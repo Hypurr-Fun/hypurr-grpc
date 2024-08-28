@@ -15,20 +15,6 @@ import { MessageType } from "@protobuf-ts/runtime";
 import { StringValue } from "./google/protobuf/wrappers";
 import { Int64Value } from "./google/protobuf/wrappers";
 /**
- *
- * type HyperliquidToken struct {
- * ID                int64 `gorm:"primarykey"`
- * Name              string
- * Index             int64
- * SzDecimals        int64
- * WeiDecimals       int64
- * TokenId           string
- * CirculatingSupply float64
- * DeployInfo        *HyperliquidTokenDeployInfo `gorm:"foreignKey:token_id"`
- * Geneses           []*HyperliquidTokenGenesis  `gorm:"foreignKey:token_id"`
- * HLQBalance        float64
- * }
- *
  * @generated from protobuf message hypurr.HyperliquidToken
  */
 export interface HyperliquidToken {
@@ -73,20 +59,6 @@ export interface HyperliquidToken {
      */
     hlqBalance: number;
 }
-// 
-// type HyperliquidTokenDeployInfo struct {
-// TokenID          int64   `gorm:"primaryKey;foreignKey:hyperliquid_token.id"`
-// Height           int64   // The block height at which token was deployed
-// Deployer         string  // The deployer's address
-// RegisterTx       string  // The tx at which token was registered
-// RegisterSpotTx   string  // The tx at which spot was registered
-// GenesisTx        string  // The tx at which token genesis was done
-// HyperliquidityTx string  // The tx at which hyperliquidity was deployed
-// HIP2Price        float64 // The price at which HIP2 was deployed
-// HIP2OrderCount   int     // The number of orders in HIP2
-// HIP2OrderSize    float64 // The size of each order in HIP2
-// }
-
 /**
  * @generated from protobuf message hypurr.HyperliquidTokenDeployInfo
  */
@@ -132,17 +104,6 @@ export interface HyperliquidTokenDeployInfo {
      */
     hip2OrderSize: number;
 }
-// 
-// type HyperliquidTokenGenesis struct {
-// Token         *HyperliquidToken
-// TokenID       int64  `gorm:"primaryKey"`
-// Target        string `gorm:"primaryKey"`
-// Amount        float64
-// Type          string
-// TargetToken   *HyperliquidToken
-// TargetTokenID sql.NullInt64
-// }
-
 /**
  * @generated from protobuf message hypurr.HyperliquidTokenGenesis
  */
@@ -168,21 +129,6 @@ export interface HyperliquidTokenGenesis {
      */
     targetTokenId?: Int64Value;
 }
-// 
-// type HyperliquidSpotPair struct {
-// ID             int64  `gorm:"primarykey"`
-// Name           string `gorm:"unique"`
-// BaseId         int64  `gorm:"foreignKey:hyperliquid_token.id;uniqueIndex:idx_base_quote"`
-// Base           *HyperliquidToken
-// QuoteId        int64 `gorm:"foreignKey:hyperliquid_token.id;uniqueIndex:idx_base_quote"`
-// Quote          *HyperliquidToken
-// Index          int64
-// MidPrice       float64
-// MarkPrice      float64
-// DailyNtlVolume float64
-// PreviousDayPx  float64
-// }
-
 /**
  * @generated from protobuf message hypurr.HyperliquidSpotPair
  */
@@ -233,18 +179,6 @@ export interface HyperliquidSpotPair {
     previousDayPx: number;
 }
 /**
- *
- * type HyperliquidWallet struct {
- * ID              int64 `gorm:"primaryKey"`
- * Name            string
- * TelegramID      sql.NullInt64 `gorm:"foreignKey:telegram_user.telegram_id"`
- * EthereumAddress string        `gorm:"unique"`
- * EncPrivateKey   sql.NullString
- * Points          int                          `gorm:"not null;default:0"`
- * Balances        []*HyperliquidWalletBalance  `gorm:"foreignKey:wallet_id"`
- * Movements       []*HyperliquidWalletMovement `gorm:"foreignKey:wallet_id"`
- * }
- *
  * @generated from protobuf message hypurr.HyperliquidWallet
  */
 export interface HyperliquidWallet {
@@ -286,30 +220,6 @@ export interface HyperliquidPublicWallet {
      */
     ethereumAddress: string;
 }
-// 
-// 
-// type HyperliquidWalletMovement struct {
-// TelegramID  sql.NullInt64
-// Wallet      *HyperliquidWallet
-// WalletID    int64  `gorm:"primaryKey"`
-// Hash        string `gorm:"primaryKey"`
-// Type        string
-// TokenID     int64
-// Token       *HyperliquidToken
-// Amount      float64
-// UsdcValue   float64
-// Destination string
-// Fee         float64
-// Timestamp   int64
-// }
-// 
-// type HyperliquidWalletBalance struct {
-// TelegramID sql.NullInt64
-// WalletID   int64 `gorm:"primaryKey"`
-// TokenID    int64 `gorm:"primaryKey"`
-// Balance    float64
-// }
-
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletMovement
  */
@@ -384,31 +294,6 @@ export interface HyperliquidWalletBalance {
      */
     balance: number;
 }
-// 
-// type HyperliquidWalletDeploySession struct {
-// ID              int64 `gorm:"primarykey"`
-// TelegramID      int64 `gorm:"foreignKey:telegram_user.telegram_id"`
-// WalletID        int64 `gorm:"foreignKey:hyperliquid_wallet.id"`
-// Wallet          *HyperliquidWallet
-// Step            int8
-// TokenName       string
-// TokenDecimals   int
-// TokenWei        int
-// TokenSupply     int
-// StartMarketCap  int
-// CreatorShare    int
-// LiquidityShare  int
-// Anchor1Share    int
-// Anchor1TokenId  sql.NullInt64 `gorm:"foreignKey:hyperliquid_token.id"`
-// Anchor1Token    *HyperliquidToken
-// Anchor2Share    int
-// Anchor2TokenId  sql.NullInt64 `gorm:"foreignKey:hyperliquid_token.id"`
-// Anchor2Token    *HyperliquidToken
-// TokenId         sql.NullInt64
-// SpotPairId      int
-// DeployThreshold float64
-// }
-
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletDeploySession
  */
@@ -590,17 +475,6 @@ export interface HyperliquidLaunch {
      */
     decimals: number;
 }
-// 
-// type HyperliquidLaunchBalance struct {
-// LaunchID   int64              `gorm:"not null;primaryKey"`
-// Launch     *HyperliquidLaunch `gorm:"foreignKey:ID"`
-// TelegramID sql.NullInt64
-// Telegram   *TelegramUser      `gorm:"foreignKey:TelegramID"`
-// WalletID   int64              `gorm:"not null;primaryKey"`
-// Wallet     *HyperliquidWallet `gorm:"foreignKey:ID"`
-// Balance    int
-// }
-
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchBalance
  */
@@ -634,22 +508,6 @@ export interface HyperliquidLaunchBalance {
      */
     balance: number;
 }
-// 
-// type HyperliquidLaunchFill struct {
-// LaunchID     int64
-// Launch       *HyperliquidLaunch
-// TelegramID   int64
-// Telegram     *TelegramUser `gorm:"foreignKey:TelegramID"`
-// WalletID     int64
-// Wallet       *HyperliquidWallet `gorm:"foreignKey:ID"`
-// UsdcDelta    float64
-// LaunchDelta  float64
-// Timestamp    int64
-// MovementHash string                     `gorm:"primaryKey"`
-// Movement     *HyperliquidWalletMovement `gorm:"foreignKey:hash"`
-// }
-// 
-
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchFill
  */
@@ -657,19 +515,19 @@ export interface HyperliquidLaunchFill {
     /**
      * @generated from protobuf field: int64 launch_id = 1;
      */
-    launchId: number; // foreign key
+    launchId: number;
     /**
      * @generated from protobuf field: int64 telegram_id = 2;
      */
-    telegramId: number; // foreign key
+    telegramId: number;
     /**
      * @generated from protobuf field: hypurr.TelegramUser telegram = 3;
      */
-    telegram?: TelegramUser; // foreign key
+    telegram?: TelegramUser;
     /**
      * @generated from protobuf field: hypurr.HyperliquidPublicWallet wallet = 4;
      */
-    wallet?: HyperliquidPublicWallet; // foreign key
+    wallet?: HyperliquidPublicWallet;
     /**
      * @generated from protobuf field: int64 usdc_delta = 5;
      */
@@ -937,18 +795,6 @@ export interface HyperliquidLaunchResponse {
      */
     launch?: HyperliquidLaunch;
 }
-// 
-// type HyperliquidLaunchMessage struct {
-// ID         int64 `gorm:"primaryKey"`
-// Timestamp  int64
-// LaunchID   int64
-// TelegramID int64
-// ChatID     int64
-// TopicID    int64
-// Message    string
-// }
-// 
-
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchMessage
  */
@@ -1044,26 +890,6 @@ export interface HyperliquidLaunchHoldersResponse {
  */
 export interface LatestHyperliquidLaunchFillsRequest {
 }
-// 
-// type HyperliquidLaunch struct {
-// ID           int64 `gorm:"primaryKey"`
-// TelegramID   int64
-// TelegramUser *TelegramUser `gorm:"foreignKey:TelegramID"`
-// Name         string
-// Description  string
-// Launched     bool
-// X0           float64 // Virtual x0 20,000
-// SessionID    int64
-// Session      *HyperliquidWalletDeploySession
-// MediaFileID  string
-// TopicID      sql.NullInt64
-// X            float64
-// K            float64                  // 10000000000
-// Fills        []*HyperliquidLaunchFill `gorm:"foreignKey:LaunchID"`
-// Dirty        bool
-// }
-// 
-
 /**
  * @generated from protobuf enum hypurr.HyperliquidLaunchPoolType
  */

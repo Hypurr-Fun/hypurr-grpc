@@ -14,7 +14,7 @@ PROTO_GO_MAKER := protoc --go_out=. --go-grpc_out=. --go_opt=paths=source_relati
 PROTO_JS_MAKER := npx protoc --ts_out=. --ts_opt long_type_number
 
 # Protobuf python generator
-PROTO_PY_MAKER := python -m grpc_tools.protoc --python_out=. --grpc_python_out=. hypurr.proto
+PROTO_PY_MAKER := python3 -m grpc_tools.protoc --python_out=. --grpc_python_out=. hypurr.proto
 
 GOCMD=go
 GOBUILD=$(GOCMD) build

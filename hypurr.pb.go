@@ -76,18 +76,6 @@ func (HyperliquidLaunchPoolType) EnumDescriptor() ([]byte, []int) {
 	return file_hypurr_proto_rawDescGZIP(), []int{0}
 }
 
-// type HyperliquidToken struct {
-// ID                int64 `gorm:"primarykey"`
-// Name              string
-// Index             int64
-// SzDecimals        int64
-// WeiDecimals       int64
-// TokenId           string
-// CirculatingSupply float64
-// DeployInfo        *HyperliquidTokenDeployInfo `gorm:"foreignKey:token_id"`
-// Geneses           []*HyperliquidTokenGenesis  `gorm:"foreignKey:token_id"`
-// HLQBalance        float64
-// }
 type HyperliquidToken struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -532,16 +520,6 @@ func (x *HyperliquidSpotPair) GetPreviousDayPx() float64 {
 	return 0
 }
 
-// type HyperliquidWallet struct {
-// ID              int64 `gorm:"primaryKey"`
-// Name            string
-// TelegramID      sql.NullInt64 `gorm:"foreignKey:telegram_user.telegram_id"`
-// EthereumAddress string        `gorm:"unique"`
-// EncPrivateKey   sql.NullString
-// Points          int                          `gorm:"not null;default:0"`
-// Balances        []*HyperliquidWalletBalance  `gorm:"foreignKey:wallet_id"`
-// Movements       []*HyperliquidWalletMovement `gorm:"foreignKey:wallet_id"`
-// }
 type HyperliquidWallet struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1435,10 +1413,10 @@ type HyperliquidLaunchFill struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	LaunchId     int64                    `protobuf:"varint,1,opt,name=launch_id,json=launchId,proto3" json:"launch_id,omitempty"`       // foreign key
-	TelegramId   int64                    `protobuf:"varint,2,opt,name=telegram_id,json=telegramId,proto3" json:"telegram_id,omitempty"` // foreign key
-	Telegram     *TelegramUser            `protobuf:"bytes,3,opt,name=telegram,proto3" json:"telegram,omitempty"`                        // foreign key
-	Wallet       *HyperliquidPublicWallet `protobuf:"bytes,4,opt,name=wallet,proto3" json:"wallet,omitempty"`                            // foreign key
+	LaunchId     int64                    `protobuf:"varint,1,opt,name=launch_id,json=launchId,proto3" json:"launch_id,omitempty"`
+	TelegramId   int64                    `protobuf:"varint,2,opt,name=telegram_id,json=telegramId,proto3" json:"telegram_id,omitempty"`
+	Telegram     *TelegramUser            `protobuf:"bytes,3,opt,name=telegram,proto3" json:"telegram,omitempty"`
+	Wallet       *HyperliquidPublicWallet `protobuf:"bytes,4,opt,name=wallet,proto3" json:"wallet,omitempty"`
 	UsdcDelta    int64                    `protobuf:"varint,5,opt,name=usdc_delta,json=usdcDelta,proto3" json:"usdc_delta,omitempty"`
 	LaunchDelta  int64                    `protobuf:"varint,6,opt,name=launch_delta,json=launchDelta,proto3" json:"launch_delta,omitempty"`
 	Timestamp    int64                    `protobuf:"varint,7,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
