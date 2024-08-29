@@ -307,71 +307,63 @@ export interface HyperliquidWalletDeploySession {
      */
     telegramId?: Int64Value;
     /**
-     * @generated from protobuf field: int64 wallet_id = 3;
-     */
-    walletId: number;
-    /**
-     * @generated from protobuf field: hypurr.HyperliquidWallet wallet = 4;
-     */
-    wallet?: HyperliquidWallet;
-    /**
-     * @generated from protobuf field: int32 step = 5;
+     * @generated from protobuf field: int32 step = 3;
      */
     step: number;
     /**
-     * @generated from protobuf field: string token_name = 6;
+     * @generated from protobuf field: string token_name = 4;
      */
     tokenName: string;
     /**
-     * @generated from protobuf field: string full_name = 7;
+     * @generated from protobuf field: string full_name = 5;
      */
     fullName: string;
     /**
-     * @generated from protobuf field: int32 token_decimals = 8;
+     * @generated from protobuf field: int32 token_decimals = 6;
      */
     tokenDecimals: number;
     /**
-     * @generated from protobuf field: int32 token_wei = 9;
+     * @generated from protobuf field: int32 token_wei = 7;
      */
     tokenWei: number;
     /**
-     * @generated from protobuf field: double token_supply = 10;
+     * @generated from protobuf field: double token_supply = 8;
      */
     tokenSupply: number;
     /**
-     * @generated from protobuf field: int32 start_market_cap = 11;
+     * @generated from protobuf field: int32 start_market_cap = 9;
      */
     startMarketCap: number;
     /**
-     * @generated from protobuf field: google.protobuf.Int64Value anchor1_token_id = 12;
+     * @generated from protobuf field: google.protobuf.Int64Value anchor1_token_id = 10;
      */
     anchor1TokenId?: Int64Value;
     /**
-     * @generated from protobuf field: hypurr.HyperliquidToken anchor1_token = 13;
+     * @generated from protobuf field: hypurr.HyperliquidToken anchor1_token = 11;
      */
     anchor1Token?: HyperliquidToken;
     /**
-     * @generated from protobuf field: google.protobuf.Int64Value anchor2_token_id = 14;
+     * @generated from protobuf field: google.protobuf.Int64Value anchor2_token_id = 12;
      */
     anchor2TokenId?: Int64Value;
     /**
-     * @generated from protobuf field: hypurr.HyperliquidToken anchor2_token = 15;
+     * @generated from protobuf field: hypurr.HyperliquidToken anchor2_token = 13;
      */
     anchor2Token?: HyperliquidToken;
     /**
-     * @generated from protobuf field: google.protobuf.Int64Value token_id = 16;
+     * @generated from protobuf field: google.protobuf.Int64Value token_id = 14;
      */
     tokenId?: Int64Value;
     /**
-     * @generated from protobuf field: int32 spot_pair_id = 17;
+     * @generated from protobuf field: int32 spot_pair_id = 15;
      */
     spotPairId: number;
     /**
-     * @generated from protobuf field: double deploy_threshold = 18;
+     * @generated from protobuf field: double deploy_threshold = 16;
      */
     deployThreshold: number;
     /**
-     * @generated from protobuf field: map<string, hypurr.HyperliquidWalletDeploySessionGenesis> geneses = 19;
+     * @generated from protobuf field: map<string, hypurr.HyperliquidWalletDeploySessionGenesis> geneses = 17;
      */
     geneses: {
         [key: string]: HyperliquidWalletDeploySessionGenesis;
@@ -474,6 +466,10 @@ export interface HyperliquidLaunch {
      * @generated from protobuf field: int64 decimals = 20;
      */
     decimals: number;
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidPublicWallet session_wallet = 21;
+     */
+    sessionWallet?: HyperliquidPublicWallet;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchBalance
@@ -1657,27 +1653,25 @@ class HyperliquidWalletDeploySession$Type extends MessageType<HyperliquidWalletD
         super("hypurr.HyperliquidWalletDeploySession", [
             { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "telegram_id", kind: "message", T: () => Int64Value },
-            { no: 3, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "wallet", kind: "message", T: () => HyperliquidWallet },
-            { no: 5, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "token_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "token_decimals", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 9, name: "token_wei", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 10, name: "token_supply", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 11, name: "start_market_cap", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 12, name: "anchor1_token_id", kind: "message", T: () => Int64Value },
-            { no: 13, name: "anchor1_token", kind: "message", T: () => HyperliquidToken },
-            { no: 14, name: "anchor2_token_id", kind: "message", T: () => Int64Value },
-            { no: 15, name: "anchor2_token", kind: "message", T: () => HyperliquidToken },
-            { no: 16, name: "token_id", kind: "message", T: () => Int64Value },
-            { no: 17, name: "spot_pair_id", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 18, name: "deploy_threshold", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 19, name: "geneses", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => HyperliquidWalletDeploySessionGenesis } }
+            { no: 3, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "token_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "token_decimals", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "token_wei", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 8, name: "token_supply", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "start_market_cap", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 10, name: "anchor1_token_id", kind: "message", T: () => Int64Value },
+            { no: 11, name: "anchor1_token", kind: "message", T: () => HyperliquidToken },
+            { no: 12, name: "anchor2_token_id", kind: "message", T: () => Int64Value },
+            { no: 13, name: "anchor2_token", kind: "message", T: () => HyperliquidToken },
+            { no: 14, name: "token_id", kind: "message", T: () => Int64Value },
+            { no: 15, name: "spot_pair_id", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 16, name: "deploy_threshold", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 17, name: "geneses", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => HyperliquidWalletDeploySessionGenesis } }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWalletDeploySession>): HyperliquidWalletDeploySession {
-        const message = { id: 0, walletId: 0, step: 0, tokenName: "", fullName: "", tokenDecimals: 0, tokenWei: 0, tokenSupply: 0, startMarketCap: 0, spotPairId: 0, deployThreshold: 0, geneses: {} };
+        const message = { id: 0, step: 0, tokenName: "", fullName: "", tokenDecimals: 0, tokenWei: 0, tokenSupply: 0, startMarketCap: 0, spotPairId: 0, deployThreshold: 0, geneses: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWalletDeploySession>(this, message, value);
@@ -1694,56 +1688,50 @@ class HyperliquidWalletDeploySession$Type extends MessageType<HyperliquidWalletD
                 case /* google.protobuf.Int64Value telegram_id */ 2:
                     message.telegramId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.telegramId);
                     break;
-                case /* int64 wallet_id */ 3:
-                    message.walletId = reader.int64().toNumber();
-                    break;
-                case /* hypurr.HyperliquidWallet wallet */ 4:
-                    message.wallet = HyperliquidWallet.internalBinaryRead(reader, reader.uint32(), options, message.wallet);
-                    break;
-                case /* int32 step */ 5:
+                case /* int32 step */ 3:
                     message.step = reader.int32();
                     break;
-                case /* string token_name */ 6:
+                case /* string token_name */ 4:
                     message.tokenName = reader.string();
                     break;
-                case /* string full_name */ 7:
+                case /* string full_name */ 5:
                     message.fullName = reader.string();
                     break;
-                case /* int32 token_decimals */ 8:
+                case /* int32 token_decimals */ 6:
                     message.tokenDecimals = reader.int32();
                     break;
-                case /* int32 token_wei */ 9:
+                case /* int32 token_wei */ 7:
                     message.tokenWei = reader.int32();
                     break;
-                case /* double token_supply */ 10:
+                case /* double token_supply */ 8:
                     message.tokenSupply = reader.double();
                     break;
-                case /* int32 start_market_cap */ 11:
+                case /* int32 start_market_cap */ 9:
                     message.startMarketCap = reader.int32();
                     break;
-                case /* google.protobuf.Int64Value anchor1_token_id */ 12:
+                case /* google.protobuf.Int64Value anchor1_token_id */ 10:
                     message.anchor1TokenId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.anchor1TokenId);
                     break;
-                case /* hypurr.HyperliquidToken anchor1_token */ 13:
+                case /* hypurr.HyperliquidToken anchor1_token */ 11:
                     message.anchor1Token = HyperliquidToken.internalBinaryRead(reader, reader.uint32(), options, message.anchor1Token);
                     break;
-                case /* google.protobuf.Int64Value anchor2_token_id */ 14:
+                case /* google.protobuf.Int64Value anchor2_token_id */ 12:
                     message.anchor2TokenId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.anchor2TokenId);
                     break;
-                case /* hypurr.HyperliquidToken anchor2_token */ 15:
+                case /* hypurr.HyperliquidToken anchor2_token */ 13:
                     message.anchor2Token = HyperliquidToken.internalBinaryRead(reader, reader.uint32(), options, message.anchor2Token);
                     break;
-                case /* google.protobuf.Int64Value token_id */ 16:
+                case /* google.protobuf.Int64Value token_id */ 14:
                     message.tokenId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.tokenId);
                     break;
-                case /* int32 spot_pair_id */ 17:
+                case /* int32 spot_pair_id */ 15:
                     message.spotPairId = reader.int32();
                     break;
-                case /* double deploy_threshold */ 18:
+                case /* double deploy_threshold */ 16:
                     message.deployThreshold = reader.double();
                     break;
-                case /* map<string, hypurr.HyperliquidWalletDeploySessionGenesis> geneses */ 19:
-                    this.binaryReadMap19(message.geneses, reader, options);
+                case /* map<string, hypurr.HyperliquidWalletDeploySessionGenesis> geneses */ 17:
+                    this.binaryReadMap17(message.geneses, reader, options);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1756,7 +1744,7 @@ class HyperliquidWalletDeploySession$Type extends MessageType<HyperliquidWalletD
         }
         return message;
     }
-    private binaryReadMap19(map: HyperliquidWalletDeploySession["geneses"], reader: IBinaryReader, options: BinaryReadOptions): void {
+    private binaryReadMap17(map: HyperliquidWalletDeploySession["geneses"], reader: IBinaryReader, options: BinaryReadOptions): void {
         let len = reader.uint32(), end = reader.pos + len, key: keyof HyperliquidWalletDeploySession["geneses"] | undefined, val: HyperliquidWalletDeploySession["geneses"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1779,57 +1767,51 @@ class HyperliquidWalletDeploySession$Type extends MessageType<HyperliquidWalletD
         /* google.protobuf.Int64Value telegram_id = 2; */
         if (message.telegramId)
             Int64Value.internalBinaryWrite(message.telegramId, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* int64 wallet_id = 3; */
-        if (message.walletId !== 0)
-            writer.tag(3, WireType.Varint).int64(message.walletId);
-        /* hypurr.HyperliquidWallet wallet = 4; */
-        if (message.wallet)
-            HyperliquidWallet.internalBinaryWrite(message.wallet, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* int32 step = 5; */
+        /* int32 step = 3; */
         if (message.step !== 0)
-            writer.tag(5, WireType.Varint).int32(message.step);
-        /* string token_name = 6; */
+            writer.tag(3, WireType.Varint).int32(message.step);
+        /* string token_name = 4; */
         if (message.tokenName !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.tokenName);
-        /* string full_name = 7; */
+            writer.tag(4, WireType.LengthDelimited).string(message.tokenName);
+        /* string full_name = 5; */
         if (message.fullName !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.fullName);
-        /* int32 token_decimals = 8; */
+            writer.tag(5, WireType.LengthDelimited).string(message.fullName);
+        /* int32 token_decimals = 6; */
         if (message.tokenDecimals !== 0)
-            writer.tag(8, WireType.Varint).int32(message.tokenDecimals);
-        /* int32 token_wei = 9; */
+            writer.tag(6, WireType.Varint).int32(message.tokenDecimals);
+        /* int32 token_wei = 7; */
         if (message.tokenWei !== 0)
-            writer.tag(9, WireType.Varint).int32(message.tokenWei);
-        /* double token_supply = 10; */
+            writer.tag(7, WireType.Varint).int32(message.tokenWei);
+        /* double token_supply = 8; */
         if (message.tokenSupply !== 0)
-            writer.tag(10, WireType.Bit64).double(message.tokenSupply);
-        /* int32 start_market_cap = 11; */
+            writer.tag(8, WireType.Bit64).double(message.tokenSupply);
+        /* int32 start_market_cap = 9; */
         if (message.startMarketCap !== 0)
-            writer.tag(11, WireType.Varint).int32(message.startMarketCap);
-        /* google.protobuf.Int64Value anchor1_token_id = 12; */
+            writer.tag(9, WireType.Varint).int32(message.startMarketCap);
+        /* google.protobuf.Int64Value anchor1_token_id = 10; */
         if (message.anchor1TokenId)
-            Int64Value.internalBinaryWrite(message.anchor1TokenId, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
-        /* hypurr.HyperliquidToken anchor1_token = 13; */
+            Int64Value.internalBinaryWrite(message.anchor1TokenId, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.HyperliquidToken anchor1_token = 11; */
         if (message.anchor1Token)
-            HyperliquidToken.internalBinaryWrite(message.anchor1Token, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Int64Value anchor2_token_id = 14; */
+            HyperliquidToken.internalBinaryWrite(message.anchor1Token, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value anchor2_token_id = 12; */
         if (message.anchor2TokenId)
-            Int64Value.internalBinaryWrite(message.anchor2TokenId, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
-        /* hypurr.HyperliquidToken anchor2_token = 15; */
+            Int64Value.internalBinaryWrite(message.anchor2TokenId, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.HyperliquidToken anchor2_token = 13; */
         if (message.anchor2Token)
-            HyperliquidToken.internalBinaryWrite(message.anchor2Token, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Int64Value token_id = 16; */
+            HyperliquidToken.internalBinaryWrite(message.anchor2Token, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value token_id = 14; */
         if (message.tokenId)
-            Int64Value.internalBinaryWrite(message.tokenId, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
-        /* int32 spot_pair_id = 17; */
+            Int64Value.internalBinaryWrite(message.tokenId, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
+        /* int32 spot_pair_id = 15; */
         if (message.spotPairId !== 0)
-            writer.tag(17, WireType.Varint).int32(message.spotPairId);
-        /* double deploy_threshold = 18; */
+            writer.tag(15, WireType.Varint).int32(message.spotPairId);
+        /* double deploy_threshold = 16; */
         if (message.deployThreshold !== 0)
-            writer.tag(18, WireType.Bit64).double(message.deployThreshold);
-        /* map<string, hypurr.HyperliquidWalletDeploySessionGenesis> geneses = 19; */
+            writer.tag(16, WireType.Bit64).double(message.deployThreshold);
+        /* map<string, hypurr.HyperliquidWalletDeploySessionGenesis> geneses = 17; */
         for (let k of Object.keys(message.geneses)) {
-            writer.tag(19, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
+            writer.tag(17, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
             writer.tag(2, WireType.LengthDelimited).fork();
             HyperliquidWalletDeploySessionGenesis.internalBinaryWrite(message.geneses[k], writer, options);
             writer.join().join();
@@ -1921,7 +1903,8 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
             { no: 17, name: "previous_day_px", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 18, name: "last_event_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 19, name: "pool_type", kind: "enum", T: () => ["hypurr.HyperliquidLaunchPoolType", HyperliquidLaunchPoolType] },
-            { no: 20, name: "decimals", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 20, name: "decimals", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 21, name: "session_wallet", kind: "message", T: () => HyperliquidPublicWallet }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunch>): HyperliquidLaunch {
@@ -1996,6 +1979,9 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
                 case /* int64 decimals */ 20:
                     message.decimals = reader.int64().toNumber();
                     break;
+                case /* hypurr.HyperliquidPublicWallet session_wallet */ 21:
+                    message.sessionWallet = HyperliquidPublicWallet.internalBinaryRead(reader, reader.uint32(), options, message.sessionWallet);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2068,6 +2054,9 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
         /* int64 decimals = 20; */
         if (message.decimals !== 0)
             writer.tag(20, WireType.Varint).int64(message.decimals);
+        /* hypurr.HyperliquidPublicWallet session_wallet = 21; */
+        if (message.sessionWallet)
+            HyperliquidPublicWallet.internalBinaryWrite(message.sessionWallet, writer.tag(21, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

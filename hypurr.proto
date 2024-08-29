@@ -93,23 +93,21 @@ message HyperliquidWalletBalance {
 message HyperliquidWalletDeploySession {
   int64 id = 1;
   google.protobuf.Int64Value telegram_id = 2;
-  int64 wallet_id = 3;
-  HyperliquidWallet wallet = 4;
-  int32 step = 5;
-  string token_name = 6;
-  string full_name = 7;
-  int32 token_decimals = 8;
-  int32 token_wei = 9;
-  double token_supply = 10;
-  int32 start_market_cap = 11;
-  google.protobuf.Int64Value anchor1_token_id = 12;
-  HyperliquidToken anchor1_token = 13;
-  google.protobuf.Int64Value anchor2_token_id = 14;
-  HyperliquidToken anchor2_token = 15;
-  google.protobuf.Int64Value token_id = 16;
-  int32 spot_pair_id = 17;
-  double deploy_threshold = 18;
-  map<string, HyperliquidWalletDeploySessionGenesis> geneses = 19;
+  int32 step = 3;
+  string token_name = 4;
+  string full_name = 5;
+  int32 token_decimals = 6;
+  int32 token_wei = 7;
+  double token_supply = 8;
+  int32 start_market_cap = 9;
+  google.protobuf.Int64Value anchor1_token_id = 10;
+  HyperliquidToken anchor1_token = 11;
+  google.protobuf.Int64Value anchor2_token_id = 12;
+  HyperliquidToken anchor2_token = 13;
+  google.protobuf.Int64Value token_id = 14;
+  int32 spot_pair_id = 15;
+  double deploy_threshold = 16;
+  map<string, HyperliquidWalletDeploySessionGenesis> geneses = 17;
 }
 
 message HyperliquidWalletDeploySessionGenesis {
@@ -145,6 +143,7 @@ message HyperliquidLaunch {
   int64 last_event_timestamp = 18;
   HyperliquidLaunchPoolType pool_type = 19;
   int64 decimals = 20;
+  HyperliquidPublicWallet session_wallet = 21;
 }
 
 message HyperliquidLaunchBalance {
