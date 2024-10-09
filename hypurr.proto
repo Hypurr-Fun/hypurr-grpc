@@ -370,14 +370,20 @@ message HyperliquidWalletPerformanceRequest {
   google.protobuf.StringValue ethereum_address = 1;
 }
 
-message Performance {
+message PerformancePoint {
   int64 time = 1;
   double notional = 2;
   double pnl = 3;
 }
 
+message Performance {
+  double net_cash = 1;
+  double notional = 2;
+  repeated PerformancePoint points = 3;
+}
+
 message HyperliquidWalletPerformanceResponse {
-  repeated Performance spot = 1;
+  Performance spot = 1;
 }
 
 service Static {

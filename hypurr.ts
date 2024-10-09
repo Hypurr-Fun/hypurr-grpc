@@ -1039,9 +1039,9 @@ export interface HyperliquidWalletPerformanceRequest {
     ethereumAddress?: StringValue;
 }
 /**
- * @generated from protobuf message hypurr.Performance
+ * @generated from protobuf message hypurr.PerformancePoint
  */
-export interface Performance {
+export interface PerformancePoint {
     /**
      * @generated from protobuf field: int64 time = 1;
      */
@@ -1056,13 +1056,30 @@ export interface Performance {
     pnl: number;
 }
 /**
+ * @generated from protobuf message hypurr.Performance
+ */
+export interface Performance {
+    /**
+     * @generated from protobuf field: double net_cash = 1;
+     */
+    netCash: number;
+    /**
+     * @generated from protobuf field: double notional = 2;
+     */
+    notional: number;
+    /**
+     * @generated from protobuf field: repeated hypurr.PerformancePoint points = 3;
+     */
+    points: PerformancePoint[];
+}
+/**
  * @generated from protobuf message hypurr.HyperliquidWalletPerformanceResponse
  */
 export interface HyperliquidWalletPerformanceResponse {
     /**
-     * @generated from protobuf field: repeated hypurr.Performance spot = 1;
+     * @generated from protobuf field: hypurr.Performance spot = 1;
      */
-    spot: Performance[];
+    spot?: Performance;
 }
 /**
  * @generated from protobuf enum hypurr.HyperliquidLaunchPoolType
@@ -4274,22 +4291,22 @@ class HyperliquidWalletPerformanceRequest$Type extends MessageType<HyperliquidWa
  */
 export const HyperliquidWalletPerformanceRequest = new HyperliquidWalletPerformanceRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class Performance$Type extends MessageType<Performance> {
+class PerformancePoint$Type extends MessageType<PerformancePoint> {
     constructor() {
-        super("hypurr.Performance", [
+        super("hypurr.PerformancePoint", [
             { no: 1, name: "time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 3, name: "pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
-    create(value?: PartialMessage<Performance>): Performance {
+    create(value?: PartialMessage<PerformancePoint>): PerformancePoint {
         const message = { time: 0, notional: 0, pnl: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<Performance>(this, message, value);
+            reflectionMergePartial<PerformancePoint>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Performance): Performance {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerformancePoint): PerformancePoint {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -4314,7 +4331,7 @@ class Performance$Type extends MessageType<Performance> {
         }
         return message;
     }
-    internalBinaryWrite(message: Performance, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PerformancePoint, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* int64 time = 1; */
         if (message.time !== 0)
             writer.tag(1, WireType.Varint).int64(message.time);
@@ -4331,6 +4348,67 @@ class Performance$Type extends MessageType<Performance> {
     }
 }
 /**
+ * @generated MessageType for protobuf message hypurr.PerformancePoint
+ */
+export const PerformancePoint = new PerformancePoint$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Performance$Type extends MessageType<Performance> {
+    constructor() {
+        super("hypurr.Performance", [
+            { no: 1, name: "net_cash", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 2, name: "notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "points", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PerformancePoint }
+        ]);
+    }
+    create(value?: PartialMessage<Performance>): Performance {
+        const message = { netCash: 0, notional: 0, points: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<Performance>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Performance): Performance {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* double net_cash */ 1:
+                    message.netCash = reader.double();
+                    break;
+                case /* double notional */ 2:
+                    message.notional = reader.double();
+                    break;
+                case /* repeated hypurr.PerformancePoint points */ 3:
+                    message.points.push(PerformancePoint.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: Performance, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* double net_cash = 1; */
+        if (message.netCash !== 0)
+            writer.tag(1, WireType.Bit64).double(message.netCash);
+        /* double notional = 2; */
+        if (message.notional !== 0)
+            writer.tag(2, WireType.Bit64).double(message.notional);
+        /* repeated hypurr.PerformancePoint points = 3; */
+        for (let i = 0; i < message.points.length; i++)
+            PerformancePoint.internalBinaryWrite(message.points[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
  * @generated MessageType for protobuf message hypurr.Performance
  */
 export const Performance = new Performance$Type();
@@ -4338,11 +4416,11 @@ export const Performance = new Performance$Type();
 class HyperliquidWalletPerformanceResponse$Type extends MessageType<HyperliquidWalletPerformanceResponse> {
     constructor() {
         super("hypurr.HyperliquidWalletPerformanceResponse", [
-            { no: 1, name: "spot", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Performance }
+            { no: 1, name: "spot", kind: "message", T: () => Performance }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWalletPerformanceResponse>): HyperliquidWalletPerformanceResponse {
-        const message = { spot: [] };
+        const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWalletPerformanceResponse>(this, message, value);
@@ -4353,8 +4431,8 @@ class HyperliquidWalletPerformanceResponse$Type extends MessageType<HyperliquidW
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypurr.Performance spot */ 1:
-                    message.spot.push(Performance.internalBinaryRead(reader, reader.uint32(), options));
+                case /* hypurr.Performance spot */ 1:
+                    message.spot = Performance.internalBinaryRead(reader, reader.uint32(), options, message.spot);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4368,9 +4446,9 @@ class HyperliquidWalletPerformanceResponse$Type extends MessageType<HyperliquidW
         return message;
     }
     internalBinaryWrite(message: HyperliquidWalletPerformanceResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.Performance spot = 1; */
-        for (let i = 0; i < message.spot.length; i++)
-            Performance.internalBinaryWrite(message.spot[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.Performance spot = 1; */
+        if (message.spot)
+            Performance.internalBinaryWrite(message.spot, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
