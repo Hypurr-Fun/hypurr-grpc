@@ -125,7 +125,7 @@ enum HyperliquidLaunchPoolType {
 message HyperliquidLaunch {
   int64 id = 1;
   int64 telegram_id = 2;
-  TelegramUser telegram_user = 3;
+  TelegramUserPublic telegram_user = 3;
   string description = 4;
   bool listed = 5;
   bool settled = 6;
@@ -150,7 +150,7 @@ message HyperliquidLaunchBalance {
   int64 launch_id = 1;
   HyperliquidLaunch launch = 2;
   google.protobuf.Int64Value telegram_id = 3;
-  TelegramUser telegram = 4;
+  TelegramUserPublic telegram = 4;
   int64 wallet_id = 5;
   HyperliquidWallet wallet = 6;
   int32 balance = 7;
@@ -159,7 +159,7 @@ message HyperliquidLaunchBalance {
 message HyperliquidLaunchFill {
   int64 launch_id = 1;
   int64 telegram_id = 2;
-  TelegramUser telegram = 3;
+  TelegramUserPublic telegram = 3;
   HyperliquidPublicWallet wallet = 4;
   int64 usdc_delta = 5;
   int64 launch_delta = 6;
@@ -167,7 +167,7 @@ message HyperliquidLaunchFill {
   google.protobuf.StringValue movement_hash = 8;
 }
 
-message TelegramUser {
+message TelegramUserPublic {
   int64 id = 1;
   string username = 2;
 }
@@ -272,7 +272,7 @@ message HyperliquidLaunchMessage {
   int64 timestamp = 2;
   int64 launch_id = 3;
   int64 telegram_id = 4;
-  TelegramUser author = 5;
+  TelegramUserPublic author = 5;
   int64 chat_id = 6;
   int64 topic_id = 7;
   string message = 8;
@@ -302,11 +302,92 @@ message HyperliquidLaunchHoldersResponse {
 
 message LatestHyperliquidLaunchFillsRequest {}
 
+message TelegramUserRequest {
+  map<string,string> auth_data = 1;
+}
+/*
+type TelegramUser struct {
+	TelegramID       int64 `gorm:"primarykey"`
+	TelegramUsername string
+	PendingFees      float64 `gorm:"not null;default:0"`
+	ReferralRewards  float64 `gorm:"not null;default:0"` // Not null default 0
+	ReferralCode     string
+	ReferralScore    int64 `gorm:"not null;default:0"`
+	ReferrerID       int64
+	Settings         *TelegramUserSettings `gorm:"foreignKey:telegram_id"`
+	Wallet           *HyperliquidWallet
+	WalletID         int64 `gorm:"not null;foreignKey:hyperliquid_wallet.id"`
+	SniperWallet     *HyperliquidWallet
+	SniperWalletID   int64 `gorm:"not null;foreignKey:hyperliquid_wallet.id"`
+	DumperWallet     *HyperliquidWallet
+	DumperWalletID   int64                        `gorm:"not null;foreignKey:hyperliquid_wallet.id"`
+	Launches         []*HyperliquidLaunch         `gorm:"foreignKey:telegram_id;references:telegram_id"`
+	Balances         []*HyperliquidWalletBalance  `gorm:"foreignKey:telegram_id;references:telegram_id"`
+	Movements        []*HyperliquidWalletMovement `gorm:"foreignKey:telegram_id;references:telegram_id"`
+	LaunchFills      []*HyperliquidLaunchFill     `gorm:"foreignKey:telegram_id;references:telegram_id"`
+	ReputationID     sql.NullInt64
+	Reputation       *TelegramUserReputation `gorm:"foreignKey:telegram_id;references:telegram_id"`
+}
+ */
+message TelegramUser {
+  int64 telegram_id = 1;
+  string telegram_username = 2;
+  double pending_fees = 3;
+  double referral_rewards = 4;
+  string referral_code = 5;
+  int64 referral_score = 6;
+  int64 referrer_id = 7;
+  TelegramUserSettings settings = 8;
+  HyperliquidWallet wallet = 9;
+  int64 wallet_id = 10;
+  HyperliquidWallet sniper_wallet = 11;
+  int64 sniper_wallet_id = 12;
+  HyperliquidWallet dumper_wallet = 13;
+  int64 dumper_wallet_id = 14;
+  int64 reputation_id = 15;
+  TelegramUserReputation reputation = 16;
+  repeated HyperliquidLaunch launches = 17;
+  repeated HyperliquidWalletBalance balances = 18;
+  repeated HyperliquidWalletMovement movements = 19;
+  repeated HyperliquidLaunchFill launch_fills = 20;
+}
+
+// TODO
+message TelegramUserSettings {
+
+}
+
+// TODO
+message TelegramUserReputation {
+
+}
+
+message TelegramUserResponse {
+  TelegramUser user = 1;
+}
+
+message HyperliquidWalletPerformanceRequest {
+  google.protobuf.StringValue ethereum_address = 1;
+}
+
+message Performance {
+  int64 time = 1;
+  double value = 2;
+  double volume = 3;
+  double fees = 4;
+}
+
+message HyperliquidWalletPerformanceResponse {
+  repeated Performance spot = 1;
+}
+
 service Static {
+  rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc HyperliquidTokens (HyperliquidTokensRequest) returns (HyperliquidTokensResponse) {}
   rpc HyperliquidSpotPairs (HyperliquidSpotPairsRequest) returns (HyperliquidSpotPairsResponse) {}
   rpc HyperliquidWallet (HyperliquidWalletRequest) returns (HyperliquidWalletResponse) {}
   rpc HyperliquidWalletDeploySessions (HyperliquidWalletDeploySessionsRequest) returns (HyperliquidWalletDeploySessionsResponse) {}
+  rpc HyperliquidWalletPerformance (HyperliquidWalletPerformanceRequest) returns (HyperliquidWalletPerformanceResponse) {}
   rpc HyperliquidLaunch (HyperliquidLaunchRequest) returns (HyperliquidLaunchResponse) {}
   rpc HyperliquidLaunches (HyperliquidLaunchesRequest) returns (HyperliquidLaunchesResponse) {}
   rpc HyperliquidLaunchFills (HyperliquidLaunchFillsRequest) returns (stream HyperliquidLaunchFillsResponse) {}

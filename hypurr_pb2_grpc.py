@@ -14,6 +14,11 @@ class StaticStub(object):
     Args:
       channel: A grpc.Channel.
     """
+    self.TelegramUser = channel.unary_unary(
+        '/hypurr.Static/TelegramUser',
+        request_serializer=hypurr__pb2.TelegramUserRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.TelegramUserResponse.FromString,
+        )
     self.HyperliquidTokens = channel.unary_unary(
         '/hypurr.Static/HyperliquidTokens',
         request_serializer=hypurr__pb2.HyperliquidTokensRequest.SerializeToString,
@@ -33,6 +38,11 @@ class StaticStub(object):
         '/hypurr.Static/HyperliquidWalletDeploySessions',
         request_serializer=hypurr__pb2.HyperliquidWalletDeploySessionsRequest.SerializeToString,
         response_deserializer=hypurr__pb2.HyperliquidWalletDeploySessionsResponse.FromString,
+        )
+    self.HyperliquidWalletPerformance = channel.unary_unary(
+        '/hypurr.Static/HyperliquidWalletPerformance',
+        request_serializer=hypurr__pb2.HyperliquidWalletPerformanceRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.HyperliquidWalletPerformanceResponse.FromString,
         )
     self.HyperliquidLaunch = channel.unary_unary(
         '/hypurr.Static/HyperliquidLaunch',
@@ -85,6 +95,13 @@ class StaticServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
+  def TelegramUser(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def HyperliquidTokens(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -107,6 +124,13 @@ class StaticServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def HyperliquidWalletDeploySessions(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HyperliquidWalletPerformance(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -179,6 +203,11 @@ class StaticServicer(object):
 
 def add_StaticServicer_to_server(servicer, server):
   rpc_method_handlers = {
+      'TelegramUser': grpc.unary_unary_rpc_method_handler(
+          servicer.TelegramUser,
+          request_deserializer=hypurr__pb2.TelegramUserRequest.FromString,
+          response_serializer=hypurr__pb2.TelegramUserResponse.SerializeToString,
+      ),
       'HyperliquidTokens': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidTokens,
           request_deserializer=hypurr__pb2.HyperliquidTokensRequest.FromString,
@@ -198,6 +227,11 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.HyperliquidWalletDeploySessions,
           request_deserializer=hypurr__pb2.HyperliquidWalletDeploySessionsRequest.FromString,
           response_serializer=hypurr__pb2.HyperliquidWalletDeploySessionsResponse.SerializeToString,
+      ),
+      'HyperliquidWalletPerformance': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidWalletPerformance,
+          request_deserializer=hypurr__pb2.HyperliquidWalletPerformanceRequest.FromString,
+          response_serializer=hypurr__pb2.HyperliquidWalletPerformanceResponse.SerializeToString,
       ),
       'HyperliquidLaunch': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidLaunch,
