@@ -1056,6 +1056,43 @@ export interface PerformancePoint {
     pnl: number;
 }
 /**
+ * @generated from protobuf message hypurr.PerformanceReport
+ */
+export interface PerformanceReport {
+    /**
+     * @generated from protobuf field: int64 token_id = 1;
+     */
+    tokenId: number;
+    /**
+     * @generated from protobuf field: double total_pnl = 2;
+     */
+    totalPnl: number;
+    /**
+     * @generated from protobuf field: double running_pnl = 3;
+     */
+    runningPnl: number;
+    /**
+     * @generated from protobuf field: double size = 4;
+     */
+    size: number;
+    /**
+     * @generated from protobuf field: double price = 5;
+     */
+    price: number;
+    /**
+     * @generated from protobuf field: double entry_price = 6;
+     */
+    entryPrice: number;
+    /**
+     * @generated from protobuf field: double total_cost = 7;
+     */
+    totalCost: number;
+    /**
+     * @generated from protobuf field: double running_cost = 8;
+     */
+    runningCost: number;
+}
+/**
  * @generated from protobuf message hypurr.Performance
  */
 export interface Performance {
@@ -1068,7 +1105,11 @@ export interface Performance {
      */
     notional: number;
     /**
-     * @generated from protobuf field: repeated hypurr.PerformancePoint points = 3;
+     * @generated from protobuf field: repeated hypurr.PerformanceReport reports = 3;
+     */
+    reports: PerformanceReport[];
+    /**
+     * @generated from protobuf field: repeated hypurr.PerformancePoint points = 4;
      */
     points: PerformancePoint[];
 }
@@ -4352,16 +4393,113 @@ class PerformancePoint$Type extends MessageType<PerformancePoint> {
  */
 export const PerformancePoint = new PerformancePoint$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class PerformanceReport$Type extends MessageType<PerformanceReport> {
+    constructor() {
+        super("hypurr.PerformanceReport", [
+            { no: 1, name: "token_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "total_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "running_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "entry_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "total_cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "running_cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PerformanceReport>): PerformanceReport {
+        const message = { tokenId: 0, totalPnl: 0, runningPnl: 0, size: 0, price: 0, entryPrice: 0, totalCost: 0, runningCost: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PerformanceReport>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerformanceReport): PerformanceReport {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 token_id */ 1:
+                    message.tokenId = reader.int64().toNumber();
+                    break;
+                case /* double total_pnl */ 2:
+                    message.totalPnl = reader.double();
+                    break;
+                case /* double running_pnl */ 3:
+                    message.runningPnl = reader.double();
+                    break;
+                case /* double size */ 4:
+                    message.size = reader.double();
+                    break;
+                case /* double price */ 5:
+                    message.price = reader.double();
+                    break;
+                case /* double entry_price */ 6:
+                    message.entryPrice = reader.double();
+                    break;
+                case /* double total_cost */ 7:
+                    message.totalCost = reader.double();
+                    break;
+                case /* double running_cost */ 8:
+                    message.runningCost = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PerformanceReport, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 token_id = 1; */
+        if (message.tokenId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.tokenId);
+        /* double total_pnl = 2; */
+        if (message.totalPnl !== 0)
+            writer.tag(2, WireType.Bit64).double(message.totalPnl);
+        /* double running_pnl = 3; */
+        if (message.runningPnl !== 0)
+            writer.tag(3, WireType.Bit64).double(message.runningPnl);
+        /* double size = 4; */
+        if (message.size !== 0)
+            writer.tag(4, WireType.Bit64).double(message.size);
+        /* double price = 5; */
+        if (message.price !== 0)
+            writer.tag(5, WireType.Bit64).double(message.price);
+        /* double entry_price = 6; */
+        if (message.entryPrice !== 0)
+            writer.tag(6, WireType.Bit64).double(message.entryPrice);
+        /* double total_cost = 7; */
+        if (message.totalCost !== 0)
+            writer.tag(7, WireType.Bit64).double(message.totalCost);
+        /* double running_cost = 8; */
+        if (message.runningCost !== 0)
+            writer.tag(8, WireType.Bit64).double(message.runningCost);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PerformanceReport
+ */
+export const PerformanceReport = new PerformanceReport$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class Performance$Type extends MessageType<Performance> {
     constructor() {
         super("hypurr.Performance", [
             { no: 1, name: "net_cash", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 2, name: "notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 3, name: "points", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PerformancePoint }
+            { no: 3, name: "reports", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PerformanceReport },
+            { no: 4, name: "points", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PerformancePoint }
         ]);
     }
     create(value?: PartialMessage<Performance>): Performance {
-        const message = { netCash: 0, notional: 0, points: [] };
+        const message = { netCash: 0, notional: 0, reports: [], points: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<Performance>(this, message, value);
@@ -4378,7 +4516,10 @@ class Performance$Type extends MessageType<Performance> {
                 case /* double notional */ 2:
                     message.notional = reader.double();
                     break;
-                case /* repeated hypurr.PerformancePoint points */ 3:
+                case /* repeated hypurr.PerformanceReport reports */ 3:
+                    message.reports.push(PerformanceReport.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated hypurr.PerformancePoint points */ 4:
                     message.points.push(PerformancePoint.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -4399,9 +4540,12 @@ class Performance$Type extends MessageType<Performance> {
         /* double notional = 2; */
         if (message.notional !== 0)
             writer.tag(2, WireType.Bit64).double(message.notional);
-        /* repeated hypurr.PerformancePoint points = 3; */
+        /* repeated hypurr.PerformanceReport reports = 3; */
+        for (let i = 0; i < message.reports.length; i++)
+            PerformanceReport.internalBinaryWrite(message.reports[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.PerformancePoint points = 4; */
         for (let i = 0; i < message.points.length; i++)
-            PerformancePoint.internalBinaryWrite(message.points[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            PerformancePoint.internalBinaryWrite(message.points[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
