@@ -372,9 +372,8 @@ message HyperliquidWalletPerformanceRequest {
 
 message Performance {
   int64 time = 1;
-  double value = 2;
-  double volume = 3;
-  double fees = 4;
+  double notional = 2;
+  double pnl = 3;
 }
 
 message HyperliquidWalletPerformanceResponse {

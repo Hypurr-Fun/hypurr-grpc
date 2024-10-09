@@ -1047,17 +1047,13 @@ export interface Performance {
      */
     time: number;
     /**
-     * @generated from protobuf field: double value = 2;
+     * @generated from protobuf field: double notional = 2;
      */
-    value: number;
+    notional: number;
     /**
-     * @generated from protobuf field: double volume = 3;
+     * @generated from protobuf field: double pnl = 3;
      */
-    volume: number;
-    /**
-     * @generated from protobuf field: double fees = 4;
-     */
-    fees: number;
+    pnl: number;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletPerformanceResponse
@@ -4282,13 +4278,12 @@ class Performance$Type extends MessageType<Performance> {
     constructor() {
         super("hypurr.Performance", [
             { no: 1, name: "time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "value", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 3, name: "volume", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 4, name: "fees", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 2, name: "notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<Performance>): Performance {
-        const message = { time: 0, value: 0, volume: 0, fees: 0 };
+        const message = { time: 0, notional: 0, pnl: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<Performance>(this, message, value);
@@ -4302,14 +4297,11 @@ class Performance$Type extends MessageType<Performance> {
                 case /* int64 time */ 1:
                     message.time = reader.int64().toNumber();
                     break;
-                case /* double value */ 2:
-                    message.value = reader.double();
+                case /* double notional */ 2:
+                    message.notional = reader.double();
                     break;
-                case /* double volume */ 3:
-                    message.volume = reader.double();
-                    break;
-                case /* double fees */ 4:
-                    message.fees = reader.double();
+                case /* double pnl */ 3:
+                    message.pnl = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4326,15 +4318,12 @@ class Performance$Type extends MessageType<Performance> {
         /* int64 time = 1; */
         if (message.time !== 0)
             writer.tag(1, WireType.Varint).int64(message.time);
-        /* double value = 2; */
-        if (message.value !== 0)
-            writer.tag(2, WireType.Bit64).double(message.value);
-        /* double volume = 3; */
-        if (message.volume !== 0)
-            writer.tag(3, WireType.Bit64).double(message.volume);
-        /* double fees = 4; */
-        if (message.fees !== 0)
-            writer.tag(4, WireType.Bit64).double(message.fees);
+        /* double notional = 2; */
+        if (message.notional !== 0)
+            writer.tag(2, WireType.Bit64).double(message.notional);
+        /* double pnl = 3; */
+        if (message.pnl !== 0)
+            writer.tag(3, WireType.Bit64).double(message.pnl);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
