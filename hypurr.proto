@@ -372,24 +372,24 @@ message HyperliquidWalletPerformanceRequest {
 
 message PerformancePoint {
   int64 time = 1;
-  double notional = 2;
-  double pnl = 3;
+  float notional = 2;
+  float pnl = 3;
 }
 
 message PerformanceReport {
   int64 token_id = 1;
-  double total_pnl = 2;
-  double running_pnl = 3;
-  double size = 4;
-  double price = 5;
-  double entry_price = 6;
-  double total_cost = 7;
-  double running_cost = 8;
+  float total_pnl = 2;
+  float running_pnl = 3;
+  float size = 4;
+  float price = 5;
+  float entry_price = 6;
+  float total_cost = 7;
+  float running_cost = 8;
 }
 
 message Performance {
-  double net_cash = 1;
-  double notional = 2;
+  float net_cash = 1;
+  float notional = 2;
   repeated PerformanceReport reports = 3;
   repeated PerformancePoint points = 4;
 }
