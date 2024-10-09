@@ -1047,11 +1047,11 @@ export interface PerformancePoint {
      */
     time: number;
     /**
-     * @generated from protobuf field: double notional = 2;
+     * @generated from protobuf field: float notional = 2;
      */
     notional: number;
     /**
-     * @generated from protobuf field: double pnl = 3;
+     * @generated from protobuf field: float pnl = 3;
      */
     pnl: number;
 }
@@ -1064,31 +1064,31 @@ export interface PerformanceReport {
      */
     tokenId: number;
     /**
-     * @generated from protobuf field: double total_pnl = 2;
+     * @generated from protobuf field: float total_pnl = 2;
      */
     totalPnl: number;
     /**
-     * @generated from protobuf field: double running_pnl = 3;
+     * @generated from protobuf field: float running_pnl = 3;
      */
     runningPnl: number;
     /**
-     * @generated from protobuf field: double size = 4;
+     * @generated from protobuf field: float size = 4;
      */
     size: number;
     /**
-     * @generated from protobuf field: double price = 5;
+     * @generated from protobuf field: float price = 5;
      */
     price: number;
     /**
-     * @generated from protobuf field: double entry_price = 6;
+     * @generated from protobuf field: float entry_price = 6;
      */
     entryPrice: number;
     /**
-     * @generated from protobuf field: double total_cost = 7;
+     * @generated from protobuf field: float total_cost = 7;
      */
     totalCost: number;
     /**
-     * @generated from protobuf field: double running_cost = 8;
+     * @generated from protobuf field: float running_cost = 8;
      */
     runningCost: number;
 }
@@ -1097,11 +1097,11 @@ export interface PerformanceReport {
  */
 export interface Performance {
     /**
-     * @generated from protobuf field: double net_cash = 1;
+     * @generated from protobuf field: float net_cash = 1;
      */
     netCash: number;
     /**
-     * @generated from protobuf field: double notional = 2;
+     * @generated from protobuf field: float notional = 2;
      */
     notional: number;
     /**
@@ -4336,8 +4336,8 @@ class PerformancePoint$Type extends MessageType<PerformancePoint> {
     constructor() {
         super("hypurr.PerformancePoint", [
             { no: 1, name: "time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 3, name: "pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 2, name: "notional", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 3, name: "pnl", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
         ]);
     }
     create(value?: PartialMessage<PerformancePoint>): PerformancePoint {
@@ -4355,11 +4355,11 @@ class PerformancePoint$Type extends MessageType<PerformancePoint> {
                 case /* int64 time */ 1:
                     message.time = reader.int64().toNumber();
                     break;
-                case /* double notional */ 2:
-                    message.notional = reader.double();
+                case /* float notional */ 2:
+                    message.notional = reader.float();
                     break;
-                case /* double pnl */ 3:
-                    message.pnl = reader.double();
+                case /* float pnl */ 3:
+                    message.pnl = reader.float();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4376,12 +4376,12 @@ class PerformancePoint$Type extends MessageType<PerformancePoint> {
         /* int64 time = 1; */
         if (message.time !== 0)
             writer.tag(1, WireType.Varint).int64(message.time);
-        /* double notional = 2; */
+        /* float notional = 2; */
         if (message.notional !== 0)
-            writer.tag(2, WireType.Bit64).double(message.notional);
-        /* double pnl = 3; */
+            writer.tag(2, WireType.Bit32).float(message.notional);
+        /* float pnl = 3; */
         if (message.pnl !== 0)
-            writer.tag(3, WireType.Bit64).double(message.pnl);
+            writer.tag(3, WireType.Bit32).float(message.pnl);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4397,13 +4397,13 @@ class PerformanceReport$Type extends MessageType<PerformanceReport> {
     constructor() {
         super("hypurr.PerformanceReport", [
             { no: 1, name: "token_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "total_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 3, name: "running_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 4, name: "size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 5, name: "price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 6, name: "entry_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 7, name: "total_cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 8, name: "running_cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 2, name: "total_pnl", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 3, name: "running_pnl", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 4, name: "size", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 5, name: "price", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 6, name: "entry_price", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 7, name: "total_cost", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 8, name: "running_cost", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
         ]);
     }
     create(value?: PartialMessage<PerformanceReport>): PerformanceReport {
@@ -4421,26 +4421,26 @@ class PerformanceReport$Type extends MessageType<PerformanceReport> {
                 case /* int64 token_id */ 1:
                     message.tokenId = reader.int64().toNumber();
                     break;
-                case /* double total_pnl */ 2:
-                    message.totalPnl = reader.double();
+                case /* float total_pnl */ 2:
+                    message.totalPnl = reader.float();
                     break;
-                case /* double running_pnl */ 3:
-                    message.runningPnl = reader.double();
+                case /* float running_pnl */ 3:
+                    message.runningPnl = reader.float();
                     break;
-                case /* double size */ 4:
-                    message.size = reader.double();
+                case /* float size */ 4:
+                    message.size = reader.float();
                     break;
-                case /* double price */ 5:
-                    message.price = reader.double();
+                case /* float price */ 5:
+                    message.price = reader.float();
                     break;
-                case /* double entry_price */ 6:
-                    message.entryPrice = reader.double();
+                case /* float entry_price */ 6:
+                    message.entryPrice = reader.float();
                     break;
-                case /* double total_cost */ 7:
-                    message.totalCost = reader.double();
+                case /* float total_cost */ 7:
+                    message.totalCost = reader.float();
                     break;
-                case /* double running_cost */ 8:
-                    message.runningCost = reader.double();
+                case /* float running_cost */ 8:
+                    message.runningCost = reader.float();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4457,27 +4457,27 @@ class PerformanceReport$Type extends MessageType<PerformanceReport> {
         /* int64 token_id = 1; */
         if (message.tokenId !== 0)
             writer.tag(1, WireType.Varint).int64(message.tokenId);
-        /* double total_pnl = 2; */
+        /* float total_pnl = 2; */
         if (message.totalPnl !== 0)
-            writer.tag(2, WireType.Bit64).double(message.totalPnl);
-        /* double running_pnl = 3; */
+            writer.tag(2, WireType.Bit32).float(message.totalPnl);
+        /* float running_pnl = 3; */
         if (message.runningPnl !== 0)
-            writer.tag(3, WireType.Bit64).double(message.runningPnl);
-        /* double size = 4; */
+            writer.tag(3, WireType.Bit32).float(message.runningPnl);
+        /* float size = 4; */
         if (message.size !== 0)
-            writer.tag(4, WireType.Bit64).double(message.size);
-        /* double price = 5; */
+            writer.tag(4, WireType.Bit32).float(message.size);
+        /* float price = 5; */
         if (message.price !== 0)
-            writer.tag(5, WireType.Bit64).double(message.price);
-        /* double entry_price = 6; */
+            writer.tag(5, WireType.Bit32).float(message.price);
+        /* float entry_price = 6; */
         if (message.entryPrice !== 0)
-            writer.tag(6, WireType.Bit64).double(message.entryPrice);
-        /* double total_cost = 7; */
+            writer.tag(6, WireType.Bit32).float(message.entryPrice);
+        /* float total_cost = 7; */
         if (message.totalCost !== 0)
-            writer.tag(7, WireType.Bit64).double(message.totalCost);
-        /* double running_cost = 8; */
+            writer.tag(7, WireType.Bit32).float(message.totalCost);
+        /* float running_cost = 8; */
         if (message.runningCost !== 0)
-            writer.tag(8, WireType.Bit64).double(message.runningCost);
+            writer.tag(8, WireType.Bit32).float(message.runningCost);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4492,8 +4492,8 @@ export const PerformanceReport = new PerformanceReport$Type();
 class Performance$Type extends MessageType<Performance> {
     constructor() {
         super("hypurr.Performance", [
-            { no: 1, name: "net_cash", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 2, name: "notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 1, name: "net_cash", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 2, name: "notional", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
             { no: 3, name: "reports", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PerformanceReport },
             { no: 4, name: "points", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PerformancePoint }
         ]);
@@ -4510,11 +4510,11 @@ class Performance$Type extends MessageType<Performance> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* double net_cash */ 1:
-                    message.netCash = reader.double();
+                case /* float net_cash */ 1:
+                    message.netCash = reader.float();
                     break;
-                case /* double notional */ 2:
-                    message.notional = reader.double();
+                case /* float notional */ 2:
+                    message.notional = reader.float();
                     break;
                 case /* repeated hypurr.PerformanceReport reports */ 3:
                     message.reports.push(PerformanceReport.internalBinaryRead(reader, reader.uint32(), options));
@@ -4534,12 +4534,12 @@ class Performance$Type extends MessageType<Performance> {
         return message;
     }
     internalBinaryWrite(message: Performance, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* double net_cash = 1; */
+        /* float net_cash = 1; */
         if (message.netCash !== 0)
-            writer.tag(1, WireType.Bit64).double(message.netCash);
-        /* double notional = 2; */
+            writer.tag(1, WireType.Bit32).float(message.netCash);
+        /* float notional = 2; */
         if (message.notional !== 0)
-            writer.tag(2, WireType.Bit64).double(message.notional);
+            writer.tag(2, WireType.Bit32).float(message.notional);
         /* repeated hypurr.PerformanceReport reports = 3; */
         for (let i = 0; i < message.reports.length; i++)
             PerformanceReport.internalBinaryWrite(message.reports[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
