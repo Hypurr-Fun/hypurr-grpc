@@ -396,6 +396,7 @@ message Performance {
 
 message HyperliquidWalletPerformanceResponse {
   Performance spot = 1;
+  Performance perp = 2;
 }
 
 service Static {
