@@ -29,6 +29,11 @@ class StaticStub(object):
         request_serializer=hypurr__pb2.HyperliquidSpotPairsRequest.SerializeToString,
         response_deserializer=hypurr__pb2.HyperliquidSpotPairsResponse.FromString,
         )
+    self.HyperliquidPerpPairs = channel.unary_unary(
+        '/hypurr.Static/HyperliquidPerpPairs',
+        request_serializer=hypurr__pb2.HyperliquidPerpPairsRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.HyperliquidPerpPairsResponse.FromString,
+        )
     self.HyperliquidWallet = channel.unary_unary(
         '/hypurr.Static/HyperliquidWallet',
         request_serializer=hypurr__pb2.HyperliquidWalletRequest.SerializeToString,
@@ -110,6 +115,13 @@ class StaticServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def HyperliquidSpotPairs(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HyperliquidPerpPairs(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -217,6 +229,11 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.HyperliquidSpotPairs,
           request_deserializer=hypurr__pb2.HyperliquidSpotPairsRequest.FromString,
           response_serializer=hypurr__pb2.HyperliquidSpotPairsResponse.SerializeToString,
+      ),
+      'HyperliquidPerpPairs': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidPerpPairs,
+          request_deserializer=hypurr__pb2.HyperliquidPerpPairsRequest.FromString,
+          response_serializer=hypurr__pb2.HyperliquidPerpPairsResponse.SerializeToString,
       ),
       'HyperliquidWallet': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidWallet,

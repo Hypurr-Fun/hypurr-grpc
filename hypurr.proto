@@ -54,6 +54,19 @@ message HyperliquidSpotPair {
   double previous_day_px = 11;
 }
 
+message HyperliquidPerpPair {
+  int64 id = 1;
+  string name = 2;
+  int64 index = 3;
+  double mid_price = 4;
+  double mark_price = 5;
+  double daily_ntl_volume = 6;
+  double previous_day_px = 7;
+  double funding = 8;
+  double open_interest = 9;
+  double premium = 10;
+}
+
 message HyperliquidWallet {
   int64 id = 1;
   string name = 2;
@@ -184,6 +197,12 @@ message HyperliquidSpotPairsRequest {}
 
 message HyperliquidSpotPairsResponse {
   repeated HyperliquidSpotPair pairs = 1;
+}
+
+message HyperliquidPerpPairsRequest {}
+
+message HyperliquidPerpPairsResponse {
+  repeated HyperliquidPerpPair pairs = 1;
 }
 
 message HyperliquidWalletRequest {
@@ -403,6 +422,7 @@ service Static {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc HyperliquidTokens (HyperliquidTokensRequest) returns (HyperliquidTokensResponse) {}
   rpc HyperliquidSpotPairs (HyperliquidSpotPairsRequest) returns (HyperliquidSpotPairsResponse) {}
+  rpc HyperliquidPerpPairs (HyperliquidPerpPairsRequest) returns (HyperliquidPerpPairsResponse) {}
   rpc HyperliquidWallet (HyperliquidWalletRequest) returns (HyperliquidWalletResponse) {}
   rpc HyperliquidWalletDeploySessions (HyperliquidWalletDeploySessionsRequest) returns (HyperliquidWalletDeploySessionsResponse) {}
   rpc HyperliquidWalletPerformance (HyperliquidWalletPerformanceRequest) returns (HyperliquidWalletPerformanceResponse) {}

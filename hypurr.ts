@@ -179,6 +179,51 @@ export interface HyperliquidSpotPair {
     previousDayPx: number;
 }
 /**
+ * @generated from protobuf message hypurr.HyperliquidPerpPair
+ */
+export interface HyperliquidPerpPair {
+    /**
+     * @generated from protobuf field: int64 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: string name = 2;
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: int64 index = 3;
+     */
+    index: number;
+    /**
+     * @generated from protobuf field: double mid_price = 4;
+     */
+    midPrice: number;
+    /**
+     * @generated from protobuf field: double mark_price = 5;
+     */
+    markPrice: number;
+    /**
+     * @generated from protobuf field: double daily_ntl_volume = 6;
+     */
+    dailyNtlVolume: number;
+    /**
+     * @generated from protobuf field: double previous_day_px = 7;
+     */
+    previousDayPx: number;
+    /**
+     * @generated from protobuf field: double funding = 8;
+     */
+    funding: number;
+    /**
+     * @generated from protobuf field: double open_interest = 9;
+     */
+    openInterest: number;
+    /**
+     * @generated from protobuf field: double premium = 10;
+     */
+    premium: number;
+}
+/**
  * @generated from protobuf message hypurr.HyperliquidWallet
  */
 export interface HyperliquidWallet {
@@ -581,6 +626,20 @@ export interface HyperliquidSpotPairsResponse {
      * @generated from protobuf field: repeated hypurr.HyperliquidSpotPair pairs = 1;
      */
     pairs: HyperliquidSpotPair[];
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidPerpPairsRequest
+ */
+export interface HyperliquidPerpPairsRequest {
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidPerpPairsResponse
+ */
+export interface HyperliquidPerpPairsResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.HyperliquidPerpPair pairs = 1;
+     */
+    pairs: HyperliquidPerpPair[];
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletRequest
@@ -1559,6 +1618,116 @@ class HyperliquidSpotPair$Type extends MessageType<HyperliquidSpotPair> {
  * @generated MessageType for protobuf message hypurr.HyperliquidSpotPair
  */
 export const HyperliquidSpotPair = new HyperliquidSpotPair$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidPerpPair$Type extends MessageType<HyperliquidPerpPair> {
+    constructor() {
+        super("hypurr.HyperliquidPerpPair", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "index", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "mid_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "mark_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "daily_ntl_volume", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "previous_day_px", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "funding", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "open_interest", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "premium", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidPerpPair>): HyperliquidPerpPair {
+        const message = { id: 0, name: "", index: 0, midPrice: 0, markPrice: 0, dailyNtlVolume: 0, previousDayPx: 0, funding: 0, openInterest: 0, premium: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidPerpPair>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidPerpPair): HyperliquidPerpPair {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* int64 index */ 3:
+                    message.index = reader.int64().toNumber();
+                    break;
+                case /* double mid_price */ 4:
+                    message.midPrice = reader.double();
+                    break;
+                case /* double mark_price */ 5:
+                    message.markPrice = reader.double();
+                    break;
+                case /* double daily_ntl_volume */ 6:
+                    message.dailyNtlVolume = reader.double();
+                    break;
+                case /* double previous_day_px */ 7:
+                    message.previousDayPx = reader.double();
+                    break;
+                case /* double funding */ 8:
+                    message.funding = reader.double();
+                    break;
+                case /* double open_interest */ 9:
+                    message.openInterest = reader.double();
+                    break;
+                case /* double premium */ 10:
+                    message.premium = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidPerpPair, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* int64 index = 3; */
+        if (message.index !== 0)
+            writer.tag(3, WireType.Varint).int64(message.index);
+        /* double mid_price = 4; */
+        if (message.midPrice !== 0)
+            writer.tag(4, WireType.Bit64).double(message.midPrice);
+        /* double mark_price = 5; */
+        if (message.markPrice !== 0)
+            writer.tag(5, WireType.Bit64).double(message.markPrice);
+        /* double daily_ntl_volume = 6; */
+        if (message.dailyNtlVolume !== 0)
+            writer.tag(6, WireType.Bit64).double(message.dailyNtlVolume);
+        /* double previous_day_px = 7; */
+        if (message.previousDayPx !== 0)
+            writer.tag(7, WireType.Bit64).double(message.previousDayPx);
+        /* double funding = 8; */
+        if (message.funding !== 0)
+            writer.tag(8, WireType.Bit64).double(message.funding);
+        /* double open_interest = 9; */
+        if (message.openInterest !== 0)
+            writer.tag(9, WireType.Bit64).double(message.openInterest);
+        /* double premium = 10; */
+        if (message.premium !== 0)
+            writer.tag(10, WireType.Bit64).double(message.premium);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidPerpPair
+ */
+export const HyperliquidPerpPair = new HyperliquidPerpPair$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
     constructor() {
@@ -2692,6 +2861,79 @@ class HyperliquidSpotPairsResponse$Type extends MessageType<HyperliquidSpotPairs
  * @generated MessageType for protobuf message hypurr.HyperliquidSpotPairsResponse
  */
 export const HyperliquidSpotPairsResponse = new HyperliquidSpotPairsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidPerpPairsRequest$Type extends MessageType<HyperliquidPerpPairsRequest> {
+    constructor() {
+        super("hypurr.HyperliquidPerpPairsRequest", []);
+    }
+    create(value?: PartialMessage<HyperliquidPerpPairsRequest>): HyperliquidPerpPairsRequest {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidPerpPairsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidPerpPairsRequest): HyperliquidPerpPairsRequest {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: HyperliquidPerpPairsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidPerpPairsRequest
+ */
+export const HyperliquidPerpPairsRequest = new HyperliquidPerpPairsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidPerpPairsResponse$Type extends MessageType<HyperliquidPerpPairsResponse> {
+    constructor() {
+        super("hypurr.HyperliquidPerpPairsResponse", [
+            { no: 1, name: "pairs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidPerpPair }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidPerpPairsResponse>): HyperliquidPerpPairsResponse {
+        const message = { pairs: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidPerpPairsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidPerpPairsResponse): HyperliquidPerpPairsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.HyperliquidPerpPair pairs */ 1:
+                    message.pairs.push(HyperliquidPerpPair.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidPerpPairsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.HyperliquidPerpPair pairs = 1; */
+        for (let i = 0; i < message.pairs.length; i++)
+            HyperliquidPerpPair.internalBinaryWrite(message.pairs[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidPerpPairsResponse
+ */
+export const HyperliquidPerpPairsResponse = new HyperliquidPerpPairsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidWalletRequest$Type extends MessageType<HyperliquidWalletRequest> {
     constructor() {
@@ -4621,6 +4863,7 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "TelegramUser", options: {}, I: TelegramUserRequest, O: TelegramUserResponse },
     { name: "HyperliquidTokens", options: {}, I: HyperliquidTokensRequest, O: HyperliquidTokensResponse },
     { name: "HyperliquidSpotPairs", options: {}, I: HyperliquidSpotPairsRequest, O: HyperliquidSpotPairsResponse },
+    { name: "HyperliquidPerpPairs", options: {}, I: HyperliquidPerpPairsRequest, O: HyperliquidPerpPairsResponse },
     { name: "HyperliquidWallet", options: {}, I: HyperliquidWalletRequest, O: HyperliquidWalletResponse },
     { name: "HyperliquidWalletDeploySessions", options: {}, I: HyperliquidWalletDeploySessionsRequest, O: HyperliquidWalletDeploySessionsResponse },
     { name: "HyperliquidWalletPerformance", options: {}, I: HyperliquidWalletPerformanceRequest, O: HyperliquidWalletPerformanceResponse },
