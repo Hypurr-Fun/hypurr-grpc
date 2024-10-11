@@ -321,9 +321,7 @@ message HyperliquidLaunchHoldersResponse {
 
 message LatestHyperliquidLaunchFillsRequest {}
 
-message TelegramUserRequest {
-  map<string,string> auth_data = 1;
-}
+
 /*
 type TelegramUser struct {
 	TelegramID       int64 `gorm:"primarykey"`
@@ -348,6 +346,7 @@ type TelegramUser struct {
 	Reputation       *TelegramUserReputation `gorm:"foreignKey:telegram_id;references:telegram_id"`
 }
  */
+
 message TelegramUser {
   int64 telegram_id = 1;
   string telegram_username = 2;
@@ -381,8 +380,21 @@ message TelegramUserReputation {
 
 }
 
+message TelegramUserRequest {
+  map<string,string> auth_data = 1;
+}
+
 message TelegramUserResponse {
   TelegramUser user = 1;
+}
+
+
+message TelegramUserWalletsRequest {
+  map<string,string> auth_data = 1;
+}
+
+message TelegramUserWalletsResponse {
+  repeated HyperliquidWallet wallets = 1;
 }
 
 message HyperliquidWalletPerformanceRequest {
@@ -418,8 +430,10 @@ message HyperliquidWalletPerformanceResponse {
   Performance perp = 2;
 }
 
+
 service Static {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
+  rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
   rpc HyperliquidTokens (HyperliquidTokensRequest) returns (HyperliquidTokensResponse) {}
   rpc HyperliquidSpotPairs (HyperliquidSpotPairsRequest) returns (HyperliquidSpotPairsResponse) {}
   rpc HyperliquidPerpPairs (HyperliquidPerpPairsRequest) returns (HyperliquidPerpPairsResponse) {}

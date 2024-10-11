@@ -19,6 +19,11 @@ class StaticStub(object):
         request_serializer=hypurr__pb2.TelegramUserRequest.SerializeToString,
         response_deserializer=hypurr__pb2.TelegramUserResponse.FromString,
         )
+    self.TelegramUserWallets = channel.unary_unary(
+        '/hypurr.Static/TelegramUserWallets',
+        request_serializer=hypurr__pb2.TelegramUserWalletsRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.TelegramUserWalletsResponse.FromString,
+        )
     self.HyperliquidTokens = channel.unary_unary(
         '/hypurr.Static/HyperliquidTokens',
         request_serializer=hypurr__pb2.HyperliquidTokensRequest.SerializeToString,
@@ -101,6 +106,13 @@ class StaticServicer(object):
   pass
 
   def TelegramUser(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def TelegramUserWallets(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -219,6 +231,11 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.TelegramUser,
           request_deserializer=hypurr__pb2.TelegramUserRequest.FromString,
           response_serializer=hypurr__pb2.TelegramUserResponse.SerializeToString,
+      ),
+      'TelegramUserWallets': grpc.unary_unary_rpc_method_handler(
+          servicer.TelegramUserWallets,
+          request_deserializer=hypurr__pb2.TelegramUserWalletsRequest.FromString,
+          response_serializer=hypurr__pb2.TelegramUserWalletsResponse.SerializeToString,
       ),
       'HyperliquidTokens': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidTokens,
