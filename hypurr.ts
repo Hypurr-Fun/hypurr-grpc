@@ -598,6 +598,10 @@ export interface TelegramUserPublic {
      * @generated from protobuf field: string username = 2;
      */
     username: string;
+    /**
+     * @generated from protobuf field: string picture_file_id = 3;
+     */
+    pictureFileId: string;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidTokensRequest
@@ -2686,11 +2690,12 @@ class TelegramUserPublic$Type extends MessageType<TelegramUserPublic> {
     constructor() {
         super("hypurr.TelegramUserPublic", [
             { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "picture_file_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<TelegramUserPublic>): TelegramUserPublic {
-        const message = { id: 0, username: "" };
+        const message = { id: 0, username: "", pictureFileId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<TelegramUserPublic>(this, message, value);
@@ -2706,6 +2711,9 @@ class TelegramUserPublic$Type extends MessageType<TelegramUserPublic> {
                     break;
                 case /* string username */ 2:
                     message.username = reader.string();
+                    break;
+                case /* string picture_file_id */ 3:
+                    message.pictureFileId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2725,6 +2733,9 @@ class TelegramUserPublic$Type extends MessageType<TelegramUserPublic> {
         /* string username = 2; */
         if (message.username !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.username);
+        /* string picture_file_id = 3; */
+        if (message.pictureFileId !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.pictureFileId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -183,6 +183,7 @@ message HyperliquidLaunchFill {
 message TelegramUserPublic {
   int64 id = 1;
   string username = 2;
+  string picture_file_id = 3;
 }
 
 message HyperliquidTokensRequest {
