@@ -157,6 +157,7 @@ message HyperliquidLaunch {
   HyperliquidLaunchPoolType pool_type = 19;
   int64 decimals = 20;
   HyperliquidPublicWallet session_wallet = 21;
+  string media_type = 22;
 }
 
 message HyperliquidLaunchBalance {
