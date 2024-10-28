@@ -5024,6 +5024,7 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "HyperliquidLaunches", options: {}, I: HyperliquidLaunchesRequest, O: HyperliquidLaunchesResponse },
     { name: "HyperliquidLaunchFills", serverStreaming: true, options: {}, I: HyperliquidLaunchFillsRequest, O: HyperliquidLaunchFillsResponse },
     { name: "HyperliquidLaunchCandles", options: {}, I: HyperliquidLaunchCandlesRequest, O: HyperliquidLaunchCandlesResponse },
+    { name: "HyperliquidLaunchCandleStream", serverStreaming: true, options: {}, I: HyperliquidLaunchCandlesRequest, O: HyperliquidLaunchCandlesResponse },
     { name: "HyperliquidLaunchMessages", serverStreaming: true, options: {}, I: HyperliquidLaunchMessagesRequest, O: HyperliquidLaunchMessagesResponse },
     { name: "LatestHyperliquidLaunchFills", serverStreaming: true, options: {}, I: LatestHyperliquidLaunchFillsRequest, O: HyperliquidLaunchFillsResponse },
     { name: "HyperliquidLaunchHolders", options: {}, I: HyperliquidLaunchHoldersRequest, O: HyperliquidLaunchHoldersResponse },

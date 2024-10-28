@@ -33,6 +33,7 @@ const (
 	Static_HyperliquidLaunches_FullMethodName                        = "/hypurr.Static/HyperliquidLaunches"
 	Static_HyperliquidLaunchFills_FullMethodName                     = "/hypurr.Static/HyperliquidLaunchFills"
 	Static_HyperliquidLaunchCandles_FullMethodName                   = "/hypurr.Static/HyperliquidLaunchCandles"
+	Static_HyperliquidLaunchCandleStream_FullMethodName              = "/hypurr.Static/HyperliquidLaunchCandleStream"
 	Static_HyperliquidLaunchMessages_FullMethodName                  = "/hypurr.Static/HyperliquidLaunchMessages"
 	Static_LatestHyperliquidLaunchFills_FullMethodName               = "/hypurr.Static/LatestHyperliquidLaunchFills"
 	Static_HyperliquidLaunchHolders_FullMethodName                   = "/hypurr.Static/HyperliquidLaunchHolders"
@@ -56,6 +57,7 @@ type StaticClient interface {
 	HyperliquidLaunches(ctx context.Context, in *HyperliquidLaunchesRequest, opts ...grpc.CallOption) (*HyperliquidLaunchesResponse, error)
 	HyperliquidLaunchFills(ctx context.Context, in *HyperliquidLaunchFillsRequest, opts ...grpc.CallOption) (Static_HyperliquidLaunchFillsClient, error)
 	HyperliquidLaunchCandles(ctx context.Context, in *HyperliquidLaunchCandlesRequest, opts ...grpc.CallOption) (*HyperliquidLaunchCandlesResponse, error)
+	HyperliquidLaunchCandleStream(ctx context.Context, in *HyperliquidLaunchCandlesRequest, opts ...grpc.CallOption) (Static_HyperliquidLaunchCandleStreamClient, error)
 	HyperliquidLaunchMessages(ctx context.Context, in *HyperliquidLaunchMessagesRequest, opts ...grpc.CallOption) (Static_HyperliquidLaunchMessagesClient, error)
 	LatestHyperliquidLaunchFills(ctx context.Context, in *LatestHyperliquidLaunchFillsRequest, opts ...grpc.CallOption) (Static_LatestHyperliquidLaunchFillsClient, error)
 	HyperliquidLaunchHolders(ctx context.Context, in *HyperliquidLaunchHoldersRequest, opts ...grpc.CallOption) (*HyperliquidLaunchHoldersResponse, error)
@@ -214,9 +216,42 @@ func (c *staticClient) HyperliquidLaunchCandles(ctx context.Context, in *Hyperli
 	return out, nil
 }
 
+func (c *staticClient) HyperliquidLaunchCandleStream(ctx context.Context, in *HyperliquidLaunchCandlesRequest, opts ...grpc.CallOption) (Static_HyperliquidLaunchCandleStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Static_ServiceDesc.Streams[1], Static_HyperliquidLaunchCandleStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &staticHyperliquidLaunchCandleStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Static_HyperliquidLaunchCandleStreamClient interface {
+	Recv() (*HyperliquidLaunchCandlesResponse, error)
+	grpc.ClientStream
+}
+
+type staticHyperliquidLaunchCandleStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *staticHyperliquidLaunchCandleStreamClient) Recv() (*HyperliquidLaunchCandlesResponse, error) {
+	m := new(HyperliquidLaunchCandlesResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *staticClient) HyperliquidLaunchMessages(ctx context.Context, in *HyperliquidLaunchMessagesRequest, opts ...grpc.CallOption) (Static_HyperliquidLaunchMessagesClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &Static_ServiceDesc.Streams[1], Static_HyperliquidLaunchMessages_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &Static_ServiceDesc.Streams[2], Static_HyperliquidLaunchMessages_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -249,7 +284,7 @@ func (x *staticHyperliquidLaunchMessagesClient) Recv() (*HyperliquidLaunchMessag
 
 func (c *staticClient) LatestHyperliquidLaunchFills(ctx context.Context, in *LatestHyperliquidLaunchFillsRequest, opts ...grpc.CallOption) (Static_LatestHyperliquidLaunchFillsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &Static_ServiceDesc.Streams[2], Static_LatestHyperliquidLaunchFills_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &Static_ServiceDesc.Streams[3], Static_LatestHyperliquidLaunchFills_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -326,6 +361,7 @@ type StaticServer interface {
 	HyperliquidLaunches(context.Context, *HyperliquidLaunchesRequest) (*HyperliquidLaunchesResponse, error)
 	HyperliquidLaunchFills(*HyperliquidLaunchFillsRequest, Static_HyperliquidLaunchFillsServer) error
 	HyperliquidLaunchCandles(context.Context, *HyperliquidLaunchCandlesRequest) (*HyperliquidLaunchCandlesResponse, error)
+	HyperliquidLaunchCandleStream(*HyperliquidLaunchCandlesRequest, Static_HyperliquidLaunchCandleStreamServer) error
 	HyperliquidLaunchMessages(*HyperliquidLaunchMessagesRequest, Static_HyperliquidLaunchMessagesServer) error
 	LatestHyperliquidLaunchFills(*LatestHyperliquidLaunchFillsRequest, Static_LatestHyperliquidLaunchFillsServer) error
 	HyperliquidLaunchHolders(context.Context, *HyperliquidLaunchHoldersRequest) (*HyperliquidLaunchHoldersResponse, error)
@@ -373,6 +409,9 @@ func (UnimplementedStaticServer) HyperliquidLaunchFills(*HyperliquidLaunchFillsR
 }
 func (UnimplementedStaticServer) HyperliquidLaunchCandles(context.Context, *HyperliquidLaunchCandlesRequest) (*HyperliquidLaunchCandlesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidLaunchCandles not implemented")
+}
+func (UnimplementedStaticServer) HyperliquidLaunchCandleStream(*HyperliquidLaunchCandlesRequest, Static_HyperliquidLaunchCandleStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method HyperliquidLaunchCandleStream not implemented")
 }
 func (UnimplementedStaticServer) HyperliquidLaunchMessages(*HyperliquidLaunchMessagesRequest, Static_HyperliquidLaunchMessagesServer) error {
 	return status.Errorf(codes.Unimplemented, "method HyperliquidLaunchMessages not implemented")
@@ -621,6 +660,27 @@ func _Static_HyperliquidLaunchCandles_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Static_HyperliquidLaunchCandleStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(HyperliquidLaunchCandlesRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(StaticServer).HyperliquidLaunchCandleStream(m, &staticHyperliquidLaunchCandleStreamServer{ServerStream: stream})
+}
+
+type Static_HyperliquidLaunchCandleStreamServer interface {
+	Send(*HyperliquidLaunchCandlesResponse) error
+	grpc.ServerStream
+}
+
+type staticHyperliquidLaunchCandleStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *staticHyperliquidLaunchCandleStreamServer) Send(m *HyperliquidLaunchCandlesResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 func _Static_HyperliquidLaunchMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(HyperliquidLaunchMessagesRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -785,6 +845,11 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "HyperliquidLaunchFills",
 			Handler:       _Static_HyperliquidLaunchFills_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "HyperliquidLaunchCandleStream",
+			Handler:       _Static_HyperliquidLaunchCandleStream_Handler,
 			ServerStreams: true,
 		},
 		{

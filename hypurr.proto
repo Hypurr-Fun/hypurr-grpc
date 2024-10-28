@@ -446,6 +446,7 @@ service Static {
   rpc HyperliquidLaunches (HyperliquidLaunchesRequest) returns (HyperliquidLaunchesResponse) {}
   rpc HyperliquidLaunchFills (HyperliquidLaunchFillsRequest) returns (stream HyperliquidLaunchFillsResponse) {}
   rpc HyperliquidLaunchCandles (HyperliquidLaunchCandlesRequest) returns (HyperliquidLaunchCandlesResponse) {}
+  rpc HyperliquidLaunchCandleStream (HyperliquidLaunchCandlesRequest) returns (stream HyperliquidLaunchCandlesResponse) {}
   rpc HyperliquidLaunchMessages (HyperliquidLaunchMessagesRequest) returns (stream HyperliquidLaunchMessagesResponse) {}
   rpc LatestHyperliquidLaunchFills (LatestHyperliquidLaunchFillsRequest) returns (stream HyperliquidLaunchFillsResponse) {}
   rpc HyperliquidLaunchHolders (HyperliquidLaunchHoldersRequest) returns (HyperliquidLaunchHoldersResponse) {}

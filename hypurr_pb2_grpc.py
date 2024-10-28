@@ -74,6 +74,11 @@ class StaticStub(object):
         request_serializer=hypurr__pb2.HyperliquidLaunchCandlesRequest.SerializeToString,
         response_deserializer=hypurr__pb2.HyperliquidLaunchCandlesResponse.FromString,
         )
+    self.HyperliquidLaunchCandleStream = channel.unary_stream(
+        '/hypurr.Static/HyperliquidLaunchCandleStream',
+        request_serializer=hypurr__pb2.HyperliquidLaunchCandlesRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.HyperliquidLaunchCandlesResponse.FromString,
+        )
     self.HyperliquidLaunchMessages = channel.unary_stream(
         '/hypurr.Static/HyperliquidLaunchMessages',
         request_serializer=hypurr__pb2.HyperliquidLaunchMessagesRequest.SerializeToString,
@@ -189,6 +194,13 @@ class StaticServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def HyperliquidLaunchCandleStream(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def HyperliquidLaunchMessages(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -284,6 +296,11 @@ def add_StaticServicer_to_server(servicer, server):
       ),
       'HyperliquidLaunchCandles': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidLaunchCandles,
+          request_deserializer=hypurr__pb2.HyperliquidLaunchCandlesRequest.FromString,
+          response_serializer=hypurr__pb2.HyperliquidLaunchCandlesResponse.SerializeToString,
+      ),
+      'HyperliquidLaunchCandleStream': grpc.unary_stream_rpc_method_handler(
+          servicer.HyperliquidLaunchCandleStream,
           request_deserializer=hypurr__pb2.HyperliquidLaunchCandlesRequest.FromString,
           response_serializer=hypurr__pb2.HyperliquidLaunchCandlesResponse.SerializeToString,
       ),
