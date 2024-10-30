@@ -84,6 +84,11 @@ class StaticStub(object):
         request_serializer=hypurr__pb2.HyperliquidLaunchMessagesRequest.SerializeToString,
         response_deserializer=hypurr__pb2.HyperliquidLaunchMessagesResponse.FromString,
         )
+    self.HyperliquidAuctionStream = channel.unary_stream(
+        '/hypurr.Static/HyperliquidAuctionStream',
+        request_serializer=hypurr__pb2.HyperliquidDeployAuctionRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.HyperliquidDeployAuction.FromString,
+        )
     self.LatestHyperliquidLaunchFills = channel.unary_stream(
         '/hypurr.Static/LatestHyperliquidLaunchFills',
         request_serializer=hypurr__pb2.LatestHyperliquidLaunchFillsRequest.SerializeToString,
@@ -208,6 +213,13 @@ class StaticServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def HyperliquidAuctionStream(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def LatestHyperliquidLaunchFills(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -308,6 +320,11 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.HyperliquidLaunchMessages,
           request_deserializer=hypurr__pb2.HyperliquidLaunchMessagesRequest.FromString,
           response_serializer=hypurr__pb2.HyperliquidLaunchMessagesResponse.SerializeToString,
+      ),
+      'HyperliquidAuctionStream': grpc.unary_stream_rpc_method_handler(
+          servicer.HyperliquidAuctionStream,
+          request_deserializer=hypurr__pb2.HyperliquidDeployAuctionRequest.FromString,
+          response_serializer=hypurr__pb2.HyperliquidDeployAuction.SerializeToString,
       ),
       'LatestHyperliquidLaunchFills': grpc.unary_stream_rpc_method_handler(
           servicer.LatestHyperliquidLaunchFills,

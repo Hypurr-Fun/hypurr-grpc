@@ -35,6 +35,7 @@ const (
 	Static_HyperliquidLaunchCandles_FullMethodName                   = "/hypurr.Static/HyperliquidLaunchCandles"
 	Static_HyperliquidLaunchCandleStream_FullMethodName              = "/hypurr.Static/HyperliquidLaunchCandleStream"
 	Static_HyperliquidLaunchMessages_FullMethodName                  = "/hypurr.Static/HyperliquidLaunchMessages"
+	Static_HyperliquidAuctionStream_FullMethodName                   = "/hypurr.Static/HyperliquidAuctionStream"
 	Static_LatestHyperliquidLaunchFills_FullMethodName               = "/hypurr.Static/LatestHyperliquidLaunchFills"
 	Static_HyperliquidLaunchHolders_FullMethodName                   = "/hypurr.Static/HyperliquidLaunchHolders"
 	Static_SetHyperliquidWalletDeploySessionTarget_FullMethodName    = "/hypurr.Static/SetHyperliquidWalletDeploySessionTarget"
@@ -59,6 +60,7 @@ type StaticClient interface {
 	HyperliquidLaunchCandles(ctx context.Context, in *HyperliquidLaunchCandlesRequest, opts ...grpc.CallOption) (*HyperliquidLaunchCandlesResponse, error)
 	HyperliquidLaunchCandleStream(ctx context.Context, in *HyperliquidLaunchCandlesRequest, opts ...grpc.CallOption) (Static_HyperliquidLaunchCandleStreamClient, error)
 	HyperliquidLaunchMessages(ctx context.Context, in *HyperliquidLaunchMessagesRequest, opts ...grpc.CallOption) (Static_HyperliquidLaunchMessagesClient, error)
+	HyperliquidAuctionStream(ctx context.Context, in *HyperliquidDeployAuctionRequest, opts ...grpc.CallOption) (Static_HyperliquidAuctionStreamClient, error)
 	LatestHyperliquidLaunchFills(ctx context.Context, in *LatestHyperliquidLaunchFillsRequest, opts ...grpc.CallOption) (Static_LatestHyperliquidLaunchFillsClient, error)
 	HyperliquidLaunchHolders(ctx context.Context, in *HyperliquidLaunchHoldersRequest, opts ...grpc.CallOption) (*HyperliquidLaunchHoldersResponse, error)
 	SetHyperliquidWalletDeploySessionTarget(ctx context.Context, in *SetHyperliquidWalletDeploySessionTargetRequest, opts ...grpc.CallOption) (*SetHyperliquidWalletDeploySessionTargetResponse, error)
@@ -282,9 +284,42 @@ func (x *staticHyperliquidLaunchMessagesClient) Recv() (*HyperliquidLaunchMessag
 	return m, nil
 }
 
+func (c *staticClient) HyperliquidAuctionStream(ctx context.Context, in *HyperliquidDeployAuctionRequest, opts ...grpc.CallOption) (Static_HyperliquidAuctionStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Static_ServiceDesc.Streams[3], Static_HyperliquidAuctionStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &staticHyperliquidAuctionStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Static_HyperliquidAuctionStreamClient interface {
+	Recv() (*HyperliquidDeployAuction, error)
+	grpc.ClientStream
+}
+
+type staticHyperliquidAuctionStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *staticHyperliquidAuctionStreamClient) Recv() (*HyperliquidDeployAuction, error) {
+	m := new(HyperliquidDeployAuction)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *staticClient) LatestHyperliquidLaunchFills(ctx context.Context, in *LatestHyperliquidLaunchFillsRequest, opts ...grpc.CallOption) (Static_LatestHyperliquidLaunchFillsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &Static_ServiceDesc.Streams[3], Static_LatestHyperliquidLaunchFills_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &Static_ServiceDesc.Streams[4], Static_LatestHyperliquidLaunchFills_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -363,6 +398,7 @@ type StaticServer interface {
 	HyperliquidLaunchCandles(context.Context, *HyperliquidLaunchCandlesRequest) (*HyperliquidLaunchCandlesResponse, error)
 	HyperliquidLaunchCandleStream(*HyperliquidLaunchCandlesRequest, Static_HyperliquidLaunchCandleStreamServer) error
 	HyperliquidLaunchMessages(*HyperliquidLaunchMessagesRequest, Static_HyperliquidLaunchMessagesServer) error
+	HyperliquidAuctionStream(*HyperliquidDeployAuctionRequest, Static_HyperliquidAuctionStreamServer) error
 	LatestHyperliquidLaunchFills(*LatestHyperliquidLaunchFillsRequest, Static_LatestHyperliquidLaunchFillsServer) error
 	HyperliquidLaunchHolders(context.Context, *HyperliquidLaunchHoldersRequest) (*HyperliquidLaunchHoldersResponse, error)
 	SetHyperliquidWalletDeploySessionTarget(context.Context, *SetHyperliquidWalletDeploySessionTargetRequest) (*SetHyperliquidWalletDeploySessionTargetResponse, error)
@@ -415,6 +451,9 @@ func (UnimplementedStaticServer) HyperliquidLaunchCandleStream(*HyperliquidLaunc
 }
 func (UnimplementedStaticServer) HyperliquidLaunchMessages(*HyperliquidLaunchMessagesRequest, Static_HyperliquidLaunchMessagesServer) error {
 	return status.Errorf(codes.Unimplemented, "method HyperliquidLaunchMessages not implemented")
+}
+func (UnimplementedStaticServer) HyperliquidAuctionStream(*HyperliquidDeployAuctionRequest, Static_HyperliquidAuctionStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method HyperliquidAuctionStream not implemented")
 }
 func (UnimplementedStaticServer) LatestHyperliquidLaunchFills(*LatestHyperliquidLaunchFillsRequest, Static_LatestHyperliquidLaunchFillsServer) error {
 	return status.Errorf(codes.Unimplemented, "method LatestHyperliquidLaunchFills not implemented")
@@ -702,6 +741,27 @@ func (x *staticHyperliquidLaunchMessagesServer) Send(m *HyperliquidLaunchMessage
 	return x.ServerStream.SendMsg(m)
 }
 
+func _Static_HyperliquidAuctionStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(HyperliquidDeployAuctionRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(StaticServer).HyperliquidAuctionStream(m, &staticHyperliquidAuctionStreamServer{ServerStream: stream})
+}
+
+type Static_HyperliquidAuctionStreamServer interface {
+	Send(*HyperliquidDeployAuction) error
+	grpc.ServerStream
+}
+
+type staticHyperliquidAuctionStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *staticHyperliquidAuctionStreamServer) Send(m *HyperliquidDeployAuction) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 func _Static_LatestHyperliquidLaunchFills_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(LatestHyperliquidLaunchFillsRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -855,6 +915,11 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "HyperliquidLaunchMessages",
 			Handler:       _Static_HyperliquidLaunchMessages_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "HyperliquidAuctionStream",
+			Handler:       _Static_HyperliquidAuctionStream_Handler,
 			ServerStreams: true,
 		},
 		{

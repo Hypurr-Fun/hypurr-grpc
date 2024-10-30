@@ -432,6 +432,17 @@ message HyperliquidWalletPerformanceResponse {
   Performance perp = 2;
 }
 
+message HyperliquidDeployAuctionRequest {
+}
+
+message HyperliquidDeployAuction {
+  int64 start_time = 1;
+  int64 duration = 2;
+  double start_gas = 3;
+  google.protobuf.DoubleValue current_gas = 4;
+  google.protobuf.DoubleValue end_gas = 5;
+}
+
 
 service Static {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
@@ -448,6 +459,7 @@ service Static {
   rpc HyperliquidLaunchCandles (HyperliquidLaunchCandlesRequest) returns (HyperliquidLaunchCandlesResponse) {}
   rpc HyperliquidLaunchCandleStream (HyperliquidLaunchCandlesRequest) returns (stream HyperliquidLaunchCandlesResponse) {}
   rpc HyperliquidLaunchMessages (HyperliquidLaunchMessagesRequest) returns (stream HyperliquidLaunchMessagesResponse) {}
+  rpc HyperliquidAuctionStream (HyperliquidDeployAuctionRequest) returns (stream HyperliquidDeployAuction) {}
   rpc LatestHyperliquidLaunchFills (LatestHyperliquidLaunchFillsRequest) returns (stream HyperliquidLaunchFillsResponse) {}
   rpc HyperliquidLaunchHolders (HyperliquidLaunchHoldersRequest) returns (HyperliquidLaunchHoldersResponse) {}
   rpc SetHyperliquidWalletDeploySessionTarget (SetHyperliquidWalletDeploySessionTargetRequest) returns (SetHyperliquidWalletDeploySessionTargetResponse) {}
