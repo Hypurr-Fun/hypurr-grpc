@@ -185,6 +185,7 @@ message TelegramUserPublic {
   int64 id = 1;
   string username = 2;
   string picture_file_id = 3;
+  int64 reputation_score = 4;
 }
 
 message HyperliquidTokensRequest {

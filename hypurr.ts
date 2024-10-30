@@ -607,6 +607,10 @@ export interface TelegramUserPublic {
      * @generated from protobuf field: string picture_file_id = 3;
      */
     pictureFileId: string;
+    /**
+     * @generated from protobuf field: int64 reputation_score = 4;
+     */
+    reputationScore: number;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidTokensRequest
@@ -2733,11 +2737,12 @@ class TelegramUserPublic$Type extends MessageType<TelegramUserPublic> {
         super("hypurr.TelegramUserPublic", [
             { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "picture_file_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "picture_file_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "reputation_score", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<TelegramUserPublic>): TelegramUserPublic {
-        const message = { id: 0, username: "", pictureFileId: "" };
+        const message = { id: 0, username: "", pictureFileId: "", reputationScore: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<TelegramUserPublic>(this, message, value);
@@ -2756,6 +2761,9 @@ class TelegramUserPublic$Type extends MessageType<TelegramUserPublic> {
                     break;
                 case /* string picture_file_id */ 3:
                     message.pictureFileId = reader.string();
+                    break;
+                case /* int64 reputation_score */ 4:
+                    message.reputationScore = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2778,6 +2786,9 @@ class TelegramUserPublic$Type extends MessageType<TelegramUserPublic> {
         /* string picture_file_id = 3; */
         if (message.pictureFileId !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.pictureFileId);
+        /* int64 reputation_score = 4; */
+        if (message.reputationScore !== 0)
+            writer.tag(4, WireType.Varint).int64(message.reputationScore);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
