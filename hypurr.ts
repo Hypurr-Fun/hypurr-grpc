@@ -1066,6 +1066,10 @@ export interface TelegramUser {
      * @generated from protobuf field: repeated hypurr.HyperliquidLaunchFill launch_fills = 20;
      */
     launchFills: HyperliquidLaunchFill[];
+    /**
+     * @generated from protobuf field: repeated hypurr.HyperliquidWalletLabel labels = 21;
+     */
+    labels: HyperliquidWalletLabel[];
 }
 /**
  * TODO
@@ -1080,6 +1084,19 @@ export interface TelegramUserSettings {
  * @generated from protobuf message hypurr.TelegramUserReputation
  */
 export interface TelegramUserReputation {
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidWalletLabel
+ */
+export interface HyperliquidWalletLabel {
+    /**
+     * @generated from protobuf field: string ethereum_address = 1;
+     */
+    ethereumAddress: string;
+    /**
+     * @generated from protobuf field: string label = 2;
+     */
+    label: string;
 }
 /**
  * @generated from protobuf message hypurr.TelegramUserRequest
@@ -4295,11 +4312,12 @@ class TelegramUser$Type extends MessageType<TelegramUser> {
             { no: 17, name: "launches", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidLaunch },
             { no: 18, name: "balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidWalletBalance },
             { no: 19, name: "movements", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidWalletMovement },
-            { no: 20, name: "launch_fills", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidLaunchFill }
+            { no: 20, name: "launch_fills", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidLaunchFill },
+            { no: 21, name: "labels", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidWalletLabel }
         ]);
     }
     create(value?: PartialMessage<TelegramUser>): TelegramUser {
-        const message = { telegramId: 0, telegramUsername: "", pendingFees: 0, referralRewards: 0, referralCode: "", referralScore: 0, referrerId: 0, walletId: 0, sniperWalletId: 0, dumperWalletId: 0, reputationId: 0, launches: [], balances: [], movements: [], launchFills: [] };
+        const message = { telegramId: 0, telegramUsername: "", pendingFees: 0, referralRewards: 0, referralCode: "", referralScore: 0, referrerId: 0, walletId: 0, sniperWalletId: 0, dumperWalletId: 0, reputationId: 0, launches: [], balances: [], movements: [], launchFills: [], labels: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<TelegramUser>(this, message, value);
@@ -4369,6 +4387,9 @@ class TelegramUser$Type extends MessageType<TelegramUser> {
                     break;
                 case /* repeated hypurr.HyperliquidLaunchFill launch_fills */ 20:
                     message.launchFills.push(HyperliquidLaunchFill.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated hypurr.HyperliquidWalletLabel labels */ 21:
+                    message.labels.push(HyperliquidWalletLabel.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4442,6 +4463,9 @@ class TelegramUser$Type extends MessageType<TelegramUser> {
         /* repeated hypurr.HyperliquidLaunchFill launch_fills = 20; */
         for (let i = 0; i < message.launchFills.length; i++)
             HyperliquidLaunchFill.internalBinaryWrite(message.launchFills[i], writer.tag(20, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.HyperliquidWalletLabel labels = 21; */
+        for (let i = 0; i < message.labels.length; i++)
+            HyperliquidWalletLabel.internalBinaryWrite(message.labels[i], writer.tag(21, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4504,6 +4528,60 @@ class TelegramUserReputation$Type extends MessageType<TelegramUserReputation> {
  * @generated MessageType for protobuf message hypurr.TelegramUserReputation
  */
 export const TelegramUserReputation = new TelegramUserReputation$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidWalletLabel$Type extends MessageType<HyperliquidWalletLabel> {
+    constructor() {
+        super("hypurr.HyperliquidWalletLabel", [
+            { no: 1, name: "ethereum_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidWalletLabel>): HyperliquidWalletLabel {
+        const message = { ethereumAddress: "", label: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidWalletLabel>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidWalletLabel): HyperliquidWalletLabel {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string ethereum_address */ 1:
+                    message.ethereumAddress = reader.string();
+                    break;
+                case /* string label */ 2:
+                    message.label = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidWalletLabel, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string ethereum_address = 1; */
+        if (message.ethereumAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.ethereumAddress);
+        /* string label = 2; */
+        if (message.label !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.label);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidWalletLabel
+ */
+export const HyperliquidWalletLabel = new HyperliquidWalletLabel$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserRequest$Type extends MessageType<TelegramUserRequest> {
     constructor() {

@@ -371,6 +371,7 @@ message TelegramUser {
   repeated HyperliquidWalletBalance balances = 18;
   repeated HyperliquidWalletMovement movements = 19;
   repeated HyperliquidLaunchFill launch_fills = 20;
+  repeated HyperliquidWalletLabel labels = 21;
 }
 
 // TODO
@@ -381,6 +382,11 @@ message TelegramUserSettings {
 // TODO
 message TelegramUserReputation {
 
+}
+
+message HyperliquidWalletLabel {
+  string ethereum_address = 1;
+  string label = 2;
 }
 
 message TelegramUserRequest {
