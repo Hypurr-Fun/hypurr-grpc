@@ -627,6 +627,79 @@ export interface HyperliquidTokensResponse {
     tokens: HyperliquidToken[];
 }
 /**
+ * @generated from protobuf message hypurr.HyperliquidTokenMessage
+ */
+export interface HyperliquidTokenMessage {
+    /**
+     * @generated from protobuf field: int64 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: int64 timestamp = 2;
+     */
+    timestamp: number;
+    /**
+     * @generated from protobuf field: int64 token_id = 3;
+     */
+    tokenId: number;
+    /**
+     * @generated from protobuf field: int64 telegram_id = 4;
+     */
+    telegramId: number;
+    /**
+     * @generated from protobuf field: hypurr.TelegramUserPublic author = 5;
+     */
+    author?: TelegramUserPublic;
+    /**
+     * @generated from protobuf field: int64 chat_id = 6;
+     */
+    chatId: number;
+    /**
+     * @generated from protobuf field: int64 topic_id = 7;
+     */
+    topicId: number;
+    /**
+     * @generated from protobuf field: string message = 8;
+     */
+    message: string;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidTokenMessagesRequest
+ */
+export interface HyperliquidTokenMessagesRequest {
+    /**
+     * @generated from protobuf field: int64 token_id = 1;
+     */
+    tokenId: number;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidTokenMessagesResponse
+ */
+export interface HyperliquidTokenMessagesResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.HyperliquidTokenMessage messages = 1;
+     */
+    messages: HyperliquidTokenMessage[];
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidSpotPairRequest
+ */
+export interface HyperliquidSpotPairRequest {
+    /**
+     * @generated from protobuf field: int64 id = 1;
+     */
+    id: number;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidSpotPairResponse
+ */
+export interface HyperliquidSpotPairResponse {
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidSpotPair pair = 1;
+     */
+    pair?: HyperliquidSpotPair;
+}
+/**
  * @generated from protobuf message hypurr.HyperliquidSpotPairsRequest
  */
 export interface HyperliquidSpotPairsRequest {
@@ -958,30 +1031,6 @@ export interface HyperliquidLaunchHoldersResponse {
  */
 export interface LatestHyperliquidLaunchFillsRequest {
 }
-// 
-// type TelegramUser struct {
-// TelegramID       int64 `gorm:"primarykey"`
-// TelegramUsername string
-// PendingFees      float64 `gorm:"not null;default:0"`
-// ReferralRewards  float64 `gorm:"not null;default:0"` // Not null default 0
-// ReferralCode     string
-// ReferralScore    int64 `gorm:"not null;default:0"`
-// ReferrerID       int64
-// Settings         *TelegramUserSettings `gorm:"foreignKey:telegram_id"`
-// Wallet           *HyperliquidWallet
-// WalletID         int64 `gorm:"not null;foreignKey:hyperliquid_wallet.id"`
-// SniperWallet     *HyperliquidWallet
-// SniperWalletID   int64 `gorm:"not null;foreignKey:hyperliquid_wallet.id"`
-// DumperWallet     *HyperliquidWallet
-// DumperWalletID   int64                        `gorm:"not null;foreignKey:hyperliquid_wallet.id"`
-// Launches         []*HyperliquidLaunch         `gorm:"foreignKey:telegram_id;references:telegram_id"`
-// Balances         []*HyperliquidWalletBalance  `gorm:"foreignKey:telegram_id;references:telegram_id"`
-// Movements        []*HyperliquidWalletMovement `gorm:"foreignKey:telegram_id;references:telegram_id"`
-// LaunchFills      []*HyperliquidLaunchFill     `gorm:"foreignKey:telegram_id;references:telegram_id"`
-// ReputationID     sql.NullInt64
-// Reputation       *TelegramUserReputation `gorm:"foreignKey:telegram_id;references:telegram_id"`
-// }
-
 /**
  * @generated from protobuf message hypurr.TelegramUser
  */
@@ -2889,6 +2938,290 @@ class HyperliquidTokensResponse$Type extends MessageType<HyperliquidTokensRespon
  * @generated MessageType for protobuf message hypurr.HyperliquidTokensResponse
  */
 export const HyperliquidTokensResponse = new HyperliquidTokensResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidTokenMessage$Type extends MessageType<HyperliquidTokenMessage> {
+    constructor() {
+        super("hypurr.HyperliquidTokenMessage", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "token_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "author", kind: "message", T: () => TelegramUserPublic },
+            { no: 6, name: "chat_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "topic_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 8, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidTokenMessage>): HyperliquidTokenMessage {
+        const message = { id: 0, timestamp: 0, tokenId: 0, telegramId: 0, chatId: 0, topicId: 0, message: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidTokenMessage>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidTokenMessage): HyperliquidTokenMessage {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* int64 timestamp */ 2:
+                    message.timestamp = reader.int64().toNumber();
+                    break;
+                case /* int64 token_id */ 3:
+                    message.tokenId = reader.int64().toNumber();
+                    break;
+                case /* int64 telegram_id */ 4:
+                    message.telegramId = reader.int64().toNumber();
+                    break;
+                case /* hypurr.TelegramUserPublic author */ 5:
+                    message.author = TelegramUserPublic.internalBinaryRead(reader, reader.uint32(), options, message.author);
+                    break;
+                case /* int64 chat_id */ 6:
+                    message.chatId = reader.int64().toNumber();
+                    break;
+                case /* int64 topic_id */ 7:
+                    message.topicId = reader.int64().toNumber();
+                    break;
+                case /* string message */ 8:
+                    message.message = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidTokenMessage, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* int64 timestamp = 2; */
+        if (message.timestamp !== 0)
+            writer.tag(2, WireType.Varint).int64(message.timestamp);
+        /* int64 token_id = 3; */
+        if (message.tokenId !== 0)
+            writer.tag(3, WireType.Varint).int64(message.tokenId);
+        /* int64 telegram_id = 4; */
+        if (message.telegramId !== 0)
+            writer.tag(4, WireType.Varint).int64(message.telegramId);
+        /* hypurr.TelegramUserPublic author = 5; */
+        if (message.author)
+            TelegramUserPublic.internalBinaryWrite(message.author, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* int64 chat_id = 6; */
+        if (message.chatId !== 0)
+            writer.tag(6, WireType.Varint).int64(message.chatId);
+        /* int64 topic_id = 7; */
+        if (message.topicId !== 0)
+            writer.tag(7, WireType.Varint).int64(message.topicId);
+        /* string message = 8; */
+        if (message.message !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.message);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidTokenMessage
+ */
+export const HyperliquidTokenMessage = new HyperliquidTokenMessage$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidTokenMessagesRequest$Type extends MessageType<HyperliquidTokenMessagesRequest> {
+    constructor() {
+        super("hypurr.HyperliquidTokenMessagesRequest", [
+            { no: 1, name: "token_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidTokenMessagesRequest>): HyperliquidTokenMessagesRequest {
+        const message = { tokenId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidTokenMessagesRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidTokenMessagesRequest): HyperliquidTokenMessagesRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 token_id */ 1:
+                    message.tokenId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidTokenMessagesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 token_id = 1; */
+        if (message.tokenId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.tokenId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidTokenMessagesRequest
+ */
+export const HyperliquidTokenMessagesRequest = new HyperliquidTokenMessagesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidTokenMessagesResponse$Type extends MessageType<HyperliquidTokenMessagesResponse> {
+    constructor() {
+        super("hypurr.HyperliquidTokenMessagesResponse", [
+            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidTokenMessage }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidTokenMessagesResponse>): HyperliquidTokenMessagesResponse {
+        const message = { messages: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidTokenMessagesResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidTokenMessagesResponse): HyperliquidTokenMessagesResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.HyperliquidTokenMessage messages */ 1:
+                    message.messages.push(HyperliquidTokenMessage.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidTokenMessagesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.HyperliquidTokenMessage messages = 1; */
+        for (let i = 0; i < message.messages.length; i++)
+            HyperliquidTokenMessage.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidTokenMessagesResponse
+ */
+export const HyperliquidTokenMessagesResponse = new HyperliquidTokenMessagesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidSpotPairRequest$Type extends MessageType<HyperliquidSpotPairRequest> {
+    constructor() {
+        super("hypurr.HyperliquidSpotPairRequest", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidSpotPairRequest>): HyperliquidSpotPairRequest {
+        const message = { id: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidSpotPairRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidSpotPairRequest): HyperliquidSpotPairRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidSpotPairRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidSpotPairRequest
+ */
+export const HyperliquidSpotPairRequest = new HyperliquidSpotPairRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidSpotPairResponse$Type extends MessageType<HyperliquidSpotPairResponse> {
+    constructor() {
+        super("hypurr.HyperliquidSpotPairResponse", [
+            { no: 1, name: "pair", kind: "message", T: () => HyperliquidSpotPair }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidSpotPairResponse>): HyperliquidSpotPairResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidSpotPairResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidSpotPairResponse): HyperliquidSpotPairResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.HyperliquidSpotPair pair */ 1:
+                    message.pair = HyperliquidSpotPair.internalBinaryRead(reader, reader.uint32(), options, message.pair);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidSpotPairResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.HyperliquidSpotPair pair = 1; */
+        if (message.pair)
+            HyperliquidSpotPair.internalBinaryWrite(message.pair, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidSpotPairResponse
+ */
+export const HyperliquidSpotPairResponse = new HyperliquidSpotPairResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidSpotPairsRequest$Type extends MessageType<HyperliquidSpotPairsRequest> {
     constructor() {
@@ -5236,6 +5569,8 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "TelegramUser", options: {}, I: TelegramUserRequest, O: TelegramUserResponse },
     { name: "TelegramUserWallets", options: {}, I: TelegramUserWalletsRequest, O: TelegramUserWalletsResponse },
     { name: "HyperliquidTokens", options: {}, I: HyperliquidTokensRequest, O: HyperliquidTokensResponse },
+    { name: "HyperliquidTokenMessages", serverStreaming: true, options: {}, I: HyperliquidTokenMessagesRequest, O: HyperliquidTokenMessagesResponse },
+    { name: "HyperliquidSpotPair", options: {}, I: HyperliquidSpotPairRequest, O: HyperliquidSpotPairResponse },
     { name: "HyperliquidSpotPairs", options: {}, I: HyperliquidSpotPairsRequest, O: HyperliquidSpotPairsResponse },
     { name: "HyperliquidPerpPairs", options: {}, I: HyperliquidPerpPairsRequest, O: HyperliquidPerpPairsResponse },
     { name: "HyperliquidWallet", options: {}, I: HyperliquidWalletRequest, O: HyperliquidWalletResponse },
@@ -5247,9 +5582,9 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "HyperliquidLaunchCandles", options: {}, I: HyperliquidLaunchCandlesRequest, O: HyperliquidLaunchCandlesResponse },
     { name: "HyperliquidLaunchCandleStream", serverStreaming: true, options: {}, I: HyperliquidLaunchCandlesRequest, O: HyperliquidLaunchCandlesResponse },
     { name: "HyperliquidLaunchMessages", serverStreaming: true, options: {}, I: HyperliquidLaunchMessagesRequest, O: HyperliquidLaunchMessagesResponse },
-    { name: "HyperliquidAuctionStream", serverStreaming: true, options: {}, I: HyperliquidDeployAuctionRequest, O: HyperliquidDeployAuction },
     { name: "LatestHyperliquidLaunchFills", serverStreaming: true, options: {}, I: LatestHyperliquidLaunchFillsRequest, O: HyperliquidLaunchFillsResponse },
     { name: "HyperliquidLaunchHolders", options: {}, I: HyperliquidLaunchHoldersRequest, O: HyperliquidLaunchHoldersResponse },
+    { name: "HyperliquidAuctionStream", serverStreaming: true, options: {}, I: HyperliquidDeployAuctionRequest, O: HyperliquidDeployAuction },
     { name: "SetHyperliquidWalletDeploySessionTarget", options: {}, I: SetHyperliquidWalletDeploySessionTargetRequest, O: SetHyperliquidWalletDeploySessionTargetResponse },
     { name: "DeleteHyperliquidWalletDeploySessionTarget", options: {}, I: DeleteHyperliquidWalletDeploySessionTargetRequest, O: DeleteHyperliquidWalletDeploySessionTargetResponse }
 ]);

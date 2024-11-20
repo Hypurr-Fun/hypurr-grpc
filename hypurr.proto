@@ -196,6 +196,33 @@ message HyperliquidTokensResponse {
   repeated HyperliquidToken tokens = 1;
 }
 
+message HyperliquidTokenMessage {
+  int64 id = 1;
+  int64 timestamp = 2;
+  int64 token_id = 3;
+  int64 telegram_id = 4;
+  TelegramUserPublic author = 5;
+  int64 chat_id = 6;
+  int64 topic_id = 7;
+  string message = 8;
+}
+
+message HyperliquidTokenMessagesRequest {
+  int64 token_id = 1;
+}
+
+message HyperliquidTokenMessagesResponse {
+  repeated HyperliquidTokenMessage messages = 1;
+}
+
+message HyperliquidSpotPairRequest {
+  int64 id = 1;
+}
+
+message HyperliquidSpotPairResponse {
+  HyperliquidSpotPair pair = 1;
+}
+
 message HyperliquidSpotPairsRequest {}
 
 message HyperliquidSpotPairsResponse {
@@ -325,31 +352,6 @@ message HyperliquidLaunchHoldersResponse {
 message LatestHyperliquidLaunchFillsRequest {}
 
 
-/*
-type TelegramUser struct {
-	TelegramID       int64 `gorm:"primarykey"`
-	TelegramUsername string
-	PendingFees      float64 `gorm:"not null;default:0"`
-	ReferralRewards  float64 `gorm:"not null;default:0"` // Not null default 0
-	ReferralCode     string
-	ReferralScore    int64 `gorm:"not null;default:0"`
-	ReferrerID       int64
-	Settings         *TelegramUserSettings `gorm:"foreignKey:telegram_id"`
-	Wallet           *HyperliquidWallet
-	WalletID         int64 `gorm:"not null;foreignKey:hyperliquid_wallet.id"`
-	SniperWallet     *HyperliquidWallet
-	SniperWalletID   int64 `gorm:"not null;foreignKey:hyperliquid_wallet.id"`
-	DumperWallet     *HyperliquidWallet
-	DumperWalletID   int64                        `gorm:"not null;foreignKey:hyperliquid_wallet.id"`
-	Launches         []*HyperliquidLaunch         `gorm:"foreignKey:telegram_id;references:telegram_id"`
-	Balances         []*HyperliquidWalletBalance  `gorm:"foreignKey:telegram_id;references:telegram_id"`
-	Movements        []*HyperliquidWalletMovement `gorm:"foreignKey:telegram_id;references:telegram_id"`
-	LaunchFills      []*HyperliquidLaunchFill     `gorm:"foreignKey:telegram_id;references:telegram_id"`
-	ReputationID     sql.NullInt64
-	Reputation       *TelegramUserReputation `gorm:"foreignKey:telegram_id;references:telegram_id"`
-}
- */
-
 message TelegramUser {
   int64 telegram_id = 1;
   string telegram_username = 2;
@@ -390,7 +392,7 @@ message HyperliquidWalletLabel {
 }
 
 message TelegramUserRequest {
-  map<string,string> auth_data = 1;
+  map<string, string> auth_data = 1;
 }
 
 message TelegramUserResponse {
@@ -399,7 +401,7 @@ message TelegramUserResponse {
 
 
 message TelegramUserWalletsRequest {
-  map<string,string> auth_data = 1;
+  map<string, string> auth_data = 1;
 }
 
 message TelegramUserWalletsResponse {
@@ -454,21 +456,29 @@ message HyperliquidDeployAuction {
 service Static {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
+
   rpc HyperliquidTokens (HyperliquidTokensRequest) returns (HyperliquidTokensResponse) {}
+  rpc HyperliquidTokenMessages (HyperliquidTokenMessagesRequest) returns (stream HyperliquidTokenMessagesResponse) {}
+
+  rpc HyperliquidSpotPair (HyperliquidSpotPairRequest) returns (HyperliquidSpotPairResponse) {}
   rpc HyperliquidSpotPairs (HyperliquidSpotPairsRequest) returns (HyperliquidSpotPairsResponse) {}
   rpc HyperliquidPerpPairs (HyperliquidPerpPairsRequest) returns (HyperliquidPerpPairsResponse) {}
+
   rpc HyperliquidWallet (HyperliquidWalletRequest) returns (HyperliquidWalletResponse) {}
   rpc HyperliquidWalletDeploySessions (HyperliquidWalletDeploySessionsRequest) returns (HyperliquidWalletDeploySessionsResponse) {}
   rpc HyperliquidWalletPerformance (HyperliquidWalletPerformanceRequest) returns (HyperliquidWalletPerformanceResponse) {}
+
   rpc HyperliquidLaunch (HyperliquidLaunchRequest) returns (HyperliquidLaunchResponse) {}
   rpc HyperliquidLaunches (HyperliquidLaunchesRequest) returns (HyperliquidLaunchesResponse) {}
   rpc HyperliquidLaunchFills (HyperliquidLaunchFillsRequest) returns (stream HyperliquidLaunchFillsResponse) {}
   rpc HyperliquidLaunchCandles (HyperliquidLaunchCandlesRequest) returns (HyperliquidLaunchCandlesResponse) {}
   rpc HyperliquidLaunchCandleStream (HyperliquidLaunchCandlesRequest) returns (stream HyperliquidLaunchCandlesResponse) {}
   rpc HyperliquidLaunchMessages (HyperliquidLaunchMessagesRequest) returns (stream HyperliquidLaunchMessagesResponse) {}
-  rpc HyperliquidAuctionStream (HyperliquidDeployAuctionRequest) returns (stream HyperliquidDeployAuction) {}
   rpc LatestHyperliquidLaunchFills (LatestHyperliquidLaunchFillsRequest) returns (stream HyperliquidLaunchFillsResponse) {}
   rpc HyperliquidLaunchHolders (HyperliquidLaunchHoldersRequest) returns (HyperliquidLaunchHoldersResponse) {}
+
+  rpc HyperliquidAuctionStream (HyperliquidDeployAuctionRequest) returns (stream HyperliquidDeployAuction) {}
+
   rpc SetHyperliquidWalletDeploySessionTarget (SetHyperliquidWalletDeploySessionTargetRequest) returns (SetHyperliquidWalletDeploySessionTargetResponse) {}
   rpc DeleteHyperliquidWalletDeploySessionTarget (DeleteHyperliquidWalletDeploySessionTargetRequest) returns (DeleteHyperliquidWalletDeploySessionTargetResponse) {}
 }
