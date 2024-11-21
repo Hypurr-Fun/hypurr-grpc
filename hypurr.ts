@@ -59,6 +59,10 @@ export interface HyperliquidToken {
      * @generated from protobuf field: double hlq_balance = 10;
      */
     hlqBalance: number;
+    /**
+     * @generated from protobuf field: string full_name = 11;
+     */
+    fullName: string;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidTokenDeployInfo
@@ -1348,11 +1352,12 @@ class HyperliquidToken$Type extends MessageType<HyperliquidToken> {
             { no: 7, name: "circulating_supply", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 8, name: "deploy_info", kind: "message", T: () => HyperliquidTokenDeployInfo },
             { no: 9, name: "geneses", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidTokenGenesis },
-            { no: 10, name: "hlq_balance", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 10, name: "hlq_balance", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidToken>): HyperliquidToken {
-        const message = { id: 0, name: "", index: 0, szDecimals: 0, weiDecimals: 0, tokenId: "", circulatingSupply: 0, geneses: [], hlqBalance: 0 };
+        const message = { id: 0, name: "", index: 0, szDecimals: 0, weiDecimals: 0, tokenId: "", circulatingSupply: 0, geneses: [], hlqBalance: 0, fullName: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidToken>(this, message, value);
@@ -1392,6 +1397,9 @@ class HyperliquidToken$Type extends MessageType<HyperliquidToken> {
                     break;
                 case /* double hlq_balance */ 10:
                     message.hlqBalance = reader.double();
+                    break;
+                case /* string full_name */ 11:
+                    message.fullName = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1435,6 +1443,9 @@ class HyperliquidToken$Type extends MessageType<HyperliquidToken> {
         /* double hlq_balance = 10; */
         if (message.hlqBalance !== 0)
             writer.tag(10, WireType.Bit64).double(message.hlqBalance);
+        /* string full_name = 11; */
+        if (message.fullName !== "")
+            writer.tag(11, WireType.LengthDelimited).string(message.fullName);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

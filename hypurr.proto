@@ -17,6 +17,7 @@ message HyperliquidToken {
   HyperliquidTokenDeployInfo deploy_info = 8;
   repeated HyperliquidTokenGenesis geneses = 9;
   double hlq_balance = 10;
+  string full_name = 11;
 }
 
 message HyperliquidTokenDeployInfo {
