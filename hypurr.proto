@@ -18,6 +18,7 @@ message HyperliquidToken {
   repeated HyperliquidTokenGenesis geneses = 9;
   double hlq_balance = 10;
   string full_name = 11;
+  HyperliquidTokenStatistics statistics = 12;
 }
 
 message HyperliquidTokenHolder {

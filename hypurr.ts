@@ -63,6 +63,10 @@ export interface HyperliquidToken {
      * @generated from protobuf field: string full_name = 11;
      */
     fullName: string;
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidTokenStatistics statistics = 12;
+     */
+    statistics?: HyperliquidTokenStatistics;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidTokenHolder
@@ -1387,7 +1391,8 @@ class HyperliquidToken$Type extends MessageType<HyperliquidToken> {
             { no: 8, name: "deploy_info", kind: "message", T: () => HyperliquidTokenDeployInfo },
             { no: 9, name: "geneses", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidTokenGenesis },
             { no: 10, name: "hlq_balance", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 11, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 11, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 12, name: "statistics", kind: "message", T: () => HyperliquidTokenStatistics }
         ]);
     }
     create(value?: PartialMessage<HyperliquidToken>): HyperliquidToken {
@@ -1435,6 +1440,9 @@ class HyperliquidToken$Type extends MessageType<HyperliquidToken> {
                 case /* string full_name */ 11:
                     message.fullName = reader.string();
                     break;
+                case /* hypurr.HyperliquidTokenStatistics statistics */ 12:
+                    message.statistics = HyperliquidTokenStatistics.internalBinaryRead(reader, reader.uint32(), options, message.statistics);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1480,6 +1488,9 @@ class HyperliquidToken$Type extends MessageType<HyperliquidToken> {
         /* string full_name = 11; */
         if (message.fullName !== "")
             writer.tag(11, WireType.LengthDelimited).string(message.fullName);
+        /* hypurr.HyperliquidTokenStatistics statistics = 12; */
+        if (message.statistics)
+            HyperliquidTokenStatistics.internalBinaryWrite(message.statistics, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
