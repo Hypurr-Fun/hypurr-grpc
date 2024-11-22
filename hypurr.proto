@@ -480,6 +480,7 @@ service Static {
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
 
   rpc HyperliquidTokens (HyperliquidTokensRequest) returns (HyperliquidTokensResponse) {}
+  rpc HyperliquidTokenHolders (HyperliquidTokenHoldersRequest) returns (HyperliquidTokenHoldersResponse) {}
   rpc HyperliquidTokenMessages (HyperliquidTokenMessagesRequest) returns (stream HyperliquidTokenMessagesResponse) {}
 
   rpc HyperliquidSpotPair (HyperliquidSpotPairRequest) returns (HyperliquidSpotPairResponse) {}

@@ -5859,6 +5859,7 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "TelegramUser", options: {}, I: TelegramUserRequest, O: TelegramUserResponse },
     { name: "TelegramUserWallets", options: {}, I: TelegramUserWalletsRequest, O: TelegramUserWalletsResponse },
     { name: "HyperliquidTokens", options: {}, I: HyperliquidTokensRequest, O: HyperliquidTokensResponse },
+    { name: "HyperliquidTokenHolders", options: {}, I: HyperliquidTokenHoldersRequest, O: HyperliquidTokenHoldersResponse },
     { name: "HyperliquidTokenMessages", serverStreaming: true, options: {}, I: HyperliquidTokenMessagesRequest, O: HyperliquidTokenMessagesResponse },
     { name: "HyperliquidSpotPair", options: {}, I: HyperliquidSpotPairRequest, O: HyperliquidSpotPairResponse },
     { name: "HyperliquidSpotPairs", options: {}, I: HyperliquidSpotPairsRequest, O: HyperliquidSpotPairsResponse },
