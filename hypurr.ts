@@ -86,6 +86,24 @@ export interface HyperliquidTokenHolder {
     type: string;
 }
 /**
+ * @generated from protobuf message hypurr.HyperliquidTokenHoldersRequest
+ */
+export interface HyperliquidTokenHoldersRequest {
+    /**
+     * @generated from protobuf field: int64 token_id = 1;
+     */
+    tokenId: number;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidTokenHoldersResponse
+ */
+export interface HyperliquidTokenHoldersResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.HyperliquidTokenHolder holders = 1;
+     */
+    holders: HyperliquidTokenHolder[];
+}
+/**
  * @generated from protobuf message hypurr.HyperliquidTokenStatistics
  */
 export interface HyperliquidTokenStatistics {
@@ -1562,6 +1580,100 @@ class HyperliquidTokenHolder$Type extends MessageType<HyperliquidTokenHolder> {
  * @generated MessageType for protobuf message hypurr.HyperliquidTokenHolder
  */
 export const HyperliquidTokenHolder = new HyperliquidTokenHolder$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidTokenHoldersRequest$Type extends MessageType<HyperliquidTokenHoldersRequest> {
+    constructor() {
+        super("hypurr.HyperliquidTokenHoldersRequest", [
+            { no: 1, name: "token_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidTokenHoldersRequest>): HyperliquidTokenHoldersRequest {
+        const message = { tokenId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidTokenHoldersRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidTokenHoldersRequest): HyperliquidTokenHoldersRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 token_id */ 1:
+                    message.tokenId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidTokenHoldersRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 token_id = 1; */
+        if (message.tokenId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.tokenId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidTokenHoldersRequest
+ */
+export const HyperliquidTokenHoldersRequest = new HyperliquidTokenHoldersRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidTokenHoldersResponse$Type extends MessageType<HyperliquidTokenHoldersResponse> {
+    constructor() {
+        super("hypurr.HyperliquidTokenHoldersResponse", [
+            { no: 1, name: "holders", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidTokenHolder }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidTokenHoldersResponse>): HyperliquidTokenHoldersResponse {
+        const message = { holders: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidTokenHoldersResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidTokenHoldersResponse): HyperliquidTokenHoldersResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.HyperliquidTokenHolder holders */ 1:
+                    message.holders.push(HyperliquidTokenHolder.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidTokenHoldersResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.HyperliquidTokenHolder holders = 1; */
+        for (let i = 0; i < message.holders.length; i++)
+            HyperliquidTokenHolder.internalBinaryWrite(message.holders[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidTokenHoldersResponse
+ */
+export const HyperliquidTokenHoldersResponse = new HyperliquidTokenHoldersResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidTokenStatistics$Type extends MessageType<HyperliquidTokenStatistics> {
     constructor() {
