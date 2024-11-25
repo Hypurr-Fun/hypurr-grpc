@@ -210,6 +210,21 @@ message TelegramUserPublic {
   int64 reputation_score = 4;
 }
 
+message HyperliquidDeployAuction {
+  int64 start_time = 1;
+  int64 duration = 2;
+  double start_gas = 3;
+  google.protobuf.DoubleValue current_gas = 4;
+  google.protobuf.StringValue end_gas = 5;
+}
+
+message HyperliquidDeployAuctionRequest {
+}
+
+message HyperliquidDeployAuctionResponse {
+  HyperliquidDeployAuction auction = 1;
+}
+
 message HyperliquidTokensRequest {
 
 }
@@ -463,21 +478,11 @@ message HyperliquidWalletPerformanceResponse {
   Performance perp = 2;
 }
 
-message HyperliquidDeployAuctionRequest {
-}
-
-message HyperliquidDeployAuction {
-  int64 start_time = 1;
-  int64 duration = 2;
-  double start_gas = 3;
-  google.protobuf.DoubleValue current_gas = 4;
-  google.protobuf.DoubleValue end_gas = 5;
-}
-
-
 service Static {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
+
+  rpc HyperliquidDeployAuction (HyperliquidDeployAuctionRequest) returns (HyperliquidDeployAuctionResponse) {}
 
   rpc HyperliquidTokens (HyperliquidTokensRequest) returns (HyperliquidTokensResponse) {}
   rpc HyperliquidTokenHolders (HyperliquidTokenHoldersRequest) returns (HyperliquidTokenHoldersResponse) {}
@@ -499,8 +504,6 @@ service Static {
   rpc HyperliquidLaunchMessages (HyperliquidLaunchMessagesRequest) returns (stream HyperliquidLaunchMessagesResponse) {}
   rpc LatestHyperliquidLaunchFills (LatestHyperliquidLaunchFillsRequest) returns (stream HyperliquidLaunchFillsResponse) {}
   rpc HyperliquidLaunchHolders (HyperliquidLaunchHoldersRequest) returns (HyperliquidLaunchHoldersResponse) {}
-
-  rpc HyperliquidAuctionStream (HyperliquidDeployAuctionRequest) returns (stream HyperliquidDeployAuction) {}
 
   rpc SetHyperliquidWalletDeploySessionTarget (SetHyperliquidWalletDeploySessionTargetRequest) returns (SetHyperliquidWalletDeploySessionTargetResponse) {}
   rpc DeleteHyperliquidWalletDeploySessionTarget (DeleteHyperliquidWalletDeploySessionTargetRequest) returns (DeleteHyperliquidWalletDeploySessionTargetResponse) {}

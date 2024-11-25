@@ -673,6 +673,45 @@ export interface TelegramUserPublic {
     reputationScore: number;
 }
 /**
+ * @generated from protobuf message hypurr.HyperliquidDeployAuction
+ */
+export interface HyperliquidDeployAuction {
+    /**
+     * @generated from protobuf field: int64 start_time = 1;
+     */
+    startTime: number;
+    /**
+     * @generated from protobuf field: int64 duration = 2;
+     */
+    duration: number;
+    /**
+     * @generated from protobuf field: double start_gas = 3;
+     */
+    startGas: number;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue current_gas = 4;
+     */
+    currentGas?: DoubleValue;
+    /**
+     * @generated from protobuf field: google.protobuf.StringValue end_gas = 5;
+     */
+    endGas?: StringValue;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidDeployAuctionRequest
+ */
+export interface HyperliquidDeployAuctionRequest {
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidDeployAuctionResponse
+ */
+export interface HyperliquidDeployAuctionResponse {
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidDeployAuction auction = 1;
+     */
+    auction?: HyperliquidDeployAuction;
+}
+/**
  * @generated from protobuf message hypurr.HyperliquidTokensRequest
  */
 export interface HyperliquidTokensRequest {
@@ -1343,36 +1382,6 @@ export interface HyperliquidWalletPerformanceResponse {
      * @generated from protobuf field: hypurr.Performance perp = 2;
      */
     perp?: Performance;
-}
-/**
- * @generated from protobuf message hypurr.HyperliquidDeployAuctionRequest
- */
-export interface HyperliquidDeployAuctionRequest {
-}
-/**
- * @generated from protobuf message hypurr.HyperliquidDeployAuction
- */
-export interface HyperliquidDeployAuction {
-    /**
-     * @generated from protobuf field: int64 start_time = 1;
-     */
-    startTime: number;
-    /**
-     * @generated from protobuf field: int64 duration = 2;
-     */
-    duration: number;
-    /**
-     * @generated from protobuf field: double start_gas = 3;
-     */
-    startGas: number;
-    /**
-     * @generated from protobuf field: google.protobuf.DoubleValue current_gas = 4;
-     */
-    currentGas?: DoubleValue;
-    /**
-     * @generated from protobuf field: google.protobuf.DoubleValue end_gas = 5;
-     */
-    endGas?: DoubleValue;
 }
 /**
  * @generated from protobuf enum hypurr.HyperliquidLaunchPoolType
@@ -3155,6 +3164,154 @@ class TelegramUserPublic$Type extends MessageType<TelegramUserPublic> {
  * @generated MessageType for protobuf message hypurr.TelegramUserPublic
  */
 export const TelegramUserPublic = new TelegramUserPublic$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidDeployAuction$Type extends MessageType<HyperliquidDeployAuction> {
+    constructor() {
+        super("hypurr.HyperliquidDeployAuction", [
+            { no: 1, name: "start_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "duration", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "start_gas", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "current_gas", kind: "message", T: () => DoubleValue },
+            { no: 5, name: "end_gas", kind: "message", T: () => StringValue }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidDeployAuction>): HyperliquidDeployAuction {
+        const message = { startTime: 0, duration: 0, startGas: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidDeployAuction>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidDeployAuction): HyperliquidDeployAuction {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 start_time */ 1:
+                    message.startTime = reader.int64().toNumber();
+                    break;
+                case /* int64 duration */ 2:
+                    message.duration = reader.int64().toNumber();
+                    break;
+                case /* double start_gas */ 3:
+                    message.startGas = reader.double();
+                    break;
+                case /* google.protobuf.DoubleValue current_gas */ 4:
+                    message.currentGas = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.currentGas);
+                    break;
+                case /* google.protobuf.StringValue end_gas */ 5:
+                    message.endGas = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.endGas);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidDeployAuction, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 start_time = 1; */
+        if (message.startTime !== 0)
+            writer.tag(1, WireType.Varint).int64(message.startTime);
+        /* int64 duration = 2; */
+        if (message.duration !== 0)
+            writer.tag(2, WireType.Varint).int64(message.duration);
+        /* double start_gas = 3; */
+        if (message.startGas !== 0)
+            writer.tag(3, WireType.Bit64).double(message.startGas);
+        /* google.protobuf.DoubleValue current_gas = 4; */
+        if (message.currentGas)
+            DoubleValue.internalBinaryWrite(message.currentGas, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.StringValue end_gas = 5; */
+        if (message.endGas)
+            StringValue.internalBinaryWrite(message.endGas, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidDeployAuction
+ */
+export const HyperliquidDeployAuction = new HyperliquidDeployAuction$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidDeployAuctionRequest$Type extends MessageType<HyperliquidDeployAuctionRequest> {
+    constructor() {
+        super("hypurr.HyperliquidDeployAuctionRequest", []);
+    }
+    create(value?: PartialMessage<HyperliquidDeployAuctionRequest>): HyperliquidDeployAuctionRequest {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidDeployAuctionRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidDeployAuctionRequest): HyperliquidDeployAuctionRequest {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: HyperliquidDeployAuctionRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidDeployAuctionRequest
+ */
+export const HyperliquidDeployAuctionRequest = new HyperliquidDeployAuctionRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidDeployAuctionResponse$Type extends MessageType<HyperliquidDeployAuctionResponse> {
+    constructor() {
+        super("hypurr.HyperliquidDeployAuctionResponse", [
+            { no: 1, name: "auction", kind: "message", T: () => HyperliquidDeployAuction }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidDeployAuctionResponse>): HyperliquidDeployAuctionResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidDeployAuctionResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidDeployAuctionResponse): HyperliquidDeployAuctionResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.HyperliquidDeployAuction auction */ 1:
+                    message.auction = HyperliquidDeployAuction.internalBinaryRead(reader, reader.uint32(), options, message.auction);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidDeployAuctionResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.HyperliquidDeployAuction auction = 1; */
+        if (message.auction)
+            HyperliquidDeployAuction.internalBinaryWrite(message.auction, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidDeployAuctionResponse
+ */
+export const HyperliquidDeployAuctionResponse = new HyperliquidDeployAuctionResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidTokensRequest$Type extends MessageType<HyperliquidTokensRequest> {
     constructor() {
@@ -5751,113 +5908,13 @@ class HyperliquidWalletPerformanceResponse$Type extends MessageType<HyperliquidW
  * @generated MessageType for protobuf message hypurr.HyperliquidWalletPerformanceResponse
  */
 export const HyperliquidWalletPerformanceResponse = new HyperliquidWalletPerformanceResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class HyperliquidDeployAuctionRequest$Type extends MessageType<HyperliquidDeployAuctionRequest> {
-    constructor() {
-        super("hypurr.HyperliquidDeployAuctionRequest", []);
-    }
-    create(value?: PartialMessage<HyperliquidDeployAuctionRequest>): HyperliquidDeployAuctionRequest {
-        const message = {};
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<HyperliquidDeployAuctionRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidDeployAuctionRequest): HyperliquidDeployAuctionRequest {
-        return target ?? this.create();
-    }
-    internalBinaryWrite(message: HyperliquidDeployAuctionRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.HyperliquidDeployAuctionRequest
- */
-export const HyperliquidDeployAuctionRequest = new HyperliquidDeployAuctionRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class HyperliquidDeployAuction$Type extends MessageType<HyperliquidDeployAuction> {
-    constructor() {
-        super("hypurr.HyperliquidDeployAuction", [
-            { no: 1, name: "start_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "duration", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "start_gas", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 4, name: "current_gas", kind: "message", T: () => DoubleValue },
-            { no: 5, name: "end_gas", kind: "message", T: () => DoubleValue }
-        ]);
-    }
-    create(value?: PartialMessage<HyperliquidDeployAuction>): HyperliquidDeployAuction {
-        const message = { startTime: 0, duration: 0, startGas: 0 };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<HyperliquidDeployAuction>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidDeployAuction): HyperliquidDeployAuction {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 start_time */ 1:
-                    message.startTime = reader.int64().toNumber();
-                    break;
-                case /* int64 duration */ 2:
-                    message.duration = reader.int64().toNumber();
-                    break;
-                case /* double start_gas */ 3:
-                    message.startGas = reader.double();
-                    break;
-                case /* google.protobuf.DoubleValue current_gas */ 4:
-                    message.currentGas = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.currentGas);
-                    break;
-                case /* google.protobuf.DoubleValue end_gas */ 5:
-                    message.endGas = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.endGas);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: HyperliquidDeployAuction, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 start_time = 1; */
-        if (message.startTime !== 0)
-            writer.tag(1, WireType.Varint).int64(message.startTime);
-        /* int64 duration = 2; */
-        if (message.duration !== 0)
-            writer.tag(2, WireType.Varint).int64(message.duration);
-        /* double start_gas = 3; */
-        if (message.startGas !== 0)
-            writer.tag(3, WireType.Bit64).double(message.startGas);
-        /* google.protobuf.DoubleValue current_gas = 4; */
-        if (message.currentGas)
-            DoubleValue.internalBinaryWrite(message.currentGas, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.DoubleValue end_gas = 5; */
-        if (message.endGas)
-            DoubleValue.internalBinaryWrite(message.endGas, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.HyperliquidDeployAuction
- */
-export const HyperliquidDeployAuction = new HyperliquidDeployAuction$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Static
  */
 export const Static = new ServiceType("hypurr.Static", [
     { name: "TelegramUser", options: {}, I: TelegramUserRequest, O: TelegramUserResponse },
     { name: "TelegramUserWallets", options: {}, I: TelegramUserWalletsRequest, O: TelegramUserWalletsResponse },
+    { name: "HyperliquidDeployAuction", options: {}, I: HyperliquidDeployAuctionRequest, O: HyperliquidDeployAuctionResponse },
     { name: "HyperliquidTokens", options: {}, I: HyperliquidTokensRequest, O: HyperliquidTokensResponse },
     { name: "HyperliquidTokenHolders", options: {}, I: HyperliquidTokenHoldersRequest, O: HyperliquidTokenHoldersResponse },
     { name: "HyperliquidTokenMessages", serverStreaming: true, options: {}, I: HyperliquidTokenMessagesRequest, O: HyperliquidTokenMessagesResponse },
@@ -5875,7 +5932,6 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "HyperliquidLaunchMessages", serverStreaming: true, options: {}, I: HyperliquidLaunchMessagesRequest, O: HyperliquidLaunchMessagesResponse },
     { name: "LatestHyperliquidLaunchFills", serverStreaming: true, options: {}, I: LatestHyperliquidLaunchFillsRequest, O: HyperliquidLaunchFillsResponse },
     { name: "HyperliquidLaunchHolders", options: {}, I: HyperliquidLaunchHoldersRequest, O: HyperliquidLaunchHoldersResponse },
-    { name: "HyperliquidAuctionStream", serverStreaming: true, options: {}, I: HyperliquidDeployAuctionRequest, O: HyperliquidDeployAuction },
     { name: "SetHyperliquidWalletDeploySessionTarget", options: {}, I: SetHyperliquidWalletDeploySessionTargetRequest, O: SetHyperliquidWalletDeploySessionTargetResponse },
     { name: "DeleteHyperliquidWalletDeploySessionTarget", options: {}, I: DeleteHyperliquidWalletDeploySessionTargetRequest, O: DeleteHyperliquidWalletDeploySessionTargetResponse }
 ]);

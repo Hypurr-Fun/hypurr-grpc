@@ -24,6 +24,11 @@ class StaticStub(object):
         request_serializer=hypurr__pb2.TelegramUserWalletsRequest.SerializeToString,
         response_deserializer=hypurr__pb2.TelegramUserWalletsResponse.FromString,
         )
+    self.HyperliquidDeployAuction = channel.unary_unary(
+        '/hypurr.Static/HyperliquidDeployAuction',
+        request_serializer=hypurr__pb2.HyperliquidDeployAuctionRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.HyperliquidDeployAuctionResponse.FromString,
+        )
     self.HyperliquidTokens = channel.unary_unary(
         '/hypurr.Static/HyperliquidTokens',
         request_serializer=hypurr__pb2.HyperliquidTokensRequest.SerializeToString,
@@ -109,11 +114,6 @@ class StaticStub(object):
         request_serializer=hypurr__pb2.HyperliquidLaunchHoldersRequest.SerializeToString,
         response_deserializer=hypurr__pb2.HyperliquidLaunchHoldersResponse.FromString,
         )
-    self.HyperliquidAuctionStream = channel.unary_stream(
-        '/hypurr.Static/HyperliquidAuctionStream',
-        request_serializer=hypurr__pb2.HyperliquidDeployAuctionRequest.SerializeToString,
-        response_deserializer=hypurr__pb2.HyperliquidDeployAuction.FromString,
-        )
     self.SetHyperliquidWalletDeploySessionTarget = channel.unary_unary(
         '/hypurr.Static/SetHyperliquidWalletDeploySessionTarget',
         request_serializer=hypurr__pb2.SetHyperliquidWalletDeploySessionTargetRequest.SerializeToString,
@@ -138,6 +138,13 @@ class StaticServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def TelegramUserWallets(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HyperliquidDeployAuction(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -263,13 +270,6 @@ class StaticServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def HyperliquidAuctionStream(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
   def SetHyperliquidWalletDeploySessionTarget(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -296,6 +296,11 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.TelegramUserWallets,
           request_deserializer=hypurr__pb2.TelegramUserWalletsRequest.FromString,
           response_serializer=hypurr__pb2.TelegramUserWalletsResponse.SerializeToString,
+      ),
+      'HyperliquidDeployAuction': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidDeployAuction,
+          request_deserializer=hypurr__pb2.HyperliquidDeployAuctionRequest.FromString,
+          response_serializer=hypurr__pb2.HyperliquidDeployAuctionResponse.SerializeToString,
       ),
       'HyperliquidTokens': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidTokens,
@@ -381,11 +386,6 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.HyperliquidLaunchHolders,
           request_deserializer=hypurr__pb2.HyperliquidLaunchHoldersRequest.FromString,
           response_serializer=hypurr__pb2.HyperliquidLaunchHoldersResponse.SerializeToString,
-      ),
-      'HyperliquidAuctionStream': grpc.unary_stream_rpc_method_handler(
-          servicer.HyperliquidAuctionStream,
-          request_deserializer=hypurr__pb2.HyperliquidDeployAuctionRequest.FromString,
-          response_serializer=hypurr__pb2.HyperliquidDeployAuction.SerializeToString,
       ),
       'SetHyperliquidWalletDeploySessionTarget': grpc.unary_unary_rpc_method_handler(
           servicer.SetHyperliquidWalletDeploySessionTarget,
