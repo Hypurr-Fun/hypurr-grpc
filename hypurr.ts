@@ -693,9 +693,9 @@ export interface HyperliquidDeployAuction {
      */
     currentGas?: DoubleValue;
     /**
-     * @generated from protobuf field: google.protobuf.StringValue end_gas = 5;
+     * @generated from protobuf field: google.protobuf.DoubleValue end_gas = 5;
      */
-    endGas?: StringValue;
+    endGas?: DoubleValue;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidDeployAuctionRequest
@@ -3172,7 +3172,7 @@ class HyperliquidDeployAuction$Type extends MessageType<HyperliquidDeployAuction
             { no: 2, name: "duration", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "start_gas", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 4, name: "current_gas", kind: "message", T: () => DoubleValue },
-            { no: 5, name: "end_gas", kind: "message", T: () => StringValue }
+            { no: 5, name: "end_gas", kind: "message", T: () => DoubleValue }
         ]);
     }
     create(value?: PartialMessage<HyperliquidDeployAuction>): HyperliquidDeployAuction {
@@ -3199,8 +3199,8 @@ class HyperliquidDeployAuction$Type extends MessageType<HyperliquidDeployAuction
                 case /* google.protobuf.DoubleValue current_gas */ 4:
                     message.currentGas = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.currentGas);
                     break;
-                case /* google.protobuf.StringValue end_gas */ 5:
-                    message.endGas = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.endGas);
+                case /* google.protobuf.DoubleValue end_gas */ 5:
+                    message.endGas = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.endGas);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3226,9 +3226,9 @@ class HyperliquidDeployAuction$Type extends MessageType<HyperliquidDeployAuction
         /* google.protobuf.DoubleValue current_gas = 4; */
         if (message.currentGas)
             DoubleValue.internalBinaryWrite(message.currentGas, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.StringValue end_gas = 5; */
+        /* google.protobuf.DoubleValue end_gas = 5; */
         if (message.endGas)
-            StringValue.internalBinaryWrite(message.endGas, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+            DoubleValue.internalBinaryWrite(message.endGas, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

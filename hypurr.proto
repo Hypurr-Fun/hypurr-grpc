@@ -215,7 +215,7 @@ message HyperliquidDeployAuction {
   int64 duration = 2;
   double start_gas = 3;
   google.protobuf.DoubleValue current_gas = 4;
-  google.protobuf.StringValue end_gas = 5;
+  google.protobuf.DoubleValue end_gas = 5;
 }
 
 message HyperliquidDeployAuctionRequest {

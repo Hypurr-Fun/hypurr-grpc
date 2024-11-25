@@ -1946,7 +1946,7 @@ type HyperliquidDeployAuction struct {
 	Duration   int64                   `protobuf:"varint,2,opt,name=duration,proto3" json:"duration,omitempty"`
 	StartGas   float64                 `protobuf:"fixed64,3,opt,name=start_gas,json=startGas,proto3" json:"start_gas,omitempty"`
 	CurrentGas *wrapperspb.DoubleValue `protobuf:"bytes,4,opt,name=current_gas,json=currentGas,proto3" json:"current_gas,omitempty"`
-	EndGas     *wrapperspb.StringValue `protobuf:"bytes,5,opt,name=end_gas,json=endGas,proto3" json:"end_gas,omitempty"`
+	EndGas     *wrapperspb.DoubleValue `protobuf:"bytes,5,opt,name=end_gas,json=endGas,proto3" json:"end_gas,omitempty"`
 }
 
 func (x *HyperliquidDeployAuction) Reset() {
@@ -2009,7 +2009,7 @@ func (x *HyperliquidDeployAuction) GetCurrentGas() *wrapperspb.DoubleValue {
 	return nil
 }
 
-func (x *HyperliquidDeployAuction) GetEndGas() *wrapperspb.StringValue {
+func (x *HyperliquidDeployAuction) GetEndGas() *wrapperspb.DoubleValue {
 	if x != nil {
 		return x.EndGas
 	}
@@ -5203,7 +5203,7 @@ var file_hypurr_proto_rawDesc = []byte{
 	0x75, 0x62, 0x6c, 0x65, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x0a, 0x63, 0x75, 0x72, 0x72, 0x65,
 	0x6e, 0x74, 0x47, 0x61, 0x73, 0x12, 0x35, 0x0a, 0x07, 0x65, 0x6e, 0x64, 0x5f, 0x67, 0x61, 0x73,
 	0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x56,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x44, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x56,
 	0x61, 0x6c, 0x75, 0x65, 0x52, 0x06, 0x65, 0x6e, 0x64, 0x47, 0x61, 0x73, 0x22, 0x21, 0x0a, 0x1f,
 	0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x44, 0x65, 0x70, 0x6c, 0x6f,
 	0x79, 0x41, 0x75, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22,
@@ -5883,7 +5883,7 @@ var file_hypurr_proto_depIdxs = []int32{
 	11,  // 33: hypurr.HyperliquidLaunchFill.wallet:type_name -> hypurr.HyperliquidPublicWallet
 	75,  // 34: hypurr.HyperliquidLaunchFill.movement_hash:type_name -> google.protobuf.StringValue
 	76,  // 35: hypurr.HyperliquidDeployAuction.current_gas:type_name -> google.protobuf.DoubleValue
-	75,  // 36: hypurr.HyperliquidDeployAuction.end_gas:type_name -> google.protobuf.StringValue
+	76,  // 36: hypurr.HyperliquidDeployAuction.end_gas:type_name -> google.protobuf.DoubleValue
 	20,  // 37: hypurr.HyperliquidDeployAuctionResponse.auction:type_name -> hypurr.HyperliquidDeployAuction
 	1,   // 38: hypurr.HyperliquidTokensResponse.tokens:type_name -> hypurr.HyperliquidToken
 	19,  // 39: hypurr.HyperliquidTokenMessage.author:type_name -> hypurr.TelegramUserPublic
