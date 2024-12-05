@@ -486,6 +486,14 @@ message HypurrFunCabal {
   repeated HypurrFunCabalUser users = 4;
   repeated HypurrFunCabalTrackedWallet tracked_wallets = 5;
   repeated HypurrFunCabalUserSeason user_seasons = 6;
+  HypurrFunCabalSummary summary = 7;
+}
+
+message HypurrFunCabalSummary {
+  int64 user_count = 1;
+  double season_spot_pnl = 2;
+  double season_perp_pnl = 3;
+  double season_launch_pnl = 4;
 }
 
 message HypurrFunCabalUser {
