@@ -1410,9 +1410,9 @@ export interface HypurrFunCabal {
      */
     trackedWallets: HypurrFunCabalTrackedWallet[];
     /**
-     * @generated from protobuf field: repeated hypurr.HypurrFunCabalSeason seasons = 6;
+     * @generated from protobuf field: repeated hypurr.HypurrFunCabalUserSeason user_seasons = 6;
      */
-    seasons: HypurrFunCabalSeason[];
+    userSeasons: HypurrFunCabalUserSeason[];
 }
 /**
  * @generated from protobuf message hypurr.HypurrFunCabalUser
@@ -6118,11 +6118,11 @@ class HypurrFunCabal$Type extends MessageType<HypurrFunCabal> {
             { no: 3, name: "picture_file_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "users", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HypurrFunCabalUser },
             { no: 5, name: "tracked_wallets", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HypurrFunCabalTrackedWallet },
-            { no: 6, name: "seasons", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HypurrFunCabalSeason }
+            { no: 6, name: "user_seasons", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HypurrFunCabalUserSeason }
         ]);
     }
     create(value?: PartialMessage<HypurrFunCabal>): HypurrFunCabal {
-        const message = { telegramChatId: 0, name: "", pictureFileId: "", users: [], trackedWallets: [], seasons: [] };
+        const message = { telegramChatId: 0, name: "", pictureFileId: "", users: [], trackedWallets: [], userSeasons: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HypurrFunCabal>(this, message, value);
@@ -6148,8 +6148,8 @@ class HypurrFunCabal$Type extends MessageType<HypurrFunCabal> {
                 case /* repeated hypurr.HypurrFunCabalTrackedWallet tracked_wallets */ 5:
                     message.trackedWallets.push(HypurrFunCabalTrackedWallet.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* repeated hypurr.HypurrFunCabalSeason seasons */ 6:
-                    message.seasons.push(HypurrFunCabalSeason.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.HypurrFunCabalUserSeason user_seasons */ 6:
+                    message.userSeasons.push(HypurrFunCabalUserSeason.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -6178,9 +6178,9 @@ class HypurrFunCabal$Type extends MessageType<HypurrFunCabal> {
         /* repeated hypurr.HypurrFunCabalTrackedWallet tracked_wallets = 5; */
         for (let i = 0; i < message.trackedWallets.length; i++)
             HypurrFunCabalTrackedWallet.internalBinaryWrite(message.trackedWallets[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* repeated hypurr.HypurrFunCabalSeason seasons = 6; */
-        for (let i = 0; i < message.seasons.length; i++)
-            HypurrFunCabalSeason.internalBinaryWrite(message.seasons[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.HypurrFunCabalUserSeason user_seasons = 6; */
+        for (let i = 0; i < message.userSeasons.length; i++)
+            HypurrFunCabalUserSeason.internalBinaryWrite(message.userSeasons[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

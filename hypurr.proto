@@ -485,7 +485,7 @@ message HypurrFunCabal {
   string picture_file_id = 3;
   repeated HypurrFunCabalUser users = 4;
   repeated HypurrFunCabalTrackedWallet tracked_wallets = 5;
-  repeated HypurrFunCabalSeason seasons = 6;
+  repeated HypurrFunCabalUserSeason user_seasons = 6;
 }
 
 message HypurrFunCabalUser {
