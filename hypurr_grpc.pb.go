@@ -41,6 +41,7 @@ const (
 	Static_HyperliquidLaunchMessages_FullMethodName                  = "/hypurr.Static/HyperliquidLaunchMessages"
 	Static_LatestHyperliquidLaunchFills_FullMethodName               = "/hypurr.Static/LatestHyperliquidLaunchFills"
 	Static_HyperliquidLaunchHolders_FullMethodName                   = "/hypurr.Static/HyperliquidLaunchHolders"
+	Static_HypurrFunCabals_FullMethodName                            = "/hypurr.Static/HypurrFunCabals"
 	Static_SetHyperliquidWalletDeploySessionTarget_FullMethodName    = "/hypurr.Static/SetHyperliquidWalletDeploySessionTarget"
 	Static_DeleteHyperliquidWalletDeploySessionTarget_FullMethodName = "/hypurr.Static/DeleteHyperliquidWalletDeploySessionTarget"
 )
@@ -69,6 +70,7 @@ type StaticClient interface {
 	HyperliquidLaunchMessages(ctx context.Context, in *HyperliquidLaunchMessagesRequest, opts ...grpc.CallOption) (Static_HyperliquidLaunchMessagesClient, error)
 	LatestHyperliquidLaunchFills(ctx context.Context, in *LatestHyperliquidLaunchFillsRequest, opts ...grpc.CallOption) (Static_LatestHyperliquidLaunchFillsClient, error)
 	HyperliquidLaunchHolders(ctx context.Context, in *HyperliquidLaunchHoldersRequest, opts ...grpc.CallOption) (*HyperliquidLaunchHoldersResponse, error)
+	HypurrFunCabals(ctx context.Context, in *HypurrFunCabalsRequest, opts ...grpc.CallOption) (*HypurrFunCabalsResponse, error)
 	SetHyperliquidWalletDeploySessionTarget(ctx context.Context, in *SetHyperliquidWalletDeploySessionTargetRequest, opts ...grpc.CallOption) (*SetHyperliquidWalletDeploySessionTargetResponse, error)
 	DeleteHyperliquidWalletDeploySessionTarget(ctx context.Context, in *DeleteHyperliquidWalletDeploySessionTargetRequest, opts ...grpc.CallOption) (*DeleteHyperliquidWalletDeploySessionTargetResponse, error)
 }
@@ -396,6 +398,16 @@ func (c *staticClient) HyperliquidLaunchHolders(ctx context.Context, in *Hyperli
 	return out, nil
 }
 
+func (c *staticClient) HypurrFunCabals(ctx context.Context, in *HypurrFunCabalsRequest, opts ...grpc.CallOption) (*HypurrFunCabalsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HypurrFunCabalsResponse)
+	err := c.cc.Invoke(ctx, Static_HypurrFunCabals_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *staticClient) SetHyperliquidWalletDeploySessionTarget(ctx context.Context, in *SetHyperliquidWalletDeploySessionTargetRequest, opts ...grpc.CallOption) (*SetHyperliquidWalletDeploySessionTargetResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SetHyperliquidWalletDeploySessionTargetResponse)
@@ -440,6 +452,7 @@ type StaticServer interface {
 	HyperliquidLaunchMessages(*HyperliquidLaunchMessagesRequest, Static_HyperliquidLaunchMessagesServer) error
 	LatestHyperliquidLaunchFills(*LatestHyperliquidLaunchFillsRequest, Static_LatestHyperliquidLaunchFillsServer) error
 	HyperliquidLaunchHolders(context.Context, *HyperliquidLaunchHoldersRequest) (*HyperliquidLaunchHoldersResponse, error)
+	HypurrFunCabals(context.Context, *HypurrFunCabalsRequest) (*HypurrFunCabalsResponse, error)
 	SetHyperliquidWalletDeploySessionTarget(context.Context, *SetHyperliquidWalletDeploySessionTargetRequest) (*SetHyperliquidWalletDeploySessionTargetResponse, error)
 	DeleteHyperliquidWalletDeploySessionTarget(context.Context, *DeleteHyperliquidWalletDeploySessionTargetRequest) (*DeleteHyperliquidWalletDeploySessionTargetResponse, error)
 	mustEmbedUnimplementedStaticServer()
@@ -508,6 +521,9 @@ func (UnimplementedStaticServer) LatestHyperliquidLaunchFills(*LatestHyperliquid
 }
 func (UnimplementedStaticServer) HyperliquidLaunchHolders(context.Context, *HyperliquidLaunchHoldersRequest) (*HyperliquidLaunchHoldersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidLaunchHolders not implemented")
+}
+func (UnimplementedStaticServer) HypurrFunCabals(context.Context, *HypurrFunCabalsRequest) (*HypurrFunCabalsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HypurrFunCabals not implemented")
 }
 func (UnimplementedStaticServer) SetHyperliquidWalletDeploySessionTarget(context.Context, *SetHyperliquidWalletDeploySessionTargetRequest) (*SetHyperliquidWalletDeploySessionTargetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetHyperliquidWalletDeploySessionTarget not implemented")
@@ -903,6 +919,24 @@ func _Static_HyperliquidLaunchHolders_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Static_HypurrFunCabals_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HypurrFunCabalsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).HypurrFunCabals(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_HypurrFunCabals_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).HypurrFunCabals(ctx, req.(*HypurrFunCabalsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Static_SetHyperliquidWalletDeploySessionTarget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SetHyperliquidWalletDeploySessionTargetRequest)
 	if err := dec(in); err != nil {
@@ -1005,6 +1039,10 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HyperliquidLaunchHolders",
 			Handler:    _Static_HyperliquidLaunchHolders_Handler,
+		},
+		{
+			MethodName: "HypurrFunCabals",
+			Handler:    _Static_HypurrFunCabals_Handler,
 		},
 		{
 			MethodName: "SetHyperliquidWalletDeploySessionTarget",

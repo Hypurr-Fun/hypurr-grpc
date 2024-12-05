@@ -114,6 +114,11 @@ class StaticStub(object):
         request_serializer=hypurr__pb2.HyperliquidLaunchHoldersRequest.SerializeToString,
         response_deserializer=hypurr__pb2.HyperliquidLaunchHoldersResponse.FromString,
         )
+    self.HypurrFunCabals = channel.unary_unary(
+        '/hypurr.Static/HypurrFunCabals',
+        request_serializer=hypurr__pb2.HypurrFunCabalsRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.HypurrFunCabalsResponse.FromString,
+        )
     self.SetHyperliquidWalletDeploySessionTarget = channel.unary_unary(
         '/hypurr.Static/SetHyperliquidWalletDeploySessionTarget',
         request_serializer=hypurr__pb2.SetHyperliquidWalletDeploySessionTargetRequest.SerializeToString,
@@ -270,6 +275,13 @@ class StaticServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def HypurrFunCabals(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def SetHyperliquidWalletDeploySessionTarget(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -386,6 +398,11 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.HyperliquidLaunchHolders,
           request_deserializer=hypurr__pb2.HyperliquidLaunchHoldersRequest.FromString,
           response_serializer=hypurr__pb2.HyperliquidLaunchHoldersResponse.SerializeToString,
+      ),
+      'HypurrFunCabals': grpc.unary_unary_rpc_method_handler(
+          servicer.HypurrFunCabals,
+          request_deserializer=hypurr__pb2.HypurrFunCabalsRequest.FromString,
+          response_serializer=hypurr__pb2.HypurrFunCabalsResponse.SerializeToString,
       ),
       'SetHyperliquidWalletDeploySessionTarget': grpc.unary_unary_rpc_method_handler(
           servicer.SetHyperliquidWalletDeploySessionTarget,

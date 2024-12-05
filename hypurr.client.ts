@@ -8,6 +8,8 @@ import type { DeleteHyperliquidWalletDeploySessionTargetResponse } from "./hypur
 import type { DeleteHyperliquidWalletDeploySessionTargetRequest } from "./hypurr";
 import type { SetHyperliquidWalletDeploySessionTargetResponse } from "./hypurr";
 import type { SetHyperliquidWalletDeploySessionTargetRequest } from "./hypurr";
+import type { HypurrFunCabalsResponse } from "./hypurr";
+import type { HypurrFunCabalsRequest } from "./hypurr";
 import type { HyperliquidLaunchHoldersResponse } from "./hypurr";
 import type { HyperliquidLaunchHoldersRequest } from "./hypurr";
 import type { LatestHyperliquidLaunchFillsRequest } from "./hypurr";
@@ -133,6 +135,10 @@ export interface IStaticClient {
      * @generated from protobuf rpc: HyperliquidLaunchHolders(hypurr.HyperliquidLaunchHoldersRequest) returns (hypurr.HyperliquidLaunchHoldersResponse);
      */
     hyperliquidLaunchHolders(input: HyperliquidLaunchHoldersRequest, options?: RpcOptions): UnaryCall<HyperliquidLaunchHoldersRequest, HyperliquidLaunchHoldersResponse>;
+    /**
+     * @generated from protobuf rpc: HypurrFunCabals(hypurr.HypurrFunCabalsRequest) returns (hypurr.HypurrFunCabalsResponse);
+     */
+    hypurrFunCabals(input: HypurrFunCabalsRequest, options?: RpcOptions): UnaryCall<HypurrFunCabalsRequest, HypurrFunCabalsResponse>;
     /**
      * @generated from protobuf rpc: SetHyperliquidWalletDeploySessionTarget(hypurr.SetHyperliquidWalletDeploySessionTargetRequest) returns (hypurr.SetHyperliquidWalletDeploySessionTargetResponse);
      */
@@ -292,17 +298,24 @@ export class StaticClient implements IStaticClient, ServiceInfo {
         return stackIntercept<HyperliquidLaunchHoldersRequest, HyperliquidLaunchHoldersResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: HypurrFunCabals(hypurr.HypurrFunCabalsRequest) returns (hypurr.HypurrFunCabalsResponse);
+     */
+    hypurrFunCabals(input: HypurrFunCabalsRequest, options?: RpcOptions): UnaryCall<HypurrFunCabalsRequest, HypurrFunCabalsResponse> {
+        const method = this.methods[20], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HypurrFunCabalsRequest, HypurrFunCabalsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: SetHyperliquidWalletDeploySessionTarget(hypurr.SetHyperliquidWalletDeploySessionTargetRequest) returns (hypurr.SetHyperliquidWalletDeploySessionTargetResponse);
      */
     setHyperliquidWalletDeploySessionTarget(input: SetHyperliquidWalletDeploySessionTargetRequest, options?: RpcOptions): UnaryCall<SetHyperliquidWalletDeploySessionTargetRequest, SetHyperliquidWalletDeploySessionTargetResponse> {
-        const method = this.methods[20], opt = this._transport.mergeOptions(options);
+        const method = this.methods[21], opt = this._transport.mergeOptions(options);
         return stackIntercept<SetHyperliquidWalletDeploySessionTargetRequest, SetHyperliquidWalletDeploySessionTargetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: DeleteHyperliquidWalletDeploySessionTarget(hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest) returns (hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse);
      */
     deleteHyperliquidWalletDeploySessionTarget(input: DeleteHyperliquidWalletDeploySessionTargetRequest, options?: RpcOptions): UnaryCall<DeleteHyperliquidWalletDeploySessionTargetRequest, DeleteHyperliquidWalletDeploySessionTargetResponse> {
-        const method = this.methods[21], opt = this._transport.mergeOptions(options);
+        const method = this.methods[22], opt = this._transport.mergeOptions(options);
         return stackIntercept<DeleteHyperliquidWalletDeploySessionTargetRequest, DeleteHyperliquidWalletDeploySessionTargetResponse>("unary", this._transport, method, opt, input);
     }
 }

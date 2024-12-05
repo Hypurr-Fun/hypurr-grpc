@@ -478,6 +478,70 @@ message HyperliquidWalletPerformanceResponse {
   Performance perp = 2;
 }
 
+// CABALS
+message HypurrFunCabal {
+  int64 telegram_chat_id = 1;
+  string name = 2;
+  string picture_file_id = 3;
+  repeated HypurrFunCabalUser users = 4;
+  repeated HypurrFunCabalTrackedWallet tracked_wallets = 5;
+  repeated HypurrFunCabalSeason seasons = 6;
+}
+
+message HypurrFunCabalUser {
+  int64 telegram_chat_id = 1;
+  int64 telegram_id = 2;
+  HyperliquidWallet wallet = 3;
+  int64 wallet_id = 4;
+  string name = 5;
+  double spot_pnl = 6;
+  double spot_equity = 7;
+  double launch_pnl = 8;
+  double launch_equity = 9;
+  double perp_pnl = 10;
+  double perp_equity = 11;
+}
+
+message HypurrFunCabalTrackedWallet {
+  int64 telegram_chat_id = 1;
+  int64 wallet_id = 2;
+  HyperliquidWallet wallet = 3;
+  string label = 4;
+  bool alert_spot = 5;
+  bool alert_perp = 6;
+}
+
+message HypurrFunCabalSeason {
+  int64 id = 1;
+  int64 start_time = 2;
+  int64 end_time = 3;
+  string name = 4;
+  repeated HypurrFunCabalUserSeason user_seasons = 5;
+  google.protobuf.Int64Value winner_id = 6;
+  HypurrFunCabal winner = 7;
+}
+
+message HypurrFunCabalUserSeason {
+  int64 cabal_season_id = 1;
+  int64 telegram_id = 2;
+  int64 wallet_id = 3;
+  int64 telegram_chat_id = 4;
+  double spot_pnl = 5;
+  double launch_pnl = 6;
+  double perp_pnl = 7;
+  double last_spot_pnl = 8;
+  double last_launch_pnl = 9;
+  double last_perp_pnl = 10;
+}
+
+message HypurrFunCabalsRequest {
+
+}
+
+message HypurrFunCabalsResponse {
+  repeated HypurrFunCabal cabals = 1;
+}
+
 service Static {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
@@ -504,6 +568,8 @@ service Static {
   rpc HyperliquidLaunchMessages (HyperliquidLaunchMessagesRequest) returns (stream HyperliquidLaunchMessagesResponse) {}
   rpc LatestHyperliquidLaunchFills (LatestHyperliquidLaunchFillsRequest) returns (stream HyperliquidLaunchFillsResponse) {}
   rpc HyperliquidLaunchHolders (HyperliquidLaunchHoldersRequest) returns (HyperliquidLaunchHoldersResponse) {}
+
+  rpc HypurrFunCabals (HypurrFunCabalsRequest) returns (HypurrFunCabalsResponse) {}
 
   rpc SetHyperliquidWalletDeploySessionTarget (SetHyperliquidWalletDeploySessionTargetRequest) returns (SetHyperliquidWalletDeploySessionTargetResponse) {}
   rpc DeleteHyperliquidWalletDeploySessionTarget (DeleteHyperliquidWalletDeploySessionTargetRequest) returns (DeleteHyperliquidWalletDeploySessionTargetResponse) {}

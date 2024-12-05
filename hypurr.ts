@@ -1384,6 +1384,207 @@ export interface HyperliquidWalletPerformanceResponse {
     perp?: Performance;
 }
 /**
+ * CABALS
+ *
+ * @generated from protobuf message hypurr.HypurrFunCabal
+ */
+export interface HypurrFunCabal {
+    /**
+     * @generated from protobuf field: int64 telegram_chat_id = 1;
+     */
+    telegramChatId: number;
+    /**
+     * @generated from protobuf field: string name = 2;
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: string picture_file_id = 3;
+     */
+    pictureFileId: string;
+    /**
+     * @generated from protobuf field: repeated hypurr.HypurrFunCabalUser users = 4;
+     */
+    users: HypurrFunCabalUser[];
+    /**
+     * @generated from protobuf field: repeated hypurr.HypurrFunCabalTrackedWallet tracked_wallets = 5;
+     */
+    trackedWallets: HypurrFunCabalTrackedWallet[];
+    /**
+     * @generated from protobuf field: repeated hypurr.HypurrFunCabalSeason seasons = 6;
+     */
+    seasons: HypurrFunCabalSeason[];
+}
+/**
+ * @generated from protobuf message hypurr.HypurrFunCabalUser
+ */
+export interface HypurrFunCabalUser {
+    /**
+     * @generated from protobuf field: int64 telegram_chat_id = 1;
+     */
+    telegramChatId: number;
+    /**
+     * @generated from protobuf field: int64 telegram_id = 2;
+     */
+    telegramId: number;
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidWallet wallet = 3;
+     */
+    wallet?: HyperliquidWallet;
+    /**
+     * @generated from protobuf field: int64 wallet_id = 4;
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: string name = 5;
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: double spot_pnl = 6;
+     */
+    spotPnl: number;
+    /**
+     * @generated from protobuf field: double spot_equity = 7;
+     */
+    spotEquity: number;
+    /**
+     * @generated from protobuf field: double launch_pnl = 8;
+     */
+    launchPnl: number;
+    /**
+     * @generated from protobuf field: double launch_equity = 9;
+     */
+    launchEquity: number;
+    /**
+     * @generated from protobuf field: double perp_pnl = 10;
+     */
+    perpPnl: number;
+    /**
+     * @generated from protobuf field: double perp_equity = 11;
+     */
+    perpEquity: number;
+}
+/**
+ * @generated from protobuf message hypurr.HypurrFunCabalTrackedWallet
+ */
+export interface HypurrFunCabalTrackedWallet {
+    /**
+     * @generated from protobuf field: int64 telegram_chat_id = 1;
+     */
+    telegramChatId: number;
+    /**
+     * @generated from protobuf field: int64 wallet_id = 2;
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidWallet wallet = 3;
+     */
+    wallet?: HyperliquidWallet;
+    /**
+     * @generated from protobuf field: string label = 4;
+     */
+    label: string;
+    /**
+     * @generated from protobuf field: bool alert_spot = 5;
+     */
+    alertSpot: boolean;
+    /**
+     * @generated from protobuf field: bool alert_perp = 6;
+     */
+    alertPerp: boolean;
+}
+/**
+ * @generated from protobuf message hypurr.HypurrFunCabalSeason
+ */
+export interface HypurrFunCabalSeason {
+    /**
+     * @generated from protobuf field: int64 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: int64 start_time = 2;
+     */
+    startTime: number;
+    /**
+     * @generated from protobuf field: int64 end_time = 3;
+     */
+    endTime: number;
+    /**
+     * @generated from protobuf field: string name = 4;
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: repeated hypurr.HypurrFunCabalUserSeason user_seasons = 5;
+     */
+    userSeasons: HypurrFunCabalUserSeason[];
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value winner_id = 6;
+     */
+    winnerId?: Int64Value;
+    /**
+     * @generated from protobuf field: hypurr.HypurrFunCabal winner = 7;
+     */
+    winner?: HypurrFunCabal;
+}
+/**
+ * @generated from protobuf message hypurr.HypurrFunCabalUserSeason
+ */
+export interface HypurrFunCabalUserSeason {
+    /**
+     * @generated from protobuf field: int64 cabal_season_id = 1;
+     */
+    cabalSeasonId: number;
+    /**
+     * @generated from protobuf field: int64 telegram_id = 2;
+     */
+    telegramId: number;
+    /**
+     * @generated from protobuf field: int64 wallet_id = 3;
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: int64 telegram_chat_id = 4;
+     */
+    telegramChatId: number;
+    /**
+     * @generated from protobuf field: double spot_pnl = 5;
+     */
+    spotPnl: number;
+    /**
+     * @generated from protobuf field: double launch_pnl = 6;
+     */
+    launchPnl: number;
+    /**
+     * @generated from protobuf field: double perp_pnl = 7;
+     */
+    perpPnl: number;
+    /**
+     * @generated from protobuf field: double last_spot_pnl = 8;
+     */
+    lastSpotPnl: number;
+    /**
+     * @generated from protobuf field: double last_launch_pnl = 9;
+     */
+    lastLaunchPnl: number;
+    /**
+     * @generated from protobuf field: double last_perp_pnl = 10;
+     */
+    lastPerpPnl: number;
+}
+/**
+ * @generated from protobuf message hypurr.HypurrFunCabalsRequest
+ */
+export interface HypurrFunCabalsRequest {
+}
+/**
+ * @generated from protobuf message hypurr.HypurrFunCabalsResponse
+ */
+export interface HypurrFunCabalsResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.HypurrFunCabal cabals = 1;
+     */
+    cabals: HypurrFunCabal[];
+}
+/**
  * @generated from protobuf enum hypurr.HyperliquidLaunchPoolType
  */
 export enum HyperliquidLaunchPoolType {
@@ -5908,6 +6109,559 @@ class HyperliquidWalletPerformanceResponse$Type extends MessageType<HyperliquidW
  * @generated MessageType for protobuf message hypurr.HyperliquidWalletPerformanceResponse
  */
 export const HyperliquidWalletPerformanceResponse = new HyperliquidWalletPerformanceResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HypurrFunCabal$Type extends MessageType<HypurrFunCabal> {
+    constructor() {
+        super("hypurr.HypurrFunCabal", [
+            { no: 1, name: "telegram_chat_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "picture_file_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "users", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HypurrFunCabalUser },
+            { no: 5, name: "tracked_wallets", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HypurrFunCabalTrackedWallet },
+            { no: 6, name: "seasons", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HypurrFunCabalSeason }
+        ]);
+    }
+    create(value?: PartialMessage<HypurrFunCabal>): HypurrFunCabal {
+        const message = { telegramChatId: 0, name: "", pictureFileId: "", users: [], trackedWallets: [], seasons: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HypurrFunCabal>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HypurrFunCabal): HypurrFunCabal {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 telegram_chat_id */ 1:
+                    message.telegramChatId = reader.int64().toNumber();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* string picture_file_id */ 3:
+                    message.pictureFileId = reader.string();
+                    break;
+                case /* repeated hypurr.HypurrFunCabalUser users */ 4:
+                    message.users.push(HypurrFunCabalUser.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated hypurr.HypurrFunCabalTrackedWallet tracked_wallets */ 5:
+                    message.trackedWallets.push(HypurrFunCabalTrackedWallet.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated hypurr.HypurrFunCabalSeason seasons */ 6:
+                    message.seasons.push(HypurrFunCabalSeason.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HypurrFunCabal, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 telegram_chat_id = 1; */
+        if (message.telegramChatId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.telegramChatId);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* string picture_file_id = 3; */
+        if (message.pictureFileId !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.pictureFileId);
+        /* repeated hypurr.HypurrFunCabalUser users = 4; */
+        for (let i = 0; i < message.users.length; i++)
+            HypurrFunCabalUser.internalBinaryWrite(message.users[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.HypurrFunCabalTrackedWallet tracked_wallets = 5; */
+        for (let i = 0; i < message.trackedWallets.length; i++)
+            HypurrFunCabalTrackedWallet.internalBinaryWrite(message.trackedWallets[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.HypurrFunCabalSeason seasons = 6; */
+        for (let i = 0; i < message.seasons.length; i++)
+            HypurrFunCabalSeason.internalBinaryWrite(message.seasons[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HypurrFunCabal
+ */
+export const HypurrFunCabal = new HypurrFunCabal$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HypurrFunCabalUser$Type extends MessageType<HypurrFunCabalUser> {
+    constructor() {
+        super("hypurr.HypurrFunCabalUser", [
+            { no: 1, name: "telegram_chat_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "wallet", kind: "message", T: () => HyperliquidWallet },
+            { no: 4, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "spot_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "spot_equity", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "launch_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "launch_equity", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "perp_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "perp_equity", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HypurrFunCabalUser>): HypurrFunCabalUser {
+        const message = { telegramChatId: 0, telegramId: 0, walletId: 0, name: "", spotPnl: 0, spotEquity: 0, launchPnl: 0, launchEquity: 0, perpPnl: 0, perpEquity: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HypurrFunCabalUser>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HypurrFunCabalUser): HypurrFunCabalUser {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 telegram_chat_id */ 1:
+                    message.telegramChatId = reader.int64().toNumber();
+                    break;
+                case /* int64 telegram_id */ 2:
+                    message.telegramId = reader.int64().toNumber();
+                    break;
+                case /* hypurr.HyperliquidWallet wallet */ 3:
+                    message.wallet = HyperliquidWallet.internalBinaryRead(reader, reader.uint32(), options, message.wallet);
+                    break;
+                case /* int64 wallet_id */ 4:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* string name */ 5:
+                    message.name = reader.string();
+                    break;
+                case /* double spot_pnl */ 6:
+                    message.spotPnl = reader.double();
+                    break;
+                case /* double spot_equity */ 7:
+                    message.spotEquity = reader.double();
+                    break;
+                case /* double launch_pnl */ 8:
+                    message.launchPnl = reader.double();
+                    break;
+                case /* double launch_equity */ 9:
+                    message.launchEquity = reader.double();
+                    break;
+                case /* double perp_pnl */ 10:
+                    message.perpPnl = reader.double();
+                    break;
+                case /* double perp_equity */ 11:
+                    message.perpEquity = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HypurrFunCabalUser, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 telegram_chat_id = 1; */
+        if (message.telegramChatId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.telegramChatId);
+        /* int64 telegram_id = 2; */
+        if (message.telegramId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.telegramId);
+        /* hypurr.HyperliquidWallet wallet = 3; */
+        if (message.wallet)
+            HyperliquidWallet.internalBinaryWrite(message.wallet, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* int64 wallet_id = 4; */
+        if (message.walletId !== 0)
+            writer.tag(4, WireType.Varint).int64(message.walletId);
+        /* string name = 5; */
+        if (message.name !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.name);
+        /* double spot_pnl = 6; */
+        if (message.spotPnl !== 0)
+            writer.tag(6, WireType.Bit64).double(message.spotPnl);
+        /* double spot_equity = 7; */
+        if (message.spotEquity !== 0)
+            writer.tag(7, WireType.Bit64).double(message.spotEquity);
+        /* double launch_pnl = 8; */
+        if (message.launchPnl !== 0)
+            writer.tag(8, WireType.Bit64).double(message.launchPnl);
+        /* double launch_equity = 9; */
+        if (message.launchEquity !== 0)
+            writer.tag(9, WireType.Bit64).double(message.launchEquity);
+        /* double perp_pnl = 10; */
+        if (message.perpPnl !== 0)
+            writer.tag(10, WireType.Bit64).double(message.perpPnl);
+        /* double perp_equity = 11; */
+        if (message.perpEquity !== 0)
+            writer.tag(11, WireType.Bit64).double(message.perpEquity);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HypurrFunCabalUser
+ */
+export const HypurrFunCabalUser = new HypurrFunCabalUser$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HypurrFunCabalTrackedWallet$Type extends MessageType<HypurrFunCabalTrackedWallet> {
+    constructor() {
+        super("hypurr.HypurrFunCabalTrackedWallet", [
+            { no: 1, name: "telegram_chat_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "wallet", kind: "message", T: () => HyperliquidWallet },
+            { no: 4, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "alert_spot", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 6, name: "alert_perp", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HypurrFunCabalTrackedWallet>): HypurrFunCabalTrackedWallet {
+        const message = { telegramChatId: 0, walletId: 0, label: "", alertSpot: false, alertPerp: false };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HypurrFunCabalTrackedWallet>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HypurrFunCabalTrackedWallet): HypurrFunCabalTrackedWallet {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 telegram_chat_id */ 1:
+                    message.telegramChatId = reader.int64().toNumber();
+                    break;
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* hypurr.HyperliquidWallet wallet */ 3:
+                    message.wallet = HyperliquidWallet.internalBinaryRead(reader, reader.uint32(), options, message.wallet);
+                    break;
+                case /* string label */ 4:
+                    message.label = reader.string();
+                    break;
+                case /* bool alert_spot */ 5:
+                    message.alertSpot = reader.bool();
+                    break;
+                case /* bool alert_perp */ 6:
+                    message.alertPerp = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HypurrFunCabalTrackedWallet, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 telegram_chat_id = 1; */
+        if (message.telegramChatId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.telegramChatId);
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* hypurr.HyperliquidWallet wallet = 3; */
+        if (message.wallet)
+            HyperliquidWallet.internalBinaryWrite(message.wallet, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* string label = 4; */
+        if (message.label !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.label);
+        /* bool alert_spot = 5; */
+        if (message.alertSpot !== false)
+            writer.tag(5, WireType.Varint).bool(message.alertSpot);
+        /* bool alert_perp = 6; */
+        if (message.alertPerp !== false)
+            writer.tag(6, WireType.Varint).bool(message.alertPerp);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HypurrFunCabalTrackedWallet
+ */
+export const HypurrFunCabalTrackedWallet = new HypurrFunCabalTrackedWallet$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HypurrFunCabalSeason$Type extends MessageType<HypurrFunCabalSeason> {
+    constructor() {
+        super("hypurr.HypurrFunCabalSeason", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "start_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "end_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "user_seasons", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HypurrFunCabalUserSeason },
+            { no: 6, name: "winner_id", kind: "message", T: () => Int64Value },
+            { no: 7, name: "winner", kind: "message", T: () => HypurrFunCabal }
+        ]);
+    }
+    create(value?: PartialMessage<HypurrFunCabalSeason>): HypurrFunCabalSeason {
+        const message = { id: 0, startTime: 0, endTime: 0, name: "", userSeasons: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HypurrFunCabalSeason>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HypurrFunCabalSeason): HypurrFunCabalSeason {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* int64 start_time */ 2:
+                    message.startTime = reader.int64().toNumber();
+                    break;
+                case /* int64 end_time */ 3:
+                    message.endTime = reader.int64().toNumber();
+                    break;
+                case /* string name */ 4:
+                    message.name = reader.string();
+                    break;
+                case /* repeated hypurr.HypurrFunCabalUserSeason user_seasons */ 5:
+                    message.userSeasons.push(HypurrFunCabalUserSeason.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* google.protobuf.Int64Value winner_id */ 6:
+                    message.winnerId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.winnerId);
+                    break;
+                case /* hypurr.HypurrFunCabal winner */ 7:
+                    message.winner = HypurrFunCabal.internalBinaryRead(reader, reader.uint32(), options, message.winner);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HypurrFunCabalSeason, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* int64 start_time = 2; */
+        if (message.startTime !== 0)
+            writer.tag(2, WireType.Varint).int64(message.startTime);
+        /* int64 end_time = 3; */
+        if (message.endTime !== 0)
+            writer.tag(3, WireType.Varint).int64(message.endTime);
+        /* string name = 4; */
+        if (message.name !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.name);
+        /* repeated hypurr.HypurrFunCabalUserSeason user_seasons = 5; */
+        for (let i = 0; i < message.userSeasons.length; i++)
+            HypurrFunCabalUserSeason.internalBinaryWrite(message.userSeasons[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value winner_id = 6; */
+        if (message.winnerId)
+            Int64Value.internalBinaryWrite(message.winnerId, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.HypurrFunCabal winner = 7; */
+        if (message.winner)
+            HypurrFunCabal.internalBinaryWrite(message.winner, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HypurrFunCabalSeason
+ */
+export const HypurrFunCabalSeason = new HypurrFunCabalSeason$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HypurrFunCabalUserSeason$Type extends MessageType<HypurrFunCabalUserSeason> {
+    constructor() {
+        super("hypurr.HypurrFunCabalUserSeason", [
+            { no: 1, name: "cabal_season_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "telegram_chat_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "spot_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "launch_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "perp_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "last_spot_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "last_launch_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "last_perp_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HypurrFunCabalUserSeason>): HypurrFunCabalUserSeason {
+        const message = { cabalSeasonId: 0, telegramId: 0, walletId: 0, telegramChatId: 0, spotPnl: 0, launchPnl: 0, perpPnl: 0, lastSpotPnl: 0, lastLaunchPnl: 0, lastPerpPnl: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HypurrFunCabalUserSeason>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HypurrFunCabalUserSeason): HypurrFunCabalUserSeason {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 cabal_season_id */ 1:
+                    message.cabalSeasonId = reader.int64().toNumber();
+                    break;
+                case /* int64 telegram_id */ 2:
+                    message.telegramId = reader.int64().toNumber();
+                    break;
+                case /* int64 wallet_id */ 3:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* int64 telegram_chat_id */ 4:
+                    message.telegramChatId = reader.int64().toNumber();
+                    break;
+                case /* double spot_pnl */ 5:
+                    message.spotPnl = reader.double();
+                    break;
+                case /* double launch_pnl */ 6:
+                    message.launchPnl = reader.double();
+                    break;
+                case /* double perp_pnl */ 7:
+                    message.perpPnl = reader.double();
+                    break;
+                case /* double last_spot_pnl */ 8:
+                    message.lastSpotPnl = reader.double();
+                    break;
+                case /* double last_launch_pnl */ 9:
+                    message.lastLaunchPnl = reader.double();
+                    break;
+                case /* double last_perp_pnl */ 10:
+                    message.lastPerpPnl = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HypurrFunCabalUserSeason, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 cabal_season_id = 1; */
+        if (message.cabalSeasonId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.cabalSeasonId);
+        /* int64 telegram_id = 2; */
+        if (message.telegramId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.telegramId);
+        /* int64 wallet_id = 3; */
+        if (message.walletId !== 0)
+            writer.tag(3, WireType.Varint).int64(message.walletId);
+        /* int64 telegram_chat_id = 4; */
+        if (message.telegramChatId !== 0)
+            writer.tag(4, WireType.Varint).int64(message.telegramChatId);
+        /* double spot_pnl = 5; */
+        if (message.spotPnl !== 0)
+            writer.tag(5, WireType.Bit64).double(message.spotPnl);
+        /* double launch_pnl = 6; */
+        if (message.launchPnl !== 0)
+            writer.tag(6, WireType.Bit64).double(message.launchPnl);
+        /* double perp_pnl = 7; */
+        if (message.perpPnl !== 0)
+            writer.tag(7, WireType.Bit64).double(message.perpPnl);
+        /* double last_spot_pnl = 8; */
+        if (message.lastSpotPnl !== 0)
+            writer.tag(8, WireType.Bit64).double(message.lastSpotPnl);
+        /* double last_launch_pnl = 9; */
+        if (message.lastLaunchPnl !== 0)
+            writer.tag(9, WireType.Bit64).double(message.lastLaunchPnl);
+        /* double last_perp_pnl = 10; */
+        if (message.lastPerpPnl !== 0)
+            writer.tag(10, WireType.Bit64).double(message.lastPerpPnl);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HypurrFunCabalUserSeason
+ */
+export const HypurrFunCabalUserSeason = new HypurrFunCabalUserSeason$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HypurrFunCabalsRequest$Type extends MessageType<HypurrFunCabalsRequest> {
+    constructor() {
+        super("hypurr.HypurrFunCabalsRequest", []);
+    }
+    create(value?: PartialMessage<HypurrFunCabalsRequest>): HypurrFunCabalsRequest {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HypurrFunCabalsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HypurrFunCabalsRequest): HypurrFunCabalsRequest {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: HypurrFunCabalsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HypurrFunCabalsRequest
+ */
+export const HypurrFunCabalsRequest = new HypurrFunCabalsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HypurrFunCabalsResponse$Type extends MessageType<HypurrFunCabalsResponse> {
+    constructor() {
+        super("hypurr.HypurrFunCabalsResponse", [
+            { no: 1, name: "cabals", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HypurrFunCabal }
+        ]);
+    }
+    create(value?: PartialMessage<HypurrFunCabalsResponse>): HypurrFunCabalsResponse {
+        const message = { cabals: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HypurrFunCabalsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HypurrFunCabalsResponse): HypurrFunCabalsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.HypurrFunCabal cabals */ 1:
+                    message.cabals.push(HypurrFunCabal.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HypurrFunCabalsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.HypurrFunCabal cabals = 1; */
+        for (let i = 0; i < message.cabals.length; i++)
+            HypurrFunCabal.internalBinaryWrite(message.cabals[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HypurrFunCabalsResponse
+ */
+export const HypurrFunCabalsResponse = new HypurrFunCabalsResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Static
  */
@@ -5932,6 +6686,7 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "HyperliquidLaunchMessages", serverStreaming: true, options: {}, I: HyperliquidLaunchMessagesRequest, O: HyperliquidLaunchMessagesResponse },
     { name: "LatestHyperliquidLaunchFills", serverStreaming: true, options: {}, I: LatestHyperliquidLaunchFillsRequest, O: HyperliquidLaunchFillsResponse },
     { name: "HyperliquidLaunchHolders", options: {}, I: HyperliquidLaunchHoldersRequest, O: HyperliquidLaunchHoldersResponse },
+    { name: "HypurrFunCabals", options: {}, I: HypurrFunCabalsRequest, O: HypurrFunCabalsResponse },
     { name: "SetHyperliquidWalletDeploySessionTarget", options: {}, I: SetHyperliquidWalletDeploySessionTargetRequest, O: SetHyperliquidWalletDeploySessionTargetResponse },
     { name: "DeleteHyperliquidWalletDeploySessionTarget", options: {}, I: DeleteHyperliquidWalletDeploySessionTargetRequest, O: DeleteHyperliquidWalletDeploySessionTargetResponse }
 ]);
