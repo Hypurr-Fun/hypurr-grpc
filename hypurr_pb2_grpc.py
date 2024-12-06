@@ -84,6 +84,11 @@ class StaticStub(object):
         request_serializer=hypurr__pb2.HyperliquidLaunchesRequest.SerializeToString,
         response_deserializer=hypurr__pb2.HyperliquidLaunchesResponse.FromString,
         )
+    self.HyperliquidLaunchStream = channel.unary_stream(
+        '/hypurr.Static/HyperliquidLaunchStream',
+        request_serializer=hypurr__pb2.HyperliquidLaunchStreamRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.HyperliquidLaunchStreamResponse.FromString,
+        )
     self.HyperliquidLaunchFills = channel.unary_stream(
         '/hypurr.Static/HyperliquidLaunchFills',
         request_serializer=hypurr__pb2.HyperliquidLaunchFillsRequest.SerializeToString,
@@ -233,6 +238,13 @@ class StaticServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def HyperliquidLaunchStream(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def HyperliquidLaunchFills(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -368,6 +380,11 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.HyperliquidLaunches,
           request_deserializer=hypurr__pb2.HyperliquidLaunchesRequest.FromString,
           response_serializer=hypurr__pb2.HyperliquidLaunchesResponse.SerializeToString,
+      ),
+      'HyperliquidLaunchStream': grpc.unary_stream_rpc_method_handler(
+          servicer.HyperliquidLaunchStream,
+          request_deserializer=hypurr__pb2.HyperliquidLaunchStreamRequest.FromString,
+          response_serializer=hypurr__pb2.HyperliquidLaunchStreamResponse.SerializeToString,
       ),
       'HyperliquidLaunchFills': grpc.unary_stream_rpc_method_handler(
           servicer.HyperliquidLaunchFills,

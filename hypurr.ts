@@ -859,6 +859,24 @@ export interface HyperliquidLaunchesResponse {
     launches: HyperliquidLaunch[];
 }
 /**
+ * @generated from protobuf message hypurr.HyperliquidLaunchStreamRequest
+ */
+export interface HyperliquidLaunchStreamRequest {
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value launch_id = 1;
+     */
+    launchId?: Int64Value;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidLaunchStreamResponse
+ */
+export interface HyperliquidLaunchStreamResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.HyperliquidLaunch launches = 1;
+     */
+    launches: HyperliquidLaunch[];
+}
+/**
  * @generated from protobuf message hypurr.HyperliquidWalletDeploySessionsRequest
  */
 export interface HyperliquidWalletDeploySessionsRequest {
@@ -4209,6 +4227,100 @@ class HyperliquidLaunchesResponse$Type extends MessageType<HyperliquidLaunchesRe
  */
 export const HyperliquidLaunchesResponse = new HyperliquidLaunchesResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidLaunchStreamRequest$Type extends MessageType<HyperliquidLaunchStreamRequest> {
+    constructor() {
+        super("hypurr.HyperliquidLaunchStreamRequest", [
+            { no: 1, name: "launch_id", kind: "message", T: () => Int64Value }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidLaunchStreamRequest>): HyperliquidLaunchStreamRequest {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidLaunchStreamRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidLaunchStreamRequest): HyperliquidLaunchStreamRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* google.protobuf.Int64Value launch_id */ 1:
+                    message.launchId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.launchId);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidLaunchStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* google.protobuf.Int64Value launch_id = 1; */
+        if (message.launchId)
+            Int64Value.internalBinaryWrite(message.launchId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidLaunchStreamRequest
+ */
+export const HyperliquidLaunchStreamRequest = new HyperliquidLaunchStreamRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidLaunchStreamResponse$Type extends MessageType<HyperliquidLaunchStreamResponse> {
+    constructor() {
+        super("hypurr.HyperliquidLaunchStreamResponse", [
+            { no: 1, name: "launches", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidLaunch }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidLaunchStreamResponse>): HyperliquidLaunchStreamResponse {
+        const message = { launches: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidLaunchStreamResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidLaunchStreamResponse): HyperliquidLaunchStreamResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.HyperliquidLaunch launches */ 1:
+                    message.launches.push(HyperliquidLaunch.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidLaunchStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.HyperliquidLaunch launches = 1; */
+        for (let i = 0; i < message.launches.length; i++)
+            HyperliquidLaunch.internalBinaryWrite(message.launches[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidLaunchStreamResponse
+ */
+export const HyperliquidLaunchStreamResponse = new HyperliquidLaunchStreamResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidWalletDeploySessionsRequest$Type extends MessageType<HyperliquidWalletDeploySessionsRequest> {
     constructor() {
         super("hypurr.HyperliquidWalletDeploySessionsRequest", [
@@ -6780,6 +6892,7 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "HyperliquidWalletPerformance", options: {}, I: HyperliquidWalletPerformanceRequest, O: HyperliquidWalletPerformanceResponse },
     { name: "HyperliquidLaunch", options: {}, I: HyperliquidLaunchRequest, O: HyperliquidLaunchResponse },
     { name: "HyperliquidLaunches", options: {}, I: HyperliquidLaunchesRequest, O: HyperliquidLaunchesResponse },
+    { name: "HyperliquidLaunchStream", serverStreaming: true, options: {}, I: HyperliquidLaunchStreamRequest, O: HyperliquidLaunchStreamResponse },
     { name: "HyperliquidLaunchFills", serverStreaming: true, options: {}, I: HyperliquidLaunchFillsRequest, O: HyperliquidLaunchFillsResponse },
     { name: "HyperliquidLaunchCandles", options: {}, I: HyperliquidLaunchCandlesRequest, O: HyperliquidLaunchCandlesResponse },
     { name: "HyperliquidLaunchCandleStream", serverStreaming: true, options: {}, I: HyperliquidLaunchCandlesRequest, O: HyperliquidLaunchCandlesResponse },

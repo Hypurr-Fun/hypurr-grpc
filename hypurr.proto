@@ -286,6 +286,14 @@ message HyperliquidLaunchesResponse {
   repeated HyperliquidLaunch launches = 1;
 }
 
+message HyperliquidLaunchStreamRequest {
+  google.protobuf.Int64Value launch_id = 1;
+}
+
+message HyperliquidLaunchStreamResponse {
+  repeated HyperliquidLaunch launches = 1;
+}
+
 message HyperliquidWalletDeploySessionsRequest {
   google.protobuf.Int64Value telegram_id = 1;
   google.protobuf.Int64Value wallet_id = 2;
@@ -570,6 +578,7 @@ service Static {
 
   rpc HyperliquidLaunch (HyperliquidLaunchRequest) returns (HyperliquidLaunchResponse) {}
   rpc HyperliquidLaunches (HyperliquidLaunchesRequest) returns (HyperliquidLaunchesResponse) {}
+  rpc HyperliquidLaunchStream (HyperliquidLaunchStreamRequest) returns (stream HyperliquidLaunchStreamResponse) {}
   rpc HyperliquidLaunchFills (HyperliquidLaunchFillsRequest) returns (stream HyperliquidLaunchFillsResponse) {}
   rpc HyperliquidLaunchCandles (HyperliquidLaunchCandlesRequest) returns (HyperliquidLaunchCandlesResponse) {}
   rpc HyperliquidLaunchCandleStream (HyperliquidLaunchCandlesRequest) returns (stream HyperliquidLaunchCandlesResponse) {}
