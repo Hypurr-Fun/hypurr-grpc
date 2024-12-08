@@ -1400,6 +1400,10 @@ export interface HyperliquidWalletPerformanceResponse {
      * @generated from protobuf field: hypurr.Performance perp = 2;
      */
     perp?: Performance;
+    /**
+     * @generated from protobuf field: hypurr.Performance launch = 3;
+     */
+    launch?: Performance;
 }
 /**
  * CABALS
@@ -6197,7 +6201,8 @@ class HyperliquidWalletPerformanceResponse$Type extends MessageType<HyperliquidW
     constructor() {
         super("hypurr.HyperliquidWalletPerformanceResponse", [
             { no: 1, name: "spot", kind: "message", T: () => Performance },
-            { no: 2, name: "perp", kind: "message", T: () => Performance }
+            { no: 2, name: "perp", kind: "message", T: () => Performance },
+            { no: 3, name: "launch", kind: "message", T: () => Performance }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWalletPerformanceResponse>): HyperliquidWalletPerformanceResponse {
@@ -6218,6 +6223,9 @@ class HyperliquidWalletPerformanceResponse$Type extends MessageType<HyperliquidW
                 case /* hypurr.Performance perp */ 2:
                     message.perp = Performance.internalBinaryRead(reader, reader.uint32(), options, message.perp);
                     break;
+                case /* hypurr.Performance launch */ 3:
+                    message.launch = Performance.internalBinaryRead(reader, reader.uint32(), options, message.launch);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -6236,6 +6244,9 @@ class HyperliquidWalletPerformanceResponse$Type extends MessageType<HyperliquidW
         /* hypurr.Performance perp = 2; */
         if (message.perp)
             Performance.internalBinaryWrite(message.perp, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.Performance launch = 3; */
+        if (message.launch)
+            Performance.internalBinaryWrite(message.launch, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -484,6 +484,7 @@ message Performance {
 message HyperliquidWalletPerformanceResponse {
   Performance spot = 1;
   Performance perp = 2;
+  Performance launch = 3;
 }
 
 // CABALS
