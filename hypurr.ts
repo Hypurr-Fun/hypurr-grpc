@@ -1312,6 +1312,10 @@ export interface HyperliquidWalletPerformanceRequest {
      * @generated from protobuf field: google.protobuf.StringValue ethereum_address = 1;
      */
     ethereumAddress?: StringValue;
+    /**
+     * @generated from protobuf field: string account_type = 2;
+     */
+    accountType: string;
 }
 /**
  * @generated from protobuf message hypurr.PerformancePoint
@@ -5928,11 +5932,12 @@ export const TelegramUserWalletsResponse = new TelegramUserWalletsResponse$Type(
 class HyperliquidWalletPerformanceRequest$Type extends MessageType<HyperliquidWalletPerformanceRequest> {
     constructor() {
         super("hypurr.HyperliquidWalletPerformanceRequest", [
-            { no: 1, name: "ethereum_address", kind: "message", T: () => StringValue }
+            { no: 1, name: "ethereum_address", kind: "message", T: () => StringValue },
+            { no: 2, name: "account_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWalletPerformanceRequest>): HyperliquidWalletPerformanceRequest {
-        const message = {};
+        const message = { accountType: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWalletPerformanceRequest>(this, message, value);
@@ -5945,6 +5950,9 @@ class HyperliquidWalletPerformanceRequest$Type extends MessageType<HyperliquidWa
             switch (fieldNo) {
                 case /* google.protobuf.StringValue ethereum_address */ 1:
                     message.ethereumAddress = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.ethereumAddress);
+                    break;
+                case /* string account_type */ 2:
+                    message.accountType = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5961,6 +5969,9 @@ class HyperliquidWalletPerformanceRequest$Type extends MessageType<HyperliquidWa
         /* google.protobuf.StringValue ethereum_address = 1; */
         if (message.ethereumAddress)
             StringValue.internalBinaryWrite(message.ethereumAddress, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string account_type = 2; */
+        if (message.accountType !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.accountType);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

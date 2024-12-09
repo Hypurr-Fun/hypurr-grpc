@@ -455,6 +455,7 @@ message TelegramUserWalletsResponse {
 
 message HyperliquidWalletPerformanceRequest {
   google.protobuf.StringValue ethereum_address = 1;
+  string account_type = 2;
 }
 
 message PerformancePoint {
