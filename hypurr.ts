@@ -421,7 +421,7 @@ export interface HyperliquidLaunchBalance {
      */
     launchId: number;
     /**
-     * @generated from protobuf field: double balance = 4;
+     * @generated from protobuf field: int64 balance = 4;
      */
     balance: number;
 }
@@ -2742,7 +2742,7 @@ class HyperliquidLaunchBalance$Type extends MessageType<HyperliquidLaunchBalance
             { no: 1, name: "telegram_id", kind: "message", T: () => Int64Value },
             { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "balance", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 4, name: "balance", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchBalance>): HyperliquidLaunchBalance {
@@ -2766,8 +2766,8 @@ class HyperliquidLaunchBalance$Type extends MessageType<HyperliquidLaunchBalance
                 case /* int64 launch_id */ 3:
                     message.launchId = reader.int64().toNumber();
                     break;
-                case /* double balance */ 4:
-                    message.balance = reader.double();
+                case /* int64 balance */ 4:
+                    message.balance = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2790,9 +2790,9 @@ class HyperliquidLaunchBalance$Type extends MessageType<HyperliquidLaunchBalance
         /* int64 launch_id = 3; */
         if (message.launchId !== 0)
             writer.tag(3, WireType.Varint).int64(message.launchId);
-        /* double balance = 4; */
+        /* int64 balance = 4; */
         if (message.balance !== 0)
-            writer.tag(4, WireType.Bit64).double(message.balance);
+            writer.tag(4, WireType.Varint).int64(message.balance);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
