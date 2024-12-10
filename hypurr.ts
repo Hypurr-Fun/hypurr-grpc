@@ -309,13 +309,17 @@ export interface HyperliquidWallet {
      */
     points: number;
     /**
-     * @generated from protobuf field: repeated hypurr.HyperliquidWalletBalance balances = 6;
-     */
-    balances: HyperliquidWalletBalance[];
-    /**
-     * @generated from protobuf field: repeated hypurr.HyperliquidWalletMovement movements = 7;
+     * @generated from protobuf field: repeated hypurr.HyperliquidWalletMovement movements = 6;
      */
     movements: HyperliquidWalletMovement[];
+    /**
+     * @generated from protobuf field: repeated hypurr.HyperliquidWalletBalance spot_balances = 7;
+     */
+    spotBalances: HyperliquidWalletBalance[];
+    /**
+     * @generated from protobuf field: repeated hypurr.HyperliquidLaunchBalance launch_balances = 8;
+     */
+    launchBalances: HyperliquidLaunchBalance[];
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidPublicWallet
@@ -395,6 +399,27 @@ export interface HyperliquidWalletBalance {
      * @generated from protobuf field: int64 token_id = 3;
      */
     tokenId: number;
+    /**
+     * @generated from protobuf field: int64 balance = 4;
+     */
+    balance: number;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidLaunchBalance
+ */
+export interface HyperliquidLaunchBalance {
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value telegram_id = 1;
+     */
+    telegramId?: Int64Value;
+    /**
+     * @generated from protobuf field: int64 wallet_id = 2;
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: int64 launch_id = 3;
+     */
+    launchId: number;
     /**
      * @generated from protobuf field: double balance = 4;
      */
@@ -580,39 +605,6 @@ export interface HyperliquidLaunch {
      * @generated from protobuf field: string media_type = 22;
      */
     mediaType: string;
-}
-/**
- * @generated from protobuf message hypurr.HyperliquidLaunchBalance
- */
-export interface HyperliquidLaunchBalance {
-    /**
-     * @generated from protobuf field: int64 launch_id = 1;
-     */
-    launchId: number;
-    /**
-     * @generated from protobuf field: hypurr.HyperliquidLaunch launch = 2;
-     */
-    launch?: HyperliquidLaunch;
-    /**
-     * @generated from protobuf field: google.protobuf.Int64Value telegram_id = 3;
-     */
-    telegramId?: Int64Value;
-    /**
-     * @generated from protobuf field: hypurr.TelegramUserPublic telegram = 4;
-     */
-    telegram?: TelegramUserPublic;
-    /**
-     * @generated from protobuf field: int64 wallet_id = 5;
-     */
-    walletId: number;
-    /**
-     * @generated from protobuf field: hypurr.HyperliquidWallet wallet = 6;
-     */
-    wallet?: HyperliquidWallet;
-    /**
-     * @generated from protobuf field: int32 balance = 7;
-     */
-    balance: number;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchFill
@@ -2417,12 +2409,13 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
             { no: 3, name: "telegram_id", kind: "message", T: () => Int64Value },
             { no: 4, name: "ethereum_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "points", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidWalletBalance },
-            { no: 7, name: "movements", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidWalletMovement }
+            { no: 6, name: "movements", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidWalletMovement },
+            { no: 7, name: "spot_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidWalletBalance },
+            { no: 8, name: "launch_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidLaunchBalance }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWallet>): HyperliquidWallet {
-        const message = { id: 0, name: "", ethereumAddress: "", points: 0, balances: [], movements: [] };
+        const message = { id: 0, name: "", ethereumAddress: "", points: 0, movements: [], spotBalances: [], launchBalances: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWallet>(this, message, value);
@@ -2448,11 +2441,14 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
                 case /* int32 points */ 5:
                     message.points = reader.int32();
                     break;
-                case /* repeated hypurr.HyperliquidWalletBalance balances */ 6:
-                    message.balances.push(HyperliquidWalletBalance.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* repeated hypurr.HyperliquidWalletMovement movements */ 7:
+                case /* repeated hypurr.HyperliquidWalletMovement movements */ 6:
                     message.movements.push(HyperliquidWalletMovement.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated hypurr.HyperliquidWalletBalance spot_balances */ 7:
+                    message.spotBalances.push(HyperliquidWalletBalance.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated hypurr.HyperliquidLaunchBalance launch_balances */ 8:
+                    message.launchBalances.push(HyperliquidLaunchBalance.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2481,12 +2477,15 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
         /* int32 points = 5; */
         if (message.points !== 0)
             writer.tag(5, WireType.Varint).int32(message.points);
-        /* repeated hypurr.HyperliquidWalletBalance balances = 6; */
-        for (let i = 0; i < message.balances.length; i++)
-            HyperliquidWalletBalance.internalBinaryWrite(message.balances[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* repeated hypurr.HyperliquidWalletMovement movements = 7; */
+        /* repeated hypurr.HyperliquidWalletMovement movements = 6; */
         for (let i = 0; i < message.movements.length; i++)
-            HyperliquidWalletMovement.internalBinaryWrite(message.movements[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+            HyperliquidWalletMovement.internalBinaryWrite(message.movements[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.HyperliquidWalletBalance spot_balances = 7; */
+        for (let i = 0; i < message.spotBalances.length; i++)
+            HyperliquidWalletBalance.internalBinaryWrite(message.spotBalances[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.HyperliquidLaunchBalance launch_balances = 8; */
+        for (let i = 0; i < message.launchBalances.length; i++)
+            HyperliquidLaunchBalance.internalBinaryWrite(message.launchBalances[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2675,7 +2674,7 @@ class HyperliquidWalletBalance$Type extends MessageType<HyperliquidWalletBalance
             { no: 1, name: "telegram_id", kind: "message", T: () => Int64Value },
             { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "token_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "balance", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 4, name: "balance", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWalletBalance>): HyperliquidWalletBalance {
@@ -2699,8 +2698,8 @@ class HyperliquidWalletBalance$Type extends MessageType<HyperliquidWalletBalance
                 case /* int64 token_id */ 3:
                     message.tokenId = reader.int64().toNumber();
                     break;
-                case /* double balance */ 4:
-                    message.balance = reader.double();
+                case /* int64 balance */ 4:
+                    message.balance = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2723,9 +2722,9 @@ class HyperliquidWalletBalance$Type extends MessageType<HyperliquidWalletBalance
         /* int64 token_id = 3; */
         if (message.tokenId !== 0)
             writer.tag(3, WireType.Varint).int64(message.tokenId);
-        /* double balance = 4; */
+        /* int64 balance = 4; */
         if (message.balance !== 0)
-            writer.tag(4, WireType.Bit64).double(message.balance);
+            writer.tag(4, WireType.Varint).int64(message.balance);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2736,6 +2735,74 @@ class HyperliquidWalletBalance$Type extends MessageType<HyperliquidWalletBalance
  * @generated MessageType for protobuf message hypurr.HyperliquidWalletBalance
  */
 export const HyperliquidWalletBalance = new HyperliquidWalletBalance$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidLaunchBalance$Type extends MessageType<HyperliquidLaunchBalance> {
+    constructor() {
+        super("hypurr.HyperliquidLaunchBalance", [
+            { no: 1, name: "telegram_id", kind: "message", T: () => Int64Value },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "balance", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidLaunchBalance>): HyperliquidLaunchBalance {
+        const message = { walletId: 0, launchId: 0, balance: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidLaunchBalance>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidLaunchBalance): HyperliquidLaunchBalance {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* google.protobuf.Int64Value telegram_id */ 1:
+                    message.telegramId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.telegramId);
+                    break;
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* int64 launch_id */ 3:
+                    message.launchId = reader.int64().toNumber();
+                    break;
+                case /* double balance */ 4:
+                    message.balance = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidLaunchBalance, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* google.protobuf.Int64Value telegram_id = 1; */
+        if (message.telegramId)
+            Int64Value.internalBinaryWrite(message.telegramId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* int64 launch_id = 3; */
+        if (message.launchId !== 0)
+            writer.tag(3, WireType.Varint).int64(message.launchId);
+        /* double balance = 4; */
+        if (message.balance !== 0)
+            writer.tag(4, WireType.Bit64).double(message.balance);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidLaunchBalance
+ */
+export const HyperliquidLaunchBalance = new HyperliquidLaunchBalance$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidWalletDeploySession$Type extends MessageType<HyperliquidWalletDeploySession> {
     constructor() {
@@ -3163,95 +3230,6 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
  * @generated MessageType for protobuf message hypurr.HyperliquidLaunch
  */
 export const HyperliquidLaunch = new HyperliquidLaunch$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class HyperliquidLaunchBalance$Type extends MessageType<HyperliquidLaunchBalance> {
-    constructor() {
-        super("hypurr.HyperliquidLaunchBalance", [
-            { no: 1, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "launch", kind: "message", T: () => HyperliquidLaunch },
-            { no: 3, name: "telegram_id", kind: "message", T: () => Int64Value },
-            { no: 4, name: "telegram", kind: "message", T: () => TelegramUserPublic },
-            { no: 5, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 6, name: "wallet", kind: "message", T: () => HyperliquidWallet },
-            { no: 7, name: "balance", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
-        ]);
-    }
-    create(value?: PartialMessage<HyperliquidLaunchBalance>): HyperliquidLaunchBalance {
-        const message = { launchId: 0, walletId: 0, balance: 0 };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<HyperliquidLaunchBalance>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidLaunchBalance): HyperliquidLaunchBalance {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 launch_id */ 1:
-                    message.launchId = reader.int64().toNumber();
-                    break;
-                case /* hypurr.HyperliquidLaunch launch */ 2:
-                    message.launch = HyperliquidLaunch.internalBinaryRead(reader, reader.uint32(), options, message.launch);
-                    break;
-                case /* google.protobuf.Int64Value telegram_id */ 3:
-                    message.telegramId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.telegramId);
-                    break;
-                case /* hypurr.TelegramUserPublic telegram */ 4:
-                    message.telegram = TelegramUserPublic.internalBinaryRead(reader, reader.uint32(), options, message.telegram);
-                    break;
-                case /* int64 wallet_id */ 5:
-                    message.walletId = reader.int64().toNumber();
-                    break;
-                case /* hypurr.HyperliquidWallet wallet */ 6:
-                    message.wallet = HyperliquidWallet.internalBinaryRead(reader, reader.uint32(), options, message.wallet);
-                    break;
-                case /* int32 balance */ 7:
-                    message.balance = reader.int32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: HyperliquidLaunchBalance, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 launch_id = 1; */
-        if (message.launchId !== 0)
-            writer.tag(1, WireType.Varint).int64(message.launchId);
-        /* hypurr.HyperliquidLaunch launch = 2; */
-        if (message.launch)
-            HyperliquidLaunch.internalBinaryWrite(message.launch, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Int64Value telegram_id = 3; */
-        if (message.telegramId)
-            Int64Value.internalBinaryWrite(message.telegramId, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* hypurr.TelegramUserPublic telegram = 4; */
-        if (message.telegram)
-            TelegramUserPublic.internalBinaryWrite(message.telegram, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* int64 wallet_id = 5; */
-        if (message.walletId !== 0)
-            writer.tag(5, WireType.Varint).int64(message.walletId);
-        /* hypurr.HyperliquidWallet wallet = 6; */
-        if (message.wallet)
-            HyperliquidWallet.internalBinaryWrite(message.wallet, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* int32 balance = 7; */
-        if (message.balance !== 0)
-            writer.tag(7, WireType.Varint).int32(message.balance);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.HyperliquidLaunchBalance
- */
-export const HyperliquidLaunchBalance = new HyperliquidLaunchBalance$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidLaunchFill$Type extends MessageType<HyperliquidLaunchFill> {
     constructor() {

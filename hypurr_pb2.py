@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x0chypurr.proto\x12\x06hypurr\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xdf\x02\n\x10HyperliquidToken\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05index\x18\x03 \x01(\x03\x12\x13\n\x0bsz_decimals\x18\x04 \x01(\x03\x12\x14\n\x0cwei_decimals\x18\x05 \x01(\x03\x12\x10\n\x08token_id\x18\x06 \x01(\t\x12\x1a\n\x12\x63irculating_supply\x18\x07 \x01(\x01\x12\x37\n\x0b\x64\x65ploy_info\x18\x08 \x01(\x0b\x32\".hypurr.HyperliquidTokenDeployInfo\x12\x30\n\x07geneses\x18\t \x03(\x0b\x32\x1f.hypurr.HyperliquidTokenGenesis\x12\x13\n\x0bhlq_balance\x18\n \x01(\x01\x12\x11\n\tfull_name\x18\x0b \x01(\t\x12\x36\n\nstatistics\x18\x0c \x01(\x0b\x32\".hypurr.HyperliquidTokenStatistics\"H\n\x16HyperliquidTokenHolder\x12\x0f\n\x07\x62\x61lance\x18\x01 \x01(\x01\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\"2\n\x1eHyperliquidTokenHoldersRequest\x12\x10\n\x08token_id\x18\x01 \x01(\x03\"R\n\x1fHyperliquidTokenHoldersResponse\x12/\n\x07holders\x18\x01 \x03(\x0b\x32\x1e.hypurr.HyperliquidTokenHolder\"g\n\x1aHyperliquidTokenStatistics\x12\x10\n\x08token_id\x18\x01 \x01(\x03\x12\x14\n\x0cholder_count\x18\x02 \x01(\x03\x12!\n\x19\x63oncentration_coefficient\x18\x03 \x01(\x01\"\xf5\x01\n\x1aHyperliquidTokenDeployInfo\x12\x10\n\x08token_id\x18\x01 \x01(\x03\x12\x0e\n\x06height\x18\x02 \x01(\x03\x12\x10\n\x08\x64\x65ployer\x18\x03 \x01(\t\x12\x13\n\x0bregister_tx\x18\x04 \x01(\t\x12\x18\n\x10register_spot_tx\x18\x05 \x01(\t\x12\x12\n\ngenesis_tx\x18\x06 \x01(\t\x12\x19\n\x11hyperliquidity_tx\x18\x07 \x01(\t\x12\x12\n\nhip2_price\x18\x08 \x01(\x01\x12\x18\n\x10hip2_order_count\x18\t \x01(\x05\x12\x17\n\x0fhip2_order_size\x18\n \x01(\x01\"\x8f\x01\n\x17HyperliquidTokenGenesis\x12\x10\n\x08token_id\x18\x01 \x01(\x03\x12\x0e\n\x06target\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x01\x12\x0c\n\x04type\x18\x04 \x01(\t\x12\x34\n\x0ftarget_token_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"\x8c\x02\n\x13HyperliquidSpotPair\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07\x62\x61se_id\x18\x03 \x01(\x03\x12&\n\x04\x62\x61se\x18\x04 \x01(\x0b\x32\x18.hypurr.HyperliquidToken\x12\x10\n\x08quote_id\x18\x05 \x01(\x03\x12\'\n\x05quote\x18\x06 \x01(\x0b\x32\x18.hypurr.HyperliquidToken\x12\r\n\x05index\x18\x07 \x01(\x03\x12\x11\n\tmid_price\x18\x08 \x01(\x01\x12\x12\n\nmark_price\x18\t \x01(\x01\x12\x18\n\x10\x64\x61ily_ntl_volume\x18\n \x01(\x01\x12\x17\n\x0fprevious_day_px\x18\x0b \x01(\x01\"\xd1\x01\n\x13HyperliquidPerpPair\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05index\x18\x03 \x01(\x03\x12\x11\n\tmid_price\x18\x04 \x01(\x01\x12\x12\n\nmark_price\x18\x05 \x01(\x01\x12\x18\n\x10\x64\x61ily_ntl_volume\x18\x06 \x01(\x01\x12\x17\n\x0fprevious_day_px\x18\x07 \x01(\x01\x12\x0f\n\x07\x66unding\x18\x08 \x01(\x01\x12\x15\n\ropen_interest\x18\t \x01(\x01\x12\x0f\n\x07premium\x18\n \x01(\x01\"\xf3\x01\n\x11HyperliquidWallet\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x30\n\x0btelegram_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x18\n\x10\x65thereum_address\x18\x04 \x01(\t\x12\x0e\n\x06points\x18\x05 \x01(\x05\x12\x32\n\x08\x62\x61lances\x18\x06 \x03(\x0b\x32 .hypurr.HyperliquidWalletBalance\x12\x34\n\tmovements\x18\x07 \x03(\x0b\x32!.hypurr.HyperliquidWalletMovement\"3\n\x17HyperliquidPublicWallet\x12\x18\n\x10\x65thereum_address\x18\x01 \x01(\t\"\xd8\x02\n\x19HyperliquidWalletMovement\x12\x30\n\x0btelegram_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12)\n\x06wallet\x18\x02 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12\x0c\n\x04hash\x18\x04 \x01(\t\x12\x0c\n\x04type\x18\x05 \x01(\t\x12\x10\n\x08token_id\x18\x06 \x01(\x03\x12\'\n\x05token\x18\x07 \x01(\x0b\x32\x18.hypurr.HyperliquidToken\x12\x0e\n\x06\x61mount\x18\x08 \x01(\x01\x12\x12\n\nusdc_value\x18\t \x01(\x01\x12\x13\n\x0b\x64\x65stination\x18\n \x01(\t\x12\x0b\n\x03\x66\x65\x65\x18\x0b \x01(\x01\x12.\n\ttimestamp\x18\x0c \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"\x82\x01\n\x18HyperliquidWalletBalance\x12\x30\n\x0btelegram_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x10\n\x08token_id\x18\x03 \x01(\x03\x12\x0f\n\x07\x62\x61lance\x18\x04 \x01(\x01\"\xc2\x05\n\x1eHyperliquidWalletDeploySession\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x30\n\x0btelegram_id\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x0c\n\x04step\x18\x03 \x01(\x05\x12\x12\n\ntoken_name\x18\x04 \x01(\t\x12\x11\n\tfull_name\x18\x05 \x01(\t\x12\x16\n\x0etoken_decimals\x18\x06 \x01(\x05\x12\x11\n\ttoken_wei\x18\x07 \x01(\x05\x12\x14\n\x0ctoken_supply\x18\x08 \x01(\x01\x12\x18\n\x10start_market_cap\x18\t \x01(\x05\x12\x35\n\x10\x61nchor1_token_id\x18\n \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12/\n\ranchor1_token\x18\x0b \x01(\x0b\x32\x18.hypurr.HyperliquidToken\x12\x35\n\x10\x61nchor2_token_id\x18\x0c \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12/\n\ranchor2_token\x18\r \x01(\x0b\x32\x18.hypurr.HyperliquidToken\x12-\n\x08token_id\x18\x0e \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x14\n\x0cspot_pair_id\x18\x0f \x01(\x05\x12\x18\n\x10\x64\x65ploy_threshold\x18\x10 \x01(\x01\x12\x44\n\x07geneses\x18\x11 \x03(\x0b\x32\x33.hypurr.HyperliquidWalletDeploySession.GenesesEntry\x1a]\n\x0cGenesesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12<\n\x05value\x18\x02 \x01(\x0b\x32-.hypurr.HyperliquidWalletDeploySessionGenesis:\x02\x38\x01\"F\n%HyperliquidWalletDeploySessionGenesis\x12\x0e\n\x06target\x18\x01 \x01(\t\x12\r\n\x05share\x18\x02 \x01(\x05\"\xf1\x04\n\x11HyperliquidLaunch\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x31\n\rtelegram_user\x18\x03 \x01(\x0b\x32\x1a.hypurr.TelegramUserPublic\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12\x0e\n\x06listed\x18\x05 \x01(\x08\x12\x0f\n\x07settled\x18\x06 \x01(\x08\x12\n\n\x02x0\x18\x07 \x01(\x03\x12\x12\n\nsession_id\x18\x08 \x01(\x03\x12\x37\n\x07session\x18\t \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\x12\x15\n\rmedia_file_id\x18\n \x01(\t\x12-\n\x08topic_id\x18\x0b \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\t\n\x01x\x18\x0c \x01(\x03\x12\t\n\x01y\x18\r \x01(\x03\x12\t\n\x01k\x18\x0e \x01(\x03\x12,\n\x05\x66ills\x18\x0f \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\x12\x18\n\x10\x64\x61ily_ntl_volume\x18\x10 \x01(\x01\x12\x17\n\x0fprevious_day_px\x18\x11 \x01(\x01\x12\x1c\n\x14last_event_timestamp\x18\x12 \x01(\x03\x12\x34\n\tpool_type\x18\x13 \x01(\x0e\x32!.hypurr.HyperliquidLaunchPoolType\x12\x10\n\x08\x64\x65\x63imals\x18\x14 \x01(\x03\x12\x37\n\x0esession_wallet\x18\x15 \x01(\x0b\x32\x1f.hypurr.HyperliquidPublicWallet\x12\x12\n\nmedia_type\x18\x16 \x01(\t\"\x87\x02\n\x18HyperliquidLaunchBalance\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12)\n\x06launch\x18\x02 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\x12\x30\n\x0btelegram_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12,\n\x08telegram\x18\x04 \x01(\x0b\x32\x1a.hypurr.TelegramUserPublic\x12\x11\n\twallet_id\x18\x05 \x01(\x03\x12)\n\x06wallet\x18\x06 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x0f\n\x07\x62\x61lance\x18\x07 \x01(\x05\"\x90\x02\n\x15HyperliquidLaunchFill\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12,\n\x08telegram\x18\x03 \x01(\x0b\x32\x1a.hypurr.TelegramUserPublic\x12/\n\x06wallet\x18\x04 \x01(\x0b\x32\x1f.hypurr.HyperliquidPublicWallet\x12\x12\n\nusdc_delta\x18\x05 \x01(\x03\x12\x14\n\x0claunch_delta\x18\x06 \x01(\x03\x12\x11\n\ttimestamp\x18\x07 \x01(\x03\x12\x33\n\rmovement_hash\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"e\n\x12TelegramUserPublic\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x17\n\x0fpicture_file_id\x18\x03 \x01(\t\x12\x18\n\x10reputation_score\x18\x04 \x01(\x03\"\xb5\x01\n\x18HyperliquidDeployAuction\x12\x12\n\nstart_time\x18\x01 \x01(\x03\x12\x10\n\x08\x64uration\x18\x02 \x01(\x03\x12\x11\n\tstart_gas\x18\x03 \x01(\x01\x12\x31\n\x0b\x63urrent_gas\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12-\n\x07\x65nd_gas\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\"!\n\x1fHyperliquidDeployAuctionRequest\"U\n HyperliquidDeployAuctionResponse\x12\x31\n\x07\x61uction\x18\x01 \x01(\x0b\x32 .hypurr.HyperliquidDeployAuction\"\x1a\n\x18HyperliquidTokensRequest\"E\n\x19HyperliquidTokensResponse\x12(\n\x06tokens\x18\x01 \x03(\x0b\x32\x18.hypurr.HyperliquidToken\"\xbf\x01\n\x17HyperliquidTokenMessage\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\ttimestamp\x18\x02 \x01(\x03\x12\x10\n\x08token_id\x18\x03 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x04 \x01(\x03\x12*\n\x06\x61uthor\x18\x05 \x01(\x0b\x32\x1a.hypurr.TelegramUserPublic\x12\x0f\n\x07\x63hat_id\x18\x06 \x01(\x03\x12\x10\n\x08topic_id\x18\x07 \x01(\x03\x12\x0f\n\x07message\x18\x08 \x01(\t\"3\n\x1fHyperliquidTokenMessagesRequest\x12\x10\n\x08token_id\x18\x01 \x01(\x03\"U\n HyperliquidTokenMessagesResponse\x12\x31\n\x08messages\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidTokenMessage\"(\n\x1aHyperliquidSpotPairRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"H\n\x1bHyperliquidSpotPairResponse\x12)\n\x04pair\x18\x01 \x01(\x0b\x32\x1b.hypurr.HyperliquidSpotPair\"\x1d\n\x1bHyperliquidSpotPairsRequest\"J\n\x1cHyperliquidSpotPairsResponse\x12*\n\x05pairs\x18\x01 \x03(\x0b\x32\x1b.hypurr.HyperliquidSpotPair\"\x1d\n\x1bHyperliquidPerpPairsRequest\"J\n\x1cHyperliquidPerpPairsResponse\x12*\n\x05pairs\x18\x01 \x03(\x0b\x32\x1b.hypurr.HyperliquidPerpPair\"R\n\x18HyperliquidWalletRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"F\n\x19HyperliquidWalletResponse\x12)\n\x06wallet\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\"\x1c\n\x1aHyperliquidLaunchesRequest\"J\n\x1bHyperliquidLaunchesResponse\x12+\n\x08launches\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\"P\n\x1eHyperliquidLaunchStreamRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"N\n\x1fHyperliquidLaunchStreamResponse\x12+\n\x08launches\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\xf3\x01\n&HyperliquidWalletDeploySessionsRequest\x12\x30\n\x0btelegram_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12.\n\twallet_id\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12/\n\nsession_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x36\n\x10\x65thereum_address\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"c\n\'HyperliquidWalletDeploySessionsResponse\x12\x38\n\x08sessions\x18\x01 \x03(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"\xa9\x01\n.SetHyperliquidWalletDeploySessionTargetRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x12\n\nsession_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x0e\n\x06target\x18\x04 \x01(\t\x12\r\n\x05share\x18\x05 \x01(\x05\"j\n/SetHyperliquidWalletDeploySessionTargetResponse\x12\x37\n\x07session\x18\x01 \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"\x8d\x01\n1DeleteHyperliquidWalletDeploySessionTargetRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x12\n\nsession_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\"m\n2DeleteHyperliquidWalletDeploySessionTargetResponse\x12\x37\n\x07session\x18\x01 \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"O\n\x1dHyperliquidLaunchFillsRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"N\n\x1eHyperliquidLaunchFillsResponse\x12,\n\x05\x66ills\x18\x01 \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\"F\n\x1fHyperliquidLaunchCandlesRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12\x10\n\x08interval\x18\x02 \x01(\t\"o\n\x17HyperliquidLaunchCandle\x12\x0c\n\x04time\x18\x01 \x01(\x03\x12\x0c\n\x04open\x18\x02 \x01(\x02\x12\x0c\n\x04high\x18\x03 \x01(\x02\x12\x0b\n\x03low\x18\x04 \x01(\x02\x12\r\n\x05\x63lose\x18\x05 \x01(\x02\x12\x0e\n\x06volume\x18\x06 \x01(\x02\"T\n HyperliquidLaunchCandlesResponse\x12\x30\n\x07\x63\x61ndles\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidLaunchCandle\"&\n\x18HyperliquidLaunchRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"F\n\x19HyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\xc1\x01\n\x18HyperliquidLaunchMessage\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\ttimestamp\x18\x02 \x01(\x03\x12\x11\n\tlaunch_id\x18\x03 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x04 \x01(\x03\x12*\n\x06\x61uthor\x18\x05 \x01(\x0b\x32\x1a.hypurr.TelegramUserPublic\x12\x0f\n\x07\x63hat_id\x18\x06 \x01(\x03\x12\x10\n\x08topic_id\x18\x07 \x01(\x03\x12\x0f\n\x07message\x18\x08 \x01(\t\"5\n HyperliquidLaunchMessagesRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\"W\n!HyperliquidLaunchMessagesResponse\x12\x32\n\x08messages\x18\x01 \x03(\x0b\x32 .hypurr.HyperliquidLaunchMessage\"I\n\x17HyperliquidLaunchHolder\x12\x0f\n\x07\x62\x61lance\x18\x01 \x01(\x03\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\"4\n\x1fHyperliquidLaunchHoldersRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\"T\n HyperliquidLaunchHoldersResponse\x12\x30\n\x07holders\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidLaunchHolder\"%\n#LatestHyperliquidLaunchFillsRequest\"\xff\x05\n\x0cTelegramUser\x12\x13\n\x0btelegram_id\x18\x01 \x01(\x03\x12\x19\n\x11telegram_username\x18\x02 \x01(\t\x12\x14\n\x0cpending_fees\x18\x03 \x01(\x01\x12\x18\n\x10referral_rewards\x18\x04 \x01(\x01\x12\x15\n\rreferral_code\x18\x05 \x01(\t\x12\x16\n\x0ereferral_score\x18\x06 \x01(\x03\x12\x13\n\x0breferrer_id\x18\x07 \x01(\x03\x12.\n\x08settings\x18\x08 \x01(\x0b\x32\x1c.hypurr.TelegramUserSettings\x12)\n\x06wallet\x18\t \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x11\n\twallet_id\x18\n \x01(\x03\x12\x30\n\rsniper_wallet\x18\x0b \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x18\n\x10sniper_wallet_id\x18\x0c \x01(\x03\x12\x30\n\rdumper_wallet\x18\r \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x18\n\x10\x64umper_wallet_id\x18\x0e \x01(\x03\x12\x15\n\rreputation_id\x18\x0f \x01(\x03\x12\x32\n\nreputation\x18\x10 \x01(\x0b\x32\x1e.hypurr.TelegramUserReputation\x12+\n\x08launches\x18\x11 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\x12\x32\n\x08\x62\x61lances\x18\x12 \x03(\x0b\x32 .hypurr.HyperliquidWalletBalance\x12\x34\n\tmovements\x18\x13 \x03(\x0b\x32!.hypurr.HyperliquidWalletMovement\x12\x33\n\x0claunch_fills\x18\x14 \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\x12.\n\x06labels\x18\x15 \x03(\x0b\x32\x1e.hypurr.HyperliquidWalletLabel\"\x16\n\x14TelegramUserSettings\"\x18\n\x16TelegramUserReputation\"A\n\x16HyperliquidWalletLabel\x12\x18\n\x10\x65thereum_address\x18\x01 \x01(\t\x12\r\n\x05label\x18\x02 \x01(\t\"\x84\x01\n\x13TelegramUserRequest\x12<\n\tauth_data\x18\x01 \x03(\x0b\x32).hypurr.TelegramUserRequest.AuthDataEntry\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\":\n\x14TelegramUserResponse\x12\"\n\x04user\x18\x01 \x01(\x0b\x32\x14.hypurr.TelegramUser\"\x92\x01\n\x1aTelegramUserWalletsRequest\x12\x43\n\tauth_data\x18\x01 \x03(\x0b\x32\x30.hypurr.TelegramUserWalletsRequest.AuthDataEntry\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"I\n\x1bTelegramUserWalletsResponse\x12*\n\x07wallets\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidWallet\"s\n#HyperliquidWalletPerformanceRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x14\n\x0c\x61\x63\x63ount_type\x18\x02 \x01(\t\"?\n\x10PerformancePoint\x12\x0c\n\x04time\x18\x01 \x01(\x03\x12\x10\n\x08notional\x18\x02 \x01(\x02\x12\x0b\n\x03pnl\x18\x03 \x01(\x02\"\xa9\x01\n\x11PerformanceReport\x12\x10\n\x08token_id\x18\x01 \x01(\x03\x12\x11\n\ttotal_pnl\x18\x02 \x01(\x02\x12\x13\n\x0brunning_pnl\x18\x03 \x01(\x02\x12\x0c\n\x04size\x18\x04 \x01(\x02\x12\r\n\x05price\x18\x05 \x01(\x02\x12\x13\n\x0b\x65ntry_price\x18\x06 \x01(\x02\x12\x12\n\ntotal_cost\x18\x07 \x01(\x02\x12\x14\n\x0crunning_cost\x18\x08 \x01(\x02\"\x87\x01\n\x0bPerformance\x12\x10\n\x08net_cash\x18\x01 \x01(\x02\x12\x10\n\x08notional\x18\x02 \x01(\x02\x12*\n\x07reports\x18\x03 \x03(\x0b\x32\x19.hypurr.PerformanceReport\x12(\n\x06points\x18\x04 \x03(\x0b\x32\x18.hypurr.PerformancePoint\"\x91\x01\n$HyperliquidWalletPerformanceResponse\x12!\n\x04spot\x18\x01 \x01(\x0b\x32\x13.hypurr.Performance\x12!\n\x04perp\x18\x02 \x01(\x0b\x32\x13.hypurr.Performance\x12#\n\x06launch\x18\x03 \x01(\x0b\x32\x13.hypurr.Performance\"\xa2\x02\n\x0eHypurrFunCabal\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x17\n\x0fpicture_file_id\x18\x03 \x01(\t\x12)\n\x05users\x18\x04 \x03(\x0b\x32\x1a.hypurr.HypurrFunCabalUser\x12<\n\x0ftracked_wallets\x18\x05 \x03(\x0b\x32#.hypurr.HypurrFunCabalTrackedWallet\x12\x36\n\x0cuser_seasons\x18\x06 \x03(\x0b\x32 .hypurr.HypurrFunCabalUserSeason\x12.\n\x07summary\x18\x07 \x01(\x0b\x32\x1d.hypurr.HypurrFunCabalSummary\"x\n\x15HypurrFunCabalSummary\x12\x12\n\nuser_count\x18\x01 \x01(\x03\x12\x17\n\x0fseason_spot_pnl\x18\x02 \x01(\x01\x12\x17\n\x0fseason_perp_pnl\x18\x03 \x01(\x01\x12\x19\n\x11season_launch_pnl\x18\x04 \x01(\x01\"\x88\x02\n\x12HypurrFunCabalUser\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12)\n\x06wallet\x18\x03 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x11\n\twallet_id\x18\x04 \x01(\x03\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x10\n\x08spot_pnl\x18\x06 \x01(\x01\x12\x13\n\x0bspot_equity\x18\x07 \x01(\x01\x12\x12\n\nlaunch_pnl\x18\x08 \x01(\x01\x12\x15\n\rlaunch_equity\x18\t \x01(\x01\x12\x10\n\x08perp_pnl\x18\n \x01(\x01\x12\x13\n\x0bperp_equity\x18\x0b \x01(\x01\"\xac\x01\n\x1bHypurrFunCabalTrackedWallet\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12)\n\x06wallet\x18\x03 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\r\n\x05label\x18\x04 \x01(\t\x12\x12\n\nalert_spot\x18\x05 \x01(\x08\x12\x12\n\nalert_perp\x18\x06 \x01(\x08\"\xe6\x01\n\x14HypurrFunCabalSeason\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x12\n\nstart_time\x18\x02 \x01(\x03\x12\x10\n\x08\x65nd_time\x18\x03 \x01(\x03\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x36\n\x0cuser_seasons\x18\x05 \x03(\x0b\x32 .hypurr.HypurrFunCabalUserSeason\x12.\n\twinner_id\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12&\n\x06winner\x18\x07 \x01(\x0b\x32\x16.hypurr.HypurrFunCabal\"\xf4\x01\n\x18HypurrFunCabalUserSeason\x12\x17\n\x0f\x63\x61\x62\x61l_season_id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12\x18\n\x10telegram_chat_id\x18\x04 \x01(\x03\x12\x10\n\x08spot_pnl\x18\x05 \x01(\x01\x12\x12\n\nlaunch_pnl\x18\x06 \x01(\x01\x12\x10\n\x08perp_pnl\x18\x07 \x01(\x01\x12\x15\n\rlast_spot_pnl\x18\x08 \x01(\x01\x12\x17\n\x0flast_launch_pnl\x18\t \x01(\x01\x12\x15\n\rlast_perp_pnl\x18\n \x01(\x01\"\x18\n\x16HypurrFunCabalsRequest\"A\n\x17HypurrFunCabalsResponse\x12&\n\x06\x63\x61\x62\x61ls\x18\x01 \x03(\x0b\x32\x16.hypurr.HypurrFunCabal*R\n\x19HyperliquidLaunchPoolType\x12\r\n\tQuadratic\x10\x00\x12\x0f\n\x0bQuadraticV2\x10\x01\x12\n\n\x06Linear\x10\x02\x12\t\n\x05\x46ixed\x10\x03\x32\xf2\x14\n\x06Static\x12K\n\x0cTelegramUser\x12\x1b.hypurr.TelegramUserRequest\x1a\x1c.hypurr.TelegramUserResponse\"\x00\x12`\n\x13TelegramUserWallets\x12\".hypurr.TelegramUserWalletsRequest\x1a#.hypurr.TelegramUserWalletsResponse\"\x00\x12o\n\x18HyperliquidDeployAuction\x12\'.hypurr.HyperliquidDeployAuctionRequest\x1a(.hypurr.HyperliquidDeployAuctionResponse\"\x00\x12Z\n\x11HyperliquidTokens\x12 .hypurr.HyperliquidTokensRequest\x1a!.hypurr.HyperliquidTokensResponse\"\x00\x12l\n\x17HyperliquidTokenHolders\x12&.hypurr.HyperliquidTokenHoldersRequest\x1a\'.hypurr.HyperliquidTokenHoldersResponse\"\x00\x12q\n\x18HyperliquidTokenMessages\x12\'.hypurr.HyperliquidTokenMessagesRequest\x1a(.hypurr.HyperliquidTokenMessagesResponse\"\x00\x30\x01\x12`\n\x13HyperliquidSpotPair\x12\".hypurr.HyperliquidSpotPairRequest\x1a#.hypurr.HyperliquidSpotPairResponse\"\x00\x12\x63\n\x14HyperliquidSpotPairs\x12#.hypurr.HyperliquidSpotPairsRequest\x1a$.hypurr.HyperliquidSpotPairsResponse\"\x00\x12\x63\n\x14HyperliquidPerpPairs\x12#.hypurr.HyperliquidPerpPairsRequest\x1a$.hypurr.HyperliquidPerpPairsResponse\"\x00\x12Z\n\x11HyperliquidWallet\x12 .hypurr.HyperliquidWalletRequest\x1a!.hypurr.HyperliquidWalletResponse\"\x00\x12\x84\x01\n\x1fHyperliquidWalletDeploySessions\x12..hypurr.HyperliquidWalletDeploySessionsRequest\x1a/.hypurr.HyperliquidWalletDeploySessionsResponse\"\x00\x12{\n\x1cHyperliquidWalletPerformance\x12+.hypurr.HyperliquidWalletPerformanceRequest\x1a,.hypurr.HyperliquidWalletPerformanceResponse\"\x00\x12Z\n\x11HyperliquidLaunch\x12 .hypurr.HyperliquidLaunchRequest\x1a!.hypurr.HyperliquidLaunchResponse\"\x00\x12`\n\x13HyperliquidLaunches\x12\".hypurr.HyperliquidLaunchesRequest\x1a#.hypurr.HyperliquidLaunchesResponse\"\x00\x12n\n\x17HyperliquidLaunchStream\x12&.hypurr.HyperliquidLaunchStreamRequest\x1a\'.hypurr.HyperliquidLaunchStreamResponse\"\x00\x30\x01\x12k\n\x16HyperliquidLaunchFills\x12%.hypurr.HyperliquidLaunchFillsRequest\x1a&.hypurr.HyperliquidLaunchFillsResponse\"\x00\x30\x01\x12o\n\x18HyperliquidLaunchCandles\x12\'.hypurr.HyperliquidLaunchCandlesRequest\x1a(.hypurr.HyperliquidLaunchCandlesResponse\"\x00\x12v\n\x1dHyperliquidLaunchCandleStream\x12\'.hypurr.HyperliquidLaunchCandlesRequest\x1a(.hypurr.HyperliquidLaunchCandlesResponse\"\x00\x30\x01\x12t\n\x19HyperliquidLaunchMessages\x12(.hypurr.HyperliquidLaunchMessagesRequest\x1a).hypurr.HyperliquidLaunchMessagesResponse\"\x00\x30\x01\x12w\n\x1cLatestHyperliquidLaunchFills\x12+.hypurr.LatestHyperliquidLaunchFillsRequest\x1a&.hypurr.HyperliquidLaunchFillsResponse\"\x00\x30\x01\x12o\n\x18HyperliquidLaunchHolders\x12\'.hypurr.HyperliquidLaunchHoldersRequest\x1a(.hypurr.HyperliquidLaunchHoldersResponse\"\x00\x12T\n\x0fHypurrFunCabals\x12\x1e.hypurr.HypurrFunCabalsRequest\x1a\x1f.hypurr.HypurrFunCabalsResponse\"\x00\x12\x9c\x01\n\'SetHyperliquidWalletDeploySessionTarget\x12\x36.hypurr.SetHyperliquidWalletDeploySessionTargetRequest\x1a\x37.hypurr.SetHyperliquidWalletDeploySessionTargetResponse\"\x00\x12\xa5\x01\n*DeleteHyperliquidWalletDeploySessionTarget\x12\x39.hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest\x1a:.hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse\"\x00\x42#Z!gitlab.com/hypurr-fun/hypurr-grpcb\x06proto3')
+  serialized_pb=_b('\n\x0chypurr.proto\x12\x06hypurr\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xdf\x02\n\x10HyperliquidToken\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05index\x18\x03 \x01(\x03\x12\x13\n\x0bsz_decimals\x18\x04 \x01(\x03\x12\x14\n\x0cwei_decimals\x18\x05 \x01(\x03\x12\x10\n\x08token_id\x18\x06 \x01(\t\x12\x1a\n\x12\x63irculating_supply\x18\x07 \x01(\x01\x12\x37\n\x0b\x64\x65ploy_info\x18\x08 \x01(\x0b\x32\".hypurr.HyperliquidTokenDeployInfo\x12\x30\n\x07geneses\x18\t \x03(\x0b\x32\x1f.hypurr.HyperliquidTokenGenesis\x12\x13\n\x0bhlq_balance\x18\n \x01(\x01\x12\x11\n\tfull_name\x18\x0b \x01(\t\x12\x36\n\nstatistics\x18\x0c \x01(\x0b\x32\".hypurr.HyperliquidTokenStatistics\"H\n\x16HyperliquidTokenHolder\x12\x0f\n\x07\x62\x61lance\x18\x01 \x01(\x01\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\"2\n\x1eHyperliquidTokenHoldersRequest\x12\x10\n\x08token_id\x18\x01 \x01(\x03\"R\n\x1fHyperliquidTokenHoldersResponse\x12/\n\x07holders\x18\x01 \x03(\x0b\x32\x1e.hypurr.HyperliquidTokenHolder\"g\n\x1aHyperliquidTokenStatistics\x12\x10\n\x08token_id\x18\x01 \x01(\x03\x12\x14\n\x0cholder_count\x18\x02 \x01(\x03\x12!\n\x19\x63oncentration_coefficient\x18\x03 \x01(\x01\"\xf5\x01\n\x1aHyperliquidTokenDeployInfo\x12\x10\n\x08token_id\x18\x01 \x01(\x03\x12\x0e\n\x06height\x18\x02 \x01(\x03\x12\x10\n\x08\x64\x65ployer\x18\x03 \x01(\t\x12\x13\n\x0bregister_tx\x18\x04 \x01(\t\x12\x18\n\x10register_spot_tx\x18\x05 \x01(\t\x12\x12\n\ngenesis_tx\x18\x06 \x01(\t\x12\x19\n\x11hyperliquidity_tx\x18\x07 \x01(\t\x12\x12\n\nhip2_price\x18\x08 \x01(\x01\x12\x18\n\x10hip2_order_count\x18\t \x01(\x05\x12\x17\n\x0fhip2_order_size\x18\n \x01(\x01\"\x8f\x01\n\x17HyperliquidTokenGenesis\x12\x10\n\x08token_id\x18\x01 \x01(\x03\x12\x0e\n\x06target\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x01\x12\x0c\n\x04type\x18\x04 \x01(\t\x12\x34\n\x0ftarget_token_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"\x8c\x02\n\x13HyperliquidSpotPair\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07\x62\x61se_id\x18\x03 \x01(\x03\x12&\n\x04\x62\x61se\x18\x04 \x01(\x0b\x32\x18.hypurr.HyperliquidToken\x12\x10\n\x08quote_id\x18\x05 \x01(\x03\x12\'\n\x05quote\x18\x06 \x01(\x0b\x32\x18.hypurr.HyperliquidToken\x12\r\n\x05index\x18\x07 \x01(\x03\x12\x11\n\tmid_price\x18\x08 \x01(\x01\x12\x12\n\nmark_price\x18\t \x01(\x01\x12\x18\n\x10\x64\x61ily_ntl_volume\x18\n \x01(\x01\x12\x17\n\x0fprevious_day_px\x18\x0b \x01(\x01\"\xd1\x01\n\x13HyperliquidPerpPair\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05index\x18\x03 \x01(\x03\x12\x11\n\tmid_price\x18\x04 \x01(\x01\x12\x12\n\nmark_price\x18\x05 \x01(\x01\x12\x18\n\x10\x64\x61ily_ntl_volume\x18\x06 \x01(\x01\x12\x17\n\x0fprevious_day_px\x18\x07 \x01(\x01\x12\x0f\n\x07\x66unding\x18\x08 \x01(\x01\x12\x15\n\ropen_interest\x18\t \x01(\x01\x12\x0f\n\x07premium\x18\n \x01(\x01\"\xb3\x02\n\x11HyperliquidWallet\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x30\n\x0btelegram_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x18\n\x10\x65thereum_address\x18\x04 \x01(\t\x12\x0e\n\x06points\x18\x05 \x01(\x05\x12\x34\n\tmovements\x18\x06 \x03(\x0b\x32!.hypurr.HyperliquidWalletMovement\x12\x37\n\rspot_balances\x18\x07 \x03(\x0b\x32 .hypurr.HyperliquidWalletBalance\x12\x39\n\x0flaunch_balances\x18\x08 \x03(\x0b\x32 .hypurr.HyperliquidLaunchBalance\"3\n\x17HyperliquidPublicWallet\x12\x18\n\x10\x65thereum_address\x18\x01 \x01(\t\"\xd8\x02\n\x19HyperliquidWalletMovement\x12\x30\n\x0btelegram_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12)\n\x06wallet\x18\x02 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12\x0c\n\x04hash\x18\x04 \x01(\t\x12\x0c\n\x04type\x18\x05 \x01(\t\x12\x10\n\x08token_id\x18\x06 \x01(\x03\x12\'\n\x05token\x18\x07 \x01(\x0b\x32\x18.hypurr.HyperliquidToken\x12\x0e\n\x06\x61mount\x18\x08 \x01(\x01\x12\x12\n\nusdc_value\x18\t \x01(\x01\x12\x13\n\x0b\x64\x65stination\x18\n \x01(\t\x12\x0b\n\x03\x66\x65\x65\x18\x0b \x01(\x01\x12.\n\ttimestamp\x18\x0c \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"\x82\x01\n\x18HyperliquidWalletBalance\x12\x30\n\x0btelegram_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x10\n\x08token_id\x18\x03 \x01(\x03\x12\x0f\n\x07\x62\x61lance\x18\x04 \x01(\x03\"\x83\x01\n\x18HyperliquidLaunchBalance\x12\x30\n\x0btelegram_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x11\n\tlaunch_id\x18\x03 \x01(\x03\x12\x0f\n\x07\x62\x61lance\x18\x04 \x01(\x01\"\xc2\x05\n\x1eHyperliquidWalletDeploySession\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x30\n\x0btelegram_id\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x0c\n\x04step\x18\x03 \x01(\x05\x12\x12\n\ntoken_name\x18\x04 \x01(\t\x12\x11\n\tfull_name\x18\x05 \x01(\t\x12\x16\n\x0etoken_decimals\x18\x06 \x01(\x05\x12\x11\n\ttoken_wei\x18\x07 \x01(\x05\x12\x14\n\x0ctoken_supply\x18\x08 \x01(\x01\x12\x18\n\x10start_market_cap\x18\t \x01(\x05\x12\x35\n\x10\x61nchor1_token_id\x18\n \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12/\n\ranchor1_token\x18\x0b \x01(\x0b\x32\x18.hypurr.HyperliquidToken\x12\x35\n\x10\x61nchor2_token_id\x18\x0c \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12/\n\ranchor2_token\x18\r \x01(\x0b\x32\x18.hypurr.HyperliquidToken\x12-\n\x08token_id\x18\x0e \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x14\n\x0cspot_pair_id\x18\x0f \x01(\x05\x12\x18\n\x10\x64\x65ploy_threshold\x18\x10 \x01(\x01\x12\x44\n\x07geneses\x18\x11 \x03(\x0b\x32\x33.hypurr.HyperliquidWalletDeploySession.GenesesEntry\x1a]\n\x0cGenesesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12<\n\x05value\x18\x02 \x01(\x0b\x32-.hypurr.HyperliquidWalletDeploySessionGenesis:\x02\x38\x01\"F\n%HyperliquidWalletDeploySessionGenesis\x12\x0e\n\x06target\x18\x01 \x01(\t\x12\r\n\x05share\x18\x02 \x01(\x05\"\xf1\x04\n\x11HyperliquidLaunch\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x31\n\rtelegram_user\x18\x03 \x01(\x0b\x32\x1a.hypurr.TelegramUserPublic\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12\x0e\n\x06listed\x18\x05 \x01(\x08\x12\x0f\n\x07settled\x18\x06 \x01(\x08\x12\n\n\x02x0\x18\x07 \x01(\x03\x12\x12\n\nsession_id\x18\x08 \x01(\x03\x12\x37\n\x07session\x18\t \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\x12\x15\n\rmedia_file_id\x18\n \x01(\t\x12-\n\x08topic_id\x18\x0b \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\t\n\x01x\x18\x0c \x01(\x03\x12\t\n\x01y\x18\r \x01(\x03\x12\t\n\x01k\x18\x0e \x01(\x03\x12,\n\x05\x66ills\x18\x0f \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\x12\x18\n\x10\x64\x61ily_ntl_volume\x18\x10 \x01(\x01\x12\x17\n\x0fprevious_day_px\x18\x11 \x01(\x01\x12\x1c\n\x14last_event_timestamp\x18\x12 \x01(\x03\x12\x34\n\tpool_type\x18\x13 \x01(\x0e\x32!.hypurr.HyperliquidLaunchPoolType\x12\x10\n\x08\x64\x65\x63imals\x18\x14 \x01(\x03\x12\x37\n\x0esession_wallet\x18\x15 \x01(\x0b\x32\x1f.hypurr.HyperliquidPublicWallet\x12\x12\n\nmedia_type\x18\x16 \x01(\t\"\x90\x02\n\x15HyperliquidLaunchFill\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12,\n\x08telegram\x18\x03 \x01(\x0b\x32\x1a.hypurr.TelegramUserPublic\x12/\n\x06wallet\x18\x04 \x01(\x0b\x32\x1f.hypurr.HyperliquidPublicWallet\x12\x12\n\nusdc_delta\x18\x05 \x01(\x03\x12\x14\n\x0claunch_delta\x18\x06 \x01(\x03\x12\x11\n\ttimestamp\x18\x07 \x01(\x03\x12\x33\n\rmovement_hash\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"e\n\x12TelegramUserPublic\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x17\n\x0fpicture_file_id\x18\x03 \x01(\t\x12\x18\n\x10reputation_score\x18\x04 \x01(\x03\"\xb5\x01\n\x18HyperliquidDeployAuction\x12\x12\n\nstart_time\x18\x01 \x01(\x03\x12\x10\n\x08\x64uration\x18\x02 \x01(\x03\x12\x11\n\tstart_gas\x18\x03 \x01(\x01\x12\x31\n\x0b\x63urrent_gas\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12-\n\x07\x65nd_gas\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\"!\n\x1fHyperliquidDeployAuctionRequest\"U\n HyperliquidDeployAuctionResponse\x12\x31\n\x07\x61uction\x18\x01 \x01(\x0b\x32 .hypurr.HyperliquidDeployAuction\"\x1a\n\x18HyperliquidTokensRequest\"E\n\x19HyperliquidTokensResponse\x12(\n\x06tokens\x18\x01 \x03(\x0b\x32\x18.hypurr.HyperliquidToken\"\xbf\x01\n\x17HyperliquidTokenMessage\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\ttimestamp\x18\x02 \x01(\x03\x12\x10\n\x08token_id\x18\x03 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x04 \x01(\x03\x12*\n\x06\x61uthor\x18\x05 \x01(\x0b\x32\x1a.hypurr.TelegramUserPublic\x12\x0f\n\x07\x63hat_id\x18\x06 \x01(\x03\x12\x10\n\x08topic_id\x18\x07 \x01(\x03\x12\x0f\n\x07message\x18\x08 \x01(\t\"3\n\x1fHyperliquidTokenMessagesRequest\x12\x10\n\x08token_id\x18\x01 \x01(\x03\"U\n HyperliquidTokenMessagesResponse\x12\x31\n\x08messages\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidTokenMessage\"(\n\x1aHyperliquidSpotPairRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"H\n\x1bHyperliquidSpotPairResponse\x12)\n\x04pair\x18\x01 \x01(\x0b\x32\x1b.hypurr.HyperliquidSpotPair\"\x1d\n\x1bHyperliquidSpotPairsRequest\"J\n\x1cHyperliquidSpotPairsResponse\x12*\n\x05pairs\x18\x01 \x03(\x0b\x32\x1b.hypurr.HyperliquidSpotPair\"\x1d\n\x1bHyperliquidPerpPairsRequest\"J\n\x1cHyperliquidPerpPairsResponse\x12*\n\x05pairs\x18\x01 \x03(\x0b\x32\x1b.hypurr.HyperliquidPerpPair\"R\n\x18HyperliquidWalletRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"F\n\x19HyperliquidWalletResponse\x12)\n\x06wallet\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\"\x1c\n\x1aHyperliquidLaunchesRequest\"J\n\x1bHyperliquidLaunchesResponse\x12+\n\x08launches\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\"P\n\x1eHyperliquidLaunchStreamRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"N\n\x1fHyperliquidLaunchStreamResponse\x12+\n\x08launches\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\xf3\x01\n&HyperliquidWalletDeploySessionsRequest\x12\x30\n\x0btelegram_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12.\n\twallet_id\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12/\n\nsession_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x36\n\x10\x65thereum_address\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"c\n\'HyperliquidWalletDeploySessionsResponse\x12\x38\n\x08sessions\x18\x01 \x03(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"\xa9\x01\n.SetHyperliquidWalletDeploySessionTargetRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x12\n\nsession_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x0e\n\x06target\x18\x04 \x01(\t\x12\r\n\x05share\x18\x05 \x01(\x05\"j\n/SetHyperliquidWalletDeploySessionTargetResponse\x12\x37\n\x07session\x18\x01 \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"\x8d\x01\n1DeleteHyperliquidWalletDeploySessionTargetRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x12\n\nsession_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\"m\n2DeleteHyperliquidWalletDeploySessionTargetResponse\x12\x37\n\x07session\x18\x01 \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"O\n\x1dHyperliquidLaunchFillsRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"N\n\x1eHyperliquidLaunchFillsResponse\x12,\n\x05\x66ills\x18\x01 \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\"F\n\x1fHyperliquidLaunchCandlesRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12\x10\n\x08interval\x18\x02 \x01(\t\"o\n\x17HyperliquidLaunchCandle\x12\x0c\n\x04time\x18\x01 \x01(\x03\x12\x0c\n\x04open\x18\x02 \x01(\x02\x12\x0c\n\x04high\x18\x03 \x01(\x02\x12\x0b\n\x03low\x18\x04 \x01(\x02\x12\r\n\x05\x63lose\x18\x05 \x01(\x02\x12\x0e\n\x06volume\x18\x06 \x01(\x02\"T\n HyperliquidLaunchCandlesResponse\x12\x30\n\x07\x63\x61ndles\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidLaunchCandle\"&\n\x18HyperliquidLaunchRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"F\n\x19HyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\xc1\x01\n\x18HyperliquidLaunchMessage\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\ttimestamp\x18\x02 \x01(\x03\x12\x11\n\tlaunch_id\x18\x03 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x04 \x01(\x03\x12*\n\x06\x61uthor\x18\x05 \x01(\x0b\x32\x1a.hypurr.TelegramUserPublic\x12\x0f\n\x07\x63hat_id\x18\x06 \x01(\x03\x12\x10\n\x08topic_id\x18\x07 \x01(\x03\x12\x0f\n\x07message\x18\x08 \x01(\t\"5\n HyperliquidLaunchMessagesRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\"W\n!HyperliquidLaunchMessagesResponse\x12\x32\n\x08messages\x18\x01 \x03(\x0b\x32 .hypurr.HyperliquidLaunchMessage\"I\n\x17HyperliquidLaunchHolder\x12\x0f\n\x07\x62\x61lance\x18\x01 \x01(\x03\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\"4\n\x1fHyperliquidLaunchHoldersRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\"T\n HyperliquidLaunchHoldersResponse\x12\x30\n\x07holders\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidLaunchHolder\"%\n#LatestHyperliquidLaunchFillsRequest\"\xff\x05\n\x0cTelegramUser\x12\x13\n\x0btelegram_id\x18\x01 \x01(\x03\x12\x19\n\x11telegram_username\x18\x02 \x01(\t\x12\x14\n\x0cpending_fees\x18\x03 \x01(\x01\x12\x18\n\x10referral_rewards\x18\x04 \x01(\x01\x12\x15\n\rreferral_code\x18\x05 \x01(\t\x12\x16\n\x0ereferral_score\x18\x06 \x01(\x03\x12\x13\n\x0breferrer_id\x18\x07 \x01(\x03\x12.\n\x08settings\x18\x08 \x01(\x0b\x32\x1c.hypurr.TelegramUserSettings\x12)\n\x06wallet\x18\t \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x11\n\twallet_id\x18\n \x01(\x03\x12\x30\n\rsniper_wallet\x18\x0b \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x18\n\x10sniper_wallet_id\x18\x0c \x01(\x03\x12\x30\n\rdumper_wallet\x18\r \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x18\n\x10\x64umper_wallet_id\x18\x0e \x01(\x03\x12\x15\n\rreputation_id\x18\x0f \x01(\x03\x12\x32\n\nreputation\x18\x10 \x01(\x0b\x32\x1e.hypurr.TelegramUserReputation\x12+\n\x08launches\x18\x11 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\x12\x32\n\x08\x62\x61lances\x18\x12 \x03(\x0b\x32 .hypurr.HyperliquidWalletBalance\x12\x34\n\tmovements\x18\x13 \x03(\x0b\x32!.hypurr.HyperliquidWalletMovement\x12\x33\n\x0claunch_fills\x18\x14 \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\x12.\n\x06labels\x18\x15 \x03(\x0b\x32\x1e.hypurr.HyperliquidWalletLabel\"\x16\n\x14TelegramUserSettings\"\x18\n\x16TelegramUserReputation\"A\n\x16HyperliquidWalletLabel\x12\x18\n\x10\x65thereum_address\x18\x01 \x01(\t\x12\r\n\x05label\x18\x02 \x01(\t\"\x84\x01\n\x13TelegramUserRequest\x12<\n\tauth_data\x18\x01 \x03(\x0b\x32).hypurr.TelegramUserRequest.AuthDataEntry\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\":\n\x14TelegramUserResponse\x12\"\n\x04user\x18\x01 \x01(\x0b\x32\x14.hypurr.TelegramUser\"\x92\x01\n\x1aTelegramUserWalletsRequest\x12\x43\n\tauth_data\x18\x01 \x03(\x0b\x32\x30.hypurr.TelegramUserWalletsRequest.AuthDataEntry\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"I\n\x1bTelegramUserWalletsResponse\x12*\n\x07wallets\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidWallet\"s\n#HyperliquidWalletPerformanceRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x14\n\x0c\x61\x63\x63ount_type\x18\x02 \x01(\t\"?\n\x10PerformancePoint\x12\x0c\n\x04time\x18\x01 \x01(\x03\x12\x10\n\x08notional\x18\x02 \x01(\x02\x12\x0b\n\x03pnl\x18\x03 \x01(\x02\"\xa9\x01\n\x11PerformanceReport\x12\x10\n\x08token_id\x18\x01 \x01(\x03\x12\x11\n\ttotal_pnl\x18\x02 \x01(\x02\x12\x13\n\x0brunning_pnl\x18\x03 \x01(\x02\x12\x0c\n\x04size\x18\x04 \x01(\x02\x12\r\n\x05price\x18\x05 \x01(\x02\x12\x13\n\x0b\x65ntry_price\x18\x06 \x01(\x02\x12\x12\n\ntotal_cost\x18\x07 \x01(\x02\x12\x14\n\x0crunning_cost\x18\x08 \x01(\x02\"\x87\x01\n\x0bPerformance\x12\x10\n\x08net_cash\x18\x01 \x01(\x02\x12\x10\n\x08notional\x18\x02 \x01(\x02\x12*\n\x07reports\x18\x03 \x03(\x0b\x32\x19.hypurr.PerformanceReport\x12(\n\x06points\x18\x04 \x03(\x0b\x32\x18.hypurr.PerformancePoint\"\x91\x01\n$HyperliquidWalletPerformanceResponse\x12!\n\x04spot\x18\x01 \x01(\x0b\x32\x13.hypurr.Performance\x12!\n\x04perp\x18\x02 \x01(\x0b\x32\x13.hypurr.Performance\x12#\n\x06launch\x18\x03 \x01(\x0b\x32\x13.hypurr.Performance\"\xa2\x02\n\x0eHypurrFunCabal\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x17\n\x0fpicture_file_id\x18\x03 \x01(\t\x12)\n\x05users\x18\x04 \x03(\x0b\x32\x1a.hypurr.HypurrFunCabalUser\x12<\n\x0ftracked_wallets\x18\x05 \x03(\x0b\x32#.hypurr.HypurrFunCabalTrackedWallet\x12\x36\n\x0cuser_seasons\x18\x06 \x03(\x0b\x32 .hypurr.HypurrFunCabalUserSeason\x12.\n\x07summary\x18\x07 \x01(\x0b\x32\x1d.hypurr.HypurrFunCabalSummary\"x\n\x15HypurrFunCabalSummary\x12\x12\n\nuser_count\x18\x01 \x01(\x03\x12\x17\n\x0fseason_spot_pnl\x18\x02 \x01(\x01\x12\x17\n\x0fseason_perp_pnl\x18\x03 \x01(\x01\x12\x19\n\x11season_launch_pnl\x18\x04 \x01(\x01\"\x88\x02\n\x12HypurrFunCabalUser\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12)\n\x06wallet\x18\x03 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x11\n\twallet_id\x18\x04 \x01(\x03\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x10\n\x08spot_pnl\x18\x06 \x01(\x01\x12\x13\n\x0bspot_equity\x18\x07 \x01(\x01\x12\x12\n\nlaunch_pnl\x18\x08 \x01(\x01\x12\x15\n\rlaunch_equity\x18\t \x01(\x01\x12\x10\n\x08perp_pnl\x18\n \x01(\x01\x12\x13\n\x0bperp_equity\x18\x0b \x01(\x01\"\xac\x01\n\x1bHypurrFunCabalTrackedWallet\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12)\n\x06wallet\x18\x03 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\r\n\x05label\x18\x04 \x01(\t\x12\x12\n\nalert_spot\x18\x05 \x01(\x08\x12\x12\n\nalert_perp\x18\x06 \x01(\x08\"\xe6\x01\n\x14HypurrFunCabalSeason\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x12\n\nstart_time\x18\x02 \x01(\x03\x12\x10\n\x08\x65nd_time\x18\x03 \x01(\x03\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x36\n\x0cuser_seasons\x18\x05 \x03(\x0b\x32 .hypurr.HypurrFunCabalUserSeason\x12.\n\twinner_id\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12&\n\x06winner\x18\x07 \x01(\x0b\x32\x16.hypurr.HypurrFunCabal\"\xf4\x01\n\x18HypurrFunCabalUserSeason\x12\x17\n\x0f\x63\x61\x62\x61l_season_id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12\x18\n\x10telegram_chat_id\x18\x04 \x01(\x03\x12\x10\n\x08spot_pnl\x18\x05 \x01(\x01\x12\x12\n\nlaunch_pnl\x18\x06 \x01(\x01\x12\x10\n\x08perp_pnl\x18\x07 \x01(\x01\x12\x15\n\rlast_spot_pnl\x18\x08 \x01(\x01\x12\x17\n\x0flast_launch_pnl\x18\t \x01(\x01\x12\x15\n\rlast_perp_pnl\x18\n \x01(\x01\"\x18\n\x16HypurrFunCabalsRequest\"A\n\x17HypurrFunCabalsResponse\x12&\n\x06\x63\x61\x62\x61ls\x18\x01 \x03(\x0b\x32\x16.hypurr.HypurrFunCabal*R\n\x19HyperliquidLaunchPoolType\x12\r\n\tQuadratic\x10\x00\x12\x0f\n\x0bQuadraticV2\x10\x01\x12\n\n\x06Linear\x10\x02\x12\t\n\x05\x46ixed\x10\x03\x32\xf2\x14\n\x06Static\x12K\n\x0cTelegramUser\x12\x1b.hypurr.TelegramUserRequest\x1a\x1c.hypurr.TelegramUserResponse\"\x00\x12`\n\x13TelegramUserWallets\x12\".hypurr.TelegramUserWalletsRequest\x1a#.hypurr.TelegramUserWalletsResponse\"\x00\x12o\n\x18HyperliquidDeployAuction\x12\'.hypurr.HyperliquidDeployAuctionRequest\x1a(.hypurr.HyperliquidDeployAuctionResponse\"\x00\x12Z\n\x11HyperliquidTokens\x12 .hypurr.HyperliquidTokensRequest\x1a!.hypurr.HyperliquidTokensResponse\"\x00\x12l\n\x17HyperliquidTokenHolders\x12&.hypurr.HyperliquidTokenHoldersRequest\x1a\'.hypurr.HyperliquidTokenHoldersResponse\"\x00\x12q\n\x18HyperliquidTokenMessages\x12\'.hypurr.HyperliquidTokenMessagesRequest\x1a(.hypurr.HyperliquidTokenMessagesResponse\"\x00\x30\x01\x12`\n\x13HyperliquidSpotPair\x12\".hypurr.HyperliquidSpotPairRequest\x1a#.hypurr.HyperliquidSpotPairResponse\"\x00\x12\x63\n\x14HyperliquidSpotPairs\x12#.hypurr.HyperliquidSpotPairsRequest\x1a$.hypurr.HyperliquidSpotPairsResponse\"\x00\x12\x63\n\x14HyperliquidPerpPairs\x12#.hypurr.HyperliquidPerpPairsRequest\x1a$.hypurr.HyperliquidPerpPairsResponse\"\x00\x12Z\n\x11HyperliquidWallet\x12 .hypurr.HyperliquidWalletRequest\x1a!.hypurr.HyperliquidWalletResponse\"\x00\x12\x84\x01\n\x1fHyperliquidWalletDeploySessions\x12..hypurr.HyperliquidWalletDeploySessionsRequest\x1a/.hypurr.HyperliquidWalletDeploySessionsResponse\"\x00\x12{\n\x1cHyperliquidWalletPerformance\x12+.hypurr.HyperliquidWalletPerformanceRequest\x1a,.hypurr.HyperliquidWalletPerformanceResponse\"\x00\x12Z\n\x11HyperliquidLaunch\x12 .hypurr.HyperliquidLaunchRequest\x1a!.hypurr.HyperliquidLaunchResponse\"\x00\x12`\n\x13HyperliquidLaunches\x12\".hypurr.HyperliquidLaunchesRequest\x1a#.hypurr.HyperliquidLaunchesResponse\"\x00\x12n\n\x17HyperliquidLaunchStream\x12&.hypurr.HyperliquidLaunchStreamRequest\x1a\'.hypurr.HyperliquidLaunchStreamResponse\"\x00\x30\x01\x12k\n\x16HyperliquidLaunchFills\x12%.hypurr.HyperliquidLaunchFillsRequest\x1a&.hypurr.HyperliquidLaunchFillsResponse\"\x00\x30\x01\x12o\n\x18HyperliquidLaunchCandles\x12\'.hypurr.HyperliquidLaunchCandlesRequest\x1a(.hypurr.HyperliquidLaunchCandlesResponse\"\x00\x12v\n\x1dHyperliquidLaunchCandleStream\x12\'.hypurr.HyperliquidLaunchCandlesRequest\x1a(.hypurr.HyperliquidLaunchCandlesResponse\"\x00\x30\x01\x12t\n\x19HyperliquidLaunchMessages\x12(.hypurr.HyperliquidLaunchMessagesRequest\x1a).hypurr.HyperliquidLaunchMessagesResponse\"\x00\x30\x01\x12w\n\x1cLatestHyperliquidLaunchFills\x12+.hypurr.LatestHyperliquidLaunchFillsRequest\x1a&.hypurr.HyperliquidLaunchFillsResponse\"\x00\x30\x01\x12o\n\x18HyperliquidLaunchHolders\x12\'.hypurr.HyperliquidLaunchHoldersRequest\x1a(.hypurr.HyperliquidLaunchHoldersResponse\"\x00\x12T\n\x0fHypurrFunCabals\x12\x1e.hypurr.HypurrFunCabalsRequest\x1a\x1f.hypurr.HypurrFunCabalsResponse\"\x00\x12\x9c\x01\n\'SetHyperliquidWalletDeploySessionTarget\x12\x36.hypurr.SetHyperliquidWalletDeploySessionTargetRequest\x1a\x37.hypurr.SetHyperliquidWalletDeploySessionTargetResponse\"\x00\x12\xa5\x01\n*DeleteHyperliquidWalletDeploySessionTarget\x12\x39.hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest\x1a:.hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse\"\x00\x42#Z!gitlab.com/hypurr-fun/hypurr-grpcb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -51,8 +51,8 @@ _HYPERLIQUIDLAUNCHPOOLTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=11356,
-  serialized_end=11438,
+  serialized_start=11288,
+  serialized_end=11370,
 )
 _sym_db.RegisterEnumDescriptor(_HYPERLIQUIDLAUNCHPOOLTYPE)
 
@@ -715,15 +715,22 @@ _HYPERLIQUIDWALLET = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='balances', full_name='hypurr.HyperliquidWallet.balances', index=5,
+      name='movements', full_name='hypurr.HyperliquidWallet.movements', index=5,
       number=6, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='movements', full_name='hypurr.HyperliquidWallet.movements', index=6,
+      name='spot_balances', full_name='hypurr.HyperliquidWallet.spot_balances', index=6,
       number=7, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='launch_balances', full_name='hypurr.HyperliquidWallet.launch_balances', index=7,
+      number=8, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -741,7 +748,7 @@ _HYPERLIQUIDWALLET = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1636,
-  serialized_end=1879,
+  serialized_end=1943,
 )
 
 
@@ -771,8 +778,8 @@ _HYPERLIQUIDPUBLICWALLET = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1881,
-  serialized_end=1932,
+  serialized_start=1945,
+  serialized_end=1996,
 )
 
 
@@ -879,8 +886,8 @@ _HYPERLIQUIDWALLETMOVEMENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1935,
-  serialized_end=2279,
+  serialized_start=1999,
+  serialized_end=2343,
 )
 
 
@@ -914,6 +921,58 @@ _HYPERLIQUIDWALLETBALANCE = _descriptor.Descriptor(
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='balance', full_name='hypurr.HyperliquidWalletBalance.balance', index=3,
+      number=4, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2346,
+  serialized_end=2476,
+)
+
+
+_HYPERLIQUIDLAUNCHBALANCE = _descriptor.Descriptor(
+  name='HyperliquidLaunchBalance',
+  full_name='hypurr.HyperliquidLaunchBalance',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='telegram_id', full_name='hypurr.HyperliquidLaunchBalance.telegram_id', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='wallet_id', full_name='hypurr.HyperliquidLaunchBalance.wallet_id', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='launch_id', full_name='hypurr.HyperliquidLaunchBalance.launch_id', index=2,
+      number=3, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='balance', full_name='hypurr.HyperliquidLaunchBalance.balance', index=3,
       number=4, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -931,8 +990,8 @@ _HYPERLIQUIDWALLETBALANCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2282,
-  serialized_end=2412,
+  serialized_start=2479,
+  serialized_end=2610,
 )
 
 
@@ -969,8 +1028,8 @@ _HYPERLIQUIDWALLETDEPLOYSESSION_GENESESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3028,
-  serialized_end=3121,
+  serialized_start=3226,
+  serialized_end=3319,
 )
 
 _HYPERLIQUIDWALLETDEPLOYSESSION = _descriptor.Descriptor(
@@ -1111,8 +1170,8 @@ _HYPERLIQUIDWALLETDEPLOYSESSION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2415,
-  serialized_end=3121,
+  serialized_start=2613,
+  serialized_end=3319,
 )
 
 
@@ -1149,8 +1208,8 @@ _HYPERLIQUIDWALLETDEPLOYSESSIONGENESIS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3123,
-  serialized_end=3193,
+  serialized_start=3321,
+  serialized_end=3391,
 )
 
 
@@ -1327,81 +1386,8 @@ _HYPERLIQUIDLAUNCH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3196,
-  serialized_end=3821,
-)
-
-
-_HYPERLIQUIDLAUNCHBALANCE = _descriptor.Descriptor(
-  name='HyperliquidLaunchBalance',
-  full_name='hypurr.HyperliquidLaunchBalance',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='launch_id', full_name='hypurr.HyperliquidLaunchBalance.launch_id', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='launch', full_name='hypurr.HyperliquidLaunchBalance.launch', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='telegram_id', full_name='hypurr.HyperliquidLaunchBalance.telegram_id', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='telegram', full_name='hypurr.HyperliquidLaunchBalance.telegram', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='wallet_id', full_name='hypurr.HyperliquidLaunchBalance.wallet_id', index=4,
-      number=5, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='wallet', full_name='hypurr.HyperliquidLaunchBalance.wallet', index=5,
-      number=6, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='balance', full_name='hypurr.HyperliquidLaunchBalance.balance', index=6,
-      number=7, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=3824,
-  serialized_end=4087,
+  serialized_start=3394,
+  serialized_end=4019,
 )
 
 
@@ -1480,8 +1466,8 @@ _HYPERLIQUIDLAUNCHFILL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4090,
-  serialized_end=4362,
+  serialized_start=4022,
+  serialized_end=4294,
 )
 
 
@@ -1532,8 +1518,8 @@ _TELEGRAMUSERPUBLIC = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4364,
-  serialized_end=4465,
+  serialized_start=4296,
+  serialized_end=4397,
 )
 
 
@@ -1591,8 +1577,8 @@ _HYPERLIQUIDDEPLOYAUCTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4468,
-  serialized_end=4649,
+  serialized_start=4400,
+  serialized_end=4581,
 )
 
 
@@ -1615,8 +1601,8 @@ _HYPERLIQUIDDEPLOYAUCTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4651,
-  serialized_end=4684,
+  serialized_start=4583,
+  serialized_end=4616,
 )
 
 
@@ -1646,8 +1632,8 @@ _HYPERLIQUIDDEPLOYAUCTIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4686,
-  serialized_end=4771,
+  serialized_start=4618,
+  serialized_end=4703,
 )
 
 
@@ -1670,8 +1656,8 @@ _HYPERLIQUIDTOKENSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4773,
-  serialized_end=4799,
+  serialized_start=4705,
+  serialized_end=4731,
 )
 
 
@@ -1701,8 +1687,8 @@ _HYPERLIQUIDTOKENSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4801,
-  serialized_end=4870,
+  serialized_start=4733,
+  serialized_end=4802,
 )
 
 
@@ -1781,8 +1767,8 @@ _HYPERLIQUIDTOKENMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4873,
-  serialized_end=5064,
+  serialized_start=4805,
+  serialized_end=4996,
 )
 
 
@@ -1812,8 +1798,8 @@ _HYPERLIQUIDTOKENMESSAGESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5066,
-  serialized_end=5117,
+  serialized_start=4998,
+  serialized_end=5049,
 )
 
 
@@ -1843,8 +1829,8 @@ _HYPERLIQUIDTOKENMESSAGESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5119,
-  serialized_end=5204,
+  serialized_start=5051,
+  serialized_end=5136,
 )
 
 
@@ -1874,8 +1860,8 @@ _HYPERLIQUIDSPOTPAIRREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5206,
-  serialized_end=5246,
+  serialized_start=5138,
+  serialized_end=5178,
 )
 
 
@@ -1905,8 +1891,8 @@ _HYPERLIQUIDSPOTPAIRRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5248,
-  serialized_end=5320,
+  serialized_start=5180,
+  serialized_end=5252,
 )
 
 
@@ -1929,8 +1915,8 @@ _HYPERLIQUIDSPOTPAIRSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5322,
-  serialized_end=5351,
+  serialized_start=5254,
+  serialized_end=5283,
 )
 
 
@@ -1960,8 +1946,8 @@ _HYPERLIQUIDSPOTPAIRSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5353,
-  serialized_end=5427,
+  serialized_start=5285,
+  serialized_end=5359,
 )
 
 
@@ -1984,8 +1970,8 @@ _HYPERLIQUIDPERPPAIRSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5429,
-  serialized_end=5458,
+  serialized_start=5361,
+  serialized_end=5390,
 )
 
 
@@ -2015,8 +2001,8 @@ _HYPERLIQUIDPERPPAIRSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5460,
-  serialized_end=5534,
+  serialized_start=5392,
+  serialized_end=5466,
 )
 
 
@@ -2046,8 +2032,8 @@ _HYPERLIQUIDWALLETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5536,
-  serialized_end=5618,
+  serialized_start=5468,
+  serialized_end=5550,
 )
 
 
@@ -2077,8 +2063,8 @@ _HYPERLIQUIDWALLETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5620,
-  serialized_end=5690,
+  serialized_start=5552,
+  serialized_end=5622,
 )
 
 
@@ -2101,8 +2087,8 @@ _HYPERLIQUIDLAUNCHESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5692,
-  serialized_end=5720,
+  serialized_start=5624,
+  serialized_end=5652,
 )
 
 
@@ -2132,8 +2118,8 @@ _HYPERLIQUIDLAUNCHESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5722,
-  serialized_end=5796,
+  serialized_start=5654,
+  serialized_end=5728,
 )
 
 
@@ -2163,8 +2149,8 @@ _HYPERLIQUIDLAUNCHSTREAMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5798,
-  serialized_end=5878,
+  serialized_start=5730,
+  serialized_end=5810,
 )
 
 
@@ -2194,8 +2180,8 @@ _HYPERLIQUIDLAUNCHSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5880,
-  serialized_end=5958,
+  serialized_start=5812,
+  serialized_end=5890,
 )
 
 
@@ -2246,8 +2232,8 @@ _HYPERLIQUIDWALLETDEPLOYSESSIONSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5961,
-  serialized_end=6204,
+  serialized_start=5893,
+  serialized_end=6136,
 )
 
 
@@ -2277,8 +2263,8 @@ _HYPERLIQUIDWALLETDEPLOYSESSIONSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6206,
-  serialized_end=6305,
+  serialized_start=6138,
+  serialized_end=6237,
 )
 
 
@@ -2336,8 +2322,8 @@ _SETHYPERLIQUIDWALLETDEPLOYSESSIONTARGETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6308,
-  serialized_end=6477,
+  serialized_start=6240,
+  serialized_end=6409,
 )
 
 
@@ -2367,8 +2353,8 @@ _SETHYPERLIQUIDWALLETDEPLOYSESSIONTARGETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6479,
-  serialized_end=6585,
+  serialized_start=6411,
+  serialized_end=6517,
 )
 
 
@@ -2412,8 +2398,8 @@ _DELETEHYPERLIQUIDWALLETDEPLOYSESSIONTARGETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6588,
-  serialized_end=6729,
+  serialized_start=6520,
+  serialized_end=6661,
 )
 
 
@@ -2443,8 +2429,8 @@ _DELETEHYPERLIQUIDWALLETDEPLOYSESSIONTARGETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6731,
-  serialized_end=6840,
+  serialized_start=6663,
+  serialized_end=6772,
 )
 
 
@@ -2474,8 +2460,8 @@ _HYPERLIQUIDLAUNCHFILLSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6842,
-  serialized_end=6921,
+  serialized_start=6774,
+  serialized_end=6853,
 )
 
 
@@ -2505,8 +2491,8 @@ _HYPERLIQUIDLAUNCHFILLSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6923,
-  serialized_end=7001,
+  serialized_start=6855,
+  serialized_end=6933,
 )
 
 
@@ -2543,8 +2529,8 @@ _HYPERLIQUIDLAUNCHCANDLESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7003,
-  serialized_end=7073,
+  serialized_start=6935,
+  serialized_end=7005,
 )
 
 
@@ -2609,8 +2595,8 @@ _HYPERLIQUIDLAUNCHCANDLE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7075,
-  serialized_end=7186,
+  serialized_start=7007,
+  serialized_end=7118,
 )
 
 
@@ -2640,8 +2626,8 @@ _HYPERLIQUIDLAUNCHCANDLESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7188,
-  serialized_end=7272,
+  serialized_start=7120,
+  serialized_end=7204,
 )
 
 
@@ -2671,8 +2657,8 @@ _HYPERLIQUIDLAUNCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7274,
-  serialized_end=7312,
+  serialized_start=7206,
+  serialized_end=7244,
 )
 
 
@@ -2702,8 +2688,8 @@ _HYPERLIQUIDLAUNCHRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7314,
-  serialized_end=7384,
+  serialized_start=7246,
+  serialized_end=7316,
 )
 
 
@@ -2782,8 +2768,8 @@ _HYPERLIQUIDLAUNCHMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7387,
-  serialized_end=7580,
+  serialized_start=7319,
+  serialized_end=7512,
 )
 
 
@@ -2813,8 +2799,8 @@ _HYPERLIQUIDLAUNCHMESSAGESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7582,
-  serialized_end=7635,
+  serialized_start=7514,
+  serialized_end=7567,
 )
 
 
@@ -2844,8 +2830,8 @@ _HYPERLIQUIDLAUNCHMESSAGESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7637,
-  serialized_end=7724,
+  serialized_start=7569,
+  serialized_end=7656,
 )
 
 
@@ -2889,8 +2875,8 @@ _HYPERLIQUIDLAUNCHHOLDER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7726,
-  serialized_end=7799,
+  serialized_start=7658,
+  serialized_end=7731,
 )
 
 
@@ -2920,8 +2906,8 @@ _HYPERLIQUIDLAUNCHHOLDERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7801,
-  serialized_end=7853,
+  serialized_start=7733,
+  serialized_end=7785,
 )
 
 
@@ -2951,8 +2937,8 @@ _HYPERLIQUIDLAUNCHHOLDERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7855,
-  serialized_end=7939,
+  serialized_start=7787,
+  serialized_end=7871,
 )
 
 
@@ -2975,8 +2961,8 @@ _LATESTHYPERLIQUIDLAUNCHFILLSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7941,
-  serialized_end=7978,
+  serialized_start=7873,
+  serialized_end=7910,
 )
 
 
@@ -3146,8 +3132,8 @@ _TELEGRAMUSER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7981,
-  serialized_end=8748,
+  serialized_start=7913,
+  serialized_end=8680,
 )
 
 
@@ -3170,8 +3156,8 @@ _TELEGRAMUSERSETTINGS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8750,
-  serialized_end=8772,
+  serialized_start=8682,
+  serialized_end=8704,
 )
 
 
@@ -3194,8 +3180,8 @@ _TELEGRAMUSERREPUTATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8774,
-  serialized_end=8798,
+  serialized_start=8706,
+  serialized_end=8730,
 )
 
 
@@ -3232,8 +3218,8 @@ _HYPERLIQUIDWALLETLABEL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8800,
-  serialized_end=8865,
+  serialized_start=8732,
+  serialized_end=8797,
 )
 
 
@@ -3270,8 +3256,8 @@ _TELEGRAMUSERREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8953,
-  serialized_end=9000,
+  serialized_start=8885,
+  serialized_end=8932,
 )
 
 _TELEGRAMUSERREQUEST = _descriptor.Descriptor(
@@ -3300,8 +3286,8 @@ _TELEGRAMUSERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8868,
-  serialized_end=9000,
+  serialized_start=8800,
+  serialized_end=8932,
 )
 
 
@@ -3331,8 +3317,8 @@ _TELEGRAMUSERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9002,
-  serialized_end=9060,
+  serialized_start=8934,
+  serialized_end=8992,
 )
 
 
@@ -3369,8 +3355,8 @@ _TELEGRAMUSERWALLETSREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8953,
-  serialized_end=9000,
+  serialized_start=8885,
+  serialized_end=8932,
 )
 
 _TELEGRAMUSERWALLETSREQUEST = _descriptor.Descriptor(
@@ -3399,8 +3385,8 @@ _TELEGRAMUSERWALLETSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9063,
-  serialized_end=9209,
+  serialized_start=8995,
+  serialized_end=9141,
 )
 
 
@@ -3430,8 +3416,8 @@ _TELEGRAMUSERWALLETSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9211,
-  serialized_end=9284,
+  serialized_start=9143,
+  serialized_end=9216,
 )
 
 
@@ -3468,8 +3454,8 @@ _HYPERLIQUIDWALLETPERFORMANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9286,
-  serialized_end=9401,
+  serialized_start=9218,
+  serialized_end=9333,
 )
 
 
@@ -3513,8 +3499,8 @@ _PERFORMANCEPOINT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9403,
-  serialized_end=9466,
+  serialized_start=9335,
+  serialized_end=9398,
 )
 
 
@@ -3593,8 +3579,8 @@ _PERFORMANCEREPORT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9469,
-  serialized_end=9638,
+  serialized_start=9401,
+  serialized_end=9570,
 )
 
 
@@ -3645,8 +3631,8 @@ _PERFORMANCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9641,
-  serialized_end=9776,
+  serialized_start=9573,
+  serialized_end=9708,
 )
 
 
@@ -3690,8 +3676,8 @@ _HYPERLIQUIDWALLETPERFORMANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9779,
-  serialized_end=9924,
+  serialized_start=9711,
+  serialized_end=9856,
 )
 
 
@@ -3763,8 +3749,8 @@ _HYPURRFUNCABAL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9927,
-  serialized_end=10217,
+  serialized_start=9859,
+  serialized_end=10149,
 )
 
 
@@ -3815,8 +3801,8 @@ _HYPURRFUNCABALSUMMARY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10219,
-  serialized_end=10339,
+  serialized_start=10151,
+  serialized_end=10271,
 )
 
 
@@ -3916,8 +3902,8 @@ _HYPURRFUNCABALUSER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10342,
-  serialized_end=10606,
+  serialized_start=10274,
+  serialized_end=10538,
 )
 
 
@@ -3982,8 +3968,8 @@ _HYPURRFUNCABALTRACKEDWALLET = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10609,
-  serialized_end=10781,
+  serialized_start=10541,
+  serialized_end=10713,
 )
 
 
@@ -4055,8 +4041,8 @@ _HYPURRFUNCABALSEASON = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=10784,
-  serialized_end=11014,
+  serialized_start=10716,
+  serialized_end=10946,
 )
 
 
@@ -4149,8 +4135,8 @@ _HYPURRFUNCABALUSERSEASON = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11017,
-  serialized_end=11261,
+  serialized_start=10949,
+  serialized_end=11193,
 )
 
 
@@ -4173,8 +4159,8 @@ _HYPURRFUNCABALSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11263,
-  serialized_end=11287,
+  serialized_start=11195,
+  serialized_end=11219,
 )
 
 
@@ -4204,8 +4190,8 @@ _HYPURRFUNCABALSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=11289,
-  serialized_end=11354,
+  serialized_start=11221,
+  serialized_end=11286,
 )
 
 _HYPERLIQUIDTOKEN.fields_by_name['deploy_info'].message_type = _HYPERLIQUIDTOKENDEPLOYINFO
@@ -4216,13 +4202,15 @@ _HYPERLIQUIDTOKENGENESIS.fields_by_name['target_token_id'].message_type = google
 _HYPERLIQUIDSPOTPAIR.fields_by_name['base'].message_type = _HYPERLIQUIDTOKEN
 _HYPERLIQUIDSPOTPAIR.fields_by_name['quote'].message_type = _HYPERLIQUIDTOKEN
 _HYPERLIQUIDWALLET.fields_by_name['telegram_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_HYPERLIQUIDWALLET.fields_by_name['balances'].message_type = _HYPERLIQUIDWALLETBALANCE
 _HYPERLIQUIDWALLET.fields_by_name['movements'].message_type = _HYPERLIQUIDWALLETMOVEMENT
+_HYPERLIQUIDWALLET.fields_by_name['spot_balances'].message_type = _HYPERLIQUIDWALLETBALANCE
+_HYPERLIQUIDWALLET.fields_by_name['launch_balances'].message_type = _HYPERLIQUIDLAUNCHBALANCE
 _HYPERLIQUIDWALLETMOVEMENT.fields_by_name['telegram_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
 _HYPERLIQUIDWALLETMOVEMENT.fields_by_name['wallet'].message_type = _HYPERLIQUIDWALLET
 _HYPERLIQUIDWALLETMOVEMENT.fields_by_name['token'].message_type = _HYPERLIQUIDTOKEN
 _HYPERLIQUIDWALLETMOVEMENT.fields_by_name['timestamp'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
 _HYPERLIQUIDWALLETBALANCE.fields_by_name['telegram_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_HYPERLIQUIDLAUNCHBALANCE.fields_by_name['telegram_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
 _HYPERLIQUIDWALLETDEPLOYSESSION_GENESESENTRY.fields_by_name['value'].message_type = _HYPERLIQUIDWALLETDEPLOYSESSIONGENESIS
 _HYPERLIQUIDWALLETDEPLOYSESSION_GENESESENTRY.containing_type = _HYPERLIQUIDWALLETDEPLOYSESSION
 _HYPERLIQUIDWALLETDEPLOYSESSION.fields_by_name['telegram_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
@@ -4238,10 +4226,6 @@ _HYPERLIQUIDLAUNCH.fields_by_name['topic_id'].message_type = google_dot_protobuf
 _HYPERLIQUIDLAUNCH.fields_by_name['fills'].message_type = _HYPERLIQUIDLAUNCHFILL
 _HYPERLIQUIDLAUNCH.fields_by_name['pool_type'].enum_type = _HYPERLIQUIDLAUNCHPOOLTYPE
 _HYPERLIQUIDLAUNCH.fields_by_name['session_wallet'].message_type = _HYPERLIQUIDPUBLICWALLET
-_HYPERLIQUIDLAUNCHBALANCE.fields_by_name['launch'].message_type = _HYPERLIQUIDLAUNCH
-_HYPERLIQUIDLAUNCHBALANCE.fields_by_name['telegram_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_HYPERLIQUIDLAUNCHBALANCE.fields_by_name['telegram'].message_type = _TELEGRAMUSERPUBLIC
-_HYPERLIQUIDLAUNCHBALANCE.fields_by_name['wallet'].message_type = _HYPERLIQUIDWALLET
 _HYPERLIQUIDLAUNCHFILL.fields_by_name['telegram'].message_type = _TELEGRAMUSERPUBLIC
 _HYPERLIQUIDLAUNCHFILL.fields_by_name['wallet'].message_type = _HYPERLIQUIDPUBLICWALLET
 _HYPERLIQUIDLAUNCHFILL.fields_by_name['movement_hash'].message_type = google_dot_protobuf_dot_wrappers__pb2._STRINGVALUE
@@ -4320,10 +4304,10 @@ DESCRIPTOR.message_types_by_name['HyperliquidWallet'] = _HYPERLIQUIDWALLET
 DESCRIPTOR.message_types_by_name['HyperliquidPublicWallet'] = _HYPERLIQUIDPUBLICWALLET
 DESCRIPTOR.message_types_by_name['HyperliquidWalletMovement'] = _HYPERLIQUIDWALLETMOVEMENT
 DESCRIPTOR.message_types_by_name['HyperliquidWalletBalance'] = _HYPERLIQUIDWALLETBALANCE
+DESCRIPTOR.message_types_by_name['HyperliquidLaunchBalance'] = _HYPERLIQUIDLAUNCHBALANCE
 DESCRIPTOR.message_types_by_name['HyperliquidWalletDeploySession'] = _HYPERLIQUIDWALLETDEPLOYSESSION
 DESCRIPTOR.message_types_by_name['HyperliquidWalletDeploySessionGenesis'] = _HYPERLIQUIDWALLETDEPLOYSESSIONGENESIS
 DESCRIPTOR.message_types_by_name['HyperliquidLaunch'] = _HYPERLIQUIDLAUNCH
-DESCRIPTOR.message_types_by_name['HyperliquidLaunchBalance'] = _HYPERLIQUIDLAUNCHBALANCE
 DESCRIPTOR.message_types_by_name['HyperliquidLaunchFill'] = _HYPERLIQUIDLAUNCHFILL
 DESCRIPTOR.message_types_by_name['TelegramUserPublic'] = _TELEGRAMUSERPUBLIC
 DESCRIPTOR.message_types_by_name['HyperliquidDeployAuction'] = _HYPERLIQUIDDEPLOYAUCTION
@@ -4481,6 +4465,13 @@ HyperliquidWalletBalance = _reflection.GeneratedProtocolMessageType('Hyperliquid
   ))
 _sym_db.RegisterMessage(HyperliquidWalletBalance)
 
+HyperliquidLaunchBalance = _reflection.GeneratedProtocolMessageType('HyperliquidLaunchBalance', (_message.Message,), dict(
+  DESCRIPTOR = _HYPERLIQUIDLAUNCHBALANCE,
+  __module__ = 'hypurr_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HyperliquidLaunchBalance)
+  ))
+_sym_db.RegisterMessage(HyperliquidLaunchBalance)
+
 HyperliquidWalletDeploySession = _reflection.GeneratedProtocolMessageType('HyperliquidWalletDeploySession', (_message.Message,), dict(
 
   GenesesEntry = _reflection.GeneratedProtocolMessageType('GenesesEntry', (_message.Message,), dict(
@@ -4509,13 +4500,6 @@ HyperliquidLaunch = _reflection.GeneratedProtocolMessageType('HyperliquidLaunch'
   # @@protoc_insertion_point(class_scope:hypurr.HyperliquidLaunch)
   ))
 _sym_db.RegisterMessage(HyperliquidLaunch)
-
-HyperliquidLaunchBalance = _reflection.GeneratedProtocolMessageType('HyperliquidLaunchBalance', (_message.Message,), dict(
-  DESCRIPTOR = _HYPERLIQUIDLAUNCHBALANCE,
-  __module__ = 'hypurr_pb2'
-  # @@protoc_insertion_point(class_scope:hypurr.HyperliquidLaunchBalance)
-  ))
-_sym_db.RegisterMessage(HyperliquidLaunchBalance)
 
 HyperliquidLaunchFill = _reflection.GeneratedProtocolMessageType('HyperliquidLaunchFill', (_message.Message,), dict(
   DESCRIPTOR = _HYPERLIQUIDLAUNCHFILL,
@@ -4990,8 +4974,8 @@ _STATIC = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=11441,
-  serialized_end=14115,
+  serialized_start=11373,
+  serialized_end=14047,
   methods=[
   _descriptor.MethodDescriptor(
     name='TelegramUser',
