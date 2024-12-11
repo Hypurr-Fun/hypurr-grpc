@@ -395,6 +395,12 @@ message HyperliquidLaunchHoldersResponse {
 
 message LatestHyperliquidLaunchFillsRequest {}
 
+message HyperliquidLaunchTradeRequest {
+  int64 launch_id = 1;
+  int64 wallet_id = 2;
+  string direction = 3;
+  double amount = 4;
+}
 
 message TelegramUser {
   int64 telegram_id = 1;
@@ -406,18 +412,19 @@ message TelegramUser {
   int64 referrer_id = 7;
   TelegramUserSettings settings = 8;
   HyperliquidWallet wallet = 9;
-  int64 wallet_id = 10;
-  HyperliquidWallet sniper_wallet = 11;
-  int64 sniper_wallet_id = 12;
-  HyperliquidWallet dumper_wallet = 13;
-  int64 dumper_wallet_id = 14;
-  int64 reputation_id = 15;
-  TelegramUserReputation reputation = 16;
-  repeated HyperliquidLaunch launches = 17;
-  repeated HyperliquidWalletBalance balances = 18;
-  repeated HyperliquidWalletMovement movements = 19;
-  repeated HyperliquidLaunchFill launch_fills = 20;
-  repeated HyperliquidWalletLabel labels = 21;
+  repeated HyperliquidWallet wallets = 10;
+  int64 wallet_id = 11;
+  HyperliquidWallet sniper_wallet = 12;
+  int64 sniper_wallet_id = 13;
+  HyperliquidWallet dumper_wallet = 14;
+  int64 dumper_wallet_id = 15;
+  int64 reputation_id = 16;
+  TelegramUserReputation reputation = 17;
+  repeated HyperliquidLaunch launches = 18;
+  repeated HyperliquidWalletBalance balances = 19;
+  repeated HyperliquidWalletMovement movements = 20;
+  repeated HyperliquidLaunchFill launch_fills = 21;
+  repeated HyperliquidWalletLabel labels = 22;
 }
 
 // TODO
