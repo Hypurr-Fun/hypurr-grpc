@@ -642,6 +642,10 @@ export interface HyperliquidLaunchFill {
      * @generated from protobuf field: google.protobuf.StringValue movement_hash = 8;
      */
     movementHash?: StringValue;
+    /**
+     * @generated from protobuf field: int64 id = 9;
+     */
+    id: number;
 }
 /**
  * @generated from protobuf message hypurr.TelegramUserPublic
@@ -3241,11 +3245,12 @@ class HyperliquidLaunchFill$Type extends MessageType<HyperliquidLaunchFill> {
             { no: 5, name: "usdc_delta", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 6, name: "launch_delta", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 7, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 8, name: "movement_hash", kind: "message", T: () => StringValue }
+            { no: 8, name: "movement_hash", kind: "message", T: () => StringValue },
+            { no: 9, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchFill>): HyperliquidLaunchFill {
-        const message = { launchId: 0, telegramId: 0, usdcDelta: 0, launchDelta: 0, timestamp: 0 };
+        const message = { launchId: 0, telegramId: 0, usdcDelta: 0, launchDelta: 0, timestamp: 0, id: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunchFill>(this, message, value);
@@ -3279,6 +3284,9 @@ class HyperliquidLaunchFill$Type extends MessageType<HyperliquidLaunchFill> {
                     break;
                 case /* google.protobuf.StringValue movement_hash */ 8:
                     message.movementHash = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.movementHash);
+                    break;
+                case /* int64 id */ 9:
+                    message.id = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3316,6 +3324,9 @@ class HyperliquidLaunchFill$Type extends MessageType<HyperliquidLaunchFill> {
         /* google.protobuf.StringValue movement_hash = 8; */
         if (message.movementHash)
             StringValue.internalBinaryWrite(message.movementHash, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* int64 id = 9; */
+        if (message.id !== 0)
+            writer.tag(9, WireType.Varint).int64(message.id);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

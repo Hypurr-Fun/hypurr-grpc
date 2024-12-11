@@ -199,6 +199,7 @@ message HyperliquidLaunchFill {
   int64 launch_delta = 6;
   int64 timestamp = 7;
   google.protobuf.StringValue movement_hash = 8;
+  int64 id = 9;
 }
 
 message TelegramUserPublic {
