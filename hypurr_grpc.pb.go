@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion8
 const (
 	Static_TelegramUser_FullMethodName                               = "/hypurr.Static/TelegramUser"
 	Static_TelegramUserWallets_FullMethodName                        = "/hypurr.Static/TelegramUserWallets"
+	Static_HyperliquidLaunchTrade_FullMethodName                     = "/hypurr.Static/HyperliquidLaunchTrade"
 	Static_HyperliquidDeployAuction_FullMethodName                   = "/hypurr.Static/HyperliquidDeployAuction"
 	Static_HyperliquidTokens_FullMethodName                          = "/hypurr.Static/HyperliquidTokens"
 	Static_HyperliquidTokenHolders_FullMethodName                    = "/hypurr.Static/HyperliquidTokenHolders"
@@ -51,8 +52,10 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StaticClient interface {
+	// Authed endpoints
 	TelegramUser(ctx context.Context, in *TelegramUserRequest, opts ...grpc.CallOption) (*TelegramUserResponse, error)
 	TelegramUserWallets(ctx context.Context, in *TelegramUserWalletsRequest, opts ...grpc.CallOption) (*TelegramUserWalletsResponse, error)
+	HyperliquidLaunchTrade(ctx context.Context, in *HyperliquidLaunchTradeRequest, opts ...grpc.CallOption) (*HyperliquidLaunchTradeResponse, error)
 	HyperliquidDeployAuction(ctx context.Context, in *HyperliquidDeployAuctionRequest, opts ...grpc.CallOption) (*HyperliquidDeployAuctionResponse, error)
 	HyperliquidTokens(ctx context.Context, in *HyperliquidTokensRequest, opts ...grpc.CallOption) (*HyperliquidTokensResponse, error)
 	HyperliquidTokenHolders(ctx context.Context, in *HyperliquidTokenHoldersRequest, opts ...grpc.CallOption) (*HyperliquidTokenHoldersResponse, error)
@@ -99,6 +102,16 @@ func (c *staticClient) TelegramUserWallets(ctx context.Context, in *TelegramUser
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(TelegramUserWalletsResponse)
 	err := c.cc.Invoke(ctx, Static_TelegramUserWallets_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staticClient) HyperliquidLaunchTrade(ctx context.Context, in *HyperliquidLaunchTradeRequest, opts ...grpc.CallOption) (*HyperliquidLaunchTradeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HyperliquidLaunchTradeResponse)
+	err := c.cc.Invoke(ctx, Static_HyperliquidLaunchTrade_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -467,8 +480,10 @@ func (c *staticClient) DeleteHyperliquidWalletDeploySessionTarget(ctx context.Co
 // All implementations must embed UnimplementedStaticServer
 // for forward compatibility
 type StaticServer interface {
+	// Authed endpoints
 	TelegramUser(context.Context, *TelegramUserRequest) (*TelegramUserResponse, error)
 	TelegramUserWallets(context.Context, *TelegramUserWalletsRequest) (*TelegramUserWalletsResponse, error)
+	HyperliquidLaunchTrade(context.Context, *HyperliquidLaunchTradeRequest) (*HyperliquidLaunchTradeResponse, error)
 	HyperliquidDeployAuction(context.Context, *HyperliquidDeployAuctionRequest) (*HyperliquidDeployAuctionResponse, error)
 	HyperliquidTokens(context.Context, *HyperliquidTokensRequest) (*HyperliquidTokensResponse, error)
 	HyperliquidTokenHolders(context.Context, *HyperliquidTokenHoldersRequest) (*HyperliquidTokenHoldersResponse, error)
@@ -503,6 +518,9 @@ func (UnimplementedStaticServer) TelegramUser(context.Context, *TelegramUserRequ
 }
 func (UnimplementedStaticServer) TelegramUserWallets(context.Context, *TelegramUserWalletsRequest) (*TelegramUserWalletsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TelegramUserWallets not implemented")
+}
+func (UnimplementedStaticServer) HyperliquidLaunchTrade(context.Context, *HyperliquidLaunchTradeRequest) (*HyperliquidLaunchTradeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidLaunchTrade not implemented")
 }
 func (UnimplementedStaticServer) HyperliquidDeployAuction(context.Context, *HyperliquidDeployAuctionRequest) (*HyperliquidDeployAuctionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidDeployAuction not implemented")
@@ -615,6 +633,24 @@ func _Static_TelegramUserWallets_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(StaticServer).TelegramUserWallets(ctx, req.(*TelegramUserWalletsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Static_HyperliquidLaunchTrade_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HyperliquidLaunchTradeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).HyperliquidLaunchTrade(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_HyperliquidLaunchTrade_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).HyperliquidLaunchTrade(ctx, req.(*HyperliquidLaunchTradeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1047,6 +1083,10 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TelegramUserWallets",
 			Handler:    _Static_TelegramUserWallets_Handler,
+		},
+		{
+			MethodName: "HyperliquidLaunchTrade",
+			Handler:    _Static_HyperliquidLaunchTrade_Handler,
 		},
 		{
 			MethodName: "HyperliquidDeployAuction",

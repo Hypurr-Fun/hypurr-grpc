@@ -24,6 +24,11 @@ class StaticStub(object):
         request_serializer=hypurr__pb2.TelegramUserWalletsRequest.SerializeToString,
         response_deserializer=hypurr__pb2.TelegramUserWalletsResponse.FromString,
         )
+    self.HyperliquidLaunchTrade = channel.unary_unary(
+        '/hypurr.Static/HyperliquidLaunchTrade',
+        request_serializer=hypurr__pb2.HyperliquidLaunchTradeRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.HyperliquidLaunchTradeResponse.FromString,
+        )
     self.HyperliquidDeployAuction = channel.unary_unary(
         '/hypurr.Static/HyperliquidDeployAuction',
         request_serializer=hypurr__pb2.HyperliquidDeployAuctionRequest.SerializeToString,
@@ -141,13 +146,20 @@ class StaticServicer(object):
   pass
 
   def TelegramUser(self, request, context):
+    """Authed endpoints
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def TelegramUserWallets(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def TelegramUserWallets(self, request, context):
+  def HyperliquidLaunchTrade(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -320,6 +332,11 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.TelegramUserWallets,
           request_deserializer=hypurr__pb2.TelegramUserWalletsRequest.FromString,
           response_serializer=hypurr__pb2.TelegramUserWalletsResponse.SerializeToString,
+      ),
+      'HyperliquidLaunchTrade': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidLaunchTrade,
+          request_deserializer=hypurr__pb2.HyperliquidLaunchTradeRequest.FromString,
+          response_serializer=hypurr__pb2.HyperliquidLaunchTradeResponse.SerializeToString,
       ),
       'HyperliquidDeployAuction': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidDeployAuction,

@@ -395,13 +395,6 @@ message HyperliquidLaunchHoldersResponse {
 
 message LatestHyperliquidLaunchFillsRequest {}
 
-message HyperliquidLaunchTradeRequest {
-  int64 launch_id = 1;
-  int64 wallet_id = 2;
-  string direction = 3;
-  double amount = 4;
-}
-
 message TelegramUser {
   int64 telegram_id = 1;
   string telegram_username = 2;
@@ -440,23 +433,6 @@ message TelegramUserReputation {
 message HyperliquidWalletLabel {
   string ethereum_address = 1;
   string label = 2;
-}
-
-message TelegramUserRequest {
-  map<string, string> auth_data = 1;
-}
-
-message TelegramUserResponse {
-  TelegramUser user = 1;
-}
-
-
-message TelegramUserWalletsRequest {
-  map<string, string> auth_data = 1;
-}
-
-message TelegramUserWalletsResponse {
-  repeated HyperliquidWallet wallets = 1;
 }
 
 message HyperliquidWalletPerformanceRequest {
@@ -566,9 +542,41 @@ message HypurrFunCabalsResponse {
   repeated HypurrFunCabal cabals = 1;
 }
 
+// Auth endpoints
+message TelegramUserRequest {
+  map<string, string> auth_data = 1;
+}
+
+message TelegramUserResponse {
+  TelegramUser user = 1;
+}
+
+
+message TelegramUserWalletsRequest {
+  map<string, string> auth_data = 1;
+}
+
+message TelegramUserWalletsResponse {
+  repeated HyperliquidWallet wallets = 1;
+}
+
+message HyperliquidLaunchTradeRequest {
+  map<string, string> auth_data = 1;
+  int64 launch_id = 2;
+  int64 wallet_id = 3;
+  string direction = 4;
+  double amount = 5;
+}
+
+message HyperliquidLaunchTradeResponse {
+
+}
+
 service Static {
+  // Authed endpoints
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
+  rpc HyperliquidLaunchTrade (HyperliquidLaunchTradeRequest) returns (HyperliquidLaunchTradeResponse) {}
 
   rpc HyperliquidDeployAuction (HyperliquidDeployAuctionRequest) returns (HyperliquidDeployAuctionResponse) {}
 
