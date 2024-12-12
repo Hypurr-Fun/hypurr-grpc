@@ -98,6 +98,8 @@ message HyperliquidWallet {
   repeated HyperliquidWalletMovement movements = 6;
   repeated HyperliquidWalletBalance spot_balances = 7;
   repeated HyperliquidLaunchBalance launch_balances = 8;
+  bool is_agent = 9;
+  bool is_read_only = 10;
 }
 
 message HyperliquidPublicWallet {

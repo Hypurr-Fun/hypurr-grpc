@@ -320,6 +320,14 @@ export interface HyperliquidWallet {
      * @generated from protobuf field: repeated hypurr.HyperliquidLaunchBalance launch_balances = 8;
      */
     launchBalances: HyperliquidLaunchBalance[];
+    /**
+     * @generated from protobuf field: bool is_agent = 9;
+     */
+    isAgent: boolean;
+    /**
+     * @generated from protobuf field: bool is_read_only = 10;
+     */
+    isReadOnly: boolean;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidPublicWallet
@@ -2482,11 +2490,13 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
             { no: 5, name: "points", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 6, name: "movements", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidWalletMovement },
             { no: 7, name: "spot_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidWalletBalance },
-            { no: 8, name: "launch_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidLaunchBalance }
+            { no: 8, name: "launch_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidLaunchBalance },
+            { no: 9, name: "is_agent", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 10, name: "is_read_only", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWallet>): HyperliquidWallet {
-        const message = { id: 0, name: "", ethereumAddress: "", points: 0, movements: [], spotBalances: [], launchBalances: [] };
+        const message = { id: 0, name: "", ethereumAddress: "", points: 0, movements: [], spotBalances: [], launchBalances: [], isAgent: false, isReadOnly: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWallet>(this, message, value);
@@ -2520,6 +2530,12 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
                     break;
                 case /* repeated hypurr.HyperliquidLaunchBalance launch_balances */ 8:
                     message.launchBalances.push(HyperliquidLaunchBalance.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* bool is_agent */ 9:
+                    message.isAgent = reader.bool();
+                    break;
+                case /* bool is_read_only */ 10:
+                    message.isReadOnly = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2557,6 +2573,12 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
         /* repeated hypurr.HyperliquidLaunchBalance launch_balances = 8; */
         for (let i = 0; i < message.launchBalances.length; i++)
             HyperliquidLaunchBalance.internalBinaryWrite(message.launchBalances[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* bool is_agent = 9; */
+        if (message.isAgent !== false)
+            writer.tag(9, WireType.Varint).bool(message.isAgent);
+        /* bool is_read_only = 10; */
+        if (message.isReadOnly !== false)
+            writer.tag(10, WireType.Varint).bool(message.isReadOnly);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
