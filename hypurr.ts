@@ -1668,6 +1668,14 @@ export interface HyperliquidLaunchTradeRequest {
  * @generated from protobuf message hypurr.HyperliquidLaunchTradeResponse
  */
 export interface HyperliquidLaunchTradeResponse {
+    /**
+     * @generated from protobuf field: double base_amount = 1;
+     */
+    baseAmount: number;
+    /**
+     * @generated from protobuf field: double quote_amount = 2;
+     */
+    quoteAmount: number;
 }
 /**
  * @generated from protobuf enum hypurr.HyperliquidLaunchPoolType
@@ -7037,19 +7045,47 @@ export const HyperliquidLaunchTradeRequest = new HyperliquidLaunchTradeRequest$T
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidLaunchTradeResponse$Type extends MessageType<HyperliquidLaunchTradeResponse> {
     constructor() {
-        super("hypurr.HyperliquidLaunchTradeResponse", []);
+        super("hypurr.HyperliquidLaunchTradeResponse", [
+            { no: 1, name: "base_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 2, name: "quote_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchTradeResponse>): HyperliquidLaunchTradeResponse {
-        const message = {};
+        const message = { baseAmount: 0, quoteAmount: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunchTradeResponse>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidLaunchTradeResponse): HyperliquidLaunchTradeResponse {
-        return target ?? this.create();
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* double base_amount */ 1:
+                    message.baseAmount = reader.double();
+                    break;
+                case /* double quote_amount */ 2:
+                    message.quoteAmount = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
     }
     internalBinaryWrite(message: HyperliquidLaunchTradeResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* double base_amount = 1; */
+        if (message.baseAmount !== 0)
+            writer.tag(1, WireType.Bit64).double(message.baseAmount);
+        /* double quote_amount = 2; */
+        if (message.quoteAmount !== 0)
+            writer.tag(2, WireType.Bit64).double(message.quoteAmount);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
