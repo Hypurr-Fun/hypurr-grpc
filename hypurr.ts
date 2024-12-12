@@ -1656,9 +1656,9 @@ export interface HyperliquidLaunchTradeRequest {
      */
     walletId: number;
     /**
-     * @generated from protobuf field: string direction = 4;
+     * @generated from protobuf field: hypurr.HyperliquidLaunchTradeDirection direction = 4;
      */
-    direction: string;
+    direction: HyperliquidLaunchTradeDirection;
     /**
      * @generated from protobuf field: double amount = 5;
      */
@@ -1689,6 +1689,19 @@ export enum HyperliquidLaunchPoolType {
      * @generated from protobuf enum value: Fixed = 3;
      */
     Fixed = 3
+}
+/**
+ * @generated from protobuf enum hypurr.HyperliquidLaunchTradeDirection
+ */
+export enum HyperliquidLaunchTradeDirection {
+    /**
+     * @generated from protobuf enum value: BUY = 0;
+     */
+    BUY = 0,
+    /**
+     * @generated from protobuf enum value: SELL = 1;
+     */
+    SELL = 1
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidToken$Type extends MessageType<HyperliquidToken> {
@@ -6937,12 +6950,12 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "direction", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "direction", kind: "enum", T: () => ["hypurr.HyperliquidLaunchTradeDirection", HyperliquidLaunchTradeDirection] },
             { no: 5, name: "amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchTradeRequest>): HyperliquidLaunchTradeRequest {
-        const message = { authData: {}, launchId: 0, walletId: 0, direction: "", amount: 0 };
+        const message = { authData: {}, launchId: 0, walletId: 0, direction: 0, amount: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunchTradeRequest>(this, message, value);
@@ -6962,8 +6975,8 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
                 case /* int64 wallet_id */ 3:
                     message.walletId = reader.int64().toNumber();
                     break;
-                case /* string direction */ 4:
-                    message.direction = reader.string();
+                case /* hypurr.HyperliquidLaunchTradeDirection direction */ 4:
+                    message.direction = reader.int32();
                     break;
                 case /* double amount */ 5:
                     message.amount = reader.double();
@@ -7005,9 +7018,9 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
         /* int64 wallet_id = 3; */
         if (message.walletId !== 0)
             writer.tag(3, WireType.Varint).int64(message.walletId);
-        /* string direction = 4; */
-        if (message.direction !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.direction);
+        /* hypurr.HyperliquidLaunchTradeDirection direction = 4; */
+        if (message.direction !== 0)
+            writer.tag(4, WireType.Varint).int32(message.direction);
         /* double amount = 5; */
         if (message.amount !== 0)
             writer.tag(5, WireType.Bit64).double(message.amount);

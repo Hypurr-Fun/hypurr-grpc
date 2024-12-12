@@ -560,11 +560,16 @@ message TelegramUserWalletsResponse {
   repeated HyperliquidWallet wallets = 1;
 }
 
+enum HyperliquidLaunchTradeDirection {
+  BUY = 0;
+  SELL = 1;
+}
+
 message HyperliquidLaunchTradeRequest {
   map<string, string> auth_data = 1;
   int64 launch_id = 2;
   int64 wallet_id = 3;
-  string direction = 4;
+  HyperliquidLaunchTradeDirection direction = 4;
   double amount = 5;
 }
 
