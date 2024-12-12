@@ -576,6 +576,8 @@ message HyperliquidLaunchTradeRequest {
 message HyperliquidLaunchTradeResponse {
   double base_amount = 1;
   double quote_amount = 2;
+  string message = 3;
+  bool success = 4;
 }
 
 service Static {

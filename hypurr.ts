@@ -1676,6 +1676,14 @@ export interface HyperliquidLaunchTradeResponse {
      * @generated from protobuf field: double quote_amount = 2;
      */
     quoteAmount: number;
+    /**
+     * @generated from protobuf field: string message = 3;
+     */
+    message: string;
+    /**
+     * @generated from protobuf field: bool success = 4;
+     */
+    success: boolean;
 }
 /**
  * @generated from protobuf enum hypurr.HyperliquidLaunchPoolType
@@ -7047,11 +7055,13 @@ class HyperliquidLaunchTradeResponse$Type extends MessageType<HyperliquidLaunchT
     constructor() {
         super("hypurr.HyperliquidLaunchTradeResponse", [
             { no: 1, name: "base_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 2, name: "quote_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 2, name: "quote_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchTradeResponse>): HyperliquidLaunchTradeResponse {
-        const message = { baseAmount: 0, quoteAmount: 0 };
+        const message = { baseAmount: 0, quoteAmount: 0, message: "", success: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunchTradeResponse>(this, message, value);
@@ -7067,6 +7077,12 @@ class HyperliquidLaunchTradeResponse$Type extends MessageType<HyperliquidLaunchT
                     break;
                 case /* double quote_amount */ 2:
                     message.quoteAmount = reader.double();
+                    break;
+                case /* string message */ 3:
+                    message.message = reader.string();
+                    break;
+                case /* bool success */ 4:
+                    message.success = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -7086,6 +7102,12 @@ class HyperliquidLaunchTradeResponse$Type extends MessageType<HyperliquidLaunchT
         /* double quote_amount = 2; */
         if (message.quoteAmount !== 0)
             writer.tag(2, WireType.Bit64).double(message.quoteAmount);
+        /* string message = 3; */
+        if (message.message !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.message);
+        /* bool success = 4; */
+        if (message.success !== false)
+            writer.tag(4, WireType.Varint).bool(message.success);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
