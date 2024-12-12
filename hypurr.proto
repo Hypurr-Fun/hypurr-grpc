@@ -582,12 +582,14 @@ message HyperliquidLaunchTradeResponse {
   bool success = 4;
 }
 
-service Static {
-  // Authed endpoints
+// Authed endpoints
+service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
   rpc HyperliquidLaunchTrade (HyperliquidLaunchTradeRequest) returns (HyperliquidLaunchTradeResponse) {}
+}
 
+service Static {
   rpc HyperliquidDeployAuction (HyperliquidDeployAuctionRequest) returns (HyperliquidDeployAuctionResponse) {}
 
   rpc HyperliquidTokens (HyperliquidTokensRequest) returns (HyperliquidTokensResponse) {}

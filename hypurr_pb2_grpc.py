@@ -4,6 +4,82 @@ import grpc
 import hypurr_pb2 as hypurr__pb2
 
 
+class TelegramStub(object):
+  """Authed endpoints
+  """
+
+  def __init__(self, channel):
+    """Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    """
+    self.TelegramUser = channel.unary_unary(
+        '/hypurr.Telegram/TelegramUser',
+        request_serializer=hypurr__pb2.TelegramUserRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.TelegramUserResponse.FromString,
+        )
+    self.TelegramUserWallets = channel.unary_unary(
+        '/hypurr.Telegram/TelegramUserWallets',
+        request_serializer=hypurr__pb2.TelegramUserWalletsRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.TelegramUserWalletsResponse.FromString,
+        )
+    self.HyperliquidLaunchTrade = channel.unary_unary(
+        '/hypurr.Telegram/HyperliquidLaunchTrade',
+        request_serializer=hypurr__pb2.HyperliquidLaunchTradeRequest.SerializeToString,
+        response_deserializer=hypurr__pb2.HyperliquidLaunchTradeResponse.FromString,
+        )
+
+
+class TelegramServicer(object):
+  """Authed endpoints
+  """
+
+  def TelegramUser(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def TelegramUserWallets(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HyperliquidLaunchTrade(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+
+def add_TelegramServicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      'TelegramUser': grpc.unary_unary_rpc_method_handler(
+          servicer.TelegramUser,
+          request_deserializer=hypurr__pb2.TelegramUserRequest.FromString,
+          response_serializer=hypurr__pb2.TelegramUserResponse.SerializeToString,
+      ),
+      'TelegramUserWallets': grpc.unary_unary_rpc_method_handler(
+          servicer.TelegramUserWallets,
+          request_deserializer=hypurr__pb2.TelegramUserWalletsRequest.FromString,
+          response_serializer=hypurr__pb2.TelegramUserWalletsResponse.SerializeToString,
+      ),
+      'HyperliquidLaunchTrade': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidLaunchTrade,
+          request_deserializer=hypurr__pb2.HyperliquidLaunchTradeRequest.FromString,
+          response_serializer=hypurr__pb2.HyperliquidLaunchTradeResponse.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      'hypurr.Telegram', rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))
+
+
 class StaticStub(object):
   # missing associated documentation comment in .proto file
   pass
@@ -14,21 +90,6 @@ class StaticStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.TelegramUser = channel.unary_unary(
-        '/hypurr.Static/TelegramUser',
-        request_serializer=hypurr__pb2.TelegramUserRequest.SerializeToString,
-        response_deserializer=hypurr__pb2.TelegramUserResponse.FromString,
-        )
-    self.TelegramUserWallets = channel.unary_unary(
-        '/hypurr.Static/TelegramUserWallets',
-        request_serializer=hypurr__pb2.TelegramUserWalletsRequest.SerializeToString,
-        response_deserializer=hypurr__pb2.TelegramUserWalletsResponse.FromString,
-        )
-    self.HyperliquidLaunchTrade = channel.unary_unary(
-        '/hypurr.Static/HyperliquidLaunchTrade',
-        request_serializer=hypurr__pb2.HyperliquidLaunchTradeRequest.SerializeToString,
-        response_deserializer=hypurr__pb2.HyperliquidLaunchTradeResponse.FromString,
-        )
     self.HyperliquidDeployAuction = channel.unary_unary(
         '/hypurr.Static/HyperliquidDeployAuction',
         request_serializer=hypurr__pb2.HyperliquidDeployAuctionRequest.SerializeToString,
@@ -144,27 +205,6 @@ class StaticStub(object):
 class StaticServicer(object):
   # missing associated documentation comment in .proto file
   pass
-
-  def TelegramUser(self, request, context):
-    """Authed endpoints
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def TelegramUserWallets(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def HyperliquidLaunchTrade(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
 
   def HyperliquidDeployAuction(self, request, context):
     # missing associated documentation comment in .proto file
@@ -323,21 +363,6 @@ class StaticServicer(object):
 
 def add_StaticServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'TelegramUser': grpc.unary_unary_rpc_method_handler(
-          servicer.TelegramUser,
-          request_deserializer=hypurr__pb2.TelegramUserRequest.FromString,
-          response_serializer=hypurr__pb2.TelegramUserResponse.SerializeToString,
-      ),
-      'TelegramUserWallets': grpc.unary_unary_rpc_method_handler(
-          servicer.TelegramUserWallets,
-          request_deserializer=hypurr__pb2.TelegramUserWalletsRequest.FromString,
-          response_serializer=hypurr__pb2.TelegramUserWalletsResponse.SerializeToString,
-      ),
-      'HyperliquidLaunchTrade': grpc.unary_unary_rpc_method_handler(
-          servicer.HyperliquidLaunchTrade,
-          request_deserializer=hypurr__pb2.HyperliquidLaunchTradeRequest.FromString,
-          response_serializer=hypurr__pb2.HyperliquidLaunchTradeResponse.SerializeToString,
-      ),
       'HyperliquidDeployAuction': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidDeployAuction,
           request_deserializer=hypurr__pb2.HyperliquidDeployAuctionRequest.FromString,

@@ -7141,12 +7141,17 @@ class HyperliquidLaunchTradeResponse$Type extends MessageType<HyperliquidLaunchT
  */
 export const HyperliquidLaunchTradeResponse = new HyperliquidLaunchTradeResponse$Type();
 /**
+ * @generated ServiceType for protobuf service hypurr.Telegram
+ */
+export const Telegram = new ServiceType("hypurr.Telegram", [
+    { name: "TelegramUser", options: {}, I: TelegramUserRequest, O: TelegramUserResponse },
+    { name: "TelegramUserWallets", options: {}, I: TelegramUserWalletsRequest, O: TelegramUserWalletsResponse },
+    { name: "HyperliquidLaunchTrade", options: {}, I: HyperliquidLaunchTradeRequest, O: HyperliquidLaunchTradeResponse }
+]);
+/**
  * @generated ServiceType for protobuf service hypurr.Static
  */
 export const Static = new ServiceType("hypurr.Static", [
-    { name: "TelegramUser", options: {}, I: TelegramUserRequest, O: TelegramUserResponse },
-    { name: "TelegramUserWallets", options: {}, I: TelegramUserWalletsRequest, O: TelegramUserWalletsResponse },
-    { name: "HyperliquidLaunchTrade", options: {}, I: HyperliquidLaunchTradeRequest, O: HyperliquidLaunchTradeResponse },
     { name: "HyperliquidDeployAuction", options: {}, I: HyperliquidDeployAuctionRequest, O: HyperliquidDeployAuctionResponse },
     { name: "HyperliquidTokens", options: {}, I: HyperliquidTokensRequest, O: HyperliquidTokensResponse },
     { name: "HyperliquidTokenHolders", options: {}, I: HyperliquidTokenHoldersRequest, O: HyperliquidTokenHoldersResponse },
