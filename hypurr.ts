@@ -988,14 +988,14 @@ export interface HyperliquidLaunchFillsResponse {
      */
     fills: HyperliquidLaunchFill[];
     /**
-     * @generated from protobuf field: repeated hypurr.HyperliquidLaunchPositions positions = 2;
+     * @generated from protobuf field: repeated hypurr.HyperliquidLaunchPosition positions = 2;
      */
-    positions: HyperliquidLaunchPositions[];
+    positions: HyperliquidLaunchPosition[];
 }
 /**
- * @generated from protobuf message hypurr.HyperliquidLaunchPositions
+ * @generated from protobuf message hypurr.HyperliquidLaunchPosition
  */
-export interface HyperliquidLaunchPositions {
+export interface HyperliquidLaunchPosition {
     /**
      * @generated from protobuf field: string address = 1;
      */
@@ -4824,7 +4824,7 @@ class HyperliquidLaunchFillsResponse$Type extends MessageType<HyperliquidLaunchF
     constructor() {
         super("hypurr.HyperliquidLaunchFillsResponse", [
             { no: 1, name: "fills", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidLaunchFill },
-            { no: 2, name: "positions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidLaunchPositions }
+            { no: 2, name: "positions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidLaunchPosition }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchFillsResponse>): HyperliquidLaunchFillsResponse {
@@ -4842,8 +4842,8 @@ class HyperliquidLaunchFillsResponse$Type extends MessageType<HyperliquidLaunchF
                 case /* repeated hypurr.HyperliquidLaunchFill fills */ 1:
                     message.fills.push(HyperliquidLaunchFill.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* repeated hypurr.HyperliquidLaunchPositions positions */ 2:
-                    message.positions.push(HyperliquidLaunchPositions.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.HyperliquidLaunchPosition positions */ 2:
+                    message.positions.push(HyperliquidLaunchPosition.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4860,9 +4860,9 @@ class HyperliquidLaunchFillsResponse$Type extends MessageType<HyperliquidLaunchF
         /* repeated hypurr.HyperliquidLaunchFill fills = 1; */
         for (let i = 0; i < message.fills.length; i++)
             HyperliquidLaunchFill.internalBinaryWrite(message.fills[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* repeated hypurr.HyperliquidLaunchPositions positions = 2; */
+        /* repeated hypurr.HyperliquidLaunchPosition positions = 2; */
         for (let i = 0; i < message.positions.length; i++)
-            HyperliquidLaunchPositions.internalBinaryWrite(message.positions[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            HyperliquidLaunchPosition.internalBinaryWrite(message.positions[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4874,22 +4874,22 @@ class HyperliquidLaunchFillsResponse$Type extends MessageType<HyperliquidLaunchF
  */
 export const HyperliquidLaunchFillsResponse = new HyperliquidLaunchFillsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HyperliquidLaunchPositions$Type extends MessageType<HyperliquidLaunchPositions> {
+class HyperliquidLaunchPosition$Type extends MessageType<HyperliquidLaunchPosition> {
     constructor() {
-        super("hypurr.HyperliquidLaunchPositions", [
+        super("hypurr.HyperliquidLaunchPosition", [
             { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "balance", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "cost", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
-    create(value?: PartialMessage<HyperliquidLaunchPositions>): HyperliquidLaunchPositions {
+    create(value?: PartialMessage<HyperliquidLaunchPosition>): HyperliquidLaunchPosition {
         const message = { address: "", balance: 0, cost: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HyperliquidLaunchPositions>(this, message, value);
+            reflectionMergePartial<HyperliquidLaunchPosition>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidLaunchPositions): HyperliquidLaunchPositions {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidLaunchPosition): HyperliquidLaunchPosition {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -4914,7 +4914,7 @@ class HyperliquidLaunchPositions$Type extends MessageType<HyperliquidLaunchPosit
         }
         return message;
     }
-    internalBinaryWrite(message: HyperliquidLaunchPositions, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HyperliquidLaunchPosition, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string address = 1; */
         if (message.address !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.address);
@@ -4931,9 +4931,9 @@ class HyperliquidLaunchPositions$Type extends MessageType<HyperliquidLaunchPosit
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HyperliquidLaunchPositions
+ * @generated MessageType for protobuf message hypurr.HyperliquidLaunchPosition
  */
-export const HyperliquidLaunchPositions = new HyperliquidLaunchPositions$Type();
+export const HyperliquidLaunchPosition = new HyperliquidLaunchPosition$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidLaunchCandlesRequest$Type extends MessageType<HyperliquidLaunchCandlesRequest> {
     constructor() {
