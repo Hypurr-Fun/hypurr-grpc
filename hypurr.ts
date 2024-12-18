@@ -1005,9 +1005,9 @@ export interface HyperliquidLaunchPosition {
      */
     balance: number;
     /**
-     * @generated from protobuf field: int64 pnl = 3;
+     * @generated from protobuf field: int64 cost = 3;
      */
-    pnl: number;
+    cost: number;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchCandlesRequest
@@ -4879,11 +4879,11 @@ class HyperliquidLaunchPosition$Type extends MessageType<HyperliquidLaunchPositi
         super("hypurr.HyperliquidLaunchPosition", [
             { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "balance", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "pnl", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 3, name: "cost", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchPosition>): HyperliquidLaunchPosition {
-        const message = { address: "", balance: 0, pnl: 0 };
+        const message = { address: "", balance: 0, cost: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunchPosition>(this, message, value);
@@ -4900,8 +4900,8 @@ class HyperliquidLaunchPosition$Type extends MessageType<HyperliquidLaunchPositi
                 case /* int64 balance */ 2:
                     message.balance = reader.int64().toNumber();
                     break;
-                case /* int64 pnl */ 3:
-                    message.pnl = reader.int64().toNumber();
+                case /* int64 cost */ 3:
+                    message.cost = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4921,9 +4921,9 @@ class HyperliquidLaunchPosition$Type extends MessageType<HyperliquidLaunchPositi
         /* int64 balance = 2; */
         if (message.balance !== 0)
             writer.tag(2, WireType.Varint).int64(message.balance);
-        /* int64 pnl = 3; */
-        if (message.pnl !== 0)
-            writer.tag(3, WireType.Varint).int64(message.pnl);
+        /* int64 cost = 3; */
+        if (message.cost !== 0)
+            writer.tag(3, WireType.Varint).int64(message.cost);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
