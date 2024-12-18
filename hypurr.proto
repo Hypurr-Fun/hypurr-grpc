@@ -334,6 +334,12 @@ message HyperliquidLaunchFillsRequest {
 
 message HyperliquidLaunchFillsResponse {
   repeated HyperliquidLaunchFill fills = 1;
+  repeated HyperliquidLaunchPositions positions = 2;
+}
+
+message HyperliquidLaunchPositions {
+  int64 balance = 1;
+  int64 cost = 2;
 }
 
 message HyperliquidLaunchCandlesRequest {
