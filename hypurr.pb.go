@@ -1622,6 +1622,7 @@ type HyperliquidLaunch struct {
 	SessionWallet      *HyperliquidPublicWallet        `protobuf:"bytes,21,opt,name=session_wallet,json=sessionWallet,proto3" json:"session_wallet,omitempty"`
 	MediaType          string                          `protobuf:"bytes,22,opt,name=media_type,json=mediaType,proto3" json:"media_type,omitempty"`
 	ListedTimestamp    int64                           `protobuf:"varint,23,opt,name=listed_timestamp,json=listedTimestamp,proto3" json:"listed_timestamp,omitempty"`
+	DevWallet          *HyperliquidPublicWallet        `protobuf:"bytes,24,opt,name=dev_wallet,json=devWallet,proto3" json:"dev_wallet,omitempty"`
 }
 
 func (x *HyperliquidLaunch) Reset() {
@@ -1815,6 +1816,13 @@ func (x *HyperliquidLaunch) GetListedTimestamp() int64 {
 		return x.ListedTimestamp
 	}
 	return 0
+}
+
+func (x *HyperliquidLaunch) GetDevWallet() *HyperliquidPublicWallet {
+	if x != nil {
+		return x.DevWallet
+	}
+	return nil
 }
 
 type HyperliquidLaunchFill struct {
@@ -6186,7 +6194,7 @@ var file_hypurr_proto_rawDesc = []byte{
 	0x6e, 0x65, 0x73, 0x69, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x12, 0x14, 0x0a,
 	0x05, 0x73, 0x68, 0x61, 0x72, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x73, 0x68,
-	0x61, 0x72, 0x65, 0x22, 0xf7, 0x06, 0x0a, 0x11, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71,
+	0x61, 0x72, 0x65, 0x22, 0xb7, 0x07, 0x0a, 0x11, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71,
 	0x75, 0x69, 0x64, 0x4c, 0x61, 0x75, 0x6e, 0x63, 0x68, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x65, 0x6c,
 	0x65, 0x67, 0x72, 0x61, 0x6d, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0a,
@@ -6241,7 +6249,11 @@ var file_hypurr_proto_rawDesc = []byte{
 	0x65, 0x18, 0x16, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x79,
 	0x70, 0x65, 0x12, 0x29, 0x0a, 0x10, 0x6c, 0x69, 0x73, 0x74, 0x65, 0x64, 0x5f, 0x74, 0x69, 0x6d,
 	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x17, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0f, 0x6c, 0x69,
-	0x73, 0x74, 0x65, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x22, 0xf9, 0x02,
+	0x73, 0x74, 0x65, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x3e, 0x0a,
+	0x0a, 0x64, 0x65, 0x76, 0x5f, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x18, 0x18, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x1f, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72,
+	0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x57, 0x61, 0x6c, 0x6c,
+	0x65, 0x74, 0x52, 0x09, 0x64, 0x65, 0x76, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x22, 0xf9, 0x02,
 	0x0a, 0x15, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x4c, 0x61, 0x75,
 	0x6e, 0x63, 0x68, 0x46, 0x69, 0x6c, 0x6c, 0x12, 0x1b, 0x0a, 0x09, 0x6c, 0x61, 0x75, 0x6e, 0x63,
 	0x68, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x6c, 0x61, 0x75, 0x6e,
@@ -7182,129 +7194,130 @@ var file_hypurr_proto_depIdxs = []int32{
 	19,  // 27: hypurr.HyperliquidLaunch.fills:type_name -> hypurr.HyperliquidLaunchFill
 	0,   // 28: hypurr.HyperliquidLaunch.pool_type:type_name -> hypurr.HyperliquidLaunchPoolType
 	12,  // 29: hypurr.HyperliquidLaunch.session_wallet:type_name -> hypurr.HyperliquidPublicWallet
-	20,  // 30: hypurr.HyperliquidLaunchFill.telegram:type_name -> hypurr.TelegramUserPublic
-	12,  // 31: hypurr.HyperliquidLaunchFill.wallet:type_name -> hypurr.HyperliquidPublicWallet
-	90,  // 32: hypurr.HyperliquidLaunchFill.movement_hash:type_name -> google.protobuf.StringValue
-	91,  // 33: hypurr.HyperliquidDeployAuction.current_gas:type_name -> google.protobuf.DoubleValue
-	91,  // 34: hypurr.HyperliquidDeployAuction.end_gas:type_name -> google.protobuf.DoubleValue
-	21,  // 35: hypurr.HyperliquidDeployAuctionResponse.auction:type_name -> hypurr.HyperliquidDeployAuction
-	2,   // 36: hypurr.HyperliquidTokensResponse.tokens:type_name -> hypurr.HyperliquidToken
-	20,  // 37: hypurr.HyperliquidTokenMessage.author:type_name -> hypurr.TelegramUserPublic
-	26,  // 38: hypurr.HyperliquidTokenMessagesResponse.messages:type_name -> hypurr.HyperliquidTokenMessage
-	9,   // 39: hypurr.HyperliquidSpotPairResponse.pair:type_name -> hypurr.HyperliquidSpotPair
-	9,   // 40: hypurr.HyperliquidSpotPairsResponse.pairs:type_name -> hypurr.HyperliquidSpotPair
-	10,  // 41: hypurr.HyperliquidPerpPairsResponse.pairs:type_name -> hypurr.HyperliquidPerpPair
-	90,  // 42: hypurr.HyperliquidWalletRequest.ethereum_address:type_name -> google.protobuf.StringValue
-	11,  // 43: hypurr.HyperliquidWalletResponse.wallet:type_name -> hypurr.HyperliquidWallet
-	18,  // 44: hypurr.HyperliquidLaunchesResponse.launches:type_name -> hypurr.HyperliquidLaunch
-	89,  // 45: hypurr.HyperliquidLaunchStreamRequest.launch_id:type_name -> google.protobuf.Int64Value
-	18,  // 46: hypurr.HyperliquidLaunchStreamResponse.launches:type_name -> hypurr.HyperliquidLaunch
-	89,  // 47: hypurr.HyperliquidWalletDeploySessionsRequest.telegram_id:type_name -> google.protobuf.Int64Value
-	89,  // 48: hypurr.HyperliquidWalletDeploySessionsRequest.wallet_id:type_name -> google.protobuf.Int64Value
-	89,  // 49: hypurr.HyperliquidWalletDeploySessionsRequest.session_id:type_name -> google.protobuf.Int64Value
-	90,  // 50: hypurr.HyperliquidWalletDeploySessionsRequest.ethereum_address:type_name -> google.protobuf.StringValue
-	16,  // 51: hypurr.HyperliquidWalletDeploySessionsResponse.sessions:type_name -> hypurr.HyperliquidWalletDeploySession
-	90,  // 52: hypurr.SetHyperliquidWalletDeploySessionTargetRequest.ethereum_address:type_name -> google.protobuf.StringValue
-	16,  // 53: hypurr.SetHyperliquidWalletDeploySessionTargetResponse.session:type_name -> hypurr.HyperliquidWalletDeploySession
-	90,  // 54: hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest.ethereum_address:type_name -> google.protobuf.StringValue
-	16,  // 55: hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse.session:type_name -> hypurr.HyperliquidWalletDeploySession
-	89,  // 56: hypurr.HyperliquidLaunchFillsRequest.launch_id:type_name -> google.protobuf.Int64Value
-	19,  // 57: hypurr.HyperliquidLaunchFillsResponse.fills:type_name -> hypurr.HyperliquidLaunchFill
-	49,  // 58: hypurr.HyperliquidLaunchFillsResponse.positions:type_name -> hypurr.HyperliquidLaunchPosition
-	51,  // 59: hypurr.HyperliquidLaunchCandlesResponse.candles:type_name -> hypurr.HyperliquidLaunchCandle
-	18,  // 60: hypurr.HyperliquidLaunchResponse.launch:type_name -> hypurr.HyperliquidLaunch
-	20,  // 61: hypurr.HyperliquidLaunchMessage.author:type_name -> hypurr.TelegramUserPublic
-	55,  // 62: hypurr.HyperliquidLaunchMessagesResponse.messages:type_name -> hypurr.HyperliquidLaunchMessage
-	58,  // 63: hypurr.HyperliquidLaunchHoldersResponse.holders:type_name -> hypurr.HyperliquidLaunchHolder
-	63,  // 64: hypurr.TelegramUser.settings:type_name -> hypurr.TelegramUserSettings
-	11,  // 65: hypurr.TelegramUser.wallet:type_name -> hypurr.HyperliquidWallet
-	11,  // 66: hypurr.TelegramUser.wallets:type_name -> hypurr.HyperliquidWallet
-	11,  // 67: hypurr.TelegramUser.sniper_wallet:type_name -> hypurr.HyperliquidWallet
-	11,  // 68: hypurr.TelegramUser.dumper_wallet:type_name -> hypurr.HyperliquidWallet
-	64,  // 69: hypurr.TelegramUser.reputation:type_name -> hypurr.TelegramUserReputation
-	18,  // 70: hypurr.TelegramUser.launches:type_name -> hypurr.HyperliquidLaunch
-	14,  // 71: hypurr.TelegramUser.balances:type_name -> hypurr.HyperliquidWalletBalance
-	13,  // 72: hypurr.TelegramUser.movements:type_name -> hypurr.HyperliquidWalletMovement
-	19,  // 73: hypurr.TelegramUser.launch_fills:type_name -> hypurr.HyperliquidLaunchFill
-	65,  // 74: hypurr.TelegramUser.labels:type_name -> hypurr.HyperliquidWalletLabel
-	90,  // 75: hypurr.HyperliquidWalletPerformanceRequest.ethereum_address:type_name -> google.protobuf.StringValue
-	68,  // 76: hypurr.Performance.reports:type_name -> hypurr.PerformanceReport
-	67,  // 77: hypurr.Performance.points:type_name -> hypurr.PerformancePoint
-	69,  // 78: hypurr.HyperliquidWalletPerformanceResponse.spot:type_name -> hypurr.Performance
-	69,  // 79: hypurr.HyperliquidWalletPerformanceResponse.perp:type_name -> hypurr.Performance
-	69,  // 80: hypurr.HyperliquidWalletPerformanceResponse.launch:type_name -> hypurr.Performance
-	73,  // 81: hypurr.HypurrFunCabal.users:type_name -> hypurr.HypurrFunCabalUser
-	74,  // 82: hypurr.HypurrFunCabal.tracked_wallets:type_name -> hypurr.HypurrFunCabalTrackedWallet
-	76,  // 83: hypurr.HypurrFunCabal.user_seasons:type_name -> hypurr.HypurrFunCabalUserSeason
-	72,  // 84: hypurr.HypurrFunCabal.summary:type_name -> hypurr.HypurrFunCabalSummary
-	11,  // 85: hypurr.HypurrFunCabalUser.wallet:type_name -> hypurr.HyperliquidWallet
-	11,  // 86: hypurr.HypurrFunCabalTrackedWallet.wallet:type_name -> hypurr.HyperliquidWallet
-	76,  // 87: hypurr.HypurrFunCabalSeason.user_seasons:type_name -> hypurr.HypurrFunCabalUserSeason
-	89,  // 88: hypurr.HypurrFunCabalSeason.winner_id:type_name -> google.protobuf.Int64Value
-	71,  // 89: hypurr.HypurrFunCabalSeason.winner:type_name -> hypurr.HypurrFunCabal
-	71,  // 90: hypurr.HypurrFunCabalsResponse.cabals:type_name -> hypurr.HypurrFunCabal
-	86,  // 91: hypurr.TelegramUserRequest.auth_data:type_name -> hypurr.TelegramUserRequest.AuthDataEntry
-	62,  // 92: hypurr.TelegramUserResponse.user:type_name -> hypurr.TelegramUser
-	87,  // 93: hypurr.TelegramUserWalletsRequest.auth_data:type_name -> hypurr.TelegramUserWalletsRequest.AuthDataEntry
-	11,  // 94: hypurr.TelegramUserWalletsResponse.wallets:type_name -> hypurr.HyperliquidWallet
-	88,  // 95: hypurr.HyperliquidLaunchTradeRequest.auth_data:type_name -> hypurr.HyperliquidLaunchTradeRequest.AuthDataEntry
-	1,   // 96: hypurr.HyperliquidLaunchTradeRequest.direction:type_name -> hypurr.HyperliquidLaunchTradeDirection
-	17,  // 97: hypurr.HyperliquidWalletDeploySession.GenesesEntry.value:type_name -> hypurr.HyperliquidWalletDeploySessionGenesis
-	79,  // 98: hypurr.Telegram.TelegramUser:input_type -> hypurr.TelegramUserRequest
-	81,  // 99: hypurr.Telegram.TelegramUserWallets:input_type -> hypurr.TelegramUserWalletsRequest
-	83,  // 100: hypurr.Telegram.HyperliquidLaunchTrade:input_type -> hypurr.HyperliquidLaunchTradeRequest
-	22,  // 101: hypurr.Static.HyperliquidDeployAuction:input_type -> hypurr.HyperliquidDeployAuctionRequest
-	24,  // 102: hypurr.Static.HyperliquidTokens:input_type -> hypurr.HyperliquidTokensRequest
-	4,   // 103: hypurr.Static.HyperliquidTokenHolders:input_type -> hypurr.HyperliquidTokenHoldersRequest
-	27,  // 104: hypurr.Static.HyperliquidTokenMessages:input_type -> hypurr.HyperliquidTokenMessagesRequest
-	29,  // 105: hypurr.Static.HyperliquidSpotPair:input_type -> hypurr.HyperliquidSpotPairRequest
-	31,  // 106: hypurr.Static.HyperliquidSpotPairs:input_type -> hypurr.HyperliquidSpotPairsRequest
-	33,  // 107: hypurr.Static.HyperliquidPerpPairs:input_type -> hypurr.HyperliquidPerpPairsRequest
-	35,  // 108: hypurr.Static.HyperliquidWallet:input_type -> hypurr.HyperliquidWalletRequest
-	41,  // 109: hypurr.Static.HyperliquidWalletDeploySessions:input_type -> hypurr.HyperliquidWalletDeploySessionsRequest
-	66,  // 110: hypurr.Static.HyperliquidWalletPerformance:input_type -> hypurr.HyperliquidWalletPerformanceRequest
-	53,  // 111: hypurr.Static.HyperliquidLaunch:input_type -> hypurr.HyperliquidLaunchRequest
-	37,  // 112: hypurr.Static.HyperliquidLaunches:input_type -> hypurr.HyperliquidLaunchesRequest
-	39,  // 113: hypurr.Static.HyperliquidLaunchStream:input_type -> hypurr.HyperliquidLaunchStreamRequest
-	47,  // 114: hypurr.Static.HyperliquidLaunchFills:input_type -> hypurr.HyperliquidLaunchFillsRequest
-	50,  // 115: hypurr.Static.HyperliquidLaunchCandles:input_type -> hypurr.HyperliquidLaunchCandlesRequest
-	50,  // 116: hypurr.Static.HyperliquidLaunchCandleStream:input_type -> hypurr.HyperliquidLaunchCandlesRequest
-	56,  // 117: hypurr.Static.HyperliquidLaunchMessages:input_type -> hypurr.HyperliquidLaunchMessagesRequest
-	61,  // 118: hypurr.Static.LatestHyperliquidLaunchFills:input_type -> hypurr.LatestHyperliquidLaunchFillsRequest
-	59,  // 119: hypurr.Static.HyperliquidLaunchHolders:input_type -> hypurr.HyperliquidLaunchHoldersRequest
-	77,  // 120: hypurr.Static.HypurrFunCabals:input_type -> hypurr.HypurrFunCabalsRequest
-	43,  // 121: hypurr.Static.SetHyperliquidWalletDeploySessionTarget:input_type -> hypurr.SetHyperliquidWalletDeploySessionTargetRequest
-	45,  // 122: hypurr.Static.DeleteHyperliquidWalletDeploySessionTarget:input_type -> hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest
-	80,  // 123: hypurr.Telegram.TelegramUser:output_type -> hypurr.TelegramUserResponse
-	82,  // 124: hypurr.Telegram.TelegramUserWallets:output_type -> hypurr.TelegramUserWalletsResponse
-	84,  // 125: hypurr.Telegram.HyperliquidLaunchTrade:output_type -> hypurr.HyperliquidLaunchTradeResponse
-	23,  // 126: hypurr.Static.HyperliquidDeployAuction:output_type -> hypurr.HyperliquidDeployAuctionResponse
-	25,  // 127: hypurr.Static.HyperliquidTokens:output_type -> hypurr.HyperliquidTokensResponse
-	5,   // 128: hypurr.Static.HyperliquidTokenHolders:output_type -> hypurr.HyperliquidTokenHoldersResponse
-	28,  // 129: hypurr.Static.HyperliquidTokenMessages:output_type -> hypurr.HyperliquidTokenMessagesResponse
-	30,  // 130: hypurr.Static.HyperliquidSpotPair:output_type -> hypurr.HyperliquidSpotPairResponse
-	32,  // 131: hypurr.Static.HyperliquidSpotPairs:output_type -> hypurr.HyperliquidSpotPairsResponse
-	34,  // 132: hypurr.Static.HyperliquidPerpPairs:output_type -> hypurr.HyperliquidPerpPairsResponse
-	36,  // 133: hypurr.Static.HyperliquidWallet:output_type -> hypurr.HyperliquidWalletResponse
-	42,  // 134: hypurr.Static.HyperliquidWalletDeploySessions:output_type -> hypurr.HyperliquidWalletDeploySessionsResponse
-	70,  // 135: hypurr.Static.HyperliquidWalletPerformance:output_type -> hypurr.HyperliquidWalletPerformanceResponse
-	54,  // 136: hypurr.Static.HyperliquidLaunch:output_type -> hypurr.HyperliquidLaunchResponse
-	38,  // 137: hypurr.Static.HyperliquidLaunches:output_type -> hypurr.HyperliquidLaunchesResponse
-	40,  // 138: hypurr.Static.HyperliquidLaunchStream:output_type -> hypurr.HyperliquidLaunchStreamResponse
-	48,  // 139: hypurr.Static.HyperliquidLaunchFills:output_type -> hypurr.HyperliquidLaunchFillsResponse
-	52,  // 140: hypurr.Static.HyperliquidLaunchCandles:output_type -> hypurr.HyperliquidLaunchCandlesResponse
-	52,  // 141: hypurr.Static.HyperliquidLaunchCandleStream:output_type -> hypurr.HyperliquidLaunchCandlesResponse
-	57,  // 142: hypurr.Static.HyperliquidLaunchMessages:output_type -> hypurr.HyperliquidLaunchMessagesResponse
-	48,  // 143: hypurr.Static.LatestHyperliquidLaunchFills:output_type -> hypurr.HyperliquidLaunchFillsResponse
-	60,  // 144: hypurr.Static.HyperliquidLaunchHolders:output_type -> hypurr.HyperliquidLaunchHoldersResponse
-	78,  // 145: hypurr.Static.HypurrFunCabals:output_type -> hypurr.HypurrFunCabalsResponse
-	44,  // 146: hypurr.Static.SetHyperliquidWalletDeploySessionTarget:output_type -> hypurr.SetHyperliquidWalletDeploySessionTargetResponse
-	46,  // 147: hypurr.Static.DeleteHyperliquidWalletDeploySessionTarget:output_type -> hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse
-	123, // [123:148] is the sub-list for method output_type
-	98,  // [98:123] is the sub-list for method input_type
-	98,  // [98:98] is the sub-list for extension type_name
-	98,  // [98:98] is the sub-list for extension extendee
-	0,   // [0:98] is the sub-list for field type_name
+	12,  // 30: hypurr.HyperliquidLaunch.dev_wallet:type_name -> hypurr.HyperliquidPublicWallet
+	20,  // 31: hypurr.HyperliquidLaunchFill.telegram:type_name -> hypurr.TelegramUserPublic
+	12,  // 32: hypurr.HyperliquidLaunchFill.wallet:type_name -> hypurr.HyperliquidPublicWallet
+	90,  // 33: hypurr.HyperliquidLaunchFill.movement_hash:type_name -> google.protobuf.StringValue
+	91,  // 34: hypurr.HyperliquidDeployAuction.current_gas:type_name -> google.protobuf.DoubleValue
+	91,  // 35: hypurr.HyperliquidDeployAuction.end_gas:type_name -> google.protobuf.DoubleValue
+	21,  // 36: hypurr.HyperliquidDeployAuctionResponse.auction:type_name -> hypurr.HyperliquidDeployAuction
+	2,   // 37: hypurr.HyperliquidTokensResponse.tokens:type_name -> hypurr.HyperliquidToken
+	20,  // 38: hypurr.HyperliquidTokenMessage.author:type_name -> hypurr.TelegramUserPublic
+	26,  // 39: hypurr.HyperliquidTokenMessagesResponse.messages:type_name -> hypurr.HyperliquidTokenMessage
+	9,   // 40: hypurr.HyperliquidSpotPairResponse.pair:type_name -> hypurr.HyperliquidSpotPair
+	9,   // 41: hypurr.HyperliquidSpotPairsResponse.pairs:type_name -> hypurr.HyperliquidSpotPair
+	10,  // 42: hypurr.HyperliquidPerpPairsResponse.pairs:type_name -> hypurr.HyperliquidPerpPair
+	90,  // 43: hypurr.HyperliquidWalletRequest.ethereum_address:type_name -> google.protobuf.StringValue
+	11,  // 44: hypurr.HyperliquidWalletResponse.wallet:type_name -> hypurr.HyperliquidWallet
+	18,  // 45: hypurr.HyperliquidLaunchesResponse.launches:type_name -> hypurr.HyperliquidLaunch
+	89,  // 46: hypurr.HyperliquidLaunchStreamRequest.launch_id:type_name -> google.protobuf.Int64Value
+	18,  // 47: hypurr.HyperliquidLaunchStreamResponse.launches:type_name -> hypurr.HyperliquidLaunch
+	89,  // 48: hypurr.HyperliquidWalletDeploySessionsRequest.telegram_id:type_name -> google.protobuf.Int64Value
+	89,  // 49: hypurr.HyperliquidWalletDeploySessionsRequest.wallet_id:type_name -> google.protobuf.Int64Value
+	89,  // 50: hypurr.HyperliquidWalletDeploySessionsRequest.session_id:type_name -> google.protobuf.Int64Value
+	90,  // 51: hypurr.HyperliquidWalletDeploySessionsRequest.ethereum_address:type_name -> google.protobuf.StringValue
+	16,  // 52: hypurr.HyperliquidWalletDeploySessionsResponse.sessions:type_name -> hypurr.HyperliquidWalletDeploySession
+	90,  // 53: hypurr.SetHyperliquidWalletDeploySessionTargetRequest.ethereum_address:type_name -> google.protobuf.StringValue
+	16,  // 54: hypurr.SetHyperliquidWalletDeploySessionTargetResponse.session:type_name -> hypurr.HyperliquidWalletDeploySession
+	90,  // 55: hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest.ethereum_address:type_name -> google.protobuf.StringValue
+	16,  // 56: hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse.session:type_name -> hypurr.HyperliquidWalletDeploySession
+	89,  // 57: hypurr.HyperliquidLaunchFillsRequest.launch_id:type_name -> google.protobuf.Int64Value
+	19,  // 58: hypurr.HyperliquidLaunchFillsResponse.fills:type_name -> hypurr.HyperliquidLaunchFill
+	49,  // 59: hypurr.HyperliquidLaunchFillsResponse.positions:type_name -> hypurr.HyperliquidLaunchPosition
+	51,  // 60: hypurr.HyperliquidLaunchCandlesResponse.candles:type_name -> hypurr.HyperliquidLaunchCandle
+	18,  // 61: hypurr.HyperliquidLaunchResponse.launch:type_name -> hypurr.HyperliquidLaunch
+	20,  // 62: hypurr.HyperliquidLaunchMessage.author:type_name -> hypurr.TelegramUserPublic
+	55,  // 63: hypurr.HyperliquidLaunchMessagesResponse.messages:type_name -> hypurr.HyperliquidLaunchMessage
+	58,  // 64: hypurr.HyperliquidLaunchHoldersResponse.holders:type_name -> hypurr.HyperliquidLaunchHolder
+	63,  // 65: hypurr.TelegramUser.settings:type_name -> hypurr.TelegramUserSettings
+	11,  // 66: hypurr.TelegramUser.wallet:type_name -> hypurr.HyperliquidWallet
+	11,  // 67: hypurr.TelegramUser.wallets:type_name -> hypurr.HyperliquidWallet
+	11,  // 68: hypurr.TelegramUser.sniper_wallet:type_name -> hypurr.HyperliquidWallet
+	11,  // 69: hypurr.TelegramUser.dumper_wallet:type_name -> hypurr.HyperliquidWallet
+	64,  // 70: hypurr.TelegramUser.reputation:type_name -> hypurr.TelegramUserReputation
+	18,  // 71: hypurr.TelegramUser.launches:type_name -> hypurr.HyperliquidLaunch
+	14,  // 72: hypurr.TelegramUser.balances:type_name -> hypurr.HyperliquidWalletBalance
+	13,  // 73: hypurr.TelegramUser.movements:type_name -> hypurr.HyperliquidWalletMovement
+	19,  // 74: hypurr.TelegramUser.launch_fills:type_name -> hypurr.HyperliquidLaunchFill
+	65,  // 75: hypurr.TelegramUser.labels:type_name -> hypurr.HyperliquidWalletLabel
+	90,  // 76: hypurr.HyperliquidWalletPerformanceRequest.ethereum_address:type_name -> google.protobuf.StringValue
+	68,  // 77: hypurr.Performance.reports:type_name -> hypurr.PerformanceReport
+	67,  // 78: hypurr.Performance.points:type_name -> hypurr.PerformancePoint
+	69,  // 79: hypurr.HyperliquidWalletPerformanceResponse.spot:type_name -> hypurr.Performance
+	69,  // 80: hypurr.HyperliquidWalletPerformanceResponse.perp:type_name -> hypurr.Performance
+	69,  // 81: hypurr.HyperliquidWalletPerformanceResponse.launch:type_name -> hypurr.Performance
+	73,  // 82: hypurr.HypurrFunCabal.users:type_name -> hypurr.HypurrFunCabalUser
+	74,  // 83: hypurr.HypurrFunCabal.tracked_wallets:type_name -> hypurr.HypurrFunCabalTrackedWallet
+	76,  // 84: hypurr.HypurrFunCabal.user_seasons:type_name -> hypurr.HypurrFunCabalUserSeason
+	72,  // 85: hypurr.HypurrFunCabal.summary:type_name -> hypurr.HypurrFunCabalSummary
+	11,  // 86: hypurr.HypurrFunCabalUser.wallet:type_name -> hypurr.HyperliquidWallet
+	11,  // 87: hypurr.HypurrFunCabalTrackedWallet.wallet:type_name -> hypurr.HyperliquidWallet
+	76,  // 88: hypurr.HypurrFunCabalSeason.user_seasons:type_name -> hypurr.HypurrFunCabalUserSeason
+	89,  // 89: hypurr.HypurrFunCabalSeason.winner_id:type_name -> google.protobuf.Int64Value
+	71,  // 90: hypurr.HypurrFunCabalSeason.winner:type_name -> hypurr.HypurrFunCabal
+	71,  // 91: hypurr.HypurrFunCabalsResponse.cabals:type_name -> hypurr.HypurrFunCabal
+	86,  // 92: hypurr.TelegramUserRequest.auth_data:type_name -> hypurr.TelegramUserRequest.AuthDataEntry
+	62,  // 93: hypurr.TelegramUserResponse.user:type_name -> hypurr.TelegramUser
+	87,  // 94: hypurr.TelegramUserWalletsRequest.auth_data:type_name -> hypurr.TelegramUserWalletsRequest.AuthDataEntry
+	11,  // 95: hypurr.TelegramUserWalletsResponse.wallets:type_name -> hypurr.HyperliquidWallet
+	88,  // 96: hypurr.HyperliquidLaunchTradeRequest.auth_data:type_name -> hypurr.HyperliquidLaunchTradeRequest.AuthDataEntry
+	1,   // 97: hypurr.HyperliquidLaunchTradeRequest.direction:type_name -> hypurr.HyperliquidLaunchTradeDirection
+	17,  // 98: hypurr.HyperliquidWalletDeploySession.GenesesEntry.value:type_name -> hypurr.HyperliquidWalletDeploySessionGenesis
+	79,  // 99: hypurr.Telegram.TelegramUser:input_type -> hypurr.TelegramUserRequest
+	81,  // 100: hypurr.Telegram.TelegramUserWallets:input_type -> hypurr.TelegramUserWalletsRequest
+	83,  // 101: hypurr.Telegram.HyperliquidLaunchTrade:input_type -> hypurr.HyperliquidLaunchTradeRequest
+	22,  // 102: hypurr.Static.HyperliquidDeployAuction:input_type -> hypurr.HyperliquidDeployAuctionRequest
+	24,  // 103: hypurr.Static.HyperliquidTokens:input_type -> hypurr.HyperliquidTokensRequest
+	4,   // 104: hypurr.Static.HyperliquidTokenHolders:input_type -> hypurr.HyperliquidTokenHoldersRequest
+	27,  // 105: hypurr.Static.HyperliquidTokenMessages:input_type -> hypurr.HyperliquidTokenMessagesRequest
+	29,  // 106: hypurr.Static.HyperliquidSpotPair:input_type -> hypurr.HyperliquidSpotPairRequest
+	31,  // 107: hypurr.Static.HyperliquidSpotPairs:input_type -> hypurr.HyperliquidSpotPairsRequest
+	33,  // 108: hypurr.Static.HyperliquidPerpPairs:input_type -> hypurr.HyperliquidPerpPairsRequest
+	35,  // 109: hypurr.Static.HyperliquidWallet:input_type -> hypurr.HyperliquidWalletRequest
+	41,  // 110: hypurr.Static.HyperliquidWalletDeploySessions:input_type -> hypurr.HyperliquidWalletDeploySessionsRequest
+	66,  // 111: hypurr.Static.HyperliquidWalletPerformance:input_type -> hypurr.HyperliquidWalletPerformanceRequest
+	53,  // 112: hypurr.Static.HyperliquidLaunch:input_type -> hypurr.HyperliquidLaunchRequest
+	37,  // 113: hypurr.Static.HyperliquidLaunches:input_type -> hypurr.HyperliquidLaunchesRequest
+	39,  // 114: hypurr.Static.HyperliquidLaunchStream:input_type -> hypurr.HyperliquidLaunchStreamRequest
+	47,  // 115: hypurr.Static.HyperliquidLaunchFills:input_type -> hypurr.HyperliquidLaunchFillsRequest
+	50,  // 116: hypurr.Static.HyperliquidLaunchCandles:input_type -> hypurr.HyperliquidLaunchCandlesRequest
+	50,  // 117: hypurr.Static.HyperliquidLaunchCandleStream:input_type -> hypurr.HyperliquidLaunchCandlesRequest
+	56,  // 118: hypurr.Static.HyperliquidLaunchMessages:input_type -> hypurr.HyperliquidLaunchMessagesRequest
+	61,  // 119: hypurr.Static.LatestHyperliquidLaunchFills:input_type -> hypurr.LatestHyperliquidLaunchFillsRequest
+	59,  // 120: hypurr.Static.HyperliquidLaunchHolders:input_type -> hypurr.HyperliquidLaunchHoldersRequest
+	77,  // 121: hypurr.Static.HypurrFunCabals:input_type -> hypurr.HypurrFunCabalsRequest
+	43,  // 122: hypurr.Static.SetHyperliquidWalletDeploySessionTarget:input_type -> hypurr.SetHyperliquidWalletDeploySessionTargetRequest
+	45,  // 123: hypurr.Static.DeleteHyperliquidWalletDeploySessionTarget:input_type -> hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest
+	80,  // 124: hypurr.Telegram.TelegramUser:output_type -> hypurr.TelegramUserResponse
+	82,  // 125: hypurr.Telegram.TelegramUserWallets:output_type -> hypurr.TelegramUserWalletsResponse
+	84,  // 126: hypurr.Telegram.HyperliquidLaunchTrade:output_type -> hypurr.HyperliquidLaunchTradeResponse
+	23,  // 127: hypurr.Static.HyperliquidDeployAuction:output_type -> hypurr.HyperliquidDeployAuctionResponse
+	25,  // 128: hypurr.Static.HyperliquidTokens:output_type -> hypurr.HyperliquidTokensResponse
+	5,   // 129: hypurr.Static.HyperliquidTokenHolders:output_type -> hypurr.HyperliquidTokenHoldersResponse
+	28,  // 130: hypurr.Static.HyperliquidTokenMessages:output_type -> hypurr.HyperliquidTokenMessagesResponse
+	30,  // 131: hypurr.Static.HyperliquidSpotPair:output_type -> hypurr.HyperliquidSpotPairResponse
+	32,  // 132: hypurr.Static.HyperliquidSpotPairs:output_type -> hypurr.HyperliquidSpotPairsResponse
+	34,  // 133: hypurr.Static.HyperliquidPerpPairs:output_type -> hypurr.HyperliquidPerpPairsResponse
+	36,  // 134: hypurr.Static.HyperliquidWallet:output_type -> hypurr.HyperliquidWalletResponse
+	42,  // 135: hypurr.Static.HyperliquidWalletDeploySessions:output_type -> hypurr.HyperliquidWalletDeploySessionsResponse
+	70,  // 136: hypurr.Static.HyperliquidWalletPerformance:output_type -> hypurr.HyperliquidWalletPerformanceResponse
+	54,  // 137: hypurr.Static.HyperliquidLaunch:output_type -> hypurr.HyperliquidLaunchResponse
+	38,  // 138: hypurr.Static.HyperliquidLaunches:output_type -> hypurr.HyperliquidLaunchesResponse
+	40,  // 139: hypurr.Static.HyperliquidLaunchStream:output_type -> hypurr.HyperliquidLaunchStreamResponse
+	48,  // 140: hypurr.Static.HyperliquidLaunchFills:output_type -> hypurr.HyperliquidLaunchFillsResponse
+	52,  // 141: hypurr.Static.HyperliquidLaunchCandles:output_type -> hypurr.HyperliquidLaunchCandlesResponse
+	52,  // 142: hypurr.Static.HyperliquidLaunchCandleStream:output_type -> hypurr.HyperliquidLaunchCandlesResponse
+	57,  // 143: hypurr.Static.HyperliquidLaunchMessages:output_type -> hypurr.HyperliquidLaunchMessagesResponse
+	48,  // 144: hypurr.Static.LatestHyperliquidLaunchFills:output_type -> hypurr.HyperliquidLaunchFillsResponse
+	60,  // 145: hypurr.Static.HyperliquidLaunchHolders:output_type -> hypurr.HyperliquidLaunchHoldersResponse
+	78,  // 146: hypurr.Static.HypurrFunCabals:output_type -> hypurr.HypurrFunCabalsResponse
+	44,  // 147: hypurr.Static.SetHyperliquidWalletDeploySessionTarget:output_type -> hypurr.SetHyperliquidWalletDeploySessionTargetResponse
+	46,  // 148: hypurr.Static.DeleteHyperliquidWalletDeploySessionTarget:output_type -> hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse
+	124, // [124:149] is the sub-list for method output_type
+	99,  // [99:124] is the sub-list for method input_type
+	99,  // [99:99] is the sub-list for extension type_name
+	99,  // [99:99] is the sub-list for extension extendee
+	0,   // [0:99] is the sub-list for field type_name
 }
 
 func init() { file_hypurr_proto_init() }

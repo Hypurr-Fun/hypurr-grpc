@@ -191,6 +191,7 @@ message HyperliquidLaunch {
   HyperliquidPublicWallet session_wallet = 21;
   string media_type = 22;
   int64 listed_timestamp = 23;
+  HyperliquidPublicWallet dev_wallet = 24;
 }
 
 message HyperliquidLaunchFill {

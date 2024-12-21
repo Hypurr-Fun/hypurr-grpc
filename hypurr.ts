@@ -617,6 +617,10 @@ export interface HyperliquidLaunch {
      * @generated from protobuf field: int64 listed_timestamp = 23;
      */
     listedTimestamp: number;
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidPublicWallet dev_wallet = 24;
+     */
+    devWallet?: HyperliquidPublicWallet;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchFill
@@ -3180,7 +3184,8 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
             { no: 20, name: "decimals", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 21, name: "session_wallet", kind: "message", T: () => HyperliquidPublicWallet },
             { no: 22, name: "media_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 23, name: "listed_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 23, name: "listed_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 24, name: "dev_wallet", kind: "message", T: () => HyperliquidPublicWallet }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunch>): HyperliquidLaunch {
@@ -3264,6 +3269,9 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
                 case /* int64 listed_timestamp */ 23:
                     message.listedTimestamp = reader.int64().toNumber();
                     break;
+                case /* hypurr.HyperliquidPublicWallet dev_wallet */ 24:
+                    message.devWallet = HyperliquidPublicWallet.internalBinaryRead(reader, reader.uint32(), options, message.devWallet);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -3345,6 +3353,9 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
         /* int64 listed_timestamp = 23; */
         if (message.listedTimestamp !== 0)
             writer.tag(23, WireType.Varint).int64(message.listedTimestamp);
+        /* hypurr.HyperliquidPublicWallet dev_wallet = 24; */
+        if (message.devWallet)
+            HyperliquidPublicWallet.internalBinaryWrite(message.devWallet, writer.tag(24, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
