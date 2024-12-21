@@ -613,6 +613,10 @@ export interface HyperliquidLaunch {
      * @generated from protobuf field: string media_type = 22;
      */
     mediaType: string;
+    /**
+     * @generated from protobuf field: int64 listed_timestamp = 23;
+     */
+    listedTimestamp: number;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchFill
@@ -3175,11 +3179,12 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
             { no: 19, name: "pool_type", kind: "enum", T: () => ["hypurr.HyperliquidLaunchPoolType", HyperliquidLaunchPoolType] },
             { no: 20, name: "decimals", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 21, name: "session_wallet", kind: "message", T: () => HyperliquidPublicWallet },
-            { no: 22, name: "media_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 22, name: "media_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 23, name: "listed_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunch>): HyperliquidLaunch {
-        const message = { id: 0, telegramId: 0, description: "", listed: false, settled: false, x0: 0, sessionId: 0, mediaFileId: "", x: 0, y: 0, k: 0, fills: [], dailyNtlVolume: 0, previousDayPx: 0, lastEventTimestamp: 0, poolType: 0, decimals: 0, mediaType: "" };
+        const message = { id: 0, telegramId: 0, description: "", listed: false, settled: false, x0: 0, sessionId: 0, mediaFileId: "", x: 0, y: 0, k: 0, fills: [], dailyNtlVolume: 0, previousDayPx: 0, lastEventTimestamp: 0, poolType: 0, decimals: 0, mediaType: "", listedTimestamp: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunch>(this, message, value);
@@ -3255,6 +3260,9 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
                     break;
                 case /* string media_type */ 22:
                     message.mediaType = reader.string();
+                    break;
+                case /* int64 listed_timestamp */ 23:
+                    message.listedTimestamp = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3334,6 +3342,9 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
         /* string media_type = 22; */
         if (message.mediaType !== "")
             writer.tag(22, WireType.LengthDelimited).string(message.mediaType);
+        /* int64 listed_timestamp = 23; */
+        if (message.listedTimestamp !== 0)
+            writer.tag(23, WireType.Varint).int64(message.listedTimestamp);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
