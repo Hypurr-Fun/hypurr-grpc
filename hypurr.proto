@@ -168,30 +168,53 @@ enum HyperliquidLaunchPoolType {
 }
 
 message HyperliquidLaunch {
+  // Launch id
   int64 id = 1;
+  // Dev telegram id
   int64 telegram_id = 2;
+  // Dev telegram user
   TelegramUserPublic telegram_user = 3;
+  // Description
   string description = 4;
+  // Listed
   bool listed = 5;
+  // Settled
   bool settled = 6;
+  // Initial x, virtual USDC balance
   int64 x0 = 7;
+  // Session id
   int64 session_id = 8;
+  // Deploy session
   HyperliquidWalletDeploySession session = 9;
   string media_file_id = 10;
   google.protobuf.Int64Value topic_id = 11;
   int64 x = 12;
+  // Constant y
   int64 y = 13;
+  // Constant k
   int64 k = 14;
+  // Fills
   repeated HyperliquidLaunchFill fills = 15;
+  // Daily notional volume
   double daily_ntl_volume = 16;
+  // Previous day price
   double previous_day_px = 17;
+  // Last trade timestamp
   int64 last_event_timestamp = 18;
+  // Pool type (quadratic, linear, fixed)
   HyperliquidLaunchPoolType pool_type = 19;
+  // Decimals
   int64 decimals = 20;
+  // Session pool wallet
   HyperliquidPublicWallet session_wallet = 21;
+  // Media type (photo, video,..)
   string media_type = 22;
+  // Timestamp of when the launch was listed
   int64 listed_timestamp = 23;
+  // Dev wallet
   HyperliquidPublicWallet dev_wallet = 24;
+  // Dev lockup time in milliseconds
+  int64 dev_lockup = 25;
 }
 
 message HyperliquidLaunchFill {
