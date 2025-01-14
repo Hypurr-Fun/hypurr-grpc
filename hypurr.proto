@@ -314,6 +314,7 @@ message HyperliquidLaunchesResponse {
 
 message HyperliquidLaunchStreamRequest {
   google.protobuf.Int64Value launch_id = 1;
+  google.protobuf.Int64Value limit = 2;
 }
 
 message HyperliquidLaunchStreamResponse {

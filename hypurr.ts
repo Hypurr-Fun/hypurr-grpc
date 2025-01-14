@@ -526,38 +526,56 @@ export interface HyperliquidWalletDeploySessionGenesis {
  */
 export interface HyperliquidLaunch {
     /**
+     * Launch id
+     *
      * @generated from protobuf field: int64 id = 1;
      */
     id: number;
     /**
+     * Dev telegram id
+     *
      * @generated from protobuf field: int64 telegram_id = 2;
      */
     telegramId: number;
     /**
+     * Dev telegram user
+     *
      * @generated from protobuf field: hypurr.TelegramUserPublic telegram_user = 3;
      */
     telegramUser?: TelegramUserPublic;
     /**
+     * Description
+     *
      * @generated from protobuf field: string description = 4;
      */
     description: string;
     /**
+     * Listed
+     *
      * @generated from protobuf field: bool listed = 5;
      */
     listed: boolean;
     /**
+     * Settled
+     *
      * @generated from protobuf field: bool settled = 6;
      */
     settled: boolean;
     /**
+     * Initial x, virtual USDC balance
+     *
      * @generated from protobuf field: int64 x0 = 7;
      */
     x0: number;
     /**
+     * Session id
+     *
      * @generated from protobuf field: int64 session_id = 8;
      */
     sessionId: number;
     /**
+     * Deploy session
+     *
      * @generated from protobuf field: hypurr.HyperliquidWalletDeploySession session = 9;
      */
     session?: HyperliquidWalletDeploySession;
@@ -574,54 +592,80 @@ export interface HyperliquidLaunch {
      */
     x: number;
     /**
+     * Constant y
+     *
      * @generated from protobuf field: int64 y = 13;
      */
     y: number;
     /**
+     * Constant k
+     *
      * @generated from protobuf field: int64 k = 14;
      */
     k: number;
     /**
+     * Fills
+     *
      * @generated from protobuf field: repeated hypurr.HyperliquidLaunchFill fills = 15;
      */
     fills: HyperliquidLaunchFill[];
     /**
+     * Daily notional volume
+     *
      * @generated from protobuf field: double daily_ntl_volume = 16;
      */
     dailyNtlVolume: number;
     /**
+     * Previous day price
+     *
      * @generated from protobuf field: double previous_day_px = 17;
      */
     previousDayPx: number;
     /**
+     * Last trade timestamp
+     *
      * @generated from protobuf field: int64 last_event_timestamp = 18;
      */
     lastEventTimestamp: number;
     /**
+     * Pool type (quadratic, linear, fixed)
+     *
      * @generated from protobuf field: hypurr.HyperliquidLaunchPoolType pool_type = 19;
      */
     poolType: HyperliquidLaunchPoolType;
     /**
+     * Decimals
+     *
      * @generated from protobuf field: int64 decimals = 20;
      */
     decimals: number;
     /**
+     * Session pool wallet
+     *
      * @generated from protobuf field: hypurr.HyperliquidPublicWallet session_wallet = 21;
      */
     sessionWallet?: HyperliquidPublicWallet;
     /**
+     * Media type (photo, video,..)
+     *
      * @generated from protobuf field: string media_type = 22;
      */
     mediaType: string;
     /**
+     * Timestamp of when the launch was listed
+     *
      * @generated from protobuf field: int64 listed_timestamp = 23;
      */
     listedTimestamp: number;
     /**
+     * Dev wallet
+     *
      * @generated from protobuf field: hypurr.HyperliquidPublicWallet dev_wallet = 24;
      */
     devWallet?: HyperliquidPublicWallet;
     /**
+     * Dev lockup time in milliseconds
+     *
      * @generated from protobuf field: int64 dev_lockup = 25;
      */
     devLockup: number;
@@ -882,6 +926,10 @@ export interface HyperliquidLaunchStreamRequest {
      * @generated from protobuf field: google.protobuf.Int64Value launch_id = 1;
      */
     launchId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value limit = 2;
+     */
+    limit?: Int64Value;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchStreamResponse
@@ -4370,7 +4418,8 @@ export const HyperliquidLaunchesResponse = new HyperliquidLaunchesResponse$Type(
 class HyperliquidLaunchStreamRequest$Type extends MessageType<HyperliquidLaunchStreamRequest> {
     constructor() {
         super("hypurr.HyperliquidLaunchStreamRequest", [
-            { no: 1, name: "launch_id", kind: "message", T: () => Int64Value }
+            { no: 1, name: "launch_id", kind: "message", T: () => Int64Value },
+            { no: 2, name: "limit", kind: "message", T: () => Int64Value }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchStreamRequest>): HyperliquidLaunchStreamRequest {
@@ -4388,6 +4437,9 @@ class HyperliquidLaunchStreamRequest$Type extends MessageType<HyperliquidLaunchS
                 case /* google.protobuf.Int64Value launch_id */ 1:
                     message.launchId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.launchId);
                     break;
+                case /* google.protobuf.Int64Value limit */ 2:
+                    message.limit = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.limit);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -4403,6 +4455,9 @@ class HyperliquidLaunchStreamRequest$Type extends MessageType<HyperliquidLaunchS
         /* google.protobuf.Int64Value launch_id = 1; */
         if (message.launchId)
             Int64Value.internalBinaryWrite(message.launchId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value limit = 2; */
+        if (message.limit)
+            Int64Value.internalBinaryWrite(message.limit, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
