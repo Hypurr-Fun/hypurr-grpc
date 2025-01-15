@@ -666,9 +666,9 @@ export interface HyperliquidLaunch {
     /**
      * Dev lockup time in milliseconds
      *
-     * @generated from protobuf field: int64 dev_lockup = 25;
+     * @generated from protobuf field: int64 dev_lockup = 25 [jstype = JS_STRING];
      */
-    devLockup: number;
+    devLockup: string;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchFill
@@ -3286,11 +3286,11 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
             { no: 22, name: "media_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 23, name: "listed_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 24, name: "dev_wallet", kind: "message", T: () => HyperliquidPublicWallet },
-            { no: 25, name: "dev_lockup", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 25, name: "dev_lockup", kind: "scalar", T: 3 /*ScalarType.INT64*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunch>): HyperliquidLaunch {
-        const message = { id: 0, telegramId: 0, description: "", listed: false, settled: false, x0: 0, sessionId: 0, mediaFileId: "", x: 0, y: 0, k: 0, fills: [], dailyNtlVolume: 0, previousDayPx: 0, lastEventTimestamp: 0, poolType: 0, decimals: 0, mediaType: "", listedTimestamp: 0, devLockup: 0 };
+        const message = { id: 0, telegramId: 0, description: "", listed: false, settled: false, x0: 0, sessionId: 0, mediaFileId: "", x: 0, y: 0, k: 0, fills: [], dailyNtlVolume: 0, previousDayPx: 0, lastEventTimestamp: 0, poolType: 0, decimals: 0, mediaType: "", listedTimestamp: 0, devLockup: "0" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunch>(this, message, value);
@@ -3373,8 +3373,8 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
                 case /* hypurr.HyperliquidPublicWallet dev_wallet */ 24:
                     message.devWallet = HyperliquidPublicWallet.internalBinaryRead(reader, reader.uint32(), options, message.devWallet);
                     break;
-                case /* int64 dev_lockup */ 25:
-                    message.devLockup = reader.int64().toNumber();
+                case /* int64 dev_lockup = 25 [jstype = JS_STRING];*/ 25:
+                    message.devLockup = reader.int64().toString();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3460,8 +3460,8 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
         /* hypurr.HyperliquidPublicWallet dev_wallet = 24; */
         if (message.devWallet)
             HyperliquidPublicWallet.internalBinaryWrite(message.devWallet, writer.tag(24, WireType.LengthDelimited).fork(), options).join();
-        /* int64 dev_lockup = 25; */
-        if (message.devLockup !== 0)
+        /* int64 dev_lockup = 25 [jstype = JS_STRING]; */
+        if (message.devLockup !== "0")
             writer.tag(25, WireType.Varint).int64(message.devLockup);
         let u = options.writeUnknownFields;
         if (u !== false)

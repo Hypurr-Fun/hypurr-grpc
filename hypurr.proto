@@ -214,7 +214,7 @@ message HyperliquidLaunch {
   // Dev wallet
   HyperliquidPublicWallet dev_wallet = 24;
   // Dev lockup time in milliseconds
-  int64 dev_lockup = 25;
+  int64 dev_lockup = 25 [jstype = JS_STRING];
 }
 
 message HyperliquidLaunchFill {
