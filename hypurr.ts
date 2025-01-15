@@ -927,6 +927,8 @@ export interface HyperliquidLaunchStreamRequest {
      */
     launchId?: Int64Value;
     /**
+     * Default: 200
+     *
      * @generated from protobuf field: google.protobuf.Int64Value limit = 2;
      */
     limit?: Int64Value;
@@ -1327,11 +1329,57 @@ export interface TelegramUser {
     labels: HyperliquidWalletLabel[];
 }
 /**
- * TODO
- *
  * @generated from protobuf message hypurr.TelegramUserSettings
  */
 export interface TelegramUserSettings {
+    /**
+     * @generated from protobuf field: int32 left_buy = 1;
+     */
+    leftBuy: number;
+    /**
+     * @generated from protobuf field: int32 mid_buy = 2;
+     */
+    midBuy: number;
+    /**
+     * @generated from protobuf field: int32 right_buy = 3;
+     */
+    rightBuy: number;
+    /**
+     * @generated from protobuf field: int32 left_sell = 4;
+     */
+    leftSell: number;
+    /**
+     * @generated from protobuf field: int32 mid_sell = 5;
+     */
+    midSell: number;
+    /**
+     * @generated from protobuf field: int32 right_sell = 6;
+     */
+    rightSell: number;
+    /**
+     * @generated from protobuf field: bool log_trades = 7;
+     */
+    logTrades: boolean;
+    /**
+     * @generated from protobuf field: bool hide_small = 8;
+     */
+    hideSmall: boolean;
+    /**
+     * @generated from protobuf field: int32 max_slippage = 9;
+     */
+    maxSlippage: number;
+    /**
+     * @generated from protobuf field: float tip_amount = 10;
+     */
+    tipAmount: number;
+    /**
+     * @generated from protobuf field: bool no_tipping = 11;
+     */
+    noTipping: boolean;
+    /**
+     * @generated from protobuf field: bool auto_bridge = 12;
+     */
+    autoBridge: boolean;
 }
 /**
  * TODO
@@ -5867,19 +5915,117 @@ export const TelegramUser = new TelegramUser$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserSettings$Type extends MessageType<TelegramUserSettings> {
     constructor() {
-        super("hypurr.TelegramUserSettings", []);
+        super("hypurr.TelegramUserSettings", [
+            { no: 1, name: "left_buy", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "mid_buy", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 3, name: "right_buy", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "left_sell", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 5, name: "mid_sell", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "right_sell", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "log_trades", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 8, name: "hide_small", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 9, name: "max_slippage", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 10, name: "tip_amount", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 11, name: "no_tipping", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 12, name: "auto_bridge", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
     }
     create(value?: PartialMessage<TelegramUserSettings>): TelegramUserSettings {
-        const message = {};
+        const message = { leftBuy: 0, midBuy: 0, rightBuy: 0, leftSell: 0, midSell: 0, rightSell: 0, logTrades: false, hideSmall: false, maxSlippage: 0, tipAmount: 0, noTipping: false, autoBridge: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<TelegramUserSettings>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramUserSettings): TelegramUserSettings {
-        return target ?? this.create();
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 left_buy */ 1:
+                    message.leftBuy = reader.int32();
+                    break;
+                case /* int32 mid_buy */ 2:
+                    message.midBuy = reader.int32();
+                    break;
+                case /* int32 right_buy */ 3:
+                    message.rightBuy = reader.int32();
+                    break;
+                case /* int32 left_sell */ 4:
+                    message.leftSell = reader.int32();
+                    break;
+                case /* int32 mid_sell */ 5:
+                    message.midSell = reader.int32();
+                    break;
+                case /* int32 right_sell */ 6:
+                    message.rightSell = reader.int32();
+                    break;
+                case /* bool log_trades */ 7:
+                    message.logTrades = reader.bool();
+                    break;
+                case /* bool hide_small */ 8:
+                    message.hideSmall = reader.bool();
+                    break;
+                case /* int32 max_slippage */ 9:
+                    message.maxSlippage = reader.int32();
+                    break;
+                case /* float tip_amount */ 10:
+                    message.tipAmount = reader.float();
+                    break;
+                case /* bool no_tipping */ 11:
+                    message.noTipping = reader.bool();
+                    break;
+                case /* bool auto_bridge */ 12:
+                    message.autoBridge = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
     }
     internalBinaryWrite(message: TelegramUserSettings, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 left_buy = 1; */
+        if (message.leftBuy !== 0)
+            writer.tag(1, WireType.Varint).int32(message.leftBuy);
+        /* int32 mid_buy = 2; */
+        if (message.midBuy !== 0)
+            writer.tag(2, WireType.Varint).int32(message.midBuy);
+        /* int32 right_buy = 3; */
+        if (message.rightBuy !== 0)
+            writer.tag(3, WireType.Varint).int32(message.rightBuy);
+        /* int32 left_sell = 4; */
+        if (message.leftSell !== 0)
+            writer.tag(4, WireType.Varint).int32(message.leftSell);
+        /* int32 mid_sell = 5; */
+        if (message.midSell !== 0)
+            writer.tag(5, WireType.Varint).int32(message.midSell);
+        /* int32 right_sell = 6; */
+        if (message.rightSell !== 0)
+            writer.tag(6, WireType.Varint).int32(message.rightSell);
+        /* bool log_trades = 7; */
+        if (message.logTrades !== false)
+            writer.tag(7, WireType.Varint).bool(message.logTrades);
+        /* bool hide_small = 8; */
+        if (message.hideSmall !== false)
+            writer.tag(8, WireType.Varint).bool(message.hideSmall);
+        /* int32 max_slippage = 9; */
+        if (message.maxSlippage !== 0)
+            writer.tag(9, WireType.Varint).int32(message.maxSlippage);
+        /* float tip_amount = 10; */
+        if (message.tipAmount !== 0)
+            writer.tag(10, WireType.Bit32).float(message.tipAmount);
+        /* bool no_tipping = 11; */
+        if (message.noTipping !== false)
+            writer.tag(11, WireType.Varint).bool(message.noTipping);
+        /* bool auto_bridge = 12; */
+        if (message.autoBridge !== false)
+            writer.tag(12, WireType.Varint).bool(message.autoBridge);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

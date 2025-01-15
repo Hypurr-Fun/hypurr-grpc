@@ -314,6 +314,7 @@ message HyperliquidLaunchesResponse {
 
 message HyperliquidLaunchStreamRequest {
   google.protobuf.Int64Value launch_id = 1;
+  // Default: 200
   google.protobuf.Int64Value limit = 2;
 }
 
@@ -455,9 +456,19 @@ message TelegramUser {
   repeated HyperliquidWalletLabel labels = 22;
 }
 
-// TODO
 message TelegramUserSettings {
-
+  int32 left_buy = 1;
+  int32 mid_buy = 2;
+  int32 right_buy = 3;
+  int32 left_sell = 4;
+  int32 mid_sell = 5;
+  int32 right_sell = 6;
+  bool log_trades = 7;
+  bool hide_small = 8;
+  int32 max_slippage = 9;
+  float tip_amount = 10;
+  bool no_tipping = 11;
+  bool auto_bridge = 12;
 }
 
 // TODO
