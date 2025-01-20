@@ -664,11 +664,18 @@ export interface HyperliquidLaunch {
      */
     devWallet?: HyperliquidPublicWallet;
     /**
-     * Dev lockup time in milliseconds
+     * Dev lockup time in nanoseconds
+     * deprecated
      *
      * @generated from protobuf field: int64 dev_lockup = 25 [jstype = JS_STRING];
      */
     devLockup: string;
+    /**
+     * dev lockup time in seconds
+     *
+     * @generated from protobuf field: int64 dev_lockup_seconds = 26;
+     */
+    devLockupSeconds: number;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchFill
@@ -908,6 +915,10 @@ export interface HyperliquidWalletResponse {
  * @generated from protobuf message hypurr.HyperliquidLaunchesRequest
  */
 export interface HyperliquidLaunchesRequest {
+    /**
+     * @generated from protobuf field: repeated int64 launch_ids = 1;
+     */
+    launchIds: number[];
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchesResponse
@@ -1382,11 +1393,17 @@ export interface TelegramUserSettings {
     autoBridge: boolean;
 }
 /**
- * TODO
- *
  * @generated from protobuf message hypurr.TelegramUserReputation
  */
 export interface TelegramUserReputation {
+    /**
+     * @generated from protobuf field: double hfun_score = 1;
+     */
+    hfunScore: number;
+    /**
+     * @generated from protobuf field: double reputation_score = 2;
+     */
+    reputationScore: number;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletLabel
@@ -3286,11 +3303,12 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
             { no: 22, name: "media_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 23, name: "listed_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 24, name: "dev_wallet", kind: "message", T: () => HyperliquidPublicWallet },
-            { no: 25, name: "dev_lockup", kind: "scalar", T: 3 /*ScalarType.INT64*/ }
+            { no: 25, name: "dev_lockup", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+            { no: 26, name: "dev_lockup_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunch>): HyperliquidLaunch {
-        const message = { id: 0, telegramId: 0, description: "", listed: false, settled: false, x0: 0, sessionId: 0, mediaFileId: "", x: 0, y: 0, k: 0, fills: [], dailyNtlVolume: 0, previousDayPx: 0, lastEventTimestamp: 0, poolType: 0, decimals: 0, mediaType: "", listedTimestamp: 0, devLockup: "0" };
+        const message = { id: 0, telegramId: 0, description: "", listed: false, settled: false, x0: 0, sessionId: 0, mediaFileId: "", x: 0, y: 0, k: 0, fills: [], dailyNtlVolume: 0, previousDayPx: 0, lastEventTimestamp: 0, poolType: 0, decimals: 0, mediaType: "", listedTimestamp: 0, devLockup: "0", devLockupSeconds: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunch>(this, message, value);
@@ -3375,6 +3393,9 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
                     break;
                 case /* int64 dev_lockup = 25 [jstype = JS_STRING];*/ 25:
                     message.devLockup = reader.int64().toString();
+                    break;
+                case /* int64 dev_lockup_seconds */ 26:
+                    message.devLockupSeconds = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3463,6 +3484,9 @@ class HyperliquidLaunch$Type extends MessageType<HyperliquidLaunch> {
         /* int64 dev_lockup = 25 [jstype = JS_STRING]; */
         if (message.devLockup !== "0")
             writer.tag(25, WireType.Varint).int64(message.devLockup);
+        /* int64 dev_lockup_seconds = 26; */
+        if (message.devLockupSeconds !== 0)
+            writer.tag(26, WireType.Varint).int64(message.devLockupSeconds);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4392,19 +4416,48 @@ export const HyperliquidWalletResponse = new HyperliquidWalletResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidLaunchesRequest$Type extends MessageType<HyperliquidLaunchesRequest> {
     constructor() {
-        super("hypurr.HyperliquidLaunchesRequest", []);
+        super("hypurr.HyperliquidLaunchesRequest", [
+            { no: 1, name: "launch_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchesRequest>): HyperliquidLaunchesRequest {
-        const message = {};
+        const message = { launchIds: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunchesRequest>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidLaunchesRequest): HyperliquidLaunchesRequest {
-        return target ?? this.create();
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated int64 launch_ids */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.launchIds.push(reader.int64().toNumber());
+                    else
+                        message.launchIds.push(reader.int64().toNumber());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
     }
     internalBinaryWrite(message: HyperliquidLaunchesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated int64 launch_ids = 1; */
+        if (message.launchIds.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.launchIds.length; i++)
+                writer.int64(message.launchIds[i]);
+            writer.join();
+        }
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -6039,19 +6092,47 @@ export const TelegramUserSettings = new TelegramUserSettings$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserReputation$Type extends MessageType<TelegramUserReputation> {
     constructor() {
-        super("hypurr.TelegramUserReputation", []);
+        super("hypurr.TelegramUserReputation", [
+            { no: 1, name: "hfun_score", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 2, name: "reputation_score", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
     }
     create(value?: PartialMessage<TelegramUserReputation>): TelegramUserReputation {
-        const message = {};
+        const message = { hfunScore: 0, reputationScore: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<TelegramUserReputation>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramUserReputation): TelegramUserReputation {
-        return target ?? this.create();
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* double hfun_score */ 1:
+                    message.hfunScore = reader.double();
+                    break;
+                case /* double reputation_score */ 2:
+                    message.reputationScore = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
     }
     internalBinaryWrite(message: TelegramUserReputation, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* double hfun_score = 1; */
+        if (message.hfunScore !== 0)
+            writer.tag(1, WireType.Bit64).double(message.hfunScore);
+        /* double reputation_score = 2; */
+        if (message.reputationScore !== 0)
+            writer.tag(2, WireType.Bit64).double(message.reputationScore);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

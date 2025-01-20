@@ -213,8 +213,11 @@ message HyperliquidLaunch {
   int64 listed_timestamp = 23;
   // Dev wallet
   HyperliquidPublicWallet dev_wallet = 24;
-  // Dev lockup time in milliseconds
+  // Dev lockup time in nanoseconds
+  // deprecated
   int64 dev_lockup = 25 [jstype = JS_STRING];
+  // dev lockup time in seconds
+  int64 dev_lockup_seconds = 26;
 }
 
 message HyperliquidLaunchFill {
@@ -306,7 +309,9 @@ message HyperliquidWalletResponse {
   HyperliquidWallet wallet = 1;
 }
 
-message HyperliquidLaunchesRequest {}
+message HyperliquidLaunchesRequest {
+  repeated int64 launch_ids = 1;
+}
 
 message HyperliquidLaunchesResponse {
   repeated HyperliquidLaunch launches = 1;
@@ -471,9 +476,9 @@ message TelegramUserSettings {
   bool auto_bridge = 12;
 }
 
-// TODO
 message TelegramUserReputation {
-
+  double hfun_score = 1;
+  double reputation_score = 2;
 }
 
 message HyperliquidWalletLabel {
