@@ -1,0 +1,10 @@
+syntax = "proto3";
+package hypurr;
+option go_package = "gitlab.com/hypurr-fun/hypurr-grpc";
+
+message TelegramUserPublic {
+  int64 id = 1;
+  string username = 2;
+  string picture_file_id = 3;
+  int64 reputation_score = 4;
+}

@@ -1,0 +1,9 @@
+// User wants to fetch certificates, and credits
+syntax = "proto3";
+package hypurr;
+option go_package = "gitlab.com/hypurr-fun/hypurr-grpc";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+

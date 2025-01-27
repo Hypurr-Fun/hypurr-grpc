@@ -1,58 +1,71 @@
 # Protobuf definitions
-PROTO_FILES := $(shell find . \( -path "./node_modules" -o -path "./languages" -o -path "./specification" \) -prune -o -type f -name '*.proto' -print)
+PROTO_FILES := $(shell find hypurr -type f -name '*.proto')
 # Protobuf Go files
-PROTO_GEN_GO_FILES = $(patsubst %.proto, %.pb.go, $(PROTO_FILES))
-# Protobuf javascript files
-PROTO_GEN_JS_FILES = $(patsubst %.proto, %_pb.js, $(PROTO_FILES))
-# Protobuf python files
-PROTO_GEN_PY_FILES = $(patsubst %.proto, %_pb2.py, $(PROTO_FILES))
+PROTO_GEN_GO_FILES = $(patsubst %.proto, go/%.pb.go, $(PROTO_FILES))
+PROTO_GEN_GO_GRPC_FILES = $(patsubst %.proto, go/%_grpc.pb.go, $(PROTO_FILES))
+# Protobuf TypeScript files
+PROTO_GEN_TS_FILES = $(patsubst %.proto, ts/%_pb.js, $(PROTO_FILES))
+# Protobuf Python files
+PROTO_GEN_PY_FILES = $(patsubst %.proto, python/%_pb2.py, $(PROTO_FILES))
+PROTO_GEN_PY_GRPC_FILES = $(patsubst %.proto, python/%_pb2_grpc.py, $(PROTO_FILES))
 
-# Protobuf golang generator
-PROTO_GO_MAKER := protoc --go_out=. --go-grpc_out=. --go_opt=paths=source_relative --go-grpc_opt=paths=source_relative
+# Protobuf Go generator
+PROTO_GO_MAKER := protoc --proto_path=. --proto_path=/usr/local/include
 
-# Protobuf javascript generator
-PROTO_JS_MAKER := npx protoc --ts_out=. --ts_opt long_type_number
+# Protobuf TypeScript generator
+PROTO_TS_MAKER := npx protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts
 
-# Protobuf python generator
-PROTO_PY_MAKER := python3 -m grpc_tools.protoc --python_out=. --grpc_python_out=. hypurr.proto
+# Protobuf Python generator
+PROTO_PY_MAKER := python3 -m grpc_tools.protoc --proto_path=.
 
 GOCMD=go
 GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
-GOTEST=$(GOCMD) test
-GOGET=$(GOCMD) get
-BINARY_UNIX=$(BINARY_NAME)_unix
 
-PLUGIN_GEN_FILES = $(patsubst plugins/%.go, obj/%.so, $(wildcard plugins/*.go))
+.PHONY: all build clean golang javascript python
 
-.PHONY: all build plugins test clean run trader manager
-
+# Default target
 all: build
 
+# Build everything
 build: golang javascript python
 
+# Compile Protobuf for Go
 golang: $(PROTO_GEN_GO_FILES)
 
-javascript: $(PROTO_GEN_JS_FILES)
+# Compile Protobuf for TypeScript
+javascript: $(PROTO_GEN_TS_FILES)
 
+# Compile Protobuf for Python
 python: $(PROTO_GEN_PY_FILES)
 
+# Generate Go protobuf files
+go/%.pb.go go/%_grpc.pb.go: %.proto
+	@mkdir -p $(dir $@)
+	$(PROTO_GO_MAKER) \
+		--go_out=go --go-grpc_out=go \
+		--go_opt=paths=source_relative --go-grpc_opt=paths=source_relative \
+		$<
 
-%.pb.go: %.proto
-	cd $(dir $<); $(PROTO_GO_MAKER) --proto_path=. --proto_path=$(GOPATH)/src --proto_path=/usr/local/include ./*.proto
+# Generate TypeScript protobuf files
+ts/%_pb.js: %.proto
+	@mkdir -p $(dir $@)
+	$(PROTO_TS_MAKER) \
+		--proto_path=. \
+		--ts_opt=long_type_number \
+		--ts_out=ts \
+		$<
 
-%_pb.js: %.proto
-	cd $(dir $<); $(PROTO_JS_MAKER) --proto_path=. ./*.proto; $(PROTO_JS_MAKER) --proto_path=. ./*proto
+# Generate Python protobuf files
+python/%_pb2.py python/%_pb2_grpc.py: %.proto
+	@mkdir -p $(dir $@)
+	$(PROTO_PY_MAKER) \
+		--python_out=python \
+		--grpc_python_out=python \
+		$<
 
-%_pb2.py: %.proto
-	cd $(dir $<); $(PROTO_PY_MAKER) --proto_path=.
-
-
-# }}} Protobuf end
-
-# {{{ Cleanup
+# Cleanup generated files
 clean: protoclean
 
 protoclean:
-	rm -rf $(PROTO_GEN_GO_FILES) $(PROTO_GEN_PY_FILES) $(PROTO_GEN_JS_FILES)
-# }}} Cleanup end
+	rm -rf go/ ts/ python/

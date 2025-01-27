@@ -1,0 +1,32 @@
+syntax = "proto3";
+package hypurr;
+option go_package = "gitlab.com/hypurr-fun/hypurr-grpc";
+
+import "hypurr/token.proto";
+
+message HyperliquidSpotPair {
+  int64 id = 1;
+  string name = 2;
+  int64 base_id = 3;
+  HyperliquidToken base = 4;
+  int64 quote_id = 5;
+  HyperliquidToken quote = 6;
+  int64 index = 7;
+  double mid_price = 8;
+  double mark_price = 9;
+  double daily_ntl_volume = 10;
+  double previous_day_px = 11;
+}
+
+message HyperliquidPerpPair {
+  int64 id = 1;
+  string name = 2;
+  int64 index = 3;
+  double mid_price = 4;
+  double mark_price = 5;
+  double daily_ntl_volume = 6;
+  double previous_day_px = 7;
+  double funding = 8;
+  double open_interest = 9;
+  double premium = 10;
+}

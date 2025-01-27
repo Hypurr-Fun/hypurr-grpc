@@ -1,0 +1,265 @@
+syntax = "proto3";
+package hypurr;
+option go_package = "gitlab.com/hypurr-fun/hypurr-grpc";
+
+import "google/protobuf/wrappers.proto";
+
+import "hypurr/token.proto";
+import "hypurr/wallet.proto";
+import "hypurr/launch.proto";
+import "hypurr/pairs.proto";
+import "hypurr/cabal.proto";
+import "hypurr/user.proto";
+
+// Auth endpoints
+message TelegramUserRequest {
+  map<string, string> auth_data = 1;
+}
+
+message TelegramUserResponse {
+  TelegramUser user = 1;
+}
+
+message TelegramUserWalletsRequest {
+  map<string, string> auth_data = 1;
+}
+
+message TelegramUserWalletsResponse {
+  repeated HyperliquidWallet wallets = 1;
+}
+
+message HyperliquidLaunchTradeRequest {
+  map<string, string> auth_data = 1;
+  int64 launch_id = 2;
+  int64 wallet_id = 3;
+  HyperliquidLaunchTradeDirection direction = 4;
+  double amount = 5;
+}
+
+enum HyperliquidLaunchTradeDirection {
+  BUY = 0;
+  SELL = 1;
+}
+
+message HyperliquidLaunchTradeResponse {
+  double base_amount = 1;
+  double quote_amount = 2;
+  string message = 3;
+  bool success = 4;
+}
+
+
+// Authed endpoints
+service Telegram {
+  rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
+  rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
+  rpc HyperliquidLaunchTrade (HyperliquidLaunchTradeRequest) returns (HyperliquidLaunchTradeResponse) {}
+}
+
+
+message HyperliquidTokenHoldersRequest {
+  int64 token_id = 1;
+}
+
+message HyperliquidTokenHoldersResponse {
+  repeated HyperliquidTokenHolder holders = 1;
+}
+
+message HyperliquidDeployAuctionRequest {
+}
+
+message HyperliquidDeployAuctionResponse {
+  HyperliquidDeployAuction auction = 1;
+}
+
+message HyperliquidTokensRequest {
+
+}
+
+message HyperliquidTokensResponse {
+  repeated HyperliquidToken tokens = 1;
+}
+
+message HyperliquidTokenMessagesRequest {
+  int64 token_id = 1;
+}
+
+message HyperliquidTokenMessagesResponse {
+  repeated HyperliquidTokenMessage messages = 1;
+}
+
+message HyperliquidSpotPairRequest {
+  int64 id = 1;
+}
+
+message HyperliquidSpotPairResponse {
+  HyperliquidSpotPair pair = 1;
+}
+
+message HyperliquidSpotPairsRequest {}
+
+message HyperliquidSpotPairsResponse {
+  repeated HyperliquidSpotPair pairs = 1;
+}
+
+message HyperliquidPerpPairsRequest {}
+
+message HyperliquidPerpPairsResponse {
+  repeated HyperliquidPerpPair pairs = 1;
+}
+
+message HyperliquidWalletRequest {
+  google.protobuf.StringValue ethereum_address = 1;
+}
+
+message HyperliquidWalletResponse {
+  HyperliquidWallet wallet = 1;
+}
+
+message HyperliquidLaunchesRequest {
+  repeated int64 launch_ids = 1;
+}
+
+message HyperliquidLaunchesResponse {
+  repeated HyperliquidLaunch launches = 1;
+}
+
+message HyperliquidLaunchStreamRequest {
+  google.protobuf.Int64Value launch_id = 1;
+  // Default: 200
+  google.protobuf.Int64Value limit = 2;
+}
+
+message HyperliquidLaunchStreamResponse {
+  repeated HyperliquidLaunch launches = 1;
+}
+
+message HyperliquidWalletDeploySessionsRequest {
+  google.protobuf.Int64Value telegram_id = 1;
+  google.protobuf.Int64Value wallet_id = 2;
+  google.protobuf.Int64Value session_id = 3;
+  google.protobuf.StringValue ethereum_address = 4;
+}
+
+message HyperliquidWalletDeploySessionsResponse {
+  repeated HyperliquidWalletDeploySession sessions = 1;
+}
+
+message SetHyperliquidWalletDeploySessionTargetRequest {
+  google.protobuf.StringValue ethereum_address = 1;
+  int64 session_id = 2;
+  string name = 3;
+  string target = 4;
+  int32 share = 5;
+}
+
+message SetHyperliquidWalletDeploySessionTargetResponse {
+  HyperliquidWalletDeploySession session = 1;
+}
+
+message DeleteHyperliquidWalletDeploySessionTargetRequest {
+  google.protobuf.StringValue ethereum_address = 1;
+  int64 session_id = 2;
+  string name = 3;
+}
+
+message DeleteHyperliquidWalletDeploySessionTargetResponse {
+  HyperliquidWalletDeploySession session = 1;
+}
+
+message HyperliquidLaunchFillsRequest {
+  google.protobuf.Int64Value launch_id = 1;
+}
+
+message HyperliquidLaunchFillsResponse {
+  repeated HyperliquidLaunchFill fills = 1;
+  repeated HyperliquidLaunchPosition positions = 2;
+}
+
+
+message HyperliquidLaunchCandlesRequest {
+  int64 launch_id = 1;
+  string interval = 2;
+}
+
+message HyperliquidLaunchCandlesResponse {
+  repeated HyperliquidLaunchCandle candles = 1;
+}
+
+message HyperliquidLaunchRequest {
+  int64 id = 1;
+}
+
+message HyperliquidLaunchResponse {
+  HyperliquidLaunch launch = 1;
+}
+
+message HyperliquidLaunchMessagesRequest {
+  int64 launch_id = 1;
+}
+
+message HyperliquidLaunchMessagesResponse {
+  repeated HyperliquidLaunchMessage messages = 1;
+}
+
+message HyperliquidLaunchHoldersRequest {
+  int64 launch_id = 1;
+}
+
+message HyperliquidLaunchHoldersResponse {
+  repeated HyperliquidLaunchHolder holders = 1;
+}
+
+message LatestHyperliquidLaunchFillsRequest {}
+
+message HyperliquidWalletPerformanceRequest {
+  google.protobuf.StringValue ethereum_address = 1;
+  string account_type = 2;
+}
+
+message HyperliquidWalletPerformanceResponse {
+  Performance spot = 1;
+  Performance perp = 2;
+  Performance launch = 3;
+}
+
+
+message HypurrFunCabalsRequest {
+
+}
+
+message HypurrFunCabalsResponse {
+  repeated HypurrFunCabal cabals = 1;
+}
+
+
+service Static {
+  rpc HyperliquidDeployAuction (HyperliquidDeployAuctionRequest) returns (HyperliquidDeployAuctionResponse) {}
+
+  rpc HyperliquidTokens (HyperliquidTokensRequest) returns (HyperliquidTokensResponse) {}
+  rpc HyperliquidTokenHolders (HyperliquidTokenHoldersRequest) returns (HyperliquidTokenHoldersResponse) {}
+  rpc HyperliquidTokenMessages (HyperliquidTokenMessagesRequest) returns (stream HyperliquidTokenMessagesResponse) {}
+
+  rpc HyperliquidSpotPair (HyperliquidSpotPairRequest) returns (HyperliquidSpotPairResponse) {}
+  rpc HyperliquidSpotPairs (HyperliquidSpotPairsRequest) returns (HyperliquidSpotPairsResponse) {}
+  rpc HyperliquidPerpPairs (HyperliquidPerpPairsRequest) returns (HyperliquidPerpPairsResponse) {}
+
+  rpc HyperliquidWallet (HyperliquidWalletRequest) returns (HyperliquidWalletResponse) {}
+  rpc HyperliquidWalletDeploySessions (HyperliquidWalletDeploySessionsRequest) returns (HyperliquidWalletDeploySessionsResponse) {}
+  rpc HyperliquidWalletPerformance (HyperliquidWalletPerformanceRequest) returns (HyperliquidWalletPerformanceResponse) {}
+
+  rpc HyperliquidLaunch (HyperliquidLaunchRequest) returns (HyperliquidLaunchResponse) {}
+  rpc HyperliquidLaunches (HyperliquidLaunchesRequest) returns (HyperliquidLaunchesResponse) {}
+  rpc HyperliquidLaunchStream (HyperliquidLaunchStreamRequest) returns (stream HyperliquidLaunchStreamResponse) {}
+  rpc HyperliquidLaunchFills (HyperliquidLaunchFillsRequest) returns (stream HyperliquidLaunchFillsResponse) {}
+  rpc HyperliquidLaunchCandles (HyperliquidLaunchCandlesRequest) returns (HyperliquidLaunchCandlesResponse) {}
+  rpc HyperliquidLaunchCandleStream (HyperliquidLaunchCandlesRequest) returns (stream HyperliquidLaunchCandlesResponse) {}
+  rpc HyperliquidLaunchMessages (HyperliquidLaunchMessagesRequest) returns (stream HyperliquidLaunchMessagesResponse) {}
+  rpc LatestHyperliquidLaunchFills (LatestHyperliquidLaunchFillsRequest) returns (stream HyperliquidLaunchFillsResponse) {}
+  rpc HyperliquidLaunchHolders (HyperliquidLaunchHoldersRequest) returns (HyperliquidLaunchHoldersResponse) {}
+
+  rpc HypurrFunCabals (HypurrFunCabalsRequest) returns (HypurrFunCabalsResponse) {}
+
+  rpc SetHyperliquidWalletDeploySessionTarget (SetHyperliquidWalletDeploySessionTargetRequest) returns (SetHyperliquidWalletDeploySessionTargetResponse) {}
+  rpc DeleteHyperliquidWalletDeploySessionTarget (DeleteHyperliquidWalletDeploySessionTargetRequest) returns (DeleteHyperliquidWalletDeploySessionTargetResponse) {}
+}

@@ -1,0 +1,57 @@
+// User wants to fetch certificates, and credits
+syntax = "proto3";
+package hypurr;
+option go_package = "gitlab.com/hypurr-fun/hypurr-grpc";
+import "hypurr/wallet.proto";
+import "hypurr/launch.proto";
+import "hypurr/common.proto";
+
+message TelegramUser {
+  int64 telegram_id = 1;
+  string telegram_username = 2;
+  double pending_fees = 3;
+  double referral_rewards = 4;
+  string referral_code = 5;
+  int64 referral_score = 6;
+  int64 referrer_id = 7;
+  TelegramUserSettings settings = 8;
+  HyperliquidWallet wallet = 9;
+  repeated HyperliquidWallet wallets = 10;
+  int64 wallet_id = 11;
+  HyperliquidWallet sniper_wallet = 12;
+  int64 sniper_wallet_id = 13;
+  HyperliquidWallet dumper_wallet = 14;
+  int64 dumper_wallet_id = 15;
+  int64 reputation_id = 16;
+  TelegramUserReputation reputation = 17;
+  repeated HyperliquidLaunch launches = 18;
+  repeated HyperliquidWalletBalance balances = 19;
+  repeated HyperliquidWalletMovement movements = 20;
+  repeated HyperliquidLaunchFill launch_fills = 21;
+  repeated HyperliquidWalletLabel labels = 22;
+}
+
+message TelegramUserSettings {
+  int32 left_buy = 1;
+  int32 mid_buy = 2;
+  int32 right_buy = 3;
+  int32 left_sell = 4;
+  int32 mid_sell = 5;
+  int32 right_sell = 6;
+  bool log_trades = 7;
+  bool hide_small = 8;
+  int32 max_slippage = 9;
+  float tip_amount = 10;
+  bool no_tipping = 11;
+  bool auto_bridge = 12;
+}
+
+message TelegramUserReputation {
+  double hfun_score = 1;
+  double reputation_score = 2;
+}
+
+message HyperliquidWalletLabel {
+  string ethereum_address = 1;
+  string label = 2;
+}

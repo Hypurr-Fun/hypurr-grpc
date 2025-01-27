@@ -1,0 +1,105 @@
+syntax = "proto3";
+package hypurr;
+option go_package = "gitlab.com/hypurr-fun/hypurr-grpc";
+
+import "google/protobuf/wrappers.proto";
+import "hypurr/token.proto";
+
+message HyperliquidWallet {
+  int64 id = 1;
+  string name = 2;
+  google.protobuf.Int64Value telegram_id = 3;
+  string ethereum_address = 4;
+  int32 points = 5;
+  repeated HyperliquidWalletMovement movements = 6;
+  repeated HyperliquidWalletBalance spot_balances = 7;
+  repeated HyperliquidLaunchBalance launch_balances = 8;
+  bool is_agent = 9;
+  bool is_read_only = 10;
+}
+
+message HyperliquidWalletMovement {
+  google.protobuf.Int64Value telegram_id = 1;
+  HyperliquidWallet wallet = 2;
+  int64 wallet_id = 3;
+  string hash = 4;
+  string type = 5;
+  int64 token_id = 6;
+  HyperliquidToken token = 7;
+  double amount = 8;
+  double usdc_value = 9;
+  string destination = 10;
+  double fee = 11;
+  google.protobuf.Int64Value timestamp = 12;
+}
+
+message HyperliquidPublicWallet {
+  string ethereum_address = 1;
+}
+
+message HyperliquidWalletBalance {
+  google.protobuf.Int64Value telegram_id = 1;
+  int64 wallet_id = 2;
+  int64 token_id = 3;
+  double balance = 4;
+}
+
+message HyperliquidLaunchBalance {
+  google.protobuf.Int64Value telegram_id = 1;
+  int64 wallet_id = 2;
+  int64 launch_id = 3;
+  int64 balance = 4;
+}
+
+message HyperliquidWalletDeploySession {
+  int64 id = 1;
+  google.protobuf.Int64Value telegram_id = 2;
+  int32 step = 3;
+  string token_name = 4;
+  string full_name = 5;
+  int32 token_decimals = 6;
+  int32 token_wei = 7;
+  double token_supply = 8;
+  int32 start_market_cap = 9;
+  google.protobuf.Int64Value anchor1_token_id = 10;
+  HyperliquidToken anchor1_token = 11;
+  google.protobuf.Int64Value anchor2_token_id = 12;
+  HyperliquidToken anchor2_token = 13;
+  google.protobuf.Int64Value token_id = 14;
+  int32 spot_pair_id = 15;
+  double deploy_threshold = 16;
+  map<string, HyperliquidWalletDeploySessionGenesis> geneses = 17;
+}
+
+message HyperliquidWalletDeploySessionGenesis {
+  string target = 1;
+  int32 share = 2;
+}
+
+
+message PerformancePoint {
+  int64 time = 1;
+  float notional = 2;
+  float pnl = 3;
+}
+
+message PerformanceReport {
+  int64 token_id = 1;
+  float total_pnl = 2;
+  float running_pnl = 3;
+  float size = 4;
+  float price = 5;
+  float entry_price = 6;
+  float total_cost = 7;
+  float running_cost = 8;
+}
+
+message Performance {
+  float net_cash = 1;
+  float notional = 2;
+  repeated PerformanceReport reports = 3;
+  repeated PerformancePoint points = 4;
+}
+
+
+// ... (continue with other wallet-related messages) 

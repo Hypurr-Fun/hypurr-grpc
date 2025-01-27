@@ -1,0 +1,70 @@
+syntax = "proto3";
+package hypurr;
+option go_package = "gitlab.com/hypurr-fun/hypurr-grpc";
+
+import "google/protobuf/wrappers.proto";
+import "hypurr/wallet.proto";
+
+// CABALS
+message HypurrFunCabal {
+  int64 telegram_chat_id = 1;
+  string name = 2;
+  string picture_file_id = 3;
+  repeated HypurrFunCabalUser users = 4;
+  repeated HypurrFunCabalTrackedWallet tracked_wallets = 5;
+  repeated HypurrFunCabalUserSeason user_seasons = 6;
+  HypurrFunCabalSummary summary = 7;
+}
+
+message HypurrFunCabalSummary {
+  int64 user_count = 1;
+  double season_spot_pnl = 2;
+  double season_perp_pnl = 3;
+  double season_launch_pnl = 4;
+}
+
+message HypurrFunCabalUser {
+  int64 telegram_chat_id = 1;
+  int64 telegram_id = 2;
+  HyperliquidWallet wallet = 3;
+  int64 wallet_id = 4;
+  string name = 5;
+  double spot_pnl = 6;
+  double spot_equity = 7;
+  double launch_pnl = 8;
+  double launch_equity = 9;
+  double perp_pnl = 10;
+  double perp_equity = 11;
+}
+
+message HypurrFunCabalTrackedWallet {
+  int64 telegram_chat_id = 1;
+  int64 wallet_id = 2;
+  HyperliquidWallet wallet = 3;
+  string label = 4;
+  bool alert_spot = 5;
+  bool alert_perp = 6;
+}
+
+message HypurrFunCabalSeason {
+  int64 id = 1;
+  int64 start_time = 2;
+  int64 end_time = 3;
+  string name = 4;
+  repeated HypurrFunCabalUserSeason user_seasons = 5;
+  google.protobuf.Int64Value winner_id = 6;
+  HypurrFunCabal winner = 7;
+}
+
+message HypurrFunCabalUserSeason {
+  int64 cabal_season_id = 1;
+  int64 telegram_id = 2;
+  int64 wallet_id = 3;
+  int64 telegram_chat_id = 4;
+  double spot_pnl = 5;
+  double launch_pnl = 6;
+  double perp_pnl = 7;
+  double last_spot_pnl = 8;
+  double last_launch_pnl = 9;
+  double last_perp_pnl = 10;
+}
