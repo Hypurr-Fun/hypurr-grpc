@@ -1,0 +1,34 @@
+syntax = "proto3";
+package hypurr;
+option go_package = "gitlab.com/hypurr-fun/hypurr-grpc";
+
+import "google/protobuf/wrappers.proto";
+
+message HyperliquidSpotSniperConfig {
+    int64 id = 1;
+    int64 telegram_id = 2;
+    string name = 3;
+    string target_token = 4;
+    float max_market_cap = 5;
+    float max_notional = 6;
+    int64 max_slippage = 7;
+    int64 max_user_allocation = 8;
+    int64 max_liquidity_allocation = 9;
+    int64 max_airdrop_allocation = 10;
+    bool enabled = 11;
+    bool anti_rug = 12;
+}
+
+message HyperliquidWalletSpotTwapSession {
+    int64 id = 1;
+    int64 wallet_id = 2;
+    int64 pair_id = 3;
+    google.protobuf.Int64Value telegram_id = 4;
+    float target_notional = 5;
+    float filled_quantity = 6;
+    float filled_cost = 7;
+    int64 duration = 8;
+    bool enabled = 9;
+    bool buy = 10;
+    bool ended = 11;
+}

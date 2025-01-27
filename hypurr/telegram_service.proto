@@ -2,7 +2,7 @@ syntax = "proto3";
 package hypurr;
 option go_package = "gitlab.com/hypurr-fun/hypurr-grpc";
 
-
+import "hypurr/tools.proto";
 import "hypurr/wallet.proto";
 import "hypurr/user.proto";
 
@@ -43,10 +43,75 @@ message HyperliquidLaunchTradeResponse {
   bool success = 4;
 }
 
+message HyperliquidSpotTradeRequest {
+  map<string, string> auth_data = 1;
+  int64 pair_id = 2;
+  int64 wallet_id = 3;
+  HyperliquidLaunchTradeDirection direction = 4;
+  double amount = 5;
+}
+
+message HyperliquidSpotTradeResponse {
+  double base_amount = 1;
+  double quote_amount = 2;
+  string message = 3;
+  bool success = 4;
+}
+
+message HyperliquidSpotSniperConfigsRequest {}
+
+message HyperliquidSpotSniperConfigsResponse {
+  repeated HyperliquidSpotSniperConfig configs = 1;
+}
+
+message DeleteHyperliquidSpotSniperConfigRequest {
+  string config_id = 1;
+}
+
+message CreateHyperliquidSpotSniperConfigRequest {
+  HyperliquidSpotSniperConfig config = 1;
+}
+
+message CreateHyperliquidSpotSniperConfigResponse {
+  bool success = 1;
+  HyperliquidSpotSniperConfig config = 2;
+}
+
+message DeleteHyperliquidSpotSniperConfigResponse {
+  bool success = 1;
+}
+
+message UpdateHyperliquidSpotSniperConfigRequest {
+  HyperliquidSpotSniperConfig config = 1;
+}
+
+message UpdateHyperliquidSpotSniperConfigResponse {
+  bool success = 1;
+}
+
+message HyperliquidWalletSpotTwapSessionsRequest {
+
+}
+
+message HyperliquidWalletSpotTwapSessionsResponse {
+  repeated HyperliquidWalletSpotTwapSession sessions = 1;
+}
 
 // Authed endpoints
 service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
+
+  // Launch
   rpc HyperliquidLaunchTrade (HyperliquidLaunchTradeRequest) returns (HyperliquidLaunchTradeResponse) {}
+
+  // Spot
+  rpc HyperliquidSpotTrade (HyperliquidSpotTradeRequest) returns (HyperliquidSpotTradeResponse) {}
+
+  rpc HyperliquidWalletSpotTwapSessions (HyperliquidWalletSpotTwapSessionsRequest) returns (HyperliquidWalletSpotTwapSessionsResponse) {}
+
+  rpc HyperliquidSpotSniperConfigs (HyperliquidSpotSniperConfigsRequest) returns (HyperliquidSpotSniperConfigsResponse) {}
+  rpc CreateHyperliquidSpotSniperConfig (CreateHyperliquidSpotSniperConfigRequest) returns (CreateHyperliquidSpotSniperConfigResponse) {}
+  rpc DeleteHyperliquidSpotSniperConfig (DeleteHyperliquidSpotSniperConfigRequest) returns (DeleteHyperliquidSpotSniperConfigResponse) {}
+  rpc UpdateHyperliquidSpotSniperConfig (UpdateHyperliquidSpotSniperConfigRequest) returns (UpdateHyperliquidSpotSniperConfigResponse) {}
 }
