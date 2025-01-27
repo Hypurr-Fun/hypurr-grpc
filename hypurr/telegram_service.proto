@@ -68,7 +68,7 @@ message HyperliquidSpotSniperConfigsResponse {
 
 message DeleteHyperliquidSpotSniperConfigRequest {
   map<string, string> auth_data = 1;
-  string config_id = 2;
+  int64 config_id = 2;
 }
 
 message DeleteHyperliquidSpotSniperConfigResponse {

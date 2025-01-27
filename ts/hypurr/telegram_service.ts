@@ -185,9 +185,9 @@ export interface DeleteHyperliquidSpotSniperConfigRequest {
         [key: string]: string;
     };
     /**
-     * @generated from protobuf field: string config_id = 2;
+     * @generated from protobuf field: int64 config_id = 2;
      */
-    configId: string;
+    configId: number;
 }
 /**
  * @generated from protobuf message hypurr.DeleteHyperliquidSpotSniperConfigResponse
@@ -940,11 +940,11 @@ class DeleteHyperliquidSpotSniperConfigRequest$Type extends MessageType<DeleteHy
     constructor() {
         super("hypurr.DeleteHyperliquidSpotSniperConfigRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "config_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "config_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<DeleteHyperliquidSpotSniperConfigRequest>): DeleteHyperliquidSpotSniperConfigRequest {
-        const message = { authData: {}, configId: "" };
+        const message = { authData: {}, configId: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<DeleteHyperliquidSpotSniperConfigRequest>(this, message, value);
@@ -958,8 +958,8 @@ class DeleteHyperliquidSpotSniperConfigRequest$Type extends MessageType<DeleteHy
                 case /* map<string, string> auth_data */ 1:
                     this.binaryReadMap1(message.authData, reader, options);
                     break;
-                case /* string config_id */ 2:
-                    message.configId = reader.string();
+                case /* int64 config_id */ 2:
+                    message.configId = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -992,9 +992,9 @@ class DeleteHyperliquidSpotSniperConfigRequest$Type extends MessageType<DeleteHy
         /* map<string, string> auth_data = 1; */
         for (let k of Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
-        /* string config_id = 2; */
-        if (message.configId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.configId);
+        /* int64 config_id = 2; */
+        if (message.configId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.configId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
