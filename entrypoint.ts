@@ -6,5 +6,5 @@ export * from "./ts/hypurr/services";
 export * from "./ts/hypurr/token";
 export * from "./ts/hypurr/user";
 export * from "./ts/hypurr/wallet";
-export * from "./ts/services";
-export * from "./ts/services.client";
+export * from "./ts/hypurr/services";
+export * from "./ts/hypurr/services.client";
