@@ -33,11 +33,11 @@ export interface HyperliquidSpotSniperConfig {
      */
     targetToken: string;
     /**
-     * @generated from protobuf field: float max_market_cap = 5;
+     * @generated from protobuf field: double max_market_cap = 5;
      */
     maxMarketCap: number;
     /**
-     * @generated from protobuf field: float max_notional = 6;
+     * @generated from protobuf field: double max_notional = 6;
      */
     maxNotional: number;
     /**
@@ -86,15 +86,15 @@ export interface HyperliquidWalletSpotTwapSession {
      */
     telegramId?: Int64Value;
     /**
-     * @generated from protobuf field: float target_notional = 5;
+     * @generated from protobuf field: double target_notional = 5;
      */
     targetNotional: number;
     /**
-     * @generated from protobuf field: float filled_quantity = 6;
+     * @generated from protobuf field: double filled_quantity = 6;
      */
     filledQuantity: number;
     /**
-     * @generated from protobuf field: float filled_cost = 7;
+     * @generated from protobuf field: double filled_cost = 7;
      */
     filledCost: number;
     /**
@@ -122,8 +122,8 @@ class HyperliquidSpotSniperConfig$Type extends MessageType<HyperliquidSpotSniper
             { no: 2, name: "telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "target_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "max_market_cap", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
-            { no: 6, name: "max_notional", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 5, name: "max_market_cap", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "max_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 7, name: "max_slippage", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 8, name: "max_user_allocation", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 9, name: "max_liquidity_allocation", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
@@ -156,11 +156,11 @@ class HyperliquidSpotSniperConfig$Type extends MessageType<HyperliquidSpotSniper
                 case /* string target_token */ 4:
                     message.targetToken = reader.string();
                     break;
-                case /* float max_market_cap */ 5:
-                    message.maxMarketCap = reader.float();
+                case /* double max_market_cap */ 5:
+                    message.maxMarketCap = reader.double();
                     break;
-                case /* float max_notional */ 6:
-                    message.maxNotional = reader.float();
+                case /* double max_notional */ 6:
+                    message.maxNotional = reader.double();
                     break;
                 case /* int64 max_slippage */ 7:
                     message.maxSlippage = reader.int64().toNumber();
@@ -204,12 +204,12 @@ class HyperliquidSpotSniperConfig$Type extends MessageType<HyperliquidSpotSniper
         /* string target_token = 4; */
         if (message.targetToken !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.targetToken);
-        /* float max_market_cap = 5; */
+        /* double max_market_cap = 5; */
         if (message.maxMarketCap !== 0)
-            writer.tag(5, WireType.Bit32).float(message.maxMarketCap);
-        /* float max_notional = 6; */
+            writer.tag(5, WireType.Bit64).double(message.maxMarketCap);
+        /* double max_notional = 6; */
         if (message.maxNotional !== 0)
-            writer.tag(6, WireType.Bit32).float(message.maxNotional);
+            writer.tag(6, WireType.Bit64).double(message.maxNotional);
         /* int64 max_slippage = 7; */
         if (message.maxSlippage !== 0)
             writer.tag(7, WireType.Varint).int64(message.maxSlippage);
@@ -246,9 +246,9 @@ class HyperliquidWalletSpotTwapSession$Type extends MessageType<HyperliquidWalle
             { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "pair_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "telegram_id", kind: "message", T: () => Int64Value },
-            { no: 5, name: "target_notional", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
-            { no: 6, name: "filled_quantity", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
-            { no: 7, name: "filled_cost", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 5, name: "target_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "filled_quantity", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "filled_cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 8, name: "duration", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 9, name: "enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 10, name: "buy", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
@@ -279,14 +279,14 @@ class HyperliquidWalletSpotTwapSession$Type extends MessageType<HyperliquidWalle
                 case /* google.protobuf.Int64Value telegram_id */ 4:
                     message.telegramId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.telegramId);
                     break;
-                case /* float target_notional */ 5:
-                    message.targetNotional = reader.float();
+                case /* double target_notional */ 5:
+                    message.targetNotional = reader.double();
                     break;
-                case /* float filled_quantity */ 6:
-                    message.filledQuantity = reader.float();
+                case /* double filled_quantity */ 6:
+                    message.filledQuantity = reader.double();
                     break;
-                case /* float filled_cost */ 7:
-                    message.filledCost = reader.float();
+                case /* double filled_cost */ 7:
+                    message.filledCost = reader.double();
                     break;
                 case /* int64 duration */ 8:
                     message.duration = reader.int64().toNumber();
@@ -324,15 +324,15 @@ class HyperliquidWalletSpotTwapSession$Type extends MessageType<HyperliquidWalle
         /* google.protobuf.Int64Value telegram_id = 4; */
         if (message.telegramId)
             Int64Value.internalBinaryWrite(message.telegramId, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* float target_notional = 5; */
+        /* double target_notional = 5; */
         if (message.targetNotional !== 0)
-            writer.tag(5, WireType.Bit32).float(message.targetNotional);
-        /* float filled_quantity = 6; */
+            writer.tag(5, WireType.Bit64).double(message.targetNotional);
+        /* double filled_quantity = 6; */
         if (message.filledQuantity !== 0)
-            writer.tag(6, WireType.Bit32).float(message.filledQuantity);
-        /* float filled_cost = 7; */
+            writer.tag(6, WireType.Bit64).double(message.filledQuantity);
+        /* double filled_cost = 7; */
         if (message.filledCost !== 0)
-            writer.tag(7, WireType.Bit32).float(message.filledCost);
+            writer.tag(7, WireType.Bit64).double(message.filledCost);
         /* int64 duration = 8; */
         if (message.duration !== 0)
             writer.tag(8, WireType.Varint).int64(message.duration);

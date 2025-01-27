@@ -9,8 +9,8 @@ message HyperliquidSpotSniperConfig {
     int64 telegram_id = 2;
     string name = 3;
     string target_token = 4;
-    float max_market_cap = 5;
-    float max_notional = 6;
+    double max_market_cap = 5;
+    double max_notional = 6;
     int64 max_slippage = 7;
     int64 max_user_allocation = 8;
     int64 max_liquidity_allocation = 9;
@@ -24,9 +24,9 @@ message HyperliquidWalletSpotTwapSession {
     int64 wallet_id = 2;
     int64 pair_id = 3;
     google.protobuf.Int64Value telegram_id = 4;
-    float target_notional = 5;
-    float filled_quantity = 6;
-    float filled_cost = 7;
+    double target_notional = 5;
+    double filled_quantity = 6;
+    double filled_cost = 7;
     int64 duration = 8;
     bool enabled = 9;
     bool buy = 10;
