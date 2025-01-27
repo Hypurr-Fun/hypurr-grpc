@@ -58,18 +58,26 @@ message HyperliquidSpotTradeResponse {
   bool success = 4;
 }
 
-message HyperliquidSpotSniperConfigsRequest {}
+message HyperliquidSpotSniperConfigsRequest {
+  map<string, string> auth_data = 1;
+}
 
 message HyperliquidSpotSniperConfigsResponse {
   repeated HyperliquidSpotSniperConfig configs = 1;
 }
 
 message DeleteHyperliquidSpotSniperConfigRequest {
-  string config_id = 1;
+  map<string, string> auth_data = 1;
+  string config_id = 2;
+}
+
+message DeleteHyperliquidSpotSniperConfigResponse {
+  bool success = 1;
 }
 
 message CreateHyperliquidSpotSniperConfigRequest {
-  HyperliquidSpotSniperConfig config = 1;
+  map<string, string> auth_data = 1;
+  HyperliquidSpotSniperConfig config = 2;
 }
 
 message CreateHyperliquidSpotSniperConfigResponse {
@@ -77,12 +85,9 @@ message CreateHyperliquidSpotSniperConfigResponse {
   HyperliquidSpotSniperConfig config = 2;
 }
 
-message DeleteHyperliquidSpotSniperConfigResponse {
-  bool success = 1;
-}
-
 message UpdateHyperliquidSpotSniperConfigRequest {
-  HyperliquidSpotSniperConfig config = 1;
+  map<string, string> auth_data = 1;
+  HyperliquidSpotSniperConfig config = 2;
 }
 
 message UpdateHyperliquidSpotSniperConfigResponse {
@@ -90,7 +95,7 @@ message UpdateHyperliquidSpotSniperConfigResponse {
 }
 
 message HyperliquidWalletSpotTwapSessionsRequest {
-
+  map<string, string> auth_data = 1;
 }
 
 message HyperliquidWalletSpotTwapSessionsResponse {

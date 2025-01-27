@@ -158,6 +158,12 @@ export interface HyperliquidSpotTradeResponse {
  * @generated from protobuf message hypurr.HyperliquidSpotSniperConfigsRequest
  */
 export interface HyperliquidSpotSniperConfigsRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidSpotSniperConfigsResponse
@@ -173,16 +179,37 @@ export interface HyperliquidSpotSniperConfigsResponse {
  */
 export interface DeleteHyperliquidSpotSniperConfigRequest {
     /**
-     * @generated from protobuf field: string config_id = 1;
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string config_id = 2;
      */
     configId: string;
+}
+/**
+ * @generated from protobuf message hypurr.DeleteHyperliquidSpotSniperConfigResponse
+ */
+export interface DeleteHyperliquidSpotSniperConfigResponse {
+    /**
+     * @generated from protobuf field: bool success = 1;
+     */
+    success: boolean;
 }
 /**
  * @generated from protobuf message hypurr.CreateHyperliquidSpotSniperConfigRequest
  */
 export interface CreateHyperliquidSpotSniperConfigRequest {
     /**
-     * @generated from protobuf field: hypurr.HyperliquidSpotSniperConfig config = 1;
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidSpotSniperConfig config = 2;
      */
     config?: HyperliquidSpotSniperConfig;
 }
@@ -200,20 +227,17 @@ export interface CreateHyperliquidSpotSniperConfigResponse {
     config?: HyperliquidSpotSniperConfig;
 }
 /**
- * @generated from protobuf message hypurr.DeleteHyperliquidSpotSniperConfigResponse
- */
-export interface DeleteHyperliquidSpotSniperConfigResponse {
-    /**
-     * @generated from protobuf field: bool success = 1;
-     */
-    success: boolean;
-}
-/**
  * @generated from protobuf message hypurr.UpdateHyperliquidSpotSniperConfigRequest
  */
 export interface UpdateHyperliquidSpotSniperConfigRequest {
     /**
-     * @generated from protobuf field: hypurr.HyperliquidSpotSniperConfig config = 1;
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidSpotSniperConfig config = 2;
      */
     config?: HyperliquidSpotSniperConfig;
 }
@@ -230,6 +254,12 @@ export interface UpdateHyperliquidSpotSniperConfigResponse {
  * @generated from protobuf message hypurr.HyperliquidWalletSpotTwapSessionsRequest
  */
 export interface HyperliquidWalletSpotTwapSessionsRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletSpotTwapSessionsResponse
@@ -794,19 +824,56 @@ export const HyperliquidSpotTradeResponse = new HyperliquidSpotTradeResponse$Typ
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidSpotSniperConfigsRequest$Type extends MessageType<HyperliquidSpotSniperConfigsRequest> {
     constructor() {
-        super("hypurr.HyperliquidSpotSniperConfigsRequest", []);
+        super("hypurr.HyperliquidSpotSniperConfigsRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+        ]);
     }
     create(value?: PartialMessage<HyperliquidSpotSniperConfigsRequest>): HyperliquidSpotSniperConfigsRequest {
-        const message = {};
+        const message = { authData: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidSpotSniperConfigsRequest>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidSpotSniperConfigsRequest): HyperliquidSpotSniperConfigsRequest {
-        return target ?? this.create();
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: HyperliquidSpotSniperConfigsRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HyperliquidSpotSniperConfigsRequest["authData"] | undefined, val: HyperliquidSpotSniperConfigsRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HyperliquidSpotSniperConfigsRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
     }
     internalBinaryWrite(message: HyperliquidSpotSniperConfigsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -868,11 +935,12 @@ export const HyperliquidSpotSniperConfigsResponse = new HyperliquidSpotSniperCon
 class DeleteHyperliquidSpotSniperConfigRequest$Type extends MessageType<DeleteHyperliquidSpotSniperConfigRequest> {
     constructor() {
         super("hypurr.DeleteHyperliquidSpotSniperConfigRequest", [
-            { no: 1, name: "config_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "config_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<DeleteHyperliquidSpotSniperConfigRequest>): DeleteHyperliquidSpotSniperConfigRequest {
-        const message = { configId: "" };
+        const message = { authData: {}, configId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<DeleteHyperliquidSpotSniperConfigRequest>(this, message, value);
@@ -883,7 +951,10 @@ class DeleteHyperliquidSpotSniperConfigRequest$Type extends MessageType<DeleteHy
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string config_id */ 1:
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string config_id */ 2:
                     message.configId = reader.string();
                     break;
                 default:
@@ -897,10 +968,29 @@ class DeleteHyperliquidSpotSniperConfigRequest$Type extends MessageType<DeleteHy
         }
         return message;
     }
+    private binaryReadMap1(map: DeleteHyperliquidSpotSniperConfigRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof DeleteHyperliquidSpotSniperConfigRequest["authData"] | undefined, val: DeleteHyperliquidSpotSniperConfigRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.DeleteHyperliquidSpotSniperConfigRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
     internalBinaryWrite(message: DeleteHyperliquidSpotSniperConfigRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string config_id = 1; */
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string config_id = 2; */
         if (message.configId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.configId);
+            writer.tag(2, WireType.LengthDelimited).string(message.configId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -912,14 +1002,62 @@ class DeleteHyperliquidSpotSniperConfigRequest$Type extends MessageType<DeleteHy
  */
 export const DeleteHyperliquidSpotSniperConfigRequest = new DeleteHyperliquidSpotSniperConfigRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class DeleteHyperliquidSpotSniperConfigResponse$Type extends MessageType<DeleteHyperliquidSpotSniperConfigResponse> {
+    constructor() {
+        super("hypurr.DeleteHyperliquidSpotSniperConfigResponse", [
+            { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<DeleteHyperliquidSpotSniperConfigResponse>): DeleteHyperliquidSpotSniperConfigResponse {
+        const message = { success: false };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<DeleteHyperliquidSpotSniperConfigResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeleteHyperliquidSpotSniperConfigResponse): DeleteHyperliquidSpotSniperConfigResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bool success */ 1:
+                    message.success = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: DeleteHyperliquidSpotSniperConfigResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bool success = 1; */
+        if (message.success !== false)
+            writer.tag(1, WireType.Varint).bool(message.success);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.DeleteHyperliquidSpotSniperConfigResponse
+ */
+export const DeleteHyperliquidSpotSniperConfigResponse = new DeleteHyperliquidSpotSniperConfigResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class CreateHyperliquidSpotSniperConfigRequest$Type extends MessageType<CreateHyperliquidSpotSniperConfigRequest> {
     constructor() {
         super("hypurr.CreateHyperliquidSpotSniperConfigRequest", [
-            { no: 1, name: "config", kind: "message", T: () => HyperliquidSpotSniperConfig }
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "config", kind: "message", T: () => HyperliquidSpotSniperConfig }
         ]);
     }
     create(value?: PartialMessage<CreateHyperliquidSpotSniperConfigRequest>): CreateHyperliquidSpotSniperConfigRequest {
-        const message = {};
+        const message = { authData: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CreateHyperliquidSpotSniperConfigRequest>(this, message, value);
@@ -930,7 +1068,10 @@ class CreateHyperliquidSpotSniperConfigRequest$Type extends MessageType<CreateHy
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* hypurr.HyperliquidSpotSniperConfig config */ 1:
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* hypurr.HyperliquidSpotSniperConfig config */ 2:
                     message.config = HyperliquidSpotSniperConfig.internalBinaryRead(reader, reader.uint32(), options, message.config);
                     break;
                 default:
@@ -944,10 +1085,29 @@ class CreateHyperliquidSpotSniperConfigRequest$Type extends MessageType<CreateHy
         }
         return message;
     }
+    private binaryReadMap1(map: CreateHyperliquidSpotSniperConfigRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof CreateHyperliquidSpotSniperConfigRequest["authData"] | undefined, val: CreateHyperliquidSpotSniperConfigRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.CreateHyperliquidSpotSniperConfigRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
     internalBinaryWrite(message: CreateHyperliquidSpotSniperConfigRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* hypurr.HyperliquidSpotSniperConfig config = 1; */
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* hypurr.HyperliquidSpotSniperConfig config = 2; */
         if (message.config)
-            HyperliquidSpotSniperConfig.internalBinaryWrite(message.config, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            HyperliquidSpotSniperConfig.internalBinaryWrite(message.config, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1013,61 +1173,15 @@ class CreateHyperliquidSpotSniperConfigResponse$Type extends MessageType<CreateH
  */
 export const CreateHyperliquidSpotSniperConfigResponse = new CreateHyperliquidSpotSniperConfigResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class DeleteHyperliquidSpotSniperConfigResponse$Type extends MessageType<DeleteHyperliquidSpotSniperConfigResponse> {
-    constructor() {
-        super("hypurr.DeleteHyperliquidSpotSniperConfigResponse", [
-            { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
-    }
-    create(value?: PartialMessage<DeleteHyperliquidSpotSniperConfigResponse>): DeleteHyperliquidSpotSniperConfigResponse {
-        const message = { success: false };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<DeleteHyperliquidSpotSniperConfigResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeleteHyperliquidSpotSniperConfigResponse): DeleteHyperliquidSpotSniperConfigResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool success */ 1:
-                    message.success = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: DeleteHyperliquidSpotSniperConfigResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool success = 1; */
-        if (message.success !== false)
-            writer.tag(1, WireType.Varint).bool(message.success);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.DeleteHyperliquidSpotSniperConfigResponse
- */
-export const DeleteHyperliquidSpotSniperConfigResponse = new DeleteHyperliquidSpotSniperConfigResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class UpdateHyperliquidSpotSniperConfigRequest$Type extends MessageType<UpdateHyperliquidSpotSniperConfigRequest> {
     constructor() {
         super("hypurr.UpdateHyperliquidSpotSniperConfigRequest", [
-            { no: 1, name: "config", kind: "message", T: () => HyperliquidSpotSniperConfig }
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "config", kind: "message", T: () => HyperliquidSpotSniperConfig }
         ]);
     }
     create(value?: PartialMessage<UpdateHyperliquidSpotSniperConfigRequest>): UpdateHyperliquidSpotSniperConfigRequest {
-        const message = {};
+        const message = { authData: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UpdateHyperliquidSpotSniperConfigRequest>(this, message, value);
@@ -1078,7 +1192,10 @@ class UpdateHyperliquidSpotSniperConfigRequest$Type extends MessageType<UpdateHy
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* hypurr.HyperliquidSpotSniperConfig config */ 1:
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* hypurr.HyperliquidSpotSniperConfig config */ 2:
                     message.config = HyperliquidSpotSniperConfig.internalBinaryRead(reader, reader.uint32(), options, message.config);
                     break;
                 default:
@@ -1092,10 +1209,29 @@ class UpdateHyperliquidSpotSniperConfigRequest$Type extends MessageType<UpdateHy
         }
         return message;
     }
+    private binaryReadMap1(map: UpdateHyperliquidSpotSniperConfigRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof UpdateHyperliquidSpotSniperConfigRequest["authData"] | undefined, val: UpdateHyperliquidSpotSniperConfigRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.UpdateHyperliquidSpotSniperConfigRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
     internalBinaryWrite(message: UpdateHyperliquidSpotSniperConfigRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* hypurr.HyperliquidSpotSniperConfig config = 1; */
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* hypurr.HyperliquidSpotSniperConfig config = 2; */
         if (message.config)
-            HyperliquidSpotSniperConfig.internalBinaryWrite(message.config, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            HyperliquidSpotSniperConfig.internalBinaryWrite(message.config, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1156,19 +1292,56 @@ export const UpdateHyperliquidSpotSniperConfigResponse = new UpdateHyperliquidSp
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidWalletSpotTwapSessionsRequest$Type extends MessageType<HyperliquidWalletSpotTwapSessionsRequest> {
     constructor() {
-        super("hypurr.HyperliquidWalletSpotTwapSessionsRequest", []);
+        super("hypurr.HyperliquidWalletSpotTwapSessionsRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+        ]);
     }
     create(value?: PartialMessage<HyperliquidWalletSpotTwapSessionsRequest>): HyperliquidWalletSpotTwapSessionsRequest {
-        const message = {};
+        const message = { authData: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWalletSpotTwapSessionsRequest>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidWalletSpotTwapSessionsRequest): HyperliquidWalletSpotTwapSessionsRequest {
-        return target ?? this.create();
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: HyperliquidWalletSpotTwapSessionsRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HyperliquidWalletSpotTwapSessionsRequest["authData"] | undefined, val: HyperliquidWalletSpotTwapSessionsRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HyperliquidWalletSpotTwapSessionsRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
     }
     internalBinaryWrite(message: HyperliquidWalletSpotTwapSessionsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
