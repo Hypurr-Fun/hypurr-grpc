@@ -15,16 +15,15 @@ _sym_db = _symbol_database.Default()
 
 from hypurr import wallet_pb2 as hypurr_dot_wallet__pb2
 from hypurr import launch_pb2 as hypurr_dot_launch__pb2
-from hypurr import common_pb2 as hypurr_dot_common__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/user.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x11hypurr/user.proto\x12\x06hypurr\x1a\x13hypurr/wallet.proto\x1a\x13hypurr/launch.proto\x1a\x13hypurr/common.proto\"\xab\x06\n\x0cTelegramUser\x12\x13\n\x0btelegram_id\x18\x01 \x01(\x03\x12\x19\n\x11telegram_username\x18\x02 \x01(\t\x12\x14\n\x0cpending_fees\x18\x03 \x01(\x01\x12\x18\n\x10referral_rewards\x18\x04 \x01(\x01\x12\x15\n\rreferral_code\x18\x05 \x01(\t\x12\x16\n\x0ereferral_score\x18\x06 \x01(\x03\x12\x13\n\x0breferrer_id\x18\x07 \x01(\x03\x12.\n\x08settings\x18\x08 \x01(\x0b\x32\x1c.hypurr.TelegramUserSettings\x12)\n\x06wallet\x18\t \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12*\n\x07wallets\x18\n \x03(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x11\n\twallet_id\x18\x0b \x01(\x03\x12\x30\n\rsniper_wallet\x18\x0c \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x18\n\x10sniper_wallet_id\x18\r \x01(\x03\x12\x30\n\rdumper_wallet\x18\x0e \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x18\n\x10\x64umper_wallet_id\x18\x0f \x01(\x03\x12\x15\n\rreputation_id\x18\x10 \x01(\x03\x12\x32\n\nreputation\x18\x11 \x01(\x0b\x32\x1e.hypurr.TelegramUserReputation\x12+\n\x08launches\x18\x12 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\x12\x32\n\x08\x62\x61lances\x18\x13 \x03(\x0b\x32 .hypurr.HyperliquidWalletBalance\x12\x34\n\tmovements\x18\x14 \x03(\x0b\x32!.hypurr.HyperliquidWalletMovement\x12\x33\n\x0claunch_fills\x18\x15 \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\x12.\n\x06labels\x18\x16 \x03(\x0b\x32\x1e.hypurr.HyperliquidWalletLabel\"\x80\x02\n\x14TelegramUserSettings\x12\x10\n\x08left_buy\x18\x01 \x01(\x05\x12\x0f\n\x07mid_buy\x18\x02 \x01(\x05\x12\x11\n\tright_buy\x18\x03 \x01(\x05\x12\x11\n\tleft_sell\x18\x04 \x01(\x05\x12\x10\n\x08mid_sell\x18\x05 \x01(\x05\x12\x12\n\nright_sell\x18\x06 \x01(\x05\x12\x12\n\nlog_trades\x18\x07 \x01(\x08\x12\x12\n\nhide_small\x18\x08 \x01(\x08\x12\x14\n\x0cmax_slippage\x18\t \x01(\x05\x12\x12\n\ntip_amount\x18\n \x01(\x02\x12\x12\n\nno_tipping\x18\x0b \x01(\x08\x12\x13\n\x0b\x61uto_bridge\x18\x0c \x01(\x08\"F\n\x16TelegramUserReputation\x12\x12\n\nhfun_score\x18\x01 \x01(\x01\x12\x18\n\x10reputation_score\x18\x02 \x01(\x01\"A\n\x16HyperliquidWalletLabel\x12\x18\n\x10\x65thereum_address\x18\x01 \x01(\t\x12\r\n\x05label\x18\x02 \x01(\tB#Z!gitlab.com/hypurr-fun/hypurr-grpcb\x06proto3')
+  serialized_pb=_b('\n\x11hypurr/user.proto\x12\x06hypurr\x1a\x13hypurr/wallet.proto\x1a\x13hypurr/launch.proto\"\xab\x06\n\x0cTelegramUser\x12\x13\n\x0btelegram_id\x18\x01 \x01(\x03\x12\x19\n\x11telegram_username\x18\x02 \x01(\t\x12\x14\n\x0cpending_fees\x18\x03 \x01(\x01\x12\x18\n\x10referral_rewards\x18\x04 \x01(\x01\x12\x15\n\rreferral_code\x18\x05 \x01(\t\x12\x16\n\x0ereferral_score\x18\x06 \x01(\x03\x12\x13\n\x0breferrer_id\x18\x07 \x01(\x03\x12.\n\x08settings\x18\x08 \x01(\x0b\x32\x1c.hypurr.TelegramUserSettings\x12)\n\x06wallet\x18\t \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12*\n\x07wallets\x18\n \x03(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x11\n\twallet_id\x18\x0b \x01(\x03\x12\x30\n\rsniper_wallet\x18\x0c \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x18\n\x10sniper_wallet_id\x18\r \x01(\x03\x12\x30\n\rdumper_wallet\x18\x0e \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x18\n\x10\x64umper_wallet_id\x18\x0f \x01(\x03\x12\x15\n\rreputation_id\x18\x10 \x01(\x03\x12\x32\n\nreputation\x18\x11 \x01(\x0b\x32\x1e.hypurr.TelegramUserReputation\x12+\n\x08launches\x18\x12 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\x12\x32\n\x08\x62\x61lances\x18\x13 \x03(\x0b\x32 .hypurr.HyperliquidWalletBalance\x12\x34\n\tmovements\x18\x14 \x03(\x0b\x32!.hypurr.HyperliquidWalletMovement\x12\x33\n\x0claunch_fills\x18\x15 \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\x12.\n\x06labels\x18\x16 \x03(\x0b\x32\x1e.hypurr.HyperliquidWalletLabel\"\x80\x02\n\x14TelegramUserSettings\x12\x10\n\x08left_buy\x18\x01 \x01(\x05\x12\x0f\n\x07mid_buy\x18\x02 \x01(\x05\x12\x11\n\tright_buy\x18\x03 \x01(\x05\x12\x11\n\tleft_sell\x18\x04 \x01(\x05\x12\x10\n\x08mid_sell\x18\x05 \x01(\x05\x12\x12\n\nright_sell\x18\x06 \x01(\x05\x12\x12\n\nlog_trades\x18\x07 \x01(\x08\x12\x12\n\nhide_small\x18\x08 \x01(\x08\x12\x14\n\x0cmax_slippage\x18\t \x01(\x05\x12\x12\n\ntip_amount\x18\n \x01(\x02\x12\x12\n\nno_tipping\x18\x0b \x01(\x08\x12\x13\n\x0b\x61uto_bridge\x18\x0c \x01(\x08\"F\n\x16TelegramUserReputation\x12\x12\n\nhfun_score\x18\x01 \x01(\x01\x12\x18\n\x10reputation_score\x18\x02 \x01(\x01\"A\n\x16HyperliquidWalletLabel\x12\x18\n\x10\x65thereum_address\x18\x01 \x01(\t\x12\r\n\x05label\x18\x02 \x01(\tB#Z!gitlab.com/hypurr-fun/hypurr-grpcb\x06proto3')
   ,
-  dependencies=[hypurr_dot_wallet__pb2.DESCRIPTOR,hypurr_dot_launch__pb2.DESCRIPTOR,hypurr_dot_common__pb2.DESCRIPTOR,])
+  dependencies=[hypurr_dot_wallet__pb2.DESCRIPTOR,hypurr_dot_launch__pb2.DESCRIPTOR,])
 
 
 
@@ -202,8 +201,8 @@ _TELEGRAMUSER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=93,
-  serialized_end=904,
+  serialized_start=72,
+  serialized_end=883,
 )
 
 
@@ -310,8 +309,8 @@ _TELEGRAMUSERSETTINGS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=907,
-  serialized_end=1163,
+  serialized_start=886,
+  serialized_end=1142,
 )
 
 
@@ -348,8 +347,8 @@ _TELEGRAMUSERREPUTATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1165,
-  serialized_end=1235,
+  serialized_start=1144,
+  serialized_end=1214,
 )
 
 
@@ -386,8 +385,8 @@ _HYPERLIQUIDWALLETLABEL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1237,
-  serialized_end=1302,
+  serialized_start=1216,
+  serialized_end=1281,
 )
 
 _TELEGRAMUSER.fields_by_name['settings'].message_type = _TELEGRAMUSERSETTINGS

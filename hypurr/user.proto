@@ -4,7 +4,6 @@ package hypurr;
 option go_package = "gitlab.com/hypurr-fun/hypurr-grpc";
 import "hypurr/wallet.proto";
 import "hypurr/launch.proto";
-import "hypurr/common.proto";
 
 message TelegramUser {
   int64 telegram_id = 1;

@@ -9,53 +9,6 @@ import "hypurr/wallet.proto";
 import "hypurr/launch.proto";
 import "hypurr/pairs.proto";
 import "hypurr/cabal.proto";
-import "hypurr/user.proto";
-
-// Auth endpoints
-message TelegramUserRequest {
-  map<string, string> auth_data = 1;
-}
-
-message TelegramUserResponse {
-  TelegramUser user = 1;
-}
-
-message TelegramUserWalletsRequest {
-  map<string, string> auth_data = 1;
-}
-
-message TelegramUserWalletsResponse {
-  repeated HyperliquidWallet wallets = 1;
-}
-
-message HyperliquidLaunchTradeRequest {
-  map<string, string> auth_data = 1;
-  int64 launch_id = 2;
-  int64 wallet_id = 3;
-  HyperliquidLaunchTradeDirection direction = 4;
-  double amount = 5;
-}
-
-enum HyperliquidLaunchTradeDirection {
-  BUY = 0;
-  SELL = 1;
-}
-
-message HyperliquidLaunchTradeResponse {
-  double base_amount = 1;
-  double quote_amount = 2;
-  string message = 3;
-  bool success = 4;
-}
-
-
-// Authed endpoints
-service Telegram {
-  rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
-  rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
-  rpc HyperliquidLaunchTrade (HyperliquidLaunchTradeRequest) returns (HyperliquidLaunchTradeResponse) {}
-}
-
 
 message HyperliquidTokenHoldersRequest {
   int64 token_id = 1;
