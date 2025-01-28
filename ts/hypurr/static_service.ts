@@ -365,6 +365,10 @@ export interface HyperliquidLaunchMessagesRequest {
      * @generated from protobuf field: google.protobuf.BoolValue pinned = 2;
      */
     pinned?: BoolValue;
+    /**
+     * @generated from protobuf field: google.protobuf.BoolValue dev = 3;
+     */
+    dev?: BoolValue;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchMessagesResponse
@@ -1959,7 +1963,8 @@ class HyperliquidLaunchMessagesRequest$Type extends MessageType<HyperliquidLaunc
     constructor() {
         super("hypurr.HyperliquidLaunchMessagesRequest", [
             { no: 1, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "pinned", kind: "message", T: () => BoolValue }
+            { no: 2, name: "pinned", kind: "message", T: () => BoolValue },
+            { no: 3, name: "dev", kind: "message", T: () => BoolValue }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchMessagesRequest>): HyperliquidLaunchMessagesRequest {
@@ -1980,6 +1985,9 @@ class HyperliquidLaunchMessagesRequest$Type extends MessageType<HyperliquidLaunc
                 case /* google.protobuf.BoolValue pinned */ 2:
                     message.pinned = BoolValue.internalBinaryRead(reader, reader.uint32(), options, message.pinned);
                     break;
+                case /* google.protobuf.BoolValue dev */ 3:
+                    message.dev = BoolValue.internalBinaryRead(reader, reader.uint32(), options, message.dev);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1998,6 +2006,9 @@ class HyperliquidLaunchMessagesRequest$Type extends MessageType<HyperliquidLaunc
         /* google.protobuf.BoolValue pinned = 2; */
         if (message.pinned)
             BoolValue.internalBinaryWrite(message.pinned, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.BoolValue dev = 3; */
+        if (message.dev)
+            BoolValue.internalBinaryWrite(message.dev, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

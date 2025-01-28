@@ -150,6 +150,7 @@ message HyperliquidLaunchResponse {
 message HyperliquidLaunchMessagesRequest {
   int64 launch_id = 1;
   google.protobuf.BoolValue pinned = 2;
+  google.protobuf.BoolValue dev = 3;
 }
 
 message HyperliquidLaunchMessagesResponse {
