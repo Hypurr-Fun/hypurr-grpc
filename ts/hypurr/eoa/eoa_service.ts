@@ -50,9 +50,9 @@ export interface HyperliquidLaunchTradeRequest {
      */
     direction: HyperliquidLaunchTradeDirection;
     /**
-     * @generated from protobuf field: double amount = 5;
+     * @generated from protobuf field: string amount = 5;
      */
-    amount: number;
+    amount: string;
     /**
      * @generated from protobuf field: string ethereum_address = 6;
      */
@@ -213,13 +213,13 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
             { no: 2, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "direction", kind: "enum", T: () => ["eoa.HyperliquidLaunchTradeDirection", HyperliquidLaunchTradeDirection] },
-            { no: 5, name: "amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "amount", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "ethereum_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchTradeRequest>): HyperliquidLaunchTradeRequest {
-        const message = { launchId: 0, walletId: 0, direction: 0, amount: 0, ethereumAddress: "", time: 0 };
+        const message = { launchId: 0, walletId: 0, direction: 0, amount: "", ethereumAddress: "", time: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunchTradeRequest>(this, message, value);
@@ -242,8 +242,8 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
                 case /* eoa.HyperliquidLaunchTradeDirection direction */ 4:
                     message.direction = reader.int32();
                     break;
-                case /* double amount */ 5:
-                    message.amount = reader.double();
+                case /* string amount */ 5:
+                    message.amount = reader.string();
                     break;
                 case /* string ethereum_address */ 6:
                     message.ethereumAddress = reader.string();
@@ -275,9 +275,9 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
         /* eoa.HyperliquidLaunchTradeDirection direction = 4; */
         if (message.direction !== 0)
             writer.tag(4, WireType.Varint).int32(message.direction);
-        /* double amount = 5; */
-        if (message.amount !== 0)
-            writer.tag(5, WireType.Bit64).double(message.amount);
+        /* string amount = 5; */
+        if (message.amount !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.amount);
         /* string ethereum_address = 6; */
         if (message.ethereumAddress !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.ethereumAddress);
