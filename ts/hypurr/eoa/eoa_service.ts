@@ -61,6 +61,10 @@ export interface HyperliquidLaunchTradeRequest {
      * @generated from protobuf field: int64 time = 7;
      */
     time: number;
+    /**
+     * @generated from protobuf field: double max_slippage = 8;
+     */
+    maxSlippage: number;
 }
 /**
  * @generated from protobuf message eoa.HyperliquidLaunchTradeResponse
@@ -215,11 +219,12 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
             { no: 4, name: "direction", kind: "enum", T: () => ["eoa.HyperliquidLaunchTradeDirection", HyperliquidLaunchTradeDirection] },
             { no: 5, name: "amount", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "ethereum_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 7, name: "time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 8, name: "max_slippage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchTradeRequest>): HyperliquidLaunchTradeRequest {
-        const message = { launchId: 0, walletId: 0, direction: 0, amount: "", ethereumAddress: "", time: 0 };
+        const message = { launchId: 0, walletId: 0, direction: 0, amount: "", ethereumAddress: "", time: 0, maxSlippage: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunchTradeRequest>(this, message, value);
@@ -250,6 +255,9 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
                     break;
                 case /* int64 time */ 7:
                     message.time = reader.int64().toNumber();
+                    break;
+                case /* double max_slippage */ 8:
+                    message.maxSlippage = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -284,6 +292,9 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
         /* int64 time = 7; */
         if (message.time !== 0)
             writer.tag(7, WireType.Varint).int64(message.time);
+        /* double max_slippage = 8; */
+        if (message.maxSlippage !== 0)
+            writer.tag(8, WireType.Bit64).double(message.maxSlippage);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

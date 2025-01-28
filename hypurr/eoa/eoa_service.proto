@@ -16,6 +16,7 @@ message HyperliquidLaunchTradeRequest {
   string amount = 5;
   string ethereum_address = 6;
   int64 time = 7;
+  double max_slippage = 8;
 }
 
 enum HyperliquidLaunchTradeDirection {
