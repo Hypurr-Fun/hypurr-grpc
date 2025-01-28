@@ -295,6 +295,10 @@ export interface HyperliquidLaunchMessage {
      * @generated from protobuf field: string message = 8;
      */
     message: string;
+    /**
+     * @generated from protobuf field: bool pinned = 9;
+     */
+    pinned: boolean;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchHolder
@@ -813,11 +817,12 @@ class HyperliquidLaunchMessage$Type extends MessageType<HyperliquidLaunchMessage
             { no: 5, name: "author", kind: "message", T: () => TelegramUserPublic },
             { no: 6, name: "chat_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 7, name: "topic_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 8, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 8, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "pinned", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchMessage>): HyperliquidLaunchMessage {
-        const message = { id: 0, timestamp: 0, launchId: 0, telegramId: 0, chatId: 0, topicId: 0, message: "" };
+        const message = { id: 0, timestamp: 0, launchId: 0, telegramId: 0, chatId: 0, topicId: 0, message: "", pinned: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunchMessage>(this, message, value);
@@ -851,6 +856,9 @@ class HyperliquidLaunchMessage$Type extends MessageType<HyperliquidLaunchMessage
                     break;
                 case /* string message */ 8:
                     message.message = reader.string();
+                    break;
+                case /* bool pinned */ 9:
+                    message.pinned = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -888,6 +896,9 @@ class HyperliquidLaunchMessage$Type extends MessageType<HyperliquidLaunchMessage
         /* string message = 8; */
         if (message.message !== "")
             writer.tag(8, WireType.LengthDelimited).string(message.message);
+        /* bool pinned = 9; */
+        if (message.pinned !== false)
+            writer.tag(9, WireType.Varint).bool(message.pinned);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

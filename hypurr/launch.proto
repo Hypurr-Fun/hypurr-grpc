@@ -102,6 +102,7 @@ message HyperliquidLaunchMessage {
   int64 chat_id = 6;
   int64 topic_id = 7;
   string message = 8;
+  bool pinned = 9;
 }
 
 message HyperliquidLaunchHolder {

@@ -16,6 +16,7 @@ import { HypurrFunCabal } from "./cabal";
 import { Performance } from "./wallet";
 import { HyperliquidLaunchHolder } from "./launch";
 import { HyperliquidLaunchMessage } from "./launch";
+import { BoolValue } from "../google/protobuf/wrappers";
 import { HyperliquidLaunchCandle } from "./launch";
 import { HyperliquidLaunchPosition } from "./launch";
 import { HyperliquidLaunchFill } from "./launch";
@@ -360,6 +361,10 @@ export interface HyperliquidLaunchMessagesRequest {
      * @generated from protobuf field: int64 launch_id = 1;
      */
     launchId: number;
+    /**
+     * @generated from protobuf field: google.protobuf.BoolValue pinned = 2;
+     */
+    pinned?: BoolValue;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchMessagesResponse
@@ -1953,7 +1958,8 @@ export const HyperliquidLaunchResponse = new HyperliquidLaunchResponse$Type();
 class HyperliquidLaunchMessagesRequest$Type extends MessageType<HyperliquidLaunchMessagesRequest> {
     constructor() {
         super("hypurr.HyperliquidLaunchMessagesRequest", [
-            { no: 1, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 1, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "pinned", kind: "message", T: () => BoolValue }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchMessagesRequest>): HyperliquidLaunchMessagesRequest {
@@ -1971,6 +1977,9 @@ class HyperliquidLaunchMessagesRequest$Type extends MessageType<HyperliquidLaunc
                 case /* int64 launch_id */ 1:
                     message.launchId = reader.int64().toNumber();
                     break;
+                case /* google.protobuf.BoolValue pinned */ 2:
+                    message.pinned = BoolValue.internalBinaryRead(reader, reader.uint32(), options, message.pinned);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1986,6 +1995,9 @@ class HyperliquidLaunchMessagesRequest$Type extends MessageType<HyperliquidLaunc
         /* int64 launch_id = 1; */
         if (message.launchId !== 0)
             writer.tag(1, WireType.Varint).int64(message.launchId);
+        /* google.protobuf.BoolValue pinned = 2; */
+        if (message.pinned)
+            BoolValue.internalBinaryWrite(message.pinned, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
