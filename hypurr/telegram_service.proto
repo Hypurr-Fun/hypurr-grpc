@@ -115,7 +115,7 @@ message LaunchHyperliquidLaunchRequest {
   int64 wallet_id = 2;
   string description = 3;
   string full_name = 4;
-  string symbol = 5;
+  string token_name = 5;
   bytes media = 6;
   MediaType media_type = 7;
   int64 dev_lockup_seconds = 8;

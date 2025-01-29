@@ -298,9 +298,9 @@ export interface LaunchHyperliquidLaunchRequest {
      */
     fullName: string;
     /**
-     * @generated from protobuf field: string symbol = 5;
+     * @generated from protobuf field: string token_name = 5;
      */
-    symbol: string;
+    tokenName: string;
     /**
      * @generated from protobuf field: bytes media = 6;
      */
@@ -1488,7 +1488,7 @@ class LaunchHyperliquidLaunchRequest$Type extends MessageType<LaunchHyperliquidL
             { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "symbol", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "token_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "media", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
             { no: 7, name: "media_type", kind: "enum", T: () => ["hypurr.MediaType", MediaType, "MEDIA_TYPE_"] },
             { no: 8, name: "dev_lockup_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
@@ -1496,7 +1496,7 @@ class LaunchHyperliquidLaunchRequest$Type extends MessageType<LaunchHyperliquidL
         ]);
     }
     create(value?: PartialMessage<LaunchHyperliquidLaunchRequest>): LaunchHyperliquidLaunchRequest {
-        const message = { authData: {}, walletId: 0, description: "", fullName: "", symbol: "", media: new Uint8Array(0), mediaType: 0, devLockupSeconds: 0, initialNotional: 0 };
+        const message = { authData: {}, walletId: 0, description: "", fullName: "", tokenName: "", media: new Uint8Array(0), mediaType: 0, devLockupSeconds: 0, initialNotional: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<LaunchHyperliquidLaunchRequest>(this, message, value);
@@ -1519,8 +1519,8 @@ class LaunchHyperliquidLaunchRequest$Type extends MessageType<LaunchHyperliquidL
                 case /* string full_name */ 4:
                     message.fullName = reader.string();
                     break;
-                case /* string symbol */ 5:
-                    message.symbol = reader.string();
+                case /* string token_name */ 5:
+                    message.tokenName = reader.string();
                     break;
                 case /* bytes media */ 6:
                     message.media = reader.bytes();
@@ -1574,9 +1574,9 @@ class LaunchHyperliquidLaunchRequest$Type extends MessageType<LaunchHyperliquidL
         /* string full_name = 4; */
         if (message.fullName !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.fullName);
-        /* string symbol = 5; */
-        if (message.symbol !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.symbol);
+        /* string token_name = 5; */
+        if (message.tokenName !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.tokenName);
         /* bytes media = 6; */
         if (message.media.length)
             writer.tag(6, WireType.LengthDelimited).bytes(message.media);
