@@ -314,9 +314,9 @@ export interface LaunchHyperliquidLaunchRequest {
      */
     devLockupSeconds: number;
     /**
-     * @generated from protobuf field: double initial_notional = 9;
+     * @generated from protobuf field: double initial_purchase_notional = 9;
      */
-    initialNotional: number;
+    initialPurchaseNotional: number;
 }
 /**
  * @generated from protobuf message hypurr.LaunchHyperliquidLaunchResponse
@@ -345,9 +345,9 @@ export enum HyperliquidLaunchTradeDirection {
  */
 export enum MediaType {
     /**
-     * @generated from protobuf enum value: MEDIA_TYPE_IMAGE = 0;
+     * @generated from protobuf enum value: MEDIA_TYPE_PHOTO = 0;
      */
-    IMAGE = 0,
+    PHOTO = 0,
     /**
      * @generated from protobuf enum value: MEDIA_TYPE_ANIMATION = 1;
      */
@@ -1492,11 +1492,11 @@ class LaunchHyperliquidLaunchRequest$Type extends MessageType<LaunchHyperliquidL
             { no: 6, name: "media", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
             { no: 7, name: "media_type", kind: "enum", T: () => ["hypurr.MediaType", MediaType, "MEDIA_TYPE_"] },
             { no: 8, name: "dev_lockup_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 9, name: "initial_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 9, name: "initial_purchase_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<LaunchHyperliquidLaunchRequest>): LaunchHyperliquidLaunchRequest {
-        const message = { authData: {}, walletId: 0, description: "", fullName: "", tokenName: "", media: new Uint8Array(0), mediaType: 0, devLockupSeconds: 0, initialNotional: 0 };
+        const message = { authData: {}, walletId: 0, description: "", fullName: "", tokenName: "", media: new Uint8Array(0), mediaType: 0, devLockupSeconds: 0, initialPurchaseNotional: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<LaunchHyperliquidLaunchRequest>(this, message, value);
@@ -1531,8 +1531,8 @@ class LaunchHyperliquidLaunchRequest$Type extends MessageType<LaunchHyperliquidL
                 case /* int64 dev_lockup_seconds */ 8:
                     message.devLockupSeconds = reader.int64().toNumber();
                     break;
-                case /* double initial_notional */ 9:
-                    message.initialNotional = reader.double();
+                case /* double initial_purchase_notional */ 9:
+                    message.initialPurchaseNotional = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1586,9 +1586,9 @@ class LaunchHyperliquidLaunchRequest$Type extends MessageType<LaunchHyperliquidL
         /* int64 dev_lockup_seconds = 8; */
         if (message.devLockupSeconds !== 0)
             writer.tag(8, WireType.Varint).int64(message.devLockupSeconds);
-        /* double initial_notional = 9; */
-        if (message.initialNotional !== 0)
-            writer.tag(9, WireType.Bit64).double(message.initialNotional);
+        /* double initial_purchase_notional = 9; */
+        if (message.initialPurchaseNotional !== 0)
+            writer.tag(9, WireType.Bit64).double(message.initialPurchaseNotional);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

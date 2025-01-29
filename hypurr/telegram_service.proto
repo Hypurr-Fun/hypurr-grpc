@@ -105,7 +105,7 @@ message HyperliquidWalletSpotTwapSessionsResponse {
 }
 
 enum MediaType {
-  MEDIA_TYPE_IMAGE = 0;
+  MEDIA_TYPE_PHOTO = 0;
   MEDIA_TYPE_ANIMATION = 1;
   MEDIA_TYPE_VIDEO = 2;
 }
@@ -119,7 +119,7 @@ message LaunchHyperliquidLaunchRequest {
   bytes media = 6;
   MediaType media_type = 7;
   int64 dev_lockup_seconds = 8;
-  double initial_notional = 9;
+  double initial_purchase_notional = 9;
 }
 
 message LaunchHyperliquidLaunchResponse {
