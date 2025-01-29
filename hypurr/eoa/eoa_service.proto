@@ -46,6 +46,12 @@ message HyperliquidSpotTradeResponse {
   bool success = 4;
 }
 
+message LaunchHyperliquidLaunchRequest {
+  string base_asset = 1;
+  string quote_asset = 2;
+  double amount = 3;
+}
+
 // Authed endpoints
 service EOA {
   // Launch

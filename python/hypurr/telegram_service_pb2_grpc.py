@@ -5,8 +5,8 @@ from hypurr import telegram_service_pb2 as hypurr_dot_telegram__service__pb2
 
 
 class TelegramStub(object):
-  """Authed endpoints
-  """
+  # missing associated documentation comment in .proto file
+  pass
 
   def __init__(self, channel):
     """Constructor.
@@ -28,6 +28,11 @@ class TelegramStub(object):
         '/hypurr.Telegram/HyperliquidLaunchTrade',
         request_serializer=hypurr_dot_telegram__service__pb2.HyperliquidLaunchTradeRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram__service__pb2.HyperliquidLaunchTradeResponse.FromString,
+        )
+    self.LaunchHyperliquidLaunch = channel.unary_unary(
+        '/hypurr.Telegram/LaunchHyperliquidLaunch',
+        request_serializer=hypurr_dot_telegram__service__pb2.LaunchHyperliquidLaunchRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram__service__pb2.LaunchHyperliquidLaunchResponse.FromString,
         )
     self.HyperliquidSpotTrade = channel.unary_unary(
         '/hypurr.Telegram/HyperliquidSpotTrade',
@@ -62,8 +67,8 @@ class TelegramStub(object):
 
 
 class TelegramServicer(object):
-  """Authed endpoints
-  """
+  # missing associated documentation comment in .proto file
+  pass
 
   def TelegramUser(self, request, context):
     # missing associated documentation comment in .proto file
@@ -82,6 +87,13 @@ class TelegramServicer(object):
   def HyperliquidLaunchTrade(self, request, context):
     """Launch
     """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def LaunchHyperliquidLaunch(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -145,6 +157,11 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.HyperliquidLaunchTrade,
           request_deserializer=hypurr_dot_telegram__service__pb2.HyperliquidLaunchTradeRequest.FromString,
           response_serializer=hypurr_dot_telegram__service__pb2.HyperliquidLaunchTradeResponse.SerializeToString,
+      ),
+      'LaunchHyperliquidLaunch': grpc.unary_unary_rpc_method_handler(
+          servicer.LaunchHyperliquidLaunch,
+          request_deserializer=hypurr_dot_telegram__service__pb2.LaunchHyperliquidLaunchRequest.FromString,
+          response_serializer=hypurr_dot_telegram__service__pb2.LaunchHyperliquidLaunchResponse.SerializeToString,
       ),
       'HyperliquidSpotTrade': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidSpotTrade,

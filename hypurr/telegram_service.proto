@@ -5,6 +5,7 @@ option go_package = "gitlab.com/hypurr-fun/hypurr-grpc";
 import "hypurr/tools.proto";
 import "hypurr/wallet.proto";
 import "hypurr/user.proto";
+import "hypurr/launch.proto";
 
 // Auth endpoints
 message TelegramUserRequest {
@@ -103,13 +104,35 @@ message HyperliquidWalletSpotTwapSessionsResponse {
   repeated HyperliquidWalletSpotTwapSession sessions = 1;
 }
 
-// Authed endpoints
+enum MediaType {
+  MEDIA_TYPE_IMAGE = 0;
+  MEDIA_TYPE_ANIMATION = 1;
+  MEDIA_TYPE_VIDEO = 2;
+}
+
+message LaunchHyperliquidLaunchRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  string description = 3;
+  string full_name = 4;
+  string symbol = 5;
+  bytes media = 6;
+  MediaType media_type = 7;
+  int64 dev_lockup_seconds = 8;
+  double initial_notional = 9;
+}
+
+message LaunchHyperliquidLaunchResponse {
+ HyperliquidLaunch launch = 1;
+}
+
 service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
 
   // Launch
   rpc HyperliquidLaunchTrade (HyperliquidLaunchTradeRequest) returns (HyperliquidLaunchTradeResponse) {}
+  rpc LaunchHyperliquidLaunch (LaunchHyperliquidLaunchRequest) returns (LaunchHyperliquidLaunchResponse) {}
 
   // Spot
   rpc HyperliquidSpotTrade (HyperliquidSpotTradeRequest) returns (HyperliquidSpotTradeResponse) {}

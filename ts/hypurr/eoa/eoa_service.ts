@@ -136,6 +136,23 @@ export interface HyperliquidSpotTradeResponse {
     success: boolean;
 }
 /**
+ * @generated from protobuf message eoa.LaunchHyperliquidLaunchRequest
+ */
+export interface LaunchHyperliquidLaunchRequest {
+    /**
+     * @generated from protobuf field: string base_asset = 1;
+     */
+    baseAsset: string;
+    /**
+     * @generated from protobuf field: string quote_asset = 2;
+     */
+    quoteAsset: string;
+    /**
+     * @generated from protobuf field: double amount = 3;
+     */
+    amount: number;
+}
+/**
  * @generated from protobuf enum eoa.HyperliquidLaunchTradeDirection
  */
 export enum HyperliquidLaunchTradeDirection {
@@ -532,6 +549,67 @@ class HyperliquidSpotTradeResponse$Type extends MessageType<HyperliquidSpotTrade
  * @generated MessageType for protobuf message eoa.HyperliquidSpotTradeResponse
  */
 export const HyperliquidSpotTradeResponse = new HyperliquidSpotTradeResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LaunchHyperliquidLaunchRequest$Type extends MessageType<LaunchHyperliquidLaunchRequest> {
+    constructor() {
+        super("eoa.LaunchHyperliquidLaunchRequest", [
+            { no: 1, name: "base_asset", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "quote_asset", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<LaunchHyperliquidLaunchRequest>): LaunchHyperliquidLaunchRequest {
+        const message = { baseAsset: "", quoteAsset: "", amount: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<LaunchHyperliquidLaunchRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LaunchHyperliquidLaunchRequest): LaunchHyperliquidLaunchRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string base_asset */ 1:
+                    message.baseAsset = reader.string();
+                    break;
+                case /* string quote_asset */ 2:
+                    message.quoteAsset = reader.string();
+                    break;
+                case /* double amount */ 3:
+                    message.amount = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: LaunchHyperliquidLaunchRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string base_asset = 1; */
+        if (message.baseAsset !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.baseAsset);
+        /* string quote_asset = 2; */
+        if (message.quoteAsset !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.quoteAsset);
+        /* double amount = 3; */
+        if (message.amount !== 0)
+            writer.tag(3, WireType.Bit64).double(message.amount);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message eoa.LaunchHyperliquidLaunchRequest
+ */
+export const LaunchHyperliquidLaunchRequest = new LaunchHyperliquidLaunchRequest$Type();
 /**
  * @generated ServiceType for protobuf service eoa.EOA
  */

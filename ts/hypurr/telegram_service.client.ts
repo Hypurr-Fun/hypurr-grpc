@@ -16,6 +16,8 @@ import type { HyperliquidWalletSpotTwapSessionsResponse } from "./telegram_servi
 import type { HyperliquidWalletSpotTwapSessionsRequest } from "./telegram_service";
 import type { HyperliquidSpotTradeResponse } from "./telegram_service";
 import type { HyperliquidSpotTradeRequest } from "./telegram_service";
+import type { LaunchHyperliquidLaunchResponse } from "./telegram_service";
+import type { LaunchHyperliquidLaunchRequest } from "./telegram_service";
 import type { HyperliquidLaunchTradeResponse } from "./telegram_service";
 import type { HyperliquidLaunchTradeRequest } from "./telegram_service";
 import type { TelegramUserWalletsResponse } from "./telegram_service";
@@ -26,8 +28,6 @@ import type { TelegramUserRequest } from "./telegram_service";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
- * Authed endpoints
- *
  * @generated from protobuf service hypurr.Telegram
  */
 export interface ITelegramClient {
@@ -45,6 +45,10 @@ export interface ITelegramClient {
      * @generated from protobuf rpc: HyperliquidLaunchTrade(hypurr.HyperliquidLaunchTradeRequest) returns (hypurr.HyperliquidLaunchTradeResponse);
      */
     hyperliquidLaunchTrade(input: HyperliquidLaunchTradeRequest, options?: RpcOptions): UnaryCall<HyperliquidLaunchTradeRequest, HyperliquidLaunchTradeResponse>;
+    /**
+     * @generated from protobuf rpc: LaunchHyperliquidLaunch(hypurr.LaunchHyperliquidLaunchRequest) returns (hypurr.LaunchHyperliquidLaunchResponse);
+     */
+    launchHyperliquidLaunch(input: LaunchHyperliquidLaunchRequest, options?: RpcOptions): UnaryCall<LaunchHyperliquidLaunchRequest, LaunchHyperliquidLaunchResponse>;
     /**
      * Spot
      *
@@ -73,8 +77,6 @@ export interface ITelegramClient {
     updateHyperliquidSpotSniperConfig(input: UpdateHyperliquidSpotSniperConfigRequest, options?: RpcOptions): UnaryCall<UpdateHyperliquidSpotSniperConfigRequest, UpdateHyperliquidSpotSniperConfigResponse>;
 }
 /**
- * Authed endpoints
- *
  * @generated from protobuf service hypurr.Telegram
  */
 export class TelegramClient implements ITelegramClient, ServiceInfo {
@@ -107,47 +109,54 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
         return stackIntercept<HyperliquidLaunchTradeRequest, HyperliquidLaunchTradeResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: LaunchHyperliquidLaunch(hypurr.LaunchHyperliquidLaunchRequest) returns (hypurr.LaunchHyperliquidLaunchResponse);
+     */
+    launchHyperliquidLaunch(input: LaunchHyperliquidLaunchRequest, options?: RpcOptions): UnaryCall<LaunchHyperliquidLaunchRequest, LaunchHyperliquidLaunchResponse> {
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        return stackIntercept<LaunchHyperliquidLaunchRequest, LaunchHyperliquidLaunchResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * Spot
      *
      * @generated from protobuf rpc: HyperliquidSpotTrade(hypurr.HyperliquidSpotTradeRequest) returns (hypurr.HyperliquidSpotTradeResponse);
      */
     hyperliquidSpotTrade(input: HyperliquidSpotTradeRequest, options?: RpcOptions): UnaryCall<HyperliquidSpotTradeRequest, HyperliquidSpotTradeResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<HyperliquidSpotTradeRequest, HyperliquidSpotTradeResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HyperliquidWalletSpotTwapSessions(hypurr.HyperliquidWalletSpotTwapSessionsRequest) returns (hypurr.HyperliquidWalletSpotTwapSessionsResponse);
      */
     hyperliquidWalletSpotTwapSessions(input: HyperliquidWalletSpotTwapSessionsRequest, options?: RpcOptions): UnaryCall<HyperliquidWalletSpotTwapSessionsRequest, HyperliquidWalletSpotTwapSessionsResponse> {
-        const method = this.methods[4], opt = this._transport.mergeOptions(options);
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
         return stackIntercept<HyperliquidWalletSpotTwapSessionsRequest, HyperliquidWalletSpotTwapSessionsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HyperliquidSpotSniperConfigs(hypurr.HyperliquidSpotSniperConfigsRequest) returns (hypurr.HyperliquidSpotSniperConfigsResponse);
      */
     hyperliquidSpotSniperConfigs(input: HyperliquidSpotSniperConfigsRequest, options?: RpcOptions): UnaryCall<HyperliquidSpotSniperConfigsRequest, HyperliquidSpotSniperConfigsResponse> {
-        const method = this.methods[5], opt = this._transport.mergeOptions(options);
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
         return stackIntercept<HyperliquidSpotSniperConfigsRequest, HyperliquidSpotSniperConfigsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: CreateHyperliquidSpotSniperConfig(hypurr.CreateHyperliquidSpotSniperConfigRequest) returns (hypurr.CreateHyperliquidSpotSniperConfigResponse);
      */
     createHyperliquidSpotSniperConfig(input: CreateHyperliquidSpotSniperConfigRequest, options?: RpcOptions): UnaryCall<CreateHyperliquidSpotSniperConfigRequest, CreateHyperliquidSpotSniperConfigResponse> {
-        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        const method = this.methods[7], opt = this._transport.mergeOptions(options);
         return stackIntercept<CreateHyperliquidSpotSniperConfigRequest, CreateHyperliquidSpotSniperConfigResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: DeleteHyperliquidSpotSniperConfig(hypurr.DeleteHyperliquidSpotSniperConfigRequest) returns (hypurr.DeleteHyperliquidSpotSniperConfigResponse);
      */
     deleteHyperliquidSpotSniperConfig(input: DeleteHyperliquidSpotSniperConfigRequest, options?: RpcOptions): UnaryCall<DeleteHyperliquidSpotSniperConfigRequest, DeleteHyperliquidSpotSniperConfigResponse> {
-        const method = this.methods[7], opt = this._transport.mergeOptions(options);
+        const method = this.methods[8], opt = this._transport.mergeOptions(options);
         return stackIntercept<DeleteHyperliquidSpotSniperConfigRequest, DeleteHyperliquidSpotSniperConfigResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: UpdateHyperliquidSpotSniperConfig(hypurr.UpdateHyperliquidSpotSniperConfigRequest) returns (hypurr.UpdateHyperliquidSpotSniperConfigResponse);
      */
     updateHyperliquidSpotSniperConfig(input: UpdateHyperliquidSpotSniperConfigRequest, options?: RpcOptions): UnaryCall<UpdateHyperliquidSpotSniperConfigRequest, UpdateHyperliquidSpotSniperConfigResponse> {
-        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        const method = this.methods[9], opt = this._transport.mergeOptions(options);
         return stackIntercept<UpdateHyperliquidSpotSniperConfigRequest, UpdateHyperliquidSpotSniperConfigResponse>("unary", this._transport, method, opt, input);
     }
 }
