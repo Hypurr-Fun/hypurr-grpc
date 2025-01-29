@@ -12,6 +12,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { HyperliquidWallet } from "../wallet";
 /**
  * @generated from protobuf message eoa.EOASignature
  */
@@ -151,6 +152,49 @@ export interface LaunchHyperliquidLaunchRequest {
      * @generated from protobuf field: double amount = 3;
      */
     amount: number;
+}
+/**
+ * @generated from protobuf message eoa.EOAUserRequest
+ */
+export interface EOAUserRequest {
+    /**
+     * @generated from protobuf field: string address = 1;
+     */
+    address: string;
+    /**
+     * @generated from protobuf field: int64 timestamp = 2;
+     */
+    timestamp: number;
+    /**
+     * @generated from protobuf field: int64 expires_at = 3;
+     */
+    expiresAt: number;
+}
+/**
+ * @generated from protobuf message eoa.EOAUserResponse
+ */
+export interface EOAUserResponse {
+    /**
+     * @generated from protobuf field: eoa.EOAToken token = 1;
+     */
+    token?: EOAToken;
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidWallet wallet = 2;
+     */
+    wallet?: HyperliquidWallet;
+}
+/**
+ * @generated from protobuf message eoa.EOAToken
+ */
+export interface EOAToken {
+    /**
+     * @generated from protobuf field: string secret = 1;
+     */
+    secret: string;
+    /**
+     * @generated from protobuf field: int64 expires_at = 2;
+     */
+    expiresAt: number;
 }
 /**
  * @generated from protobuf enum eoa.HyperliquidLaunchTradeDirection
@@ -610,10 +654,180 @@ class LaunchHyperliquidLaunchRequest$Type extends MessageType<LaunchHyperliquidL
  * @generated MessageType for protobuf message eoa.LaunchHyperliquidLaunchRequest
  */
 export const LaunchHyperliquidLaunchRequest = new LaunchHyperliquidLaunchRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EOAUserRequest$Type extends MessageType<EOAUserRequest> {
+    constructor() {
+        super("eoa.EOAUserRequest", [
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<EOAUserRequest>): EOAUserRequest {
+        const message = { address: "", timestamp: 0, expiresAt: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<EOAUserRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EOAUserRequest): EOAUserRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string address */ 1:
+                    message.address = reader.string();
+                    break;
+                case /* int64 timestamp */ 2:
+                    message.timestamp = reader.int64().toNumber();
+                    break;
+                case /* int64 expires_at */ 3:
+                    message.expiresAt = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: EOAUserRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string address = 1; */
+        if (message.address !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.address);
+        /* int64 timestamp = 2; */
+        if (message.timestamp !== 0)
+            writer.tag(2, WireType.Varint).int64(message.timestamp);
+        /* int64 expires_at = 3; */
+        if (message.expiresAt !== 0)
+            writer.tag(3, WireType.Varint).int64(message.expiresAt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message eoa.EOAUserRequest
+ */
+export const EOAUserRequest = new EOAUserRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EOAUserResponse$Type extends MessageType<EOAUserResponse> {
+    constructor() {
+        super("eoa.EOAUserResponse", [
+            { no: 1, name: "token", kind: "message", T: () => EOAToken },
+            { no: 2, name: "wallet", kind: "message", T: () => HyperliquidWallet }
+        ]);
+    }
+    create(value?: PartialMessage<EOAUserResponse>): EOAUserResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<EOAUserResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EOAUserResponse): EOAUserResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* eoa.EOAToken token */ 1:
+                    message.token = EOAToken.internalBinaryRead(reader, reader.uint32(), options, message.token);
+                    break;
+                case /* hypurr.HyperliquidWallet wallet */ 2:
+                    message.wallet = HyperliquidWallet.internalBinaryRead(reader, reader.uint32(), options, message.wallet);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: EOAUserResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* eoa.EOAToken token = 1; */
+        if (message.token)
+            EOAToken.internalBinaryWrite(message.token, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.HyperliquidWallet wallet = 2; */
+        if (message.wallet)
+            HyperliquidWallet.internalBinaryWrite(message.wallet, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message eoa.EOAUserResponse
+ */
+export const EOAUserResponse = new EOAUserResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EOAToken$Type extends MessageType<EOAToken> {
+    constructor() {
+        super("eoa.EOAToken", [
+            { no: 1, name: "secret", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<EOAToken>): EOAToken {
+        const message = { secret: "", expiresAt: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<EOAToken>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EOAToken): EOAToken {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string secret */ 1:
+                    message.secret = reader.string();
+                    break;
+                case /* int64 expires_at */ 2:
+                    message.expiresAt = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: EOAToken, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string secret = 1; */
+        if (message.secret !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.secret);
+        /* int64 expires_at = 2; */
+        if (message.expiresAt !== 0)
+            writer.tag(2, WireType.Varint).int64(message.expiresAt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message eoa.EOAToken
+ */
+export const EOAToken = new EOAToken$Type();
 /**
  * @generated ServiceType for protobuf service eoa.EOA
  */
 export const EOA = new ServiceType("eoa.EOA", [
+    { name: "EOAUser", options: {}, I: EOAUserRequest, O: EOAUserResponse },
     { name: "HyperliquidLaunchTrade", options: {}, I: HyperliquidLaunchTradeRequest, O: HyperliquidLaunchTradeResponse },
     { name: "HyperliquidSpotTrade", options: {}, I: HyperliquidSpotTradeRequest, O: HyperliquidSpotTradeResponse }
 ]);
