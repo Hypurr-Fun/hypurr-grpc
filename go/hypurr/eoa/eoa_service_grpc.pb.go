@@ -4,7 +4,7 @@
 // - protoc             v3.21.12
 // source: hypurr/eoa/eoa_service.proto
 
-package hypurr_grpc
+package eoa
 
 import (
 	context "context"

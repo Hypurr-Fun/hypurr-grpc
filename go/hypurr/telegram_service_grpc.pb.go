@@ -4,7 +4,7 @@
 // - protoc             v3.21.12
 // source: hypurr/telegram_service.proto
 
-package hypurr_grpc
+package hypurr
 
 import (
 	context "context"

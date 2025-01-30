@@ -1,6 +1,6 @@
 syntax = "proto3";
 package eoa;
-option go_package = "gitlab.com/hypurr-fun/hypurr-grpc";
+option go_package = "gitlab.com/hypurr-fun/hypurr-grpc/go/hypurr/eoa";
 
 import "hypurr/wallet.proto";
 
