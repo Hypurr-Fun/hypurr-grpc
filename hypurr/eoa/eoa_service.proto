@@ -3,6 +3,7 @@ package eoa;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/eoa";
 
 import "hypurr/wallet.proto";
+import "hypurr/launch.proto";
 
 message EOASignature {
   string r = 1;
@@ -70,11 +71,19 @@ message EOAToken {
   int64 expires_at = 2;
 }
 
+message PendingHyperliquidLaunchRequest {
+}
+
+message PendingHyperliquidLaunchResponse {
+  hypurr.HyperliquidLaunch launch = 1;
+}
+
 // Authed endpoints
 service EOA {
   rpc EOAUser (EOAUserRequest) returns (EOAUserResponse) {}
 
   // Launch
+  rpc PendingHyperliquidLaunch (PendingHyperliquidLaunchRequest) returns (PendingHyperliquidLaunchResponse) {}
   rpc HyperliquidLaunchTrade (HyperliquidLaunchTradeRequest) returns (HyperliquidLaunchTradeResponse) {}
 
   // Spot

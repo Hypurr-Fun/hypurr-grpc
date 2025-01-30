@@ -19,9 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	EOA_EOAUser_FullMethodName                = "/eoa.EOA/EOAUser"
-	EOA_HyperliquidLaunchTrade_FullMethodName = "/eoa.EOA/HyperliquidLaunchTrade"
-	EOA_HyperliquidSpotTrade_FullMethodName   = "/eoa.EOA/HyperliquidSpotTrade"
+	EOA_EOAUser_FullMethodName                  = "/eoa.EOA/EOAUser"
+	EOA_PendingHyperliquidLaunch_FullMethodName = "/eoa.EOA/PendingHyperliquidLaunch"
+	EOA_HyperliquidLaunchTrade_FullMethodName   = "/eoa.EOA/HyperliquidLaunchTrade"
+	EOA_HyperliquidSpotTrade_FullMethodName     = "/eoa.EOA/HyperliquidSpotTrade"
 )
 
 // EOAClient is the client API for EOA service.
@@ -32,6 +33,7 @@ const (
 type EOAClient interface {
 	EOAUser(ctx context.Context, in *EOAUserRequest, opts ...grpc.CallOption) (*EOAUserResponse, error)
 	// Launch
+	PendingHyperliquidLaunch(ctx context.Context, in *PendingHyperliquidLaunchRequest, opts ...grpc.CallOption) (*PendingHyperliquidLaunchResponse, error)
 	HyperliquidLaunchTrade(ctx context.Context, in *HyperliquidLaunchTradeRequest, opts ...grpc.CallOption) (*HyperliquidLaunchTradeResponse, error)
 	// Spot
 	HyperliquidSpotTrade(ctx context.Context, in *HyperliquidSpotTradeRequest, opts ...grpc.CallOption) (*HyperliquidSpotTradeResponse, error)
@@ -49,6 +51,16 @@ func (c *eOAClient) EOAUser(ctx context.Context, in *EOAUserRequest, opts ...grp
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(EOAUserResponse)
 	err := c.cc.Invoke(ctx, EOA_EOAUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *eOAClient) PendingHyperliquidLaunch(ctx context.Context, in *PendingHyperliquidLaunchRequest, opts ...grpc.CallOption) (*PendingHyperliquidLaunchResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PendingHyperliquidLaunchResponse)
+	err := c.cc.Invoke(ctx, EOA_PendingHyperliquidLaunch_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -83,6 +95,7 @@ func (c *eOAClient) HyperliquidSpotTrade(ctx context.Context, in *HyperliquidSpo
 type EOAServer interface {
 	EOAUser(context.Context, *EOAUserRequest) (*EOAUserResponse, error)
 	// Launch
+	PendingHyperliquidLaunch(context.Context, *PendingHyperliquidLaunchRequest) (*PendingHyperliquidLaunchResponse, error)
 	HyperliquidLaunchTrade(context.Context, *HyperliquidLaunchTradeRequest) (*HyperliquidLaunchTradeResponse, error)
 	// Spot
 	HyperliquidSpotTrade(context.Context, *HyperliquidSpotTradeRequest) (*HyperliquidSpotTradeResponse, error)
@@ -95,6 +108,9 @@ type UnimplementedEOAServer struct {
 
 func (UnimplementedEOAServer) EOAUser(context.Context, *EOAUserRequest) (*EOAUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EOAUser not implemented")
+}
+func (UnimplementedEOAServer) PendingHyperliquidLaunch(context.Context, *PendingHyperliquidLaunchRequest) (*PendingHyperliquidLaunchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PendingHyperliquidLaunch not implemented")
 }
 func (UnimplementedEOAServer) HyperliquidLaunchTrade(context.Context, *HyperliquidLaunchTradeRequest) (*HyperliquidLaunchTradeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidLaunchTrade not implemented")
@@ -129,6 +145,24 @@ func _EOA_EOAUser_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EOAServer).EOAUser(ctx, req.(*EOAUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _EOA_PendingHyperliquidLaunch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PendingHyperliquidLaunchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EOAServer).PendingHyperliquidLaunch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: EOA_PendingHyperliquidLaunch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EOAServer).PendingHyperliquidLaunch(ctx, req.(*PendingHyperliquidLaunchRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -179,6 +213,10 @@ var EOA_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EOAUser",
 			Handler:    _EOA_EOAUser_Handler,
+		},
+		{
+			MethodName: "PendingHyperliquidLaunch",
+			Handler:    _EOA_PendingHyperliquidLaunch_Handler,
 		},
 		{
 			MethodName: "HyperliquidLaunchTrade",
