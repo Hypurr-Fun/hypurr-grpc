@@ -1,7 +1,7 @@
 // User wants to fetch certificates, and credits
 syntax = "proto3";
 package hypurr;
-option go_package = "gitlab.com/hypurr-fun/hypurr-grpc/go/hypurr";
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 import "hypurr/wallet.proto";
 import "hypurr/launch.proto";
 
