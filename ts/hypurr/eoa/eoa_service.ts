@@ -170,6 +170,10 @@ export interface EOAUserRequest {
      * @generated from protobuf field: int64 expires_at = 3;
      */
     expiresAt: number;
+    /**
+     * @generated from protobuf field: string signature = 4;
+     */
+    signature: string;
 }
 /**
  * @generated from protobuf message eoa.EOAUserResponse
@@ -675,11 +679,12 @@ class EOAUserRequest$Type extends MessageType<EOAUserRequest> {
         super("eoa.EOAUserRequest", [
             { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 3, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "signature", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<EOAUserRequest>): EOAUserRequest {
-        const message = { address: "", timestamp: 0, expiresAt: 0 };
+        const message = { address: "", timestamp: 0, expiresAt: 0, signature: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<EOAUserRequest>(this, message, value);
@@ -698,6 +703,9 @@ class EOAUserRequest$Type extends MessageType<EOAUserRequest> {
                     break;
                 case /* int64 expires_at */ 3:
                     message.expiresAt = reader.int64().toNumber();
+                    break;
+                case /* string signature */ 4:
+                    message.signature = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -720,6 +728,9 @@ class EOAUserRequest$Type extends MessageType<EOAUserRequest> {
         /* int64 expires_at = 3; */
         if (message.expiresAt !== 0)
             writer.tag(3, WireType.Varint).int64(message.expiresAt);
+        /* string signature = 4; */
+        if (message.signature !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.signature);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
