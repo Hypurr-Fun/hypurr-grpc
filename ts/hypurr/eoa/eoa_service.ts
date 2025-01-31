@@ -159,6 +159,15 @@ export interface LaunchHyperliquidLaunchRequest {
  */
 export interface EOAUserRequest {
     /**
+     * @generated from protobuf field: eoa.EIP712Signature signature = 1;
+     */
+    signature?: EIP712Signature;
+}
+/**
+ * @generated from protobuf message eoa.EIP712Signature
+ */
+export interface EIP712Signature {
+    /**
      * @generated from protobuf field: string address = 1;
      */
     address: string;
@@ -677,20 +686,67 @@ export const LaunchHyperliquidLaunchRequest = new LaunchHyperliquidLaunchRequest
 class EOAUserRequest$Type extends MessageType<EOAUserRequest> {
     constructor() {
         super("eoa.EOAUserRequest", [
-            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "signature", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "signature", kind: "message", T: () => EIP712Signature }
         ]);
     }
     create(value?: PartialMessage<EOAUserRequest>): EOAUserRequest {
-        const message = { address: "", timestamp: 0, expiresAt: 0, signature: "" };
+        const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<EOAUserRequest>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EOAUserRequest): EOAUserRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* eoa.EIP712Signature signature */ 1:
+                    message.signature = EIP712Signature.internalBinaryRead(reader, reader.uint32(), options, message.signature);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: EOAUserRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* eoa.EIP712Signature signature = 1; */
+        if (message.signature)
+            EIP712Signature.internalBinaryWrite(message.signature, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message eoa.EOAUserRequest
+ */
+export const EOAUserRequest = new EOAUserRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EIP712Signature$Type extends MessageType<EIP712Signature> {
+    constructor() {
+        super("eoa.EIP712Signature", [
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "signature", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<EIP712Signature>): EIP712Signature {
+        const message = { address: "", timestamp: 0, expiresAt: 0, signature: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<EIP712Signature>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EIP712Signature): EIP712Signature {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -718,7 +774,7 @@ class EOAUserRequest$Type extends MessageType<EOAUserRequest> {
         }
         return message;
     }
-    internalBinaryWrite(message: EOAUserRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: EIP712Signature, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string address = 1; */
         if (message.address !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.address);
@@ -738,9 +794,9 @@ class EOAUserRequest$Type extends MessageType<EOAUserRequest> {
     }
 }
 /**
- * @generated MessageType for protobuf message eoa.EOAUserRequest
+ * @generated MessageType for protobuf message eoa.EIP712Signature
  */
-export const EOAUserRequest = new EOAUserRequest$Type();
+export const EIP712Signature = new EIP712Signature$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class EOAUserResponse$Type extends MessageType<EOAUserResponse> {
     constructor() {
