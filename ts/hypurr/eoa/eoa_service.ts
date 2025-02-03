@@ -94,25 +94,19 @@ export interface HyperliquidLaunchTradeResponse {
  */
 export interface HyperliquidSpotTradeRequest {
     /**
-     * @generated from protobuf field: map<string, string> auth_data = 1;
-     */
-    authData: {
-        [key: string]: string;
-    };
-    /**
-     * @generated from protobuf field: int64 pair_id = 2;
+     * @generated from protobuf field: int64 pair_id = 1;
      */
     pairId: number;
     /**
-     * @generated from protobuf field: int64 wallet_id = 3;
+     * @generated from protobuf field: int64 wallet_id = 2;
      */
     walletId: number;
     /**
-     * @generated from protobuf field: eoa.HyperliquidLaunchTradeDirection direction = 4;
+     * @generated from protobuf field: eoa.HyperliquidLaunchTradeDirection direction = 3;
      */
     direction: HyperliquidLaunchTradeDirection;
     /**
-     * @generated from protobuf field: double amount = 5;
+     * @generated from protobuf field: double amount = 4;
      */
     amount: number;
 }
@@ -484,15 +478,14 @@ export const HyperliquidLaunchTradeResponse = new HyperliquidLaunchTradeResponse
 class HyperliquidSpotTradeRequest$Type extends MessageType<HyperliquidSpotTradeRequest> {
     constructor() {
         super("eoa.HyperliquidSpotTradeRequest", [
-            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "pair_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "direction", kind: "enum", T: () => ["eoa.HyperliquidLaunchTradeDirection", HyperliquidLaunchTradeDirection] },
-            { no: 5, name: "amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 1, name: "pair_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "direction", kind: "enum", T: () => ["eoa.HyperliquidLaunchTradeDirection", HyperliquidLaunchTradeDirection] },
+            { no: 4, name: "amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidSpotTradeRequest>): HyperliquidSpotTradeRequest {
-        const message = { authData: {}, pairId: 0, walletId: 0, direction: 0, amount: 0 };
+        const message = { pairId: 0, walletId: 0, direction: 0, amount: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidSpotTradeRequest>(this, message, value);
@@ -503,19 +496,16 @@ class HyperliquidSpotTradeRequest$Type extends MessageType<HyperliquidSpotTradeR
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* map<string, string> auth_data */ 1:
-                    this.binaryReadMap1(message.authData, reader, options);
-                    break;
-                case /* int64 pair_id */ 2:
+                case /* int64 pair_id */ 1:
                     message.pairId = reader.int64().toNumber();
                     break;
-                case /* int64 wallet_id */ 3:
+                case /* int64 wallet_id */ 2:
                     message.walletId = reader.int64().toNumber();
                     break;
-                case /* eoa.HyperliquidLaunchTradeDirection direction */ 4:
+                case /* eoa.HyperliquidLaunchTradeDirection direction */ 3:
                     message.direction = reader.int32();
                     break;
-                case /* double amount */ 5:
+                case /* double amount */ 4:
                     message.amount = reader.double();
                     break;
                 default:
@@ -529,38 +519,19 @@ class HyperliquidSpotTradeRequest$Type extends MessageType<HyperliquidSpotTradeR
         }
         return message;
     }
-    private binaryReadMap1(map: HyperliquidSpotTradeRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof HyperliquidSpotTradeRequest["authData"] | undefined, val: HyperliquidSpotTradeRequest["authData"][any] | undefined;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case 1:
-                    key = reader.string();
-                    break;
-                case 2:
-                    val = reader.string();
-                    break;
-                default: throw new globalThis.Error("unknown map entry field for field eoa.HyperliquidSpotTradeRequest.auth_data");
-            }
-        }
-        map[key ?? ""] = val ?? "";
-    }
     internalBinaryWrite(message: HyperliquidSpotTradeRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* map<string, string> auth_data = 1; */
-        for (let k of Object.keys(message.authData))
-            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
-        /* int64 pair_id = 2; */
+        /* int64 pair_id = 1; */
         if (message.pairId !== 0)
-            writer.tag(2, WireType.Varint).int64(message.pairId);
-        /* int64 wallet_id = 3; */
+            writer.tag(1, WireType.Varint).int64(message.pairId);
+        /* int64 wallet_id = 2; */
         if (message.walletId !== 0)
-            writer.tag(3, WireType.Varint).int64(message.walletId);
-        /* eoa.HyperliquidLaunchTradeDirection direction = 4; */
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* eoa.HyperliquidLaunchTradeDirection direction = 3; */
         if (message.direction !== 0)
-            writer.tag(4, WireType.Varint).int32(message.direction);
-        /* double amount = 5; */
+            writer.tag(3, WireType.Varint).int32(message.direction);
+        /* double amount = 4; */
         if (message.amount !== 0)
-            writer.tag(5, WireType.Bit64).double(message.amount);
+            writer.tag(4, WireType.Bit64).double(message.amount);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
