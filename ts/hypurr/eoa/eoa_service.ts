@@ -186,9 +186,9 @@ export interface EOAUserRequest {
  */
 export interface EIP712Signature {
     /**
-     * @generated from protobuf field: string agent = 1;
+     * @generated from protobuf field: string agentAddress = 1;
      */
-    agent: string;
+    agentAddress: string;
     /**
      * @generated from protobuf field: string agentName = 2;
      */
@@ -845,14 +845,14 @@ export const EOAUserRequest = new EOAUserRequest$Type();
 class EIP712Signature$Type extends MessageType<EIP712Signature> {
     constructor() {
         super("eoa.EIP712Signature", [
-            { no: 1, name: "agent", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "agentAddress", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "agentName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "nonce", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "signature", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<EIP712Signature>): EIP712Signature {
-        const message = { agent: "", agentName: "", nonce: 0, signature: "" };
+        const message = { agentAddress: "", agentName: "", nonce: 0, signature: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<EIP712Signature>(this, message, value);
@@ -863,8 +863,8 @@ class EIP712Signature$Type extends MessageType<EIP712Signature> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string agent */ 1:
-                    message.agent = reader.string();
+                case /* string agentAddress */ 1:
+                    message.agentAddress = reader.string();
                     break;
                 case /* string agentName */ 2:
                     message.agentName = reader.string();
@@ -887,9 +887,9 @@ class EIP712Signature$Type extends MessageType<EIP712Signature> {
         return message;
     }
     internalBinaryWrite(message: EIP712Signature, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string agent = 1; */
-        if (message.agent !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.agent);
+        /* string agentAddress = 1; */
+        if (message.agentAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.agentAddress);
         /* string agentName = 2; */
         if (message.agentName !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.agentName);

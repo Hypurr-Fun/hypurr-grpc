@@ -68,7 +68,7 @@ message EOAUserRequest {
 }
 
 message EIP712Signature {
-  string agent = 1;
+  string agentAddress = 1;
   string agentName = 2;
   int64 nonce = 3;
   string signature = 4;
