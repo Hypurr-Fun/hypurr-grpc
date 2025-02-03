@@ -10,9 +10,11 @@ import type { HyperliquidLaunchTradeResponse } from "./eoa_service";
 import type { HyperliquidLaunchTradeRequest } from "./eoa_service";
 import type { PendingHyperliquidLaunchResponse } from "./eoa_service";
 import type { PendingHyperliquidLaunchRequest } from "./eoa_service";
-import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { EOAUserResponse } from "./eoa_service";
 import type { EOAUserRequest } from "./eoa_service";
+import { stackIntercept } from "@protobuf-ts/runtime-rpc";
+import type { EOAUserAgentChallengeResponse } from "./eoa_service";
+import type { EOAUserAgentChallengeRequest } from "./eoa_service";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
@@ -21,6 +23,10 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  * @generated from protobuf service eoa.EOA
  */
 export interface IEOAClient {
+    /**
+     * @generated from protobuf rpc: EOAUserAgentChallenge(eoa.EOAUserAgentChallengeRequest) returns (eoa.EOAUserAgentChallengeResponse);
+     */
+    eOAUserAgentChallenge(input: EOAUserAgentChallengeRequest, options?: RpcOptions): UnaryCall<EOAUserAgentChallengeRequest, EOAUserAgentChallengeResponse>;
     /**
      * @generated from protobuf rpc: EOAUser(eoa.EOAUserRequest) returns (eoa.EOAUserResponse);
      */
@@ -54,10 +60,17 @@ export class EOAClient implements IEOAClient, ServiceInfo {
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
+     * @generated from protobuf rpc: EOAUserAgentChallenge(eoa.EOAUserAgentChallengeRequest) returns (eoa.EOAUserAgentChallengeResponse);
+     */
+    eOAUserAgentChallenge(input: EOAUserAgentChallengeRequest, options?: RpcOptions): UnaryCall<EOAUserAgentChallengeRequest, EOAUserAgentChallengeResponse> {
+        const method = this.methods[0], opt = this._transport.mergeOptions(options);
+        return stackIntercept<EOAUserAgentChallengeRequest, EOAUserAgentChallengeResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: EOAUser(eoa.EOAUserRequest) returns (eoa.EOAUserResponse);
      */
     eOAUser(input: EOAUserRequest, options?: RpcOptions): UnaryCall<EOAUserRequest, EOAUserResponse> {
-        const method = this.methods[0], opt = this._transport.mergeOptions(options);
+        const method = this.methods[1], opt = this._transport.mergeOptions(options);
         return stackIntercept<EOAUserRequest, EOAUserResponse>("unary", this._transport, method, opt, input);
     }
     /**
@@ -66,14 +79,14 @@ export class EOAClient implements IEOAClient, ServiceInfo {
      * @generated from protobuf rpc: PendingHyperliquidLaunch(eoa.PendingHyperliquidLaunchRequest) returns (eoa.PendingHyperliquidLaunchResponse);
      */
     pendingHyperliquidLaunch(input: PendingHyperliquidLaunchRequest, options?: RpcOptions): UnaryCall<PendingHyperliquidLaunchRequest, PendingHyperliquidLaunchResponse> {
-        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        const method = this.methods[2], opt = this._transport.mergeOptions(options);
         return stackIntercept<PendingHyperliquidLaunchRequest, PendingHyperliquidLaunchResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HyperliquidLaunchTrade(eoa.HyperliquidLaunchTradeRequest) returns (eoa.HyperliquidLaunchTradeResponse);
      */
     hyperliquidLaunchTrade(input: HyperliquidLaunchTradeRequest, options?: RpcOptions): UnaryCall<HyperliquidLaunchTradeRequest, HyperliquidLaunchTradeResponse> {
-        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
         return stackIntercept<HyperliquidLaunchTradeRequest, HyperliquidLaunchTradeResponse>("unary", this._transport, method, opt, input);
     }
     /**
@@ -82,7 +95,7 @@ export class EOAClient implements IEOAClient, ServiceInfo {
      * @generated from protobuf rpc: HyperliquidSpotTrade(eoa.HyperliquidSpotTradeRequest) returns (eoa.HyperliquidSpotTradeResponse);
      */
     hyperliquidSpotTrade(input: HyperliquidSpotTradeRequest, options?: RpcOptions): UnaryCall<HyperliquidSpotTradeRequest, HyperliquidSpotTradeResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<HyperliquidSpotTradeRequest, HyperliquidSpotTradeResponse>("unary", this._transport, method, opt, input);
     }
 }

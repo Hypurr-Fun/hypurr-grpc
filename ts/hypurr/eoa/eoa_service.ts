@@ -155,6 +155,24 @@ export interface LaunchHyperliquidLaunchRequest {
     amount: number;
 }
 /**
+ * @generated from protobuf message eoa.EOAUserAgentChallengeRequest
+ */
+export interface EOAUserAgentChallengeRequest {
+    /**
+     * @generated from protobuf field: string address = 1;
+     */
+    address: string;
+}
+/**
+ * @generated from protobuf message eoa.EOAUserAgentChallengeResponse
+ */
+export interface EOAUserAgentChallengeResponse {
+    /**
+     * @generated from protobuf field: string agent = 1;
+     */
+    agent: string;
+}
+/**
  * @generated from protobuf message eoa.EOAUserRequest
  */
 export interface EOAUserRequest {
@@ -168,17 +186,17 @@ export interface EOAUserRequest {
  */
 export interface EIP712Signature {
     /**
-     * @generated from protobuf field: string address = 1;
+     * @generated from protobuf field: string agent = 1;
      */
-    address: string;
+    agent: string;
     /**
-     * @generated from protobuf field: int64 timestamp = 2;
+     * @generated from protobuf field: string agentName = 2;
      */
-    timestamp: number;
+    agentName: string;
     /**
-     * @generated from protobuf field: int64 expires_at = 3;
+     * @generated from protobuf field: int64 nonce = 3;
      */
-    expiresAt: number;
+    nonce: number;
     /**
      * @generated from protobuf field: string signature = 4;
      */
@@ -683,6 +701,100 @@ class LaunchHyperliquidLaunchRequest$Type extends MessageType<LaunchHyperliquidL
  */
 export const LaunchHyperliquidLaunchRequest = new LaunchHyperliquidLaunchRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class EOAUserAgentChallengeRequest$Type extends MessageType<EOAUserAgentChallengeRequest> {
+    constructor() {
+        super("eoa.EOAUserAgentChallengeRequest", [
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<EOAUserAgentChallengeRequest>): EOAUserAgentChallengeRequest {
+        const message = { address: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<EOAUserAgentChallengeRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EOAUserAgentChallengeRequest): EOAUserAgentChallengeRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string address */ 1:
+                    message.address = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: EOAUserAgentChallengeRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string address = 1; */
+        if (message.address !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.address);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message eoa.EOAUserAgentChallengeRequest
+ */
+export const EOAUserAgentChallengeRequest = new EOAUserAgentChallengeRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EOAUserAgentChallengeResponse$Type extends MessageType<EOAUserAgentChallengeResponse> {
+    constructor() {
+        super("eoa.EOAUserAgentChallengeResponse", [
+            { no: 1, name: "agent", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<EOAUserAgentChallengeResponse>): EOAUserAgentChallengeResponse {
+        const message = { agent: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<EOAUserAgentChallengeResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EOAUserAgentChallengeResponse): EOAUserAgentChallengeResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string agent */ 1:
+                    message.agent = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: EOAUserAgentChallengeResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string agent = 1; */
+        if (message.agent !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.agent);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message eoa.EOAUserAgentChallengeResponse
+ */
+export const EOAUserAgentChallengeResponse = new EOAUserAgentChallengeResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class EOAUserRequest$Type extends MessageType<EOAUserRequest> {
     constructor() {
         super("eoa.EOAUserRequest", [
@@ -733,14 +845,14 @@ export const EOAUserRequest = new EOAUserRequest$Type();
 class EIP712Signature$Type extends MessageType<EIP712Signature> {
     constructor() {
         super("eoa.EIP712Signature", [
-            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 1, name: "agent", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "agentName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "nonce", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "signature", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<EIP712Signature>): EIP712Signature {
-        const message = { address: "", timestamp: 0, expiresAt: 0, signature: "" };
+        const message = { agent: "", agentName: "", nonce: 0, signature: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<EIP712Signature>(this, message, value);
@@ -751,14 +863,14 @@ class EIP712Signature$Type extends MessageType<EIP712Signature> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string address */ 1:
-                    message.address = reader.string();
+                case /* string agent */ 1:
+                    message.agent = reader.string();
                     break;
-                case /* int64 timestamp */ 2:
-                    message.timestamp = reader.int64().toNumber();
+                case /* string agentName */ 2:
+                    message.agentName = reader.string();
                     break;
-                case /* int64 expires_at */ 3:
-                    message.expiresAt = reader.int64().toNumber();
+                case /* int64 nonce */ 3:
+                    message.nonce = reader.int64().toNumber();
                     break;
                 case /* string signature */ 4:
                     message.signature = reader.string();
@@ -775,15 +887,15 @@ class EIP712Signature$Type extends MessageType<EIP712Signature> {
         return message;
     }
     internalBinaryWrite(message: EIP712Signature, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string address = 1; */
-        if (message.address !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.address);
-        /* int64 timestamp = 2; */
-        if (message.timestamp !== 0)
-            writer.tag(2, WireType.Varint).int64(message.timestamp);
-        /* int64 expires_at = 3; */
-        if (message.expiresAt !== 0)
-            writer.tag(3, WireType.Varint).int64(message.expiresAt);
+        /* string agent = 1; */
+        if (message.agent !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.agent);
+        /* string agentName = 2; */
+        if (message.agentName !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.agentName);
+        /* int64 nonce = 3; */
+        if (message.nonce !== 0)
+            writer.tag(3, WireType.Varint).int64(message.nonce);
         /* string signature = 4; */
         if (message.signature !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.signature);
@@ -982,6 +1094,7 @@ export const PendingHyperliquidLaunchResponse = new PendingHyperliquidLaunchResp
  * @generated ServiceType for protobuf service eoa.EOA
  */
 export const EOA = new ServiceType("eoa.EOA", [
+    { name: "EOAUserAgentChallenge", options: {}, I: EOAUserAgentChallengeRequest, O: EOAUserAgentChallengeResponse },
     { name: "EOAUser", options: {}, I: EOAUserRequest, O: EOAUserResponse },
     { name: "PendingHyperliquidLaunch", options: {}, I: PendingHyperliquidLaunchRequest, O: PendingHyperliquidLaunchResponse },
     { name: "HyperliquidLaunchTrade", options: {}, I: HyperliquidLaunchTradeRequest, O: HyperliquidLaunchTradeResponse },

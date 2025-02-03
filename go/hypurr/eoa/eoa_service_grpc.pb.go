@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
+	EOA_EOAUserAgentChallenge_FullMethodName    = "/eoa.EOA/EOAUserAgentChallenge"
 	EOA_EOAUser_FullMethodName                  = "/eoa.EOA/EOAUser"
 	EOA_PendingHyperliquidLaunch_FullMethodName = "/eoa.EOA/PendingHyperliquidLaunch"
 	EOA_HyperliquidLaunchTrade_FullMethodName   = "/eoa.EOA/HyperliquidLaunchTrade"
@@ -31,6 +32,7 @@ const (
 //
 // Authed endpoints
 type EOAClient interface {
+	EOAUserAgentChallenge(ctx context.Context, in *EOAUserAgentChallengeRequest, opts ...grpc.CallOption) (*EOAUserAgentChallengeResponse, error)
 	EOAUser(ctx context.Context, in *EOAUserRequest, opts ...grpc.CallOption) (*EOAUserResponse, error)
 	// Launch
 	PendingHyperliquidLaunch(ctx context.Context, in *PendingHyperliquidLaunchRequest, opts ...grpc.CallOption) (*PendingHyperliquidLaunchResponse, error)
@@ -45,6 +47,16 @@ type eOAClient struct {
 
 func NewEOAClient(cc grpc.ClientConnInterface) EOAClient {
 	return &eOAClient{cc}
+}
+
+func (c *eOAClient) EOAUserAgentChallenge(ctx context.Context, in *EOAUserAgentChallengeRequest, opts ...grpc.CallOption) (*EOAUserAgentChallengeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EOAUserAgentChallengeResponse)
+	err := c.cc.Invoke(ctx, EOA_EOAUserAgentChallenge_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *eOAClient) EOAUser(ctx context.Context, in *EOAUserRequest, opts ...grpc.CallOption) (*EOAUserResponse, error) {
@@ -93,6 +105,7 @@ func (c *eOAClient) HyperliquidSpotTrade(ctx context.Context, in *HyperliquidSpo
 //
 // Authed endpoints
 type EOAServer interface {
+	EOAUserAgentChallenge(context.Context, *EOAUserAgentChallengeRequest) (*EOAUserAgentChallengeResponse, error)
 	EOAUser(context.Context, *EOAUserRequest) (*EOAUserResponse, error)
 	// Launch
 	PendingHyperliquidLaunch(context.Context, *PendingHyperliquidLaunchRequest) (*PendingHyperliquidLaunchResponse, error)
@@ -106,6 +119,9 @@ type EOAServer interface {
 type UnimplementedEOAServer struct {
 }
 
+func (UnimplementedEOAServer) EOAUserAgentChallenge(context.Context, *EOAUserAgentChallengeRequest) (*EOAUserAgentChallengeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EOAUserAgentChallenge not implemented")
+}
 func (UnimplementedEOAServer) EOAUser(context.Context, *EOAUserRequest) (*EOAUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EOAUser not implemented")
 }
@@ -129,6 +145,24 @@ type UnsafeEOAServer interface {
 
 func RegisterEOAServer(s grpc.ServiceRegistrar, srv EOAServer) {
 	s.RegisterService(&EOA_ServiceDesc, srv)
+}
+
+func _EOA_EOAUserAgentChallenge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EOAUserAgentChallengeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EOAServer).EOAUserAgentChallenge(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: EOA_EOAUserAgentChallenge_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EOAServer).EOAUserAgentChallenge(ctx, req.(*EOAUserAgentChallengeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _EOA_EOAUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -210,6 +244,10 @@ var EOA_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "eoa.EOA",
 	HandlerType: (*EOAServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "EOAUserAgentChallenge",
+			Handler:    _EOA_EOAUserAgentChallenge_Handler,
+		},
 		{
 			MethodName: "EOAUser",
 			Handler:    _EOA_EOAUser_Handler,

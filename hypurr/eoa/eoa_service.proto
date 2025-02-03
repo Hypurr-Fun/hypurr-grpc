@@ -55,14 +55,22 @@ message LaunchHyperliquidLaunchRequest {
   double amount = 3;
 }
 
+message EOAUserAgentChallengeRequest {
+  string address = 1;
+}
+
+message EOAUserAgentChallengeResponse {
+  string agent = 1;
+}
+
 message EOAUserRequest {
   EIP712Signature signature = 1;
 }
 
 message EIP712Signature {
-  string address = 1;
-  int64 timestamp = 2;
-  int64 expires_at = 3;
+  string agent = 1;
+  string agentName = 2;
+  int64 nonce = 3;
   string signature = 4;
 }
 
@@ -85,6 +93,7 @@ message PendingHyperliquidLaunchResponse {
 
 // Authed endpoints
 service EOA {
+  rpc EOAUserAgentChallenge (EOAUserAgentChallengeRequest) returns (EOAUserAgentChallengeResponse) {}
   rpc EOAUser (EOAUserRequest) returns (EOAUserResponse) {}
 
   // Launch
