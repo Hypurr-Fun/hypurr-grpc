@@ -12,7 +12,7 @@ message EOASignature {
 }
 
 message HyperliquidLaunchTradeRequest {
-  EOASignature signature = 1;
+  string signature = 1;
   int64 launch_id = 2;
   int64 wallet_id = 3;
   HyperliquidLaunchTradeDirection direction = 4;

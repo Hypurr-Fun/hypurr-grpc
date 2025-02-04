@@ -36,9 +36,9 @@ export interface EOASignature {
  */
 export interface HyperliquidLaunchTradeRequest {
     /**
-     * @generated from protobuf field: eoa.EOASignature signature = 1;
+     * @generated from protobuf field: string signature = 1;
      */
-    signature?: EOASignature;
+    signature: string;
     /**
      * @generated from protobuf field: int64 launch_id = 2;
      */
@@ -314,7 +314,7 @@ export const EOASignature = new EOASignature$Type();
 class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTradeRequest> {
     constructor() {
         super("eoa.HyperliquidLaunchTradeRequest", [
-            { no: 1, name: "signature", kind: "message", T: () => EOASignature },
+            { no: 1, name: "signature", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "direction", kind: "enum", T: () => ["eoa.HyperliquidLaunchTradeDirection", HyperliquidLaunchTradeDirection] },
@@ -325,7 +325,7 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchTradeRequest>): HyperliquidLaunchTradeRequest {
-        const message = { launchId: 0, walletId: 0, direction: 0, amount: "", ethereumAddress: "", time: 0, maxSlippage: 0 };
+        const message = { signature: "", launchId: 0, walletId: 0, direction: 0, amount: "", ethereumAddress: "", time: 0, maxSlippage: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunchTradeRequest>(this, message, value);
@@ -336,8 +336,8 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* eoa.EOASignature signature */ 1:
-                    message.signature = EOASignature.internalBinaryRead(reader, reader.uint32(), options, message.signature);
+                case /* string signature */ 1:
+                    message.signature = reader.string();
                     break;
                 case /* int64 launch_id */ 2:
                     message.launchId = reader.int64().toNumber();
@@ -372,9 +372,9 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
         return message;
     }
     internalBinaryWrite(message: HyperliquidLaunchTradeRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* eoa.EOASignature signature = 1; */
-        if (message.signature)
-            EOASignature.internalBinaryWrite(message.signature, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string signature = 1; */
+        if (message.signature !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.signature);
         /* int64 launch_id = 2; */
         if (message.launchId !== 0)
             writer.tag(2, WireType.Varint).int64(message.launchId);
