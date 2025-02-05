@@ -34,6 +34,11 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram__service__pb2.LaunchHyperliquidLaunchRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram__service__pb2.LaunchHyperliquidLaunchResponse.FromString,
         )
+    self.EditHyperliquidLaunch = channel.unary_unary(
+        '/hypurr.Telegram/EditHyperliquidLaunch',
+        request_serializer=hypurr_dot_telegram__service__pb2.EditHyperliquidLaunchRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram__service__pb2.EditHyperliquidLaunchResponse.FromString,
+        )
     self.HyperliquidSpotTrade = channel.unary_unary(
         '/hypurr.Telegram/HyperliquidSpotTrade',
         request_serializer=hypurr_dot_telegram__service__pb2.HyperliquidSpotTradeRequest.SerializeToString,
@@ -92,6 +97,13 @@ class TelegramServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def LaunchHyperliquidLaunch(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def EditHyperliquidLaunch(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -162,6 +174,11 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.LaunchHyperliquidLaunch,
           request_deserializer=hypurr_dot_telegram__service__pb2.LaunchHyperliquidLaunchRequest.FromString,
           response_serializer=hypurr_dot_telegram__service__pb2.LaunchHyperliquidLaunchResponse.SerializeToString,
+      ),
+      'EditHyperliquidLaunch': grpc.unary_unary_rpc_method_handler(
+          servicer.EditHyperliquidLaunch,
+          request_deserializer=hypurr_dot_telegram__service__pb2.EditHyperliquidLaunchRequest.FromString,
+          response_serializer=hypurr_dot_telegram__service__pb2.EditHyperliquidLaunchResponse.SerializeToString,
       ),
       'HyperliquidSpotTrade': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidSpotTrade,

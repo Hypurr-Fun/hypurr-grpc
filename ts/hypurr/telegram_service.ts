@@ -328,6 +328,46 @@ export interface LaunchHyperliquidLaunchResponse {
     launch?: HyperliquidLaunch;
 }
 /**
+ * @generated from protobuf message hypurr.EditHyperliquidLaunchRequest
+ */
+export interface EditHyperliquidLaunchRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+    /**
+     * @generated from protobuf field: string full_name = 3;
+     */
+    fullName: string;
+    /**
+     * @generated from protobuf field: bytes media = 4;
+     */
+    media: Uint8Array;
+    /**
+     * @generated from protobuf field: hypurr.MediaType media_type = 5;
+     */
+    mediaType: MediaType;
+    /**
+     * @generated from protobuf field: int64 dev_lockup_seconds = 6;
+     */
+    devLockupSeconds: number;
+}
+/**
+ * @generated from protobuf message hypurr.EditHyperliquidLaunchResponse
+ */
+export interface EditHyperliquidLaunchResponse {
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidLaunch launch = 1;
+     */
+    launch?: HyperliquidLaunch;
+}
+/**
  * @generated from protobuf enum hypurr.HyperliquidLaunchTradeDirection
  */
 export enum HyperliquidLaunchTradeDirection {
@@ -1646,6 +1686,151 @@ class LaunchHyperliquidLaunchResponse$Type extends MessageType<LaunchHyperliquid
  * @generated MessageType for protobuf message hypurr.LaunchHyperliquidLaunchResponse
  */
 export const LaunchHyperliquidLaunchResponse = new LaunchHyperliquidLaunchResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EditHyperliquidLaunchRequest$Type extends MessageType<EditHyperliquidLaunchRequest> {
+    constructor() {
+        super("hypurr.EditHyperliquidLaunchRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "media", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 5, name: "media_type", kind: "enum", T: () => ["hypurr.MediaType", MediaType, "MEDIA_TYPE_"] },
+            { no: 6, name: "dev_lockup_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<EditHyperliquidLaunchRequest>): EditHyperliquidLaunchRequest {
+        const message = { authData: {}, description: "", fullName: "", media: new Uint8Array(0), mediaType: 0, devLockupSeconds: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<EditHyperliquidLaunchRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EditHyperliquidLaunchRequest): EditHyperliquidLaunchRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string description */ 2:
+                    message.description = reader.string();
+                    break;
+                case /* string full_name */ 3:
+                    message.fullName = reader.string();
+                    break;
+                case /* bytes media */ 4:
+                    message.media = reader.bytes();
+                    break;
+                case /* hypurr.MediaType media_type */ 5:
+                    message.mediaType = reader.int32();
+                    break;
+                case /* int64 dev_lockup_seconds */ 6:
+                    message.devLockupSeconds = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: EditHyperliquidLaunchRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof EditHyperliquidLaunchRequest["authData"] | undefined, val: EditHyperliquidLaunchRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.EditHyperliquidLaunchRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: EditHyperliquidLaunchRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string description = 2; */
+        if (message.description !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.description);
+        /* string full_name = 3; */
+        if (message.fullName !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.fullName);
+        /* bytes media = 4; */
+        if (message.media.length)
+            writer.tag(4, WireType.LengthDelimited).bytes(message.media);
+        /* hypurr.MediaType media_type = 5; */
+        if (message.mediaType !== 0)
+            writer.tag(5, WireType.Varint).int32(message.mediaType);
+        /* int64 dev_lockup_seconds = 6; */
+        if (message.devLockupSeconds !== 0)
+            writer.tag(6, WireType.Varint).int64(message.devLockupSeconds);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.EditHyperliquidLaunchRequest
+ */
+export const EditHyperliquidLaunchRequest = new EditHyperliquidLaunchRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EditHyperliquidLaunchResponse$Type extends MessageType<EditHyperliquidLaunchResponse> {
+    constructor() {
+        super("hypurr.EditHyperliquidLaunchResponse", [
+            { no: 1, name: "launch", kind: "message", T: () => HyperliquidLaunch }
+        ]);
+    }
+    create(value?: PartialMessage<EditHyperliquidLaunchResponse>): EditHyperliquidLaunchResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<EditHyperliquidLaunchResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EditHyperliquidLaunchResponse): EditHyperliquidLaunchResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.HyperliquidLaunch launch */ 1:
+                    message.launch = HyperliquidLaunch.internalBinaryRead(reader, reader.uint32(), options, message.launch);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: EditHyperliquidLaunchResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.HyperliquidLaunch launch = 1; */
+        if (message.launch)
+            HyperliquidLaunch.internalBinaryWrite(message.launch, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.EditHyperliquidLaunchResponse
+ */
+export const EditHyperliquidLaunchResponse = new EditHyperliquidLaunchResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Telegram
  */
@@ -1654,6 +1839,7 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "TelegramUserWallets", options: {}, I: TelegramUserWalletsRequest, O: TelegramUserWalletsResponse },
     { name: "HyperliquidLaunchTrade", options: {}, I: HyperliquidLaunchTradeRequest, O: HyperliquidLaunchTradeResponse },
     { name: "LaunchHyperliquidLaunch", options: {}, I: LaunchHyperliquidLaunchRequest, O: LaunchHyperliquidLaunchResponse },
+    { name: "EditHyperliquidLaunch", options: {}, I: EditHyperliquidLaunchRequest, O: EditHyperliquidLaunchResponse },
     { name: "HyperliquidSpotTrade", options: {}, I: HyperliquidSpotTradeRequest, O: HyperliquidSpotTradeResponse },
     { name: "HyperliquidWalletSpotTwapSessions", options: {}, I: HyperliquidWalletSpotTwapSessionsRequest, O: HyperliquidWalletSpotTwapSessionsResponse },
     { name: "HyperliquidSpotSniperConfigs", options: {}, I: HyperliquidSpotSniperConfigsRequest, O: HyperliquidSpotSniperConfigsResponse },

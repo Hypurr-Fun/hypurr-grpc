@@ -126,6 +126,19 @@ message LaunchHyperliquidLaunchResponse {
  HyperliquidLaunch launch = 1;
 }
 
+message EditHyperliquidLaunchRequest {
+  map<string, string> auth_data = 1;
+  string description = 2;
+  string full_name = 3;
+  bytes media = 4;
+  MediaType media_type = 5;
+  int64 dev_lockup_seconds = 6;
+}
+
+message EditHyperliquidLaunchResponse {
+  HyperliquidLaunch launch = 1;
+}
+
 service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
@@ -133,6 +146,7 @@ service Telegram {
   // Launch
   rpc HyperliquidLaunchTrade (HyperliquidLaunchTradeRequest) returns (HyperliquidLaunchTradeResponse) {}
   rpc LaunchHyperliquidLaunch (LaunchHyperliquidLaunchRequest) returns (LaunchHyperliquidLaunchResponse) {}
+  rpc EditHyperliquidLaunch (EditHyperliquidLaunchRequest) returns (EditHyperliquidLaunchResponse) {}
 
   // Spot
   rpc HyperliquidSpotTrade (HyperliquidSpotTradeRequest) returns (HyperliquidSpotTradeResponse) {}

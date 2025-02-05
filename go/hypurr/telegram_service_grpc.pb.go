@@ -23,6 +23,7 @@ const (
 	Telegram_TelegramUserWallets_FullMethodName               = "/hypurr.Telegram/TelegramUserWallets"
 	Telegram_HyperliquidLaunchTrade_FullMethodName            = "/hypurr.Telegram/HyperliquidLaunchTrade"
 	Telegram_LaunchHyperliquidLaunch_FullMethodName           = "/hypurr.Telegram/LaunchHyperliquidLaunch"
+	Telegram_EditHyperliquidLaunch_FullMethodName             = "/hypurr.Telegram/EditHyperliquidLaunch"
 	Telegram_HyperliquidSpotTrade_FullMethodName              = "/hypurr.Telegram/HyperliquidSpotTrade"
 	Telegram_HyperliquidWalletSpotTwapSessions_FullMethodName = "/hypurr.Telegram/HyperliquidWalletSpotTwapSessions"
 	Telegram_HyperliquidSpotSniperConfigs_FullMethodName      = "/hypurr.Telegram/HyperliquidSpotSniperConfigs"
@@ -40,6 +41,7 @@ type TelegramClient interface {
 	// Launch
 	HyperliquidLaunchTrade(ctx context.Context, in *HyperliquidLaunchTradeRequest, opts ...grpc.CallOption) (*HyperliquidLaunchTradeResponse, error)
 	LaunchHyperliquidLaunch(ctx context.Context, in *LaunchHyperliquidLaunchRequest, opts ...grpc.CallOption) (*LaunchHyperliquidLaunchResponse, error)
+	EditHyperliquidLaunch(ctx context.Context, in *EditHyperliquidLaunchRequest, opts ...grpc.CallOption) (*EditHyperliquidLaunchResponse, error)
 	// Spot
 	HyperliquidSpotTrade(ctx context.Context, in *HyperliquidSpotTradeRequest, opts ...grpc.CallOption) (*HyperliquidSpotTradeResponse, error)
 	HyperliquidWalletSpotTwapSessions(ctx context.Context, in *HyperliquidWalletSpotTwapSessionsRequest, opts ...grpc.CallOption) (*HyperliquidWalletSpotTwapSessionsResponse, error)
@@ -91,6 +93,16 @@ func (c *telegramClient) LaunchHyperliquidLaunch(ctx context.Context, in *Launch
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(LaunchHyperliquidLaunchResponse)
 	err := c.cc.Invoke(ctx, Telegram_LaunchHyperliquidLaunch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) EditHyperliquidLaunch(ctx context.Context, in *EditHyperliquidLaunchRequest, opts ...grpc.CallOption) (*EditHyperliquidLaunchResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EditHyperliquidLaunchResponse)
+	err := c.cc.Invoke(ctx, Telegram_EditHyperliquidLaunch_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -166,6 +178,7 @@ type TelegramServer interface {
 	// Launch
 	HyperliquidLaunchTrade(context.Context, *HyperliquidLaunchTradeRequest) (*HyperliquidLaunchTradeResponse, error)
 	LaunchHyperliquidLaunch(context.Context, *LaunchHyperliquidLaunchRequest) (*LaunchHyperliquidLaunchResponse, error)
+	EditHyperliquidLaunch(context.Context, *EditHyperliquidLaunchRequest) (*EditHyperliquidLaunchResponse, error)
 	// Spot
 	HyperliquidSpotTrade(context.Context, *HyperliquidSpotTradeRequest) (*HyperliquidSpotTradeResponse, error)
 	HyperliquidWalletSpotTwapSessions(context.Context, *HyperliquidWalletSpotTwapSessionsRequest) (*HyperliquidWalletSpotTwapSessionsResponse, error)
@@ -191,6 +204,9 @@ func (UnimplementedTelegramServer) HyperliquidLaunchTrade(context.Context, *Hype
 }
 func (UnimplementedTelegramServer) LaunchHyperliquidLaunch(context.Context, *LaunchHyperliquidLaunchRequest) (*LaunchHyperliquidLaunchResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LaunchHyperliquidLaunch not implemented")
+}
+func (UnimplementedTelegramServer) EditHyperliquidLaunch(context.Context, *EditHyperliquidLaunchRequest) (*EditHyperliquidLaunchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditHyperliquidLaunch not implemented")
 }
 func (UnimplementedTelegramServer) HyperliquidSpotTrade(context.Context, *HyperliquidSpotTradeRequest) (*HyperliquidSpotTradeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidSpotTrade not implemented")
@@ -291,6 +307,24 @@ func _Telegram_LaunchHyperliquidLaunch_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TelegramServer).LaunchHyperliquidLaunch(ctx, req.(*LaunchHyperliquidLaunchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_EditHyperliquidLaunch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditHyperliquidLaunchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).EditHyperliquidLaunch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_EditHyperliquidLaunch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).EditHyperliquidLaunch(ctx, req.(*EditHyperliquidLaunchRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -425,6 +459,10 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LaunchHyperliquidLaunch",
 			Handler:    _Telegram_LaunchHyperliquidLaunch_Handler,
+		},
+		{
+			MethodName: "EditHyperliquidLaunch",
+			Handler:    _Telegram_EditHyperliquidLaunch_Handler,
 		},
 		{
 			MethodName: "HyperliquidSpotTrade",
