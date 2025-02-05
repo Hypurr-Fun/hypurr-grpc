@@ -2,6 +2,8 @@ syntax = "proto3";
 package hypurr;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
+import "google/protobuf/wrappers.proto";
+
 import "hypurr/tools.proto";
 import "hypurr/wallet.proto";
 import "hypurr/user.proto";
@@ -130,7 +132,7 @@ message EditHyperliquidLaunchRequest {
   map<string, string> auth_data = 1;
   string description = 2;
   string full_name = 3;
-  bytes media = 4;
+  google.protobuf.BytesValue media = 4;
   MediaType media_type = 5;
   int64 dev_lockup_seconds = 6;
 }

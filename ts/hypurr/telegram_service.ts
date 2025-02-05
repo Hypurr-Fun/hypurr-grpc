@@ -12,6 +12,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { BytesValue } from "../google/protobuf/wrappers";
 import { HyperliquidLaunch } from "./launch";
 import { HyperliquidWalletSpotTwapSession } from "./tools";
 import { HyperliquidSpotSniperConfig } from "./tools";
@@ -346,9 +347,9 @@ export interface EditHyperliquidLaunchRequest {
      */
     fullName: string;
     /**
-     * @generated from protobuf field: bytes media = 4;
+     * @generated from protobuf field: google.protobuf.BytesValue media = 4;
      */
-    media: Uint8Array;
+    media?: BytesValue;
     /**
      * @generated from protobuf field: hypurr.MediaType media_type = 5;
      */
@@ -1693,13 +1694,13 @@ class EditHyperliquidLaunchRequest$Type extends MessageType<EditHyperliquidLaunc
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "media", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 4, name: "media", kind: "message", T: () => BytesValue },
             { no: 5, name: "media_type", kind: "enum", T: () => ["hypurr.MediaType", MediaType, "MEDIA_TYPE_"] },
             { no: 6, name: "dev_lockup_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<EditHyperliquidLaunchRequest>): EditHyperliquidLaunchRequest {
-        const message = { authData: {}, description: "", fullName: "", media: new Uint8Array(0), mediaType: 0, devLockupSeconds: 0 };
+        const message = { authData: {}, description: "", fullName: "", mediaType: 0, devLockupSeconds: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<EditHyperliquidLaunchRequest>(this, message, value);
@@ -1719,8 +1720,8 @@ class EditHyperliquidLaunchRequest$Type extends MessageType<EditHyperliquidLaunc
                 case /* string full_name */ 3:
                     message.fullName = reader.string();
                     break;
-                case /* bytes media */ 4:
-                    message.media = reader.bytes();
+                case /* google.protobuf.BytesValue media */ 4:
+                    message.media = BytesValue.internalBinaryRead(reader, reader.uint32(), options, message.media);
                     break;
                 case /* hypurr.MediaType media_type */ 5:
                     message.mediaType = reader.int32();
@@ -1765,9 +1766,9 @@ class EditHyperliquidLaunchRequest$Type extends MessageType<EditHyperliquidLaunc
         /* string full_name = 3; */
         if (message.fullName !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.fullName);
-        /* bytes media = 4; */
-        if (message.media.length)
-            writer.tag(4, WireType.LengthDelimited).bytes(message.media);
+        /* google.protobuf.BytesValue media = 4; */
+        if (message.media)
+            BytesValue.internalBinaryWrite(message.media, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         /* hypurr.MediaType media_type = 5; */
         if (message.mediaType !== 0)
             writer.tag(5, WireType.Varint).int32(message.mediaType);
