@@ -339,23 +339,27 @@ export interface EditHyperliquidLaunchRequest {
         [key: string]: string;
     };
     /**
-     * @generated from protobuf field: string description = 2;
+     * @generated from protobuf field: int64 launch_id = 2;
+     */
+    launchId: number;
+    /**
+     * @generated from protobuf field: string description = 3;
      */
     description: string;
     /**
-     * @generated from protobuf field: string full_name = 3;
+     * @generated from protobuf field: string full_name = 4;
      */
     fullName: string;
     /**
-     * @generated from protobuf field: google.protobuf.BytesValue media = 4;
+     * @generated from protobuf field: google.protobuf.BytesValue media = 5;
      */
     media?: BytesValue;
     /**
-     * @generated from protobuf field: hypurr.MediaType media_type = 5;
+     * @generated from protobuf field: hypurr.MediaType media_type = 6;
      */
     mediaType: MediaType;
     /**
-     * @generated from protobuf field: int64 dev_lockup_seconds = 6;
+     * @generated from protobuf field: int64 dev_lockup_seconds = 7;
      */
     devLockupSeconds: number;
 }
@@ -1692,15 +1696,16 @@ class EditHyperliquidLaunchRequest$Type extends MessageType<EditHyperliquidLaunc
     constructor() {
         super("hypurr.EditHyperliquidLaunchRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "media", kind: "message", T: () => BytesValue },
-            { no: 5, name: "media_type", kind: "enum", T: () => ["hypurr.MediaType", MediaType, "MEDIA_TYPE_"] },
-            { no: 6, name: "dev_lockup_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 2, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "media", kind: "message", T: () => BytesValue },
+            { no: 6, name: "media_type", kind: "enum", T: () => ["hypurr.MediaType", MediaType, "MEDIA_TYPE_"] },
+            { no: 7, name: "dev_lockup_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<EditHyperliquidLaunchRequest>): EditHyperliquidLaunchRequest {
-        const message = { authData: {}, description: "", fullName: "", mediaType: 0, devLockupSeconds: 0 };
+        const message = { authData: {}, launchId: 0, description: "", fullName: "", mediaType: 0, devLockupSeconds: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<EditHyperliquidLaunchRequest>(this, message, value);
@@ -1714,19 +1719,22 @@ class EditHyperliquidLaunchRequest$Type extends MessageType<EditHyperliquidLaunc
                 case /* map<string, string> auth_data */ 1:
                     this.binaryReadMap1(message.authData, reader, options);
                     break;
-                case /* string description */ 2:
+                case /* int64 launch_id */ 2:
+                    message.launchId = reader.int64().toNumber();
+                    break;
+                case /* string description */ 3:
                     message.description = reader.string();
                     break;
-                case /* string full_name */ 3:
+                case /* string full_name */ 4:
                     message.fullName = reader.string();
                     break;
-                case /* google.protobuf.BytesValue media */ 4:
+                case /* google.protobuf.BytesValue media */ 5:
                     message.media = BytesValue.internalBinaryRead(reader, reader.uint32(), options, message.media);
                     break;
-                case /* hypurr.MediaType media_type */ 5:
+                case /* hypurr.MediaType media_type */ 6:
                     message.mediaType = reader.int32();
                     break;
-                case /* int64 dev_lockup_seconds */ 6:
+                case /* int64 dev_lockup_seconds */ 7:
                     message.devLockupSeconds = reader.int64().toNumber();
                     break;
                 default:
@@ -1760,21 +1768,24 @@ class EditHyperliquidLaunchRequest$Type extends MessageType<EditHyperliquidLaunc
         /* map<string, string> auth_data = 1; */
         for (let k of Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
-        /* string description = 2; */
+        /* int64 launch_id = 2; */
+        if (message.launchId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.launchId);
+        /* string description = 3; */
         if (message.description !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.description);
-        /* string full_name = 3; */
+            writer.tag(3, WireType.LengthDelimited).string(message.description);
+        /* string full_name = 4; */
         if (message.fullName !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.fullName);
-        /* google.protobuf.BytesValue media = 4; */
+            writer.tag(4, WireType.LengthDelimited).string(message.fullName);
+        /* google.protobuf.BytesValue media = 5; */
         if (message.media)
-            BytesValue.internalBinaryWrite(message.media, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* hypurr.MediaType media_type = 5; */
+            BytesValue.internalBinaryWrite(message.media, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.MediaType media_type = 6; */
         if (message.mediaType !== 0)
-            writer.tag(5, WireType.Varint).int32(message.mediaType);
-        /* int64 dev_lockup_seconds = 6; */
+            writer.tag(6, WireType.Varint).int32(message.mediaType);
+        /* int64 dev_lockup_seconds = 7; */
         if (message.devLockupSeconds !== 0)
-            writer.tag(6, WireType.Varint).int64(message.devLockupSeconds);
+            writer.tag(7, WireType.Varint).int64(message.devLockupSeconds);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

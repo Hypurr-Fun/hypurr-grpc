@@ -130,11 +130,12 @@ message LaunchHyperliquidLaunchResponse {
 
 message EditHyperliquidLaunchRequest {
   map<string, string> auth_data = 1;
-  string description = 2;
-  string full_name = 3;
-  google.protobuf.BytesValue media = 4;
-  MediaType media_type = 5;
-  int64 dev_lockup_seconds = 6;
+  int64 launch_id = 2;
+  string description = 3;
+  string full_name = 4;
+  google.protobuf.BytesValue media = 5;
+  MediaType media_type = 6;
+  int64 dev_lockup_seconds = 7;
 }
 
 message EditHyperliquidLaunchResponse {
