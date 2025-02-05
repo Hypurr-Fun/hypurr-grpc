@@ -299,6 +299,10 @@ export interface HyperliquidLaunchFillsRequest {
      * @generated from protobuf field: google.protobuf.Int64Value launch_id = 1;
      */
     launchId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value limit = 2;
+     */
+    limit?: Int64Value;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchFillsResponse
@@ -1666,7 +1670,8 @@ export const DeleteHyperliquidWalletDeploySessionTargetResponse = new DeleteHype
 class HyperliquidLaunchFillsRequest$Type extends MessageType<HyperliquidLaunchFillsRequest> {
     constructor() {
         super("hypurr.HyperliquidLaunchFillsRequest", [
-            { no: 1, name: "launch_id", kind: "message", T: () => Int64Value }
+            { no: 1, name: "launch_id", kind: "message", T: () => Int64Value },
+            { no: 2, name: "limit", kind: "message", T: () => Int64Value }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchFillsRequest>): HyperliquidLaunchFillsRequest {
@@ -1684,6 +1689,9 @@ class HyperliquidLaunchFillsRequest$Type extends MessageType<HyperliquidLaunchFi
                 case /* google.protobuf.Int64Value launch_id */ 1:
                     message.launchId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.launchId);
                     break;
+                case /* google.protobuf.Int64Value limit */ 2:
+                    message.limit = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.limit);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1699,6 +1707,9 @@ class HyperliquidLaunchFillsRequest$Type extends MessageType<HyperliquidLaunchFi
         /* google.protobuf.Int64Value launch_id = 1; */
         if (message.launchId)
             Int64Value.internalBinaryWrite(message.launchId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value limit = 2; */
+        if (message.limit)
+            Int64Value.internalBinaryWrite(message.limit, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
