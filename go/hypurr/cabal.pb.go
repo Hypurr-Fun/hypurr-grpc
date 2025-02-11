@@ -616,6 +616,93 @@ func (x *HypurrFunCabalUserSeason) GetLastPerpPnl() float64 {
 	return 0
 }
 
+type HypurrFunCabalPerformance struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SeasonId        int64   `protobuf:"varint,1,opt,name=season_id,json=seasonId,proto3" json:"season_id,omitempty"`
+	SpotPnl         float64 `protobuf:"fixed64,2,opt,name=spot_pnl,json=spotPnl,proto3" json:"spot_pnl,omitempty"`
+	LaunchPnl       float64 `protobuf:"fixed64,3,opt,name=launch_pnl,json=launchPnl,proto3" json:"launch_pnl,omitempty"`
+	PerpPnl         float64 `protobuf:"fixed64,4,opt,name=perp_pnl,json=perpPnl,proto3" json:"perp_pnl,omitempty"`
+	SeasonStartTime int64   `protobuf:"varint,5,opt,name=season_start_time,json=seasonStartTime,proto3" json:"season_start_time,omitempty"`
+	SeasonEndTime   int64   `protobuf:"varint,6,opt,name=season_end_time,json=seasonEndTime,proto3" json:"season_end_time,omitempty"`
+}
+
+func (x *HypurrFunCabalPerformance) Reset() {
+	*x = HypurrFunCabalPerformance{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_cabal_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HypurrFunCabalPerformance) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HypurrFunCabalPerformance) ProtoMessage() {}
+
+func (x *HypurrFunCabalPerformance) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_cabal_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HypurrFunCabalPerformance.ProtoReflect.Descriptor instead.
+func (*HypurrFunCabalPerformance) Descriptor() ([]byte, []int) {
+	return file_hypurr_cabal_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *HypurrFunCabalPerformance) GetSeasonId() int64 {
+	if x != nil {
+		return x.SeasonId
+	}
+	return 0
+}
+
+func (x *HypurrFunCabalPerformance) GetSpotPnl() float64 {
+	if x != nil {
+		return x.SpotPnl
+	}
+	return 0
+}
+
+func (x *HypurrFunCabalPerformance) GetLaunchPnl() float64 {
+	if x != nil {
+		return x.LaunchPnl
+	}
+	return 0
+}
+
+func (x *HypurrFunCabalPerformance) GetPerpPnl() float64 {
+	if x != nil {
+		return x.PerpPnl
+	}
+	return 0
+}
+
+func (x *HypurrFunCabalPerformance) GetSeasonStartTime() int64 {
+	if x != nil {
+		return x.SeasonStartTime
+	}
+	return 0
+}
+
+func (x *HypurrFunCabalPerformance) GetSeasonEndTime() int64 {
+	if x != nil {
+		return x.SeasonEndTime
+	}
+	return 0
+}
+
 var File_hypurr_cabal_proto protoreflect.FileDescriptor
 
 var file_hypurr_cabal_proto_rawDesc = []byte{
@@ -739,10 +826,24 @@ var file_hypurr_cabal_proto_rawDesc = []byte{
 	0x28, 0x01, 0x52, 0x0d, 0x6c, 0x61, 0x73, 0x74, 0x4c, 0x61, 0x75, 0x6e, 0x63, 0x68, 0x50, 0x6e,
 	0x6c, 0x12, 0x22, 0x0a, 0x0d, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x70, 0x65, 0x72, 0x70, 0x5f, 0x70,
 	0x6e, 0x6c, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0b, 0x6c, 0x61, 0x73, 0x74, 0x50, 0x65,
-	0x72, 0x70, 0x50, 0x6e, 0x6c, 0x42, 0x29, 0x5a, 0x27, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72,
-	0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x72, 0x70, 0x50, 0x6e, 0x6c, 0x22, 0xe1, 0x01, 0x0a, 0x19, 0x48, 0x79, 0x70, 0x75, 0x72, 0x72,
+	0x46, 0x75, 0x6e, 0x43, 0x61, 0x62, 0x61, 0x6c, 0x50, 0x65, 0x72, 0x66, 0x6f, 0x72, 0x6d, 0x61,
+	0x6e, 0x63, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x73, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x49, 0x64,
+	0x12, 0x19, 0x0a, 0x08, 0x73, 0x70, 0x6f, 0x74, 0x5f, 0x70, 0x6e, 0x6c, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x01, 0x52, 0x07, 0x73, 0x70, 0x6f, 0x74, 0x50, 0x6e, 0x6c, 0x12, 0x1d, 0x0a, 0x0a, 0x6c,
+	0x61, 0x75, 0x6e, 0x63, 0x68, 0x5f, 0x70, 0x6e, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52,
+	0x09, 0x6c, 0x61, 0x75, 0x6e, 0x63, 0x68, 0x50, 0x6e, 0x6c, 0x12, 0x19, 0x0a, 0x08, 0x70, 0x65,
+	0x72, 0x70, 0x5f, 0x70, 0x6e, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x70, 0x65,
+	0x72, 0x70, 0x50, 0x6e, 0x6c, 0x12, 0x2a, 0x0a, 0x11, 0x73, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x5f,
+	0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x0f, 0x73, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d,
+	0x65, 0x12, 0x26, 0x0a, 0x0f, 0x73, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x5f, 0x65, 0x6e, 0x64, 0x5f,
+	0x74, 0x69, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0d, 0x73, 0x65, 0x61, 0x73,
+	0x6f, 0x6e, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x42, 0x29, 0x5a, 0x27, 0x67, 0x69, 0x74,
+	0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68,
+	0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79,
+	0x70, 0x75, 0x72, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -757,7 +858,7 @@ func file_hypurr_cabal_proto_rawDescGZIP() []byte {
 	return file_hypurr_cabal_proto_rawDescData
 }
 
-var file_hypurr_cabal_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_hypurr_cabal_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_hypurr_cabal_proto_goTypes = []any{
 	(*HypurrFunCabal)(nil),              // 0: hypurr.HypurrFunCabal
 	(*HypurrFunCabalSummary)(nil),       // 1: hypurr.HypurrFunCabalSummary
@@ -765,18 +866,19 @@ var file_hypurr_cabal_proto_goTypes = []any{
 	(*HypurrFunCabalTrackedWallet)(nil), // 3: hypurr.HypurrFunCabalTrackedWallet
 	(*HypurrFunCabalSeason)(nil),        // 4: hypurr.HypurrFunCabalSeason
 	(*HypurrFunCabalUserSeason)(nil),    // 5: hypurr.HypurrFunCabalUserSeason
-	(*HyperliquidWallet)(nil),           // 6: hypurr.HyperliquidWallet
-	(*wrapperspb.Int64Value)(nil),       // 7: google.protobuf.Int64Value
+	(*HypurrFunCabalPerformance)(nil),   // 6: hypurr.HypurrFunCabalPerformance
+	(*HyperliquidWallet)(nil),           // 7: hypurr.HyperliquidWallet
+	(*wrapperspb.Int64Value)(nil),       // 8: google.protobuf.Int64Value
 }
 var file_hypurr_cabal_proto_depIdxs = []int32{
 	2, // 0: hypurr.HypurrFunCabal.users:type_name -> hypurr.HypurrFunCabalUser
 	3, // 1: hypurr.HypurrFunCabal.tracked_wallets:type_name -> hypurr.HypurrFunCabalTrackedWallet
 	5, // 2: hypurr.HypurrFunCabal.user_seasons:type_name -> hypurr.HypurrFunCabalUserSeason
 	1, // 3: hypurr.HypurrFunCabal.summary:type_name -> hypurr.HypurrFunCabalSummary
-	6, // 4: hypurr.HypurrFunCabalUser.wallet:type_name -> hypurr.HyperliquidWallet
-	6, // 5: hypurr.HypurrFunCabalTrackedWallet.wallet:type_name -> hypurr.HyperliquidWallet
+	7, // 4: hypurr.HypurrFunCabalUser.wallet:type_name -> hypurr.HyperliquidWallet
+	7, // 5: hypurr.HypurrFunCabalTrackedWallet.wallet:type_name -> hypurr.HyperliquidWallet
 	5, // 6: hypurr.HypurrFunCabalSeason.user_seasons:type_name -> hypurr.HypurrFunCabalUserSeason
-	7, // 7: hypurr.HypurrFunCabalSeason.winner_id:type_name -> google.protobuf.Int64Value
+	8, // 7: hypurr.HypurrFunCabalSeason.winner_id:type_name -> google.protobuf.Int64Value
 	0, // 8: hypurr.HypurrFunCabalSeason.winner:type_name -> hypurr.HypurrFunCabal
 	9, // [9:9] is the sub-list for method output_type
 	9, // [9:9] is the sub-list for method input_type
@@ -864,6 +966,18 @@ func file_hypurr_cabal_proto_init() {
 				return nil
 			}
 		}
+		file_hypurr_cabal_proto_msgTypes[6].Exporter = func(v any, i int) any {
+			switch v := v.(*HypurrFunCabalPerformance); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -871,7 +985,7 @@ func file_hypurr_cabal_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hypurr_cabal_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

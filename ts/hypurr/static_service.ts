@@ -12,6 +12,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { HypurrFunCabalPerformance } from "./cabal";
 import { HypurrFunCabal } from "./cabal";
 import { Performance } from "./wallet";
 import { HyperliquidLaunchHolder } from "./launch";
@@ -449,6 +450,24 @@ export interface HypurrFunCabalsResponse {
      * @generated from protobuf field: repeated hypurr.HypurrFunCabal cabals = 1;
      */
     cabals: HypurrFunCabal[];
+}
+/**
+ * @generated from protobuf message hypurr.HypurrFunCabalPerformanceRequest
+ */
+export interface HypurrFunCabalPerformanceRequest {
+    /**
+     * @generated from protobuf field: int64 telegram_chat_id = 1;
+     */
+    telegramChatId: number;
+}
+/**
+ * @generated from protobuf message hypurr.HypurrFunCabalPerformanceResponse
+ */
+export interface HypurrFunCabalPerformanceResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.HypurrFunCabalPerformance performances = 1;
+     */
+    performances: HypurrFunCabalPerformance[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidTokenHoldersRequest$Type extends MessageType<HyperliquidTokenHoldersRequest> {
@@ -2385,6 +2404,100 @@ class HypurrFunCabalsResponse$Type extends MessageType<HypurrFunCabalsResponse> 
  * @generated MessageType for protobuf message hypurr.HypurrFunCabalsResponse
  */
 export const HypurrFunCabalsResponse = new HypurrFunCabalsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HypurrFunCabalPerformanceRequest$Type extends MessageType<HypurrFunCabalPerformanceRequest> {
+    constructor() {
+        super("hypurr.HypurrFunCabalPerformanceRequest", [
+            { no: 1, name: "telegram_chat_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HypurrFunCabalPerformanceRequest>): HypurrFunCabalPerformanceRequest {
+        const message = { telegramChatId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HypurrFunCabalPerformanceRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HypurrFunCabalPerformanceRequest): HypurrFunCabalPerformanceRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 telegram_chat_id */ 1:
+                    message.telegramChatId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HypurrFunCabalPerformanceRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 telegram_chat_id = 1; */
+        if (message.telegramChatId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.telegramChatId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HypurrFunCabalPerformanceRequest
+ */
+export const HypurrFunCabalPerformanceRequest = new HypurrFunCabalPerformanceRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HypurrFunCabalPerformanceResponse$Type extends MessageType<HypurrFunCabalPerformanceResponse> {
+    constructor() {
+        super("hypurr.HypurrFunCabalPerformanceResponse", [
+            { no: 1, name: "performances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HypurrFunCabalPerformance }
+        ]);
+    }
+    create(value?: PartialMessage<HypurrFunCabalPerformanceResponse>): HypurrFunCabalPerformanceResponse {
+        const message = { performances: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HypurrFunCabalPerformanceResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HypurrFunCabalPerformanceResponse): HypurrFunCabalPerformanceResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.HypurrFunCabalPerformance performances */ 1:
+                    message.performances.push(HypurrFunCabalPerformance.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HypurrFunCabalPerformanceResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.HypurrFunCabalPerformance performances = 1; */
+        for (let i = 0; i < message.performances.length; i++)
+            HypurrFunCabalPerformance.internalBinaryWrite(message.performances[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HypurrFunCabalPerformanceResponse
+ */
+export const HypurrFunCabalPerformanceResponse = new HypurrFunCabalPerformanceResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Static
  */
@@ -2409,6 +2522,7 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "LatestHyperliquidLaunchFills", serverStreaming: true, options: {}, I: LatestHyperliquidLaunchFillsRequest, O: HyperliquidLaunchFillsResponse },
     { name: "HyperliquidLaunchHolders", options: {}, I: HyperliquidLaunchHoldersRequest, O: HyperliquidLaunchHoldersResponse },
     { name: "HypurrFunCabals", options: {}, I: HypurrFunCabalsRequest, O: HypurrFunCabalsResponse },
+    { name: "HypurrFunCabalPerformance", options: {}, I: HypurrFunCabalPerformanceRequest, O: HypurrFunCabalPerformanceResponse },
     { name: "SetHyperliquidWalletDeploySessionTarget", options: {}, I: SetHyperliquidWalletDeploySessionTargetRequest, O: SetHyperliquidWalletDeploySessionTargetResponse },
     { name: "DeleteHyperliquidWalletDeploySessionTarget", options: {}, I: DeleteHyperliquidWalletDeploySessionTargetRequest, O: DeleteHyperliquidWalletDeploySessionTargetResponse }
 ]);

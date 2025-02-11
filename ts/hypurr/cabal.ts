@@ -225,6 +225,35 @@ export interface HypurrFunCabalUserSeason {
      */
     lastPerpPnl: number;
 }
+/**
+ * @generated from protobuf message hypurr.HypurrFunCabalPerformance
+ */
+export interface HypurrFunCabalPerformance {
+    /**
+     * @generated from protobuf field: int64 season_id = 1;
+     */
+    seasonId: number;
+    /**
+     * @generated from protobuf field: double spot_pnl = 2;
+     */
+    spotPnl: number;
+    /**
+     * @generated from protobuf field: double launch_pnl = 3;
+     */
+    launchPnl: number;
+    /**
+     * @generated from protobuf field: double perp_pnl = 4;
+     */
+    perpPnl: number;
+    /**
+     * @generated from protobuf field: int64 season_start_time = 5;
+     */
+    seasonStartTime: number;
+    /**
+     * @generated from protobuf field: int64 season_end_time = 6;
+     */
+    seasonEndTime: number;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class HypurrFunCabal$Type extends MessageType<HypurrFunCabal> {
     constructor() {
@@ -780,3 +809,85 @@ class HypurrFunCabalUserSeason$Type extends MessageType<HypurrFunCabalUserSeason
  * @generated MessageType for protobuf message hypurr.HypurrFunCabalUserSeason
  */
 export const HypurrFunCabalUserSeason = new HypurrFunCabalUserSeason$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HypurrFunCabalPerformance$Type extends MessageType<HypurrFunCabalPerformance> {
+    constructor() {
+        super("hypurr.HypurrFunCabalPerformance", [
+            { no: 1, name: "season_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "spot_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "launch_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "perp_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "season_start_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "season_end_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HypurrFunCabalPerformance>): HypurrFunCabalPerformance {
+        const message = { seasonId: 0, spotPnl: 0, launchPnl: 0, perpPnl: 0, seasonStartTime: 0, seasonEndTime: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HypurrFunCabalPerformance>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HypurrFunCabalPerformance): HypurrFunCabalPerformance {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 season_id */ 1:
+                    message.seasonId = reader.int64().toNumber();
+                    break;
+                case /* double spot_pnl */ 2:
+                    message.spotPnl = reader.double();
+                    break;
+                case /* double launch_pnl */ 3:
+                    message.launchPnl = reader.double();
+                    break;
+                case /* double perp_pnl */ 4:
+                    message.perpPnl = reader.double();
+                    break;
+                case /* int64 season_start_time */ 5:
+                    message.seasonStartTime = reader.int64().toNumber();
+                    break;
+                case /* int64 season_end_time */ 6:
+                    message.seasonEndTime = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HypurrFunCabalPerformance, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 season_id = 1; */
+        if (message.seasonId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.seasonId);
+        /* double spot_pnl = 2; */
+        if (message.spotPnl !== 0)
+            writer.tag(2, WireType.Bit64).double(message.spotPnl);
+        /* double launch_pnl = 3; */
+        if (message.launchPnl !== 0)
+            writer.tag(3, WireType.Bit64).double(message.launchPnl);
+        /* double perp_pnl = 4; */
+        if (message.perpPnl !== 0)
+            writer.tag(4, WireType.Bit64).double(message.perpPnl);
+        /* int64 season_start_time = 5; */
+        if (message.seasonStartTime !== 0)
+            writer.tag(5, WireType.Varint).int64(message.seasonStartTime);
+        /* int64 season_end_time = 6; */
+        if (message.seasonEndTime !== 0)
+            writer.tag(6, WireType.Varint).int64(message.seasonEndTime);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HypurrFunCabalPerformance
+ */
+export const HypurrFunCabalPerformance = new HypurrFunCabalPerformance$Type();

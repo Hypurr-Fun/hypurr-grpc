@@ -68,3 +68,12 @@ message HypurrFunCabalUserSeason {
   double last_launch_pnl = 9;
   double last_perp_pnl = 10;
 }
+
+message HypurrFunCabalPerformance {
+  int64 season_id = 1;
+  double spot_pnl = 2;
+  double launch_pnl = 3;
+  double perp_pnl = 4;
+  int64 season_start_time = 5;
+  int64 season_end_time = 6;
+}

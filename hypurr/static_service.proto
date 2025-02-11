@@ -189,6 +189,13 @@ message HypurrFunCabalsResponse {
   repeated HypurrFunCabal cabals = 1;
 }
 
+message HypurrFunCabalPerformanceRequest {
+  int64 telegram_chat_id = 1;
+}
+
+message HypurrFunCabalPerformanceResponse {
+  repeated HypurrFunCabalPerformance performances = 1;
+}
 
 service Static {
   rpc HyperliquidDeployAuction (HyperliquidDeployAuctionRequest) returns (HyperliquidDeployAuctionResponse) {}
@@ -216,6 +223,8 @@ service Static {
   rpc HyperliquidLaunchHolders (HyperliquidLaunchHoldersRequest) returns (HyperliquidLaunchHoldersResponse) {}
 
   rpc HypurrFunCabals (HypurrFunCabalsRequest) returns (HypurrFunCabalsResponse) {}
+
+  rpc HypurrFunCabalPerformance (HypurrFunCabalPerformanceRequest) returns (HypurrFunCabalPerformanceResponse) {}
 
   rpc SetHyperliquidWalletDeploySessionTarget (SetHyperliquidWalletDeploySessionTargetRequest) returns (SetHyperliquidWalletDeploySessionTargetResponse) {}
   rpc DeleteHyperliquidWalletDeploySessionTarget (DeleteHyperliquidWalletDeploySessionTargetRequest) returns (DeleteHyperliquidWalletDeploySessionTargetResponse) {}
