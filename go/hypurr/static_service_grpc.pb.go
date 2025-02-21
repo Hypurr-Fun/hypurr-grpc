@@ -42,6 +42,14 @@ const (
 	Static_HypurrFunCabalPerformance_FullMethodName                  = "/hypurr.Static/HypurrFunCabalPerformance"
 	Static_SetHyperliquidWalletDeploySessionTarget_FullMethodName    = "/hypurr.Static/SetHyperliquidWalletDeploySessionTarget"
 	Static_DeleteHyperliquidWalletDeploySessionTarget_FullMethodName = "/hypurr.Static/DeleteHyperliquidWalletDeploySessionTarget"
+	Static_EVMToken_FullMethodName                                   = "/hypurr.Static/EVMToken"
+	Static_EVMTokens_FullMethodName                                  = "/hypurr.Static/EVMTokens"
+	Static_EVMPair_FullMethodName                                    = "/hypurr.Static/EVMPair"
+	Static_EVMPairs_FullMethodName                                   = "/hypurr.Static/EVMPairs"
+	Static_EVMSwap_FullMethodName                                    = "/hypurr.Static/EVMSwap"
+	Static_EVMSwaps_FullMethodName                                   = "/hypurr.Static/EVMSwaps"
+	Static_EVMTransferEvents_FullMethodName                          = "/hypurr.Static/EVMTransferEvents"
+	Static_EVMApprovalEvents_FullMethodName                          = "/hypurr.Static/EVMApprovalEvents"
 )
 
 // StaticClient is the client API for Static service.
@@ -71,6 +79,18 @@ type StaticClient interface {
 	HypurrFunCabalPerformance(ctx context.Context, in *HypurrFunCabalPerformanceRequest, opts ...grpc.CallOption) (*HypurrFunCabalPerformanceResponse, error)
 	SetHyperliquidWalletDeploySessionTarget(ctx context.Context, in *SetHyperliquidWalletDeploySessionTargetRequest, opts ...grpc.CallOption) (*SetHyperliquidWalletDeploySessionTargetResponse, error)
 	DeleteHyperliquidWalletDeploySessionTarget(ctx context.Context, in *DeleteHyperliquidWalletDeploySessionTargetRequest, opts ...grpc.CallOption) (*DeleteHyperliquidWalletDeploySessionTargetResponse, error)
+	// Token related endpoints
+	EVMToken(ctx context.Context, in *EVMTokenRequest, opts ...grpc.CallOption) (*EVMTokenResponse, error)
+	EVMTokens(ctx context.Context, in *EVMTokensRequest, opts ...grpc.CallOption) (*EVMTokensResponse, error)
+	// Pair related endpoints
+	EVMPair(ctx context.Context, in *EVMPairRequest, opts ...grpc.CallOption) (*EVMPairResponse, error)
+	EVMPairs(ctx context.Context, in *EVMPairsRequest, opts ...grpc.CallOption) (*EVMPairsResponse, error)
+	// Swap related endpoints
+	EVMSwap(ctx context.Context, in *EVMSwapRequest, opts ...grpc.CallOption) (*EVMSwapResponse, error)
+	EVMSwaps(ctx context.Context, in *EVMSwapsRequest, opts ...grpc.CallOption) (*EVMSwapsResponse, error)
+	// Event related endpoints
+	EVMTransferEvents(ctx context.Context, in *EVMTransferEventsRequest, opts ...grpc.CallOption) (*EVMTransferEventsResponse, error)
+	EVMApprovalEvents(ctx context.Context, in *EVMApprovalEventsRequest, opts ...grpc.CallOption) (*EVMApprovalEventsResponse, error)
 }
 
 type staticClient struct {
@@ -449,6 +469,86 @@ func (c *staticClient) DeleteHyperliquidWalletDeploySessionTarget(ctx context.Co
 	return out, nil
 }
 
+func (c *staticClient) EVMToken(ctx context.Context, in *EVMTokenRequest, opts ...grpc.CallOption) (*EVMTokenResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EVMTokenResponse)
+	err := c.cc.Invoke(ctx, Static_EVMToken_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staticClient) EVMTokens(ctx context.Context, in *EVMTokensRequest, opts ...grpc.CallOption) (*EVMTokensResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EVMTokensResponse)
+	err := c.cc.Invoke(ctx, Static_EVMTokens_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staticClient) EVMPair(ctx context.Context, in *EVMPairRequest, opts ...grpc.CallOption) (*EVMPairResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EVMPairResponse)
+	err := c.cc.Invoke(ctx, Static_EVMPair_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staticClient) EVMPairs(ctx context.Context, in *EVMPairsRequest, opts ...grpc.CallOption) (*EVMPairsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EVMPairsResponse)
+	err := c.cc.Invoke(ctx, Static_EVMPairs_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staticClient) EVMSwap(ctx context.Context, in *EVMSwapRequest, opts ...grpc.CallOption) (*EVMSwapResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EVMSwapResponse)
+	err := c.cc.Invoke(ctx, Static_EVMSwap_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staticClient) EVMSwaps(ctx context.Context, in *EVMSwapsRequest, opts ...grpc.CallOption) (*EVMSwapsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EVMSwapsResponse)
+	err := c.cc.Invoke(ctx, Static_EVMSwaps_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staticClient) EVMTransferEvents(ctx context.Context, in *EVMTransferEventsRequest, opts ...grpc.CallOption) (*EVMTransferEventsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EVMTransferEventsResponse)
+	err := c.cc.Invoke(ctx, Static_EVMTransferEvents_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staticClient) EVMApprovalEvents(ctx context.Context, in *EVMApprovalEventsRequest, opts ...grpc.CallOption) (*EVMApprovalEventsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EVMApprovalEventsResponse)
+	err := c.cc.Invoke(ctx, Static_EVMApprovalEvents_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StaticServer is the server API for Static service.
 // All implementations must embed UnimplementedStaticServer
 // for forward compatibility
@@ -476,6 +576,18 @@ type StaticServer interface {
 	HypurrFunCabalPerformance(context.Context, *HypurrFunCabalPerformanceRequest) (*HypurrFunCabalPerformanceResponse, error)
 	SetHyperliquidWalletDeploySessionTarget(context.Context, *SetHyperliquidWalletDeploySessionTargetRequest) (*SetHyperliquidWalletDeploySessionTargetResponse, error)
 	DeleteHyperliquidWalletDeploySessionTarget(context.Context, *DeleteHyperliquidWalletDeploySessionTargetRequest) (*DeleteHyperliquidWalletDeploySessionTargetResponse, error)
+	// Token related endpoints
+	EVMToken(context.Context, *EVMTokenRequest) (*EVMTokenResponse, error)
+	EVMTokens(context.Context, *EVMTokensRequest) (*EVMTokensResponse, error)
+	// Pair related endpoints
+	EVMPair(context.Context, *EVMPairRequest) (*EVMPairResponse, error)
+	EVMPairs(context.Context, *EVMPairsRequest) (*EVMPairsResponse, error)
+	// Swap related endpoints
+	EVMSwap(context.Context, *EVMSwapRequest) (*EVMSwapResponse, error)
+	EVMSwaps(context.Context, *EVMSwapsRequest) (*EVMSwapsResponse, error)
+	// Event related endpoints
+	EVMTransferEvents(context.Context, *EVMTransferEventsRequest) (*EVMTransferEventsResponse, error)
+	EVMApprovalEvents(context.Context, *EVMApprovalEventsRequest) (*EVMApprovalEventsResponse, error)
 	mustEmbedUnimplementedStaticServer()
 }
 
@@ -551,6 +663,30 @@ func (UnimplementedStaticServer) SetHyperliquidWalletDeploySessionTarget(context
 }
 func (UnimplementedStaticServer) DeleteHyperliquidWalletDeploySessionTarget(context.Context, *DeleteHyperliquidWalletDeploySessionTargetRequest) (*DeleteHyperliquidWalletDeploySessionTargetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHyperliquidWalletDeploySessionTarget not implemented")
+}
+func (UnimplementedStaticServer) EVMToken(context.Context, *EVMTokenRequest) (*EVMTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EVMToken not implemented")
+}
+func (UnimplementedStaticServer) EVMTokens(context.Context, *EVMTokensRequest) (*EVMTokensResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EVMTokens not implemented")
+}
+func (UnimplementedStaticServer) EVMPair(context.Context, *EVMPairRequest) (*EVMPairResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EVMPair not implemented")
+}
+func (UnimplementedStaticServer) EVMPairs(context.Context, *EVMPairsRequest) (*EVMPairsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EVMPairs not implemented")
+}
+func (UnimplementedStaticServer) EVMSwap(context.Context, *EVMSwapRequest) (*EVMSwapResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EVMSwap not implemented")
+}
+func (UnimplementedStaticServer) EVMSwaps(context.Context, *EVMSwapsRequest) (*EVMSwapsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EVMSwaps not implemented")
+}
+func (UnimplementedStaticServer) EVMTransferEvents(context.Context, *EVMTransferEventsRequest) (*EVMTransferEventsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EVMTransferEvents not implemented")
+}
+func (UnimplementedStaticServer) EVMApprovalEvents(context.Context, *EVMApprovalEventsRequest) (*EVMApprovalEventsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EVMApprovalEvents not implemented")
 }
 func (UnimplementedStaticServer) mustEmbedUnimplementedStaticServer() {}
 
@@ -997,6 +1133,150 @@ func _Static_DeleteHyperliquidWalletDeploySessionTarget_Handler(srv interface{},
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Static_EVMToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EVMTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).EVMToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_EVMToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).EVMToken(ctx, req.(*EVMTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Static_EVMTokens_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EVMTokensRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).EVMTokens(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_EVMTokens_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).EVMTokens(ctx, req.(*EVMTokensRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Static_EVMPair_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EVMPairRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).EVMPair(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_EVMPair_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).EVMPair(ctx, req.(*EVMPairRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Static_EVMPairs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EVMPairsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).EVMPairs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_EVMPairs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).EVMPairs(ctx, req.(*EVMPairsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Static_EVMSwap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EVMSwapRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).EVMSwap(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_EVMSwap_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).EVMSwap(ctx, req.(*EVMSwapRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Static_EVMSwaps_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EVMSwapsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).EVMSwaps(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_EVMSwaps_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).EVMSwaps(ctx, req.(*EVMSwapsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Static_EVMTransferEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EVMTransferEventsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).EVMTransferEvents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_EVMTransferEvents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).EVMTransferEvents(ctx, req.(*EVMTransferEventsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Static_EVMApprovalEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EVMApprovalEventsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).EVMApprovalEvents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_EVMApprovalEvents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).EVMApprovalEvents(ctx, req.(*EVMApprovalEventsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Static_ServiceDesc is the grpc.ServiceDesc for Static service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1071,6 +1351,38 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteHyperliquidWalletDeploySessionTarget",
 			Handler:    _Static_DeleteHyperliquidWalletDeploySessionTarget_Handler,
+		},
+		{
+			MethodName: "EVMToken",
+			Handler:    _Static_EVMToken_Handler,
+		},
+		{
+			MethodName: "EVMTokens",
+			Handler:    _Static_EVMTokens_Handler,
+		},
+		{
+			MethodName: "EVMPair",
+			Handler:    _Static_EVMPair_Handler,
+		},
+		{
+			MethodName: "EVMPairs",
+			Handler:    _Static_EVMPairs_Handler,
+		},
+		{
+			MethodName: "EVMSwap",
+			Handler:    _Static_EVMSwap_Handler,
+		},
+		{
+			MethodName: "EVMSwaps",
+			Handler:    _Static_EVMSwaps_Handler,
+		},
+		{
+			MethodName: "EVMTransferEvents",
+			Handler:    _Static_EVMTransferEvents_Handler,
+		},
+		{
+			MethodName: "EVMApprovalEvents",
+			Handler:    _Static_EVMApprovalEvents_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

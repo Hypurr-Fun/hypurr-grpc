@@ -9,6 +9,7 @@ import "hypurr/wallet.proto";
 import "hypurr/launch.proto";
 import "hypurr/pairs.proto";
 import "hypurr/cabal.proto";
+import "hypurr/evm.proto";
 
 message HyperliquidTokenHoldersRequest {
   int64 token_id = 1;
@@ -228,4 +229,20 @@ service Static {
 
   rpc SetHyperliquidWalletDeploySessionTarget (SetHyperliquidWalletDeploySessionTargetRequest) returns (SetHyperliquidWalletDeploySessionTargetResponse) {}
   rpc DeleteHyperliquidWalletDeploySessionTarget (DeleteHyperliquidWalletDeploySessionTargetRequest) returns (DeleteHyperliquidWalletDeploySessionTargetResponse) {}
+
+    // Token related endpoints
+  rpc EVMToken(EVMTokenRequest) returns (EVMTokenResponse) {}
+  rpc EVMTokens(EVMTokensRequest) returns (EVMTokensResponse) {}
+  
+  // Pair related endpoints
+  rpc EVMPair(EVMPairRequest) returns (EVMPairResponse) {}
+  rpc EVMPairs(EVMPairsRequest) returns (EVMPairsResponse) {}
+  
+  // Swap related endpoints
+  rpc EVMSwap(EVMSwapRequest) returns (EVMSwapResponse) {}
+  rpc EVMSwaps(EVMSwapsRequest) returns (EVMSwapsResponse) {}
+  
+  // Event related endpoints
+  rpc EVMTransferEvents(EVMTransferEventsRequest) returns (EVMTransferEventsResponse) {}
+  rpc EVMApprovalEvents(EVMApprovalEventsRequest) returns (EVMApprovalEventsResponse) {}
 }
