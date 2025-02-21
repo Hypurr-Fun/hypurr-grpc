@@ -4,22 +4,6 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Static } from "./static_service";
-import type { EVMApprovalEventsResponse } from "./evm";
-import type { EVMApprovalEventsRequest } from "./evm";
-import type { EVMTransferEventsResponse } from "./evm";
-import type { EVMTransferEventsRequest } from "./evm";
-import type { EVMSwapsResponse } from "./evm";
-import type { EVMSwapsRequest } from "./evm";
-import type { EVMSwapResponse } from "./evm";
-import type { EVMSwapRequest } from "./evm";
-import type { EVMPairsResponse } from "./evm";
-import type { EVMPairsRequest } from "./evm";
-import type { EVMPairResponse } from "./evm";
-import type { EVMPairRequest } from "./evm";
-import type { EVMTokensResponse } from "./evm";
-import type { EVMTokensRequest } from "./evm";
-import type { EVMTokenResponse } from "./evm";
-import type { EVMTokenRequest } from "./evm";
 import type { DeleteHyperliquidWalletDeploySessionTargetResponse } from "./static_service";
 import type { DeleteHyperliquidWalletDeploySessionTargetRequest } from "./static_service";
 import type { SetHyperliquidWalletDeploySessionTargetResponse } from "./static_service";
@@ -163,46 +147,6 @@ export interface IStaticClient {
      * @generated from protobuf rpc: DeleteHyperliquidWalletDeploySessionTarget(hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest) returns (hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse);
      */
     deleteHyperliquidWalletDeploySessionTarget(input: DeleteHyperliquidWalletDeploySessionTargetRequest, options?: RpcOptions): UnaryCall<DeleteHyperliquidWalletDeploySessionTargetRequest, DeleteHyperliquidWalletDeploySessionTargetResponse>;
-    /**
-     * Token related endpoints
-     *
-     * @generated from protobuf rpc: EVMToken(hypurr.EVMTokenRequest) returns (hypurr.EVMTokenResponse);
-     */
-    eVMToken(input: EVMTokenRequest, options?: RpcOptions): UnaryCall<EVMTokenRequest, EVMTokenResponse>;
-    /**
-     * @generated from protobuf rpc: EVMTokens(hypurr.EVMTokensRequest) returns (hypurr.EVMTokensResponse);
-     */
-    eVMTokens(input: EVMTokensRequest, options?: RpcOptions): UnaryCall<EVMTokensRequest, EVMTokensResponse>;
-    /**
-     * Pair related endpoints
-     *
-     * @generated from protobuf rpc: EVMPair(hypurr.EVMPairRequest) returns (hypurr.EVMPairResponse);
-     */
-    eVMPair(input: EVMPairRequest, options?: RpcOptions): UnaryCall<EVMPairRequest, EVMPairResponse>;
-    /**
-     * @generated from protobuf rpc: EVMPairs(hypurr.EVMPairsRequest) returns (hypurr.EVMPairsResponse);
-     */
-    eVMPairs(input: EVMPairsRequest, options?: RpcOptions): UnaryCall<EVMPairsRequest, EVMPairsResponse>;
-    /**
-     * Swap related endpoints
-     *
-     * @generated from protobuf rpc: EVMSwap(hypurr.EVMSwapRequest) returns (hypurr.EVMSwapResponse);
-     */
-    eVMSwap(input: EVMSwapRequest, options?: RpcOptions): UnaryCall<EVMSwapRequest, EVMSwapResponse>;
-    /**
-     * @generated from protobuf rpc: EVMSwaps(hypurr.EVMSwapsRequest) returns (hypurr.EVMSwapsResponse);
-     */
-    eVMSwaps(input: EVMSwapsRequest, options?: RpcOptions): UnaryCall<EVMSwapsRequest, EVMSwapsResponse>;
-    /**
-     * Event related endpoints
-     *
-     * @generated from protobuf rpc: EVMTransferEvents(hypurr.EVMTransferEventsRequest) returns (hypurr.EVMTransferEventsResponse);
-     */
-    eVMTransferEvents(input: EVMTransferEventsRequest, options?: RpcOptions): UnaryCall<EVMTransferEventsRequest, EVMTransferEventsResponse>;
-    /**
-     * @generated from protobuf rpc: EVMApprovalEvents(hypurr.EVMApprovalEventsRequest) returns (hypurr.EVMApprovalEventsResponse);
-     */
-    eVMApprovalEvents(input: EVMApprovalEventsRequest, options?: RpcOptions): UnaryCall<EVMApprovalEventsRequest, EVMApprovalEventsResponse>;
 }
 /**
  * @generated from protobuf service hypurr.Static
@@ -373,69 +317,5 @@ export class StaticClient implements IStaticClient, ServiceInfo {
     deleteHyperliquidWalletDeploySessionTarget(input: DeleteHyperliquidWalletDeploySessionTargetRequest, options?: RpcOptions): UnaryCall<DeleteHyperliquidWalletDeploySessionTargetRequest, DeleteHyperliquidWalletDeploySessionTargetResponse> {
         const method = this.methods[22], opt = this._transport.mergeOptions(options);
         return stackIntercept<DeleteHyperliquidWalletDeploySessionTargetRequest, DeleteHyperliquidWalletDeploySessionTargetResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * Token related endpoints
-     *
-     * @generated from protobuf rpc: EVMToken(hypurr.EVMTokenRequest) returns (hypurr.EVMTokenResponse);
-     */
-    eVMToken(input: EVMTokenRequest, options?: RpcOptions): UnaryCall<EVMTokenRequest, EVMTokenResponse> {
-        const method = this.methods[23], opt = this._transport.mergeOptions(options);
-        return stackIntercept<EVMTokenRequest, EVMTokenResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: EVMTokens(hypurr.EVMTokensRequest) returns (hypurr.EVMTokensResponse);
-     */
-    eVMTokens(input: EVMTokensRequest, options?: RpcOptions): UnaryCall<EVMTokensRequest, EVMTokensResponse> {
-        const method = this.methods[24], opt = this._transport.mergeOptions(options);
-        return stackIntercept<EVMTokensRequest, EVMTokensResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * Pair related endpoints
-     *
-     * @generated from protobuf rpc: EVMPair(hypurr.EVMPairRequest) returns (hypurr.EVMPairResponse);
-     */
-    eVMPair(input: EVMPairRequest, options?: RpcOptions): UnaryCall<EVMPairRequest, EVMPairResponse> {
-        const method = this.methods[25], opt = this._transport.mergeOptions(options);
-        return stackIntercept<EVMPairRequest, EVMPairResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: EVMPairs(hypurr.EVMPairsRequest) returns (hypurr.EVMPairsResponse);
-     */
-    eVMPairs(input: EVMPairsRequest, options?: RpcOptions): UnaryCall<EVMPairsRequest, EVMPairsResponse> {
-        const method = this.methods[26], opt = this._transport.mergeOptions(options);
-        return stackIntercept<EVMPairsRequest, EVMPairsResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * Swap related endpoints
-     *
-     * @generated from protobuf rpc: EVMSwap(hypurr.EVMSwapRequest) returns (hypurr.EVMSwapResponse);
-     */
-    eVMSwap(input: EVMSwapRequest, options?: RpcOptions): UnaryCall<EVMSwapRequest, EVMSwapResponse> {
-        const method = this.methods[27], opt = this._transport.mergeOptions(options);
-        return stackIntercept<EVMSwapRequest, EVMSwapResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: EVMSwaps(hypurr.EVMSwapsRequest) returns (hypurr.EVMSwapsResponse);
-     */
-    eVMSwaps(input: EVMSwapsRequest, options?: RpcOptions): UnaryCall<EVMSwapsRequest, EVMSwapsResponse> {
-        const method = this.methods[28], opt = this._transport.mergeOptions(options);
-        return stackIntercept<EVMSwapsRequest, EVMSwapsResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * Event related endpoints
-     *
-     * @generated from protobuf rpc: EVMTransferEvents(hypurr.EVMTransferEventsRequest) returns (hypurr.EVMTransferEventsResponse);
-     */
-    eVMTransferEvents(input: EVMTransferEventsRequest, options?: RpcOptions): UnaryCall<EVMTransferEventsRequest, EVMTransferEventsResponse> {
-        const method = this.methods[29], opt = this._transport.mergeOptions(options);
-        return stackIntercept<EVMTransferEventsRequest, EVMTransferEventsResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: EVMApprovalEvents(hypurr.EVMApprovalEventsRequest) returns (hypurr.EVMApprovalEventsResponse);
-     */
-    eVMApprovalEvents(input: EVMApprovalEventsRequest, options?: RpcOptions): UnaryCall<EVMApprovalEventsRequest, EVMApprovalEventsResponse> {
-        const method = this.methods[30], opt = this._transport.mergeOptions(options);
-        return stackIntercept<EVMApprovalEventsRequest, EVMApprovalEventsResponse>("unary", this._transport, method, opt, input);
     }
 }

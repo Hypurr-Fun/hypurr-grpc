@@ -21,8 +21,8 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Token messages
-type EVMToken struct {
+// ERC20 Token messages
+type ERC20Token struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -34,8 +34,8 @@ type EVMToken struct {
 	TotalSupply string `protobuf:"bytes,5,opt,name=total_supply,json=totalSupply,proto3" json:"total_supply,omitempty"` // Using string for big integers
 }
 
-func (x *EVMToken) Reset() {
-	*x = EVMToken{}
+func (x *ERC20Token) Reset() {
+	*x = ERC20Token{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_hypurr_evm_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -43,13 +43,13 @@ func (x *EVMToken) Reset() {
 	}
 }
 
-func (x *EVMToken) String() string {
+func (x *ERC20Token) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*EVMToken) ProtoMessage() {}
+func (*ERC20Token) ProtoMessage() {}
 
-func (x *EVMToken) ProtoReflect() protoreflect.Message {
+func (x *ERC20Token) ProtoReflect() protoreflect.Message {
 	mi := &file_hypurr_evm_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -61,56 +61,60 @@ func (x *EVMToken) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use EVMToken.ProtoReflect.Descriptor instead.
-func (*EVMToken) Descriptor() ([]byte, []int) {
+// Deprecated: Use ERC20Token.ProtoReflect.Descriptor instead.
+func (*ERC20Token) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *EVMToken) GetAddress() string {
+func (x *ERC20Token) GetAddress() string {
 	if x != nil {
 		return x.Address
 	}
 	return ""
 }
 
-func (x *EVMToken) GetName() string {
+func (x *ERC20Token) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *EVMToken) GetSymbol() string {
+func (x *ERC20Token) GetSymbol() string {
 	if x != nil {
 		return x.Symbol
 	}
 	return ""
 }
 
-func (x *EVMToken) GetDecimals() int32 {
+func (x *ERC20Token) GetDecimals() int32 {
 	if x != nil {
 		return x.Decimals
 	}
 	return 0
 }
 
-func (x *EVMToken) GetTotalSupply() string {
+func (x *ERC20Token) GetTotalSupply() string {
 	if x != nil {
 		return x.TotalSupply
 	}
 	return ""
 }
 
-type EVMTokenRequest struct {
+// Account Balance messages
+type ERC20AccountBalance struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	Address  string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	Contract string `protobuf:"bytes,2,opt,name=contract,proto3" json:"contract,omitempty"`
+	Balance  string `protobuf:"bytes,3,opt,name=balance,proto3" json:"balance,omitempty"` // Using string for big integers
+	IsOwner  bool   `protobuf:"varint,4,opt,name=is_owner,json=isOwner,proto3" json:"is_owner,omitempty"`
 }
 
-func (x *EVMTokenRequest) Reset() {
-	*x = EVMTokenRequest{}
+func (x *ERC20AccountBalance) Reset() {
+	*x = ERC20AccountBalance{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_hypurr_evm_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -118,13 +122,13 @@ func (x *EVMTokenRequest) Reset() {
 	}
 }
 
-func (x *EVMTokenRequest) String() string {
+func (x *ERC20AccountBalance) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*EVMTokenRequest) ProtoMessage() {}
+func (*ERC20AccountBalance) ProtoMessage() {}
 
-func (x *EVMTokenRequest) ProtoReflect() protoreflect.Message {
+func (x *ERC20AccountBalance) ProtoReflect() protoreflect.Message {
 	mi := &file_hypurr_evm_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -136,28 +140,55 @@ func (x *EVMTokenRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use EVMTokenRequest.ProtoReflect.Descriptor instead.
-func (*EVMTokenRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ERC20AccountBalance.ProtoReflect.Descriptor instead.
+func (*ERC20AccountBalance) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *EVMTokenRequest) GetAddress() string {
+func (x *ERC20AccountBalance) GetAddress() string {
 	if x != nil {
 		return x.Address
 	}
 	return ""
 }
 
-type EVMTokenResponse struct {
+func (x *ERC20AccountBalance) GetContract() string {
+	if x != nil {
+		return x.Contract
+	}
+	return ""
+}
+
+func (x *ERC20AccountBalance) GetBalance() string {
+	if x != nil {
+		return x.Balance
+	}
+	return ""
+}
+
+func (x *ERC20AccountBalance) GetIsOwner() bool {
+	if x != nil {
+		return x.IsOwner
+	}
+	return false
+}
+
+// UniswapV2 Pair messages
+type UniV2Pair struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Token *EVMToken `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	Address     string      `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	Token0      *ERC20Token `protobuf:"bytes,2,opt,name=token0,proto3" json:"token0,omitempty"`                              // Embedded token object
+	Token1      *ERC20Token `protobuf:"bytes,3,opt,name=token1,proto3" json:"token1,omitempty"`                              // Embedded token object
+	Reserve0    string      `protobuf:"bytes,4,opt,name=reserve0,proto3" json:"reserve0,omitempty"`                          // Using string for big integers
+	Reserve1    string      `protobuf:"bytes,5,opt,name=reserve1,proto3" json:"reserve1,omitempty"`                          // Using string for big integers
+	TotalSupply string      `protobuf:"bytes,6,opt,name=total_supply,json=totalSupply,proto3" json:"total_supply,omitempty"` // Using string for big integers
 }
 
-func (x *EVMTokenResponse) Reset() {
-	*x = EVMTokenResponse{}
+func (x *UniV2Pair) Reset() {
+	*x = UniV2Pair{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_hypurr_evm_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -165,13 +196,13 @@ func (x *EVMTokenResponse) Reset() {
 	}
 }
 
-func (x *EVMTokenResponse) String() string {
+func (x *UniV2Pair) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*EVMTokenResponse) ProtoMessage() {}
+func (*UniV2Pair) ProtoMessage() {}
 
-func (x *EVMTokenResponse) ProtoReflect() protoreflect.Message {
+func (x *UniV2Pair) ProtoReflect() protoreflect.Message {
 	mi := &file_hypurr_evm_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -183,29 +214,72 @@ func (x *EVMTokenResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use EVMTokenResponse.ProtoReflect.Descriptor instead.
-func (*EVMTokenResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use UniV2Pair.ProtoReflect.Descriptor instead.
+func (*UniV2Pair) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *EVMTokenResponse) GetToken() *EVMToken {
+func (x *UniV2Pair) GetAddress() string {
 	if x != nil {
-		return x.Token
+		return x.Address
+	}
+	return ""
+}
+
+func (x *UniV2Pair) GetToken0() *ERC20Token {
+	if x != nil {
+		return x.Token0
 	}
 	return nil
 }
 
-type EVMTokensRequest struct {
+func (x *UniV2Pair) GetToken1() *ERC20Token {
+	if x != nil {
+		return x.Token1
+	}
+	return nil
+}
+
+func (x *UniV2Pair) GetReserve0() string {
+	if x != nil {
+		return x.Reserve0
+	}
+	return ""
+}
+
+func (x *UniV2Pair) GetReserve1() string {
+	if x != nil {
+		return x.Reserve1
+	}
+	return ""
+}
+
+func (x *UniV2Pair) GetTotalSupply() string {
+	if x != nil {
+		return x.TotalSupply
+	}
+	return ""
+}
+
+// Swap messages
+type UniV2Swap struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PageSize  int32  `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	PageToken string `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	Id         string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Pair       string                 `protobuf:"bytes,2,opt,name=pair,proto3" json:"pair,omitempty"`
+	Sender     string                 `protobuf:"bytes,3,opt,name=sender,proto3" json:"sender,omitempty"`
+	Amount0In  string                 `protobuf:"bytes,4,opt,name=amount0_in,json=amount0In,proto3" json:"amount0_in,omitempty"`    // Using string for big integers
+	Amount1In  string                 `protobuf:"bytes,5,opt,name=amount1_in,json=amount1In,proto3" json:"amount1_in,omitempty"`    // Using string for big integers
+	Amount0Out string                 `protobuf:"bytes,6,opt,name=amount0_out,json=amount0Out,proto3" json:"amount0_out,omitempty"` // Using string for big integers
+	Amount1Out string                 `protobuf:"bytes,7,opt,name=amount1_out,json=amount1Out,proto3" json:"amount1_out,omitempty"` // Using string for big integers
+	To         string                 `protobuf:"bytes,8,opt,name=to,proto3" json:"to,omitempty"`
+	Timestamp  *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 }
 
-func (x *EVMTokensRequest) Reset() {
-	*x = EVMTokensRequest{}
+func (x *UniV2Swap) Reset() {
+	*x = UniV2Swap{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_hypurr_evm_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -213,13 +287,13 @@ func (x *EVMTokensRequest) Reset() {
 	}
 }
 
-func (x *EVMTokensRequest) String() string {
+func (x *UniV2Swap) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*EVMTokensRequest) ProtoMessage() {}
+func (*UniV2Swap) ProtoMessage() {}
 
-func (x *EVMTokensRequest) ProtoReflect() protoreflect.Message {
+func (x *UniV2Swap) ProtoReflect() protoreflect.Message {
 	mi := &file_hypurr_evm_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -231,36 +305,90 @@ func (x *EVMTokensRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use EVMTokensRequest.ProtoReflect.Descriptor instead.
-func (*EVMTokensRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use UniV2Swap.ProtoReflect.Descriptor instead.
+func (*UniV2Swap) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *EVMTokensRequest) GetPageSize() int32 {
+func (x *UniV2Swap) GetId() string {
 	if x != nil {
-		return x.PageSize
-	}
-	return 0
-}
-
-func (x *EVMTokensRequest) GetPageToken() string {
-	if x != nil {
-		return x.PageToken
+		return x.Id
 	}
 	return ""
 }
 
-type EVMTokensResponse struct {
+func (x *UniV2Swap) GetPair() string {
+	if x != nil {
+		return x.Pair
+	}
+	return ""
+}
+
+func (x *UniV2Swap) GetSender() string {
+	if x != nil {
+		return x.Sender
+	}
+	return ""
+}
+
+func (x *UniV2Swap) GetAmount0In() string {
+	if x != nil {
+		return x.Amount0In
+	}
+	return ""
+}
+
+func (x *UniV2Swap) GetAmount1In() string {
+	if x != nil {
+		return x.Amount1In
+	}
+	return ""
+}
+
+func (x *UniV2Swap) GetAmount0Out() string {
+	if x != nil {
+		return x.Amount0Out
+	}
+	return ""
+}
+
+func (x *UniV2Swap) GetAmount1Out() string {
+	if x != nil {
+		return x.Amount1Out
+	}
+	return ""
+}
+
+func (x *UniV2Swap) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+func (x *UniV2Swap) GetTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Timestamp
+	}
+	return nil
+}
+
+// ERC20 Transfer Event messages
+type ERC20TransferEvent struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Tokens        []*EVMToken `protobuf:"bytes,1,rep,name=tokens,proto3" json:"tokens,omitempty"`
-	NextPageToken string      `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Id        string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Contract  string                 `protobuf:"bytes,2,opt,name=contract,proto3" json:"contract,omitempty"`
+	Amount    string                 `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"` // Using string for big integers
+	Timestamp *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	From      string                 `protobuf:"bytes,5,opt,name=from,proto3" json:"from,omitempty"`
+	To        string                 `protobuf:"bytes,6,opt,name=to,proto3" json:"to,omitempty"`
 }
 
-func (x *EVMTokensResponse) Reset() {
-	*x = EVMTokensResponse{}
+func (x *ERC20TransferEvent) Reset() {
+	*x = ERC20TransferEvent{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_hypurr_evm_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -268,13 +396,13 @@ func (x *EVMTokensResponse) Reset() {
 	}
 }
 
-func (x *EVMTokensResponse) String() string {
+func (x *ERC20TransferEvent) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*EVMTokensResponse) ProtoMessage() {}
+func (*ERC20TransferEvent) ProtoMessage() {}
 
-func (x *EVMTokensResponse) ProtoReflect() protoreflect.Message {
+func (x *ERC20TransferEvent) ProtoReflect() protoreflect.Message {
 	mi := &file_hypurr_evm_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -286,41 +414,69 @@ func (x *EVMTokensResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use EVMTokensResponse.ProtoReflect.Descriptor instead.
-func (*EVMTokensResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ERC20TransferEvent.ProtoReflect.Descriptor instead.
+func (*ERC20TransferEvent) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *EVMTokensResponse) GetTokens() []*EVMToken {
+func (x *ERC20TransferEvent) GetId() string {
 	if x != nil {
-		return x.Tokens
-	}
-	return nil
-}
-
-func (x *EVMTokensResponse) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
+		return x.Id
 	}
 	return ""
 }
 
-// Pair messages
-type EVMPair struct {
+func (x *ERC20TransferEvent) GetContract() string {
+	if x != nil {
+		return x.Contract
+	}
+	return ""
+}
+
+func (x *ERC20TransferEvent) GetAmount() string {
+	if x != nil {
+		return x.Amount
+	}
+	return ""
+}
+
+func (x *ERC20TransferEvent) GetTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Timestamp
+	}
+	return nil
+}
+
+func (x *ERC20TransferEvent) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *ERC20TransferEvent) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+// ERC20 Approval Event messages
+type ERC20ApprovalEvent struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Address     string    `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	Token0      *EVMToken `protobuf:"bytes,2,opt,name=token0,proto3" json:"token0,omitempty"` // Embedded token object
-	Token1      *EVMToken `protobuf:"bytes,3,opt,name=token1,proto3" json:"token1,omitempty"` // Embedded token object
-	Reserve0    string    `protobuf:"bytes,4,opt,name=reserve0,proto3" json:"reserve0,omitempty"`
-	Reserve1    string    `protobuf:"bytes,5,opt,name=reserve1,proto3" json:"reserve1,omitempty"`
-	TotalSupply string    `protobuf:"bytes,6,opt,name=total_supply,json=totalSupply,proto3" json:"total_supply,omitempty"`
+	Id        string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Contract  string                 `protobuf:"bytes,2,opt,name=contract,proto3" json:"contract,omitempty"`
+	Amount    string                 `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"` // Using string for big integers
+	Timestamp *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Owner     string                 `protobuf:"bytes,5,opt,name=owner,proto3" json:"owner,omitempty"`
+	Spender   string                 `protobuf:"bytes,6,opt,name=spender,proto3" json:"spender,omitempty"`
 }
 
-func (x *EVMPair) Reset() {
-	*x = EVMPair{}
+func (x *ERC20ApprovalEvent) Reset() {
+	*x = ERC20ApprovalEvent{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_hypurr_evm_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -328,13 +484,13 @@ func (x *EVMPair) Reset() {
 	}
 }
 
-func (x *EVMPair) String() string {
+func (x *ERC20ApprovalEvent) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*EVMPair) ProtoMessage() {}
+func (*ERC20ApprovalEvent) ProtoMessage() {}
 
-func (x *EVMPair) ProtoReflect() protoreflect.Message {
+func (x *ERC20ApprovalEvent) ProtoReflect() protoreflect.Message {
 	mi := &file_hypurr_evm_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -346,63 +502,66 @@ func (x *EVMPair) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use EVMPair.ProtoReflect.Descriptor instead.
-func (*EVMPair) Descriptor() ([]byte, []int) {
+// Deprecated: Use ERC20ApprovalEvent.ProtoReflect.Descriptor instead.
+func (*ERC20ApprovalEvent) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *EVMPair) GetAddress() string {
+func (x *ERC20ApprovalEvent) GetId() string {
 	if x != nil {
-		return x.Address
+		return x.Id
 	}
 	return ""
 }
 
-func (x *EVMPair) GetToken0() *EVMToken {
+func (x *ERC20ApprovalEvent) GetContract() string {
 	if x != nil {
-		return x.Token0
+		return x.Contract
+	}
+	return ""
+}
+
+func (x *ERC20ApprovalEvent) GetAmount() string {
+	if x != nil {
+		return x.Amount
+	}
+	return ""
+}
+
+func (x *ERC20ApprovalEvent) GetTimestamp() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Timestamp
 	}
 	return nil
 }
 
-func (x *EVMPair) GetToken1() *EVMToken {
+func (x *ERC20ApprovalEvent) GetOwner() string {
 	if x != nil {
-		return x.Token1
-	}
-	return nil
-}
-
-func (x *EVMPair) GetReserve0() string {
-	if x != nil {
-		return x.Reserve0
+		return x.Owner
 	}
 	return ""
 }
 
-func (x *EVMPair) GetReserve1() string {
+func (x *ERC20ApprovalEvent) GetSpender() string {
 	if x != nil {
-		return x.Reserve1
+		return x.Spender
 	}
 	return ""
 }
 
-func (x *EVMPair) GetTotalSupply() string {
-	if x != nil {
-		return x.TotalSupply
-	}
-	return ""
-}
-
-type EVMPairRequest struct {
+// ERC20 Allowance messages
+type ERC20Allowance struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Address string `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	Owner   string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	Spender string `protobuf:"bytes,2,opt,name=spender,proto3" json:"spender,omitempty"`
+	Amount  string `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"` // Using string for big integers
 }
 
-func (x *EVMPairRequest) Reset() {
-	*x = EVMPairRequest{}
+func (x *ERC20Allowance) Reset() {
+	*x = ERC20Allowance{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_hypurr_evm_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -410,13 +569,13 @@ func (x *EVMPairRequest) Reset() {
 	}
 }
 
-func (x *EVMPairRequest) String() string {
+func (x *ERC20Allowance) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*EVMPairRequest) ProtoMessage() {}
+func (*ERC20Allowance) ProtoMessage() {}
 
-func (x *EVMPairRequest) ProtoReflect() protoreflect.Message {
+func (x *ERC20Allowance) ProtoReflect() protoreflect.Message {
 	mi := &file_hypurr_evm_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -428,954 +587,28 @@ func (x *EVMPairRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use EVMPairRequest.ProtoReflect.Descriptor instead.
-func (*EVMPairRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ERC20Allowance.ProtoReflect.Descriptor instead.
+func (*ERC20Allowance) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *EVMPairRequest) GetAddress() string {
-	if x != nil {
-		return x.Address
-	}
-	return ""
-}
-
-type EVMPairResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Pair *EVMPair `protobuf:"bytes,1,opt,name=pair,proto3" json:"pair,omitempty"`
-}
-
-func (x *EVMPairResponse) Reset() {
-	*x = EVMPairResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[7]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMPairResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMPairResponse) ProtoMessage() {}
-
-func (x *EVMPairResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[7]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMPairResponse.ProtoReflect.Descriptor instead.
-func (*EVMPairResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *EVMPairResponse) GetPair() *EVMPair {
-	if x != nil {
-		return x.Pair
-	}
-	return nil
-}
-
-type EVMPairsRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	PageSize  int32  `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	PageToken string `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
-}
-
-func (x *EVMPairsRequest) Reset() {
-	*x = EVMPairsRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[8]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMPairsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMPairsRequest) ProtoMessage() {}
-
-func (x *EVMPairsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[8]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMPairsRequest.ProtoReflect.Descriptor instead.
-func (*EVMPairsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *EVMPairsRequest) GetPageSize() int32 {
-	if x != nil {
-		return x.PageSize
-	}
-	return 0
-}
-
-func (x *EVMPairsRequest) GetPageToken() string {
-	if x != nil {
-		return x.PageToken
-	}
-	return ""
-}
-
-type EVMPairsResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Pairs         []*EVMPair `protobuf:"bytes,1,rep,name=pairs,proto3" json:"pairs,omitempty"`
-	NextPageToken string     `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-}
-
-func (x *EVMPairsResponse) Reset() {
-	*x = EVMPairsResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[9]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMPairsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMPairsResponse) ProtoMessage() {}
-
-func (x *EVMPairsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[9]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMPairsResponse.ProtoReflect.Descriptor instead.
-func (*EVMPairsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *EVMPairsResponse) GetPairs() []*EVMPair {
-	if x != nil {
-		return x.Pairs
-	}
-	return nil
-}
-
-func (x *EVMPairsResponse) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
-	}
-	return ""
-}
-
-// Swap messages
-type EVMSwap struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Id         string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Pair       string                 `protobuf:"bytes,2,opt,name=pair,proto3" json:"pair,omitempty"`
-	Sender     string                 `protobuf:"bytes,3,opt,name=sender,proto3" json:"sender,omitempty"`
-	Amount0In  string                 `protobuf:"bytes,4,opt,name=amount0_in,json=amount0In,proto3" json:"amount0_in,omitempty"`
-	Amount1In  string                 `protobuf:"bytes,5,opt,name=amount1_in,json=amount1In,proto3" json:"amount1_in,omitempty"`
-	Amount0Out string                 `protobuf:"bytes,6,opt,name=amount0_out,json=amount0Out,proto3" json:"amount0_out,omitempty"`
-	Amount1Out string                 `protobuf:"bytes,7,opt,name=amount1_out,json=amount1Out,proto3" json:"amount1_out,omitempty"`
-	To         string                 `protobuf:"bytes,8,opt,name=to,proto3" json:"to,omitempty"`
-	Timestamp  *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-}
-
-func (x *EVMSwap) Reset() {
-	*x = EVMSwap{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[10]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMSwap) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMSwap) ProtoMessage() {}
-
-func (x *EVMSwap) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[10]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMSwap.ProtoReflect.Descriptor instead.
-func (*EVMSwap) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *EVMSwap) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *EVMSwap) GetPair() string {
-	if x != nil {
-		return x.Pair
-	}
-	return ""
-}
-
-func (x *EVMSwap) GetSender() string {
-	if x != nil {
-		return x.Sender
-	}
-	return ""
-}
-
-func (x *EVMSwap) GetAmount0In() string {
-	if x != nil {
-		return x.Amount0In
-	}
-	return ""
-}
-
-func (x *EVMSwap) GetAmount1In() string {
-	if x != nil {
-		return x.Amount1In
-	}
-	return ""
-}
-
-func (x *EVMSwap) GetAmount0Out() string {
-	if x != nil {
-		return x.Amount0Out
-	}
-	return ""
-}
-
-func (x *EVMSwap) GetAmount1Out() string {
-	if x != nil {
-		return x.Amount1Out
-	}
-	return ""
-}
-
-func (x *EVMSwap) GetTo() string {
-	if x != nil {
-		return x.To
-	}
-	return ""
-}
-
-func (x *EVMSwap) GetTimestamp() *timestamppb.Timestamp {
-	if x != nil {
-		return x.Timestamp
-	}
-	return nil
-}
-
-type EVMSwapRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-}
-
-func (x *EVMSwapRequest) Reset() {
-	*x = EVMSwapRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[11]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMSwapRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMSwapRequest) ProtoMessage() {}
-
-func (x *EVMSwapRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[11]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMSwapRequest.ProtoReflect.Descriptor instead.
-func (*EVMSwapRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *EVMSwapRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-type EVMSwapResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Swap *EVMSwap `protobuf:"bytes,1,opt,name=swap,proto3" json:"swap,omitempty"`
-}
-
-func (x *EVMSwapResponse) Reset() {
-	*x = EVMSwapResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[12]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMSwapResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMSwapResponse) ProtoMessage() {}
-
-func (x *EVMSwapResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[12]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMSwapResponse.ProtoReflect.Descriptor instead.
-func (*EVMSwapResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *EVMSwapResponse) GetSwap() *EVMSwap {
-	if x != nil {
-		return x.Swap
-	}
-	return nil
-}
-
-type EVMSwapsRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	PageSize        int32   `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	PageToken       string  `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
-	PairAddress     *string `protobuf:"bytes,3,opt,name=pair_address,json=pairAddress,proto3,oneof" json:"pair_address,omitempty"`
-	SenderAddress   *string `protobuf:"bytes,4,opt,name=sender_address,json=senderAddress,proto3,oneof" json:"sender_address,omitempty"`
-	ReceiverAddress *string `protobuf:"bytes,5,opt,name=receiver_address,json=receiverAddress,proto3,oneof" json:"receiver_address,omitempty"`
-}
-
-func (x *EVMSwapsRequest) Reset() {
-	*x = EVMSwapsRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[13]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMSwapsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMSwapsRequest) ProtoMessage() {}
-
-func (x *EVMSwapsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[13]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMSwapsRequest.ProtoReflect.Descriptor instead.
-func (*EVMSwapsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *EVMSwapsRequest) GetPageSize() int32 {
-	if x != nil {
-		return x.PageSize
-	}
-	return 0
-}
-
-func (x *EVMSwapsRequest) GetPageToken() string {
-	if x != nil {
-		return x.PageToken
-	}
-	return ""
-}
-
-func (x *EVMSwapsRequest) GetPairAddress() string {
-	if x != nil && x.PairAddress != nil {
-		return *x.PairAddress
-	}
-	return ""
-}
-
-func (x *EVMSwapsRequest) GetSenderAddress() string {
-	if x != nil && x.SenderAddress != nil {
-		return *x.SenderAddress
-	}
-	return ""
-}
-
-func (x *EVMSwapsRequest) GetReceiverAddress() string {
-	if x != nil && x.ReceiverAddress != nil {
-		return *x.ReceiverAddress
-	}
-	return ""
-}
-
-type EVMSwapsResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Swaps         []*EVMSwap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
-	NextPageToken string     `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-}
-
-func (x *EVMSwapsResponse) Reset() {
-	*x = EVMSwapsResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[14]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMSwapsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMSwapsResponse) ProtoMessage() {}
-
-func (x *EVMSwapsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[14]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMSwapsResponse.ProtoReflect.Descriptor instead.
-func (*EVMSwapsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *EVMSwapsResponse) GetSwaps() []*EVMSwap {
-	if x != nil {
-		return x.Swaps
-	}
-	return nil
-}
-
-func (x *EVMSwapsResponse) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
-	}
-	return ""
-}
-
-// Event messages
-type EVMTransferEvent struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Id        string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Contract  string                 `protobuf:"bytes,2,opt,name=contract,proto3" json:"contract,omitempty"`
-	Amount    string                 `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
-	Timestamp *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	From      string                 `protobuf:"bytes,5,opt,name=from,proto3" json:"from,omitempty"`
-	To        string                 `protobuf:"bytes,6,opt,name=to,proto3" json:"to,omitempty"`
-}
-
-func (x *EVMTransferEvent) Reset() {
-	*x = EVMTransferEvent{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[15]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMTransferEvent) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMTransferEvent) ProtoMessage() {}
-
-func (x *EVMTransferEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[15]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMTransferEvent.ProtoReflect.Descriptor instead.
-func (*EVMTransferEvent) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *EVMTransferEvent) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *EVMTransferEvent) GetContract() string {
-	if x != nil {
-		return x.Contract
-	}
-	return ""
-}
-
-func (x *EVMTransferEvent) GetAmount() string {
-	if x != nil {
-		return x.Amount
-	}
-	return ""
-}
-
-func (x *EVMTransferEvent) GetTimestamp() *timestamppb.Timestamp {
-	if x != nil {
-		return x.Timestamp
-	}
-	return nil
-}
-
-func (x *EVMTransferEvent) GetFrom() string {
-	if x != nil {
-		return x.From
-	}
-	return ""
-}
-
-func (x *EVMTransferEvent) GetTo() string {
-	if x != nil {
-		return x.To
-	}
-	return ""
-}
-
-type EVMTransferEventsRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	PageSize     int32   `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	PageToken    string  `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
-	TokenAddress *string `protobuf:"bytes,3,opt,name=token_address,json=tokenAddress,proto3,oneof" json:"token_address,omitempty"`
-	FromAddress  *string `protobuf:"bytes,4,opt,name=from_address,json=fromAddress,proto3,oneof" json:"from_address,omitempty"`
-	ToAddress    *string `protobuf:"bytes,5,opt,name=to_address,json=toAddress,proto3,oneof" json:"to_address,omitempty"`
-}
-
-func (x *EVMTransferEventsRequest) Reset() {
-	*x = EVMTransferEventsRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[16]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMTransferEventsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMTransferEventsRequest) ProtoMessage() {}
-
-func (x *EVMTransferEventsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[16]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMTransferEventsRequest.ProtoReflect.Descriptor instead.
-func (*EVMTransferEventsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *EVMTransferEventsRequest) GetPageSize() int32 {
-	if x != nil {
-		return x.PageSize
-	}
-	return 0
-}
-
-func (x *EVMTransferEventsRequest) GetPageToken() string {
-	if x != nil {
-		return x.PageToken
-	}
-	return ""
-}
-
-func (x *EVMTransferEventsRequest) GetTokenAddress() string {
-	if x != nil && x.TokenAddress != nil {
-		return *x.TokenAddress
-	}
-	return ""
-}
-
-func (x *EVMTransferEventsRequest) GetFromAddress() string {
-	if x != nil && x.FromAddress != nil {
-		return *x.FromAddress
-	}
-	return ""
-}
-
-func (x *EVMTransferEventsRequest) GetToAddress() string {
-	if x != nil && x.ToAddress != nil {
-		return *x.ToAddress
-	}
-	return ""
-}
-
-type EVMTransferEventsResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Events        []*EVMTransferEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
-	NextPageToken string              `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-}
-
-func (x *EVMTransferEventsResponse) Reset() {
-	*x = EVMTransferEventsResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[17]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMTransferEventsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMTransferEventsResponse) ProtoMessage() {}
-
-func (x *EVMTransferEventsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[17]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMTransferEventsResponse.ProtoReflect.Descriptor instead.
-func (*EVMTransferEventsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *EVMTransferEventsResponse) GetEvents() []*EVMTransferEvent {
-	if x != nil {
-		return x.Events
-	}
-	return nil
-}
-
-func (x *EVMTransferEventsResponse) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
-	}
-	return ""
-}
-
-type EVMApprovalEvent struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Id        string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Contract  string                 `protobuf:"bytes,2,opt,name=contract,proto3" json:"contract,omitempty"`
-	Amount    string                 `protobuf:"bytes,3,opt,name=amount,proto3" json:"amount,omitempty"`
-	Timestamp *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	Owner     string                 `protobuf:"bytes,5,opt,name=owner,proto3" json:"owner,omitempty"`
-	Spender   string                 `protobuf:"bytes,6,opt,name=spender,proto3" json:"spender,omitempty"`
-}
-
-func (x *EVMApprovalEvent) Reset() {
-	*x = EVMApprovalEvent{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[18]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMApprovalEvent) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMApprovalEvent) ProtoMessage() {}
-
-func (x *EVMApprovalEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[18]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMApprovalEvent.ProtoReflect.Descriptor instead.
-func (*EVMApprovalEvent) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{18}
-}
-
-func (x *EVMApprovalEvent) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *EVMApprovalEvent) GetContract() string {
-	if x != nil {
-		return x.Contract
-	}
-	return ""
-}
-
-func (x *EVMApprovalEvent) GetAmount() string {
-	if x != nil {
-		return x.Amount
-	}
-	return ""
-}
-
-func (x *EVMApprovalEvent) GetTimestamp() *timestamppb.Timestamp {
-	if x != nil {
-		return x.Timestamp
-	}
-	return nil
-}
-
-func (x *EVMApprovalEvent) GetOwner() string {
+func (x *ERC20Allowance) GetOwner() string {
 	if x != nil {
 		return x.Owner
 	}
 	return ""
 }
 
-func (x *EVMApprovalEvent) GetSpender() string {
+func (x *ERC20Allowance) GetSpender() string {
 	if x != nil {
 		return x.Spender
 	}
 	return ""
 }
 
-type EVMApprovalEventsRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	PageSize       int32   `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	PageToken      string  `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
-	TokenAddress   *string `protobuf:"bytes,3,opt,name=token_address,json=tokenAddress,proto3,oneof" json:"token_address,omitempty"`
-	OwnerAddress   *string `protobuf:"bytes,4,opt,name=owner_address,json=ownerAddress,proto3,oneof" json:"owner_address,omitempty"`
-	SpenderAddress *string `protobuf:"bytes,5,opt,name=spender_address,json=spenderAddress,proto3,oneof" json:"spender_address,omitempty"`
-}
-
-func (x *EVMApprovalEventsRequest) Reset() {
-	*x = EVMApprovalEventsRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[19]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMApprovalEventsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMApprovalEventsRequest) ProtoMessage() {}
-
-func (x *EVMApprovalEventsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[19]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMApprovalEventsRequest.ProtoReflect.Descriptor instead.
-func (*EVMApprovalEventsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{19}
-}
-
-func (x *EVMApprovalEventsRequest) GetPageSize() int32 {
+func (x *ERC20Allowance) GetAmount() string {
 	if x != nil {
-		return x.PageSize
-	}
-	return 0
-}
-
-func (x *EVMApprovalEventsRequest) GetPageToken() string {
-	if x != nil {
-		return x.PageToken
-	}
-	return ""
-}
-
-func (x *EVMApprovalEventsRequest) GetTokenAddress() string {
-	if x != nil && x.TokenAddress != nil {
-		return *x.TokenAddress
-	}
-	return ""
-}
-
-func (x *EVMApprovalEventsRequest) GetOwnerAddress() string {
-	if x != nil && x.OwnerAddress != nil {
-		return *x.OwnerAddress
-	}
-	return ""
-}
-
-func (x *EVMApprovalEventsRequest) GetSpenderAddress() string {
-	if x != nil && x.SpenderAddress != nil {
-		return *x.SpenderAddress
-	}
-	return ""
-}
-
-type EVMApprovalEventsResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Events        []*EVMApprovalEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
-	NextPageToken string              `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-}
-
-func (x *EVMApprovalEventsResponse) Reset() {
-	*x = EVMApprovalEventsResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_evm_proto_msgTypes[20]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *EVMApprovalEventsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EVMApprovalEventsResponse) ProtoMessage() {}
-
-func (x *EVMApprovalEventsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_evm_proto_msgTypes[20]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EVMApprovalEventsResponse.ProtoReflect.Descriptor instead.
-func (*EVMApprovalEventsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_evm_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *EVMApprovalEventsResponse) GetEvents() []*EVMApprovalEvent {
-	if x != nil {
-		return x.Events
-	}
-	return nil
-}
-
-func (x *EVMApprovalEventsResponse) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
+		return x.Amount
 	}
 	return ""
 }
@@ -1386,147 +619,57 @@ var file_hypurr_evm_proto_rawDesc = []byte{
 	0x0a, 0x10, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x65, 0x76, 0x6d, 0x2e, 0x70, 0x72, 0x6f,
 	0x74, 0x6f, 0x12, 0x06, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67,
 	0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65,
-	0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x8f, 0x01, 0x0a, 0x08,
-	0x45, 0x56, 0x4d, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72,
-	0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65,
-	0x73, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x79, 0x6d, 0x62, 0x6f, 0x6c,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x79, 0x6d, 0x62, 0x6f, 0x6c, 0x12, 0x1a,
-	0x0a, 0x08, 0x64, 0x65, 0x63, 0x69, 0x6d, 0x61, 0x6c, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05,
-	0x52, 0x08, 0x64, 0x65, 0x63, 0x69, 0x6d, 0x61, 0x6c, 0x73, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x6f,
-	0x74, 0x61, 0x6c, 0x5f, 0x73, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x22, 0x2b, 0x0a,
-	0x0f, 0x45, 0x56, 0x4d, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x91, 0x01, 0x0a, 0x0a,
+	0x45, 0x52, 0x43, 0x32, 0x30, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64,
+	0x72, 0x65, 0x73, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x79, 0x6d, 0x62,
+	0x6f, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x79, 0x6d, 0x62, 0x6f, 0x6c,
+	0x12, 0x1a, 0x0a, 0x08, 0x64, 0x65, 0x63, 0x69, 0x6d, 0x61, 0x6c, 0x73, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x08, 0x64, 0x65, 0x63, 0x69, 0x6d, 0x61, 0x6c, 0x73, 0x12, 0x21, 0x0a, 0x0c,
+	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x73, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x22,
+	0x80, 0x01, 0x0a, 0x13, 0x45, 0x52, 0x43, 0x32, 0x30, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74,
+	0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65,
+	0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
+	0x73, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x12, 0x18, 0x0a,
+	0x07, 0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x62, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x69, 0x73, 0x5f, 0x6f, 0x77,
+	0x6e, 0x65, 0x72, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x69, 0x73, 0x4f, 0x77, 0x6e,
+	0x65, 0x72, 0x22, 0xd8, 0x01, 0x0a, 0x09, 0x55, 0x6e, 0x69, 0x56, 0x32, 0x50, 0x61, 0x69, 0x72,
 	0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x3a, 0x0a, 0x10, 0x45, 0x56,
-	0x4d, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x26,
-	0x0a, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e,
-	0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x45, 0x56, 0x4d, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52,
-	0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x4e, 0x0a, 0x10, 0x45, 0x56, 0x4d, 0x54, 0x6f, 0x6b,
-	0x65, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x70, 0x61,
-	0x67, 0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x70,
-	0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x65, 0x5f,
-	0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x61, 0x67,
-	0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x65, 0x0a, 0x11, 0x45, 0x56, 0x4d, 0x54, 0x6f, 0x6b,
-	0x65, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x28, 0x0a, 0x06, 0x74,
-	0x6f, 0x6b, 0x65, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x68, 0x79,
-	0x70, 0x75, 0x72, 0x72, 0x2e, 0x45, 0x56, 0x4d, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52, 0x06, 0x74,
-	0x6f, 0x6b, 0x65, 0x6e, 0x73, 0x12, 0x26, 0x0a, 0x0f, 0x6e, 0x65, 0x78, 0x74, 0x5f, 0x70, 0x61,
-	0x67, 0x65, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d,
-	0x6e, 0x65, 0x78, 0x74, 0x50, 0x61, 0x67, 0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0xd2, 0x01,
-	0x0a, 0x07, 0x45, 0x56, 0x4d, 0x50, 0x61, 0x69, 0x72, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72,
-	0x65, 0x73, 0x73, 0x12, 0x28, 0x0a, 0x06, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x30, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x45, 0x56, 0x4d,
-	0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52, 0x06, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x30, 0x12, 0x28, 0x0a,
-	0x06, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x31, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e,
-	0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x45, 0x56, 0x4d, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52,
-	0x06, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x31, 0x12, 0x1a, 0x0a, 0x08, 0x72, 0x65, 0x73, 0x65, 0x72,
-	0x76, 0x65, 0x30, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x72, 0x65, 0x73, 0x65, 0x72,
-	0x76, 0x65, 0x30, 0x12, 0x1a, 0x0a, 0x08, 0x72, 0x65, 0x73, 0x65, 0x72, 0x76, 0x65, 0x31, 0x18,
-	0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x72, 0x65, 0x73, 0x65, 0x72, 0x76, 0x65, 0x31, 0x12,
-	0x21, 0x0a, 0x0c, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x73, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x18,
-	0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x53, 0x75, 0x70, 0x70,
-	0x6c, 0x79, 0x22, 0x2a, 0x0a, 0x0e, 0x45, 0x56, 0x4d, 0x50, 0x61, 0x69, 0x72, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x36,
-	0x0a, 0x0f, 0x45, 0x56, 0x4d, 0x50, 0x61, 0x69, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x23, 0x0a, 0x04, 0x70, 0x61, 0x69, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x0f, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x45, 0x56, 0x4d, 0x50, 0x61, 0x69, 0x72,
-	0x52, 0x04, 0x70, 0x61, 0x69, 0x72, 0x22, 0x4d, 0x0a, 0x0f, 0x45, 0x56, 0x4d, 0x50, 0x61, 0x69,
-	0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x70, 0x61, 0x67,
-	0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x70, 0x61,
-	0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74,
-	0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x61, 0x67, 0x65,
-	0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x61, 0x0a, 0x10, 0x45, 0x56, 0x4d, 0x50, 0x61, 0x69, 0x72,
-	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x25, 0x0a, 0x05, 0x70, 0x61, 0x69,
-	0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72,
-	0x72, 0x2e, 0x45, 0x56, 0x4d, 0x50, 0x61, 0x69, 0x72, 0x52, 0x05, 0x70, 0x61, 0x69, 0x72, 0x73,
-	0x12, 0x26, 0x0a, 0x0f, 0x6e, 0x65, 0x78, 0x74, 0x5f, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f,
-	0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x6e, 0x65, 0x78, 0x74, 0x50,
-	0x61, 0x67, 0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x8f, 0x02, 0x0a, 0x07, 0x45, 0x56, 0x4d,
-	0x53, 0x77, 0x61, 0x70, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x69, 0x72, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x04, 0x70, 0x61, 0x69, 0x72, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x65, 0x6e, 0x64,
-	0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72,
-	0x12, 0x1d, 0x0a, 0x0a, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x30, 0x5f, 0x69, 0x6e, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x30, 0x49, 0x6e, 0x12,
-	0x1d, 0x0a, 0x0a, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x31, 0x5f, 0x69, 0x6e, 0x18, 0x05, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x09, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x31, 0x49, 0x6e, 0x12, 0x1f,
-	0x0a, 0x0b, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x30, 0x5f, 0x6f, 0x75, 0x74, 0x18, 0x06, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x0a, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x30, 0x4f, 0x75, 0x74, 0x12,
-	0x1f, 0x0a, 0x0b, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x31, 0x5f, 0x6f, 0x75, 0x74, 0x18, 0x07,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x31, 0x4f, 0x75, 0x74,
-	0x12, 0x0e, 0x0a, 0x02, 0x74, 0x6f, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x74, 0x6f,
-	0x12, 0x38, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x09, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52,
-	0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x22, 0x20, 0x0a, 0x0e, 0x45, 0x56,
-	0x4d, 0x53, 0x77, 0x61, 0x70, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02,
-	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x36, 0x0a, 0x0f,
-	0x45, 0x56, 0x4d, 0x53, 0x77, 0x61, 0x70, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x23, 0x0a, 0x04, 0x73, 0x77, 0x61, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0f, 0x2e,
-	0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x45, 0x56, 0x4d, 0x53, 0x77, 0x61, 0x70, 0x52, 0x04,
-	0x73, 0x77, 0x61, 0x70, 0x22, 0x8a, 0x02, 0x0a, 0x0f, 0x45, 0x56, 0x4d, 0x53, 0x77, 0x61, 0x70,
-	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x70, 0x61, 0x67, 0x65,
-	0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x70, 0x61, 0x67,
-	0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f,
-	0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x61, 0x67, 0x65, 0x54,
-	0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x26, 0x0a, 0x0c, 0x70, 0x61, 0x69, 0x72, 0x5f, 0x61, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x0b, 0x70, 0x61,
-	0x69, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x88, 0x01, 0x01, 0x12, 0x2a, 0x0a, 0x0e,
-	0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x09, 0x48, 0x01, 0x52, 0x0d, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x41, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x88, 0x01, 0x01, 0x12, 0x2e, 0x0a, 0x10, 0x72, 0x65, 0x63, 0x65,
-	0x69, 0x76, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x05, 0x20, 0x01,
-	0x28, 0x09, 0x48, 0x02, 0x52, 0x0f, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x72, 0x41, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x88, 0x01, 0x01, 0x42, 0x0f, 0x0a, 0x0d, 0x5f, 0x70, 0x61, 0x69,
-	0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x42, 0x11, 0x0a, 0x0f, 0x5f, 0x73, 0x65,
-	0x6e, 0x64, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x42, 0x13, 0x0a, 0x11,
-	0x5f, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73,
-	0x73, 0x22, 0x61, 0x0a, 0x10, 0x45, 0x56, 0x4d, 0x53, 0x77, 0x61, 0x70, 0x73, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x25, 0x0a, 0x05, 0x73, 0x77, 0x61, 0x70, 0x73, 0x18, 0x01,
-	0x20, 0x03, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x45, 0x56,
-	0x4d, 0x53, 0x77, 0x61, 0x70, 0x52, 0x05, 0x73, 0x77, 0x61, 0x70, 0x73, 0x12, 0x26, 0x0a, 0x0f,
-	0x6e, 0x65, 0x78, 0x74, 0x5f, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x6e, 0x65, 0x78, 0x74, 0x50, 0x61, 0x67, 0x65, 0x54,
-	0x6f, 0x6b, 0x65, 0x6e, 0x22, 0xb4, 0x01, 0x0a, 0x10, 0x45, 0x56, 0x4d, 0x54, 0x72, 0x61, 0x6e,
-	0x73, 0x66, 0x65, 0x72, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x6f, 0x6e,
-	0x74, 0x72, 0x61, 0x63, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x6f, 0x6e,
-	0x74, 0x72, 0x61, 0x63, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x38, 0x0a,
-	0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
-	0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x09, 0x74, 0x69,
-	0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18,
-	0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x74,
-	0x6f, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x74, 0x6f, 0x22, 0xfe, 0x01, 0x0a, 0x18,
-	0x45, 0x56, 0x4d, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x45, 0x76, 0x65, 0x6e, 0x74,
-	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x70, 0x61, 0x67, 0x65,
-	0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x70, 0x61, 0x67,
-	0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f,
-	0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x61, 0x67, 0x65, 0x54,
-	0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x28, 0x0a, 0x0d, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x5f, 0x61, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x0c, 0x74,
-	0x6f, 0x6b, 0x65, 0x6e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x88, 0x01, 0x01, 0x12, 0x26,
-	0x0a, 0x0c, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x09, 0x48, 0x01, 0x52, 0x0b, 0x66, 0x72, 0x6f, 0x6d, 0x41, 0x64, 0x64, 0x72,
-	0x65, 0x73, 0x73, 0x88, 0x01, 0x01, 0x12, 0x22, 0x0a, 0x0a, 0x74, 0x6f, 0x5f, 0x61, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x48, 0x02, 0x52, 0x09, 0x74, 0x6f,
-	0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x88, 0x01, 0x01, 0x42, 0x10, 0x0a, 0x0e, 0x5f, 0x74,
-	0x6f, 0x6b, 0x65, 0x6e, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x42, 0x0f, 0x0a, 0x0d,
-	0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x42, 0x0d, 0x0a,
-	0x0b, 0x5f, 0x74, 0x6f, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x75, 0x0a, 0x19,
-	0x45, 0x56, 0x4d, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x45, 0x76, 0x65, 0x6e, 0x74,
-	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x30, 0x0a, 0x06, 0x65, 0x76, 0x65,
-	0x6e, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x68, 0x79, 0x70, 0x75,
-	0x72, 0x72, 0x2e, 0x45, 0x56, 0x4d, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x45, 0x76,
-	0x65, 0x6e, 0x74, 0x52, 0x06, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x26, 0x0a, 0x0f, 0x6e,
-	0x65, 0x78, 0x74, 0x5f, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x6e, 0x65, 0x78, 0x74, 0x50, 0x61, 0x67, 0x65, 0x54, 0x6f,
-	0x6b, 0x65, 0x6e, 0x22, 0xc0, 0x01, 0x0a, 0x10, 0x45, 0x56, 0x4d, 0x41, 0x70, 0x70, 0x72, 0x6f,
-	0x76, 0x61, 0x6c, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01,
+	0x09, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x12, 0x2a, 0x0a, 0x06, 0x74, 0x6f,
+	0x6b, 0x65, 0x6e, 0x30, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x68, 0x79, 0x70,
+	0x75, 0x72, 0x72, 0x2e, 0x45, 0x52, 0x43, 0x32, 0x30, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52, 0x06,
+	0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x30, 0x12, 0x2a, 0x0a, 0x06, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x31,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e,
+	0x45, 0x52, 0x43, 0x32, 0x30, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x52, 0x06, 0x74, 0x6f, 0x6b, 0x65,
+	0x6e, 0x31, 0x12, 0x1a, 0x0a, 0x08, 0x72, 0x65, 0x73, 0x65, 0x72, 0x76, 0x65, 0x30, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x72, 0x65, 0x73, 0x65, 0x72, 0x76, 0x65, 0x30, 0x12, 0x1a,
+	0x0a, 0x08, 0x72, 0x65, 0x73, 0x65, 0x72, 0x76, 0x65, 0x31, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x72, 0x65, 0x73, 0x65, 0x72, 0x76, 0x65, 0x31, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x6f,
+	0x74, 0x61, 0x6c, 0x5f, 0x73, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x53, 0x75, 0x70, 0x70, 0x6c, 0x79, 0x22, 0x91, 0x02,
+	0x0a, 0x09, 0x55, 0x6e, 0x69, 0x56, 0x32, 0x53, 0x77, 0x61, 0x70, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x70,
+	0x61, 0x69, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x61, 0x69, 0x72, 0x12,
+	0x16, 0x0a, 0x06, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x73, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x12, 0x1d, 0x0a, 0x0a, 0x61, 0x6d, 0x6f, 0x75, 0x6e,
+	0x74, 0x30, 0x5f, 0x69, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x61, 0x6d, 0x6f,
+	0x75, 0x6e, 0x74, 0x30, 0x49, 0x6e, 0x12, 0x1d, 0x0a, 0x0a, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74,
+	0x31, 0x5f, 0x69, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x61, 0x6d, 0x6f, 0x75,
+	0x6e, 0x74, 0x31, 0x49, 0x6e, 0x12, 0x1f, 0x0a, 0x0b, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x30,
+	0x5f, 0x6f, 0x75, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x61, 0x6d, 0x6f, 0x75,
+	0x6e, 0x74, 0x30, 0x4f, 0x75, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74,
+	0x31, 0x5f, 0x6f, 0x75, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x61, 0x6d, 0x6f,
+	0x75, 0x6e, 0x74, 0x31, 0x4f, 0x75, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x74, 0x6f, 0x18, 0x08, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x02, 0x74, 0x6f, 0x12, 0x38, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73,
+	0x74, 0x61, 0x6d, 0x70, 0x18, 0x09, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f,
+	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d,
+	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
+	0x70, 0x22, 0xb6, 0x01, 0x0a, 0x12, 0x45, 0x52, 0x43, 0x32, 0x30, 0x54, 0x72, 0x61, 0x6e, 0x73,
+	0x66, 0x65, 0x72, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x6f, 0x6e, 0x74,
 	0x72, 0x61, 0x63, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x6f, 0x6e, 0x74,
 	0x72, 0x61, 0x63, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03,
@@ -1534,38 +677,30 @@ var file_hypurr_evm_proto_rawDesc = []byte{
 	0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32,
 	0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
 	0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x09, 0x74, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x14, 0x0a, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x18,
-	0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x12, 0x18, 0x0a, 0x07,
-	0x73, 0x70, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73,
-	0x70, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x22, 0x90, 0x02, 0x0a, 0x18, 0x45, 0x56, 0x4d, 0x41, 0x70,
-	0x70, 0x72, 0x6f, 0x76, 0x61, 0x6c, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x70, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65,
-	0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x61, 0x67, 0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x12,
-	0x28, 0x0a, 0x0d, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x0c, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x41,
-	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x88, 0x01, 0x01, 0x12, 0x28, 0x0a, 0x0d, 0x6f, 0x77, 0x6e,
-	0x65, 0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
-	0x48, 0x01, 0x52, 0x0c, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
-	0x88, 0x01, 0x01, 0x12, 0x2c, 0x0a, 0x0f, 0x73, 0x70, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x5f, 0x61,
-	0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x48, 0x02, 0x52, 0x0e,
-	0x73, 0x70, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x88, 0x01,
-	0x01, 0x42, 0x10, 0x0a, 0x0e, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x5f, 0x61, 0x64, 0x64, 0x72,
-	0x65, 0x73, 0x73, 0x42, 0x10, 0x0a, 0x0e, 0x5f, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x5f, 0x61, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x42, 0x12, 0x0a, 0x10, 0x5f, 0x73, 0x70, 0x65, 0x6e, 0x64, 0x65,
-	0x72, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x75, 0x0a, 0x19, 0x45, 0x56, 0x4d,
-	0x41, 0x70, 0x70, 0x72, 0x6f, 0x76, 0x61, 0x6c, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x30, 0x0a, 0x06, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x73,
-	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e,
-	0x45, 0x56, 0x4d, 0x41, 0x70, 0x70, 0x72, 0x6f, 0x76, 0x61, 0x6c, 0x45, 0x76, 0x65, 0x6e, 0x74,
-	0x52, 0x06, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x26, 0x0a, 0x0f, 0x6e, 0x65, 0x78, 0x74,
-	0x5f, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x0d, 0x6e, 0x65, 0x78, 0x74, 0x50, 0x61, 0x67, 0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e,
-	0x42, 0x29, 0x5a, 0x27, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68,
-	0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70,
-	0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x74, 0x6f,
+	0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x74, 0x6f, 0x22, 0xc2, 0x01, 0x0a, 0x12, 0x45,
+	0x52, 0x43, 0x32, 0x30, 0x41, 0x70, 0x70, 0x72, 0x6f, 0x76, 0x61, 0x6c, 0x45, 0x76, 0x65, 0x6e,
+	0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69,
+	0x64, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x61, 0x63, 0x74, 0x12, 0x16, 0x0a,
+	0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x61,
+	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x38, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
+	0x6d, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
+	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73,
+	0x74, 0x61, 0x6d, 0x70, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12,
+	0x14, 0x0a, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
+	0x6f, 0x77, 0x6e, 0x65, 0x72, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x70, 0x65, 0x6e, 0x64, 0x65, 0x72,
+	0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x70, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x22,
+	0x58, 0x0a, 0x0e, 0x45, 0x52, 0x43, 0x32, 0x30, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x61, 0x6e, 0x63,
+	0x65, 0x12, 0x14, 0x0a, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x70, 0x65, 0x6e, 0x64,
+	0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x70, 0x65, 0x6e, 0x64, 0x65,
+	0x72, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x42, 0x29, 0x5a, 0x27, 0x67, 0x69, 0x74,
+	0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68,
+	0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79,
+	0x70, 0x75, 0x72, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1580,50 +715,28 @@ func file_hypurr_evm_proto_rawDescGZIP() []byte {
 	return file_hypurr_evm_proto_rawDescData
 }
 
-var file_hypurr_evm_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
+var file_hypurr_evm_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_hypurr_evm_proto_goTypes = []any{
-	(*EVMToken)(nil),                  // 0: hypurr.EVMToken
-	(*EVMTokenRequest)(nil),           // 1: hypurr.EVMTokenRequest
-	(*EVMTokenResponse)(nil),          // 2: hypurr.EVMTokenResponse
-	(*EVMTokensRequest)(nil),          // 3: hypurr.EVMTokensRequest
-	(*EVMTokensResponse)(nil),         // 4: hypurr.EVMTokensResponse
-	(*EVMPair)(nil),                   // 5: hypurr.EVMPair
-	(*EVMPairRequest)(nil),            // 6: hypurr.EVMPairRequest
-	(*EVMPairResponse)(nil),           // 7: hypurr.EVMPairResponse
-	(*EVMPairsRequest)(nil),           // 8: hypurr.EVMPairsRequest
-	(*EVMPairsResponse)(nil),          // 9: hypurr.EVMPairsResponse
-	(*EVMSwap)(nil),                   // 10: hypurr.EVMSwap
-	(*EVMSwapRequest)(nil),            // 11: hypurr.EVMSwapRequest
-	(*EVMSwapResponse)(nil),           // 12: hypurr.EVMSwapResponse
-	(*EVMSwapsRequest)(nil),           // 13: hypurr.EVMSwapsRequest
-	(*EVMSwapsResponse)(nil),          // 14: hypurr.EVMSwapsResponse
-	(*EVMTransferEvent)(nil),          // 15: hypurr.EVMTransferEvent
-	(*EVMTransferEventsRequest)(nil),  // 16: hypurr.EVMTransferEventsRequest
-	(*EVMTransferEventsResponse)(nil), // 17: hypurr.EVMTransferEventsResponse
-	(*EVMApprovalEvent)(nil),          // 18: hypurr.EVMApprovalEvent
-	(*EVMApprovalEventsRequest)(nil),  // 19: hypurr.EVMApprovalEventsRequest
-	(*EVMApprovalEventsResponse)(nil), // 20: hypurr.EVMApprovalEventsResponse
-	(*timestamppb.Timestamp)(nil),     // 21: google.protobuf.Timestamp
+	(*ERC20Token)(nil),            // 0: hypurr.ERC20Token
+	(*ERC20AccountBalance)(nil),   // 1: hypurr.ERC20AccountBalance
+	(*UniV2Pair)(nil),             // 2: hypurr.UniV2Pair
+	(*UniV2Swap)(nil),             // 3: hypurr.UniV2Swap
+	(*ERC20TransferEvent)(nil),    // 4: hypurr.ERC20TransferEvent
+	(*ERC20ApprovalEvent)(nil),    // 5: hypurr.ERC20ApprovalEvent
+	(*ERC20Allowance)(nil),        // 6: hypurr.ERC20Allowance
+	(*timestamppb.Timestamp)(nil), // 7: google.protobuf.Timestamp
 }
 var file_hypurr_evm_proto_depIdxs = []int32{
-	0,  // 0: hypurr.EVMTokenResponse.token:type_name -> hypurr.EVMToken
-	0,  // 1: hypurr.EVMTokensResponse.tokens:type_name -> hypurr.EVMToken
-	0,  // 2: hypurr.EVMPair.token0:type_name -> hypurr.EVMToken
-	0,  // 3: hypurr.EVMPair.token1:type_name -> hypurr.EVMToken
-	5,  // 4: hypurr.EVMPairResponse.pair:type_name -> hypurr.EVMPair
-	5,  // 5: hypurr.EVMPairsResponse.pairs:type_name -> hypurr.EVMPair
-	21, // 6: hypurr.EVMSwap.timestamp:type_name -> google.protobuf.Timestamp
-	10, // 7: hypurr.EVMSwapResponse.swap:type_name -> hypurr.EVMSwap
-	10, // 8: hypurr.EVMSwapsResponse.swaps:type_name -> hypurr.EVMSwap
-	21, // 9: hypurr.EVMTransferEvent.timestamp:type_name -> google.protobuf.Timestamp
-	15, // 10: hypurr.EVMTransferEventsResponse.events:type_name -> hypurr.EVMTransferEvent
-	21, // 11: hypurr.EVMApprovalEvent.timestamp:type_name -> google.protobuf.Timestamp
-	18, // 12: hypurr.EVMApprovalEventsResponse.events:type_name -> hypurr.EVMApprovalEvent
-	13, // [13:13] is the sub-list for method output_type
-	13, // [13:13] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	0, // 0: hypurr.UniV2Pair.token0:type_name -> hypurr.ERC20Token
+	0, // 1: hypurr.UniV2Pair.token1:type_name -> hypurr.ERC20Token
+	7, // 2: hypurr.UniV2Swap.timestamp:type_name -> google.protobuf.Timestamp
+	7, // 3: hypurr.ERC20TransferEvent.timestamp:type_name -> google.protobuf.Timestamp
+	7, // 4: hypurr.ERC20ApprovalEvent.timestamp:type_name -> google.protobuf.Timestamp
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_hypurr_evm_proto_init() }
@@ -1633,7 +746,7 @@ func file_hypurr_evm_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_hypurr_evm_proto_msgTypes[0].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMToken); i {
+			switch v := v.(*ERC20Token); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1645,7 +758,7 @@ func file_hypurr_evm_proto_init() {
 			}
 		}
 		file_hypurr_evm_proto_msgTypes[1].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMTokenRequest); i {
+			switch v := v.(*ERC20AccountBalance); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1657,7 +770,7 @@ func file_hypurr_evm_proto_init() {
 			}
 		}
 		file_hypurr_evm_proto_msgTypes[2].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMTokenResponse); i {
+			switch v := v.(*UniV2Pair); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1669,7 +782,7 @@ func file_hypurr_evm_proto_init() {
 			}
 		}
 		file_hypurr_evm_proto_msgTypes[3].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMTokensRequest); i {
+			switch v := v.(*UniV2Swap); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1681,7 +794,7 @@ func file_hypurr_evm_proto_init() {
 			}
 		}
 		file_hypurr_evm_proto_msgTypes[4].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMTokensResponse); i {
+			switch v := v.(*ERC20TransferEvent); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1693,7 +806,7 @@ func file_hypurr_evm_proto_init() {
 			}
 		}
 		file_hypurr_evm_proto_msgTypes[5].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMPair); i {
+			switch v := v.(*ERC20ApprovalEvent); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1705,175 +818,7 @@ func file_hypurr_evm_proto_init() {
 			}
 		}
 		file_hypurr_evm_proto_msgTypes[6].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMPairRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[7].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMPairResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[8].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMPairsRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[9].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMPairsResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[10].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMSwap); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[11].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMSwapRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[12].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMSwapResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[13].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMSwapsRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[14].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMSwapsResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[15].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMTransferEvent); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[16].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMTransferEventsRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[17].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMTransferEventsResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[18].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMApprovalEvent); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[19].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMApprovalEventsRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_hypurr_evm_proto_msgTypes[20].Exporter = func(v any, i int) any {
-			switch v := v.(*EVMApprovalEventsResponse); i {
+			switch v := v.(*ERC20Allowance); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1885,16 +830,13 @@ func file_hypurr_evm_proto_init() {
 			}
 		}
 	}
-	file_hypurr_evm_proto_msgTypes[13].OneofWrappers = []any{}
-	file_hypurr_evm_proto_msgTypes[16].OneofWrappers = []any{}
-	file_hypurr_evm_proto_msgTypes[19].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hypurr_evm_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   21,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -229,20 +229,4 @@ service Static {
 
   rpc SetHyperliquidWalletDeploySessionTarget (SetHyperliquidWalletDeploySessionTargetRequest) returns (SetHyperliquidWalletDeploySessionTargetResponse) {}
   rpc DeleteHyperliquidWalletDeploySessionTarget (DeleteHyperliquidWalletDeploySessionTargetRequest) returns (DeleteHyperliquidWalletDeploySessionTargetResponse) {}
-
-    // Token related endpoints
-  rpc EVMToken(EVMTokenRequest) returns (EVMTokenResponse) {}
-  rpc EVMTokens(EVMTokensRequest) returns (EVMTokensResponse) {}
-  
-  // Pair related endpoints
-  rpc EVMPair(EVMPairRequest) returns (EVMPairResponse) {}
-  rpc EVMPairs(EVMPairsRequest) returns (EVMPairsResponse) {}
-  
-  // Swap related endpoints
-  rpc EVMSwap(EVMSwapRequest) returns (EVMSwapResponse) {}
-  rpc EVMSwaps(EVMSwapsRequest) returns (EVMSwapsResponse) {}
-  
-  // Event related endpoints
-  rpc EVMTransferEvents(EVMTransferEventsRequest) returns (EVMTransferEventsResponse) {}
-  rpc EVMApprovalEvents(EVMApprovalEventsRequest) returns (EVMApprovalEventsResponse) {}
 }

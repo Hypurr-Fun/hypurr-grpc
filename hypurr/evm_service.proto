@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package hypurr;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
+
+// Import standard timestamp
+import "google/protobuf/timestamp.proto";
+import "hypurr/evm.proto";
+
+message ERC20TokenRequest {
+  string address = 1;
+}
+
+message ERC20TokenResponse {
+  ERC20Token token = 1;
+}
+
+message ERC20TokensRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ERC20TokensResponse {
+  repeated ERC20Token tokens = 1;
+  string next_page_token = 2;
+}
+
+message UniV2PairRequest {
+  string address = 1;
+}
+
+message UniV2PairResponse {
+  UniV2Pair pair = 1;
+}
+
+message UniV2PairsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message UniV2PairsResponse {
+  repeated UniV2Pair pairs = 1;
+  string next_page_token = 2;
+}
+
+message UniV2SwapRequest {
+  string id = 1;
+}
+
+message UniV2SwapResponse {
+  UniV2Swap swap = 1;
+}
+
+message UniV2SwapsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  optional string pair_address = 3;
+  optional string sender_address = 4;
+  optional string receiver_address = 5;
+}
+
+message UniV2SwapsResponse {
+  repeated UniV2Swap swaps = 1;
+  string next_page_token = 2;
+}
+
+message ERC20TransferEventsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  optional string token_address = 3;
+  optional string from_address = 4;
+  optional string to_address = 5;
+}
+
+message ERC20TransferEventsResponse {
+  repeated ERC20TransferEvent events = 1;
+  string next_page_token = 2;
+}
+
+message ERC20ApprovalEventsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  optional string token_address = 3;
+  optional string owner_address = 4;
+  optional string spender_address = 5;
+}
+
+message ERC20ApprovalEventsResponse {
+  repeated ERC20ApprovalEvent events = 1;
+  string next_page_token = 2;
+}
+
+service EVM {
+  // Token related endpoints
+  rpc ERC20Token(ERC20TokenRequest) returns (ERC20TokenResponse) {}
+  rpc ERC20Tokens(ERC20TokensRequest) returns (ERC20TokensResponse) {}
+
+  // Pair related endpoints
+  rpc UniV2Pair(UniV2PairRequest) returns (UniV2PairResponse) {}
+  rpc UniV2Pairs(UniV2PairsRequest) returns (UniV2PairsResponse) {}
+
+  // Swap related endpoints
+  rpc UniV2Swap(UniV2SwapRequest) returns (UniV2SwapResponse) {}
+  rpc UniV2Swaps(UniV2SwapsRequest) returns (UniV2SwapsResponse) {}
+
+  // Event related endpoints
+  rpc ERC20TransferEvents(ERC20TransferEventsRequest) returns (ERC20TransferEventsResponse) {}
+  rpc ERC20ApprovalEvents(ERC20ApprovalEventsRequest) returns (ERC20ApprovalEventsResponse) {}
+}

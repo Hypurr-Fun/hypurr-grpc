@@ -6,8 +6,8 @@ option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 // Import standard timestamp
 import "google/protobuf/timestamp.proto";
 
-// Token messages
-message EVMToken {
+// ERC20 Token messages
+message ERC20Token {
   string address = 1;
   string name = 2;
   string symbol = 3;
@@ -15,127 +15,60 @@ message EVMToken {
   string total_supply = 5; // Using string for big integers
 }
 
-message EVMTokenRequest {
+// Account Balance messages
+message ERC20AccountBalance {
   string address = 1;
+  string contract = 2;
+  string balance = 3;  // Using string for big integers
+  bool is_owner = 4;
 }
 
-message EVMTokenResponse {
-  EVMToken token = 1;
-}
-
-message EVMTokensRequest {
-  int32 page_size = 1;
-  string page_token = 2;
-}
-
-message EVMTokensResponse {
-  repeated EVMToken tokens = 1;
-  string next_page_token = 2;
-}
-
-// Pair messages
-message EVMPair {
+// UniswapV2 Pair messages
+message UniV2Pair {
   string address = 1;
-  EVMToken token0 = 2;  // Embedded token object
-  EVMToken token1 = 3;  // Embedded token object
-  string reserve0 = 4;
-  string reserve1 = 5;
-  string total_supply = 6;
-}
-
-message EVMPairRequest {
-  string address = 1;
-}
-
-message EVMPairResponse {
-  EVMPair pair = 1;
-}
-
-message EVMPairsRequest {
-  int32 page_size = 1;
-  string page_token = 2;
-}
-
-message EVMPairsResponse {
-  repeated EVMPair pairs = 1;
-  string next_page_token = 2;
+  ERC20Token token0 = 2;  // Embedded token object
+  ERC20Token token1 = 3;  // Embedded token object
+  string reserve0 = 4;    // Using string for big integers
+  string reserve1 = 5;    // Using string for big integers
+  string total_supply = 6;  // Using string for big integers
 }
 
 // Swap messages
-message EVMSwap {
+message UniV2Swap {
   string id = 1;
   string pair = 2;
   string sender = 3;
-  string amount0_in = 4;
-  string amount1_in = 5;
-  string amount0_out = 6;
-  string amount1_out = 7;
+  string amount0_in = 4;   // Using string for big integers
+  string amount1_in = 5;   // Using string for big integers
+  string amount0_out = 6;  // Using string for big integers
+  string amount1_out = 7;  // Using string for big integers
   string to = 8;
   google.protobuf.Timestamp timestamp = 9;
 }
 
-message EVMSwapRequest {
-  string id = 1;
-}
-
-message EVMSwapResponse {
-  EVMSwap swap = 1;
-}
-
-message EVMSwapsRequest {
-  int32 page_size = 1;
-  string page_token = 2;
-  optional string pair_address = 3;
-  optional string sender_address = 4;
-  optional string receiver_address = 5;
-}
-
-message EVMSwapsResponse {
-  repeated EVMSwap swaps = 1;
-  string next_page_token = 2;
-}
-
-// Event messages
-message EVMTransferEvent {
+// ERC20 Transfer Event messages
+message ERC20TransferEvent {
   string id = 1;
   string contract = 2;
-  string amount = 3;
+  string amount = 3;      // Using string for big integers
   google.protobuf.Timestamp timestamp = 4;
   string from = 5;
   string to = 6;
 }
 
-message EVMTransferEventsRequest {
-  int32 page_size = 1;
-  string page_token = 2;
-  optional string token_address = 3;
-  optional string from_address = 4;
-  optional string to_address = 5;
-}
-
-message EVMTransferEventsResponse {
-  repeated EVMTransferEvent events = 1;
-  string next_page_token = 2;
-}
-
-message EVMApprovalEvent {
+// ERC20 Approval Event messages
+message ERC20ApprovalEvent {
   string id = 1;
   string contract = 2;
-  string amount = 3;
+  string amount = 3;      // Using string for big integers
   google.protobuf.Timestamp timestamp = 4;
   string owner = 5;
   string spender = 6;
 }
 
-message EVMApprovalEventsRequest {
-  int32 page_size = 1;
-  string page_token = 2;
-  optional string token_address = 3;
-  optional string owner_address = 4;
-  optional string spender_address = 5;
-}
-
-message EVMApprovalEventsResponse {
-  repeated EVMApprovalEvent events = 1;
-  string next_page_token = 2;
+// ERC20 Allowance messages
+message ERC20Allowance {
+  string owner = 1;
+  string spender = 2;
+  string amount = 3;      // Using string for big integers
 }
