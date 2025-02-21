@@ -71,3 +71,14 @@ message ERC20Allowance {
   string spender = 2;
   string amount = 3;      // Using string for big integers
 }
+
+// UniV2 Price Candle messages
+message UniV2Candle {
+  int64 timestamp = 1;
+  double open = 2;
+  double high = 3;
+  double low = 4;
+  double close = 5;
+  string volume_token0 = 6;  // Using string for big integers
+  string volume_token1 = 7;  // Using string for big integers
+}

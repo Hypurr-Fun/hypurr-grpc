@@ -8,3 +8,11 @@ message TelegramUserPublic {
   string picture_file_id = 3;
   int64 reputation_score = 4;
 }
+
+message PriceCandle {
+  int64 time = 1;
+  float open = 2;
+  float high = 3;
+  float low = 4;
+  float close = 5;
+}
