@@ -37,6 +37,10 @@ export interface ERC20Token {
      * @generated from protobuf field: string total_supply = 5;
      */
     totalSupply: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: double price_in_whype = 6;
+     */
+    priceInWhype: number; // New field for price in WHYPE
 }
 /**
  * Account Balance messages
@@ -224,11 +228,12 @@ class ERC20Token$Type extends MessageType<ERC20Token> {
             { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "symbol", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "decimals", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 5, name: "total_supply", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 5, name: "total_supply", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "price_in_whype", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<ERC20Token>): ERC20Token {
-        const message = { address: "", name: "", symbol: "", decimals: 0, totalSupply: "" };
+        const message = { address: "", name: "", symbol: "", decimals: 0, totalSupply: "", priceInWhype: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ERC20Token>(this, message, value);
@@ -253,6 +258,9 @@ class ERC20Token$Type extends MessageType<ERC20Token> {
                     break;
                 case /* string total_supply */ 5:
                     message.totalSupply = reader.string();
+                    break;
+                case /* double price_in_whype */ 6:
+                    message.priceInWhype = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -281,6 +289,9 @@ class ERC20Token$Type extends MessageType<ERC20Token> {
         /* string total_supply = 5; */
         if (message.totalSupply !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.totalSupply);
+        /* double price_in_whype = 6; */
+        if (message.priceInWhype !== 0)
+            writer.tag(6, WireType.Bit64).double(message.priceInWhype);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

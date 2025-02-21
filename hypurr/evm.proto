@@ -11,6 +11,7 @@ message ERC20Token {
   string symbol = 3;
   int32 decimals = 4;
   string total_supply = 5; // Using string for big integers
+  double price_in_whype = 6; // New field for price in WHYPE
 }
 
 // Account Balance messages
