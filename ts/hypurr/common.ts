@@ -32,6 +32,31 @@ export interface TelegramUserPublic {
      */
     reputationScore: number;
 }
+/**
+ * @generated from protobuf message hypurr.PriceCandle
+ */
+export interface PriceCandle {
+    /**
+     * @generated from protobuf field: int64 time = 1;
+     */
+    time: number;
+    /**
+     * @generated from protobuf field: float open = 2;
+     */
+    open: number;
+    /**
+     * @generated from protobuf field: float high = 3;
+     */
+    high: number;
+    /**
+     * @generated from protobuf field: float low = 4;
+     */
+    low: number;
+    /**
+     * @generated from protobuf field: float close = 5;
+     */
+    close: number;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserPublic$Type extends MessageType<TelegramUserPublic> {
     constructor() {
@@ -100,3 +125,78 @@ class TelegramUserPublic$Type extends MessageType<TelegramUserPublic> {
  * @generated MessageType for protobuf message hypurr.TelegramUserPublic
  */
 export const TelegramUserPublic = new TelegramUserPublic$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PriceCandle$Type extends MessageType<PriceCandle> {
+    constructor() {
+        super("hypurr.PriceCandle", [
+            { no: 1, name: "time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "open", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 3, name: "high", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 4, name: "low", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 5, name: "close", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PriceCandle>): PriceCandle {
+        const message = { time: 0, open: 0, high: 0, low: 0, close: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PriceCandle>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PriceCandle): PriceCandle {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 time */ 1:
+                    message.time = reader.int64().toNumber();
+                    break;
+                case /* float open */ 2:
+                    message.open = reader.float();
+                    break;
+                case /* float high */ 3:
+                    message.high = reader.float();
+                    break;
+                case /* float low */ 4:
+                    message.low = reader.float();
+                    break;
+                case /* float close */ 5:
+                    message.close = reader.float();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PriceCandle, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 time = 1; */
+        if (message.time !== 0)
+            writer.tag(1, WireType.Varint).int64(message.time);
+        /* float open = 2; */
+        if (message.open !== 0)
+            writer.tag(2, WireType.Bit32).float(message.open);
+        /* float high = 3; */
+        if (message.high !== 0)
+            writer.tag(3, WireType.Bit32).float(message.high);
+        /* float low = 4; */
+        if (message.low !== 0)
+            writer.tag(4, WireType.Bit32).float(message.low);
+        /* float close = 5; */
+        if (message.close !== 0)
+            writer.tag(5, WireType.Bit32).float(message.close);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PriceCandle
+ */
+export const PriceCandle = new PriceCandle$Type();

@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { EVM } from "./evm_service";
+import type { UniV2CandlesResponse } from "./evm_service";
+import type { UniV2CandlesRequest } from "./evm_service";
 import type { ERC20ApprovalEventsResponse } from "./evm_service";
 import type { ERC20ApprovalEventsRequest } from "./evm_service";
 import type { ERC20TransferEventsResponse } from "./evm_service";
@@ -67,6 +69,12 @@ export interface IEVMClient {
      * @generated from protobuf rpc: ERC20ApprovalEvents(hypurr.ERC20ApprovalEventsRequest) returns (hypurr.ERC20ApprovalEventsResponse);
      */
     eRC20ApprovalEvents(input: ERC20ApprovalEventsRequest, options?: RpcOptions): UnaryCall<ERC20ApprovalEventsRequest, ERC20ApprovalEventsResponse>;
+    /**
+     * Price candle related endpoints
+     *
+     * @generated from protobuf rpc: UniV2Candles(hypurr.UniV2CandlesRequest) returns (hypurr.UniV2CandlesResponse);
+     */
+    uniV2Candles(input: UniV2CandlesRequest, options?: RpcOptions): UnaryCall<UniV2CandlesRequest, UniV2CandlesResponse>;
 }
 /**
  * @generated from protobuf service hypurr.EVM
@@ -140,5 +148,14 @@ export class EVMClient implements IEVMClient, ServiceInfo {
     eRC20ApprovalEvents(input: ERC20ApprovalEventsRequest, options?: RpcOptions): UnaryCall<ERC20ApprovalEventsRequest, ERC20ApprovalEventsResponse> {
         const method = this.methods[7], opt = this._transport.mergeOptions(options);
         return stackIntercept<ERC20ApprovalEventsRequest, ERC20ApprovalEventsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * Price candle related endpoints
+     *
+     * @generated from protobuf rpc: UniV2Candles(hypurr.UniV2CandlesRequest) returns (hypurr.UniV2CandlesResponse);
+     */
+    uniV2Candles(input: UniV2CandlesRequest, options?: RpcOptions): UnaryCall<UniV2CandlesRequest, UniV2CandlesResponse> {
+        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        return stackIntercept<UniV2CandlesRequest, UniV2CandlesResponse>("unary", this._transport, method, opt, input);
     }
 }
