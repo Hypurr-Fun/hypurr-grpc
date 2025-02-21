@@ -3,8 +3,6 @@ syntax = "proto3";
 package hypurr;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
-// Import standard timestamp
-import "google/protobuf/timestamp.proto";
 
 // ERC20 Token messages
 message ERC20Token {
@@ -43,7 +41,7 @@ message UniV2Swap {
   string amount0_out = 6;  // Using string for big integers
   string amount1_out = 7;  // Using string for big integers
   string to = 8;
-  google.protobuf.Timestamp timestamp = 9;
+  int64 timestamp = 9;
 }
 
 // ERC20 Transfer Event messages
@@ -51,7 +49,7 @@ message ERC20TransferEvent {
   string id = 1;
   string contract = 2;
   string amount = 3;      // Using string for big integers
-  google.protobuf.Timestamp timestamp = 4;
+  int64 timestamp = 4;
   string from = 5;
   string to = 6;
 }
@@ -61,7 +59,7 @@ message ERC20ApprovalEvent {
   string id = 1;
   string contract = 2;
   string amount = 3;      // Using string for big integers
-  google.protobuf.Timestamp timestamp = 4;
+  int64 timestamp = 4;
   string owner = 5;
   string spender = 6;
 }

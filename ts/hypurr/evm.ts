@@ -11,7 +11,6 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { Timestamp } from "../google/protobuf/timestamp";
 /**
  * ERC20 Token messages
  *
@@ -132,9 +131,9 @@ export interface UniV2Swap {
      */
     to: string;
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp timestamp = 9;
+     * @generated from protobuf field: int64 timestamp = 9;
      */
-    timestamp?: Timestamp;
+    timestamp: number;
 }
 /**
  * ERC20 Transfer Event messages
@@ -155,9 +154,9 @@ export interface ERC20TransferEvent {
      */
     amount: string; // Using string for big integers
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp timestamp = 4;
+     * @generated from protobuf field: int64 timestamp = 4;
      */
-    timestamp?: Timestamp;
+    timestamp: number;
     /**
      * @generated from protobuf field: string from = 5;
      */
@@ -186,9 +185,9 @@ export interface ERC20ApprovalEvent {
      */
     amount: string; // Using string for big integers
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp timestamp = 4;
+     * @generated from protobuf field: int64 timestamp = 4;
      */
-    timestamp?: Timestamp;
+    timestamp: number;
     /**
      * @generated from protobuf field: string owner = 5;
      */
@@ -454,11 +453,11 @@ class UniV2Swap$Type extends MessageType<UniV2Swap> {
             { no: 6, name: "amount0_out", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "amount1_out", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 8, name: "to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 9, name: "timestamp", kind: "message", T: () => Timestamp }
+            { no: 9, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<UniV2Swap>): UniV2Swap {
-        const message = { id: "", pair: "", sender: "", amount0In: "", amount1In: "", amount0Out: "", amount1Out: "", to: "" };
+        const message = { id: "", pair: "", sender: "", amount0In: "", amount1In: "", amount0Out: "", amount1Out: "", to: "", timestamp: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UniV2Swap>(this, message, value);
@@ -493,8 +492,8 @@ class UniV2Swap$Type extends MessageType<UniV2Swap> {
                 case /* string to */ 8:
                     message.to = reader.string();
                     break;
-                case /* google.protobuf.Timestamp timestamp */ 9:
-                    message.timestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.timestamp);
+                case /* int64 timestamp */ 9:
+                    message.timestamp = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -532,9 +531,9 @@ class UniV2Swap$Type extends MessageType<UniV2Swap> {
         /* string to = 8; */
         if (message.to !== "")
             writer.tag(8, WireType.LengthDelimited).string(message.to);
-        /* google.protobuf.Timestamp timestamp = 9; */
-        if (message.timestamp)
-            Timestamp.internalBinaryWrite(message.timestamp, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+        /* int64 timestamp = 9; */
+        if (message.timestamp !== 0)
+            writer.tag(9, WireType.Varint).int64(message.timestamp);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -552,13 +551,13 @@ class ERC20TransferEvent$Type extends MessageType<ERC20TransferEvent> {
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "contract", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "amount", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "timestamp", kind: "message", T: () => Timestamp },
+            { no: 4, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 5, name: "from", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "to", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ERC20TransferEvent>): ERC20TransferEvent {
-        const message = { id: "", contract: "", amount: "", from: "", to: "" };
+        const message = { id: "", contract: "", amount: "", timestamp: 0, from: "", to: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ERC20TransferEvent>(this, message, value);
@@ -578,8 +577,8 @@ class ERC20TransferEvent$Type extends MessageType<ERC20TransferEvent> {
                 case /* string amount */ 3:
                     message.amount = reader.string();
                     break;
-                case /* google.protobuf.Timestamp timestamp */ 4:
-                    message.timestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.timestamp);
+                case /* int64 timestamp */ 4:
+                    message.timestamp = reader.int64().toNumber();
                     break;
                 case /* string from */ 5:
                     message.from = reader.string();
@@ -608,9 +607,9 @@ class ERC20TransferEvent$Type extends MessageType<ERC20TransferEvent> {
         /* string amount = 3; */
         if (message.amount !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.amount);
-        /* google.protobuf.Timestamp timestamp = 4; */
-        if (message.timestamp)
-            Timestamp.internalBinaryWrite(message.timestamp, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* int64 timestamp = 4; */
+        if (message.timestamp !== 0)
+            writer.tag(4, WireType.Varint).int64(message.timestamp);
         /* string from = 5; */
         if (message.from !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.from);
@@ -634,13 +633,13 @@ class ERC20ApprovalEvent$Type extends MessageType<ERC20ApprovalEvent> {
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "contract", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "amount", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "timestamp", kind: "message", T: () => Timestamp },
+            { no: 4, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 5, name: "owner", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "spender", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ERC20ApprovalEvent>): ERC20ApprovalEvent {
-        const message = { id: "", contract: "", amount: "", owner: "", spender: "" };
+        const message = { id: "", contract: "", amount: "", timestamp: 0, owner: "", spender: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ERC20ApprovalEvent>(this, message, value);
@@ -660,8 +659,8 @@ class ERC20ApprovalEvent$Type extends MessageType<ERC20ApprovalEvent> {
                 case /* string amount */ 3:
                     message.amount = reader.string();
                     break;
-                case /* google.protobuf.Timestamp timestamp */ 4:
-                    message.timestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.timestamp);
+                case /* int64 timestamp */ 4:
+                    message.timestamp = reader.int64().toNumber();
                     break;
                 case /* string owner */ 5:
                     message.owner = reader.string();
@@ -690,9 +689,9 @@ class ERC20ApprovalEvent$Type extends MessageType<ERC20ApprovalEvent> {
         /* string amount = 3; */
         if (message.amount !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.amount);
-        /* google.protobuf.Timestamp timestamp = 4; */
-        if (message.timestamp)
-            Timestamp.internalBinaryWrite(message.timestamp, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* int64 timestamp = 4; */
+        if (message.timestamp !== 0)
+            writer.tag(4, WireType.Varint).int64(message.timestamp);
         /* string owner = 5; */
         if (message.owner !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.owner);

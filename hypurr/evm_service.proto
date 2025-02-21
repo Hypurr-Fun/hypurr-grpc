@@ -3,8 +3,6 @@ syntax = "proto3";
 package hypurr;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
-// Import standard timestamp
-import "google/protobuf/timestamp.proto";
 import "hypurr/evm.proto";
 
 message ERC20TokenRequest {
