@@ -4,8 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { EVM } from "./evm_service";
-import type { UniV2CandlesResponse } from "./evm_service";
-import type { UniV2CandlesRequest } from "./evm_service";
+import type { UniCandlesResponse } from "./evm_service";
+import type { UniCandlesRequest } from "./evm_service";
 import type { ERC20ApprovalEventsResponse } from "./evm_service";
 import type { ERC20ApprovalEventsRequest } from "./evm_service";
 import type { ERC20TransferEventsResponse } from "./evm_service";
@@ -72,9 +72,9 @@ export interface IEVMClient {
     /**
      * Price candle related endpoints
      *
-     * @generated from protobuf rpc: UniV2Candles(hypurr.UniV2CandlesRequest) returns (hypurr.UniV2CandlesResponse);
+     * @generated from protobuf rpc: UniCandles(hypurr.UniCandlesRequest) returns (hypurr.UniCandlesResponse);
      */
-    uniV2Candles(input: UniV2CandlesRequest, options?: RpcOptions): UnaryCall<UniV2CandlesRequest, UniV2CandlesResponse>;
+    uniCandles(input: UniCandlesRequest, options?: RpcOptions): UnaryCall<UniCandlesRequest, UniCandlesResponse>;
 }
 /**
  * @generated from protobuf service hypurr.EVM
@@ -152,10 +152,10 @@ export class EVMClient implements IEVMClient, ServiceInfo {
     /**
      * Price candle related endpoints
      *
-     * @generated from protobuf rpc: UniV2Candles(hypurr.UniV2CandlesRequest) returns (hypurr.UniV2CandlesResponse);
+     * @generated from protobuf rpc: UniCandles(hypurr.UniCandlesRequest) returns (hypurr.UniCandlesResponse);
      */
-    uniV2Candles(input: UniV2CandlesRequest, options?: RpcOptions): UnaryCall<UniV2CandlesRequest, UniV2CandlesResponse> {
+    uniCandles(input: UniCandlesRequest, options?: RpcOptions): UnaryCall<UniCandlesRequest, UniCandlesResponse> {
         const method = this.methods[8], opt = this._transport.mergeOptions(options);
-        return stackIntercept<UniV2CandlesRequest, UniV2CandlesResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<UniCandlesRequest, UniCandlesResponse>("unary", this._transport, method, opt, input);
     }
 }

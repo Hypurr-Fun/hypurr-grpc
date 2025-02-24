@@ -76,7 +76,7 @@ message ERC20Allowance {
 }
 
 // UniV2 Price Candle messages
-message UniV2Candle {
+message UniCandle {
   int64 timestamp = 1;
   double open = 2;
   double high = 3;
@@ -84,4 +84,31 @@ message UniV2Candle {
   double close = 5;
   string volume_token0 = 6;  // Using string for big integers
   string volume_token1 = 7;  // Using string for big integers
+}
+
+// UniswapV3 Pool messages
+message UniV3Pool {
+  string address = 1;
+  string factory = 2;
+  ERC20Token token0 = 3;  // Embedded token object
+  ERC20Token token1 = 4;  // Embedded token object
+  int32 fee = 5;
+  int32 tick_spacing = 6;
+  string liquidity = 7;    // Using string for big integers
+  string sqrt_price_x96 = 8;  // Using string for big integers
+  int32 tick = 9;
+}
+
+// UniswapV3 Swap messages
+message UniV3Swap {
+  string id = 1;
+  string pool = 2;
+  string sender = 3;
+  string recipient = 4;
+  string amount0 = 5;    // Using string for big integers
+  string amount1 = 6;    // Using string for big integers
+  string sqrt_price_x96 = 7;  // Using string for big integers
+  string liquidity = 8;    // Using string for big integers
+  int32 tick = 9;
+  int64 timestamp = 10;
 }

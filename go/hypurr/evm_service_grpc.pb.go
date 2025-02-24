@@ -27,7 +27,7 @@ const (
 	EVM_UniV2Swaps_FullMethodName          = "/hypurr.EVM/UniV2Swaps"
 	EVM_ERC20TransferEvents_FullMethodName = "/hypurr.EVM/ERC20TransferEvents"
 	EVM_ERC20ApprovalEvents_FullMethodName = "/hypurr.EVM/ERC20ApprovalEvents"
-	EVM_UniV2Candles_FullMethodName        = "/hypurr.EVM/UniV2Candles"
+	EVM_UniCandles_FullMethodName          = "/hypurr.EVM/UniCandles"
 )
 
 // EVMClient is the client API for EVM service.
@@ -47,7 +47,7 @@ type EVMClient interface {
 	ERC20TransferEvents(ctx context.Context, in *ERC20TransferEventsRequest, opts ...grpc.CallOption) (*ERC20TransferEventsResponse, error)
 	ERC20ApprovalEvents(ctx context.Context, in *ERC20ApprovalEventsRequest, opts ...grpc.CallOption) (*ERC20ApprovalEventsResponse, error)
 	// Price candle related endpoints
-	UniV2Candles(ctx context.Context, in *UniV2CandlesRequest, opts ...grpc.CallOption) (*UniV2CandlesResponse, error)
+	UniCandles(ctx context.Context, in *UniCandlesRequest, opts ...grpc.CallOption) (*UniCandlesResponse, error)
 }
 
 type eVMClient struct {
@@ -138,10 +138,10 @@ func (c *eVMClient) ERC20ApprovalEvents(ctx context.Context, in *ERC20ApprovalEv
 	return out, nil
 }
 
-func (c *eVMClient) UniV2Candles(ctx context.Context, in *UniV2CandlesRequest, opts ...grpc.CallOption) (*UniV2CandlesResponse, error) {
+func (c *eVMClient) UniCandles(ctx context.Context, in *UniCandlesRequest, opts ...grpc.CallOption) (*UniCandlesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UniV2CandlesResponse)
-	err := c.cc.Invoke(ctx, EVM_UniV2Candles_FullMethodName, in, out, cOpts...)
+	out := new(UniCandlesResponse)
+	err := c.cc.Invoke(ctx, EVM_UniCandles_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -165,7 +165,7 @@ type EVMServer interface {
 	ERC20TransferEvents(context.Context, *ERC20TransferEventsRequest) (*ERC20TransferEventsResponse, error)
 	ERC20ApprovalEvents(context.Context, *ERC20ApprovalEventsRequest) (*ERC20ApprovalEventsResponse, error)
 	// Price candle related endpoints
-	UniV2Candles(context.Context, *UniV2CandlesRequest) (*UniV2CandlesResponse, error)
+	UniCandles(context.Context, *UniCandlesRequest) (*UniCandlesResponse, error)
 	mustEmbedUnimplementedEVMServer()
 }
 
@@ -197,8 +197,8 @@ func (UnimplementedEVMServer) ERC20TransferEvents(context.Context, *ERC20Transfe
 func (UnimplementedEVMServer) ERC20ApprovalEvents(context.Context, *ERC20ApprovalEventsRequest) (*ERC20ApprovalEventsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ERC20ApprovalEvents not implemented")
 }
-func (UnimplementedEVMServer) UniV2Candles(context.Context, *UniV2CandlesRequest) (*UniV2CandlesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UniV2Candles not implemented")
+func (UnimplementedEVMServer) UniCandles(context.Context, *UniCandlesRequest) (*UniCandlesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UniCandles not implemented")
 }
 func (UnimplementedEVMServer) mustEmbedUnimplementedEVMServer() {}
 
@@ -357,20 +357,20 @@ func _EVM_ERC20ApprovalEvents_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _EVM_UniV2Candles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UniV2CandlesRequest)
+func _EVM_UniCandles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UniCandlesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EVMServer).UniV2Candles(ctx, in)
+		return srv.(EVMServer).UniCandles(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: EVM_UniV2Candles_FullMethodName,
+		FullMethod: EVM_UniCandles_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EVMServer).UniV2Candles(ctx, req.(*UniV2CandlesRequest))
+		return srv.(EVMServer).UniCandles(ctx, req.(*UniCandlesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -415,8 +415,8 @@ var EVM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _EVM_ERC20ApprovalEvents_Handler,
 		},
 		{
-			MethodName: "UniV2Candles",
-			Handler:    _EVM_UniV2Candles_Handler,
+			MethodName: "UniCandles",
+			Handler:    _EVM_UniCandles_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

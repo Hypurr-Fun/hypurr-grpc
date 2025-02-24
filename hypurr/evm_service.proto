@@ -88,15 +88,15 @@ message ERC20ApprovalEventsResponse {
   string next_page_token = 2;
 }
 
-message UniV2CandlesRequest {
+message UniCandlesRequest {
   string pair_address = 1;
   int64 from_timestamp = 2;
   int64 to_timestamp = 3;
   string interval = 4;  // e.g. "5m", "1h", "1d"
 }
 
-message UniV2CandlesResponse {
-  repeated UniV2Candle candles = 1;
+message UniCandlesResponse {
+  repeated UniCandle candles = 1;
 }
 
 service EVM {
@@ -117,5 +117,5 @@ service EVM {
   rpc ERC20ApprovalEvents(ERC20ApprovalEventsRequest) returns (ERC20ApprovalEventsResponse) {}
   
   // Price candle related endpoints
-  rpc UniV2Candles(UniV2CandlesRequest) returns (UniV2CandlesResponse) {}
+  rpc UniCandles(UniCandlesRequest) returns (UniCandlesResponse) {}
 }

@@ -12,7 +12,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { UniV2Candle } from "./evm";
+import { UniCandle } from "./evm";
 import { ERC20ApprovalEvent } from "./evm";
 import { ERC20TransferEvent } from "./evm";
 import { UniV2Swap } from "./evm";
@@ -239,9 +239,9 @@ export interface ERC20ApprovalEventsResponse {
     nextPageToken: string;
 }
 /**
- * @generated from protobuf message hypurr.UniV2CandlesRequest
+ * @generated from protobuf message hypurr.UniCandlesRequest
  */
-export interface UniV2CandlesRequest {
+export interface UniCandlesRequest {
     /**
      * @generated from protobuf field: string pair_address = 1;
      */
@@ -260,13 +260,13 @@ export interface UniV2CandlesRequest {
     interval: string; // e.g. "5m", "1h", "1d"
 }
 /**
- * @generated from protobuf message hypurr.UniV2CandlesResponse
+ * @generated from protobuf message hypurr.UniCandlesResponse
  */
-export interface UniV2CandlesResponse {
+export interface UniCandlesResponse {
     /**
-     * @generated from protobuf field: repeated hypurr.UniV2Candle candles = 1;
+     * @generated from protobuf field: repeated hypurr.UniCandle candles = 1;
      */
-    candles: UniV2Candle[];
+    candles: UniCandle[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ERC20TokenRequest$Type extends MessageType<ERC20TokenRequest> {
@@ -1154,23 +1154,23 @@ class ERC20ApprovalEventsResponse$Type extends MessageType<ERC20ApprovalEventsRe
  */
 export const ERC20ApprovalEventsResponse = new ERC20ApprovalEventsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class UniV2CandlesRequest$Type extends MessageType<UniV2CandlesRequest> {
+class UniCandlesRequest$Type extends MessageType<UniCandlesRequest> {
     constructor() {
-        super("hypurr.UniV2CandlesRequest", [
+        super("hypurr.UniCandlesRequest", [
             { no: 1, name: "pair_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "from_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "to_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "interval", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<UniV2CandlesRequest>): UniV2CandlesRequest {
+    create(value?: PartialMessage<UniCandlesRequest>): UniCandlesRequest {
         const message = { pairAddress: "", fromTimestamp: 0, toTimestamp: 0, interval: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<UniV2CandlesRequest>(this, message, value);
+            reflectionMergePartial<UniCandlesRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV2CandlesRequest): UniV2CandlesRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniCandlesRequest): UniCandlesRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1198,7 +1198,7 @@ class UniV2CandlesRequest$Type extends MessageType<UniV2CandlesRequest> {
         }
         return message;
     }
-    internalBinaryWrite(message: UniV2CandlesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: UniCandlesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string pair_address = 1; */
         if (message.pairAddress !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.pairAddress);
@@ -1218,30 +1218,30 @@ class UniV2CandlesRequest$Type extends MessageType<UniV2CandlesRequest> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.UniV2CandlesRequest
+ * @generated MessageType for protobuf message hypurr.UniCandlesRequest
  */
-export const UniV2CandlesRequest = new UniV2CandlesRequest$Type();
+export const UniCandlesRequest = new UniCandlesRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class UniV2CandlesResponse$Type extends MessageType<UniV2CandlesResponse> {
+class UniCandlesResponse$Type extends MessageType<UniCandlesResponse> {
     constructor() {
-        super("hypurr.UniV2CandlesResponse", [
-            { no: 1, name: "candles", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => UniV2Candle }
+        super("hypurr.UniCandlesResponse", [
+            { no: 1, name: "candles", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => UniCandle }
         ]);
     }
-    create(value?: PartialMessage<UniV2CandlesResponse>): UniV2CandlesResponse {
+    create(value?: PartialMessage<UniCandlesResponse>): UniCandlesResponse {
         const message = { candles: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<UniV2CandlesResponse>(this, message, value);
+            reflectionMergePartial<UniCandlesResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV2CandlesResponse): UniV2CandlesResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniCandlesResponse): UniCandlesResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypurr.UniV2Candle candles */ 1:
-                    message.candles.push(UniV2Candle.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.UniCandle candles */ 1:
+                    message.candles.push(UniCandle.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1254,10 +1254,10 @@ class UniV2CandlesResponse$Type extends MessageType<UniV2CandlesResponse> {
         }
         return message;
     }
-    internalBinaryWrite(message: UniV2CandlesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.UniV2Candle candles = 1; */
+    internalBinaryWrite(message: UniCandlesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.UniCandle candles = 1; */
         for (let i = 0; i < message.candles.length; i++)
-            UniV2Candle.internalBinaryWrite(message.candles[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            UniCandle.internalBinaryWrite(message.candles[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1265,9 +1265,9 @@ class UniV2CandlesResponse$Type extends MessageType<UniV2CandlesResponse> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.UniV2CandlesResponse
+ * @generated MessageType for protobuf message hypurr.UniCandlesResponse
  */
-export const UniV2CandlesResponse = new UniV2CandlesResponse$Type();
+export const UniCandlesResponse = new UniCandlesResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.EVM
  */
@@ -1280,5 +1280,5 @@ export const EVM = new ServiceType("hypurr.EVM", [
     { name: "UniV2Swaps", options: {}, I: UniV2SwapsRequest, O: UniV2SwapsResponse },
     { name: "ERC20TransferEvents", options: {}, I: ERC20TransferEventsRequest, O: ERC20TransferEventsResponse },
     { name: "ERC20ApprovalEvents", options: {}, I: ERC20ApprovalEventsRequest, O: ERC20ApprovalEventsResponse },
-    { name: "UniV2Candles", options: {}, I: UniV2CandlesRequest, O: UniV2CandlesResponse }
+    { name: "UniCandles", options: {}, I: UniCandlesRequest, O: UniCandlesResponse }
 ]);

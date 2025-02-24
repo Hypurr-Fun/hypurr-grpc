@@ -235,9 +235,9 @@ export interface ERC20Allowance {
 /**
  * UniV2 Price Candle messages
  *
- * @generated from protobuf message hypurr.UniV2Candle
+ * @generated from protobuf message hypurr.UniCandle
  */
-export interface UniV2Candle {
+export interface UniCandle {
     /**
      * @generated from protobuf field: int64 timestamp = 1;
      */
@@ -266,6 +266,96 @@ export interface UniV2Candle {
      * @generated from protobuf field: string volume_token1 = 7;
      */
     volumeToken1: string; // Using string for big integers
+}
+/**
+ * UniswapV3 Pool messages
+ *
+ * @generated from protobuf message hypurr.UniV3Pool
+ */
+export interface UniV3Pool {
+    /**
+     * @generated from protobuf field: string address = 1;
+     */
+    address: string;
+    /**
+     * @generated from protobuf field: string factory = 2;
+     */
+    factory: string;
+    /**
+     * @generated from protobuf field: hypurr.ERC20Token token0 = 3;
+     */
+    token0?: ERC20Token; // Embedded token object
+    /**
+     * @generated from protobuf field: hypurr.ERC20Token token1 = 4;
+     */
+    token1?: ERC20Token; // Embedded token object
+    /**
+     * @generated from protobuf field: int32 fee = 5;
+     */
+    fee: number;
+    /**
+     * @generated from protobuf field: int32 tick_spacing = 6;
+     */
+    tickSpacing: number;
+    /**
+     * @generated from protobuf field: string liquidity = 7;
+     */
+    liquidity: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: string sqrt_price_x96 = 8;
+     */
+    sqrtPriceX96: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: int32 tick = 9;
+     */
+    tick: number;
+}
+/**
+ * UniswapV3 Swap messages
+ *
+ * @generated from protobuf message hypurr.UniV3Swap
+ */
+export interface UniV3Swap {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: string pool = 2;
+     */
+    pool: string;
+    /**
+     * @generated from protobuf field: string sender = 3;
+     */
+    sender: string;
+    /**
+     * @generated from protobuf field: string recipient = 4;
+     */
+    recipient: string;
+    /**
+     * @generated from protobuf field: string amount0 = 5;
+     */
+    amount0: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: string amount1 = 6;
+     */
+    amount1: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: string sqrt_price_x96 = 7;
+     */
+    sqrtPriceX96: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: string liquidity = 8;
+     */
+    liquidity: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: int32 tick = 9;
+     */
+    tick: number;
+    /**
+     * @generated from protobuf field: int64 timestamp = 10;
+     */
+    timestamp: number;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ERC20Token$Type extends MessageType<ERC20Token> {
@@ -849,9 +939,9 @@ class ERC20Allowance$Type extends MessageType<ERC20Allowance> {
  */
 export const ERC20Allowance = new ERC20Allowance$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class UniV2Candle$Type extends MessageType<UniV2Candle> {
+class UniCandle$Type extends MessageType<UniCandle> {
     constructor() {
-        super("hypurr.UniV2Candle", [
+        super("hypurr.UniCandle", [
             { no: 1, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "open", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 3, name: "high", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
@@ -861,14 +951,14 @@ class UniV2Candle$Type extends MessageType<UniV2Candle> {
             { no: 7, name: "volume_token1", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<UniV2Candle>): UniV2Candle {
+    create(value?: PartialMessage<UniCandle>): UniCandle {
         const message = { timestamp: 0, open: 0, high: 0, low: 0, close: 0, volumeToken0: "", volumeToken1: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<UniV2Candle>(this, message, value);
+            reflectionMergePartial<UniCandle>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV2Candle): UniV2Candle {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniCandle): UniCandle {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -905,7 +995,7 @@ class UniV2Candle$Type extends MessageType<UniV2Candle> {
         }
         return message;
     }
-    internalBinaryWrite(message: UniV2Candle, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: UniCandle, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* int64 timestamp = 1; */
         if (message.timestamp !== 0)
             writer.tag(1, WireType.Varint).int64(message.timestamp);
@@ -934,6 +1024,219 @@ class UniV2Candle$Type extends MessageType<UniV2Candle> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.UniV2Candle
+ * @generated MessageType for protobuf message hypurr.UniCandle
  */
-export const UniV2Candle = new UniV2Candle$Type();
+export const UniCandle = new UniCandle$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UniV3Pool$Type extends MessageType<UniV3Pool> {
+    constructor() {
+        super("hypurr.UniV3Pool", [
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "factory", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "token0", kind: "message", T: () => ERC20Token },
+            { no: 4, name: "token1", kind: "message", T: () => ERC20Token },
+            { no: 5, name: "fee", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "tick_spacing", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "liquidity", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "sqrt_price_x96", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "tick", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<UniV3Pool>): UniV3Pool {
+        const message = { address: "", factory: "", fee: 0, tickSpacing: 0, liquidity: "", sqrtPriceX96: "", tick: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UniV3Pool>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV3Pool): UniV3Pool {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string address */ 1:
+                    message.address = reader.string();
+                    break;
+                case /* string factory */ 2:
+                    message.factory = reader.string();
+                    break;
+                case /* hypurr.ERC20Token token0 */ 3:
+                    message.token0 = ERC20Token.internalBinaryRead(reader, reader.uint32(), options, message.token0);
+                    break;
+                case /* hypurr.ERC20Token token1 */ 4:
+                    message.token1 = ERC20Token.internalBinaryRead(reader, reader.uint32(), options, message.token1);
+                    break;
+                case /* int32 fee */ 5:
+                    message.fee = reader.int32();
+                    break;
+                case /* int32 tick_spacing */ 6:
+                    message.tickSpacing = reader.int32();
+                    break;
+                case /* string liquidity */ 7:
+                    message.liquidity = reader.string();
+                    break;
+                case /* string sqrt_price_x96 */ 8:
+                    message.sqrtPriceX96 = reader.string();
+                    break;
+                case /* int32 tick */ 9:
+                    message.tick = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UniV3Pool, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string address = 1; */
+        if (message.address !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.address);
+        /* string factory = 2; */
+        if (message.factory !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.factory);
+        /* hypurr.ERC20Token token0 = 3; */
+        if (message.token0)
+            ERC20Token.internalBinaryWrite(message.token0, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ERC20Token token1 = 4; */
+        if (message.token1)
+            ERC20Token.internalBinaryWrite(message.token1, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* int32 fee = 5; */
+        if (message.fee !== 0)
+            writer.tag(5, WireType.Varint).int32(message.fee);
+        /* int32 tick_spacing = 6; */
+        if (message.tickSpacing !== 0)
+            writer.tag(6, WireType.Varint).int32(message.tickSpacing);
+        /* string liquidity = 7; */
+        if (message.liquidity !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.liquidity);
+        /* string sqrt_price_x96 = 8; */
+        if (message.sqrtPriceX96 !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.sqrtPriceX96);
+        /* int32 tick = 9; */
+        if (message.tick !== 0)
+            writer.tag(9, WireType.Varint).int32(message.tick);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UniV3Pool
+ */
+export const UniV3Pool = new UniV3Pool$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UniV3Swap$Type extends MessageType<UniV3Swap> {
+    constructor() {
+        super("hypurr.UniV3Swap", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "pool", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "sender", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "recipient", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "amount0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "amount1", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "sqrt_price_x96", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "liquidity", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "tick", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 10, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<UniV3Swap>): UniV3Swap {
+        const message = { id: "", pool: "", sender: "", recipient: "", amount0: "", amount1: "", sqrtPriceX96: "", liquidity: "", tick: 0, timestamp: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UniV3Swap>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV3Swap): UniV3Swap {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* string pool */ 2:
+                    message.pool = reader.string();
+                    break;
+                case /* string sender */ 3:
+                    message.sender = reader.string();
+                    break;
+                case /* string recipient */ 4:
+                    message.recipient = reader.string();
+                    break;
+                case /* string amount0 */ 5:
+                    message.amount0 = reader.string();
+                    break;
+                case /* string amount1 */ 6:
+                    message.amount1 = reader.string();
+                    break;
+                case /* string sqrt_price_x96 */ 7:
+                    message.sqrtPriceX96 = reader.string();
+                    break;
+                case /* string liquidity */ 8:
+                    message.liquidity = reader.string();
+                    break;
+                case /* int32 tick */ 9:
+                    message.tick = reader.int32();
+                    break;
+                case /* int64 timestamp */ 10:
+                    message.timestamp = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UniV3Swap, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* string pool = 2; */
+        if (message.pool !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.pool);
+        /* string sender = 3; */
+        if (message.sender !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.sender);
+        /* string recipient = 4; */
+        if (message.recipient !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.recipient);
+        /* string amount0 = 5; */
+        if (message.amount0 !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.amount0);
+        /* string amount1 = 6; */
+        if (message.amount1 !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.amount1);
+        /* string sqrt_price_x96 = 7; */
+        if (message.sqrtPriceX96 !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.sqrtPriceX96);
+        /* string liquidity = 8; */
+        if (message.liquidity !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.liquidity);
+        /* int32 tick = 9; */
+        if (message.tick !== 0)
+            writer.tag(9, WireType.Varint).int32(message.tick);
+        /* int64 timestamp = 10; */
+        if (message.timestamp !== 0)
+            writer.tag(10, WireType.Varint).int64(message.timestamp);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UniV3Swap
+ */
+export const UniV3Swap = new UniV3Swap$Type();
