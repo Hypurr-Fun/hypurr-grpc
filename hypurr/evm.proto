@@ -13,6 +13,7 @@ message ERC20Token {
   string total_supply = 5; // Using string for big integers
   double price_in_whype = 6; // New field for price in WHYPE
   double volume_in_whype = 7; // Added field for volume in WHYPE
+  int64 last_volume_update = 8;
 }
 
 // Account Balance messages

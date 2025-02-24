@@ -45,6 +45,10 @@ export interface ERC20Token {
      * @generated from protobuf field: double volume_in_whype = 7;
      */
     volumeInWhype: number; // Added field for volume in WHYPE
+    /**
+     * @generated from protobuf field: int64 last_volume_update = 8;
+     */
+    lastVolumeUpdate: number;
 }
 /**
  * Account Balance messages
@@ -273,11 +277,12 @@ class ERC20Token$Type extends MessageType<ERC20Token> {
             { no: 4, name: "decimals", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 5, name: "total_supply", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "price_in_whype", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 7, name: "volume_in_whype", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 7, name: "volume_in_whype", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "last_volume_update", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<ERC20Token>): ERC20Token {
-        const message = { address: "", name: "", symbol: "", decimals: 0, totalSupply: "", priceInWhype: 0, volumeInWhype: 0 };
+        const message = { address: "", name: "", symbol: "", decimals: 0, totalSupply: "", priceInWhype: 0, volumeInWhype: 0, lastVolumeUpdate: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ERC20Token>(this, message, value);
@@ -308,6 +313,9 @@ class ERC20Token$Type extends MessageType<ERC20Token> {
                     break;
                 case /* double volume_in_whype */ 7:
                     message.volumeInWhype = reader.double();
+                    break;
+                case /* int64 last_volume_update */ 8:
+                    message.lastVolumeUpdate = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -342,6 +350,9 @@ class ERC20Token$Type extends MessageType<ERC20Token> {
         /* double volume_in_whype = 7; */
         if (message.volumeInWhype !== 0)
             writer.tag(7, WireType.Bit64).double(message.volumeInWhype);
+        /* int64 last_volume_update = 8; */
+        if (message.lastVolumeUpdate !== 0)
+            writer.tag(8, WireType.Varint).int64(message.lastVolumeUpdate);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
