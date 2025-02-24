@@ -10,6 +10,10 @@ import type { ERC20ApprovalEventsResponse } from "./evm_service";
 import type { ERC20ApprovalEventsRequest } from "./evm_service";
 import type { ERC20TransferEventsResponse } from "./evm_service";
 import type { ERC20TransferEventsRequest } from "./evm_service";
+import type { UniV3SwapsResponse } from "./evm_service";
+import type { UniV3SwapsRequest } from "./evm_service";
+import type { UniV3SwapResponse } from "./evm_service";
+import type { UniV3SwapRequest } from "./evm_service";
 import type { UniV2SwapsResponse } from "./evm_service";
 import type { UniV2SwapsRequest } from "./evm_service";
 import type { UniV2SwapResponse } from "./evm_service";
@@ -59,6 +63,14 @@ export interface IEVMClient {
      * @generated from protobuf rpc: UniV2Swaps(hypurr.UniV2SwapsRequest) returns (hypurr.UniV2SwapsResponse);
      */
     uniV2Swaps(input: UniV2SwapsRequest, options?: RpcOptions): UnaryCall<UniV2SwapsRequest, UniV2SwapsResponse>;
+    /**
+     * @generated from protobuf rpc: UniV3Swap(hypurr.UniV3SwapRequest) returns (hypurr.UniV3SwapResponse);
+     */
+    uniV3Swap(input: UniV3SwapRequest, options?: RpcOptions): UnaryCall<UniV3SwapRequest, UniV3SwapResponse>;
+    /**
+     * @generated from protobuf rpc: UniV3Swaps(hypurr.UniV3SwapsRequest) returns (hypurr.UniV3SwapsResponse);
+     */
+    uniV3Swaps(input: UniV3SwapsRequest, options?: RpcOptions): UnaryCall<UniV3SwapsRequest, UniV3SwapsResponse>;
     /**
      * Event related endpoints
      *
@@ -134,19 +146,33 @@ export class EVMClient implements IEVMClient, ServiceInfo {
         return stackIntercept<UniV2SwapsRequest, UniV2SwapsResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: UniV3Swap(hypurr.UniV3SwapRequest) returns (hypurr.UniV3SwapResponse);
+     */
+    uniV3Swap(input: UniV3SwapRequest, options?: RpcOptions): UnaryCall<UniV3SwapRequest, UniV3SwapResponse> {
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        return stackIntercept<UniV3SwapRequest, UniV3SwapResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: UniV3Swaps(hypurr.UniV3SwapsRequest) returns (hypurr.UniV3SwapsResponse);
+     */
+    uniV3Swaps(input: UniV3SwapsRequest, options?: RpcOptions): UnaryCall<UniV3SwapsRequest, UniV3SwapsResponse> {
+        const method = this.methods[7], opt = this._transport.mergeOptions(options);
+        return stackIntercept<UniV3SwapsRequest, UniV3SwapsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * Event related endpoints
      *
      * @generated from protobuf rpc: ERC20TransferEvents(hypurr.ERC20TransferEventsRequest) returns (hypurr.ERC20TransferEventsResponse);
      */
     eRC20TransferEvents(input: ERC20TransferEventsRequest, options?: RpcOptions): UnaryCall<ERC20TransferEventsRequest, ERC20TransferEventsResponse> {
-        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        const method = this.methods[8], opt = this._transport.mergeOptions(options);
         return stackIntercept<ERC20TransferEventsRequest, ERC20TransferEventsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: ERC20ApprovalEvents(hypurr.ERC20ApprovalEventsRequest) returns (hypurr.ERC20ApprovalEventsResponse);
      */
     eRC20ApprovalEvents(input: ERC20ApprovalEventsRequest, options?: RpcOptions): UnaryCall<ERC20ApprovalEventsRequest, ERC20ApprovalEventsResponse> {
-        const method = this.methods[7], opt = this._transport.mergeOptions(options);
+        const method = this.methods[9], opt = this._transport.mergeOptions(options);
         return stackIntercept<ERC20ApprovalEventsRequest, ERC20ApprovalEventsResponse>("unary", this._transport, method, opt, input);
     }
     /**
@@ -155,7 +181,7 @@ export class EVMClient implements IEVMClient, ServiceInfo {
      * @generated from protobuf rpc: UniCandles(hypurr.UniCandlesRequest) returns (hypurr.UniCandlesResponse);
      */
     uniCandles(input: UniCandlesRequest, options?: RpcOptions): UnaryCall<UniCandlesRequest, UniCandlesResponse> {
-        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        const method = this.methods[10], opt = this._transport.mergeOptions(options);
         return stackIntercept<UniCandlesRequest, UniCandlesResponse>("unary", this._transport, method, opt, input);
     }
 }

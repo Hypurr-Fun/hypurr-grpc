@@ -100,6 +100,29 @@ message UniCandlesResponse {
   repeated UniCandle candles = 1;
 }
 
+// V3 Swap request/response messages
+message UniV3SwapRequest {
+  string id = 1;
+}
+
+message UniV3SwapResponse {
+  UniV3Swap swap = 1;
+}
+
+message UniV3SwapsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  optional string pool_address = 3;
+  optional string sender_address = 4;
+  optional string recipient_address = 5;
+}
+
+message UniV3SwapsResponse {
+  repeated UniV3Swap swaps = 1;
+  string next_page_token = 2;
+}
+
+
 service EVM {
   // Token related endpoints
   rpc ERC20Token(ERC20TokenRequest) returns (ERC20TokenResponse) {}
@@ -112,7 +135,9 @@ service EVM {
   // Swap related endpoints
   rpc UniV2Swap(UniV2SwapRequest) returns (UniV2SwapResponse) {}
   rpc UniV2Swaps(UniV2SwapsRequest) returns (UniV2SwapsResponse) {}
-
+  rpc UniV3Swap(UniV3SwapRequest) returns (UniV3SwapResponse) {}
+  rpc UniV3Swaps(UniV3SwapsRequest) returns (UniV3SwapsResponse) {}
+  
   // Event related endpoints
   rpc ERC20TransferEvents(ERC20TransferEventsRequest) returns (ERC20TransferEventsResponse) {}
   rpc ERC20ApprovalEvents(ERC20ApprovalEventsRequest) returns (ERC20ApprovalEventsResponse) {}

@@ -12,6 +12,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { UniV3Swap } from "./evm";
 import { UniCandle } from "./evm";
 import { ERC20ApprovalEvent } from "./evm";
 import { ERC20TransferEvent } from "./evm";
@@ -272,6 +273,64 @@ export interface UniCandlesResponse {
      * @generated from protobuf field: repeated hypurr.UniCandle candles = 1;
      */
     candles: UniCandle[];
+}
+/**
+ * V3 Swap request/response messages
+ *
+ * @generated from protobuf message hypurr.UniV3SwapRequest
+ */
+export interface UniV3SwapRequest {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+}
+/**
+ * @generated from protobuf message hypurr.UniV3SwapResponse
+ */
+export interface UniV3SwapResponse {
+    /**
+     * @generated from protobuf field: hypurr.UniV3Swap swap = 1;
+     */
+    swap?: UniV3Swap;
+}
+/**
+ * @generated from protobuf message hypurr.UniV3SwapsRequest
+ */
+export interface UniV3SwapsRequest {
+    /**
+     * @generated from protobuf field: int32 page_size = 1;
+     */
+    pageSize: number;
+    /**
+     * @generated from protobuf field: string page_token = 2;
+     */
+    pageToken: string;
+    /**
+     * @generated from protobuf field: optional string pool_address = 3;
+     */
+    poolAddress?: string;
+    /**
+     * @generated from protobuf field: optional string sender_address = 4;
+     */
+    senderAddress?: string;
+    /**
+     * @generated from protobuf field: optional string recipient_address = 5;
+     */
+    recipientAddress?: string;
+}
+/**
+ * @generated from protobuf message hypurr.UniV3SwapsResponse
+ */
+export interface UniV3SwapsResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.UniV3Swap swaps = 1;
+     */
+    swaps: UniV3Swap[];
+    /**
+     * @generated from protobuf field: string next_page_token = 2;
+     */
+    nextPageToken: string;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ERC20TokenRequest$Type extends MessageType<ERC20TokenRequest> {
@@ -1280,6 +1339,229 @@ class UniCandlesResponse$Type extends MessageType<UniCandlesResponse> {
  * @generated MessageType for protobuf message hypurr.UniCandlesResponse
  */
 export const UniCandlesResponse = new UniCandlesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UniV3SwapRequest$Type extends MessageType<UniV3SwapRequest> {
+    constructor() {
+        super("hypurr.UniV3SwapRequest", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<UniV3SwapRequest>): UniV3SwapRequest {
+        const message = { id: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UniV3SwapRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV3SwapRequest): UniV3SwapRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UniV3SwapRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UniV3SwapRequest
+ */
+export const UniV3SwapRequest = new UniV3SwapRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UniV3SwapResponse$Type extends MessageType<UniV3SwapResponse> {
+    constructor() {
+        super("hypurr.UniV3SwapResponse", [
+            { no: 1, name: "swap", kind: "message", T: () => UniV3Swap }
+        ]);
+    }
+    create(value?: PartialMessage<UniV3SwapResponse>): UniV3SwapResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UniV3SwapResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV3SwapResponse): UniV3SwapResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.UniV3Swap swap */ 1:
+                    message.swap = UniV3Swap.internalBinaryRead(reader, reader.uint32(), options, message.swap);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UniV3SwapResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.UniV3Swap swap = 1; */
+        if (message.swap)
+            UniV3Swap.internalBinaryWrite(message.swap, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UniV3SwapResponse
+ */
+export const UniV3SwapResponse = new UniV3SwapResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UniV3SwapsRequest$Type extends MessageType<UniV3SwapsRequest> {
+    constructor() {
+        super("hypurr.UniV3SwapsRequest", [
+            { no: 1, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "pool_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "sender_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "recipient_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<UniV3SwapsRequest>): UniV3SwapsRequest {
+        const message = { pageSize: 0, pageToken: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UniV3SwapsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV3SwapsRequest): UniV3SwapsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 page_size */ 1:
+                    message.pageSize = reader.int32();
+                    break;
+                case /* string page_token */ 2:
+                    message.pageToken = reader.string();
+                    break;
+                case /* optional string pool_address */ 3:
+                    message.poolAddress = reader.string();
+                    break;
+                case /* optional string sender_address */ 4:
+                    message.senderAddress = reader.string();
+                    break;
+                case /* optional string recipient_address */ 5:
+                    message.recipientAddress = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UniV3SwapsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 page_size = 1; */
+        if (message.pageSize !== 0)
+            writer.tag(1, WireType.Varint).int32(message.pageSize);
+        /* string page_token = 2; */
+        if (message.pageToken !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.pageToken);
+        /* optional string pool_address = 3; */
+        if (message.poolAddress !== undefined)
+            writer.tag(3, WireType.LengthDelimited).string(message.poolAddress);
+        /* optional string sender_address = 4; */
+        if (message.senderAddress !== undefined)
+            writer.tag(4, WireType.LengthDelimited).string(message.senderAddress);
+        /* optional string recipient_address = 5; */
+        if (message.recipientAddress !== undefined)
+            writer.tag(5, WireType.LengthDelimited).string(message.recipientAddress);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UniV3SwapsRequest
+ */
+export const UniV3SwapsRequest = new UniV3SwapsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UniV3SwapsResponse$Type extends MessageType<UniV3SwapsResponse> {
+    constructor() {
+        super("hypurr.UniV3SwapsResponse", [
+            { no: 1, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => UniV3Swap },
+            { no: 2, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<UniV3SwapsResponse>): UniV3SwapsResponse {
+        const message = { swaps: [], nextPageToken: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UniV3SwapsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV3SwapsResponse): UniV3SwapsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.UniV3Swap swaps */ 1:
+                    message.swaps.push(UniV3Swap.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string next_page_token */ 2:
+                    message.nextPageToken = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UniV3SwapsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.UniV3Swap swaps = 1; */
+        for (let i = 0; i < message.swaps.length; i++)
+            UniV3Swap.internalBinaryWrite(message.swaps[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string next_page_token = 2; */
+        if (message.nextPageToken !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.nextPageToken);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UniV3SwapsResponse
+ */
+export const UniV3SwapsResponse = new UniV3SwapsResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.EVM
  */
@@ -1290,6 +1572,8 @@ export const EVM = new ServiceType("hypurr.EVM", [
     { name: "UniPairs", options: {}, I: UniPairsRequest, O: UniPairsResponse },
     { name: "UniV2Swap", options: {}, I: UniV2SwapRequest, O: UniV2SwapResponse },
     { name: "UniV2Swaps", options: {}, I: UniV2SwapsRequest, O: UniV2SwapsResponse },
+    { name: "UniV3Swap", options: {}, I: UniV3SwapRequest, O: UniV3SwapResponse },
+    { name: "UniV3Swaps", options: {}, I: UniV3SwapsRequest, O: UniV3SwapsResponse },
     { name: "ERC20TransferEvents", options: {}, I: ERC20TransferEventsRequest, O: ERC20TransferEventsResponse },
     { name: "ERC20ApprovalEvents", options: {}, I: ERC20ApprovalEventsRequest, O: ERC20ApprovalEventsResponse },
     { name: "UniCandles", options: {}, I: UniCandlesRequest, O: UniCandlesResponse }
