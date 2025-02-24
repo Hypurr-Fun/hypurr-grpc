@@ -99,6 +99,10 @@ export interface UniV2Pair {
      * @generated from protobuf field: string total_supply = 6;
      */
     totalSupply: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: string factory = 7;
+     */
+    factory: string;
 }
 /**
  * Swap messages
@@ -425,11 +429,12 @@ class UniV2Pair$Type extends MessageType<UniV2Pair> {
             { no: 3, name: "token1", kind: "message", T: () => ERC20Token },
             { no: 4, name: "reserve0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "reserve1", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "total_supply", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 6, name: "total_supply", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "factory", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<UniV2Pair>): UniV2Pair {
-        const message = { address: "", reserve0: "", reserve1: "", totalSupply: "" };
+        const message = { address: "", reserve0: "", reserve1: "", totalSupply: "", factory: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UniV2Pair>(this, message, value);
@@ -457,6 +462,9 @@ class UniV2Pair$Type extends MessageType<UniV2Pair> {
                     break;
                 case /* string total_supply */ 6:
                     message.totalSupply = reader.string();
+                    break;
+                case /* string factory */ 7:
+                    message.factory = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -488,6 +496,9 @@ class UniV2Pair$Type extends MessageType<UniV2Pair> {
         /* string total_supply = 6; */
         if (message.totalSupply !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.totalSupply);
+        /* string factory = 7; */
+        if (message.factory !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.factory);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

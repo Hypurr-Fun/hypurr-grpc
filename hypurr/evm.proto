@@ -31,6 +31,7 @@ message UniV2Pair {
   string reserve0 = 4;    // Using string for big integers
   string reserve1 = 5;    // Using string for big integers
   string total_supply = 6;  // Using string for big integers
+  string factory = 7;
 }
 
 // Swap messages
