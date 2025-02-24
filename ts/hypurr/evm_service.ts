@@ -16,6 +16,7 @@ import { UniCandle } from "./evm";
 import { ERC20ApprovalEvent } from "./evm";
 import { ERC20TransferEvent } from "./evm";
 import { UniV2Swap } from "./evm";
+import { UniV3Pool } from "./evm";
 import { UniV2Pair } from "./evm";
 import { ERC20Token } from "./evm";
 /**
@@ -81,9 +82,9 @@ export interface UniV2PairResponse {
     pair?: UniV2Pair;
 }
 /**
- * @generated from protobuf message hypurr.UniV2PairsRequest
+ * @generated from protobuf message hypurr.UniPairsRequest
  */
-export interface UniV2PairsRequest {
+export interface UniPairsRequest {
     /**
      * @generated from protobuf field: int32 page_size = 1;
      */
@@ -94,15 +95,19 @@ export interface UniV2PairsRequest {
     pageToken: string;
 }
 /**
- * @generated from protobuf message hypurr.UniV2PairsResponse
+ * @generated from protobuf message hypurr.UniPairsResponse
  */
-export interface UniV2PairsResponse {
+export interface UniPairsResponse {
     /**
      * @generated from protobuf field: repeated hypurr.UniV2Pair pairs = 1;
      */
     pairs: UniV2Pair[];
     /**
-     * @generated from protobuf field: string next_page_token = 2;
+     * @generated from protobuf field: repeated hypurr.UniV3Pool pairs_v3 = 2;
+     */
+    pairsV3: UniV3Pool[];
+    /**
+     * @generated from protobuf field: string next_page_token = 3;
      */
     nextPageToken: string;
 }
@@ -565,21 +570,21 @@ class UniV2PairResponse$Type extends MessageType<UniV2PairResponse> {
  */
 export const UniV2PairResponse = new UniV2PairResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class UniV2PairsRequest$Type extends MessageType<UniV2PairsRequest> {
+class UniPairsRequest$Type extends MessageType<UniPairsRequest> {
     constructor() {
-        super("hypurr.UniV2PairsRequest", [
+        super("hypurr.UniPairsRequest", [
             { no: 1, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<UniV2PairsRequest>): UniV2PairsRequest {
+    create(value?: PartialMessage<UniPairsRequest>): UniPairsRequest {
         const message = { pageSize: 0, pageToken: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<UniV2PairsRequest>(this, message, value);
+            reflectionMergePartial<UniPairsRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV2PairsRequest): UniV2PairsRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniPairsRequest): UniPairsRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -601,7 +606,7 @@ class UniV2PairsRequest$Type extends MessageType<UniV2PairsRequest> {
         }
         return message;
     }
-    internalBinaryWrite(message: UniV2PairsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: UniPairsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* int32 page_size = 1; */
         if (message.pageSize !== 0)
             writer.tag(1, WireType.Varint).int32(message.pageSize);
@@ -615,25 +620,26 @@ class UniV2PairsRequest$Type extends MessageType<UniV2PairsRequest> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.UniV2PairsRequest
+ * @generated MessageType for protobuf message hypurr.UniPairsRequest
  */
-export const UniV2PairsRequest = new UniV2PairsRequest$Type();
+export const UniPairsRequest = new UniPairsRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class UniV2PairsResponse$Type extends MessageType<UniV2PairsResponse> {
+class UniPairsResponse$Type extends MessageType<UniPairsResponse> {
     constructor() {
-        super("hypurr.UniV2PairsResponse", [
+        super("hypurr.UniPairsResponse", [
             { no: 1, name: "pairs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => UniV2Pair },
-            { no: 2, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "pairs_v3", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => UniV3Pool },
+            { no: 3, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<UniV2PairsResponse>): UniV2PairsResponse {
-        const message = { pairs: [], nextPageToken: "" };
+    create(value?: PartialMessage<UniPairsResponse>): UniPairsResponse {
+        const message = { pairs: [], pairsV3: [], nextPageToken: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<UniV2PairsResponse>(this, message, value);
+            reflectionMergePartial<UniPairsResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV2PairsResponse): UniV2PairsResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniPairsResponse): UniPairsResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -641,7 +647,10 @@ class UniV2PairsResponse$Type extends MessageType<UniV2PairsResponse> {
                 case /* repeated hypurr.UniV2Pair pairs */ 1:
                     message.pairs.push(UniV2Pair.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* string next_page_token */ 2:
+                case /* repeated hypurr.UniV3Pool pairs_v3 */ 2:
+                    message.pairsV3.push(UniV3Pool.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string next_page_token */ 3:
                     message.nextPageToken = reader.string();
                     break;
                 default:
@@ -655,13 +664,16 @@ class UniV2PairsResponse$Type extends MessageType<UniV2PairsResponse> {
         }
         return message;
     }
-    internalBinaryWrite(message: UniV2PairsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: UniPairsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* repeated hypurr.UniV2Pair pairs = 1; */
         for (let i = 0; i < message.pairs.length; i++)
             UniV2Pair.internalBinaryWrite(message.pairs[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* string next_page_token = 2; */
+        /* repeated hypurr.UniV3Pool pairs_v3 = 2; */
+        for (let i = 0; i < message.pairsV3.length; i++)
+            UniV3Pool.internalBinaryWrite(message.pairsV3[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string next_page_token = 3; */
         if (message.nextPageToken !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.nextPageToken);
+            writer.tag(3, WireType.LengthDelimited).string(message.nextPageToken);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -669,9 +681,9 @@ class UniV2PairsResponse$Type extends MessageType<UniV2PairsResponse> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.UniV2PairsResponse
+ * @generated MessageType for protobuf message hypurr.UniPairsResponse
  */
-export const UniV2PairsResponse = new UniV2PairsResponse$Type();
+export const UniPairsResponse = new UniPairsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class UniV2SwapRequest$Type extends MessageType<UniV2SwapRequest> {
     constructor() {
@@ -1275,7 +1287,7 @@ export const EVM = new ServiceType("hypurr.EVM", [
     { name: "ERC20Token", options: {}, I: ERC20TokenRequest, O: ERC20TokenResponse },
     { name: "ERC20Tokens", options: {}, I: ERC20TokensRequest, O: ERC20TokensResponse },
     { name: "UniV2Pair", options: {}, I: UniV2PairRequest, O: UniV2PairResponse },
-    { name: "UniV2Pairs", options: {}, I: UniV2PairsRequest, O: UniV2PairsResponse },
+    { name: "UniPairs", options: {}, I: UniPairsRequest, O: UniPairsResponse },
     { name: "UniV2Swap", options: {}, I: UniV2SwapRequest, O: UniV2SwapResponse },
     { name: "UniV2Swaps", options: {}, I: UniV2SwapsRequest, O: UniV2SwapsResponse },
     { name: "ERC20TransferEvents", options: {}, I: ERC20TransferEventsRequest, O: ERC20TransferEventsResponse },

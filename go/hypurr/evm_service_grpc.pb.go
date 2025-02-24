@@ -22,7 +22,7 @@ const (
 	EVM_ERC20Token_FullMethodName          = "/hypurr.EVM/ERC20Token"
 	EVM_ERC20Tokens_FullMethodName         = "/hypurr.EVM/ERC20Tokens"
 	EVM_UniV2Pair_FullMethodName           = "/hypurr.EVM/UniV2Pair"
-	EVM_UniV2Pairs_FullMethodName          = "/hypurr.EVM/UniV2Pairs"
+	EVM_UniPairs_FullMethodName            = "/hypurr.EVM/UniPairs"
 	EVM_UniV2Swap_FullMethodName           = "/hypurr.EVM/UniV2Swap"
 	EVM_UniV2Swaps_FullMethodName          = "/hypurr.EVM/UniV2Swaps"
 	EVM_ERC20TransferEvents_FullMethodName = "/hypurr.EVM/ERC20TransferEvents"
@@ -39,7 +39,7 @@ type EVMClient interface {
 	ERC20Tokens(ctx context.Context, in *ERC20TokensRequest, opts ...grpc.CallOption) (*ERC20TokensResponse, error)
 	// Pair related endpoints
 	UniV2Pair(ctx context.Context, in *UniV2PairRequest, opts ...grpc.CallOption) (*UniV2PairResponse, error)
-	UniV2Pairs(ctx context.Context, in *UniV2PairsRequest, opts ...grpc.CallOption) (*UniV2PairsResponse, error)
+	UniPairs(ctx context.Context, in *UniPairsRequest, opts ...grpc.CallOption) (*UniPairsResponse, error)
 	// Swap related endpoints
 	UniV2Swap(ctx context.Context, in *UniV2SwapRequest, opts ...grpc.CallOption) (*UniV2SwapResponse, error)
 	UniV2Swaps(ctx context.Context, in *UniV2SwapsRequest, opts ...grpc.CallOption) (*UniV2SwapsResponse, error)
@@ -88,10 +88,10 @@ func (c *eVMClient) UniV2Pair(ctx context.Context, in *UniV2PairRequest, opts ..
 	return out, nil
 }
 
-func (c *eVMClient) UniV2Pairs(ctx context.Context, in *UniV2PairsRequest, opts ...grpc.CallOption) (*UniV2PairsResponse, error) {
+func (c *eVMClient) UniPairs(ctx context.Context, in *UniPairsRequest, opts ...grpc.CallOption) (*UniPairsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UniV2PairsResponse)
-	err := c.cc.Invoke(ctx, EVM_UniV2Pairs_FullMethodName, in, out, cOpts...)
+	out := new(UniPairsResponse)
+	err := c.cc.Invoke(ctx, EVM_UniPairs_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +157,7 @@ type EVMServer interface {
 	ERC20Tokens(context.Context, *ERC20TokensRequest) (*ERC20TokensResponse, error)
 	// Pair related endpoints
 	UniV2Pair(context.Context, *UniV2PairRequest) (*UniV2PairResponse, error)
-	UniV2Pairs(context.Context, *UniV2PairsRequest) (*UniV2PairsResponse, error)
+	UniPairs(context.Context, *UniPairsRequest) (*UniPairsResponse, error)
 	// Swap related endpoints
 	UniV2Swap(context.Context, *UniV2SwapRequest) (*UniV2SwapResponse, error)
 	UniV2Swaps(context.Context, *UniV2SwapsRequest) (*UniV2SwapsResponse, error)
@@ -182,8 +182,8 @@ func (UnimplementedEVMServer) ERC20Tokens(context.Context, *ERC20TokensRequest) 
 func (UnimplementedEVMServer) UniV2Pair(context.Context, *UniV2PairRequest) (*UniV2PairResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UniV2Pair not implemented")
 }
-func (UnimplementedEVMServer) UniV2Pairs(context.Context, *UniV2PairsRequest) (*UniV2PairsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UniV2Pairs not implemented")
+func (UnimplementedEVMServer) UniPairs(context.Context, *UniPairsRequest) (*UniPairsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UniPairs not implemented")
 }
 func (UnimplementedEVMServer) UniV2Swap(context.Context, *UniV2SwapRequest) (*UniV2SwapResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UniV2Swap not implemented")
@@ -267,20 +267,20 @@ func _EVM_UniV2Pair_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
-func _EVM_UniV2Pairs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UniV2PairsRequest)
+func _EVM_UniPairs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UniPairsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EVMServer).UniV2Pairs(ctx, in)
+		return srv.(EVMServer).UniPairs(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: EVM_UniV2Pairs_FullMethodName,
+		FullMethod: EVM_UniPairs_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EVMServer).UniV2Pairs(ctx, req.(*UniV2PairsRequest))
+		return srv.(EVMServer).UniPairs(ctx, req.(*UniPairsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -395,8 +395,8 @@ var EVM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _EVM_UniV2Pair_Handler,
 		},
 		{
-			MethodName: "UniV2Pairs",
-			Handler:    _EVM_UniV2Pairs_Handler,
+			MethodName: "UniPairs",
+			Handler:    _EVM_UniPairs_Handler,
 		},
 		{
 			MethodName: "UniV2Swap",

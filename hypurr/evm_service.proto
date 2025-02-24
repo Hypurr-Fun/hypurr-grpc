@@ -31,14 +31,15 @@ message UniV2PairResponse {
   UniV2Pair pair = 1;
 }
 
-message UniV2PairsRequest {
+message UniPairsRequest {
   int32 page_size = 1;
   string page_token = 2;
 }
 
-message UniV2PairsResponse {
+message UniPairsResponse {
   repeated UniV2Pair pairs = 1;
-  string next_page_token = 2;
+  repeated UniV3Pool pairs_v3 = 2;
+  string next_page_token = 3;
 }
 
 message UniV2SwapRequest {
@@ -106,7 +107,7 @@ service EVM {
 
   // Pair related endpoints
   rpc UniV2Pair(UniV2PairRequest) returns (UniV2PairResponse) {}
-  rpc UniV2Pairs(UniV2PairsRequest) returns (UniV2PairsResponse) {}
+  rpc UniPairs(UniPairsRequest) returns (UniPairsResponse) {}
 
   // Swap related endpoints
   rpc UniV2Swap(UniV2SwapRequest) returns (UniV2SwapResponse) {}

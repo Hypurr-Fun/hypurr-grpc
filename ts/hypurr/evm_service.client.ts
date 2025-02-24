@@ -14,8 +14,8 @@ import type { UniV2SwapsResponse } from "./evm_service";
 import type { UniV2SwapsRequest } from "./evm_service";
 import type { UniV2SwapResponse } from "./evm_service";
 import type { UniV2SwapRequest } from "./evm_service";
-import type { UniV2PairsResponse } from "./evm_service";
-import type { UniV2PairsRequest } from "./evm_service";
+import type { UniPairsResponse } from "./evm_service";
+import type { UniPairsRequest } from "./evm_service";
 import type { UniV2PairResponse } from "./evm_service";
 import type { UniV2PairRequest } from "./evm_service";
 import type { ERC20TokensResponse } from "./evm_service";
@@ -46,9 +46,9 @@ export interface IEVMClient {
      */
     uniV2Pair(input: UniV2PairRequest, options?: RpcOptions): UnaryCall<UniV2PairRequest, UniV2PairResponse>;
     /**
-     * @generated from protobuf rpc: UniV2Pairs(hypurr.UniV2PairsRequest) returns (hypurr.UniV2PairsResponse);
+     * @generated from protobuf rpc: UniPairs(hypurr.UniPairsRequest) returns (hypurr.UniPairsResponse);
      */
-    uniV2Pairs(input: UniV2PairsRequest, options?: RpcOptions): UnaryCall<UniV2PairsRequest, UniV2PairsResponse>;
+    uniPairs(input: UniPairsRequest, options?: RpcOptions): UnaryCall<UniPairsRequest, UniPairsResponse>;
     /**
      * Swap related endpoints
      *
@@ -111,11 +111,11 @@ export class EVMClient implements IEVMClient, ServiceInfo {
         return stackIntercept<UniV2PairRequest, UniV2PairResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: UniV2Pairs(hypurr.UniV2PairsRequest) returns (hypurr.UniV2PairsResponse);
+     * @generated from protobuf rpc: UniPairs(hypurr.UniPairsRequest) returns (hypurr.UniPairsResponse);
      */
-    uniV2Pairs(input: UniV2PairsRequest, options?: RpcOptions): UnaryCall<UniV2PairsRequest, UniV2PairsResponse> {
+    uniPairs(input: UniPairsRequest, options?: RpcOptions): UnaryCall<UniPairsRequest, UniPairsResponse> {
         const method = this.methods[3], opt = this._transport.mergeOptions(options);
-        return stackIntercept<UniV2PairsRequest, UniV2PairsResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<UniPairsRequest, UniPairsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * Swap related endpoints
