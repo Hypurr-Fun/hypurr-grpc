@@ -99,9 +99,9 @@ export interface UniPairsRequest {
  */
 export interface UniPairsResponse {
     /**
-     * @generated from protobuf field: repeated hypurr.UniV2Pair pairs = 1;
+     * @generated from protobuf field: repeated hypurr.UniV2Pair pairs_v2 = 1;
      */
-    pairs: UniV2Pair[];
+    pairsV2: UniV2Pair[];
     /**
      * @generated from protobuf field: repeated hypurr.UniV3Pool pairs_v3 = 2;
      */
@@ -627,13 +627,13 @@ export const UniPairsRequest = new UniPairsRequest$Type();
 class UniPairsResponse$Type extends MessageType<UniPairsResponse> {
     constructor() {
         super("hypurr.UniPairsResponse", [
-            { no: 1, name: "pairs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => UniV2Pair },
+            { no: 1, name: "pairs_v2", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => UniV2Pair },
             { no: 2, name: "pairs_v3", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => UniV3Pool },
             { no: 3, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<UniPairsResponse>): UniPairsResponse {
-        const message = { pairs: [], pairsV3: [], nextPageToken: "" };
+        const message = { pairsV2: [], pairsV3: [], nextPageToken: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UniPairsResponse>(this, message, value);
@@ -644,8 +644,8 @@ class UniPairsResponse$Type extends MessageType<UniPairsResponse> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypurr.UniV2Pair pairs */ 1:
-                    message.pairs.push(UniV2Pair.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.UniV2Pair pairs_v2 */ 1:
+                    message.pairsV2.push(UniV2Pair.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* repeated hypurr.UniV3Pool pairs_v3 */ 2:
                     message.pairsV3.push(UniV3Pool.internalBinaryRead(reader, reader.uint32(), options));
@@ -665,9 +665,9 @@ class UniPairsResponse$Type extends MessageType<UniPairsResponse> {
         return message;
     }
     internalBinaryWrite(message: UniPairsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.UniV2Pair pairs = 1; */
-        for (let i = 0; i < message.pairs.length; i++)
-            UniV2Pair.internalBinaryWrite(message.pairs[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.UniV2Pair pairs_v2 = 1; */
+        for (let i = 0; i < message.pairsV2.length; i++)
+            UniV2Pair.internalBinaryWrite(message.pairsV2[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* repeated hypurr.UniV3Pool pairs_v3 = 2; */
         for (let i = 0; i < message.pairsV3.length; i++)
             UniV3Pool.internalBinaryWrite(message.pairsV3[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
