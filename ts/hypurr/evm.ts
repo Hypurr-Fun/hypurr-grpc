@@ -127,27 +127,19 @@ export interface UniV2Swap {
      */
     sender: string;
     /**
-     * @generated from protobuf field: string amount0_in = 4;
+     * @generated from protobuf field: string amount0 = 4;
      */
-    amount0In: string; // Using string for big integers
+    amount0: string; // Net amount of token0 (positive for in, negative for out)
     /**
-     * @generated from protobuf field: string amount1_in = 5;
+     * @generated from protobuf field: string amount1 = 5;
      */
-    amount1In: string; // Using string for big integers
+    amount1: string; // Net amount of token1 (positive for in, negative for out)
     /**
-     * @generated from protobuf field: string amount0_out = 6;
-     */
-    amount0Out: string; // Using string for big integers
-    /**
-     * @generated from protobuf field: string amount1_out = 7;
-     */
-    amount1Out: string; // Using string for big integers
-    /**
-     * @generated from protobuf field: string to = 8;
+     * @generated from protobuf field: string to = 6;
      */
     to: string;
     /**
-     * @generated from protobuf field: int64 timestamp = 9;
+     * @generated from protobuf field: int64 timestamp = 7;
      */
     timestamp: number;
 }
@@ -617,16 +609,14 @@ class UniV2Swap$Type extends MessageType<UniV2Swap> {
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "pair", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "sender", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "amount0_in", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "amount1_in", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "amount0_out", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "amount1_out", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 9, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 4, name: "amount0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "amount1", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<UniV2Swap>): UniV2Swap {
-        const message = { id: "", pair: "", sender: "", amount0In: "", amount1In: "", amount0Out: "", amount1Out: "", to: "", timestamp: 0 };
+        const message = { id: "", pair: "", sender: "", amount0: "", amount1: "", to: "", timestamp: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UniV2Swap>(this, message, value);
@@ -646,22 +636,16 @@ class UniV2Swap$Type extends MessageType<UniV2Swap> {
                 case /* string sender */ 3:
                     message.sender = reader.string();
                     break;
-                case /* string amount0_in */ 4:
-                    message.amount0In = reader.string();
+                case /* string amount0 */ 4:
+                    message.amount0 = reader.string();
                     break;
-                case /* string amount1_in */ 5:
-                    message.amount1In = reader.string();
+                case /* string amount1 */ 5:
+                    message.amount1 = reader.string();
                     break;
-                case /* string amount0_out */ 6:
-                    message.amount0Out = reader.string();
-                    break;
-                case /* string amount1_out */ 7:
-                    message.amount1Out = reader.string();
-                    break;
-                case /* string to */ 8:
+                case /* string to */ 6:
                     message.to = reader.string();
                     break;
-                case /* int64 timestamp */ 9:
+                case /* int64 timestamp */ 7:
                     message.timestamp = reader.int64().toNumber();
                     break;
                 default:
@@ -685,24 +669,18 @@ class UniV2Swap$Type extends MessageType<UniV2Swap> {
         /* string sender = 3; */
         if (message.sender !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.sender);
-        /* string amount0_in = 4; */
-        if (message.amount0In !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.amount0In);
-        /* string amount1_in = 5; */
-        if (message.amount1In !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.amount1In);
-        /* string amount0_out = 6; */
-        if (message.amount0Out !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.amount0Out);
-        /* string amount1_out = 7; */
-        if (message.amount1Out !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.amount1Out);
-        /* string to = 8; */
+        /* string amount0 = 4; */
+        if (message.amount0 !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.amount0);
+        /* string amount1 = 5; */
+        if (message.amount1 !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.amount1);
+        /* string to = 6; */
         if (message.to !== "")
-            writer.tag(8, WireType.LengthDelimited).string(message.to);
-        /* int64 timestamp = 9; */
+            writer.tag(6, WireType.LengthDelimited).string(message.to);
+        /* int64 timestamp = 7; */
         if (message.timestamp !== 0)
-            writer.tag(9, WireType.Varint).int64(message.timestamp);
+            writer.tag(7, WireType.Varint).int64(message.timestamp);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

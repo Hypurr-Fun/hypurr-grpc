@@ -40,12 +40,10 @@ message UniV2Swap {
   string id = 1;
   string pair = 2;
   string sender = 3;
-  string amount0_in = 4;   // Using string for big integers
-  string amount1_in = 5;   // Using string for big integers
-  string amount0_out = 6;  // Using string for big integers
-  string amount1_out = 7;  // Using string for big integers
-  string to = 8;
-  int64 timestamp = 9;
+  string amount0 = 4;   // Net amount of token0 (positive for in, negative for out)
+  string amount1 = 5;   // Net amount of token1 (positive for in, negative for out)
+  string to = 6;
+  int64 timestamp = 7;
 }
 
 // ERC20 Transfer Event messages
