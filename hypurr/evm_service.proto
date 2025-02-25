@@ -34,6 +34,7 @@ message UniV2PairResponse {
 message UniPairsRequest {
   int32 page_size = 1;
   string page_token = 2;
+  optional string token_address = 3;
 }
 
 message UniPairsResponse {

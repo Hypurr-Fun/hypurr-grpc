@@ -94,6 +94,10 @@ export interface UniPairsRequest {
      * @generated from protobuf field: string page_token = 2;
      */
     pageToken: string;
+    /**
+     * @generated from protobuf field: optional string token_address = 3;
+     */
+    tokenAddress?: string;
 }
 /**
  * @generated from protobuf message hypurr.UniPairsResponse
@@ -633,7 +637,8 @@ class UniPairsRequest$Type extends MessageType<UniPairsRequest> {
     constructor() {
         super("hypurr.UniPairsRequest", [
             { no: 1, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 2, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "token_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<UniPairsRequest>): UniPairsRequest {
@@ -654,6 +659,9 @@ class UniPairsRequest$Type extends MessageType<UniPairsRequest> {
                 case /* string page_token */ 2:
                     message.pageToken = reader.string();
                     break;
+                case /* optional string token_address */ 3:
+                    message.tokenAddress = reader.string();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -672,6 +680,9 @@ class UniPairsRequest$Type extends MessageType<UniPairsRequest> {
         /* string page_token = 2; */
         if (message.pageToken !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.pageToken);
+        /* optional string token_address = 3; */
+        if (message.tokenAddress !== undefined)
+            writer.tag(3, WireType.LengthDelimited).string(message.tokenAddress);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
