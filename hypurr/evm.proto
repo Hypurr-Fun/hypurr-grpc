@@ -33,6 +33,9 @@ message UniV2Pair {
   string reserve1 = 5;    // Using string for big integers
   string total_supply = 6;  // Using string for big integers
   string factory = 7;
+  double volume0_24h = 8;  // 24h volume EMA for token0
+  double volume1_24h = 9;  // 24h volume EMA for token1
+  int64 last_volume_update = 10;  // Last time volume was updated
 }
 
 // Swap messages
@@ -95,6 +98,9 @@ message UniV3Pool {
   string liquidity = 7;    // Using string for big integers
   string sqrt_price_x96 = 8;  // Using string for big integers
   int32 tick = 9;
+  double volume0_24h = 10;  // 24h volume EMA for token0
+  double volume1_24h = 11;  // 24h volume EMA for token1
+  int64 last_volume_update = 12;  // Last time volume was updated
 }
 
 // UniswapV3 Swap messages

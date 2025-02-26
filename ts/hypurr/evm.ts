@@ -107,6 +107,18 @@ export interface UniV2Pair {
      * @generated from protobuf field: string factory = 7;
      */
     factory: string;
+    /**
+     * @generated from protobuf field: double volume0_24h = 8 [json_name = "volume024h"];
+     */
+    volume024H: number; // 24h volume EMA for token0
+    /**
+     * @generated from protobuf field: double volume1_24h = 9 [json_name = "volume124h"];
+     */
+    volume124H: number; // 24h volume EMA for token1
+    /**
+     * @generated from protobuf field: int64 last_volume_update = 10;
+     */
+    lastVolumeUpdate: number; // Last time volume was updated
 }
 /**
  * Swap messages
@@ -301,6 +313,18 @@ export interface UniV3Pool {
      * @generated from protobuf field: int32 tick = 9;
      */
     tick: number;
+    /**
+     * @generated from protobuf field: double volume0_24h = 10 [json_name = "volume024h"];
+     */
+    volume024H: number; // 24h volume EMA for token0
+    /**
+     * @generated from protobuf field: double volume1_24h = 11 [json_name = "volume124h"];
+     */
+    volume124H: number; // 24h volume EMA for token1
+    /**
+     * @generated from protobuf field: int64 last_volume_update = 12;
+     */
+    lastVolumeUpdate: number; // Last time volume was updated
 }
 /**
  * UniswapV3 Swap messages
@@ -523,11 +547,14 @@ class UniV2Pair$Type extends MessageType<UniV2Pair> {
             { no: 4, name: "reserve0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "reserve1", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "total_supply", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "factory", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 7, name: "factory", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "volume0_24h", kind: "scalar", jsonName: "volume024h", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "volume1_24h", kind: "scalar", jsonName: "volume124h", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "last_volume_update", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<UniV2Pair>): UniV2Pair {
-        const message = { address: "", reserve0: "", reserve1: "", totalSupply: "", factory: "" };
+        const message = { address: "", reserve0: "", reserve1: "", totalSupply: "", factory: "", volume024H: 0, volume124H: 0, lastVolumeUpdate: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UniV2Pair>(this, message, value);
@@ -558,6 +585,15 @@ class UniV2Pair$Type extends MessageType<UniV2Pair> {
                     break;
                 case /* string factory */ 7:
                     message.factory = reader.string();
+                    break;
+                case /* double volume0_24h = 8 [json_name = "volume024h"];*/ 8:
+                    message.volume024H = reader.double();
+                    break;
+                case /* double volume1_24h = 9 [json_name = "volume124h"];*/ 9:
+                    message.volume124H = reader.double();
+                    break;
+                case /* int64 last_volume_update */ 10:
+                    message.lastVolumeUpdate = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -592,6 +628,15 @@ class UniV2Pair$Type extends MessageType<UniV2Pair> {
         /* string factory = 7; */
         if (message.factory !== "")
             writer.tag(7, WireType.LengthDelimited).string(message.factory);
+        /* double volume0_24h = 8 [json_name = "volume024h"]; */
+        if (message.volume024H !== 0)
+            writer.tag(8, WireType.Bit64).double(message.volume024H);
+        /* double volume1_24h = 9 [json_name = "volume124h"]; */
+        if (message.volume124H !== 0)
+            writer.tag(9, WireType.Bit64).double(message.volume124H);
+        /* int64 last_volume_update = 10; */
+        if (message.lastVolumeUpdate !== 0)
+            writer.tag(10, WireType.Varint).int64(message.lastVolumeUpdate);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1017,11 +1062,14 @@ class UniV3Pool$Type extends MessageType<UniV3Pool> {
             { no: 6, name: "tick_spacing", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 7, name: "liquidity", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 8, name: "sqrt_price_x96", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 9, name: "tick", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 9, name: "tick", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 10, name: "volume0_24h", kind: "scalar", jsonName: "volume024h", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "volume1_24h", kind: "scalar", jsonName: "volume124h", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 12, name: "last_volume_update", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<UniV3Pool>): UniV3Pool {
-        const message = { address: "", factory: "", fee: 0, tickSpacing: 0, liquidity: "", sqrtPriceX96: "", tick: 0 };
+        const message = { address: "", factory: "", fee: 0, tickSpacing: 0, liquidity: "", sqrtPriceX96: "", tick: 0, volume024H: 0, volume124H: 0, lastVolumeUpdate: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UniV3Pool>(this, message, value);
@@ -1058,6 +1106,15 @@ class UniV3Pool$Type extends MessageType<UniV3Pool> {
                     break;
                 case /* int32 tick */ 9:
                     message.tick = reader.int32();
+                    break;
+                case /* double volume0_24h = 10 [json_name = "volume024h"];*/ 10:
+                    message.volume024H = reader.double();
+                    break;
+                case /* double volume1_24h = 11 [json_name = "volume124h"];*/ 11:
+                    message.volume124H = reader.double();
+                    break;
+                case /* int64 last_volume_update */ 12:
+                    message.lastVolumeUpdate = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1098,6 +1155,15 @@ class UniV3Pool$Type extends MessageType<UniV3Pool> {
         /* int32 tick = 9; */
         if (message.tick !== 0)
             writer.tag(9, WireType.Varint).int32(message.tick);
+        /* double volume0_24h = 10 [json_name = "volume024h"]; */
+        if (message.volume024H !== 0)
+            writer.tag(10, WireType.Bit64).double(message.volume024H);
+        /* double volume1_24h = 11 [json_name = "volume124h"]; */
+        if (message.volume124H !== 0)
+            writer.tag(11, WireType.Bit64).double(message.volume124H);
+        /* int64 last_volume_update = 12; */
+        if (message.lastVolumeUpdate !== 0)
+            writer.tag(12, WireType.Varint).int64(message.lastVolumeUpdate);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
