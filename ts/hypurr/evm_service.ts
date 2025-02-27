@@ -12,6 +12,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { Int32Value } from "../google/protobuf/wrappers";
 import { UniV3Swap } from "./evm";
 import { UniCandle } from "./evm";
 import { ERC20ApprovalEvent } from "./evm";
@@ -335,6 +336,50 @@ export interface UniV3SwapsResponse {
      * @generated from protobuf field: string next_page_token = 2;
      */
     nextPageToken: string;
+}
+/**
+ * @generated from protobuf message hypurr.UniV2SwapStreamRequest
+ */
+export interface UniV2SwapStreamRequest {
+    /**
+     * @generated from protobuf field: optional string pair_address = 1;
+     */
+    pairAddress?: string;
+    /**
+     * @generated from protobuf field: optional google.protobuf.Int32Value limit = 2;
+     */
+    limit?: Int32Value;
+}
+/**
+ * @generated from protobuf message hypurr.UniV2SwapStreamResponse
+ */
+export interface UniV2SwapStreamResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.UniV2Swap swaps = 1;
+     */
+    swaps: UniV2Swap[];
+}
+/**
+ * @generated from protobuf message hypurr.UniV3SwapStreamRequest
+ */
+export interface UniV3SwapStreamRequest {
+    /**
+     * @generated from protobuf field: optional string pool_address = 1;
+     */
+    poolAddress?: string;
+    /**
+     * @generated from protobuf field: optional google.protobuf.Int32Value limit = 2;
+     */
+    limit?: Int32Value;
+}
+/**
+ * @generated from protobuf message hypurr.UniV3SwapStreamResponse
+ */
+export interface UniV3SwapStreamResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.UniV3Swap swaps = 1;
+     */
+    swaps: UniV3Swap[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ERC20TokenRequest$Type extends MessageType<ERC20TokenRequest> {
@@ -1573,6 +1618,208 @@ class UniV3SwapsResponse$Type extends MessageType<UniV3SwapsResponse> {
  * @generated MessageType for protobuf message hypurr.UniV3SwapsResponse
  */
 export const UniV3SwapsResponse = new UniV3SwapsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UniV2SwapStreamRequest$Type extends MessageType<UniV2SwapStreamRequest> {
+    constructor() {
+        super("hypurr.UniV2SwapStreamRequest", [
+            { no: 1, name: "pair_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "limit", kind: "message", T: () => Int32Value }
+        ]);
+    }
+    create(value?: PartialMessage<UniV2SwapStreamRequest>): UniV2SwapStreamRequest {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UniV2SwapStreamRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV2SwapStreamRequest): UniV2SwapStreamRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* optional string pair_address */ 1:
+                    message.pairAddress = reader.string();
+                    break;
+                case /* optional google.protobuf.Int32Value limit */ 2:
+                    message.limit = Int32Value.internalBinaryRead(reader, reader.uint32(), options, message.limit);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UniV2SwapStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* optional string pair_address = 1; */
+        if (message.pairAddress !== undefined)
+            writer.tag(1, WireType.LengthDelimited).string(message.pairAddress);
+        /* optional google.protobuf.Int32Value limit = 2; */
+        if (message.limit)
+            Int32Value.internalBinaryWrite(message.limit, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UniV2SwapStreamRequest
+ */
+export const UniV2SwapStreamRequest = new UniV2SwapStreamRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UniV2SwapStreamResponse$Type extends MessageType<UniV2SwapStreamResponse> {
+    constructor() {
+        super("hypurr.UniV2SwapStreamResponse", [
+            { no: 1, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => UniV2Swap }
+        ]);
+    }
+    create(value?: PartialMessage<UniV2SwapStreamResponse>): UniV2SwapStreamResponse {
+        const message = { swaps: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UniV2SwapStreamResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV2SwapStreamResponse): UniV2SwapStreamResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.UniV2Swap swaps */ 1:
+                    message.swaps.push(UniV2Swap.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UniV2SwapStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.UniV2Swap swaps = 1; */
+        for (let i = 0; i < message.swaps.length; i++)
+            UniV2Swap.internalBinaryWrite(message.swaps[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UniV2SwapStreamResponse
+ */
+export const UniV2SwapStreamResponse = new UniV2SwapStreamResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UniV3SwapStreamRequest$Type extends MessageType<UniV3SwapStreamRequest> {
+    constructor() {
+        super("hypurr.UniV3SwapStreamRequest", [
+            { no: 1, name: "pool_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "limit", kind: "message", T: () => Int32Value }
+        ]);
+    }
+    create(value?: PartialMessage<UniV3SwapStreamRequest>): UniV3SwapStreamRequest {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UniV3SwapStreamRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV3SwapStreamRequest): UniV3SwapStreamRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* optional string pool_address */ 1:
+                    message.poolAddress = reader.string();
+                    break;
+                case /* optional google.protobuf.Int32Value limit */ 2:
+                    message.limit = Int32Value.internalBinaryRead(reader, reader.uint32(), options, message.limit);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UniV3SwapStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* optional string pool_address = 1; */
+        if (message.poolAddress !== undefined)
+            writer.tag(1, WireType.LengthDelimited).string(message.poolAddress);
+        /* optional google.protobuf.Int32Value limit = 2; */
+        if (message.limit)
+            Int32Value.internalBinaryWrite(message.limit, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UniV3SwapStreamRequest
+ */
+export const UniV3SwapStreamRequest = new UniV3SwapStreamRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UniV3SwapStreamResponse$Type extends MessageType<UniV3SwapStreamResponse> {
+    constructor() {
+        super("hypurr.UniV3SwapStreamResponse", [
+            { no: 1, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => UniV3Swap }
+        ]);
+    }
+    create(value?: PartialMessage<UniV3SwapStreamResponse>): UniV3SwapStreamResponse {
+        const message = { swaps: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UniV3SwapStreamResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniV3SwapStreamResponse): UniV3SwapStreamResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.UniV3Swap swaps */ 1:
+                    message.swaps.push(UniV3Swap.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UniV3SwapStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.UniV3Swap swaps = 1; */
+        for (let i = 0; i < message.swaps.length; i++)
+            UniV3Swap.internalBinaryWrite(message.swaps[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UniV3SwapStreamResponse
+ */
+export const UniV3SwapStreamResponse = new UniV3SwapStreamResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.EVM
  */
@@ -1587,5 +1834,7 @@ export const EVM = new ServiceType("hypurr.EVM", [
     { name: "UniV3Swaps", options: {}, I: UniV3SwapsRequest, O: UniV3SwapsResponse },
     { name: "ERC20TransferEvents", options: {}, I: ERC20TransferEventsRequest, O: ERC20TransferEventsResponse },
     { name: "ERC20ApprovalEvents", options: {}, I: ERC20ApprovalEventsRequest, O: ERC20ApprovalEventsResponse },
-    { name: "UniCandles", options: {}, I: UniCandlesRequest, O: UniCandlesResponse }
+    { name: "UniCandles", options: {}, I: UniCandlesRequest, O: UniCandlesResponse },
+    { name: "UniV2SwapStream", serverStreaming: true, options: {}, I: UniV2SwapStreamRequest, O: UniV2SwapStreamResponse },
+    { name: "UniV3SwapStream", serverStreaming: true, options: {}, I: UniV3SwapStreamRequest, O: UniV3SwapStreamResponse }
 ]);

@@ -125,6 +125,24 @@ message UniV3SwapsResponse {
   string next_page_token = 2;
 }
 
+message UniV2SwapStreamRequest {
+  optional string pair_address = 1;
+  optional google.protobuf.Int32Value limit = 2;
+}
+
+message UniV2SwapStreamResponse {
+  repeated UniV2Swap swaps = 1;
+}
+
+message UniV3SwapStreamRequest {
+  optional string pool_address = 1;
+  optional google.protobuf.Int32Value limit = 2;
+}
+
+message UniV3SwapStreamResponse {
+  repeated UniV3Swap swaps = 1;
+}
+
 service EVM {
   // Token related endpoints
   rpc ERC20Token(ERC20TokenRequest) returns (ERC20TokenResponse) {}
@@ -146,4 +164,8 @@ service EVM {
   
   // Price candle related endpoints
   rpc UniCandles(UniCandlesRequest) returns (UniCandlesResponse) {}
+
+  // Streaming endpoints
+  rpc UniV2SwapStream(UniV2SwapStreamRequest) returns (stream UniV2SwapStreamResponse) {}
+  rpc UniV3SwapStream(UniV3SwapStreamRequest) returns (stream UniV3SwapStreamResponse) {}
 }

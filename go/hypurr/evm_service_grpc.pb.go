@@ -30,6 +30,8 @@ const (
 	EVM_ERC20TransferEvents_FullMethodName = "/hypurr.EVM/ERC20TransferEvents"
 	EVM_ERC20ApprovalEvents_FullMethodName = "/hypurr.EVM/ERC20ApprovalEvents"
 	EVM_UniCandles_FullMethodName          = "/hypurr.EVM/UniCandles"
+	EVM_UniV2SwapStream_FullMethodName     = "/hypurr.EVM/UniV2SwapStream"
+	EVM_UniV3SwapStream_FullMethodName     = "/hypurr.EVM/UniV3SwapStream"
 )
 
 // EVMClient is the client API for EVM service.
@@ -52,6 +54,9 @@ type EVMClient interface {
 	ERC20ApprovalEvents(ctx context.Context, in *ERC20ApprovalEventsRequest, opts ...grpc.CallOption) (*ERC20ApprovalEventsResponse, error)
 	// Price candle related endpoints
 	UniCandles(ctx context.Context, in *UniCandlesRequest, opts ...grpc.CallOption) (*UniCandlesResponse, error)
+	// Streaming endpoints
+	UniV2SwapStream(ctx context.Context, in *UniV2SwapStreamRequest, opts ...grpc.CallOption) (EVM_UniV2SwapStreamClient, error)
+	UniV3SwapStream(ctx context.Context, in *UniV3SwapStreamRequest, opts ...grpc.CallOption) (EVM_UniV3SwapStreamClient, error)
 }
 
 type eVMClient struct {
@@ -172,6 +177,72 @@ func (c *eVMClient) UniCandles(ctx context.Context, in *UniCandlesRequest, opts 
 	return out, nil
 }
 
+func (c *eVMClient) UniV2SwapStream(ctx context.Context, in *UniV2SwapStreamRequest, opts ...grpc.CallOption) (EVM_UniV2SwapStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &EVM_ServiceDesc.Streams[0], EVM_UniV2SwapStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &eVMUniV2SwapStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type EVM_UniV2SwapStreamClient interface {
+	Recv() (*UniV2SwapStreamResponse, error)
+	grpc.ClientStream
+}
+
+type eVMUniV2SwapStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *eVMUniV2SwapStreamClient) Recv() (*UniV2SwapStreamResponse, error) {
+	m := new(UniV2SwapStreamResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *eVMClient) UniV3SwapStream(ctx context.Context, in *UniV3SwapStreamRequest, opts ...grpc.CallOption) (EVM_UniV3SwapStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &EVM_ServiceDesc.Streams[1], EVM_UniV3SwapStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &eVMUniV3SwapStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type EVM_UniV3SwapStreamClient interface {
+	Recv() (*UniV3SwapStreamResponse, error)
+	grpc.ClientStream
+}
+
+type eVMUniV3SwapStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *eVMUniV3SwapStreamClient) Recv() (*UniV3SwapStreamResponse, error) {
+	m := new(UniV3SwapStreamResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // EVMServer is the server API for EVM service.
 // All implementations must embed UnimplementedEVMServer
 // for forward compatibility
@@ -192,6 +263,9 @@ type EVMServer interface {
 	ERC20ApprovalEvents(context.Context, *ERC20ApprovalEventsRequest) (*ERC20ApprovalEventsResponse, error)
 	// Price candle related endpoints
 	UniCandles(context.Context, *UniCandlesRequest) (*UniCandlesResponse, error)
+	// Streaming endpoints
+	UniV2SwapStream(*UniV2SwapStreamRequest, EVM_UniV2SwapStreamServer) error
+	UniV3SwapStream(*UniV3SwapStreamRequest, EVM_UniV3SwapStreamServer) error
 	mustEmbedUnimplementedEVMServer()
 }
 
@@ -231,6 +305,12 @@ func (UnimplementedEVMServer) ERC20ApprovalEvents(context.Context, *ERC20Approva
 }
 func (UnimplementedEVMServer) UniCandles(context.Context, *UniCandlesRequest) (*UniCandlesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UniCandles not implemented")
+}
+func (UnimplementedEVMServer) UniV2SwapStream(*UniV2SwapStreamRequest, EVM_UniV2SwapStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method UniV2SwapStream not implemented")
+}
+func (UnimplementedEVMServer) UniV3SwapStream(*UniV3SwapStreamRequest, EVM_UniV3SwapStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method UniV3SwapStream not implemented")
 }
 func (UnimplementedEVMServer) mustEmbedUnimplementedEVMServer() {}
 
@@ -443,6 +523,48 @@ func _EVM_UniCandles_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _EVM_UniV2SwapStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(UniV2SwapStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(EVMServer).UniV2SwapStream(m, &eVMUniV2SwapStreamServer{ServerStream: stream})
+}
+
+type EVM_UniV2SwapStreamServer interface {
+	Send(*UniV2SwapStreamResponse) error
+	grpc.ServerStream
+}
+
+type eVMUniV2SwapStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *eVMUniV2SwapStreamServer) Send(m *UniV2SwapStreamResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _EVM_UniV3SwapStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(UniV3SwapStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(EVMServer).UniV3SwapStream(m, &eVMUniV3SwapStreamServer{ServerStream: stream})
+}
+
+type EVM_UniV3SwapStreamServer interface {
+	Send(*UniV3SwapStreamResponse) error
+	grpc.ServerStream
+}
+
+type eVMUniV3SwapStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *eVMUniV3SwapStreamServer) Send(m *UniV3SwapStreamResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // EVM_ServiceDesc is the grpc.ServiceDesc for EVM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -495,6 +617,17 @@ var EVM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _EVM_UniCandles_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "UniV2SwapStream",
+			Handler:       _EVM_UniV2SwapStream_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "UniV3SwapStream",
+			Handler:       _EVM_UniV3SwapStream_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "hypurr/evm_service.proto",
 }
