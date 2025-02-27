@@ -4,6 +4,8 @@ option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/eoa";
 
 import "hypurr/wallet.proto";
 import "hypurr/launch.proto";
+import "hypurr/common.proto";
+import "google/protobuf/wrappers.proto";
 
 message EOASignature {
   string r = 1;
@@ -90,6 +92,22 @@ message PendingHyperliquidLaunchResponse {
   hypurr.HyperliquidLaunch launch = 1;
 }
 
+
+message EditHyperliquidLaunchRequest {
+  google.protobuf.Int64Value launch_id = 1;
+  string token_name = 2;
+  string description = 3;
+  string full_name = 4;
+  google.protobuf.BytesValue media = 5;
+  hypurr.MediaType media_type = 6;
+  int64 dev_lockup_seconds = 7;
+  double initial_purchase_notional = 8;
+}
+
+message EditHyperliquidLaunchResponse {
+  hypurr.HyperliquidLaunch launch = 1;
+}
+
 // Authed endpoints
 service EOA {
   rpc EOAUserAgentChallenge (EOAUserAgentChallengeRequest) returns (EOAUserAgentChallengeResponse) {}
@@ -98,6 +116,7 @@ service EOA {
   // Launch
   rpc PendingHyperliquidLaunch (PendingHyperliquidLaunchRequest) returns (PendingHyperliquidLaunchResponse) {}
   rpc HyperliquidLaunchTrade (HyperliquidLaunchTradeRequest) returns (HyperliquidLaunchTradeResponse) {}
+  rpc EditHyperliquidLaunch (EditHyperliquidLaunchRequest) returns (EditHyperliquidLaunchResponse) {}
 
   // Spot
   rpc HyperliquidSpotTrade (HyperliquidSpotTradeRequest) returns (HyperliquidSpotTradeResponse) {}
