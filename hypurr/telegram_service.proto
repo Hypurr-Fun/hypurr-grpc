@@ -8,6 +8,7 @@ import "hypurr/tools.proto";
 import "hypurr/wallet.proto";
 import "hypurr/user.proto";
 import "hypurr/launch.proto";
+import "hypurr/common.proto";
 
 // Auth endpoints
 message TelegramUserRequest {
@@ -104,12 +105,6 @@ message HyperliquidWalletSpotTwapSessionsRequest {
 
 message HyperliquidWalletSpotTwapSessionsResponse {
   repeated HyperliquidWalletSpotTwapSession sessions = 1;
-}
-
-enum MediaType {
-  MEDIA_TYPE_PHOTO = 0;
-  MEDIA_TYPE_ANIMATION = 1;
-  MEDIA_TYPE_VIDEO = 2;
 }
 
 message LaunchHyperliquidLaunchRequest {

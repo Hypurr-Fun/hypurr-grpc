@@ -57,6 +57,23 @@ export interface PriceCandle {
      */
     close: number;
 }
+/**
+ * @generated from protobuf enum hypurr.MediaType
+ */
+export enum MediaType {
+    /**
+     * @generated from protobuf enum value: MEDIA_TYPE_PHOTO = 0;
+     */
+    PHOTO = 0,
+    /**
+     * @generated from protobuf enum value: MEDIA_TYPE_ANIMATION = 1;
+     */
+    ANIMATION = 1,
+    /**
+     * @generated from protobuf enum value: MEDIA_TYPE_VIDEO = 2;
+     */
+    VIDEO = 2
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserPublic$Type extends MessageType<TelegramUserPublic> {
     constructor() {

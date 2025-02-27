@@ -14,6 +14,7 @@ import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { BytesValue } from "../google/protobuf/wrappers";
 import { HyperliquidLaunch } from "./launch";
+import { MediaType } from "./common";
 import { HyperliquidWalletSpotTwapSession } from "./tools";
 import { HyperliquidSpotSniperConfig } from "./tools";
 import { HyperliquidWallet } from "./wallet";
@@ -384,23 +385,6 @@ export enum HyperliquidLaunchTradeDirection {
      * @generated from protobuf enum value: SELL = 1;
      */
     SELL = 1
-}
-/**
- * @generated from protobuf enum hypurr.MediaType
- */
-export enum MediaType {
-    /**
-     * @generated from protobuf enum value: MEDIA_TYPE_PHOTO = 0;
-     */
-    PHOTO = 0,
-    /**
-     * @generated from protobuf enum value: MEDIA_TYPE_ANIMATION = 1;
-     */
-    ANIMATION = 1,
-    /**
-     * @generated from protobuf enum value: MEDIA_TYPE_VIDEO = 2;
-     */
-    VIDEO = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserRequest$Type extends MessageType<TelegramUserRequest> {
