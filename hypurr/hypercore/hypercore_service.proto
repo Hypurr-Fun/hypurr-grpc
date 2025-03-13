@@ -34,8 +34,9 @@ message WalletBalancesRequest {
 }
 
 message WalletBalancesResponse {
-  repeated WalletSpotBalance spot_balances = 1;
-  repeated WalletPerpBalance perp_balances = 2;
+  string wallet_address = 1;
+  repeated WalletSpotBalance spot_balances = 2;
+  repeated WalletPerpBalance perp_balances = 3;
 }
 
 message WalletBalancesStreamRequest {
