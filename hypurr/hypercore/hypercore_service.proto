@@ -43,10 +43,17 @@ message WalletBalancesStreamRequest {
   bytes bloom_filter = 1;
 }
 
+message WalletBalancesStreamResponse {
+  string wallet_address = 1;
+  repeated WalletSpotBalance spot_balances = 2;
+  repeated WalletPerpBalance perp_balances = 3;
+  string reason = 4;
+}
+
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
-  rpc WalletBalancesStream(WalletBalancesStreamRequest) returns (stream WalletBalancesResponse) {}
+  rpc WalletBalancesStream(WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
 }
 
 /*

@@ -78,7 +78,7 @@ func (c *hyperCoreClient) WalletBalancesStream(ctx context.Context, in *WalletBa
 }
 
 type HyperCore_WalletBalancesStreamClient interface {
-	Recv() (*WalletBalancesResponse, error)
+	Recv() (*WalletBalancesStreamResponse, error)
 	grpc.ClientStream
 }
 
@@ -86,8 +86,8 @@ type hyperCoreWalletBalancesStreamClient struct {
 	grpc.ClientStream
 }
 
-func (x *hyperCoreWalletBalancesStreamClient) Recv() (*WalletBalancesResponse, error) {
-	m := new(WalletBalancesResponse)
+func (x *hyperCoreWalletBalancesStreamClient) Recv() (*WalletBalancesStreamResponse, error) {
+	m := new(WalletBalancesStreamResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -175,7 +175,7 @@ func _HyperCore_WalletBalancesStream_Handler(srv interface{}, stream grpc.Server
 }
 
 type HyperCore_WalletBalancesStreamServer interface {
-	Send(*WalletBalancesResponse) error
+	Send(*WalletBalancesStreamResponse) error
 	grpc.ServerStream
 }
 
@@ -183,7 +183,7 @@ type hyperCoreWalletBalancesStreamServer struct {
 	grpc.ServerStream
 }
 
-func (x *hyperCoreWalletBalancesStreamServer) Send(m *WalletBalancesResponse) error {
+func (x *hyperCoreWalletBalancesStreamServer) Send(m *WalletBalancesStreamResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
