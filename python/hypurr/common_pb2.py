@@ -3,6 +3,7 @@
 
 import sys
 _b=sys.version_info[0]<3 and (lambda x:x) or (lambda x:x.encode('latin1'))
+from google.protobuf.internal import enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
@@ -19,9 +20,39 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/common.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x13hypurr/common.proto\x12\x06hypurr\"e\n\x12TelegramUserPublic\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x17\n\x0fpicture_file_id\x18\x03 \x01(\t\x12\x18\n\x10reputation_score\x18\x04 \x01(\x03\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x13hypurr/common.proto\x12\x06hypurr\"e\n\x12TelegramUserPublic\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x17\n\x0fpicture_file_id\x18\x03 \x01(\t\x12\x18\n\x10reputation_score\x18\x04 \x01(\x03\"S\n\x0bPriceCandle\x12\x0c\n\x04time\x18\x01 \x01(\x03\x12\x0c\n\x04open\x18\x02 \x01(\x02\x12\x0c\n\x04high\x18\x03 \x01(\x02\x12\x0b\n\x03low\x18\x04 \x01(\x02\x12\r\n\x05\x63lose\x18\x05 \x01(\x02*Q\n\tMediaType\x12\x14\n\x10MEDIA_TYPE_PHOTO\x10\x00\x12\x18\n\x14MEDIA_TYPE_ANIMATION\x10\x01\x12\x14\n\x10MEDIA_TYPE_VIDEO\x10\x02\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
 )
 
+_MEDIATYPE = _descriptor.EnumDescriptor(
+  name='MediaType',
+  full_name='hypurr.MediaType',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='MEDIA_TYPE_PHOTO', index=0, number=0,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='MEDIA_TYPE_ANIMATION', index=1, number=1,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='MEDIA_TYPE_VIDEO', index=2, number=2,
+      options=None,
+      type=None),
+  ],
+  containing_type=None,
+  options=None,
+  serialized_start=219,
+  serialized_end=300,
+)
+_sym_db.RegisterEnumDescriptor(_MEDIATYPE)
+
+MediaType = enum_type_wrapper.EnumTypeWrapper(_MEDIATYPE)
+MEDIA_TYPE_PHOTO = 0
+MEDIA_TYPE_ANIMATION = 1
+MEDIA_TYPE_VIDEO = 2
 
 
 
@@ -76,7 +107,68 @@ _TELEGRAMUSERPUBLIC = _descriptor.Descriptor(
   serialized_end=132,
 )
 
+
+_PRICECANDLE = _descriptor.Descriptor(
+  name='PriceCandle',
+  full_name='hypurr.PriceCandle',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='time', full_name='hypurr.PriceCandle.time', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='open', full_name='hypurr.PriceCandle.open', index=1,
+      number=2, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='high', full_name='hypurr.PriceCandle.high', index=2,
+      number=3, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='low', full_name='hypurr.PriceCandle.low', index=3,
+      number=4, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='close', full_name='hypurr.PriceCandle.close', index=4,
+      number=5, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=134,
+  serialized_end=217,
+)
+
 DESCRIPTOR.message_types_by_name['TelegramUserPublic'] = _TELEGRAMUSERPUBLIC
+DESCRIPTOR.message_types_by_name['PriceCandle'] = _PRICECANDLE
+DESCRIPTOR.enum_types_by_name['MediaType'] = _MEDIATYPE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TelegramUserPublic = _reflection.GeneratedProtocolMessageType('TelegramUserPublic', (_message.Message,), dict(
@@ -85,6 +177,13 @@ TelegramUserPublic = _reflection.GeneratedProtocolMessageType('TelegramUserPubli
   # @@protoc_insertion_point(class_scope:hypurr.TelegramUserPublic)
   ))
 _sym_db.RegisterMessage(TelegramUserPublic)
+
+PriceCandle = _reflection.GeneratedProtocolMessageType('PriceCandle', (_message.Message,), dict(
+  DESCRIPTOR = _PRICECANDLE,
+  __module__ = 'hypurr.common_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.PriceCandle)
+  ))
+_sym_db.RegisterMessage(PriceCandle)
 
 
 DESCRIPTOR.has_options = True

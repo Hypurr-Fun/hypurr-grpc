@@ -96,9 +96,9 @@ export interface UniPairsRequest {
      */
     pageToken: string;
     /**
-     * @generated from protobuf field: optional string token_address = 3;
+     * @generated from protobuf field: string token_address = 3;
      */
-    tokenAddress?: string;
+    tokenAddress: string;
 }
 /**
  * @generated from protobuf message hypurr.UniPairsResponse
@@ -148,17 +148,17 @@ export interface UniV2SwapsRequest {
      */
     pageToken: string;
     /**
-     * @generated from protobuf field: optional string pair_address = 3;
+     * @generated from protobuf field: string pair_address = 3;
      */
-    pairAddress?: string;
+    pairAddress: string;
     /**
-     * @generated from protobuf field: optional string sender_address = 4;
+     * @generated from protobuf field: string sender_address = 4;
      */
-    senderAddress?: string;
+    senderAddress: string;
     /**
-     * @generated from protobuf field: optional string receiver_address = 5;
+     * @generated from protobuf field: string receiver_address = 5;
      */
-    receiverAddress?: string;
+    receiverAddress: string;
 }
 /**
  * @generated from protobuf message hypurr.UniV2SwapsResponse
@@ -186,17 +186,17 @@ export interface ERC20TransferEventsRequest {
      */
     pageToken: string;
     /**
-     * @generated from protobuf field: optional string token_address = 3;
+     * @generated from protobuf field: string token_address = 3;
      */
-    tokenAddress?: string;
+    tokenAddress: string;
     /**
-     * @generated from protobuf field: optional string from_address = 4;
+     * @generated from protobuf field: string from_address = 4;
      */
-    fromAddress?: string;
+    fromAddress: string;
     /**
-     * @generated from protobuf field: optional string to_address = 5;
+     * @generated from protobuf field: string to_address = 5;
      */
-    toAddress?: string;
+    toAddress: string;
 }
 /**
  * @generated from protobuf message hypurr.ERC20TransferEventsResponse
@@ -224,17 +224,17 @@ export interface ERC20ApprovalEventsRequest {
      */
     pageToken: string;
     /**
-     * @generated from protobuf field: optional string token_address = 3;
+     * @generated from protobuf field: string token_address = 3;
      */
-    tokenAddress?: string;
+    tokenAddress: string;
     /**
-     * @generated from protobuf field: optional string owner_address = 4;
+     * @generated from protobuf field: string owner_address = 4;
      */
-    ownerAddress?: string;
+    ownerAddress: string;
     /**
-     * @generated from protobuf field: optional string spender_address = 5;
+     * @generated from protobuf field: string spender_address = 5;
      */
-    spenderAddress?: string;
+    spenderAddress: string;
 }
 /**
  * @generated from protobuf message hypurr.ERC20ApprovalEventsResponse
@@ -312,17 +312,17 @@ export interface UniV3SwapsRequest {
      */
     pageToken: string;
     /**
-     * @generated from protobuf field: optional string pool_address = 3;
+     * @generated from protobuf field: string pool_address = 3;
      */
-    poolAddress?: string;
+    poolAddress: string;
     /**
-     * @generated from protobuf field: optional string sender_address = 4;
+     * @generated from protobuf field: string sender_address = 4;
      */
-    senderAddress?: string;
+    senderAddress: string;
     /**
-     * @generated from protobuf field: optional string recipient_address = 5;
+     * @generated from protobuf field: string recipient_address = 5;
      */
-    recipientAddress?: string;
+    recipientAddress: string;
 }
 /**
  * @generated from protobuf message hypurr.UniV3SwapsResponse
@@ -342,11 +342,11 @@ export interface UniV3SwapsResponse {
  */
 export interface UniV2SwapStreamRequest {
     /**
-     * @generated from protobuf field: optional string pair_address = 1;
+     * @generated from protobuf field: string pair_address = 1;
      */
-    pairAddress?: string;
+    pairAddress: string;
     /**
-     * @generated from protobuf field: optional google.protobuf.Int32Value limit = 2;
+     * @generated from protobuf field: google.protobuf.Int32Value limit = 2;
      */
     limit?: Int32Value;
 }
@@ -364,11 +364,11 @@ export interface UniV2SwapStreamResponse {
  */
 export interface UniV3SwapStreamRequest {
     /**
-     * @generated from protobuf field: optional string pool_address = 1;
+     * @generated from protobuf field: string pool_address = 1;
      */
-    poolAddress?: string;
+    poolAddress: string;
     /**
-     * @generated from protobuf field: optional google.protobuf.Int32Value limit = 2;
+     * @generated from protobuf field: google.protobuf.Int32Value limit = 2;
      */
     limit?: Int32Value;
 }
@@ -683,11 +683,11 @@ class UniPairsRequest$Type extends MessageType<UniPairsRequest> {
         super("hypurr.UniPairsRequest", [
             { no: 1, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "token_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "token_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<UniPairsRequest>): UniPairsRequest {
-        const message = { pageSize: 0, pageToken: "" };
+        const message = { pageSize: 0, pageToken: "", tokenAddress: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UniPairsRequest>(this, message, value);
@@ -704,7 +704,7 @@ class UniPairsRequest$Type extends MessageType<UniPairsRequest> {
                 case /* string page_token */ 2:
                     message.pageToken = reader.string();
                     break;
-                case /* optional string token_address */ 3:
+                case /* string token_address */ 3:
                     message.tokenAddress = reader.string();
                     break;
                 default:
@@ -725,8 +725,8 @@ class UniPairsRequest$Type extends MessageType<UniPairsRequest> {
         /* string page_token = 2; */
         if (message.pageToken !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.pageToken);
-        /* optional string token_address = 3; */
-        if (message.tokenAddress !== undefined)
+        /* string token_address = 3; */
+        if (message.tokenAddress !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.tokenAddress);
         let u = options.writeUnknownFields;
         if (u !== false)
@@ -899,13 +899,13 @@ class UniV2SwapsRequest$Type extends MessageType<UniV2SwapsRequest> {
         super("hypurr.UniV2SwapsRequest", [
             { no: 1, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "pair_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "sender_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "receiver_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "pair_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "sender_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "receiver_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<UniV2SwapsRequest>): UniV2SwapsRequest {
-        const message = { pageSize: 0, pageToken: "" };
+        const message = { pageSize: 0, pageToken: "", pairAddress: "", senderAddress: "", receiverAddress: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UniV2SwapsRequest>(this, message, value);
@@ -922,13 +922,13 @@ class UniV2SwapsRequest$Type extends MessageType<UniV2SwapsRequest> {
                 case /* string page_token */ 2:
                     message.pageToken = reader.string();
                     break;
-                case /* optional string pair_address */ 3:
+                case /* string pair_address */ 3:
                     message.pairAddress = reader.string();
                     break;
-                case /* optional string sender_address */ 4:
+                case /* string sender_address */ 4:
                     message.senderAddress = reader.string();
                     break;
-                case /* optional string receiver_address */ 5:
+                case /* string receiver_address */ 5:
                     message.receiverAddress = reader.string();
                     break;
                 default:
@@ -949,14 +949,14 @@ class UniV2SwapsRequest$Type extends MessageType<UniV2SwapsRequest> {
         /* string page_token = 2; */
         if (message.pageToken !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.pageToken);
-        /* optional string pair_address = 3; */
-        if (message.pairAddress !== undefined)
+        /* string pair_address = 3; */
+        if (message.pairAddress !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.pairAddress);
-        /* optional string sender_address = 4; */
-        if (message.senderAddress !== undefined)
+        /* string sender_address = 4; */
+        if (message.senderAddress !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.senderAddress);
-        /* optional string receiver_address = 5; */
-        if (message.receiverAddress !== undefined)
+        /* string receiver_address = 5; */
+        if (message.receiverAddress !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.receiverAddress);
         let u = options.writeUnknownFields;
         if (u !== false)
@@ -1028,13 +1028,13 @@ class ERC20TransferEventsRequest$Type extends MessageType<ERC20TransferEventsReq
         super("hypurr.ERC20TransferEventsRequest", [
             { no: 1, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "token_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "from_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "to_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "token_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "from_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "to_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ERC20TransferEventsRequest>): ERC20TransferEventsRequest {
-        const message = { pageSize: 0, pageToken: "" };
+        const message = { pageSize: 0, pageToken: "", tokenAddress: "", fromAddress: "", toAddress: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ERC20TransferEventsRequest>(this, message, value);
@@ -1051,13 +1051,13 @@ class ERC20TransferEventsRequest$Type extends MessageType<ERC20TransferEventsReq
                 case /* string page_token */ 2:
                     message.pageToken = reader.string();
                     break;
-                case /* optional string token_address */ 3:
+                case /* string token_address */ 3:
                     message.tokenAddress = reader.string();
                     break;
-                case /* optional string from_address */ 4:
+                case /* string from_address */ 4:
                     message.fromAddress = reader.string();
                     break;
-                case /* optional string to_address */ 5:
+                case /* string to_address */ 5:
                     message.toAddress = reader.string();
                     break;
                 default:
@@ -1078,14 +1078,14 @@ class ERC20TransferEventsRequest$Type extends MessageType<ERC20TransferEventsReq
         /* string page_token = 2; */
         if (message.pageToken !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.pageToken);
-        /* optional string token_address = 3; */
-        if (message.tokenAddress !== undefined)
+        /* string token_address = 3; */
+        if (message.tokenAddress !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.tokenAddress);
-        /* optional string from_address = 4; */
-        if (message.fromAddress !== undefined)
+        /* string from_address = 4; */
+        if (message.fromAddress !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.fromAddress);
-        /* optional string to_address = 5; */
-        if (message.toAddress !== undefined)
+        /* string to_address = 5; */
+        if (message.toAddress !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.toAddress);
         let u = options.writeUnknownFields;
         if (u !== false)
@@ -1157,13 +1157,13 @@ class ERC20ApprovalEventsRequest$Type extends MessageType<ERC20ApprovalEventsReq
         super("hypurr.ERC20ApprovalEventsRequest", [
             { no: 1, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "token_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "owner_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "spender_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "token_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "owner_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "spender_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ERC20ApprovalEventsRequest>): ERC20ApprovalEventsRequest {
-        const message = { pageSize: 0, pageToken: "" };
+        const message = { pageSize: 0, pageToken: "", tokenAddress: "", ownerAddress: "", spenderAddress: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ERC20ApprovalEventsRequest>(this, message, value);
@@ -1180,13 +1180,13 @@ class ERC20ApprovalEventsRequest$Type extends MessageType<ERC20ApprovalEventsReq
                 case /* string page_token */ 2:
                     message.pageToken = reader.string();
                     break;
-                case /* optional string token_address */ 3:
+                case /* string token_address */ 3:
                     message.tokenAddress = reader.string();
                     break;
-                case /* optional string owner_address */ 4:
+                case /* string owner_address */ 4:
                     message.ownerAddress = reader.string();
                     break;
-                case /* optional string spender_address */ 5:
+                case /* string spender_address */ 5:
                     message.spenderAddress = reader.string();
                     break;
                 default:
@@ -1207,14 +1207,14 @@ class ERC20ApprovalEventsRequest$Type extends MessageType<ERC20ApprovalEventsReq
         /* string page_token = 2; */
         if (message.pageToken !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.pageToken);
-        /* optional string token_address = 3; */
-        if (message.tokenAddress !== undefined)
+        /* string token_address = 3; */
+        if (message.tokenAddress !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.tokenAddress);
-        /* optional string owner_address = 4; */
-        if (message.ownerAddress !== undefined)
+        /* string owner_address = 4; */
+        if (message.ownerAddress !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.ownerAddress);
-        /* optional string spender_address = 5; */
-        if (message.spenderAddress !== undefined)
+        /* string spender_address = 5; */
+        if (message.spenderAddress !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.spenderAddress);
         let u = options.writeUnknownFields;
         if (u !== false)
@@ -1495,13 +1495,13 @@ class UniV3SwapsRequest$Type extends MessageType<UniV3SwapsRequest> {
         super("hypurr.UniV3SwapsRequest", [
             { no: 1, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "pool_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "sender_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "recipient_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "pool_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "sender_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "recipient_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<UniV3SwapsRequest>): UniV3SwapsRequest {
-        const message = { pageSize: 0, pageToken: "" };
+        const message = { pageSize: 0, pageToken: "", poolAddress: "", senderAddress: "", recipientAddress: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UniV3SwapsRequest>(this, message, value);
@@ -1518,13 +1518,13 @@ class UniV3SwapsRequest$Type extends MessageType<UniV3SwapsRequest> {
                 case /* string page_token */ 2:
                     message.pageToken = reader.string();
                     break;
-                case /* optional string pool_address */ 3:
+                case /* string pool_address */ 3:
                     message.poolAddress = reader.string();
                     break;
-                case /* optional string sender_address */ 4:
+                case /* string sender_address */ 4:
                     message.senderAddress = reader.string();
                     break;
-                case /* optional string recipient_address */ 5:
+                case /* string recipient_address */ 5:
                     message.recipientAddress = reader.string();
                     break;
                 default:
@@ -1545,14 +1545,14 @@ class UniV3SwapsRequest$Type extends MessageType<UniV3SwapsRequest> {
         /* string page_token = 2; */
         if (message.pageToken !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.pageToken);
-        /* optional string pool_address = 3; */
-        if (message.poolAddress !== undefined)
+        /* string pool_address = 3; */
+        if (message.poolAddress !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.poolAddress);
-        /* optional string sender_address = 4; */
-        if (message.senderAddress !== undefined)
+        /* string sender_address = 4; */
+        if (message.senderAddress !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.senderAddress);
-        /* optional string recipient_address = 5; */
-        if (message.recipientAddress !== undefined)
+        /* string recipient_address = 5; */
+        if (message.recipientAddress !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.recipientAddress);
         let u = options.writeUnknownFields;
         if (u !== false)
@@ -1622,12 +1622,12 @@ export const UniV3SwapsResponse = new UniV3SwapsResponse$Type();
 class UniV2SwapStreamRequest$Type extends MessageType<UniV2SwapStreamRequest> {
     constructor() {
         super("hypurr.UniV2SwapStreamRequest", [
-            { no: 1, name: "pair_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "pair_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "limit", kind: "message", T: () => Int32Value }
         ]);
     }
     create(value?: PartialMessage<UniV2SwapStreamRequest>): UniV2SwapStreamRequest {
-        const message = {};
+        const message = { pairAddress: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UniV2SwapStreamRequest>(this, message, value);
@@ -1638,10 +1638,10 @@ class UniV2SwapStreamRequest$Type extends MessageType<UniV2SwapStreamRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* optional string pair_address */ 1:
+                case /* string pair_address */ 1:
                     message.pairAddress = reader.string();
                     break;
-                case /* optional google.protobuf.Int32Value limit */ 2:
+                case /* google.protobuf.Int32Value limit */ 2:
                     message.limit = Int32Value.internalBinaryRead(reader, reader.uint32(), options, message.limit);
                     break;
                 default:
@@ -1656,10 +1656,10 @@ class UniV2SwapStreamRequest$Type extends MessageType<UniV2SwapStreamRequest> {
         return message;
     }
     internalBinaryWrite(message: UniV2SwapStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* optional string pair_address = 1; */
-        if (message.pairAddress !== undefined)
+        /* string pair_address = 1; */
+        if (message.pairAddress !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.pairAddress);
-        /* optional google.protobuf.Int32Value limit = 2; */
+        /* google.protobuf.Int32Value limit = 2; */
         if (message.limit)
             Int32Value.internalBinaryWrite(message.limit, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
@@ -1723,12 +1723,12 @@ export const UniV2SwapStreamResponse = new UniV2SwapStreamResponse$Type();
 class UniV3SwapStreamRequest$Type extends MessageType<UniV3SwapStreamRequest> {
     constructor() {
         super("hypurr.UniV3SwapStreamRequest", [
-            { no: 1, name: "pool_address", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "pool_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "limit", kind: "message", T: () => Int32Value }
         ]);
     }
     create(value?: PartialMessage<UniV3SwapStreamRequest>): UniV3SwapStreamRequest {
-        const message = {};
+        const message = { poolAddress: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UniV3SwapStreamRequest>(this, message, value);
@@ -1739,10 +1739,10 @@ class UniV3SwapStreamRequest$Type extends MessageType<UniV3SwapStreamRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* optional string pool_address */ 1:
+                case /* string pool_address */ 1:
                     message.poolAddress = reader.string();
                     break;
-                case /* optional google.protobuf.Int32Value limit */ 2:
+                case /* google.protobuf.Int32Value limit */ 2:
                     message.limit = Int32Value.internalBinaryRead(reader, reader.uint32(), options, message.limit);
                     break;
                 default:
@@ -1757,10 +1757,10 @@ class UniV3SwapStreamRequest$Type extends MessageType<UniV3SwapStreamRequest> {
         return message;
     }
     internalBinaryWrite(message: UniV3SwapStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* optional string pool_address = 1; */
-        if (message.poolAddress !== undefined)
+        /* string pool_address = 1; */
+        if (message.poolAddress !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.poolAddress);
-        /* optional google.protobuf.Int32Value limit = 2; */
+        /* google.protobuf.Int32Value limit = 2; */
         if (message.limit)
             Int32Value.internalBinaryWrite(message.limit, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;

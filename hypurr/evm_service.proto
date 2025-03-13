@@ -36,7 +36,7 @@ message UniV2PairResponse {
 message UniPairsRequest {
   int32 page_size = 1;
   string page_token = 2;
-  optional string token_address = 3;
+  string token_address = 3;
 }
 
 message UniPairsResponse {
@@ -56,9 +56,9 @@ message UniV2SwapResponse {
 message UniV2SwapsRequest {
   int32 page_size = 1;
   string page_token = 2;
-  optional string pair_address = 3;
-  optional string sender_address = 4;
-  optional string receiver_address = 5;
+  string pair_address = 3;
+  string sender_address = 4;
+  string receiver_address = 5;
 }
 
 message UniV2SwapsResponse {
@@ -69,9 +69,9 @@ message UniV2SwapsResponse {
 message ERC20TransferEventsRequest {
   int32 page_size = 1;
   string page_token = 2;
-  optional string token_address = 3;
-  optional string from_address = 4;
-  optional string to_address = 5;
+  string token_address = 3;
+  string from_address = 4;
+  string to_address = 5;
 }
 
 message ERC20TransferEventsResponse {
@@ -82,9 +82,9 @@ message ERC20TransferEventsResponse {
 message ERC20ApprovalEventsRequest {
   int32 page_size = 1;
   string page_token = 2;
-  optional string token_address = 3;
-  optional string owner_address = 4;
-  optional string spender_address = 5;
+  string token_address = 3;
+  string owner_address = 4;
+  string spender_address = 5;
 }
 
 message ERC20ApprovalEventsResponse {
@@ -115,9 +115,9 @@ message UniV3SwapResponse {
 message UniV3SwapsRequest {
   int32 page_size = 1;
   string page_token = 2;
-  optional string pool_address = 3;
-  optional string sender_address = 4;
-  optional string recipient_address = 5;
+  string pool_address = 3;
+  string sender_address = 4;
+  string recipient_address = 5;
 }
 
 message UniV3SwapsResponse {
@@ -126,8 +126,8 @@ message UniV3SwapsResponse {
 }
 
 message UniV2SwapStreamRequest {
-  optional string pair_address = 1;
-  optional google.protobuf.Int32Value limit = 2;
+  string pair_address = 1;
+  google.protobuf.Int32Value limit = 2;
 }
 
 message UniV2SwapStreamResponse {
@@ -135,8 +135,8 @@ message UniV2SwapStreamResponse {
 }
 
 message UniV3SwapStreamRequest {
-  optional string pool_address = 1;
-  optional google.protobuf.Int32Value limit = 2;
+  string pool_address = 1;
+  google.protobuf.Int32Value limit = 2;
 }
 
 message UniV3SwapStreamResponse {

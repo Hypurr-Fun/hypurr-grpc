@@ -1,0 +1,60 @@
+syntax = "proto3";
+package hypercore;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/hypercore";
+
+import "google/protobuf/wrappers.proto";
+
+message WalletMovement {
+}
+
+message WalletMovementsRequest {
+  string wallet_address = 1;
+}
+
+message WalletMovementsResponse {
+  repeated WalletMovement wallet_movements = 1;
+}
+
+message WalletSpotBalance {
+  int64 token = 1;
+  double balance = 2;
+  double cost = 3;
+}
+
+message WalletPerpBalance {
+  int64 instrument = 1;
+  double balance = 2;
+  double cost = 3;
+  double funding = 4;
+}
+
+message WalletBalancesRequest {
+  string wallet_address = 1;
+}
+
+message WalletBalancesResponse {
+  repeated WalletSpotBalance spot_balances = 1;
+  repeated WalletPerpBalance perp_balances = 2;
+}
+
+service HyperCore {
+  rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
+  rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
+}
+
+/*
+message HyperliquidWalletMovement {
+  google.protobuf.Int64Value telegram_id = 1;
+  HyperliquidWallet wallet = 2;
+  int64 wallet_id = 3;
+  string hash = 4;
+  string type = 5;
+  int64 token_id = 6;
+  HyperliquidToken token = 7;
+  double amount = 8;
+  double usdc_value = 9;
+  string destination = 10;
+  double fee = 11;
+  google.protobuf.Int64Value timestamp = 12;
+}
+ */
