@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	HyperCore_WalletMovements_FullMethodName = "/hypercore.HyperCore/WalletMovements"
-	HyperCore_WalletBalances_FullMethodName  = "/hypercore.HyperCore/WalletBalances"
+	HyperCore_WalletMovements_FullMethodName      = "/hypercore.HyperCore/WalletMovements"
+	HyperCore_WalletBalances_FullMethodName       = "/hypercore.HyperCore/WalletBalances"
+	HyperCore_WalletBalancesStream_FullMethodName = "/hypercore.HyperCore/WalletBalancesStream"
 )
 
 // HyperCoreClient is the client API for HyperCore service.
@@ -29,6 +30,7 @@ const (
 type HyperCoreClient interface {
 	WalletMovements(ctx context.Context, in *WalletMovementsRequest, opts ...grpc.CallOption) (*WalletMovementsResponse, error)
 	WalletBalances(ctx context.Context, in *WalletBalancesRequest, opts ...grpc.CallOption) (*WalletBalancesResponse, error)
+	WalletBalancesStream(ctx context.Context, in *WalletBalancesStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletBalancesStreamClient, error)
 }
 
 type hyperCoreClient struct {
@@ -59,12 +61,46 @@ func (c *hyperCoreClient) WalletBalances(ctx context.Context, in *WalletBalances
 	return out, nil
 }
 
+func (c *hyperCoreClient) WalletBalancesStream(ctx context.Context, in *WalletBalancesStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletBalancesStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[0], HyperCore_WalletBalancesStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &hyperCoreWalletBalancesStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type HyperCore_WalletBalancesStreamClient interface {
+	Recv() (*WalletBalancesResponse, error)
+	grpc.ClientStream
+}
+
+type hyperCoreWalletBalancesStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *hyperCoreWalletBalancesStreamClient) Recv() (*WalletBalancesResponse, error) {
+	m := new(WalletBalancesResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // HyperCoreServer is the server API for HyperCore service.
 // All implementations must embed UnimplementedHyperCoreServer
 // for forward compatibility
 type HyperCoreServer interface {
 	WalletMovements(context.Context, *WalletMovementsRequest) (*WalletMovementsResponse, error)
 	WalletBalances(context.Context, *WalletBalancesRequest) (*WalletBalancesResponse, error)
+	WalletBalancesStream(*WalletBalancesStreamRequest, HyperCore_WalletBalancesStreamServer) error
 	mustEmbedUnimplementedHyperCoreServer()
 }
 
@@ -77,6 +113,9 @@ func (UnimplementedHyperCoreServer) WalletMovements(context.Context, *WalletMove
 }
 func (UnimplementedHyperCoreServer) WalletBalances(context.Context, *WalletBalancesRequest) (*WalletBalancesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletBalances not implemented")
+}
+func (UnimplementedHyperCoreServer) WalletBalancesStream(*WalletBalancesStreamRequest, HyperCore_WalletBalancesStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method WalletBalancesStream not implemented")
 }
 func (UnimplementedHyperCoreServer) mustEmbedUnimplementedHyperCoreServer() {}
 
@@ -127,6 +166,27 @@ func _HyperCore_WalletBalances_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_WalletBalancesStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(WalletBalancesStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HyperCoreServer).WalletBalancesStream(m, &hyperCoreWalletBalancesStreamServer{ServerStream: stream})
+}
+
+type HyperCore_WalletBalancesStreamServer interface {
+	Send(*WalletBalancesResponse) error
+	grpc.ServerStream
+}
+
+type hyperCoreWalletBalancesStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *hyperCoreWalletBalancesStreamServer) Send(m *WalletBalancesResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // HyperCore_ServiceDesc is the grpc.ServiceDesc for HyperCore service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -143,6 +203,12 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _HyperCore_WalletBalances_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "WalletBalancesStream",
+			Handler:       _HyperCore_WalletBalancesStream_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "hypurr/hypercore/hypercore_service.proto",
 }

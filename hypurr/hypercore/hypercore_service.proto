@@ -12,7 +12,8 @@ message WalletMovementsRequest {
 }
 
 message WalletMovementsResponse {
-  repeated WalletMovement wallet_movements = 1;
+  string wallet_address = 1;
+  repeated WalletMovement wallet_movements = 2;
 }
 
 message WalletSpotBalance {
@@ -37,9 +38,14 @@ message WalletBalancesResponse {
   repeated WalletPerpBalance perp_balances = 2;
 }
 
+message WalletBalancesStreamRequest {
+  bytes bloom_filter = 1;
+}
+
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
+  rpc WalletBalancesStream(WalletBalancesStreamRequest) returns (stream WalletBalancesResponse) {}
 }
 
 /*
