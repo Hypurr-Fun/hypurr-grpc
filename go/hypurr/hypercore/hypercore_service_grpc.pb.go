@@ -22,6 +22,7 @@ const (
 	HyperCore_WalletMovements_FullMethodName      = "/hypercore.HyperCore/WalletMovements"
 	HyperCore_WalletBalances_FullMethodName       = "/hypercore.HyperCore/WalletBalances"
 	HyperCore_WalletBalancesStream_FullMethodName = "/hypercore.HyperCore/WalletBalancesStream"
+	HyperCore_ValidatorDelegators_FullMethodName  = "/hypercore.HyperCore/ValidatorDelegators"
 )
 
 // HyperCoreClient is the client API for HyperCore service.
@@ -31,6 +32,7 @@ type HyperCoreClient interface {
 	WalletMovements(ctx context.Context, in *WalletMovementsRequest, opts ...grpc.CallOption) (*WalletMovementsResponse, error)
 	WalletBalances(ctx context.Context, in *WalletBalancesRequest, opts ...grpc.CallOption) (*WalletBalancesResponse, error)
 	WalletBalancesStream(ctx context.Context, in *WalletBalancesStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletBalancesStreamClient, error)
+	ValidatorDelegators(ctx context.Context, in *ValidatorDelegatorsRequest, opts ...grpc.CallOption) (*ValidatorDelegatorsResponse, error)
 }
 
 type hyperCoreClient struct {
@@ -94,6 +96,16 @@ func (x *hyperCoreWalletBalancesStreamClient) Recv() (*WalletBalancesStreamRespo
 	return m, nil
 }
 
+func (c *hyperCoreClient) ValidatorDelegators(ctx context.Context, in *ValidatorDelegatorsRequest, opts ...grpc.CallOption) (*ValidatorDelegatorsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ValidatorDelegatorsResponse)
+	err := c.cc.Invoke(ctx, HyperCore_ValidatorDelegators_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HyperCoreServer is the server API for HyperCore service.
 // All implementations must embed UnimplementedHyperCoreServer
 // for forward compatibility
@@ -101,6 +113,7 @@ type HyperCoreServer interface {
 	WalletMovements(context.Context, *WalletMovementsRequest) (*WalletMovementsResponse, error)
 	WalletBalances(context.Context, *WalletBalancesRequest) (*WalletBalancesResponse, error)
 	WalletBalancesStream(*WalletBalancesStreamRequest, HyperCore_WalletBalancesStreamServer) error
+	ValidatorDelegators(context.Context, *ValidatorDelegatorsRequest) (*ValidatorDelegatorsResponse, error)
 	mustEmbedUnimplementedHyperCoreServer()
 }
 
@@ -116,6 +129,9 @@ func (UnimplementedHyperCoreServer) WalletBalances(context.Context, *WalletBalan
 }
 func (UnimplementedHyperCoreServer) WalletBalancesStream(*WalletBalancesStreamRequest, HyperCore_WalletBalancesStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method WalletBalancesStream not implemented")
+}
+func (UnimplementedHyperCoreServer) ValidatorDelegators(context.Context, *ValidatorDelegatorsRequest) (*ValidatorDelegatorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidatorDelegators not implemented")
 }
 func (UnimplementedHyperCoreServer) mustEmbedUnimplementedHyperCoreServer() {}
 
@@ -187,6 +203,24 @@ func (x *hyperCoreWalletBalancesStreamServer) Send(m *WalletBalancesStreamRespon
 	return x.ServerStream.SendMsg(m)
 }
 
+func _HyperCore_ValidatorDelegators_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidatorDelegatorsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).ValidatorDelegators(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_ValidatorDelegators_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).ValidatorDelegators(ctx, req.(*ValidatorDelegatorsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HyperCore_ServiceDesc is the grpc.ServiceDesc for HyperCore service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -201,6 +235,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WalletBalances",
 			Handler:    _HyperCore_WalletBalances_Handler,
+		},
+		{
+			MethodName: "ValidatorDelegators",
+			Handler:    _HyperCore_ValidatorDelegators_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

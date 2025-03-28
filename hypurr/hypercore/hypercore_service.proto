@@ -50,10 +50,24 @@ message WalletBalancesStreamResponse {
   string reason = 4;
 }
 
+message ValidatorDelegatorsRequest {
+  string validator_address = 1;
+}
+
+message ValidatorDelegatorsResponse {
+  repeated ValidatorDelegator delegators = 1;
+}
+
+message ValidatorDelegator {
+  string wallet_address = 1;
+  double stake = 2;
+}
+
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
   rpc WalletBalancesStream(WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
+  rpc ValidatorDelegators(ValidatorDelegatorsRequest) returns (ValidatorDelegatorsResponse) {}
 }
 
 /*
