@@ -12,7 +12,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { ERC20TokenBalance } from "./evm";
+import { ERC20AccountBalance } from "./evm";
 import { Int32Value } from "../google/protobuf/wrappers";
 import { UniV3Swap } from "./evm";
 import { UniCandle } from "./evm";
@@ -383,22 +383,22 @@ export interface UniV3SwapStreamResponse {
     swaps: UniV3Swap[];
 }
 /**
- * @generated from protobuf message hypurr.ERC20TokenBalancesRequest
+ * @generated from protobuf message hypurr.ERC20AccountBalancesRequest
  */
-export interface ERC20TokenBalancesRequest {
+export interface ERC20AccountBalancesRequest {
     /**
      * @generated from protobuf field: string address = 1;
      */
     address: string;
 }
 /**
- * @generated from protobuf message hypurr.ERC20TokenBalancesResponse
+ * @generated from protobuf message hypurr.ERC20AccountBalancesResponse
  */
-export interface ERC20TokenBalancesResponse {
+export interface ERC20AccountBalancesResponse {
     /**
-     * @generated from protobuf field: repeated hypurr.ERC20TokenBalance token_balances = 1;
+     * @generated from protobuf field: repeated hypurr.ERC20AccountBalance token_balances = 1;
      */
-    tokenBalances: ERC20TokenBalance[];
+    tokenBalances: ERC20AccountBalance[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ERC20TokenRequest$Type extends MessageType<ERC20TokenRequest> {
@@ -1840,20 +1840,20 @@ class UniV3SwapStreamResponse$Type extends MessageType<UniV3SwapStreamResponse> 
  */
 export const UniV3SwapStreamResponse = new UniV3SwapStreamResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ERC20TokenBalancesRequest$Type extends MessageType<ERC20TokenBalancesRequest> {
+class ERC20AccountBalancesRequest$Type extends MessageType<ERC20AccountBalancesRequest> {
     constructor() {
-        super("hypurr.ERC20TokenBalancesRequest", [
+        super("hypurr.ERC20AccountBalancesRequest", [
             { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<ERC20TokenBalancesRequest>): ERC20TokenBalancesRequest {
+    create(value?: PartialMessage<ERC20AccountBalancesRequest>): ERC20AccountBalancesRequest {
         const message = { address: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<ERC20TokenBalancesRequest>(this, message, value);
+            reflectionMergePartial<ERC20AccountBalancesRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ERC20TokenBalancesRequest): ERC20TokenBalancesRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ERC20AccountBalancesRequest): ERC20AccountBalancesRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1872,7 +1872,7 @@ class ERC20TokenBalancesRequest$Type extends MessageType<ERC20TokenBalancesReque
         }
         return message;
     }
-    internalBinaryWrite(message: ERC20TokenBalancesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: ERC20AccountBalancesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string address = 1; */
         if (message.address !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.address);
@@ -1883,30 +1883,30 @@ class ERC20TokenBalancesRequest$Type extends MessageType<ERC20TokenBalancesReque
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.ERC20TokenBalancesRequest
+ * @generated MessageType for protobuf message hypurr.ERC20AccountBalancesRequest
  */
-export const ERC20TokenBalancesRequest = new ERC20TokenBalancesRequest$Type();
+export const ERC20AccountBalancesRequest = new ERC20AccountBalancesRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ERC20TokenBalancesResponse$Type extends MessageType<ERC20TokenBalancesResponse> {
+class ERC20AccountBalancesResponse$Type extends MessageType<ERC20AccountBalancesResponse> {
     constructor() {
-        super("hypurr.ERC20TokenBalancesResponse", [
-            { no: 1, name: "token_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ERC20TokenBalance }
+        super("hypurr.ERC20AccountBalancesResponse", [
+            { no: 1, name: "token_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ERC20AccountBalance }
         ]);
     }
-    create(value?: PartialMessage<ERC20TokenBalancesResponse>): ERC20TokenBalancesResponse {
+    create(value?: PartialMessage<ERC20AccountBalancesResponse>): ERC20AccountBalancesResponse {
         const message = { tokenBalances: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<ERC20TokenBalancesResponse>(this, message, value);
+            reflectionMergePartial<ERC20AccountBalancesResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ERC20TokenBalancesResponse): ERC20TokenBalancesResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ERC20AccountBalancesResponse): ERC20AccountBalancesResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypurr.ERC20TokenBalance token_balances */ 1:
-                    message.tokenBalances.push(ERC20TokenBalance.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.ERC20AccountBalance token_balances */ 1:
+                    message.tokenBalances.push(ERC20AccountBalance.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1919,10 +1919,10 @@ class ERC20TokenBalancesResponse$Type extends MessageType<ERC20TokenBalancesResp
         }
         return message;
     }
-    internalBinaryWrite(message: ERC20TokenBalancesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.ERC20TokenBalance token_balances = 1; */
+    internalBinaryWrite(message: ERC20AccountBalancesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.ERC20AccountBalance token_balances = 1; */
         for (let i = 0; i < message.tokenBalances.length; i++)
-            ERC20TokenBalance.internalBinaryWrite(message.tokenBalances[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            ERC20AccountBalance.internalBinaryWrite(message.tokenBalances[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1930,16 +1930,16 @@ class ERC20TokenBalancesResponse$Type extends MessageType<ERC20TokenBalancesResp
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.ERC20TokenBalancesResponse
+ * @generated MessageType for protobuf message hypurr.ERC20AccountBalancesResponse
  */
-export const ERC20TokenBalancesResponse = new ERC20TokenBalancesResponse$Type();
+export const ERC20AccountBalancesResponse = new ERC20AccountBalancesResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.EVM
  */
 export const EVM = new ServiceType("hypurr.EVM", [
     { name: "ERC20Token", options: {}, I: ERC20TokenRequest, O: ERC20TokenResponse },
     { name: "ERC20Tokens", options: {}, I: ERC20TokensRequest, O: ERC20TokensResponse },
-    { name: "ERC20TokenBalances", options: {}, I: ERC20TokenBalancesRequest, O: ERC20TokenBalancesResponse },
+    { name: "ERC20TokenBalances", options: {}, I: ERC20AccountBalancesRequest, O: ERC20AccountBalancesResponse },
     { name: "UniV2Pair", options: {}, I: UniV2PairRequest, O: UniV2PairResponse },
     { name: "UniPairs", options: {}, I: UniPairsRequest, O: UniPairsResponse },
     { name: "UniV2Swap", options: {}, I: UniV2SwapRequest, O: UniV2SwapResponse },

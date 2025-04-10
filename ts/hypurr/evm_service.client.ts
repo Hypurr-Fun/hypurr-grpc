@@ -27,8 +27,8 @@ import type { UniPairsResponse } from "./evm_service";
 import type { UniPairsRequest } from "./evm_service";
 import type { UniV2PairResponse } from "./evm_service";
 import type { UniV2PairRequest } from "./evm_service";
-import type { ERC20TokenBalancesResponse } from "./evm_service";
-import type { ERC20TokenBalancesRequest } from "./evm_service";
+import type { ERC20AccountBalancesResponse } from "./evm_service";
+import type { ERC20AccountBalancesRequest } from "./evm_service";
 import type { ERC20TokensResponse } from "./evm_service";
 import type { ERC20TokensRequest } from "./evm_service";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
@@ -51,9 +51,9 @@ export interface IEVMClient {
      */
     eRC20Tokens(input: ERC20TokensRequest, options?: RpcOptions): UnaryCall<ERC20TokensRequest, ERC20TokensResponse>;
     /**
-     * @generated from protobuf rpc: ERC20TokenBalances(hypurr.ERC20TokenBalancesRequest) returns (hypurr.ERC20TokenBalancesResponse);
+     * @generated from protobuf rpc: ERC20TokenBalances(hypurr.ERC20AccountBalancesRequest) returns (hypurr.ERC20AccountBalancesResponse);
      */
-    eRC20TokenBalances(input: ERC20TokenBalancesRequest, options?: RpcOptions): UnaryCall<ERC20TokenBalancesRequest, ERC20TokenBalancesResponse>;
+    eRC20TokenBalances(input: ERC20AccountBalancesRequest, options?: RpcOptions): UnaryCall<ERC20AccountBalancesRequest, ERC20AccountBalancesResponse>;
     /**
      * Pair related endpoints
      *
@@ -135,11 +135,11 @@ export class EVMClient implements IEVMClient, ServiceInfo {
         return stackIntercept<ERC20TokensRequest, ERC20TokensResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: ERC20TokenBalances(hypurr.ERC20TokenBalancesRequest) returns (hypurr.ERC20TokenBalancesResponse);
+     * @generated from protobuf rpc: ERC20TokenBalances(hypurr.ERC20AccountBalancesRequest) returns (hypurr.ERC20AccountBalancesResponse);
      */
-    eRC20TokenBalances(input: ERC20TokenBalancesRequest, options?: RpcOptions): UnaryCall<ERC20TokenBalancesRequest, ERC20TokenBalancesResponse> {
+    eRC20TokenBalances(input: ERC20AccountBalancesRequest, options?: RpcOptions): UnaryCall<ERC20AccountBalancesRequest, ERC20AccountBalancesResponse> {
         const method = this.methods[2], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ERC20TokenBalancesRequest, ERC20TokenBalancesResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<ERC20AccountBalancesRequest, ERC20AccountBalancesResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * Pair related endpoints
