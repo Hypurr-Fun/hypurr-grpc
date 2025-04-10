@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion8
 const (
 	EVM_ERC20Token_FullMethodName          = "/hypurr.EVM/ERC20Token"
 	EVM_ERC20Tokens_FullMethodName         = "/hypurr.EVM/ERC20Tokens"
+	EVM_ERC20TokenBalances_FullMethodName  = "/hypurr.EVM/ERC20TokenBalances"
 	EVM_UniV2Pair_FullMethodName           = "/hypurr.EVM/UniV2Pair"
 	EVM_UniPairs_FullMethodName            = "/hypurr.EVM/UniPairs"
 	EVM_UniV2Swap_FullMethodName           = "/hypurr.EVM/UniV2Swap"
@@ -41,6 +42,7 @@ type EVMClient interface {
 	// Token related endpoints
 	ERC20Token(ctx context.Context, in *ERC20TokenRequest, opts ...grpc.CallOption) (*ERC20TokenResponse, error)
 	ERC20Tokens(ctx context.Context, in *ERC20TokensRequest, opts ...grpc.CallOption) (*ERC20TokensResponse, error)
+	ERC20TokenBalances(ctx context.Context, in *ERC20TokenBalancesRequest, opts ...grpc.CallOption) (*ERC20TokenBalancesResponse, error)
 	// Pair related endpoints
 	UniV2Pair(ctx context.Context, in *UniV2PairRequest, opts ...grpc.CallOption) (*UniV2PairResponse, error)
 	UniPairs(ctx context.Context, in *UniPairsRequest, opts ...grpc.CallOption) (*UniPairsResponse, error)
@@ -81,6 +83,16 @@ func (c *eVMClient) ERC20Tokens(ctx context.Context, in *ERC20TokensRequest, opt
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ERC20TokensResponse)
 	err := c.cc.Invoke(ctx, EVM_ERC20Tokens_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *eVMClient) ERC20TokenBalances(ctx context.Context, in *ERC20TokenBalancesRequest, opts ...grpc.CallOption) (*ERC20TokenBalancesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ERC20TokenBalancesResponse)
+	err := c.cc.Invoke(ctx, EVM_ERC20TokenBalances_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -250,6 +262,7 @@ type EVMServer interface {
 	// Token related endpoints
 	ERC20Token(context.Context, *ERC20TokenRequest) (*ERC20TokenResponse, error)
 	ERC20Tokens(context.Context, *ERC20TokensRequest) (*ERC20TokensResponse, error)
+	ERC20TokenBalances(context.Context, *ERC20TokenBalancesRequest) (*ERC20TokenBalancesResponse, error)
 	// Pair related endpoints
 	UniV2Pair(context.Context, *UniV2PairRequest) (*UniV2PairResponse, error)
 	UniPairs(context.Context, *UniPairsRequest) (*UniPairsResponse, error)
@@ -278,6 +291,9 @@ func (UnimplementedEVMServer) ERC20Token(context.Context, *ERC20TokenRequest) (*
 }
 func (UnimplementedEVMServer) ERC20Tokens(context.Context, *ERC20TokensRequest) (*ERC20TokensResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ERC20Tokens not implemented")
+}
+func (UnimplementedEVMServer) ERC20TokenBalances(context.Context, *ERC20TokenBalancesRequest) (*ERC20TokenBalancesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ERC20TokenBalances not implemented")
 }
 func (UnimplementedEVMServer) UniV2Pair(context.Context, *UniV2PairRequest) (*UniV2PairResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UniV2Pair not implemented")
@@ -357,6 +373,24 @@ func _EVM_ERC20Tokens_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EVMServer).ERC20Tokens(ctx, req.(*ERC20TokensRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _EVM_ERC20TokenBalances_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ERC20TokenBalancesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EVMServer).ERC20TokenBalances(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: EVM_ERC20TokenBalances_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EVMServer).ERC20TokenBalances(ctx, req.(*ERC20TokenBalancesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -579,6 +613,10 @@ var EVM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ERC20Tokens",
 			Handler:    _EVM_ERC20Tokens_Handler,
+		},
+		{
+			MethodName: "ERC20TokenBalances",
+			Handler:    _EVM_ERC20TokenBalances_Handler,
 		},
 		{
 			MethodName: "UniV2Pair",

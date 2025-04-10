@@ -16,6 +16,11 @@ message ERC20Token {
   int64 last_volume_update = 8;
 }
 
+message ERC20TokenBalance {
+  string contract_address = 1;
+  string balance = 2;  // Using string for big integers
+}
+
 // Account Balance messages
 message ERC20AccountBalance {
   string address = 1;

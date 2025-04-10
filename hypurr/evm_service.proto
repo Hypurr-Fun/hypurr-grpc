@@ -143,10 +143,19 @@ message UniV3SwapStreamResponse {
   repeated UniV3Swap swaps = 1;
 }
 
+message ERC20TokenBalancesRequest {
+  string address = 1;
+}
+
+message ERC20TokenBalancesResponse {
+  repeated ERC20TokenBalance token_balances = 1;
+}
+
 service EVM {
   // Token related endpoints
   rpc ERC20Token(ERC20TokenRequest) returns (ERC20TokenResponse) {}
   rpc ERC20Tokens(ERC20TokensRequest) returns (ERC20TokensResponse) {}
+  rpc ERC20TokenBalances (ERC20TokenBalancesRequest) returns (ERC20TokenBalancesResponse) {}
 
   // Pair related endpoints
   rpc UniV2Pair(UniV2PairRequest) returns (UniV2PairResponse) {}
