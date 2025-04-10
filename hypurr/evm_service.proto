@@ -148,14 +148,14 @@ message ERC20AccountBalancesRequest {
 }
 
 message ERC20AccountBalancesResponse {
-  repeated ERC20AccountBalance token_balances = 1;
+  repeated ERC20AccountBalance account_balances = 1;
 }
 
 service EVM {
   // Token related endpoints
   rpc ERC20Token(ERC20TokenRequest) returns (ERC20TokenResponse) {}
   rpc ERC20Tokens(ERC20TokensRequest) returns (ERC20TokensResponse) {}
-  rpc ERC20TokenBalances (ERC20AccountBalancesRequest) returns (ERC20AccountBalancesResponse) {}
+  rpc ERC20AccountBalances (ERC20AccountBalancesRequest) returns (ERC20AccountBalancesResponse) {}
 
   // Pair related endpoints
   rpc UniV2Pair(UniV2PairRequest) returns (UniV2PairResponse) {}

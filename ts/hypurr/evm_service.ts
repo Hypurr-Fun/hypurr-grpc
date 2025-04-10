@@ -396,9 +396,9 @@ export interface ERC20AccountBalancesRequest {
  */
 export interface ERC20AccountBalancesResponse {
     /**
-     * @generated from protobuf field: repeated hypurr.ERC20AccountBalance token_balances = 1;
+     * @generated from protobuf field: repeated hypurr.ERC20AccountBalance account_balances = 1;
      */
-    tokenBalances: ERC20AccountBalance[];
+    accountBalances: ERC20AccountBalance[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ERC20TokenRequest$Type extends MessageType<ERC20TokenRequest> {
@@ -1890,11 +1890,11 @@ export const ERC20AccountBalancesRequest = new ERC20AccountBalancesRequest$Type(
 class ERC20AccountBalancesResponse$Type extends MessageType<ERC20AccountBalancesResponse> {
     constructor() {
         super("hypurr.ERC20AccountBalancesResponse", [
-            { no: 1, name: "token_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ERC20AccountBalance }
+            { no: 1, name: "account_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ERC20AccountBalance }
         ]);
     }
     create(value?: PartialMessage<ERC20AccountBalancesResponse>): ERC20AccountBalancesResponse {
-        const message = { tokenBalances: [] };
+        const message = { accountBalances: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ERC20AccountBalancesResponse>(this, message, value);
@@ -1905,8 +1905,8 @@ class ERC20AccountBalancesResponse$Type extends MessageType<ERC20AccountBalances
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypurr.ERC20AccountBalance token_balances */ 1:
-                    message.tokenBalances.push(ERC20AccountBalance.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.ERC20AccountBalance account_balances */ 1:
+                    message.accountBalances.push(ERC20AccountBalance.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1920,9 +1920,9 @@ class ERC20AccountBalancesResponse$Type extends MessageType<ERC20AccountBalances
         return message;
     }
     internalBinaryWrite(message: ERC20AccountBalancesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.ERC20AccountBalance token_balances = 1; */
-        for (let i = 0; i < message.tokenBalances.length; i++)
-            ERC20AccountBalance.internalBinaryWrite(message.tokenBalances[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.ERC20AccountBalance account_balances = 1; */
+        for (let i = 0; i < message.accountBalances.length; i++)
+            ERC20AccountBalance.internalBinaryWrite(message.accountBalances[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1939,7 +1939,7 @@ export const ERC20AccountBalancesResponse = new ERC20AccountBalancesResponse$Typ
 export const EVM = new ServiceType("hypurr.EVM", [
     { name: "ERC20Token", options: {}, I: ERC20TokenRequest, O: ERC20TokenResponse },
     { name: "ERC20Tokens", options: {}, I: ERC20TokensRequest, O: ERC20TokensResponse },
-    { name: "ERC20TokenBalances", options: {}, I: ERC20AccountBalancesRequest, O: ERC20AccountBalancesResponse },
+    { name: "ERC20AccountBalances", options: {}, I: ERC20AccountBalancesRequest, O: ERC20AccountBalancesResponse },
     { name: "UniV2Pair", options: {}, I: UniV2PairRequest, O: UniV2PairResponse },
     { name: "UniPairs", options: {}, I: UniPairsRequest, O: UniPairsResponse },
     { name: "UniV2Swap", options: {}, I: UniV2SwapRequest, O: UniV2SwapResponse },
