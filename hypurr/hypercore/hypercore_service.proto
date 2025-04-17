@@ -20,6 +20,7 @@ message WalletSpotBalance {
   int64 token = 1;
   double balance = 2;
   double cost = 3;
+  double delta = 4;
 }
 
 message WalletPerpBalance {
