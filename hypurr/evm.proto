@@ -142,9 +142,11 @@ message HpumpV1LaunchPair {
 message HpumpV1LaunchPairSwap {
   string id = 1;               // tx hash + log index
   string pair = 2;             // launch pair address
-  string from = 3;
-  string to = 4;
-  string value = 5;            // Using string for big integers
-  int32 block_number = 6;
-  int64 timestamp = 7;
+  string sender = 3;
+  string origin = 4;
+  string to = 5;
+  string amount0 = 6;
+  string amount1 = 7;        // Using string for big integers
+  int32 block_number = 8;
+  int64 timestamp = 9;
 }

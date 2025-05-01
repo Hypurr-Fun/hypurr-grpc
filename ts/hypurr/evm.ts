@@ -454,23 +454,31 @@ export interface HpumpV1LaunchPairSwap {
      */
     pair: string; // launch pair address
     /**
-     * @generated from protobuf field: string from = 3;
+     * @generated from protobuf field: string sender = 3;
      */
-    from: string;
+    sender: string;
     /**
-     * @generated from protobuf field: string to = 4;
+     * @generated from protobuf field: string origin = 4;
+     */
+    origin: string;
+    /**
+     * @generated from protobuf field: string to = 5;
      */
     to: string;
     /**
-     * @generated from protobuf field: string value = 5;
+     * @generated from protobuf field: string amount0 = 6;
      */
-    value: string; // Using string for big integers
+    amount0: string;
     /**
-     * @generated from protobuf field: int32 block_number = 6;
+     * @generated from protobuf field: string amount1 = 7;
+     */
+    amount1: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: int32 block_number = 8;
      */
     blockNumber: number;
     /**
-     * @generated from protobuf field: int64 timestamp = 7;
+     * @generated from protobuf field: int64 timestamp = 9;
      */
     timestamp: number;
 }
@@ -1562,15 +1570,17 @@ class HpumpV1LaunchPairSwap$Type extends MessageType<HpumpV1LaunchPairSwap> {
         super("hypurr.HpumpV1LaunchPairSwap", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "pair", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "from", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "value", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "block_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 7, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 3, name: "sender", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "origin", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "amount0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "amount1", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "block_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 9, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchPairSwap>): HpumpV1LaunchPairSwap {
-        const message = { id: "", pair: "", from: "", to: "", value: "", blockNumber: 0, timestamp: 0 };
+        const message = { id: "", pair: "", sender: "", origin: "", to: "", amount0: "", amount1: "", blockNumber: 0, timestamp: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchPairSwap>(this, message, value);
@@ -1587,19 +1597,25 @@ class HpumpV1LaunchPairSwap$Type extends MessageType<HpumpV1LaunchPairSwap> {
                 case /* string pair */ 2:
                     message.pair = reader.string();
                     break;
-                case /* string from */ 3:
-                    message.from = reader.string();
+                case /* string sender */ 3:
+                    message.sender = reader.string();
                     break;
-                case /* string to */ 4:
+                case /* string origin */ 4:
+                    message.origin = reader.string();
+                    break;
+                case /* string to */ 5:
                     message.to = reader.string();
                     break;
-                case /* string value */ 5:
-                    message.value = reader.string();
+                case /* string amount0 */ 6:
+                    message.amount0 = reader.string();
                     break;
-                case /* int32 block_number */ 6:
+                case /* string amount1 */ 7:
+                    message.amount1 = reader.string();
+                    break;
+                case /* int32 block_number */ 8:
                     message.blockNumber = reader.int32();
                     break;
-                case /* int64 timestamp */ 7:
+                case /* int64 timestamp */ 9:
                     message.timestamp = reader.int64().toNumber();
                     break;
                 default:
@@ -1620,21 +1636,27 @@ class HpumpV1LaunchPairSwap$Type extends MessageType<HpumpV1LaunchPairSwap> {
         /* string pair = 2; */
         if (message.pair !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.pair);
-        /* string from = 3; */
-        if (message.from !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.from);
-        /* string to = 4; */
+        /* string sender = 3; */
+        if (message.sender !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.sender);
+        /* string origin = 4; */
+        if (message.origin !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.origin);
+        /* string to = 5; */
         if (message.to !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.to);
-        /* string value = 5; */
-        if (message.value !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.value);
-        /* int32 block_number = 6; */
+            writer.tag(5, WireType.LengthDelimited).string(message.to);
+        /* string amount0 = 6; */
+        if (message.amount0 !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.amount0);
+        /* string amount1 = 7; */
+        if (message.amount1 !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.amount1);
+        /* int32 block_number = 8; */
         if (message.blockNumber !== 0)
-            writer.tag(6, WireType.Varint).int32(message.blockNumber);
-        /* int64 timestamp = 7; */
+            writer.tag(8, WireType.Varint).int32(message.blockNumber);
+        /* int64 timestamp = 9; */
         if (message.timestamp !== 0)
-            writer.tag(7, WireType.Varint).int64(message.timestamp);
+            writer.tag(9, WireType.Varint).int64(message.timestamp);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
