@@ -153,7 +153,7 @@ message ERC20AccountBalancesResponse {
 
 // HPump V1 Launch Token request/response messages
 message HpumpV1LaunchTokenRequest {
-  string token = 1;
+  string address = 1;
 }
 
 message HpumpV1LaunchTokenResponse {
@@ -173,7 +173,7 @@ message HpumpV1LaunchTokensResponse {
 
 // HPump V1 Launch Pair request/response messages
 message HpumpV1LaunchPairRequest {
-  string pair = 1;
+  string address = 1;
 }
 
 message HpumpV1LaunchPairResponse {
@@ -204,7 +204,7 @@ message HpumpV1LaunchPairSwapsRequest {
   int32 page_size = 1;
   string page_token = 2;
   string pair_address = 3;
-  string from_address = 4;
+  string origin_address = 4;
   string to_address = 5;
 }
 
