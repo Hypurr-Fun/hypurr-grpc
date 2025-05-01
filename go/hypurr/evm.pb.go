@@ -1004,6 +1004,286 @@ func (x *UniV3Swap) GetTimestamp() int64 {
 	return 0
 }
 
+// HPump Launch Token messages
+type HpumpV1LaunchToken struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Token       string             `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`                           // token address is unique
+	CreatedAt   int64              `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // block timestamp
+	LaunchId    string             `protobuf:"bytes,3,opt,name=launch_id,json=launchId,proto3" json:"launch_id,omitempty"`     // the uint256 id from the event (using string for big integers)
+	Graduated   bool               `protobuf:"varint,4,opt,name=graduated,proto3" json:"graduated,omitempty"`
+	GraduatedAt int64              `protobuf:"varint,5,opt,name=graduated_at,json=graduatedAt,proto3" json:"graduated_at,omitempty"` // Timestamp when graduated
+	Pair        *HpumpV1LaunchPair `protobuf:"bytes,6,opt,name=pair,proto3" json:"pair,omitempty"`                                   // Embedded pair information
+}
+
+func (x *HpumpV1LaunchToken) Reset() {
+	*x = HpumpV1LaunchToken{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_evm_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HpumpV1LaunchToken) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HpumpV1LaunchToken) ProtoMessage() {}
+
+func (x *HpumpV1LaunchToken) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_evm_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HpumpV1LaunchToken.ProtoReflect.Descriptor instead.
+func (*HpumpV1LaunchToken) Descriptor() ([]byte, []int) {
+	return file_hypurr_evm_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *HpumpV1LaunchToken) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *HpumpV1LaunchToken) GetCreatedAt() int64 {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return 0
+}
+
+func (x *HpumpV1LaunchToken) GetLaunchId() string {
+	if x != nil {
+		return x.LaunchId
+	}
+	return ""
+}
+
+func (x *HpumpV1LaunchToken) GetGraduated() bool {
+	if x != nil {
+		return x.Graduated
+	}
+	return false
+}
+
+func (x *HpumpV1LaunchToken) GetGraduatedAt() int64 {
+	if x != nil {
+		return x.GraduatedAt
+	}
+	return 0
+}
+
+func (x *HpumpV1LaunchToken) GetPair() *HpumpV1LaunchPair {
+	if x != nil {
+		return x.Pair
+	}
+	return nil
+}
+
+// HPump Launch Pair messages
+type HpumpV1LaunchPair struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Pair              string                   `protobuf:"bytes,1,opt,name=pair,proto3" json:"pair,omitempty"`                                     // pair address is unique
+	Token             string                   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`                                   // reference to the token
+	BaseReserve       string                   `protobuf:"bytes,3,opt,name=base_reserve,json=baseReserve,proto3" json:"base_reserve,omitempty"`    // Using string for big integers
+	QuoteReserve      string                   `protobuf:"bytes,4,opt,name=quote_reserve,json=quoteReserve,proto3" json:"quote_reserve,omitempty"` // Using string for big integers
+	LastSyncTimestamp int64                    `protobuf:"varint,5,opt,name=last_sync_timestamp,json=lastSyncTimestamp,proto3" json:"last_sync_timestamp,omitempty"`
+	GraduatedTo       string                   `protobuf:"bytes,6,opt,name=graduated_to,json=graduatedTo,proto3" json:"graduated_to,omitempty"` // Address of the new pair after graduation
+	Swaps             []*HpumpV1LaunchPairSwap `protobuf:"bytes,7,rep,name=swaps,proto3" json:"swaps,omitempty"`                                // List of swaps
+}
+
+func (x *HpumpV1LaunchPair) Reset() {
+	*x = HpumpV1LaunchPair{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_evm_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HpumpV1LaunchPair) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HpumpV1LaunchPair) ProtoMessage() {}
+
+func (x *HpumpV1LaunchPair) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_evm_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HpumpV1LaunchPair.ProtoReflect.Descriptor instead.
+func (*HpumpV1LaunchPair) Descriptor() ([]byte, []int) {
+	return file_hypurr_evm_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *HpumpV1LaunchPair) GetPair() string {
+	if x != nil {
+		return x.Pair
+	}
+	return ""
+}
+
+func (x *HpumpV1LaunchPair) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *HpumpV1LaunchPair) GetBaseReserve() string {
+	if x != nil {
+		return x.BaseReserve
+	}
+	return ""
+}
+
+func (x *HpumpV1LaunchPair) GetQuoteReserve() string {
+	if x != nil {
+		return x.QuoteReserve
+	}
+	return ""
+}
+
+func (x *HpumpV1LaunchPair) GetLastSyncTimestamp() int64 {
+	if x != nil {
+		return x.LastSyncTimestamp
+	}
+	return 0
+}
+
+func (x *HpumpV1LaunchPair) GetGraduatedTo() string {
+	if x != nil {
+		return x.GraduatedTo
+	}
+	return ""
+}
+
+func (x *HpumpV1LaunchPair) GetSwaps() []*HpumpV1LaunchPairSwap {
+	if x != nil {
+		return x.Swaps
+	}
+	return nil
+}
+
+// HPump Launch Pair Swap messages
+type HpumpV1LaunchPairSwap struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id          string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`     // tx hash + log index
+	Pair        string `protobuf:"bytes,2,opt,name=pair,proto3" json:"pair,omitempty"` // launch pair address
+	From        string `protobuf:"bytes,3,opt,name=from,proto3" json:"from,omitempty"`
+	To          string `protobuf:"bytes,4,opt,name=to,proto3" json:"to,omitempty"`
+	Value       string `protobuf:"bytes,5,opt,name=value,proto3" json:"value,omitempty"` // Using string for big integers
+	BlockNumber int32  `protobuf:"varint,6,opt,name=block_number,json=blockNumber,proto3" json:"block_number,omitempty"`
+	Timestamp   int64  `protobuf:"varint,7,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+}
+
+func (x *HpumpV1LaunchPairSwap) Reset() {
+	*x = HpumpV1LaunchPairSwap{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_evm_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HpumpV1LaunchPairSwap) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HpumpV1LaunchPairSwap) ProtoMessage() {}
+
+func (x *HpumpV1LaunchPairSwap) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_evm_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HpumpV1LaunchPairSwap.ProtoReflect.Descriptor instead.
+func (*HpumpV1LaunchPairSwap) Descriptor() ([]byte, []int) {
+	return file_hypurr_evm_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *HpumpV1LaunchPairSwap) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *HpumpV1LaunchPairSwap) GetPair() string {
+	if x != nil {
+		return x.Pair
+	}
+	return ""
+}
+
+func (x *HpumpV1LaunchPairSwap) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *HpumpV1LaunchPairSwap) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+func (x *HpumpV1LaunchPairSwap) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *HpumpV1LaunchPairSwap) GetBlockNumber() int32 {
+	if x != nil {
+		return x.BlockNumber
+	}
+	return 0
+}
+
+func (x *HpumpV1LaunchPairSwap) GetTimestamp() int64 {
+	if x != nil {
+		return x.Timestamp
+	}
+	return 0
+}
+
 var File_hypurr_evm_proto protoreflect.FileDescriptor
 
 var file_hypurr_evm_proto_rawDesc = []byte{
@@ -1147,10 +1427,53 @@ var file_hypurr_evm_proto_rawDesc = []byte{
 	0x52, 0x09, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x69, 0x74, 0x79, 0x12, 0x12, 0x0a, 0x04, 0x74,
 	0x69, 0x63, 0x6b, 0x18, 0x09, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x74, 0x69, 0x63, 0x6b, 0x12,
 	0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x0a, 0x20, 0x01,
-	0x28, 0x03, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x42, 0x29, 0x5a,
-	0x27, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75,
-	0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67,
-	0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x28, 0x03, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x22, 0xd6, 0x01,
+	0x0a, 0x12, 0x48, 0x70, 0x75, 0x6d, 0x70, 0x56, 0x31, 0x4c, 0x61, 0x75, 0x6e, 0x63, 0x68, 0x54,
+	0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09,
+	0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x6c, 0x61, 0x75,
+	0x6e, 0x63, 0x68, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6c, 0x61,
+	0x75, 0x6e, 0x63, 0x68, 0x49, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x67, 0x72, 0x61, 0x64, 0x75, 0x61,
+	0x74, 0x65, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x09, 0x67, 0x72, 0x61, 0x64, 0x75,
+	0x61, 0x74, 0x65, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x67, 0x72, 0x61, 0x64, 0x75, 0x61, 0x74, 0x65,
+	0x64, 0x5f, 0x61, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x67, 0x72, 0x61, 0x64,
+	0x75, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x12, 0x2d, 0x0a, 0x04, 0x70, 0x61, 0x69, 0x72, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48,
+	0x70, 0x75, 0x6d, 0x70, 0x56, 0x31, 0x4c, 0x61, 0x75, 0x6e, 0x63, 0x68, 0x50, 0x61, 0x69, 0x72,
+	0x52, 0x04, 0x70, 0x61, 0x69, 0x72, 0x22, 0x8d, 0x02, 0x0a, 0x11, 0x48, 0x70, 0x75, 0x6d, 0x70,
+	0x56, 0x31, 0x4c, 0x61, 0x75, 0x6e, 0x63, 0x68, 0x50, 0x61, 0x69, 0x72, 0x12, 0x12, 0x0a, 0x04,
+	0x70, 0x61, 0x69, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x61, 0x69, 0x72,
+	0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x21, 0x0a, 0x0c, 0x62, 0x61, 0x73, 0x65, 0x5f, 0x72,
+	0x65, 0x73, 0x65, 0x72, 0x76, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x62, 0x61,
+	0x73, 0x65, 0x52, 0x65, 0x73, 0x65, 0x72, 0x76, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x71, 0x75, 0x6f,
+	0x74, 0x65, 0x5f, 0x72, 0x65, 0x73, 0x65, 0x72, 0x76, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0c, 0x71, 0x75, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x65, 0x72, 0x76, 0x65, 0x12, 0x2e,
+	0x0a, 0x13, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x73, 0x79, 0x6e, 0x63, 0x5f, 0x74, 0x69, 0x6d, 0x65,
+	0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x11, 0x6c, 0x61, 0x73,
+	0x74, 0x53, 0x79, 0x6e, 0x63, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x21,
+	0x0a, 0x0c, 0x67, 0x72, 0x61, 0x64, 0x75, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x74, 0x6f, 0x18, 0x06,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x67, 0x72, 0x61, 0x64, 0x75, 0x61, 0x74, 0x65, 0x64, 0x54,
+	0x6f, 0x12, 0x33, 0x0a, 0x05, 0x73, 0x77, 0x61, 0x70, 0x73, 0x18, 0x07, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x1d, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x70, 0x75, 0x6d, 0x70, 0x56,
+	0x31, 0x4c, 0x61, 0x75, 0x6e, 0x63, 0x68, 0x50, 0x61, 0x69, 0x72, 0x53, 0x77, 0x61, 0x70, 0x52,
+	0x05, 0x73, 0x77, 0x61, 0x70, 0x73, 0x22, 0xb6, 0x01, 0x0a, 0x15, 0x48, 0x70, 0x75, 0x6d, 0x70,
+	0x56, 0x31, 0x4c, 0x61, 0x75, 0x6e, 0x63, 0x68, 0x50, 0x61, 0x69, 0x72, 0x53, 0x77, 0x61, 0x70,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64,
+	0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x69, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x70, 0x61, 0x69, 0x72, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x74, 0x6f, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x74, 0x6f, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
+	0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x21,
+	0x0a, 0x0c, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x06,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x4e, 0x75, 0x6d, 0x62, 0x65,
+	0x72, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x07,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x42,
+	0x29, 0x5a, 0x27, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79,
+	0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63,
+	0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -1165,29 +1488,34 @@ func file_hypurr_evm_proto_rawDescGZIP() []byte {
 	return file_hypurr_evm_proto_rawDescData
 }
 
-var file_hypurr_evm_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_hypurr_evm_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_hypurr_evm_proto_goTypes = []any{
-	(*ERC20Token)(nil),          // 0: hypurr.ERC20Token
-	(*ERC20AccountBalance)(nil), // 1: hypurr.ERC20AccountBalance
-	(*UniV2Pair)(nil),           // 2: hypurr.UniV2Pair
-	(*UniV2Swap)(nil),           // 3: hypurr.UniV2Swap
-	(*ERC20TransferEvent)(nil),  // 4: hypurr.ERC20TransferEvent
-	(*ERC20ApprovalEvent)(nil),  // 5: hypurr.ERC20ApprovalEvent
-	(*ERC20Allowance)(nil),      // 6: hypurr.ERC20Allowance
-	(*UniCandle)(nil),           // 7: hypurr.UniCandle
-	(*UniV3Pool)(nil),           // 8: hypurr.UniV3Pool
-	(*UniV3Swap)(nil),           // 9: hypurr.UniV3Swap
+	(*ERC20Token)(nil),            // 0: hypurr.ERC20Token
+	(*ERC20AccountBalance)(nil),   // 1: hypurr.ERC20AccountBalance
+	(*UniV2Pair)(nil),             // 2: hypurr.UniV2Pair
+	(*UniV2Swap)(nil),             // 3: hypurr.UniV2Swap
+	(*ERC20TransferEvent)(nil),    // 4: hypurr.ERC20TransferEvent
+	(*ERC20ApprovalEvent)(nil),    // 5: hypurr.ERC20ApprovalEvent
+	(*ERC20Allowance)(nil),        // 6: hypurr.ERC20Allowance
+	(*UniCandle)(nil),             // 7: hypurr.UniCandle
+	(*UniV3Pool)(nil),             // 8: hypurr.UniV3Pool
+	(*UniV3Swap)(nil),             // 9: hypurr.UniV3Swap
+	(*HpumpV1LaunchToken)(nil),    // 10: hypurr.HpumpV1LaunchToken
+	(*HpumpV1LaunchPair)(nil),     // 11: hypurr.HpumpV1LaunchPair
+	(*HpumpV1LaunchPairSwap)(nil), // 12: hypurr.HpumpV1LaunchPairSwap
 }
 var file_hypurr_evm_proto_depIdxs = []int32{
-	0, // 0: hypurr.UniV2Pair.token0:type_name -> hypurr.ERC20Token
-	0, // 1: hypurr.UniV2Pair.token1:type_name -> hypurr.ERC20Token
-	0, // 2: hypurr.UniV3Pool.token0:type_name -> hypurr.ERC20Token
-	0, // 3: hypurr.UniV3Pool.token1:type_name -> hypurr.ERC20Token
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	0,  // 0: hypurr.UniV2Pair.token0:type_name -> hypurr.ERC20Token
+	0,  // 1: hypurr.UniV2Pair.token1:type_name -> hypurr.ERC20Token
+	0,  // 2: hypurr.UniV3Pool.token0:type_name -> hypurr.ERC20Token
+	0,  // 3: hypurr.UniV3Pool.token1:type_name -> hypurr.ERC20Token
+	11, // 4: hypurr.HpumpV1LaunchToken.pair:type_name -> hypurr.HpumpV1LaunchPair
+	12, // 5: hypurr.HpumpV1LaunchPair.swaps:type_name -> hypurr.HpumpV1LaunchPairSwap
+	6,  // [6:6] is the sub-list for method output_type
+	6,  // [6:6] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_hypurr_evm_proto_init() }
@@ -1316,6 +1644,42 @@ func file_hypurr_evm_proto_init() {
 				return nil
 			}
 		}
+		file_hypurr_evm_proto_msgTypes[10].Exporter = func(v any, i int) any {
+			switch v := v.(*HpumpV1LaunchToken); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_evm_proto_msgTypes[11].Exporter = func(v any, i int) any {
+			switch v := v.(*HpumpV1LaunchPair); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_evm_proto_msgTypes[12].Exporter = func(v any, i int) any {
+			switch v := v.(*HpumpV1LaunchPairSwap); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1323,7 +1687,7 @@ func file_hypurr_evm_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hypurr_evm_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

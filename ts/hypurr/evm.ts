@@ -373,6 +373,107 @@ export interface UniV3Swap {
      */
     timestamp: number;
 }
+/**
+ * HPump Launch Token messages
+ *
+ * @generated from protobuf message hypurr.HpumpV1LaunchToken
+ */
+export interface HpumpV1LaunchToken {
+    /**
+     * @generated from protobuf field: string token = 1;
+     */
+    token: string; // token address is unique
+    /**
+     * @generated from protobuf field: int64 created_at = 2;
+     */
+    createdAt: number; // block timestamp
+    /**
+     * @generated from protobuf field: string launch_id = 3;
+     */
+    launchId: string; // the uint256 id from the event (using string for big integers)
+    /**
+     * @generated from protobuf field: bool graduated = 4;
+     */
+    graduated: boolean;
+    /**
+     * @generated from protobuf field: int64 graduated_at = 5;
+     */
+    graduatedAt: number; // Timestamp when graduated
+    /**
+     * @generated from protobuf field: hypurr.HpumpV1LaunchPair pair = 6;
+     */
+    pair?: HpumpV1LaunchPair; // Embedded pair information
+}
+/**
+ * HPump Launch Pair messages
+ *
+ * @generated from protobuf message hypurr.HpumpV1LaunchPair
+ */
+export interface HpumpV1LaunchPair {
+    /**
+     * @generated from protobuf field: string pair = 1;
+     */
+    pair: string; // pair address is unique
+    /**
+     * @generated from protobuf field: string token = 2;
+     */
+    token: string; // reference to the token
+    /**
+     * @generated from protobuf field: string base_reserve = 3;
+     */
+    baseReserve: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: string quote_reserve = 4;
+     */
+    quoteReserve: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: int64 last_sync_timestamp = 5;
+     */
+    lastSyncTimestamp: number;
+    /**
+     * @generated from protobuf field: string graduated_to = 6;
+     */
+    graduatedTo: string; // Address of the new pair after graduation
+    /**
+     * @generated from protobuf field: repeated hypurr.HpumpV1LaunchPairSwap swaps = 7;
+     */
+    swaps: HpumpV1LaunchPairSwap[]; // List of swaps
+}
+/**
+ * HPump Launch Pair Swap messages
+ *
+ * @generated from protobuf message hypurr.HpumpV1LaunchPairSwap
+ */
+export interface HpumpV1LaunchPairSwap {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string; // tx hash + log index
+    /**
+     * @generated from protobuf field: string pair = 2;
+     */
+    pair: string; // launch pair address
+    /**
+     * @generated from protobuf field: string from = 3;
+     */
+    from: string;
+    /**
+     * @generated from protobuf field: string to = 4;
+     */
+    to: string;
+    /**
+     * @generated from protobuf field: string value = 5;
+     */
+    value: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: int32 block_number = 6;
+     */
+    blockNumber: number;
+    /**
+     * @generated from protobuf field: int64 timestamp = 7;
+     */
+    timestamp: number;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class ERC20Token$Type extends MessageType<ERC20Token> {
     constructor() {
@@ -1284,3 +1385,263 @@ class UniV3Swap$Type extends MessageType<UniV3Swap> {
  * @generated MessageType for protobuf message hypurr.UniV3Swap
  */
 export const UniV3Swap = new UniV3Swap$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
+    constructor() {
+        super("hypurr.HpumpV1LaunchToken", [
+            { no: 1, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "launch_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "graduated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 5, name: "graduated_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "pair", kind: "message", T: () => HpumpV1LaunchPair }
+        ]);
+    }
+    create(value?: PartialMessage<HpumpV1LaunchToken>): HpumpV1LaunchToken {
+        const message = { token: "", createdAt: 0, launchId: "", graduated: false, graduatedAt: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HpumpV1LaunchToken>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchToken): HpumpV1LaunchToken {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string token */ 1:
+                    message.token = reader.string();
+                    break;
+                case /* int64 created_at */ 2:
+                    message.createdAt = reader.int64().toNumber();
+                    break;
+                case /* string launch_id */ 3:
+                    message.launchId = reader.string();
+                    break;
+                case /* bool graduated */ 4:
+                    message.graduated = reader.bool();
+                    break;
+                case /* int64 graduated_at */ 5:
+                    message.graduatedAt = reader.int64().toNumber();
+                    break;
+                case /* hypurr.HpumpV1LaunchPair pair */ 6:
+                    message.pair = HpumpV1LaunchPair.internalBinaryRead(reader, reader.uint32(), options, message.pair);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HpumpV1LaunchToken, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string token = 1; */
+        if (message.token !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.token);
+        /* int64 created_at = 2; */
+        if (message.createdAt !== 0)
+            writer.tag(2, WireType.Varint).int64(message.createdAt);
+        /* string launch_id = 3; */
+        if (message.launchId !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.launchId);
+        /* bool graduated = 4; */
+        if (message.graduated !== false)
+            writer.tag(4, WireType.Varint).bool(message.graduated);
+        /* int64 graduated_at = 5; */
+        if (message.graduatedAt !== 0)
+            writer.tag(5, WireType.Varint).int64(message.graduatedAt);
+        /* hypurr.HpumpV1LaunchPair pair = 6; */
+        if (message.pair)
+            HpumpV1LaunchPair.internalBinaryWrite(message.pair, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchToken
+ */
+export const HpumpV1LaunchToken = new HpumpV1LaunchToken$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HpumpV1LaunchPair$Type extends MessageType<HpumpV1LaunchPair> {
+    constructor() {
+        super("hypurr.HpumpV1LaunchPair", [
+            { no: 1, name: "pair", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "base_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "quote_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "last_sync_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "graduated_to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchPairSwap }
+        ]);
+    }
+    create(value?: PartialMessage<HpumpV1LaunchPair>): HpumpV1LaunchPair {
+        const message = { pair: "", token: "", baseReserve: "", quoteReserve: "", lastSyncTimestamp: 0, graduatedTo: "", swaps: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HpumpV1LaunchPair>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPair): HpumpV1LaunchPair {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string pair */ 1:
+                    message.pair = reader.string();
+                    break;
+                case /* string token */ 2:
+                    message.token = reader.string();
+                    break;
+                case /* string base_reserve */ 3:
+                    message.baseReserve = reader.string();
+                    break;
+                case /* string quote_reserve */ 4:
+                    message.quoteReserve = reader.string();
+                    break;
+                case /* int64 last_sync_timestamp */ 5:
+                    message.lastSyncTimestamp = reader.int64().toNumber();
+                    break;
+                case /* string graduated_to */ 6:
+                    message.graduatedTo = reader.string();
+                    break;
+                case /* repeated hypurr.HpumpV1LaunchPairSwap swaps */ 7:
+                    message.swaps.push(HpumpV1LaunchPairSwap.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HpumpV1LaunchPair, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string pair = 1; */
+        if (message.pair !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.pair);
+        /* string token = 2; */
+        if (message.token !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.token);
+        /* string base_reserve = 3; */
+        if (message.baseReserve !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.baseReserve);
+        /* string quote_reserve = 4; */
+        if (message.quoteReserve !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.quoteReserve);
+        /* int64 last_sync_timestamp = 5; */
+        if (message.lastSyncTimestamp !== 0)
+            writer.tag(5, WireType.Varint).int64(message.lastSyncTimestamp);
+        /* string graduated_to = 6; */
+        if (message.graduatedTo !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.graduatedTo);
+        /* repeated hypurr.HpumpV1LaunchPairSwap swaps = 7; */
+        for (let i = 0; i < message.swaps.length; i++)
+            HpumpV1LaunchPairSwap.internalBinaryWrite(message.swaps[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPair
+ */
+export const HpumpV1LaunchPair = new HpumpV1LaunchPair$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HpumpV1LaunchPairSwap$Type extends MessageType<HpumpV1LaunchPairSwap> {
+    constructor() {
+        super("hypurr.HpumpV1LaunchPairSwap", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "pair", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "from", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "value", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "block_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HpumpV1LaunchPairSwap>): HpumpV1LaunchPairSwap {
+        const message = { id: "", pair: "", from: "", to: "", value: "", blockNumber: 0, timestamp: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HpumpV1LaunchPairSwap>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPairSwap): HpumpV1LaunchPairSwap {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* string pair */ 2:
+                    message.pair = reader.string();
+                    break;
+                case /* string from */ 3:
+                    message.from = reader.string();
+                    break;
+                case /* string to */ 4:
+                    message.to = reader.string();
+                    break;
+                case /* string value */ 5:
+                    message.value = reader.string();
+                    break;
+                case /* int32 block_number */ 6:
+                    message.blockNumber = reader.int32();
+                    break;
+                case /* int64 timestamp */ 7:
+                    message.timestamp = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HpumpV1LaunchPairSwap, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* string pair = 2; */
+        if (message.pair !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.pair);
+        /* string from = 3; */
+        if (message.from !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.from);
+        /* string to = 4; */
+        if (message.to !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.to);
+        /* string value = 5; */
+        if (message.value !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.value);
+        /* int32 block_number = 6; */
+        if (message.blockNumber !== 0)
+            writer.tag(6, WireType.Varint).int32(message.blockNumber);
+        /* int64 timestamp = 7; */
+        if (message.timestamp !== 0)
+            writer.tag(7, WireType.Varint).int64(message.timestamp);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPairSwap
+ */
+export const HpumpV1LaunchPairSwap = new HpumpV1LaunchPairSwap$Type();
