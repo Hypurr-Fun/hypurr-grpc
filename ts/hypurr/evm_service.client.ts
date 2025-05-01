@@ -4,6 +4,20 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { EVM } from "./evm_service";
+import type { HpumpV1LaunchPairSwapStreamResponse } from "./evm_service";
+import type { HpumpV1LaunchPairSwapStreamRequest } from "./evm_service";
+import type { HpumpV1LaunchPairSwapsResponse } from "./evm_service";
+import type { HpumpV1LaunchPairSwapsRequest } from "./evm_service";
+import type { HpumpV1LaunchPairSwapResponse } from "./evm_service";
+import type { HpumpV1LaunchPairSwapRequest } from "./evm_service";
+import type { HpumpV1LaunchPairsResponse } from "./evm_service";
+import type { HpumpV1LaunchPairsRequest } from "./evm_service";
+import type { HpumpV1LaunchPairResponse } from "./evm_service";
+import type { HpumpV1LaunchPairRequest } from "./evm_service";
+import type { HpumpV1LaunchTokensResponse } from "./evm_service";
+import type { HpumpV1LaunchTokensRequest } from "./evm_service";
+import type { HpumpV1LaunchTokenResponse } from "./evm_service";
+import type { HpumpV1LaunchTokenRequest } from "./evm_service";
 import type { UniV3SwapStreamResponse } from "./evm_service";
 import type { UniV3SwapStreamRequest } from "./evm_service";
 import type { UniV2SwapStreamResponse } from "./evm_service";
@@ -108,6 +122,38 @@ export interface IEVMClient {
      * @generated from protobuf rpc: UniV3SwapStream(hypurr.UniV3SwapStreamRequest) returns (stream hypurr.UniV3SwapStreamResponse);
      */
     uniV3SwapStream(input: UniV3SwapStreamRequest, options?: RpcOptions): ServerStreamingCall<UniV3SwapStreamRequest, UniV3SwapStreamResponse>;
+    /**
+     * HPump V1 related endpoints
+     *
+     * @generated from protobuf rpc: HpumpV1LaunchToken(hypurr.HpumpV1LaunchTokenRequest) returns (hypurr.HpumpV1LaunchTokenResponse);
+     */
+    hpumpV1LaunchToken(input: HpumpV1LaunchTokenRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchTokenRequest, HpumpV1LaunchTokenResponse>;
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchTokens(hypurr.HpumpV1LaunchTokensRequest) returns (hypurr.HpumpV1LaunchTokensResponse);
+     */
+    hpumpV1LaunchTokens(input: HpumpV1LaunchTokensRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchTokensRequest, HpumpV1LaunchTokensResponse>;
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPair(hypurr.HpumpV1LaunchPairRequest) returns (hypurr.HpumpV1LaunchPairResponse);
+     */
+    hpumpV1LaunchPair(input: HpumpV1LaunchPairRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairRequest, HpumpV1LaunchPairResponse>;
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairs(hypurr.HpumpV1LaunchPairsRequest) returns (hypurr.HpumpV1LaunchPairsResponse);
+     */
+    hpumpV1LaunchPairs(input: HpumpV1LaunchPairsRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairsRequest, HpumpV1LaunchPairsResponse>;
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairSwap(hypurr.HpumpV1LaunchPairSwapRequest) returns (hypurr.HpumpV1LaunchPairSwapResponse);
+     */
+    hpumpV1LaunchPairSwap(input: HpumpV1LaunchPairSwapRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairSwapRequest, HpumpV1LaunchPairSwapResponse>;
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairSwaps(hypurr.HpumpV1LaunchPairSwapsRequest) returns (hypurr.HpumpV1LaunchPairSwapsResponse);
+     */
+    hpumpV1LaunchPairSwaps(input: HpumpV1LaunchPairSwapsRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairSwapsRequest, HpumpV1LaunchPairSwapsResponse>;
+    /**
+     * HPump V1 streaming endpoint
+     *
+     * @generated from protobuf rpc: HpumpV1LaunchPairSwapStream(hypurr.HpumpV1LaunchPairSwapStreamRequest) returns (stream hypurr.HpumpV1LaunchPairSwapStreamResponse);
+     */
+    hpumpV1LaunchPairSwapStream(input: HpumpV1LaunchPairSwapStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchPairSwapStreamRequest, HpumpV1LaunchPairSwapStreamResponse>;
 }
 /**
  * @generated from protobuf service hypurr.EVM
@@ -227,5 +273,58 @@ export class EVMClient implements IEVMClient, ServiceInfo {
     uniV3SwapStream(input: UniV3SwapStreamRequest, options?: RpcOptions): ServerStreamingCall<UniV3SwapStreamRequest, UniV3SwapStreamResponse> {
         const method = this.methods[13], opt = this._transport.mergeOptions(options);
         return stackIntercept<UniV3SwapStreamRequest, UniV3SwapStreamResponse>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
+     * HPump V1 related endpoints
+     *
+     * @generated from protobuf rpc: HpumpV1LaunchToken(hypurr.HpumpV1LaunchTokenRequest) returns (hypurr.HpumpV1LaunchTokenResponse);
+     */
+    hpumpV1LaunchToken(input: HpumpV1LaunchTokenRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchTokenRequest, HpumpV1LaunchTokenResponse> {
+        const method = this.methods[14], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchTokenRequest, HpumpV1LaunchTokenResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchTokens(hypurr.HpumpV1LaunchTokensRequest) returns (hypurr.HpumpV1LaunchTokensResponse);
+     */
+    hpumpV1LaunchTokens(input: HpumpV1LaunchTokensRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchTokensRequest, HpumpV1LaunchTokensResponse> {
+        const method = this.methods[15], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchTokensRequest, HpumpV1LaunchTokensResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPair(hypurr.HpumpV1LaunchPairRequest) returns (hypurr.HpumpV1LaunchPairResponse);
+     */
+    hpumpV1LaunchPair(input: HpumpV1LaunchPairRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairRequest, HpumpV1LaunchPairResponse> {
+        const method = this.methods[16], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchPairRequest, HpumpV1LaunchPairResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairs(hypurr.HpumpV1LaunchPairsRequest) returns (hypurr.HpumpV1LaunchPairsResponse);
+     */
+    hpumpV1LaunchPairs(input: HpumpV1LaunchPairsRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairsRequest, HpumpV1LaunchPairsResponse> {
+        const method = this.methods[17], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchPairsRequest, HpumpV1LaunchPairsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairSwap(hypurr.HpumpV1LaunchPairSwapRequest) returns (hypurr.HpumpV1LaunchPairSwapResponse);
+     */
+    hpumpV1LaunchPairSwap(input: HpumpV1LaunchPairSwapRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairSwapRequest, HpumpV1LaunchPairSwapResponse> {
+        const method = this.methods[18], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchPairSwapRequest, HpumpV1LaunchPairSwapResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairSwaps(hypurr.HpumpV1LaunchPairSwapsRequest) returns (hypurr.HpumpV1LaunchPairSwapsResponse);
+     */
+    hpumpV1LaunchPairSwaps(input: HpumpV1LaunchPairSwapsRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairSwapsRequest, HpumpV1LaunchPairSwapsResponse> {
+        const method = this.methods[19], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchPairSwapsRequest, HpumpV1LaunchPairSwapsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * HPump V1 streaming endpoint
+     *
+     * @generated from protobuf rpc: HpumpV1LaunchPairSwapStream(hypurr.HpumpV1LaunchPairSwapStreamRequest) returns (stream hypurr.HpumpV1LaunchPairSwapStreamResponse);
+     */
+    hpumpV1LaunchPairSwapStream(input: HpumpV1LaunchPairSwapStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchPairSwapStreamRequest, HpumpV1LaunchPairSwapStreamResponse> {
+        const method = this.methods[20], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchPairSwapStreamRequest, HpumpV1LaunchPairSwapStreamResponse>("serverStreaming", this._transport, method, opt, input);
     }
 }
