@@ -380,9 +380,9 @@ export interface UniV3Swap {
  */
 export interface HpumpV1LaunchToken {
     /**
-     * @generated from protobuf field: string token = 1;
+     * @generated from protobuf field: string address = 1;
      */
-    token: string; // token address is unique
+    address: string; // token address is unique
     /**
      * @generated from protobuf field: int64 created_at = 2;
      */
@@ -411,9 +411,9 @@ export interface HpumpV1LaunchToken {
  */
 export interface HpumpV1LaunchPair {
     /**
-     * @generated from protobuf field: string pair = 1;
+     * @generated from protobuf field: string address = 1;
      */
-    pair: string; // pair address is unique
+    address: string; // pair address is unique
     /**
      * @generated from protobuf field: string token = 2;
      */
@@ -1389,7 +1389,7 @@ export const UniV3Swap = new UniV3Swap$Type();
 class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
     constructor() {
         super("hypurr.HpumpV1LaunchToken", [
-            { no: 1, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "launch_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "graduated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
@@ -1398,7 +1398,7 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchToken>): HpumpV1LaunchToken {
-        const message = { token: "", createdAt: 0, launchId: "", graduated: false, graduatedAt: 0 };
+        const message = { address: "", createdAt: 0, launchId: "", graduated: false, graduatedAt: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchToken>(this, message, value);
@@ -1409,8 +1409,8 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string token */ 1:
-                    message.token = reader.string();
+                case /* string address */ 1:
+                    message.address = reader.string();
                     break;
                 case /* int64 created_at */ 2:
                     message.createdAt = reader.int64().toNumber();
@@ -1439,9 +1439,9 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
         return message;
     }
     internalBinaryWrite(message: HpumpV1LaunchToken, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string token = 1; */
-        if (message.token !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.token);
+        /* string address = 1; */
+        if (message.address !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.address);
         /* int64 created_at = 2; */
         if (message.createdAt !== 0)
             writer.tag(2, WireType.Varint).int64(message.createdAt);
@@ -1471,7 +1471,7 @@ export const HpumpV1LaunchToken = new HpumpV1LaunchToken$Type();
 class HpumpV1LaunchPair$Type extends MessageType<HpumpV1LaunchPair> {
     constructor() {
         super("hypurr.HpumpV1LaunchPair", [
-            { no: 1, name: "pair", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "base_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "quote_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -1481,7 +1481,7 @@ class HpumpV1LaunchPair$Type extends MessageType<HpumpV1LaunchPair> {
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchPair>): HpumpV1LaunchPair {
-        const message = { pair: "", token: "", baseReserve: "", quoteReserve: "", lastSyncTimestamp: 0, graduatedTo: "", swaps: [] };
+        const message = { address: "", token: "", baseReserve: "", quoteReserve: "", lastSyncTimestamp: 0, graduatedTo: "", swaps: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchPair>(this, message, value);
@@ -1492,8 +1492,8 @@ class HpumpV1LaunchPair$Type extends MessageType<HpumpV1LaunchPair> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string pair */ 1:
-                    message.pair = reader.string();
+                case /* string address */ 1:
+                    message.address = reader.string();
                     break;
                 case /* string token */ 2:
                     message.token = reader.string();
@@ -1525,9 +1525,9 @@ class HpumpV1LaunchPair$Type extends MessageType<HpumpV1LaunchPair> {
         return message;
     }
     internalBinaryWrite(message: HpumpV1LaunchPair, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string pair = 1; */
-        if (message.pair !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.pair);
+        /* string address = 1; */
+        if (message.address !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.address);
         /* string token = 2; */
         if (message.token !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.token);
