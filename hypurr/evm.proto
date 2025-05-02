@@ -120,12 +120,15 @@ message UniV3Swap {
 // HPump Launch Token messages
 message HpumpV1LaunchToken {
   string address = 1;            // token address is unique
-  string pair_address = 2;
-  int64 created_at = 3;        // block timestamp
-  string launch_id = 4;        // the uint256 id from the event (using string for big integers)
-  bool graduated = 5;
-  int64 graduated_at = 6;      // Timestamp when graduated
-  HpumpV1LaunchPair pair = 7;         // Embedded pair information
+  string symbol = 2;
+  string name = 3;
+  string dev_address = 4;
+  string pair_address = 5;
+  int64 created_at = 6;        // block timestamp
+  string launch_id = 7;        // the uint256 id from the event (using string for big integers)
+  bool graduated = 8;
+  int64 graduated_at = 9;      // Timestamp when graduated
+  HpumpV1LaunchPair pair = 10;         // Embedded pair information
 }
 
 // HPump Launch Pair messages

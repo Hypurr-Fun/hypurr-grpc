@@ -384,27 +384,39 @@ export interface HpumpV1LaunchToken {
      */
     address: string; // token address is unique
     /**
-     * @generated from protobuf field: string pair_address = 2;
+     * @generated from protobuf field: string symbol = 2;
+     */
+    symbol: string;
+    /**
+     * @generated from protobuf field: string name = 3;
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: string dev_address = 4;
+     */
+    devAddress: string;
+    /**
+     * @generated from protobuf field: string pair_address = 5;
      */
     pairAddress: string;
     /**
-     * @generated from protobuf field: int64 created_at = 3;
+     * @generated from protobuf field: int64 created_at = 6;
      */
     createdAt: number; // block timestamp
     /**
-     * @generated from protobuf field: string launch_id = 4;
+     * @generated from protobuf field: string launch_id = 7;
      */
     launchId: string; // the uint256 id from the event (using string for big integers)
     /**
-     * @generated from protobuf field: bool graduated = 5;
+     * @generated from protobuf field: bool graduated = 8;
      */
     graduated: boolean;
     /**
-     * @generated from protobuf field: int64 graduated_at = 6;
+     * @generated from protobuf field: int64 graduated_at = 9;
      */
     graduatedAt: number; // Timestamp when graduated
     /**
-     * @generated from protobuf field: hypurr.HpumpV1LaunchPair pair = 7;
+     * @generated from protobuf field: hypurr.HpumpV1LaunchPair pair = 10;
      */
     pair?: HpumpV1LaunchPair; // Embedded pair information
 }
@@ -1402,16 +1414,19 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
     constructor() {
         super("hypurr.HpumpV1LaunchToken", [
             { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "pair_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "launch_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "graduated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 6, name: "graduated_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 7, name: "pair", kind: "message", T: () => HpumpV1LaunchPair }
+            { no: 2, name: "symbol", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "dev_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "pair_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "launch_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "graduated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 9, name: "graduated_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 10, name: "pair", kind: "message", T: () => HpumpV1LaunchPair }
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchToken>): HpumpV1LaunchToken {
-        const message = { address: "", pairAddress: "", createdAt: 0, launchId: "", graduated: false, graduatedAt: 0 };
+        const message = { address: "", symbol: "", name: "", devAddress: "", pairAddress: "", createdAt: 0, launchId: "", graduated: false, graduatedAt: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchToken>(this, message, value);
@@ -1425,22 +1440,31 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
                 case /* string address */ 1:
                     message.address = reader.string();
                     break;
-                case /* string pair_address */ 2:
+                case /* string symbol */ 2:
+                    message.symbol = reader.string();
+                    break;
+                case /* string name */ 3:
+                    message.name = reader.string();
+                    break;
+                case /* string dev_address */ 4:
+                    message.devAddress = reader.string();
+                    break;
+                case /* string pair_address */ 5:
                     message.pairAddress = reader.string();
                     break;
-                case /* int64 created_at */ 3:
+                case /* int64 created_at */ 6:
                     message.createdAt = reader.int64().toNumber();
                     break;
-                case /* string launch_id */ 4:
+                case /* string launch_id */ 7:
                     message.launchId = reader.string();
                     break;
-                case /* bool graduated */ 5:
+                case /* bool graduated */ 8:
                     message.graduated = reader.bool();
                     break;
-                case /* int64 graduated_at */ 6:
+                case /* int64 graduated_at */ 9:
                     message.graduatedAt = reader.int64().toNumber();
                     break;
-                case /* hypurr.HpumpV1LaunchPair pair */ 7:
+                case /* hypurr.HpumpV1LaunchPair pair */ 10:
                     message.pair = HpumpV1LaunchPair.internalBinaryRead(reader, reader.uint32(), options, message.pair);
                     break;
                 default:
@@ -1458,24 +1482,33 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
         /* string address = 1; */
         if (message.address !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.address);
-        /* string pair_address = 2; */
+        /* string symbol = 2; */
+        if (message.symbol !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.symbol);
+        /* string name = 3; */
+        if (message.name !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.name);
+        /* string dev_address = 4; */
+        if (message.devAddress !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.devAddress);
+        /* string pair_address = 5; */
         if (message.pairAddress !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.pairAddress);
-        /* int64 created_at = 3; */
+            writer.tag(5, WireType.LengthDelimited).string(message.pairAddress);
+        /* int64 created_at = 6; */
         if (message.createdAt !== 0)
-            writer.tag(3, WireType.Varint).int64(message.createdAt);
-        /* string launch_id = 4; */
+            writer.tag(6, WireType.Varint).int64(message.createdAt);
+        /* string launch_id = 7; */
         if (message.launchId !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.launchId);
-        /* bool graduated = 5; */
+            writer.tag(7, WireType.LengthDelimited).string(message.launchId);
+        /* bool graduated = 8; */
         if (message.graduated !== false)
-            writer.tag(5, WireType.Varint).bool(message.graduated);
-        /* int64 graduated_at = 6; */
+            writer.tag(8, WireType.Varint).bool(message.graduated);
+        /* int64 graduated_at = 9; */
         if (message.graduatedAt !== 0)
-            writer.tag(6, WireType.Varint).int64(message.graduatedAt);
-        /* hypurr.HpumpV1LaunchPair pair = 7; */
+            writer.tag(9, WireType.Varint).int64(message.graduatedAt);
+        /* hypurr.HpumpV1LaunchPair pair = 10; */
         if (message.pair)
-            HpumpV1LaunchPair.internalBinaryWrite(message.pair, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+            HpumpV1LaunchPair.internalBinaryWrite(message.pair, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
