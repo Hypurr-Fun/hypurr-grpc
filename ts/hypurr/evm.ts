@@ -482,13 +482,13 @@ export interface HpumpV1LaunchPairSwap {
      */
     to: string;
     /**
-     * @generated from protobuf field: string amount0 = 6;
+     * @generated from protobuf field: string net_base_amount = 6;
      */
-    amount0: string;
+    netBaseAmount: string;
     /**
-     * @generated from protobuf field: string amount1 = 7;
+     * @generated from protobuf field: string net_quote_amount = 7;
      */
-    amount1: string; // Using string for big integers
+    netQuoteAmount: string; // Using string for big integers
     /**
      * @generated from protobuf field: int32 block_number = 8;
      */
@@ -1617,14 +1617,14 @@ class HpumpV1LaunchPairSwap$Type extends MessageType<HpumpV1LaunchPairSwap> {
             { no: 3, name: "sender", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "origin", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "amount0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "amount1", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "net_base_amount", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "net_quote_amount", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 8, name: "block_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 9, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchPairSwap>): HpumpV1LaunchPairSwap {
-        const message = { id: "", pair: "", sender: "", origin: "", to: "", amount0: "", amount1: "", blockNumber: 0, timestamp: 0 };
+        const message = { id: "", pair: "", sender: "", origin: "", to: "", netBaseAmount: "", netQuoteAmount: "", blockNumber: 0, timestamp: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchPairSwap>(this, message, value);
@@ -1650,11 +1650,11 @@ class HpumpV1LaunchPairSwap$Type extends MessageType<HpumpV1LaunchPairSwap> {
                 case /* string to */ 5:
                     message.to = reader.string();
                     break;
-                case /* string amount0 */ 6:
-                    message.amount0 = reader.string();
+                case /* string net_base_amount */ 6:
+                    message.netBaseAmount = reader.string();
                     break;
-                case /* string amount1 */ 7:
-                    message.amount1 = reader.string();
+                case /* string net_quote_amount */ 7:
+                    message.netQuoteAmount = reader.string();
                     break;
                 case /* int32 block_number */ 8:
                     message.blockNumber = reader.int32();
@@ -1689,12 +1689,12 @@ class HpumpV1LaunchPairSwap$Type extends MessageType<HpumpV1LaunchPairSwap> {
         /* string to = 5; */
         if (message.to !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.to);
-        /* string amount0 = 6; */
-        if (message.amount0 !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.amount0);
-        /* string amount1 = 7; */
-        if (message.amount1 !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.amount1);
+        /* string net_base_amount = 6; */
+        if (message.netBaseAmount !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.netBaseAmount);
+        /* string net_quote_amount = 7; */
+        if (message.netQuoteAmount !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.netQuoteAmount);
         /* int32 block_number = 8; */
         if (message.blockNumber !== 0)
             writer.tag(8, WireType.Varint).int32(message.blockNumber);

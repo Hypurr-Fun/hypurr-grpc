@@ -40,6 +40,7 @@ const (
 	EVM_HpumpV1LaunchPairSwap_FullMethodName       = "/hypurr.EVM/HpumpV1LaunchPairSwap"
 	EVM_HpumpV1LaunchPairSwaps_FullMethodName      = "/hypurr.EVM/HpumpV1LaunchPairSwaps"
 	EVM_HpumpV1LaunchPairSwapStream_FullMethodName = "/hypurr.EVM/HpumpV1LaunchPairSwapStream"
+	EVM_HpumpV1_FullMethodName                     = "/hypurr.EVM/HpumpV1"
 )
 
 // EVMClient is the client API for EVM service.
@@ -75,6 +76,9 @@ type EVMClient interface {
 	HpumpV1LaunchPairSwaps(ctx context.Context, in *HpumpV1LaunchPairSwapsRequest, opts ...grpc.CallOption) (*HpumpV1LaunchPairSwapsResponse, error)
 	// HPump V1 streaming endpoint
 	HpumpV1LaunchPairSwapStream(ctx context.Context, in *HpumpV1LaunchPairSwapStreamRequest, opts ...grpc.CallOption) (EVM_HpumpV1LaunchPairSwapStreamClient, error)
+	// Price candle related endpoints
+	// Todo group into same type
+	HpumpV1(ctx context.Context, in *HpumpV1CandlesRequest, opts ...grpc.CallOption) (*HpumpV1CandlesResponse, error)
 }
 
 type eVMClient struct {
@@ -364,6 +368,16 @@ func (x *eVMHpumpV1LaunchPairSwapStreamClient) Recv() (*HpumpV1LaunchPairSwapStr
 	return m, nil
 }
 
+func (c *eVMClient) HpumpV1(ctx context.Context, in *HpumpV1CandlesRequest, opts ...grpc.CallOption) (*HpumpV1CandlesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HpumpV1CandlesResponse)
+	err := c.cc.Invoke(ctx, EVM_HpumpV1_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // EVMServer is the server API for EVM service.
 // All implementations must embed UnimplementedEVMServer
 // for forward compatibility
@@ -397,6 +411,9 @@ type EVMServer interface {
 	HpumpV1LaunchPairSwaps(context.Context, *HpumpV1LaunchPairSwapsRequest) (*HpumpV1LaunchPairSwapsResponse, error)
 	// HPump V1 streaming endpoint
 	HpumpV1LaunchPairSwapStream(*HpumpV1LaunchPairSwapStreamRequest, EVM_HpumpV1LaunchPairSwapStreamServer) error
+	// Price candle related endpoints
+	// Todo group into same type
+	HpumpV1(context.Context, *HpumpV1CandlesRequest) (*HpumpV1CandlesResponse, error)
 	mustEmbedUnimplementedEVMServer()
 }
 
@@ -466,6 +483,9 @@ func (UnimplementedEVMServer) HpumpV1LaunchPairSwaps(context.Context, *HpumpV1La
 }
 func (UnimplementedEVMServer) HpumpV1LaunchPairSwapStream(*HpumpV1LaunchPairSwapStreamRequest, EVM_HpumpV1LaunchPairSwapStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method HpumpV1LaunchPairSwapStream not implemented")
+}
+func (UnimplementedEVMServer) HpumpV1(context.Context, *HpumpV1CandlesRequest) (*HpumpV1CandlesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1 not implemented")
 }
 func (UnimplementedEVMServer) mustEmbedUnimplementedEVMServer() {}
 
@@ -867,6 +887,24 @@ func (x *eVMHpumpV1LaunchPairSwapStreamServer) Send(m *HpumpV1LaunchPairSwapStre
 	return x.ServerStream.SendMsg(m)
 }
 
+func _EVM_HpumpV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HpumpV1CandlesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EVMServer).HpumpV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: EVM_HpumpV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EVMServer).HpumpV1(ctx, req.(*HpumpV1CandlesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // EVM_ServiceDesc is the grpc.ServiceDesc for EVM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -945,6 +983,10 @@ var EVM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HpumpV1LaunchPairSwaps",
 			Handler:    _EVM_HpumpV1LaunchPairSwaps_Handler,
+		},
+		{
+			MethodName: "HpumpV1",
+			Handler:    _EVM_HpumpV1_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

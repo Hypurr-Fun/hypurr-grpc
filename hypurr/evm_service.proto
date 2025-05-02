@@ -223,6 +223,18 @@ message HpumpV1LaunchPairSwapStreamResponse {
   repeated HpumpV1LaunchPairSwap swaps = 1;
 }
 
+message HpumpV1CandlesRequest {
+  string pair_address = 1;
+  int64 from_timestamp = 2;
+  int64 to_timestamp = 3;
+  string interval = 4;  // e.g. "5m", "1h", "1d"
+}
+
+message HpumpV1CandlesResponse {
+  repeated UniCandle candles = 1;
+}
+
+
 service EVM {
   // Token related endpoints
   rpc ERC20Token(ERC20TokenRequest) returns (ERC20TokenResponse) {}
@@ -260,4 +272,9 @@ service EVM {
   
   // HPump V1 streaming endpoint
   rpc HpumpV1LaunchPairSwapStream(HpumpV1LaunchPairSwapStreamRequest) returns (stream HpumpV1LaunchPairSwapStreamResponse) {}
+
+  // Price candle related endpoints
+  // Todo group into same type
+  rpc HpumpV1(HpumpV1CandlesRequest) returns (HpumpV1CandlesResponse) {}
+
 }

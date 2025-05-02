@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { EVM } from "./evm_service";
+import type { HpumpV1CandlesResponse } from "./evm_service";
+import type { HpumpV1CandlesRequest } from "./evm_service";
 import type { HpumpV1LaunchPairSwapStreamResponse } from "./evm_service";
 import type { HpumpV1LaunchPairSwapStreamRequest } from "./evm_service";
 import type { HpumpV1LaunchPairSwapsResponse } from "./evm_service";
@@ -154,6 +156,13 @@ export interface IEVMClient {
      * @generated from protobuf rpc: HpumpV1LaunchPairSwapStream(hypurr.HpumpV1LaunchPairSwapStreamRequest) returns (stream hypurr.HpumpV1LaunchPairSwapStreamResponse);
      */
     hpumpV1LaunchPairSwapStream(input: HpumpV1LaunchPairSwapStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchPairSwapStreamRequest, HpumpV1LaunchPairSwapStreamResponse>;
+    /**
+     * Price candle related endpoints
+     * Todo group into same type
+     *
+     * @generated from protobuf rpc: HpumpV1(hypurr.HpumpV1CandlesRequest) returns (hypurr.HpumpV1CandlesResponse);
+     */
+    hpumpV1(input: HpumpV1CandlesRequest, options?: RpcOptions): UnaryCall<HpumpV1CandlesRequest, HpumpV1CandlesResponse>;
 }
 /**
  * @generated from protobuf service hypurr.EVM
@@ -326,5 +335,15 @@ export class EVMClient implements IEVMClient, ServiceInfo {
     hpumpV1LaunchPairSwapStream(input: HpumpV1LaunchPairSwapStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchPairSwapStreamRequest, HpumpV1LaunchPairSwapStreamResponse> {
         const method = this.methods[20], opt = this._transport.mergeOptions(options);
         return stackIntercept<HpumpV1LaunchPairSwapStreamRequest, HpumpV1LaunchPairSwapStreamResponse>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
+     * Price candle related endpoints
+     * Todo group into same type
+     *
+     * @generated from protobuf rpc: HpumpV1(hypurr.HpumpV1CandlesRequest) returns (hypurr.HpumpV1CandlesResponse);
+     */
+    hpumpV1(input: HpumpV1CandlesRequest, options?: RpcOptions): UnaryCall<HpumpV1CandlesRequest, HpumpV1CandlesResponse> {
+        const method = this.methods[21], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1CandlesRequest, HpumpV1CandlesResponse>("unary", this._transport, method, opt, input);
     }
 }
