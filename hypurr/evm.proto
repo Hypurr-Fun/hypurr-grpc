@@ -129,6 +129,8 @@ message HpumpV1LaunchToken {
   bool graduated = 8;
   int64 graduated_at = 9;      // Timestamp when graduated
   HpumpV1LaunchPair pair = 10; // Embedded pair information
+  string description = 11;
+
 }
 
 // HPump Launch Pair messages
