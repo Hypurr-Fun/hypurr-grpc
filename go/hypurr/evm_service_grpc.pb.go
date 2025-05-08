@@ -19,28 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	EVM_ERC20Token_FullMethodName                  = "/hypurr.EVM/ERC20Token"
-	EVM_ERC20Tokens_FullMethodName                 = "/hypurr.EVM/ERC20Tokens"
-	EVM_ERC20AccountBalances_FullMethodName        = "/hypurr.EVM/ERC20AccountBalances"
-	EVM_UniV2Pair_FullMethodName                   = "/hypurr.EVM/UniV2Pair"
-	EVM_UniPairs_FullMethodName                    = "/hypurr.EVM/UniPairs"
-	EVM_UniV2Swap_FullMethodName                   = "/hypurr.EVM/UniV2Swap"
-	EVM_UniV2Swaps_FullMethodName                  = "/hypurr.EVM/UniV2Swaps"
-	EVM_UniV3Swap_FullMethodName                   = "/hypurr.EVM/UniV3Swap"
-	EVM_UniV3Swaps_FullMethodName                  = "/hypurr.EVM/UniV3Swaps"
-	EVM_ERC20TransferEvents_FullMethodName         = "/hypurr.EVM/ERC20TransferEvents"
-	EVM_ERC20ApprovalEvents_FullMethodName         = "/hypurr.EVM/ERC20ApprovalEvents"
-	EVM_UniCandles_FullMethodName                  = "/hypurr.EVM/UniCandles"
-	EVM_UniV2SwapStream_FullMethodName             = "/hypurr.EVM/UniV2SwapStream"
-	EVM_UniV3SwapStream_FullMethodName             = "/hypurr.EVM/UniV3SwapStream"
-	EVM_HpumpV1LaunchToken_FullMethodName          = "/hypurr.EVM/HpumpV1LaunchToken"
-	EVM_HpumpV1LaunchTokens_FullMethodName         = "/hypurr.EVM/HpumpV1LaunchTokens"
-	EVM_HpumpV1LaunchPair_FullMethodName           = "/hypurr.EVM/HpumpV1LaunchPair"
-	EVM_HpumpV1LaunchPairs_FullMethodName          = "/hypurr.EVM/HpumpV1LaunchPairs"
-	EVM_HpumpV1LaunchPairSwap_FullMethodName       = "/hypurr.EVM/HpumpV1LaunchPairSwap"
-	EVM_HpumpV1LaunchPairSwaps_FullMethodName      = "/hypurr.EVM/HpumpV1LaunchPairSwaps"
-	EVM_HpumpV1LaunchPairSwapStream_FullMethodName = "/hypurr.EVM/HpumpV1LaunchPairSwapStream"
-	EVM_HpumpV1_FullMethodName                     = "/hypurr.EVM/HpumpV1"
+	EVM_ERC20Token_FullMethodName           = "/hypurr.EVM/ERC20Token"
+	EVM_ERC20Tokens_FullMethodName          = "/hypurr.EVM/ERC20Tokens"
+	EVM_ERC20AccountBalances_FullMethodName = "/hypurr.EVM/ERC20AccountBalances"
+	EVM_UniV2Pair_FullMethodName            = "/hypurr.EVM/UniV2Pair"
+	EVM_UniPairs_FullMethodName             = "/hypurr.EVM/UniPairs"
+	EVM_UniV2Swap_FullMethodName            = "/hypurr.EVM/UniV2Swap"
+	EVM_UniV2Swaps_FullMethodName           = "/hypurr.EVM/UniV2Swaps"
+	EVM_UniV3Swap_FullMethodName            = "/hypurr.EVM/UniV3Swap"
+	EVM_UniV3Swaps_FullMethodName           = "/hypurr.EVM/UniV3Swaps"
+	EVM_ERC20TransferEvents_FullMethodName  = "/hypurr.EVM/ERC20TransferEvents"
+	EVM_ERC20ApprovalEvents_FullMethodName  = "/hypurr.EVM/ERC20ApprovalEvents"
+	EVM_UniCandles_FullMethodName           = "/hypurr.EVM/UniCandles"
+	EVM_UniV2SwapStream_FullMethodName      = "/hypurr.EVM/UniV2SwapStream"
+	EVM_UniV3SwapStream_FullMethodName      = "/hypurr.EVM/UniV3SwapStream"
 )
 
 // EVMClient is the client API for EVM service.
@@ -67,18 +59,6 @@ type EVMClient interface {
 	// Streaming endpoints
 	UniV2SwapStream(ctx context.Context, in *UniV2SwapStreamRequest, opts ...grpc.CallOption) (EVM_UniV2SwapStreamClient, error)
 	UniV3SwapStream(ctx context.Context, in *UniV3SwapStreamRequest, opts ...grpc.CallOption) (EVM_UniV3SwapStreamClient, error)
-	// HPump V1 related endpoints
-	HpumpV1LaunchToken(ctx context.Context, in *HpumpV1LaunchTokenRequest, opts ...grpc.CallOption) (*HpumpV1LaunchTokenResponse, error)
-	HpumpV1LaunchTokens(ctx context.Context, in *HpumpV1LaunchTokensRequest, opts ...grpc.CallOption) (*HpumpV1LaunchTokensResponse, error)
-	HpumpV1LaunchPair(ctx context.Context, in *HpumpV1LaunchPairRequest, opts ...grpc.CallOption) (*HpumpV1LaunchPairResponse, error)
-	HpumpV1LaunchPairs(ctx context.Context, in *HpumpV1LaunchPairsRequest, opts ...grpc.CallOption) (*HpumpV1LaunchPairsResponse, error)
-	HpumpV1LaunchPairSwap(ctx context.Context, in *HpumpV1LaunchPairSwapRequest, opts ...grpc.CallOption) (*HpumpV1LaunchPairSwapResponse, error)
-	HpumpV1LaunchPairSwaps(ctx context.Context, in *HpumpV1LaunchPairSwapsRequest, opts ...grpc.CallOption) (*HpumpV1LaunchPairSwapsResponse, error)
-	// HPump V1 streaming endpoint
-	HpumpV1LaunchPairSwapStream(ctx context.Context, in *HpumpV1LaunchPairSwapStreamRequest, opts ...grpc.CallOption) (EVM_HpumpV1LaunchPairSwapStreamClient, error)
-	// Price candle related endpoints
-	// Todo group into same type
-	HpumpV1(ctx context.Context, in *HpumpV1CandlesRequest, opts ...grpc.CallOption) (*HpumpV1CandlesResponse, error)
 }
 
 type eVMClient struct {
@@ -275,109 +255,6 @@ func (x *eVMUniV3SwapStreamClient) Recv() (*UniV3SwapStreamResponse, error) {
 	return m, nil
 }
 
-func (c *eVMClient) HpumpV1LaunchToken(ctx context.Context, in *HpumpV1LaunchTokenRequest, opts ...grpc.CallOption) (*HpumpV1LaunchTokenResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HpumpV1LaunchTokenResponse)
-	err := c.cc.Invoke(ctx, EVM_HpumpV1LaunchToken_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *eVMClient) HpumpV1LaunchTokens(ctx context.Context, in *HpumpV1LaunchTokensRequest, opts ...grpc.CallOption) (*HpumpV1LaunchTokensResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HpumpV1LaunchTokensResponse)
-	err := c.cc.Invoke(ctx, EVM_HpumpV1LaunchTokens_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *eVMClient) HpumpV1LaunchPair(ctx context.Context, in *HpumpV1LaunchPairRequest, opts ...grpc.CallOption) (*HpumpV1LaunchPairResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HpumpV1LaunchPairResponse)
-	err := c.cc.Invoke(ctx, EVM_HpumpV1LaunchPair_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *eVMClient) HpumpV1LaunchPairs(ctx context.Context, in *HpumpV1LaunchPairsRequest, opts ...grpc.CallOption) (*HpumpV1LaunchPairsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HpumpV1LaunchPairsResponse)
-	err := c.cc.Invoke(ctx, EVM_HpumpV1LaunchPairs_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *eVMClient) HpumpV1LaunchPairSwap(ctx context.Context, in *HpumpV1LaunchPairSwapRequest, opts ...grpc.CallOption) (*HpumpV1LaunchPairSwapResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HpumpV1LaunchPairSwapResponse)
-	err := c.cc.Invoke(ctx, EVM_HpumpV1LaunchPairSwap_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *eVMClient) HpumpV1LaunchPairSwaps(ctx context.Context, in *HpumpV1LaunchPairSwapsRequest, opts ...grpc.CallOption) (*HpumpV1LaunchPairSwapsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HpumpV1LaunchPairSwapsResponse)
-	err := c.cc.Invoke(ctx, EVM_HpumpV1LaunchPairSwaps_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *eVMClient) HpumpV1LaunchPairSwapStream(ctx context.Context, in *HpumpV1LaunchPairSwapStreamRequest, opts ...grpc.CallOption) (EVM_HpumpV1LaunchPairSwapStreamClient, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &EVM_ServiceDesc.Streams[2], EVM_HpumpV1LaunchPairSwapStream_FullMethodName, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &eVMHpumpV1LaunchPairSwapStreamClient{ClientStream: stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type EVM_HpumpV1LaunchPairSwapStreamClient interface {
-	Recv() (*HpumpV1LaunchPairSwapStreamResponse, error)
-	grpc.ClientStream
-}
-
-type eVMHpumpV1LaunchPairSwapStreamClient struct {
-	grpc.ClientStream
-}
-
-func (x *eVMHpumpV1LaunchPairSwapStreamClient) Recv() (*HpumpV1LaunchPairSwapStreamResponse, error) {
-	m := new(HpumpV1LaunchPairSwapStreamResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *eVMClient) HpumpV1(ctx context.Context, in *HpumpV1CandlesRequest, opts ...grpc.CallOption) (*HpumpV1CandlesResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HpumpV1CandlesResponse)
-	err := c.cc.Invoke(ctx, EVM_HpumpV1_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // EVMServer is the server API for EVM service.
 // All implementations must embed UnimplementedEVMServer
 // for forward compatibility
@@ -402,18 +279,6 @@ type EVMServer interface {
 	// Streaming endpoints
 	UniV2SwapStream(*UniV2SwapStreamRequest, EVM_UniV2SwapStreamServer) error
 	UniV3SwapStream(*UniV3SwapStreamRequest, EVM_UniV3SwapStreamServer) error
-	// HPump V1 related endpoints
-	HpumpV1LaunchToken(context.Context, *HpumpV1LaunchTokenRequest) (*HpumpV1LaunchTokenResponse, error)
-	HpumpV1LaunchTokens(context.Context, *HpumpV1LaunchTokensRequest) (*HpumpV1LaunchTokensResponse, error)
-	HpumpV1LaunchPair(context.Context, *HpumpV1LaunchPairRequest) (*HpumpV1LaunchPairResponse, error)
-	HpumpV1LaunchPairs(context.Context, *HpumpV1LaunchPairsRequest) (*HpumpV1LaunchPairsResponse, error)
-	HpumpV1LaunchPairSwap(context.Context, *HpumpV1LaunchPairSwapRequest) (*HpumpV1LaunchPairSwapResponse, error)
-	HpumpV1LaunchPairSwaps(context.Context, *HpumpV1LaunchPairSwapsRequest) (*HpumpV1LaunchPairSwapsResponse, error)
-	// HPump V1 streaming endpoint
-	HpumpV1LaunchPairSwapStream(*HpumpV1LaunchPairSwapStreamRequest, EVM_HpumpV1LaunchPairSwapStreamServer) error
-	// Price candle related endpoints
-	// Todo group into same type
-	HpumpV1(context.Context, *HpumpV1CandlesRequest) (*HpumpV1CandlesResponse, error)
 	mustEmbedUnimplementedEVMServer()
 }
 
@@ -462,30 +327,6 @@ func (UnimplementedEVMServer) UniV2SwapStream(*UniV2SwapStreamRequest, EVM_UniV2
 }
 func (UnimplementedEVMServer) UniV3SwapStream(*UniV3SwapStreamRequest, EVM_UniV3SwapStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method UniV3SwapStream not implemented")
-}
-func (UnimplementedEVMServer) HpumpV1LaunchToken(context.Context, *HpumpV1LaunchTokenRequest) (*HpumpV1LaunchTokenResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchToken not implemented")
-}
-func (UnimplementedEVMServer) HpumpV1LaunchTokens(context.Context, *HpumpV1LaunchTokensRequest) (*HpumpV1LaunchTokensResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchTokens not implemented")
-}
-func (UnimplementedEVMServer) HpumpV1LaunchPair(context.Context, *HpumpV1LaunchPairRequest) (*HpumpV1LaunchPairResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchPair not implemented")
-}
-func (UnimplementedEVMServer) HpumpV1LaunchPairs(context.Context, *HpumpV1LaunchPairsRequest) (*HpumpV1LaunchPairsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchPairs not implemented")
-}
-func (UnimplementedEVMServer) HpumpV1LaunchPairSwap(context.Context, *HpumpV1LaunchPairSwapRequest) (*HpumpV1LaunchPairSwapResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchPairSwap not implemented")
-}
-func (UnimplementedEVMServer) HpumpV1LaunchPairSwaps(context.Context, *HpumpV1LaunchPairSwapsRequest) (*HpumpV1LaunchPairSwapsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchPairSwaps not implemented")
-}
-func (UnimplementedEVMServer) HpumpV1LaunchPairSwapStream(*HpumpV1LaunchPairSwapStreamRequest, EVM_HpumpV1LaunchPairSwapStreamServer) error {
-	return status.Errorf(codes.Unimplemented, "method HpumpV1LaunchPairSwapStream not implemented")
-}
-func (UnimplementedEVMServer) HpumpV1(context.Context, *HpumpV1CandlesRequest) (*HpumpV1CandlesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1 not implemented")
 }
 func (UnimplementedEVMServer) mustEmbedUnimplementedEVMServer() {}
 
@@ -758,153 +599,6 @@ func (x *eVMUniV3SwapStreamServer) Send(m *UniV3SwapStreamResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _EVM_HpumpV1LaunchToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HpumpV1LaunchTokenRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EVMServer).HpumpV1LaunchToken(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: EVM_HpumpV1LaunchToken_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EVMServer).HpumpV1LaunchToken(ctx, req.(*HpumpV1LaunchTokenRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _EVM_HpumpV1LaunchTokens_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HpumpV1LaunchTokensRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EVMServer).HpumpV1LaunchTokens(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: EVM_HpumpV1LaunchTokens_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EVMServer).HpumpV1LaunchTokens(ctx, req.(*HpumpV1LaunchTokensRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _EVM_HpumpV1LaunchPair_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HpumpV1LaunchPairRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EVMServer).HpumpV1LaunchPair(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: EVM_HpumpV1LaunchPair_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EVMServer).HpumpV1LaunchPair(ctx, req.(*HpumpV1LaunchPairRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _EVM_HpumpV1LaunchPairs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HpumpV1LaunchPairsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EVMServer).HpumpV1LaunchPairs(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: EVM_HpumpV1LaunchPairs_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EVMServer).HpumpV1LaunchPairs(ctx, req.(*HpumpV1LaunchPairsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _EVM_HpumpV1LaunchPairSwap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HpumpV1LaunchPairSwapRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EVMServer).HpumpV1LaunchPairSwap(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: EVM_HpumpV1LaunchPairSwap_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EVMServer).HpumpV1LaunchPairSwap(ctx, req.(*HpumpV1LaunchPairSwapRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _EVM_HpumpV1LaunchPairSwaps_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HpumpV1LaunchPairSwapsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EVMServer).HpumpV1LaunchPairSwaps(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: EVM_HpumpV1LaunchPairSwaps_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EVMServer).HpumpV1LaunchPairSwaps(ctx, req.(*HpumpV1LaunchPairSwapsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _EVM_HpumpV1LaunchPairSwapStream_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(HpumpV1LaunchPairSwapStreamRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(EVMServer).HpumpV1LaunchPairSwapStream(m, &eVMHpumpV1LaunchPairSwapStreamServer{ServerStream: stream})
-}
-
-type EVM_HpumpV1LaunchPairSwapStreamServer interface {
-	Send(*HpumpV1LaunchPairSwapStreamResponse) error
-	grpc.ServerStream
-}
-
-type eVMHpumpV1LaunchPairSwapStreamServer struct {
-	grpc.ServerStream
-}
-
-func (x *eVMHpumpV1LaunchPairSwapStreamServer) Send(m *HpumpV1LaunchPairSwapStreamResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _EVM_HpumpV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HpumpV1CandlesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EVMServer).HpumpV1(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: EVM_HpumpV1_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EVMServer).HpumpV1(ctx, req.(*HpumpV1CandlesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // EVM_ServiceDesc is the grpc.ServiceDesc for EVM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -960,34 +654,6 @@ var EVM_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "UniCandles",
 			Handler:    _EVM_UniCandles_Handler,
 		},
-		{
-			MethodName: "HpumpV1LaunchToken",
-			Handler:    _EVM_HpumpV1LaunchToken_Handler,
-		},
-		{
-			MethodName: "HpumpV1LaunchTokens",
-			Handler:    _EVM_HpumpV1LaunchTokens_Handler,
-		},
-		{
-			MethodName: "HpumpV1LaunchPair",
-			Handler:    _EVM_HpumpV1LaunchPair_Handler,
-		},
-		{
-			MethodName: "HpumpV1LaunchPairs",
-			Handler:    _EVM_HpumpV1LaunchPairs_Handler,
-		},
-		{
-			MethodName: "HpumpV1LaunchPairSwap",
-			Handler:    _EVM_HpumpV1LaunchPairSwap_Handler,
-		},
-		{
-			MethodName: "HpumpV1LaunchPairSwaps",
-			Handler:    _EVM_HpumpV1LaunchPairSwaps_Handler,
-		},
-		{
-			MethodName: "HpumpV1",
-			Handler:    _EVM_HpumpV1_Handler,
-		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
@@ -998,11 +664,6 @@ var EVM_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "UniV3SwapStream",
 			Handler:       _EVM_UniV3SwapStream_Handler,
-			ServerStreams: true,
-		},
-		{
-			StreamName:    "HpumpV1LaunchPairSwapStream",
-			Handler:       _EVM_HpumpV1LaunchPairSwapStream_Handler,
 			ServerStreams: true,
 		},
 	},

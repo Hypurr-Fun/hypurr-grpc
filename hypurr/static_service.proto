@@ -10,6 +10,7 @@ import "hypurr/launch.proto";
 import "hypurr/pairs.proto";
 import "hypurr/cabal.proto";
 import "hypurr/evm.proto";
+import "hypurr/hpumpv1.proto";
 
 message HyperliquidTokenHoldersRequest {
   int64 token_id = 1;
@@ -170,6 +171,91 @@ message HyperliquidLaunchHoldersResponse {
 
 message LatestHyperliquidLaunchFillsRequest {}
 
+// HPump V1 Launch Token request/response messages
+message HpumpV1LaunchTokenRequest {
+  string address = 1;
+}
+
+message HpumpV1LaunchTokenResponse {
+  HpumpV1LaunchToken token = 1;
+}
+
+message HpumpV1LaunchTokensRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  bool graduated_only = 3;
+}
+
+message HpumpV1LaunchTokensResponse {
+  repeated HpumpV1LaunchToken tokens = 1;
+  string next_page_token = 2;
+}
+
+// HPump V1 Launch Pair request/response messages
+message HpumpV1LaunchPairRequest {
+  string address = 1;
+}
+
+message HpumpV1LaunchPairResponse {
+  HpumpV1LaunchPair pair = 1;
+}
+
+message HpumpV1LaunchPairsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  string token_address = 3;
+}
+
+message HpumpV1LaunchPairsResponse {
+  repeated HpumpV1LaunchPair pairs = 1;
+  string next_page_token = 2;
+}
+
+// HPump V1 Swap request/response messages
+message HpumpV1LaunchPairSwapRequest {
+  string id = 1;
+}
+
+message HpumpV1LaunchPairSwapResponse {
+  HpumpV1LaunchPairSwap swap = 1;
+}
+
+message HpumpV1LaunchPairSwapsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  string pair_address = 3;
+  string origin_address = 4;
+  string to_address = 5;
+}
+
+message HpumpV1LaunchPairSwapsResponse {
+  repeated HpumpV1LaunchPairSwap swaps = 1;
+  string next_page_token = 2;
+}
+
+// HPump V1 Swap streaming request/response messages
+message HpumpV1LaunchPairSwapStreamRequest {
+  string pair_address = 1;
+  google.protobuf.Int32Value limit = 2;
+}
+
+message HpumpV1LaunchPairSwapStreamResponse {
+  repeated HpumpV1LaunchPairSwap swaps = 1;
+}
+
+message HpumpV1CandlesRequest {
+  string pair_address = 1;
+  int64 from_timestamp = 2;
+  int64 to_timestamp = 3;
+  string interval = 4;  // e.g. "5m", "1h", "1d"
+}
+
+message HpumpV1CandlesResponse {
+  repeated UniCandle candles = 1;
+}
+
+
+
 message HyperliquidWalletPerformanceRequest {
   google.protobuf.StringValue ethereum_address = 1;
   string account_type = 2;
@@ -198,6 +284,8 @@ message HypurrFunCabalPerformanceResponse {
   repeated HypurrFunCabalPerformance performances = 1;
 }
 
+
+
 service Static {
   rpc HyperliquidDeployAuction (HyperliquidDeployAuctionRequest) returns (HyperliquidDeployAuctionResponse) {}
 
@@ -213,6 +301,7 @@ service Static {
   rpc HyperliquidWalletDeploySessions (HyperliquidWalletDeploySessionsRequest) returns (HyperliquidWalletDeploySessionsResponse) {}
   rpc HyperliquidWalletPerformance (HyperliquidWalletPerformanceRequest) returns (HyperliquidWalletPerformanceResponse) {}
 
+  // Launch
   rpc HyperliquidLaunch (HyperliquidLaunchRequest) returns (HyperliquidLaunchResponse) {}
   rpc HyperliquidLaunches (HyperliquidLaunchesRequest) returns (HyperliquidLaunchesResponse) {}
   rpc HyperliquidLaunchStream (HyperliquidLaunchStreamRequest) returns (stream HyperliquidLaunchStreamResponse) {}
@@ -222,6 +311,16 @@ service Static {
   rpc HyperliquidLaunchMessages (HyperliquidLaunchMessagesRequest) returns (stream HyperliquidLaunchMessagesResponse) {}
   rpc LatestHyperliquidLaunchFills (LatestHyperliquidLaunchFillsRequest) returns (stream HyperliquidLaunchFillsResponse) {}
   rpc HyperliquidLaunchHolders (HyperliquidLaunchHoldersRequest) returns (HyperliquidLaunchHoldersResponse) {}
+
+  // HpumpV1
+  rpc HpumpV1LaunchToken(HpumpV1LaunchTokenRequest) returns (HpumpV1LaunchTokenResponse) {}
+  rpc HpumpV1LaunchTokens(HpumpV1LaunchTokensRequest) returns (HpumpV1LaunchTokensResponse) {}
+  rpc HpumpV1LaunchPair(HpumpV1LaunchPairRequest) returns (HpumpV1LaunchPairResponse) {}
+  rpc HpumpV1LaunchPairs(HpumpV1LaunchPairsRequest) returns (HpumpV1LaunchPairsResponse) {}
+  rpc HpumpV1LaunchPairSwap(HpumpV1LaunchPairSwapRequest) returns (HpumpV1LaunchPairSwapResponse) {}
+  rpc HpumpV1LaunchPairSwaps(HpumpV1LaunchPairSwapsRequest) returns (HpumpV1LaunchPairSwapsResponse) {}
+  rpc HpumpV1LaunchPairSwapStream(HpumpV1LaunchPairSwapStreamRequest) returns (stream HpumpV1LaunchPairSwapStreamResponse) {}
+  rpc HpumpV1(HpumpV1CandlesRequest) returns (HpumpV1CandlesResponse) {}
 
   rpc HypurrFunCabals (HypurrFunCabalsRequest) returns (HypurrFunCabalsResponse) {}
 

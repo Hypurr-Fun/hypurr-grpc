@@ -9,6 +9,12 @@ import "hypurr/wallet.proto";
 import "hypurr/user.proto";
 import "hypurr/launch.proto";
 import "hypurr/common.proto";
+import "hypurr/hpumpv1.proto";
+
+enum TradeDirection {
+  BUY = 0;
+  SELL = 1;
+}
 
 // Auth endpoints
 message TelegramUserRequest {
@@ -31,13 +37,8 @@ message HyperliquidLaunchTradeRequest {
   map<string, string> auth_data = 1;
   int64 launch_id = 2;
   int64 wallet_id = 3;
-  HyperliquidLaunchTradeDirection direction = 4;
+  TradeDirection direction = 4;
   double amount = 5;
-}
-
-enum HyperliquidLaunchTradeDirection {
-  BUY = 0;
-  SELL = 1;
 }
 
 message HyperliquidLaunchTradeResponse {
@@ -51,8 +52,23 @@ message HyperliquidSpotTradeRequest {
   map<string, string> auth_data = 1;
   int64 pair_id = 2;
   int64 wallet_id = 3;
-  HyperliquidLaunchTradeDirection direction = 4;
+  TradeDirection direction = 4;
   double amount = 5;
+}
+
+message HpumpV1LaunchTradeRequest {
+  map<string, string> auth_data = 1;
+  int64 pair_id = 2;
+  int64 wallet_id = 3;
+  TradeDirection direction = 4;
+  double amount = 5;
+}
+
+message HpumpV1LaunchTradeResponse {
+  double base_amount = 1;
+  double quote_amount = 2;
+  string message = 3;
+  bool success = 4;
 }
 
 message HyperliquidSpotTradeResponse {
@@ -123,6 +139,22 @@ message LaunchHyperliquidLaunchResponse {
  HyperliquidLaunch launch = 1;
 }
 
+message LaunchHpumpV1LaunchRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  string description = 3;
+  string full_name = 4;
+  string token_name = 5;
+  bytes media = 6;
+  MediaType media_type = 7;
+  int64 dev_lockup_seconds = 8;
+  double initial_purchase_notional = 9;
+}
+
+message LaunchHpumpV1LaunchResponse {
+  HpumpV1LaunchToken launch = 1;
+}
+
 message EditHyperliquidLaunchRequest {
   map<string, string> auth_data = 1;
   int64 launch_id = 2;
@@ -145,6 +177,10 @@ service Telegram {
   rpc HyperliquidLaunchTrade (HyperliquidLaunchTradeRequest) returns (HyperliquidLaunchTradeResponse) {}
   rpc LaunchHyperliquidLaunch (LaunchHyperliquidLaunchRequest) returns (LaunchHyperliquidLaunchResponse) {}
   rpc EditHyperliquidLaunch (EditHyperliquidLaunchRequest) returns (EditHyperliquidLaunchResponse) {}
+
+  // HpumpV1
+  rpc HpumpV1LaunchTrade (HpumpV1LaunchTradeRequest) returns (HpumpV1LaunchTradeResponse) {}
+  rpc LaunchHpumpV1Launch (LaunchHpumpV1LaunchRequest) returns (LaunchHpumpV1LaunchResponse) {}
 
   // Spot
   rpc HyperliquidSpotTrade (HyperliquidSpotTradeRequest) returns (HyperliquidSpotTradeResponse) {}

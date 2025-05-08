@@ -20,15 +20,16 @@ from hypurr import launch_pb2 as hypurr_dot_launch__pb2
 from hypurr import pairs_pb2 as hypurr_dot_pairs__pb2
 from hypurr import cabal_pb2 as hypurr_dot_cabal__pb2
 from hypurr import evm_pb2 as hypurr_dot_evm__pb2
+from hypurr import hpumpv1_pb2 as hypurr_dot_hpumpv1__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/static_service.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x1bhypurr/static_service.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x12hypurr/token.proto\x1a\x13hypurr/wallet.proto\x1a\x13hypurr/launch.proto\x1a\x12hypurr/pairs.proto\x1a\x12hypurr/cabal.proto\x1a\x10hypurr/evm.proto\"2\n\x1eHyperliquidTokenHoldersRequest\x12\x10\n\x08token_id\x18\x01 \x01(\x03\"R\n\x1fHyperliquidTokenHoldersResponse\x12/\n\x07holders\x18\x01 \x03(\x0b\x32\x1e.hypurr.HyperliquidTokenHolder\"!\n\x1fHyperliquidDeployAuctionRequest\"U\n HyperliquidDeployAuctionResponse\x12\x31\n\x07\x61uction\x18\x01 \x01(\x0b\x32 .hypurr.HyperliquidDeployAuction\"\x1a\n\x18HyperliquidTokensRequest\"E\n\x19HyperliquidTokensResponse\x12(\n\x06tokens\x18\x01 \x03(\x0b\x32\x18.hypurr.HyperliquidToken\"3\n\x1fHyperliquidTokenMessagesRequest\x12\x10\n\x08token_id\x18\x01 \x01(\x03\"U\n HyperliquidTokenMessagesResponse\x12\x31\n\x08messages\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidTokenMessage\"(\n\x1aHyperliquidSpotPairRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"H\n\x1bHyperliquidSpotPairResponse\x12)\n\x04pair\x18\x01 \x01(\x0b\x32\x1b.hypurr.HyperliquidSpotPair\"\x1d\n\x1bHyperliquidSpotPairsRequest\"J\n\x1cHyperliquidSpotPairsResponse\x12*\n\x05pairs\x18\x01 \x03(\x0b\x32\x1b.hypurr.HyperliquidSpotPair\"\x1d\n\x1bHyperliquidPerpPairsRequest\"J\n\x1cHyperliquidPerpPairsResponse\x12*\n\x05pairs\x18\x01 \x03(\x0b\x32\x1b.hypurr.HyperliquidPerpPair\"R\n\x18HyperliquidWalletRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"F\n\x19HyperliquidWalletResponse\x12)\n\x06wallet\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\"0\n\x1aHyperliquidLaunchesRequest\x12\x12\n\nlaunch_ids\x18\x01 \x03(\x03\"J\n\x1bHyperliquidLaunchesResponse\x12+\n\x08launches\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\"|\n\x1eHyperliquidLaunchStreamRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"N\n\x1fHyperliquidLaunchStreamResponse\x12+\n\x08launches\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\xf3\x01\n&HyperliquidWalletDeploySessionsRequest\x12\x30\n\x0btelegram_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12.\n\twallet_id\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12/\n\nsession_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x36\n\x10\x65thereum_address\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"c\n\'HyperliquidWalletDeploySessionsResponse\x12\x38\n\x08sessions\x18\x01 \x03(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"\xa9\x01\n.SetHyperliquidWalletDeploySessionTargetRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x12\n\nsession_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x0e\n\x06target\x18\x04 \x01(\t\x12\r\n\x05share\x18\x05 \x01(\x05\"j\n/SetHyperliquidWalletDeploySessionTargetResponse\x12\x37\n\x07session\x18\x01 \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"\x8d\x01\n1DeleteHyperliquidWalletDeploySessionTargetRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x12\n\nsession_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\"m\n2DeleteHyperliquidWalletDeploySessionTargetResponse\x12\x37\n\x07session\x18\x01 \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"{\n\x1dHyperliquidLaunchFillsRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"\x84\x01\n\x1eHyperliquidLaunchFillsResponse\x12,\n\x05\x66ills\x18\x01 \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\x12\x34\n\tpositions\x18\x02 \x03(\x0b\x32!.hypurr.HyperliquidLaunchPosition\"F\n\x1fHyperliquidLaunchCandlesRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12\x10\n\x08interval\x18\x02 \x01(\t\"T\n HyperliquidLaunchCandlesResponse\x12\x30\n\x07\x63\x61ndles\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidLaunchCandle\"&\n\x18HyperliquidLaunchRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"F\n\x19HyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\x8a\x01\n HyperliquidLaunchMessagesRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12*\n\x06pinned\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12\'\n\x03\x64\x65v\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\"W\n!HyperliquidLaunchMessagesResponse\x12\x32\n\x08messages\x18\x01 \x03(\x0b\x32 .hypurr.HyperliquidLaunchMessage\"4\n\x1fHyperliquidLaunchHoldersRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\"T\n HyperliquidLaunchHoldersResponse\x12\x30\n\x07holders\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidLaunchHolder\"%\n#LatestHyperliquidLaunchFillsRequest\"s\n#HyperliquidWalletPerformanceRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x14\n\x0c\x61\x63\x63ount_type\x18\x02 \x01(\t\"\x91\x01\n$HyperliquidWalletPerformanceResponse\x12!\n\x04spot\x18\x01 \x01(\x0b\x32\x13.hypurr.Performance\x12!\n\x04perp\x18\x02 \x01(\x0b\x32\x13.hypurr.Performance\x12#\n\x06launch\x18\x03 \x01(\x0b\x32\x13.hypurr.Performance\"\x18\n\x16HypurrFunCabalsRequest\"A\n\x17HypurrFunCabalsResponse\x12&\n\x06\x63\x61\x62\x61ls\x18\x01 \x03(\x0b\x32\x16.hypurr.HypurrFunCabal\"<\n HypurrFunCabalPerformanceRequest\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\"\\\n!HypurrFunCabalPerformanceResponse\x12\x37\n\x0cperformances\x18\x01 \x03(\x0b\x32!.hypurr.HypurrFunCabalPerformance2\xb7\x14\n\x06Static\x12o\n\x18HyperliquidDeployAuction\x12\'.hypurr.HyperliquidDeployAuctionRequest\x1a(.hypurr.HyperliquidDeployAuctionResponse\"\x00\x12Z\n\x11HyperliquidTokens\x12 .hypurr.HyperliquidTokensRequest\x1a!.hypurr.HyperliquidTokensResponse\"\x00\x12l\n\x17HyperliquidTokenHolders\x12&.hypurr.HyperliquidTokenHoldersRequest\x1a\'.hypurr.HyperliquidTokenHoldersResponse\"\x00\x12q\n\x18HyperliquidTokenMessages\x12\'.hypurr.HyperliquidTokenMessagesRequest\x1a(.hypurr.HyperliquidTokenMessagesResponse\"\x00\x30\x01\x12`\n\x13HyperliquidSpotPair\x12\".hypurr.HyperliquidSpotPairRequest\x1a#.hypurr.HyperliquidSpotPairResponse\"\x00\x12\x63\n\x14HyperliquidSpotPairs\x12#.hypurr.HyperliquidSpotPairsRequest\x1a$.hypurr.HyperliquidSpotPairsResponse\"\x00\x12\x63\n\x14HyperliquidPerpPairs\x12#.hypurr.HyperliquidPerpPairsRequest\x1a$.hypurr.HyperliquidPerpPairsResponse\"\x00\x12Z\n\x11HyperliquidWallet\x12 .hypurr.HyperliquidWalletRequest\x1a!.hypurr.HyperliquidWalletResponse\"\x00\x12\x84\x01\n\x1fHyperliquidWalletDeploySessions\x12..hypurr.HyperliquidWalletDeploySessionsRequest\x1a/.hypurr.HyperliquidWalletDeploySessionsResponse\"\x00\x12{\n\x1cHyperliquidWalletPerformance\x12+.hypurr.HyperliquidWalletPerformanceRequest\x1a,.hypurr.HyperliquidWalletPerformanceResponse\"\x00\x12Z\n\x11HyperliquidLaunch\x12 .hypurr.HyperliquidLaunchRequest\x1a!.hypurr.HyperliquidLaunchResponse\"\x00\x12`\n\x13HyperliquidLaunches\x12\".hypurr.HyperliquidLaunchesRequest\x1a#.hypurr.HyperliquidLaunchesResponse\"\x00\x12n\n\x17HyperliquidLaunchStream\x12&.hypurr.HyperliquidLaunchStreamRequest\x1a\'.hypurr.HyperliquidLaunchStreamResponse\"\x00\x30\x01\x12k\n\x16HyperliquidLaunchFills\x12%.hypurr.HyperliquidLaunchFillsRequest\x1a&.hypurr.HyperliquidLaunchFillsResponse\"\x00\x30\x01\x12o\n\x18HyperliquidLaunchCandles\x12\'.hypurr.HyperliquidLaunchCandlesRequest\x1a(.hypurr.HyperliquidLaunchCandlesResponse\"\x00\x12v\n\x1dHyperliquidLaunchCandleStream\x12\'.hypurr.HyperliquidLaunchCandlesRequest\x1a(.hypurr.HyperliquidLaunchCandlesResponse\"\x00\x30\x01\x12t\n\x19HyperliquidLaunchMessages\x12(.hypurr.HyperliquidLaunchMessagesRequest\x1a).hypurr.HyperliquidLaunchMessagesResponse\"\x00\x30\x01\x12w\n\x1cLatestHyperliquidLaunchFills\x12+.hypurr.LatestHyperliquidLaunchFillsRequest\x1a&.hypurr.HyperliquidLaunchFillsResponse\"\x00\x30\x01\x12o\n\x18HyperliquidLaunchHolders\x12\'.hypurr.HyperliquidLaunchHoldersRequest\x1a(.hypurr.HyperliquidLaunchHoldersResponse\"\x00\x12T\n\x0fHypurrFunCabals\x12\x1e.hypurr.HypurrFunCabalsRequest\x1a\x1f.hypurr.HypurrFunCabalsResponse\"\x00\x12r\n\x19HypurrFunCabalPerformance\x12(.hypurr.HypurrFunCabalPerformanceRequest\x1a).hypurr.HypurrFunCabalPerformanceResponse\"\x00\x12\x9c\x01\n\'SetHyperliquidWalletDeploySessionTarget\x12\x36.hypurr.SetHyperliquidWalletDeploySessionTargetRequest\x1a\x37.hypurr.SetHyperliquidWalletDeploySessionTargetResponse\"\x00\x12\xa5\x01\n*DeleteHyperliquidWalletDeploySessionTarget\x12\x39.hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest\x1a:.hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse\"\x00\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x1bhypurr/static_service.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x12hypurr/token.proto\x1a\x13hypurr/wallet.proto\x1a\x13hypurr/launch.proto\x1a\x12hypurr/pairs.proto\x1a\x12hypurr/cabal.proto\x1a\x10hypurr/evm.proto\x1a\x14hypurr/hpumpv1.proto\"2\n\x1eHyperliquidTokenHoldersRequest\x12\x10\n\x08token_id\x18\x01 \x01(\x03\"R\n\x1fHyperliquidTokenHoldersResponse\x12/\n\x07holders\x18\x01 \x03(\x0b\x32\x1e.hypurr.HyperliquidTokenHolder\"!\n\x1fHyperliquidDeployAuctionRequest\"U\n HyperliquidDeployAuctionResponse\x12\x31\n\x07\x61uction\x18\x01 \x01(\x0b\x32 .hypurr.HyperliquidDeployAuction\"\x1a\n\x18HyperliquidTokensRequest\"E\n\x19HyperliquidTokensResponse\x12(\n\x06tokens\x18\x01 \x03(\x0b\x32\x18.hypurr.HyperliquidToken\"3\n\x1fHyperliquidTokenMessagesRequest\x12\x10\n\x08token_id\x18\x01 \x01(\x03\"U\n HyperliquidTokenMessagesResponse\x12\x31\n\x08messages\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidTokenMessage\"(\n\x1aHyperliquidSpotPairRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"H\n\x1bHyperliquidSpotPairResponse\x12)\n\x04pair\x18\x01 \x01(\x0b\x32\x1b.hypurr.HyperliquidSpotPair\"\x1d\n\x1bHyperliquidSpotPairsRequest\"J\n\x1cHyperliquidSpotPairsResponse\x12*\n\x05pairs\x18\x01 \x03(\x0b\x32\x1b.hypurr.HyperliquidSpotPair\"\x1d\n\x1bHyperliquidPerpPairsRequest\"J\n\x1cHyperliquidPerpPairsResponse\x12*\n\x05pairs\x18\x01 \x03(\x0b\x32\x1b.hypurr.HyperliquidPerpPair\"R\n\x18HyperliquidWalletRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"F\n\x19HyperliquidWalletResponse\x12)\n\x06wallet\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\"0\n\x1aHyperliquidLaunchesRequest\x12\x12\n\nlaunch_ids\x18\x01 \x03(\x03\"J\n\x1bHyperliquidLaunchesResponse\x12+\n\x08launches\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\"|\n\x1eHyperliquidLaunchStreamRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"N\n\x1fHyperliquidLaunchStreamResponse\x12+\n\x08launches\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\xf3\x01\n&HyperliquidWalletDeploySessionsRequest\x12\x30\n\x0btelegram_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12.\n\twallet_id\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12/\n\nsession_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x36\n\x10\x65thereum_address\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"c\n\'HyperliquidWalletDeploySessionsResponse\x12\x38\n\x08sessions\x18\x01 \x03(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"\xa9\x01\n.SetHyperliquidWalletDeploySessionTargetRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x12\n\nsession_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x0e\n\x06target\x18\x04 \x01(\t\x12\r\n\x05share\x18\x05 \x01(\x05\"j\n/SetHyperliquidWalletDeploySessionTargetResponse\x12\x37\n\x07session\x18\x01 \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"\x8d\x01\n1DeleteHyperliquidWalletDeploySessionTargetRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x12\n\nsession_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\"m\n2DeleteHyperliquidWalletDeploySessionTargetResponse\x12\x37\n\x07session\x18\x01 \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"{\n\x1dHyperliquidLaunchFillsRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"\x84\x01\n\x1eHyperliquidLaunchFillsResponse\x12,\n\x05\x66ills\x18\x01 \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\x12\x34\n\tpositions\x18\x02 \x03(\x0b\x32!.hypurr.HyperliquidLaunchPosition\"F\n\x1fHyperliquidLaunchCandlesRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12\x10\n\x08interval\x18\x02 \x01(\t\"T\n HyperliquidLaunchCandlesResponse\x12\x30\n\x07\x63\x61ndles\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidLaunchCandle\"&\n\x18HyperliquidLaunchRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"F\n\x19HyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\x8a\x01\n HyperliquidLaunchMessagesRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12*\n\x06pinned\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12\'\n\x03\x64\x65v\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\"W\n!HyperliquidLaunchMessagesResponse\x12\x32\n\x08messages\x18\x01 \x03(\x0b\x32 .hypurr.HyperliquidLaunchMessage\"4\n\x1fHyperliquidLaunchHoldersRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\"T\n HyperliquidLaunchHoldersResponse\x12\x30\n\x07holders\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidLaunchHolder\"%\n#LatestHyperliquidLaunchFillsRequest\",\n\x19HpumpV1LaunchTokenRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\"G\n\x1aHpumpV1LaunchTokenResponse\x12)\n\x05token\x18\x01 \x01(\x0b\x32\x1a.hypurr.HpumpV1LaunchToken\"[\n\x1aHpumpV1LaunchTokensRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x16\n\x0egraduated_only\x18\x03 \x01(\x08\"b\n\x1bHpumpV1LaunchTokensResponse\x12*\n\x06tokens\x18\x01 \x03(\x0b\x32\x1a.hypurr.HpumpV1LaunchToken\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"+\n\x18HpumpV1LaunchPairRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\"D\n\x19HpumpV1LaunchPairResponse\x12\'\n\x04pair\x18\x01 \x01(\x0b\x32\x19.hypurr.HpumpV1LaunchPair\"Y\n\x19HpumpV1LaunchPairsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x15\n\rtoken_address\x18\x03 \x01(\t\"_\n\x1aHpumpV1LaunchPairsResponse\x12(\n\x05pairs\x18\x01 \x03(\x0b\x32\x19.hypurr.HpumpV1LaunchPair\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"*\n\x1cHpumpV1LaunchPairSwapRequest\x12\n\n\x02id\x18\x01 \x01(\t\"L\n\x1dHpumpV1LaunchPairSwapResponse\x12+\n\x04swap\x18\x01 \x01(\x0b\x32\x1d.hypurr.HpumpV1LaunchPairSwap\"\x88\x01\n\x1dHpumpV1LaunchPairSwapsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x14\n\x0cpair_address\x18\x03 \x01(\t\x12\x16\n\x0eorigin_address\x18\x04 \x01(\t\x12\x12\n\nto_address\x18\x05 \x01(\t\"g\n\x1eHpumpV1LaunchPairSwapsResponse\x12,\n\x05swaps\x18\x01 \x03(\x0b\x32\x1d.hypurr.HpumpV1LaunchPairSwap\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"f\n\"HpumpV1LaunchPairSwapStreamRequest\x12\x14\n\x0cpair_address\x18\x01 \x01(\t\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\"S\n#HpumpV1LaunchPairSwapStreamResponse\x12,\n\x05swaps\x18\x01 \x03(\x0b\x32\x1d.hypurr.HpumpV1LaunchPairSwap\"m\n\x15HpumpV1CandlesRequest\x12\x14\n\x0cpair_address\x18\x01 \x01(\t\x12\x16\n\x0e\x66rom_timestamp\x18\x02 \x01(\x03\x12\x14\n\x0cto_timestamp\x18\x03 \x01(\x03\x12\x10\n\x08interval\x18\x04 \x01(\t\"<\n\x16HpumpV1CandlesResponse\x12\"\n\x07\x63\x61ndles\x18\x01 \x03(\x0b\x32\x11.hypurr.UniCandle\"s\n#HyperliquidWalletPerformanceRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x14\n\x0c\x61\x63\x63ount_type\x18\x02 \x01(\t\"\x91\x01\n$HyperliquidWalletPerformanceResponse\x12!\n\x04spot\x18\x01 \x01(\x0b\x32\x13.hypurr.Performance\x12!\n\x04perp\x18\x02 \x01(\x0b\x32\x13.hypurr.Performance\x12#\n\x06launch\x18\x03 \x01(\x0b\x32\x13.hypurr.Performance\"\x18\n\x16HypurrFunCabalsRequest\"A\n\x17HypurrFunCabalsResponse\x12&\n\x06\x63\x61\x62\x61ls\x18\x01 \x03(\x0b\x32\x16.hypurr.HypurrFunCabal\"<\n HypurrFunCabalPerformanceRequest\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\"\\\n!HypurrFunCabalPerformanceResponse\x12\x37\n\x0cperformances\x18\x01 \x03(\x0b\x32!.hypurr.HypurrFunCabalPerformance2\xce\x1a\n\x06Static\x12o\n\x18HyperliquidDeployAuction\x12\'.hypurr.HyperliquidDeployAuctionRequest\x1a(.hypurr.HyperliquidDeployAuctionResponse\"\x00\x12Z\n\x11HyperliquidTokens\x12 .hypurr.HyperliquidTokensRequest\x1a!.hypurr.HyperliquidTokensResponse\"\x00\x12l\n\x17HyperliquidTokenHolders\x12&.hypurr.HyperliquidTokenHoldersRequest\x1a\'.hypurr.HyperliquidTokenHoldersResponse\"\x00\x12q\n\x18HyperliquidTokenMessages\x12\'.hypurr.HyperliquidTokenMessagesRequest\x1a(.hypurr.HyperliquidTokenMessagesResponse\"\x00\x30\x01\x12`\n\x13HyperliquidSpotPair\x12\".hypurr.HyperliquidSpotPairRequest\x1a#.hypurr.HyperliquidSpotPairResponse\"\x00\x12\x63\n\x14HyperliquidSpotPairs\x12#.hypurr.HyperliquidSpotPairsRequest\x1a$.hypurr.HyperliquidSpotPairsResponse\"\x00\x12\x63\n\x14HyperliquidPerpPairs\x12#.hypurr.HyperliquidPerpPairsRequest\x1a$.hypurr.HyperliquidPerpPairsResponse\"\x00\x12Z\n\x11HyperliquidWallet\x12 .hypurr.HyperliquidWalletRequest\x1a!.hypurr.HyperliquidWalletResponse\"\x00\x12\x84\x01\n\x1fHyperliquidWalletDeploySessions\x12..hypurr.HyperliquidWalletDeploySessionsRequest\x1a/.hypurr.HyperliquidWalletDeploySessionsResponse\"\x00\x12{\n\x1cHyperliquidWalletPerformance\x12+.hypurr.HyperliquidWalletPerformanceRequest\x1a,.hypurr.HyperliquidWalletPerformanceResponse\"\x00\x12Z\n\x11HyperliquidLaunch\x12 .hypurr.HyperliquidLaunchRequest\x1a!.hypurr.HyperliquidLaunchResponse\"\x00\x12`\n\x13HyperliquidLaunches\x12\".hypurr.HyperliquidLaunchesRequest\x1a#.hypurr.HyperliquidLaunchesResponse\"\x00\x12n\n\x17HyperliquidLaunchStream\x12&.hypurr.HyperliquidLaunchStreamRequest\x1a\'.hypurr.HyperliquidLaunchStreamResponse\"\x00\x30\x01\x12k\n\x16HyperliquidLaunchFills\x12%.hypurr.HyperliquidLaunchFillsRequest\x1a&.hypurr.HyperliquidLaunchFillsResponse\"\x00\x30\x01\x12o\n\x18HyperliquidLaunchCandles\x12\'.hypurr.HyperliquidLaunchCandlesRequest\x1a(.hypurr.HyperliquidLaunchCandlesResponse\"\x00\x12v\n\x1dHyperliquidLaunchCandleStream\x12\'.hypurr.HyperliquidLaunchCandlesRequest\x1a(.hypurr.HyperliquidLaunchCandlesResponse\"\x00\x30\x01\x12t\n\x19HyperliquidLaunchMessages\x12(.hypurr.HyperliquidLaunchMessagesRequest\x1a).hypurr.HyperliquidLaunchMessagesResponse\"\x00\x30\x01\x12w\n\x1cLatestHyperliquidLaunchFills\x12+.hypurr.LatestHyperliquidLaunchFillsRequest\x1a&.hypurr.HyperliquidLaunchFillsResponse\"\x00\x30\x01\x12o\n\x18HyperliquidLaunchHolders\x12\'.hypurr.HyperliquidLaunchHoldersRequest\x1a(.hypurr.HyperliquidLaunchHoldersResponse\"\x00\x12]\n\x12HpumpV1LaunchToken\x12!.hypurr.HpumpV1LaunchTokenRequest\x1a\".hypurr.HpumpV1LaunchTokenResponse\"\x00\x12`\n\x13HpumpV1LaunchTokens\x12\".hypurr.HpumpV1LaunchTokensRequest\x1a#.hypurr.HpumpV1LaunchTokensResponse\"\x00\x12Z\n\x11HpumpV1LaunchPair\x12 .hypurr.HpumpV1LaunchPairRequest\x1a!.hypurr.HpumpV1LaunchPairResponse\"\x00\x12]\n\x12HpumpV1LaunchPairs\x12!.hypurr.HpumpV1LaunchPairsRequest\x1a\".hypurr.HpumpV1LaunchPairsResponse\"\x00\x12\x66\n\x15HpumpV1LaunchPairSwap\x12$.hypurr.HpumpV1LaunchPairSwapRequest\x1a%.hypurr.HpumpV1LaunchPairSwapResponse\"\x00\x12i\n\x16HpumpV1LaunchPairSwaps\x12%.hypurr.HpumpV1LaunchPairSwapsRequest\x1a&.hypurr.HpumpV1LaunchPairSwapsResponse\"\x00\x12z\n\x1bHpumpV1LaunchPairSwapStream\x12*.hypurr.HpumpV1LaunchPairSwapStreamRequest\x1a+.hypurr.HpumpV1LaunchPairSwapStreamResponse\"\x00\x30\x01\x12J\n\x07HpumpV1\x12\x1d.hypurr.HpumpV1CandlesRequest\x1a\x1e.hypurr.HpumpV1CandlesResponse\"\x00\x12T\n\x0fHypurrFunCabals\x12\x1e.hypurr.HypurrFunCabalsRequest\x1a\x1f.hypurr.HypurrFunCabalsResponse\"\x00\x12r\n\x19HypurrFunCabalPerformance\x12(.hypurr.HypurrFunCabalPerformanceRequest\x1a).hypurr.HypurrFunCabalPerformanceResponse\"\x00\x12\x9c\x01\n\'SetHyperliquidWalletDeploySessionTarget\x12\x36.hypurr.SetHyperliquidWalletDeploySessionTargetRequest\x1a\x37.hypurr.SetHyperliquidWalletDeploySessionTargetResponse\"\x00\x12\xa5\x01\n*DeleteHyperliquidWalletDeploySessionTarget\x12\x39.hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest\x1a:.hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse\"\x00\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,hypurr_dot_token__pb2.DESCRIPTOR,hypurr_dot_wallet__pb2.DESCRIPTOR,hypurr_dot_launch__pb2.DESCRIPTOR,hypurr_dot_pairs__pb2.DESCRIPTOR,hypurr_dot_cabal__pb2.DESCRIPTOR,hypurr_dot_evm__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,hypurr_dot_token__pb2.DESCRIPTOR,hypurr_dot_wallet__pb2.DESCRIPTOR,hypurr_dot_launch__pb2.DESCRIPTOR,hypurr_dot_pairs__pb2.DESCRIPTOR,hypurr_dot_cabal__pb2.DESCRIPTOR,hypurr_dot_evm__pb2.DESCRIPTOR,hypurr_dot_hpumpv1__pb2.DESCRIPTOR,])
 
 
 
@@ -59,8 +60,8 @@ _HYPERLIQUIDTOKENHOLDERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=191,
-  serialized_end=241,
+  serialized_start=213,
+  serialized_end=263,
 )
 
 
@@ -90,8 +91,8 @@ _HYPERLIQUIDTOKENHOLDERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=243,
-  serialized_end=325,
+  serialized_start=265,
+  serialized_end=347,
 )
 
 
@@ -114,8 +115,8 @@ _HYPERLIQUIDDEPLOYAUCTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=327,
-  serialized_end=360,
+  serialized_start=349,
+  serialized_end=382,
 )
 
 
@@ -145,8 +146,8 @@ _HYPERLIQUIDDEPLOYAUCTIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=362,
-  serialized_end=447,
+  serialized_start=384,
+  serialized_end=469,
 )
 
 
@@ -169,8 +170,8 @@ _HYPERLIQUIDTOKENSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=449,
-  serialized_end=475,
+  serialized_start=471,
+  serialized_end=497,
 )
 
 
@@ -200,8 +201,8 @@ _HYPERLIQUIDTOKENSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=477,
-  serialized_end=546,
+  serialized_start=499,
+  serialized_end=568,
 )
 
 
@@ -231,8 +232,8 @@ _HYPERLIQUIDTOKENMESSAGESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=548,
-  serialized_end=599,
+  serialized_start=570,
+  serialized_end=621,
 )
 
 
@@ -262,8 +263,8 @@ _HYPERLIQUIDTOKENMESSAGESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=601,
-  serialized_end=686,
+  serialized_start=623,
+  serialized_end=708,
 )
 
 
@@ -293,8 +294,8 @@ _HYPERLIQUIDSPOTPAIRREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=688,
-  serialized_end=728,
+  serialized_start=710,
+  serialized_end=750,
 )
 
 
@@ -324,8 +325,8 @@ _HYPERLIQUIDSPOTPAIRRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=730,
-  serialized_end=802,
+  serialized_start=752,
+  serialized_end=824,
 )
 
 
@@ -348,8 +349,8 @@ _HYPERLIQUIDSPOTPAIRSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=804,
-  serialized_end=833,
+  serialized_start=826,
+  serialized_end=855,
 )
 
 
@@ -379,8 +380,8 @@ _HYPERLIQUIDSPOTPAIRSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=835,
-  serialized_end=909,
+  serialized_start=857,
+  serialized_end=931,
 )
 
 
@@ -403,8 +404,8 @@ _HYPERLIQUIDPERPPAIRSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=911,
-  serialized_end=940,
+  serialized_start=933,
+  serialized_end=962,
 )
 
 
@@ -434,8 +435,8 @@ _HYPERLIQUIDPERPPAIRSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=942,
-  serialized_end=1016,
+  serialized_start=964,
+  serialized_end=1038,
 )
 
 
@@ -465,8 +466,8 @@ _HYPERLIQUIDWALLETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1018,
-  serialized_end=1100,
+  serialized_start=1040,
+  serialized_end=1122,
 )
 
 
@@ -496,8 +497,8 @@ _HYPERLIQUIDWALLETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1102,
-  serialized_end=1172,
+  serialized_start=1124,
+  serialized_end=1194,
 )
 
 
@@ -527,8 +528,8 @@ _HYPERLIQUIDLAUNCHESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1174,
-  serialized_end=1222,
+  serialized_start=1196,
+  serialized_end=1244,
 )
 
 
@@ -558,8 +559,8 @@ _HYPERLIQUIDLAUNCHESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1224,
-  serialized_end=1298,
+  serialized_start=1246,
+  serialized_end=1320,
 )
 
 
@@ -596,8 +597,8 @@ _HYPERLIQUIDLAUNCHSTREAMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1300,
-  serialized_end=1424,
+  serialized_start=1322,
+  serialized_end=1446,
 )
 
 
@@ -627,8 +628,8 @@ _HYPERLIQUIDLAUNCHSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1426,
-  serialized_end=1504,
+  serialized_start=1448,
+  serialized_end=1526,
 )
 
 
@@ -679,8 +680,8 @@ _HYPERLIQUIDWALLETDEPLOYSESSIONSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1507,
-  serialized_end=1750,
+  serialized_start=1529,
+  serialized_end=1772,
 )
 
 
@@ -710,8 +711,8 @@ _HYPERLIQUIDWALLETDEPLOYSESSIONSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1752,
-  serialized_end=1851,
+  serialized_start=1774,
+  serialized_end=1873,
 )
 
 
@@ -769,8 +770,8 @@ _SETHYPERLIQUIDWALLETDEPLOYSESSIONTARGETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1854,
-  serialized_end=2023,
+  serialized_start=1876,
+  serialized_end=2045,
 )
 
 
@@ -800,8 +801,8 @@ _SETHYPERLIQUIDWALLETDEPLOYSESSIONTARGETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2025,
-  serialized_end=2131,
+  serialized_start=2047,
+  serialized_end=2153,
 )
 
 
@@ -845,8 +846,8 @@ _DELETEHYPERLIQUIDWALLETDEPLOYSESSIONTARGETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2134,
-  serialized_end=2275,
+  serialized_start=2156,
+  serialized_end=2297,
 )
 
 
@@ -876,8 +877,8 @@ _DELETEHYPERLIQUIDWALLETDEPLOYSESSIONTARGETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2277,
-  serialized_end=2386,
+  serialized_start=2299,
+  serialized_end=2408,
 )
 
 
@@ -914,8 +915,8 @@ _HYPERLIQUIDLAUNCHFILLSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2388,
-  serialized_end=2511,
+  serialized_start=2410,
+  serialized_end=2533,
 )
 
 
@@ -952,8 +953,8 @@ _HYPERLIQUIDLAUNCHFILLSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2514,
-  serialized_end=2646,
+  serialized_start=2536,
+  serialized_end=2668,
 )
 
 
@@ -990,8 +991,8 @@ _HYPERLIQUIDLAUNCHCANDLESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2648,
-  serialized_end=2718,
+  serialized_start=2670,
+  serialized_end=2740,
 )
 
 
@@ -1021,8 +1022,8 @@ _HYPERLIQUIDLAUNCHCANDLESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2720,
-  serialized_end=2804,
+  serialized_start=2742,
+  serialized_end=2826,
 )
 
 
@@ -1052,8 +1053,8 @@ _HYPERLIQUIDLAUNCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2806,
-  serialized_end=2844,
+  serialized_start=2828,
+  serialized_end=2866,
 )
 
 
@@ -1083,8 +1084,8 @@ _HYPERLIQUIDLAUNCHRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2846,
-  serialized_end=2916,
+  serialized_start=2868,
+  serialized_end=2938,
 )
 
 
@@ -1128,8 +1129,8 @@ _HYPERLIQUIDLAUNCHMESSAGESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2919,
-  serialized_end=3057,
+  serialized_start=2941,
+  serialized_end=3079,
 )
 
 
@@ -1159,8 +1160,8 @@ _HYPERLIQUIDLAUNCHMESSAGESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3059,
-  serialized_end=3146,
+  serialized_start=3081,
+  serialized_end=3168,
 )
 
 
@@ -1190,8 +1191,8 @@ _HYPERLIQUIDLAUNCHHOLDERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3148,
-  serialized_end=3200,
+  serialized_start=3170,
+  serialized_end=3222,
 )
 
 
@@ -1221,8 +1222,8 @@ _HYPERLIQUIDLAUNCHHOLDERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3202,
-  serialized_end=3286,
+  serialized_start=3224,
+  serialized_end=3308,
 )
 
 
@@ -1245,8 +1246,609 @@ _LATESTHYPERLIQUIDLAUNCHFILLSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3288,
-  serialized_end=3325,
+  serialized_start=3310,
+  serialized_end=3347,
+)
+
+
+_HPUMPV1LAUNCHTOKENREQUEST = _descriptor.Descriptor(
+  name='HpumpV1LaunchTokenRequest',
+  full_name='hypurr.HpumpV1LaunchTokenRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='address', full_name='hypurr.HpumpV1LaunchTokenRequest.address', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3349,
+  serialized_end=3393,
+)
+
+
+_HPUMPV1LAUNCHTOKENRESPONSE = _descriptor.Descriptor(
+  name='HpumpV1LaunchTokenResponse',
+  full_name='hypurr.HpumpV1LaunchTokenResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='token', full_name='hypurr.HpumpV1LaunchTokenResponse.token', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3395,
+  serialized_end=3466,
+)
+
+
+_HPUMPV1LAUNCHTOKENSREQUEST = _descriptor.Descriptor(
+  name='HpumpV1LaunchTokensRequest',
+  full_name='hypurr.HpumpV1LaunchTokensRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='page_size', full_name='hypurr.HpumpV1LaunchTokensRequest.page_size', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='page_token', full_name='hypurr.HpumpV1LaunchTokensRequest.page_token', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='graduated_only', full_name='hypurr.HpumpV1LaunchTokensRequest.graduated_only', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3468,
+  serialized_end=3559,
+)
+
+
+_HPUMPV1LAUNCHTOKENSRESPONSE = _descriptor.Descriptor(
+  name='HpumpV1LaunchTokensResponse',
+  full_name='hypurr.HpumpV1LaunchTokensResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='tokens', full_name='hypurr.HpumpV1LaunchTokensResponse.tokens', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='next_page_token', full_name='hypurr.HpumpV1LaunchTokensResponse.next_page_token', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3561,
+  serialized_end=3659,
+)
+
+
+_HPUMPV1LAUNCHPAIRREQUEST = _descriptor.Descriptor(
+  name='HpumpV1LaunchPairRequest',
+  full_name='hypurr.HpumpV1LaunchPairRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='address', full_name='hypurr.HpumpV1LaunchPairRequest.address', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3661,
+  serialized_end=3704,
+)
+
+
+_HPUMPV1LAUNCHPAIRRESPONSE = _descriptor.Descriptor(
+  name='HpumpV1LaunchPairResponse',
+  full_name='hypurr.HpumpV1LaunchPairResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pair', full_name='hypurr.HpumpV1LaunchPairResponse.pair', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3706,
+  serialized_end=3774,
+)
+
+
+_HPUMPV1LAUNCHPAIRSREQUEST = _descriptor.Descriptor(
+  name='HpumpV1LaunchPairsRequest',
+  full_name='hypurr.HpumpV1LaunchPairsRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='page_size', full_name='hypurr.HpumpV1LaunchPairsRequest.page_size', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='page_token', full_name='hypurr.HpumpV1LaunchPairsRequest.page_token', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='token_address', full_name='hypurr.HpumpV1LaunchPairsRequest.token_address', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3776,
+  serialized_end=3865,
+)
+
+
+_HPUMPV1LAUNCHPAIRSRESPONSE = _descriptor.Descriptor(
+  name='HpumpV1LaunchPairsResponse',
+  full_name='hypurr.HpumpV1LaunchPairsResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pairs', full_name='hypurr.HpumpV1LaunchPairsResponse.pairs', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='next_page_token', full_name='hypurr.HpumpV1LaunchPairsResponse.next_page_token', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3867,
+  serialized_end=3962,
+)
+
+
+_HPUMPV1LAUNCHPAIRSWAPREQUEST = _descriptor.Descriptor(
+  name='HpumpV1LaunchPairSwapRequest',
+  full_name='hypurr.HpumpV1LaunchPairSwapRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='hypurr.HpumpV1LaunchPairSwapRequest.id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3964,
+  serialized_end=4006,
+)
+
+
+_HPUMPV1LAUNCHPAIRSWAPRESPONSE = _descriptor.Descriptor(
+  name='HpumpV1LaunchPairSwapResponse',
+  full_name='hypurr.HpumpV1LaunchPairSwapResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='swap', full_name='hypurr.HpumpV1LaunchPairSwapResponse.swap', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4008,
+  serialized_end=4084,
+)
+
+
+_HPUMPV1LAUNCHPAIRSWAPSREQUEST = _descriptor.Descriptor(
+  name='HpumpV1LaunchPairSwapsRequest',
+  full_name='hypurr.HpumpV1LaunchPairSwapsRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='page_size', full_name='hypurr.HpumpV1LaunchPairSwapsRequest.page_size', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='page_token', full_name='hypurr.HpumpV1LaunchPairSwapsRequest.page_token', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='pair_address', full_name='hypurr.HpumpV1LaunchPairSwapsRequest.pair_address', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='origin_address', full_name='hypurr.HpumpV1LaunchPairSwapsRequest.origin_address', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='to_address', full_name='hypurr.HpumpV1LaunchPairSwapsRequest.to_address', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4087,
+  serialized_end=4223,
+)
+
+
+_HPUMPV1LAUNCHPAIRSWAPSRESPONSE = _descriptor.Descriptor(
+  name='HpumpV1LaunchPairSwapsResponse',
+  full_name='hypurr.HpumpV1LaunchPairSwapsResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='swaps', full_name='hypurr.HpumpV1LaunchPairSwapsResponse.swaps', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='next_page_token', full_name='hypurr.HpumpV1LaunchPairSwapsResponse.next_page_token', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4225,
+  serialized_end=4328,
+)
+
+
+_HPUMPV1LAUNCHPAIRSWAPSTREAMREQUEST = _descriptor.Descriptor(
+  name='HpumpV1LaunchPairSwapStreamRequest',
+  full_name='hypurr.HpumpV1LaunchPairSwapStreamRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pair_address', full_name='hypurr.HpumpV1LaunchPairSwapStreamRequest.pair_address', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='limit', full_name='hypurr.HpumpV1LaunchPairSwapStreamRequest.limit', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4330,
+  serialized_end=4432,
+)
+
+
+_HPUMPV1LAUNCHPAIRSWAPSTREAMRESPONSE = _descriptor.Descriptor(
+  name='HpumpV1LaunchPairSwapStreamResponse',
+  full_name='hypurr.HpumpV1LaunchPairSwapStreamResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='swaps', full_name='hypurr.HpumpV1LaunchPairSwapStreamResponse.swaps', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4434,
+  serialized_end=4517,
+)
+
+
+_HPUMPV1CANDLESREQUEST = _descriptor.Descriptor(
+  name='HpumpV1CandlesRequest',
+  full_name='hypurr.HpumpV1CandlesRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pair_address', full_name='hypurr.HpumpV1CandlesRequest.pair_address', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='from_timestamp', full_name='hypurr.HpumpV1CandlesRequest.from_timestamp', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='to_timestamp', full_name='hypurr.HpumpV1CandlesRequest.to_timestamp', index=2,
+      number=3, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='interval', full_name='hypurr.HpumpV1CandlesRequest.interval', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4519,
+  serialized_end=4628,
+)
+
+
+_HPUMPV1CANDLESRESPONSE = _descriptor.Descriptor(
+  name='HpumpV1CandlesResponse',
+  full_name='hypurr.HpumpV1CandlesResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='candles', full_name='hypurr.HpumpV1CandlesResponse.candles', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4630,
+  serialized_end=4690,
 )
 
 
@@ -1283,8 +1885,8 @@ _HYPERLIQUIDWALLETPERFORMANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3327,
-  serialized_end=3442,
+  serialized_start=4692,
+  serialized_end=4807,
 )
 
 
@@ -1328,8 +1930,8 @@ _HYPERLIQUIDWALLETPERFORMANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3445,
-  serialized_end=3590,
+  serialized_start=4810,
+  serialized_end=4955,
 )
 
 
@@ -1352,8 +1954,8 @@ _HYPURRFUNCABALSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3592,
-  serialized_end=3616,
+  serialized_start=4957,
+  serialized_end=4981,
 )
 
 
@@ -1383,8 +1985,8 @@ _HYPURRFUNCABALSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3618,
-  serialized_end=3683,
+  serialized_start=4983,
+  serialized_end=5048,
 )
 
 
@@ -1414,8 +2016,8 @@ _HYPURRFUNCABALPERFORMANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3685,
-  serialized_end=3745,
+  serialized_start=5050,
+  serialized_end=5110,
 )
 
 
@@ -1445,8 +2047,8 @@ _HYPURRFUNCABALPERFORMANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3747,
-  serialized_end=3839,
+  serialized_start=5112,
+  serialized_end=5204,
 )
 
 _HYPERLIQUIDTOKENHOLDERSRESPONSE.fields_by_name['holders'].message_type = hypurr_dot_token__pb2._HYPERLIQUIDTOKENHOLDER
@@ -1481,6 +2083,15 @@ _HYPERLIQUIDLAUNCHMESSAGESREQUEST.fields_by_name['pinned'].message_type = google
 _HYPERLIQUIDLAUNCHMESSAGESREQUEST.fields_by_name['dev'].message_type = google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE
 _HYPERLIQUIDLAUNCHMESSAGESRESPONSE.fields_by_name['messages'].message_type = hypurr_dot_launch__pb2._HYPERLIQUIDLAUNCHMESSAGE
 _HYPERLIQUIDLAUNCHHOLDERSRESPONSE.fields_by_name['holders'].message_type = hypurr_dot_launch__pb2._HYPERLIQUIDLAUNCHHOLDER
+_HPUMPV1LAUNCHTOKENRESPONSE.fields_by_name['token'].message_type = hypurr_dot_hpumpv1__pb2._HPUMPV1LAUNCHTOKEN
+_HPUMPV1LAUNCHTOKENSRESPONSE.fields_by_name['tokens'].message_type = hypurr_dot_hpumpv1__pb2._HPUMPV1LAUNCHTOKEN
+_HPUMPV1LAUNCHPAIRRESPONSE.fields_by_name['pair'].message_type = hypurr_dot_hpumpv1__pb2._HPUMPV1LAUNCHPAIR
+_HPUMPV1LAUNCHPAIRSRESPONSE.fields_by_name['pairs'].message_type = hypurr_dot_hpumpv1__pb2._HPUMPV1LAUNCHPAIR
+_HPUMPV1LAUNCHPAIRSWAPRESPONSE.fields_by_name['swap'].message_type = hypurr_dot_hpumpv1__pb2._HPUMPV1LAUNCHPAIRSWAP
+_HPUMPV1LAUNCHPAIRSWAPSRESPONSE.fields_by_name['swaps'].message_type = hypurr_dot_hpumpv1__pb2._HPUMPV1LAUNCHPAIRSWAP
+_HPUMPV1LAUNCHPAIRSWAPSTREAMREQUEST.fields_by_name['limit'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT32VALUE
+_HPUMPV1LAUNCHPAIRSWAPSTREAMRESPONSE.fields_by_name['swaps'].message_type = hypurr_dot_hpumpv1__pb2._HPUMPV1LAUNCHPAIRSWAP
+_HPUMPV1CANDLESRESPONSE.fields_by_name['candles'].message_type = hypurr_dot_evm__pb2._UNICANDLE
 _HYPERLIQUIDWALLETPERFORMANCEREQUEST.fields_by_name['ethereum_address'].message_type = google_dot_protobuf_dot_wrappers__pb2._STRINGVALUE
 _HYPERLIQUIDWALLETPERFORMANCERESPONSE.fields_by_name['spot'].message_type = hypurr_dot_wallet__pb2._PERFORMANCE
 _HYPERLIQUIDWALLETPERFORMANCERESPONSE.fields_by_name['perp'].message_type = hypurr_dot_wallet__pb2._PERFORMANCE
@@ -1524,6 +2135,22 @@ DESCRIPTOR.message_types_by_name['HyperliquidLaunchMessagesResponse'] = _HYPERLI
 DESCRIPTOR.message_types_by_name['HyperliquidLaunchHoldersRequest'] = _HYPERLIQUIDLAUNCHHOLDERSREQUEST
 DESCRIPTOR.message_types_by_name['HyperliquidLaunchHoldersResponse'] = _HYPERLIQUIDLAUNCHHOLDERSRESPONSE
 DESCRIPTOR.message_types_by_name['LatestHyperliquidLaunchFillsRequest'] = _LATESTHYPERLIQUIDLAUNCHFILLSREQUEST
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchTokenRequest'] = _HPUMPV1LAUNCHTOKENREQUEST
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchTokenResponse'] = _HPUMPV1LAUNCHTOKENRESPONSE
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchTokensRequest'] = _HPUMPV1LAUNCHTOKENSREQUEST
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchTokensResponse'] = _HPUMPV1LAUNCHTOKENSRESPONSE
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchPairRequest'] = _HPUMPV1LAUNCHPAIRREQUEST
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchPairResponse'] = _HPUMPV1LAUNCHPAIRRESPONSE
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchPairsRequest'] = _HPUMPV1LAUNCHPAIRSREQUEST
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchPairsResponse'] = _HPUMPV1LAUNCHPAIRSRESPONSE
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchPairSwapRequest'] = _HPUMPV1LAUNCHPAIRSWAPREQUEST
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchPairSwapResponse'] = _HPUMPV1LAUNCHPAIRSWAPRESPONSE
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchPairSwapsRequest'] = _HPUMPV1LAUNCHPAIRSWAPSREQUEST
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchPairSwapsResponse'] = _HPUMPV1LAUNCHPAIRSWAPSRESPONSE
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchPairSwapStreamRequest'] = _HPUMPV1LAUNCHPAIRSWAPSTREAMREQUEST
+DESCRIPTOR.message_types_by_name['HpumpV1LaunchPairSwapStreamResponse'] = _HPUMPV1LAUNCHPAIRSWAPSTREAMRESPONSE
+DESCRIPTOR.message_types_by_name['HpumpV1CandlesRequest'] = _HPUMPV1CANDLESREQUEST
+DESCRIPTOR.message_types_by_name['HpumpV1CandlesResponse'] = _HPUMPV1CANDLESRESPONSE
 DESCRIPTOR.message_types_by_name['HyperliquidWalletPerformanceRequest'] = _HYPERLIQUIDWALLETPERFORMANCEREQUEST
 DESCRIPTOR.message_types_by_name['HyperliquidWalletPerformanceResponse'] = _HYPERLIQUIDWALLETPERFORMANCERESPONSE
 DESCRIPTOR.message_types_by_name['HypurrFunCabalsRequest'] = _HYPURRFUNCABALSREQUEST
@@ -1791,6 +2418,118 @@ LatestHyperliquidLaunchFillsRequest = _reflection.GeneratedProtocolMessageType('
   ))
 _sym_db.RegisterMessage(LatestHyperliquidLaunchFillsRequest)
 
+HpumpV1LaunchTokenRequest = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchTokenRequest', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHTOKENREQUEST,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchTokenRequest)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchTokenRequest)
+
+HpumpV1LaunchTokenResponse = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchTokenResponse', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHTOKENRESPONSE,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchTokenResponse)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchTokenResponse)
+
+HpumpV1LaunchTokensRequest = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchTokensRequest', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHTOKENSREQUEST,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchTokensRequest)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchTokensRequest)
+
+HpumpV1LaunchTokensResponse = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchTokensResponse', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHTOKENSRESPONSE,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchTokensResponse)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchTokensResponse)
+
+HpumpV1LaunchPairRequest = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchPairRequest', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHPAIRREQUEST,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchPairRequest)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchPairRequest)
+
+HpumpV1LaunchPairResponse = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchPairResponse', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHPAIRRESPONSE,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchPairResponse)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchPairResponse)
+
+HpumpV1LaunchPairsRequest = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchPairsRequest', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHPAIRSREQUEST,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchPairsRequest)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchPairsRequest)
+
+HpumpV1LaunchPairsResponse = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchPairsResponse', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHPAIRSRESPONSE,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchPairsResponse)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchPairsResponse)
+
+HpumpV1LaunchPairSwapRequest = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchPairSwapRequest', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHPAIRSWAPREQUEST,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchPairSwapRequest)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchPairSwapRequest)
+
+HpumpV1LaunchPairSwapResponse = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchPairSwapResponse', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHPAIRSWAPRESPONSE,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchPairSwapResponse)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchPairSwapResponse)
+
+HpumpV1LaunchPairSwapsRequest = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchPairSwapsRequest', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHPAIRSWAPSREQUEST,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchPairSwapsRequest)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchPairSwapsRequest)
+
+HpumpV1LaunchPairSwapsResponse = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchPairSwapsResponse', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHPAIRSWAPSRESPONSE,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchPairSwapsResponse)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchPairSwapsResponse)
+
+HpumpV1LaunchPairSwapStreamRequest = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchPairSwapStreamRequest', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHPAIRSWAPSTREAMREQUEST,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchPairSwapStreamRequest)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchPairSwapStreamRequest)
+
+HpumpV1LaunchPairSwapStreamResponse = _reflection.GeneratedProtocolMessageType('HpumpV1LaunchPairSwapStreamResponse', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1LAUNCHPAIRSWAPSTREAMRESPONSE,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1LaunchPairSwapStreamResponse)
+  ))
+_sym_db.RegisterMessage(HpumpV1LaunchPairSwapStreamResponse)
+
+HpumpV1CandlesRequest = _reflection.GeneratedProtocolMessageType('HpumpV1CandlesRequest', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1CANDLESREQUEST,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1CandlesRequest)
+  ))
+_sym_db.RegisterMessage(HpumpV1CandlesRequest)
+
+HpumpV1CandlesResponse = _reflection.GeneratedProtocolMessageType('HpumpV1CandlesResponse', (_message.Message,), dict(
+  DESCRIPTOR = _HPUMPV1CANDLESRESPONSE,
+  __module__ = 'hypurr.static_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HpumpV1CandlesResponse)
+  ))
+_sym_db.RegisterMessage(HpumpV1CandlesResponse)
+
 HyperliquidWalletPerformanceRequest = _reflection.GeneratedProtocolMessageType('HyperliquidWalletPerformanceRequest', (_message.Message,), dict(
   DESCRIPTOR = _HYPERLIQUIDWALLETPERFORMANCEREQUEST,
   __module__ = 'hypurr.static_service_pb2'
@@ -1843,8 +2582,8 @@ _STATIC = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=3842,
-  serialized_end=6457,
+  serialized_start=5207,
+  serialized_end=8613,
   methods=[
   _descriptor.MethodDescriptor(
     name='HyperliquidDeployAuction',
@@ -2018,9 +2757,81 @@ _STATIC = _descriptor.ServiceDescriptor(
     options=None,
   ),
   _descriptor.MethodDescriptor(
+    name='HpumpV1LaunchToken',
+    full_name='hypurr.Static.HpumpV1LaunchToken',
+    index=19,
+    containing_service=None,
+    input_type=_HPUMPV1LAUNCHTOKENREQUEST,
+    output_type=_HPUMPV1LAUNCHTOKENRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='HpumpV1LaunchTokens',
+    full_name='hypurr.Static.HpumpV1LaunchTokens',
+    index=20,
+    containing_service=None,
+    input_type=_HPUMPV1LAUNCHTOKENSREQUEST,
+    output_type=_HPUMPV1LAUNCHTOKENSRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='HpumpV1LaunchPair',
+    full_name='hypurr.Static.HpumpV1LaunchPair',
+    index=21,
+    containing_service=None,
+    input_type=_HPUMPV1LAUNCHPAIRREQUEST,
+    output_type=_HPUMPV1LAUNCHPAIRRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='HpumpV1LaunchPairs',
+    full_name='hypurr.Static.HpumpV1LaunchPairs',
+    index=22,
+    containing_service=None,
+    input_type=_HPUMPV1LAUNCHPAIRSREQUEST,
+    output_type=_HPUMPV1LAUNCHPAIRSRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='HpumpV1LaunchPairSwap',
+    full_name='hypurr.Static.HpumpV1LaunchPairSwap',
+    index=23,
+    containing_service=None,
+    input_type=_HPUMPV1LAUNCHPAIRSWAPREQUEST,
+    output_type=_HPUMPV1LAUNCHPAIRSWAPRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='HpumpV1LaunchPairSwaps',
+    full_name='hypurr.Static.HpumpV1LaunchPairSwaps',
+    index=24,
+    containing_service=None,
+    input_type=_HPUMPV1LAUNCHPAIRSWAPSREQUEST,
+    output_type=_HPUMPV1LAUNCHPAIRSWAPSRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='HpumpV1LaunchPairSwapStream',
+    full_name='hypurr.Static.HpumpV1LaunchPairSwapStream',
+    index=25,
+    containing_service=None,
+    input_type=_HPUMPV1LAUNCHPAIRSWAPSTREAMREQUEST,
+    output_type=_HPUMPV1LAUNCHPAIRSWAPSTREAMRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='HpumpV1',
+    full_name='hypurr.Static.HpumpV1',
+    index=26,
+    containing_service=None,
+    input_type=_HPUMPV1CANDLESREQUEST,
+    output_type=_HPUMPV1CANDLESRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
     name='HypurrFunCabals',
     full_name='hypurr.Static.HypurrFunCabals',
-    index=19,
+    index=27,
     containing_service=None,
     input_type=_HYPURRFUNCABALSREQUEST,
     output_type=_HYPURRFUNCABALSRESPONSE,
@@ -2029,7 +2840,7 @@ _STATIC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='HypurrFunCabalPerformance',
     full_name='hypurr.Static.HypurrFunCabalPerformance',
-    index=20,
+    index=28,
     containing_service=None,
     input_type=_HYPURRFUNCABALPERFORMANCEREQUEST,
     output_type=_HYPURRFUNCABALPERFORMANCERESPONSE,
@@ -2038,7 +2849,7 @@ _STATIC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='SetHyperliquidWalletDeploySessionTarget',
     full_name='hypurr.Static.SetHyperliquidWalletDeploySessionTarget',
-    index=21,
+    index=29,
     containing_service=None,
     input_type=_SETHYPERLIQUIDWALLETDEPLOYSESSIONTARGETREQUEST,
     output_type=_SETHYPERLIQUIDWALLETDEPLOYSESSIONTARGETRESPONSE,
@@ -2047,7 +2858,7 @@ _STATIC = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='DeleteHyperliquidWalletDeploySessionTarget',
     full_name='hypurr.Static.DeleteHyperliquidWalletDeploySessionTarget',
-    index=22,
+    index=30,
     containing_service=None,
     input_type=_DELETEHYPERLIQUIDWALLETDEPLOYSESSIONTARGETREQUEST,
     output_type=_DELETEHYPERLIQUIDWALLETDEPLOYSESSIONTARGETRESPONSE,

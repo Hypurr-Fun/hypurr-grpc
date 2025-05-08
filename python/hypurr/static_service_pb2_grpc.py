@@ -109,6 +109,46 @@ class StaticStub(object):
         request_serializer=hypurr_dot_static__service__pb2.HyperliquidLaunchHoldersRequest.SerializeToString,
         response_deserializer=hypurr_dot_static__service__pb2.HyperliquidLaunchHoldersResponse.FromString,
         )
+    self.HpumpV1LaunchToken = channel.unary_unary(
+        '/hypurr.Static/HpumpV1LaunchToken',
+        request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchTokenRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchTokenResponse.FromString,
+        )
+    self.HpumpV1LaunchTokens = channel.unary_unary(
+        '/hypurr.Static/HpumpV1LaunchTokens',
+        request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchTokensRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchTokensResponse.FromString,
+        )
+    self.HpumpV1LaunchPair = channel.unary_unary(
+        '/hypurr.Static/HpumpV1LaunchPair',
+        request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairResponse.FromString,
+        )
+    self.HpumpV1LaunchPairs = channel.unary_unary(
+        '/hypurr.Static/HpumpV1LaunchPairs',
+        request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairsRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairsResponse.FromString,
+        )
+    self.HpumpV1LaunchPairSwap = channel.unary_unary(
+        '/hypurr.Static/HpumpV1LaunchPairSwap',
+        request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapResponse.FromString,
+        )
+    self.HpumpV1LaunchPairSwaps = channel.unary_unary(
+        '/hypurr.Static/HpumpV1LaunchPairSwaps',
+        request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapsRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapsResponse.FromString,
+        )
+    self.HpumpV1LaunchPairSwapStream = channel.unary_stream(
+        '/hypurr.Static/HpumpV1LaunchPairSwapStream',
+        request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapStreamRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapStreamResponse.FromString,
+        )
+    self.HpumpV1 = channel.unary_unary(
+        '/hypurr.Static/HpumpV1',
+        request_serializer=hypurr_dot_static__service__pb2.HpumpV1CandlesRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1CandlesResponse.FromString,
+        )
     self.HypurrFunCabals = channel.unary_unary(
         '/hypurr.Static/HypurrFunCabals',
         request_serializer=hypurr_dot_static__service__pb2.HypurrFunCabalsRequest.SerializeToString,
@@ -206,8 +246,8 @@ class StaticServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def HyperliquidLaunch(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
+    """Launch
+    """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -262,6 +302,62 @@ class StaticServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def HyperliquidLaunchHolders(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HpumpV1LaunchToken(self, request, context):
+    """HpumpV1
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HpumpV1LaunchTokens(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HpumpV1LaunchPair(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HpumpV1LaunchPairs(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HpumpV1LaunchPairSwap(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HpumpV1LaunchPairSwaps(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HpumpV1LaunchPairSwapStream(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HpumpV1(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -393,6 +489,46 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.HyperliquidLaunchHolders,
           request_deserializer=hypurr_dot_static__service__pb2.HyperliquidLaunchHoldersRequest.FromString,
           response_serializer=hypurr_dot_static__service__pb2.HyperliquidLaunchHoldersResponse.SerializeToString,
+      ),
+      'HpumpV1LaunchToken': grpc.unary_unary_rpc_method_handler(
+          servicer.HpumpV1LaunchToken,
+          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchTokenRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchTokenResponse.SerializeToString,
+      ),
+      'HpumpV1LaunchTokens': grpc.unary_unary_rpc_method_handler(
+          servicer.HpumpV1LaunchTokens,
+          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchTokensRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchTokensResponse.SerializeToString,
+      ),
+      'HpumpV1LaunchPair': grpc.unary_unary_rpc_method_handler(
+          servicer.HpumpV1LaunchPair,
+          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairResponse.SerializeToString,
+      ),
+      'HpumpV1LaunchPairs': grpc.unary_unary_rpc_method_handler(
+          servicer.HpumpV1LaunchPairs,
+          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairsRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairsResponse.SerializeToString,
+      ),
+      'HpumpV1LaunchPairSwap': grpc.unary_unary_rpc_method_handler(
+          servicer.HpumpV1LaunchPairSwap,
+          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapResponse.SerializeToString,
+      ),
+      'HpumpV1LaunchPairSwaps': grpc.unary_unary_rpc_method_handler(
+          servicer.HpumpV1LaunchPairSwaps,
+          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapsRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapsResponse.SerializeToString,
+      ),
+      'HpumpV1LaunchPairSwapStream': grpc.unary_stream_rpc_method_handler(
+          servicer.HpumpV1LaunchPairSwapStream,
+          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapStreamRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapStreamResponse.SerializeToString,
+      ),
+      'HpumpV1': grpc.unary_unary_rpc_method_handler(
+          servicer.HpumpV1,
+          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1CandlesRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.HpumpV1CandlesResponse.SerializeToString,
       ),
       'HypurrFunCabals': grpc.unary_unary_rpc_method_handler(
           servicer.HypurrFunCabals,

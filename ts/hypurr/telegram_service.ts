@@ -13,6 +13,7 @@ import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { BytesValue } from "../google/protobuf/wrappers";
+import { HpumpV1LaunchToken } from "./hpumpv1";
 import { HyperliquidLaunch } from "./launch";
 import { MediaType } from "./common";
 import { HyperliquidWalletSpotTwapSession } from "./tools";
@@ -80,9 +81,9 @@ export interface HyperliquidLaunchTradeRequest {
      */
     walletId: number;
     /**
-     * @generated from protobuf field: hypurr.HyperliquidLaunchTradeDirection direction = 4;
+     * @generated from protobuf field: hypurr.TradeDirection direction = 4;
      */
-    direction: HyperliquidLaunchTradeDirection;
+    direction: TradeDirection;
     /**
      * @generated from protobuf field: double amount = 5;
      */
@@ -128,13 +129,61 @@ export interface HyperliquidSpotTradeRequest {
      */
     walletId: number;
     /**
-     * @generated from protobuf field: hypurr.HyperliquidLaunchTradeDirection direction = 4;
+     * @generated from protobuf field: hypurr.TradeDirection direction = 4;
      */
-    direction: HyperliquidLaunchTradeDirection;
+    direction: TradeDirection;
     /**
      * @generated from protobuf field: double amount = 5;
      */
     amount: number;
+}
+/**
+ * @generated from protobuf message hypurr.HpumpV1LaunchTradeRequest
+ */
+export interface HpumpV1LaunchTradeRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: int64 pair_id = 2;
+     */
+    pairId: number;
+    /**
+     * @generated from protobuf field: int64 wallet_id = 3;
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: hypurr.TradeDirection direction = 4;
+     */
+    direction: TradeDirection;
+    /**
+     * @generated from protobuf field: double amount = 5;
+     */
+    amount: number;
+}
+/**
+ * @generated from protobuf message hypurr.HpumpV1LaunchTradeResponse
+ */
+export interface HpumpV1LaunchTradeResponse {
+    /**
+     * @generated from protobuf field: double base_amount = 1;
+     */
+    baseAmount: number;
+    /**
+     * @generated from protobuf field: double quote_amount = 2;
+     */
+    quoteAmount: number;
+    /**
+     * @generated from protobuf field: string message = 3;
+     */
+    message: string;
+    /**
+     * @generated from protobuf field: bool success = 4;
+     */
+    success: boolean;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidSpotTradeResponse
@@ -330,6 +379,58 @@ export interface LaunchHyperliquidLaunchResponse {
     launch?: HyperliquidLaunch;
 }
 /**
+ * @generated from protobuf message hypurr.LaunchHpumpV1LaunchRequest
+ */
+export interface LaunchHpumpV1LaunchRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: int64 wallet_id = 2;
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: string description = 3;
+     */
+    description: string;
+    /**
+     * @generated from protobuf field: string full_name = 4;
+     */
+    fullName: string;
+    /**
+     * @generated from protobuf field: string token_name = 5;
+     */
+    tokenName: string;
+    /**
+     * @generated from protobuf field: bytes media = 6;
+     */
+    media: Uint8Array;
+    /**
+     * @generated from protobuf field: hypurr.MediaType media_type = 7;
+     */
+    mediaType: MediaType;
+    /**
+     * @generated from protobuf field: int64 dev_lockup_seconds = 8;
+     */
+    devLockupSeconds: number;
+    /**
+     * @generated from protobuf field: double initial_purchase_notional = 9;
+     */
+    initialPurchaseNotional: number;
+}
+/**
+ * @generated from protobuf message hypurr.LaunchHpumpV1LaunchResponse
+ */
+export interface LaunchHpumpV1LaunchResponse {
+    /**
+     * @generated from protobuf field: hypurr.HpumpV1LaunchToken launch = 1;
+     */
+    launch?: HpumpV1LaunchToken;
+}
+/**
  * @generated from protobuf message hypurr.EditHyperliquidLaunchRequest
  */
 export interface EditHyperliquidLaunchRequest {
@@ -374,9 +475,9 @@ export interface EditHyperliquidLaunchResponse {
     launch?: HyperliquidLaunch;
 }
 /**
- * @generated from protobuf enum hypurr.HyperliquidLaunchTradeDirection
+ * @generated from protobuf enum hypurr.TradeDirection
  */
-export enum HyperliquidLaunchTradeDirection {
+export enum TradeDirection {
     /**
      * @generated from protobuf enum value: BUY = 0;
      */
@@ -613,7 +714,7 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "direction", kind: "enum", T: () => ["hypurr.HyperliquidLaunchTradeDirection", HyperliquidLaunchTradeDirection] },
+            { no: 4, name: "direction", kind: "enum", T: () => ["hypurr.TradeDirection", TradeDirection] },
             { no: 5, name: "amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
@@ -638,7 +739,7 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
                 case /* int64 wallet_id */ 3:
                     message.walletId = reader.int64().toNumber();
                     break;
-                case /* hypurr.HyperliquidLaunchTradeDirection direction */ 4:
+                case /* hypurr.TradeDirection direction */ 4:
                     message.direction = reader.int32();
                     break;
                 case /* double amount */ 5:
@@ -681,7 +782,7 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
         /* int64 wallet_id = 3; */
         if (message.walletId !== 0)
             writer.tag(3, WireType.Varint).int64(message.walletId);
-        /* hypurr.HyperliquidLaunchTradeDirection direction = 4; */
+        /* hypurr.TradeDirection direction = 4; */
         if (message.direction !== 0)
             writer.tag(4, WireType.Varint).int32(message.direction);
         /* double amount = 5; */
@@ -772,7 +873,7 @@ class HyperliquidSpotTradeRequest$Type extends MessageType<HyperliquidSpotTradeR
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "pair_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "direction", kind: "enum", T: () => ["hypurr.HyperliquidLaunchTradeDirection", HyperliquidLaunchTradeDirection] },
+            { no: 4, name: "direction", kind: "enum", T: () => ["hypurr.TradeDirection", TradeDirection] },
             { no: 5, name: "amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
@@ -797,7 +898,7 @@ class HyperliquidSpotTradeRequest$Type extends MessageType<HyperliquidSpotTradeR
                 case /* int64 wallet_id */ 3:
                     message.walletId = reader.int64().toNumber();
                     break;
-                case /* hypurr.HyperliquidLaunchTradeDirection direction */ 4:
+                case /* hypurr.TradeDirection direction */ 4:
                     message.direction = reader.int32();
                     break;
                 case /* double amount */ 5:
@@ -840,7 +941,7 @@ class HyperliquidSpotTradeRequest$Type extends MessageType<HyperliquidSpotTradeR
         /* int64 wallet_id = 3; */
         if (message.walletId !== 0)
             writer.tag(3, WireType.Varint).int64(message.walletId);
-        /* hypurr.HyperliquidLaunchTradeDirection direction = 4; */
+        /* hypurr.TradeDirection direction = 4; */
         if (message.direction !== 0)
             writer.tag(4, WireType.Varint).int32(message.direction);
         /* double amount = 5; */
@@ -856,6 +957,165 @@ class HyperliquidSpotTradeRequest$Type extends MessageType<HyperliquidSpotTradeR
  * @generated MessageType for protobuf message hypurr.HyperliquidSpotTradeRequest
  */
 export const HyperliquidSpotTradeRequest = new HyperliquidSpotTradeRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HpumpV1LaunchTradeRequest$Type extends MessageType<HpumpV1LaunchTradeRequest> {
+    constructor() {
+        super("hypurr.HpumpV1LaunchTradeRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "pair_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "direction", kind: "enum", T: () => ["hypurr.TradeDirection", TradeDirection] },
+            { no: 5, name: "amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HpumpV1LaunchTradeRequest>): HpumpV1LaunchTradeRequest {
+        const message = { authData: {}, pairId: 0, walletId: 0, direction: 0, amount: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HpumpV1LaunchTradeRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchTradeRequest): HpumpV1LaunchTradeRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* int64 pair_id */ 2:
+                    message.pairId = reader.int64().toNumber();
+                    break;
+                case /* int64 wallet_id */ 3:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* hypurr.TradeDirection direction */ 4:
+                    message.direction = reader.int32();
+                    break;
+                case /* double amount */ 5:
+                    message.amount = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: HpumpV1LaunchTradeRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HpumpV1LaunchTradeRequest["authData"] | undefined, val: HpumpV1LaunchTradeRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HpumpV1LaunchTradeRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: HpumpV1LaunchTradeRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* int64 pair_id = 2; */
+        if (message.pairId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.pairId);
+        /* int64 wallet_id = 3; */
+        if (message.walletId !== 0)
+            writer.tag(3, WireType.Varint).int64(message.walletId);
+        /* hypurr.TradeDirection direction = 4; */
+        if (message.direction !== 0)
+            writer.tag(4, WireType.Varint).int32(message.direction);
+        /* double amount = 5; */
+        if (message.amount !== 0)
+            writer.tag(5, WireType.Bit64).double(message.amount);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchTradeRequest
+ */
+export const HpumpV1LaunchTradeRequest = new HpumpV1LaunchTradeRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HpumpV1LaunchTradeResponse$Type extends MessageType<HpumpV1LaunchTradeResponse> {
+    constructor() {
+        super("hypurr.HpumpV1LaunchTradeResponse", [
+            { no: 1, name: "base_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 2, name: "quote_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HpumpV1LaunchTradeResponse>): HpumpV1LaunchTradeResponse {
+        const message = { baseAmount: 0, quoteAmount: 0, message: "", success: false };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HpumpV1LaunchTradeResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchTradeResponse): HpumpV1LaunchTradeResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* double base_amount */ 1:
+                    message.baseAmount = reader.double();
+                    break;
+                case /* double quote_amount */ 2:
+                    message.quoteAmount = reader.double();
+                    break;
+                case /* string message */ 3:
+                    message.message = reader.string();
+                    break;
+                case /* bool success */ 4:
+                    message.success = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HpumpV1LaunchTradeResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* double base_amount = 1; */
+        if (message.baseAmount !== 0)
+            writer.tag(1, WireType.Bit64).double(message.baseAmount);
+        /* double quote_amount = 2; */
+        if (message.quoteAmount !== 0)
+            writer.tag(2, WireType.Bit64).double(message.quoteAmount);
+        /* string message = 3; */
+        if (message.message !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.message);
+        /* bool success = 4; */
+        if (message.success !== false)
+            writer.tag(4, WireType.Varint).bool(message.success);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchTradeResponse
+ */
+export const HpumpV1LaunchTradeResponse = new HpumpV1LaunchTradeResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidSpotTradeResponse$Type extends MessageType<HyperliquidSpotTradeResponse> {
     constructor() {
@@ -1676,6 +1936,172 @@ class LaunchHyperliquidLaunchResponse$Type extends MessageType<LaunchHyperliquid
  */
 export const LaunchHyperliquidLaunchResponse = new LaunchHyperliquidLaunchResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class LaunchHpumpV1LaunchRequest$Type extends MessageType<LaunchHpumpV1LaunchRequest> {
+    constructor() {
+        super("hypurr.LaunchHpumpV1LaunchRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "token_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "media", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 7, name: "media_type", kind: "enum", T: () => ["hypurr.MediaType", MediaType, "MEDIA_TYPE_"] },
+            { no: 8, name: "dev_lockup_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 9, name: "initial_purchase_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<LaunchHpumpV1LaunchRequest>): LaunchHpumpV1LaunchRequest {
+        const message = { authData: {}, walletId: 0, description: "", fullName: "", tokenName: "", media: new Uint8Array(0), mediaType: 0, devLockupSeconds: 0, initialPurchaseNotional: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<LaunchHpumpV1LaunchRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LaunchHpumpV1LaunchRequest): LaunchHpumpV1LaunchRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* string description */ 3:
+                    message.description = reader.string();
+                    break;
+                case /* string full_name */ 4:
+                    message.fullName = reader.string();
+                    break;
+                case /* string token_name */ 5:
+                    message.tokenName = reader.string();
+                    break;
+                case /* bytes media */ 6:
+                    message.media = reader.bytes();
+                    break;
+                case /* hypurr.MediaType media_type */ 7:
+                    message.mediaType = reader.int32();
+                    break;
+                case /* int64 dev_lockup_seconds */ 8:
+                    message.devLockupSeconds = reader.int64().toNumber();
+                    break;
+                case /* double initial_purchase_notional */ 9:
+                    message.initialPurchaseNotional = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: LaunchHpumpV1LaunchRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof LaunchHpumpV1LaunchRequest["authData"] | undefined, val: LaunchHpumpV1LaunchRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.LaunchHpumpV1LaunchRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: LaunchHpumpV1LaunchRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* string description = 3; */
+        if (message.description !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.description);
+        /* string full_name = 4; */
+        if (message.fullName !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.fullName);
+        /* string token_name = 5; */
+        if (message.tokenName !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.tokenName);
+        /* bytes media = 6; */
+        if (message.media.length)
+            writer.tag(6, WireType.LengthDelimited).bytes(message.media);
+        /* hypurr.MediaType media_type = 7; */
+        if (message.mediaType !== 0)
+            writer.tag(7, WireType.Varint).int32(message.mediaType);
+        /* int64 dev_lockup_seconds = 8; */
+        if (message.devLockupSeconds !== 0)
+            writer.tag(8, WireType.Varint).int64(message.devLockupSeconds);
+        /* double initial_purchase_notional = 9; */
+        if (message.initialPurchaseNotional !== 0)
+            writer.tag(9, WireType.Bit64).double(message.initialPurchaseNotional);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.LaunchHpumpV1LaunchRequest
+ */
+export const LaunchHpumpV1LaunchRequest = new LaunchHpumpV1LaunchRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LaunchHpumpV1LaunchResponse$Type extends MessageType<LaunchHpumpV1LaunchResponse> {
+    constructor() {
+        super("hypurr.LaunchHpumpV1LaunchResponse", [
+            { no: 1, name: "launch", kind: "message", T: () => HpumpV1LaunchToken }
+        ]);
+    }
+    create(value?: PartialMessage<LaunchHpumpV1LaunchResponse>): LaunchHpumpV1LaunchResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<LaunchHpumpV1LaunchResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LaunchHpumpV1LaunchResponse): LaunchHpumpV1LaunchResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.HpumpV1LaunchToken launch */ 1:
+                    message.launch = HpumpV1LaunchToken.internalBinaryRead(reader, reader.uint32(), options, message.launch);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: LaunchHpumpV1LaunchResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.HpumpV1LaunchToken launch = 1; */
+        if (message.launch)
+            HpumpV1LaunchToken.internalBinaryWrite(message.launch, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.LaunchHpumpV1LaunchResponse
+ */
+export const LaunchHpumpV1LaunchResponse = new LaunchHpumpV1LaunchResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class EditHyperliquidLaunchRequest$Type extends MessageType<EditHyperliquidLaunchRequest> {
     constructor() {
         super("hypurr.EditHyperliquidLaunchRequest", [
@@ -1836,6 +2262,8 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "HyperliquidLaunchTrade", options: {}, I: HyperliquidLaunchTradeRequest, O: HyperliquidLaunchTradeResponse },
     { name: "LaunchHyperliquidLaunch", options: {}, I: LaunchHyperliquidLaunchRequest, O: LaunchHyperliquidLaunchResponse },
     { name: "EditHyperliquidLaunch", options: {}, I: EditHyperliquidLaunchRequest, O: EditHyperliquidLaunchResponse },
+    { name: "HpumpV1LaunchTrade", options: {}, I: HpumpV1LaunchTradeRequest, O: HpumpV1LaunchTradeResponse },
+    { name: "LaunchHpumpV1Launch", options: {}, I: LaunchHpumpV1LaunchRequest, O: LaunchHpumpV1LaunchResponse },
     { name: "HyperliquidSpotTrade", options: {}, I: HyperliquidSpotTradeRequest, O: HyperliquidSpotTradeResponse },
     { name: "HyperliquidWalletSpotTwapSessions", options: {}, I: HyperliquidWalletSpotTwapSessionsRequest, O: HyperliquidWalletSpotTwapSessionsResponse },
     { name: "HyperliquidSpotSniperConfigs", options: {}, I: HyperliquidSpotSniperConfigsRequest, O: HyperliquidSpotSniperConfigsResponse },

@@ -12,6 +12,22 @@ import type { HypurrFunCabalPerformanceResponse } from "./static_service";
 import type { HypurrFunCabalPerformanceRequest } from "./static_service";
 import type { HypurrFunCabalsResponse } from "./static_service";
 import type { HypurrFunCabalsRequest } from "./static_service";
+import type { HpumpV1CandlesResponse } from "./static_service";
+import type { HpumpV1CandlesRequest } from "./static_service";
+import type { HpumpV1LaunchPairSwapStreamResponse } from "./static_service";
+import type { HpumpV1LaunchPairSwapStreamRequest } from "./static_service";
+import type { HpumpV1LaunchPairSwapsResponse } from "./static_service";
+import type { HpumpV1LaunchPairSwapsRequest } from "./static_service";
+import type { HpumpV1LaunchPairSwapResponse } from "./static_service";
+import type { HpumpV1LaunchPairSwapRequest } from "./static_service";
+import type { HpumpV1LaunchPairsResponse } from "./static_service";
+import type { HpumpV1LaunchPairsRequest } from "./static_service";
+import type { HpumpV1LaunchPairResponse } from "./static_service";
+import type { HpumpV1LaunchPairRequest } from "./static_service";
+import type { HpumpV1LaunchTokensResponse } from "./static_service";
+import type { HpumpV1LaunchTokensRequest } from "./static_service";
+import type { HpumpV1LaunchTokenResponse } from "./static_service";
+import type { HpumpV1LaunchTokenRequest } from "./static_service";
 import type { HyperliquidLaunchHoldersResponse } from "./static_service";
 import type { HyperliquidLaunchHoldersRequest } from "./static_service";
 import type { LatestHyperliquidLaunchFillsRequest } from "./static_service";
@@ -96,6 +112,8 @@ export interface IStaticClient {
      */
     hyperliquidWalletPerformance(input: HyperliquidWalletPerformanceRequest, options?: RpcOptions): UnaryCall<HyperliquidWalletPerformanceRequest, HyperliquidWalletPerformanceResponse>;
     /**
+     * Launch
+     *
      * @generated from protobuf rpc: HyperliquidLaunch(hypurr.HyperliquidLaunchRequest) returns (hypurr.HyperliquidLaunchResponse);
      */
     hyperliquidLaunch(input: HyperliquidLaunchRequest, options?: RpcOptions): UnaryCall<HyperliquidLaunchRequest, HyperliquidLaunchResponse>;
@@ -131,6 +149,40 @@ export interface IStaticClient {
      * @generated from protobuf rpc: HyperliquidLaunchHolders(hypurr.HyperliquidLaunchHoldersRequest) returns (hypurr.HyperliquidLaunchHoldersResponse);
      */
     hyperliquidLaunchHolders(input: HyperliquidLaunchHoldersRequest, options?: RpcOptions): UnaryCall<HyperliquidLaunchHoldersRequest, HyperliquidLaunchHoldersResponse>;
+    /**
+     * HpumpV1
+     *
+     * @generated from protobuf rpc: HpumpV1LaunchToken(hypurr.HpumpV1LaunchTokenRequest) returns (hypurr.HpumpV1LaunchTokenResponse);
+     */
+    hpumpV1LaunchToken(input: HpumpV1LaunchTokenRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchTokenRequest, HpumpV1LaunchTokenResponse>;
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchTokens(hypurr.HpumpV1LaunchTokensRequest) returns (hypurr.HpumpV1LaunchTokensResponse);
+     */
+    hpumpV1LaunchTokens(input: HpumpV1LaunchTokensRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchTokensRequest, HpumpV1LaunchTokensResponse>;
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPair(hypurr.HpumpV1LaunchPairRequest) returns (hypurr.HpumpV1LaunchPairResponse);
+     */
+    hpumpV1LaunchPair(input: HpumpV1LaunchPairRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairRequest, HpumpV1LaunchPairResponse>;
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairs(hypurr.HpumpV1LaunchPairsRequest) returns (hypurr.HpumpV1LaunchPairsResponse);
+     */
+    hpumpV1LaunchPairs(input: HpumpV1LaunchPairsRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairsRequest, HpumpV1LaunchPairsResponse>;
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairSwap(hypurr.HpumpV1LaunchPairSwapRequest) returns (hypurr.HpumpV1LaunchPairSwapResponse);
+     */
+    hpumpV1LaunchPairSwap(input: HpumpV1LaunchPairSwapRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairSwapRequest, HpumpV1LaunchPairSwapResponse>;
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairSwaps(hypurr.HpumpV1LaunchPairSwapsRequest) returns (hypurr.HpumpV1LaunchPairSwapsResponse);
+     */
+    hpumpV1LaunchPairSwaps(input: HpumpV1LaunchPairSwapsRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairSwapsRequest, HpumpV1LaunchPairSwapsResponse>;
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairSwapStream(hypurr.HpumpV1LaunchPairSwapStreamRequest) returns (stream hypurr.HpumpV1LaunchPairSwapStreamResponse);
+     */
+    hpumpV1LaunchPairSwapStream(input: HpumpV1LaunchPairSwapStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchPairSwapStreamRequest, HpumpV1LaunchPairSwapStreamResponse>;
+    /**
+     * @generated from protobuf rpc: HpumpV1(hypurr.HpumpV1CandlesRequest) returns (hypurr.HpumpV1CandlesResponse);
+     */
+    hpumpV1(input: HpumpV1CandlesRequest, options?: RpcOptions): UnaryCall<HpumpV1CandlesRequest, HpumpV1CandlesResponse>;
     /**
      * @generated from protobuf rpc: HypurrFunCabals(hypurr.HypurrFunCabalsRequest) returns (hypurr.HypurrFunCabalsResponse);
      */
@@ -228,6 +280,8 @@ export class StaticClient implements IStaticClient, ServiceInfo {
         return stackIntercept<HyperliquidWalletPerformanceRequest, HyperliquidWalletPerformanceResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * Launch
+     *
      * @generated from protobuf rpc: HyperliquidLaunch(hypurr.HyperliquidLaunchRequest) returns (hypurr.HyperliquidLaunchResponse);
      */
     hyperliquidLaunch(input: HyperliquidLaunchRequest, options?: RpcOptions): UnaryCall<HyperliquidLaunchRequest, HyperliquidLaunchResponse> {
@@ -291,31 +345,89 @@ export class StaticClient implements IStaticClient, ServiceInfo {
         return stackIntercept<HyperliquidLaunchHoldersRequest, HyperliquidLaunchHoldersResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * HpumpV1
+     *
+     * @generated from protobuf rpc: HpumpV1LaunchToken(hypurr.HpumpV1LaunchTokenRequest) returns (hypurr.HpumpV1LaunchTokenResponse);
+     */
+    hpumpV1LaunchToken(input: HpumpV1LaunchTokenRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchTokenRequest, HpumpV1LaunchTokenResponse> {
+        const method = this.methods[19], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchTokenRequest, HpumpV1LaunchTokenResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchTokens(hypurr.HpumpV1LaunchTokensRequest) returns (hypurr.HpumpV1LaunchTokensResponse);
+     */
+    hpumpV1LaunchTokens(input: HpumpV1LaunchTokensRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchTokensRequest, HpumpV1LaunchTokensResponse> {
+        const method = this.methods[20], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchTokensRequest, HpumpV1LaunchTokensResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPair(hypurr.HpumpV1LaunchPairRequest) returns (hypurr.HpumpV1LaunchPairResponse);
+     */
+    hpumpV1LaunchPair(input: HpumpV1LaunchPairRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairRequest, HpumpV1LaunchPairResponse> {
+        const method = this.methods[21], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchPairRequest, HpumpV1LaunchPairResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairs(hypurr.HpumpV1LaunchPairsRequest) returns (hypurr.HpumpV1LaunchPairsResponse);
+     */
+    hpumpV1LaunchPairs(input: HpumpV1LaunchPairsRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairsRequest, HpumpV1LaunchPairsResponse> {
+        const method = this.methods[22], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchPairsRequest, HpumpV1LaunchPairsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairSwap(hypurr.HpumpV1LaunchPairSwapRequest) returns (hypurr.HpumpV1LaunchPairSwapResponse);
+     */
+    hpumpV1LaunchPairSwap(input: HpumpV1LaunchPairSwapRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairSwapRequest, HpumpV1LaunchPairSwapResponse> {
+        const method = this.methods[23], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchPairSwapRequest, HpumpV1LaunchPairSwapResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairSwaps(hypurr.HpumpV1LaunchPairSwapsRequest) returns (hypurr.HpumpV1LaunchPairSwapsResponse);
+     */
+    hpumpV1LaunchPairSwaps(input: HpumpV1LaunchPairSwapsRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchPairSwapsRequest, HpumpV1LaunchPairSwapsResponse> {
+        const method = this.methods[24], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchPairSwapsRequest, HpumpV1LaunchPairSwapsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HpumpV1LaunchPairSwapStream(hypurr.HpumpV1LaunchPairSwapStreamRequest) returns (stream hypurr.HpumpV1LaunchPairSwapStreamResponse);
+     */
+    hpumpV1LaunchPairSwapStream(input: HpumpV1LaunchPairSwapStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchPairSwapStreamRequest, HpumpV1LaunchPairSwapStreamResponse> {
+        const method = this.methods[25], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1LaunchPairSwapStreamRequest, HpumpV1LaunchPairSwapStreamResponse>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HpumpV1(hypurr.HpumpV1CandlesRequest) returns (hypurr.HpumpV1CandlesResponse);
+     */
+    hpumpV1(input: HpumpV1CandlesRequest, options?: RpcOptions): UnaryCall<HpumpV1CandlesRequest, HpumpV1CandlesResponse> {
+        const method = this.methods[26], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HpumpV1CandlesRequest, HpumpV1CandlesResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: HypurrFunCabals(hypurr.HypurrFunCabalsRequest) returns (hypurr.HypurrFunCabalsResponse);
      */
     hypurrFunCabals(input: HypurrFunCabalsRequest, options?: RpcOptions): UnaryCall<HypurrFunCabalsRequest, HypurrFunCabalsResponse> {
-        const method = this.methods[19], opt = this._transport.mergeOptions(options);
+        const method = this.methods[27], opt = this._transport.mergeOptions(options);
         return stackIntercept<HypurrFunCabalsRequest, HypurrFunCabalsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HypurrFunCabalPerformance(hypurr.HypurrFunCabalPerformanceRequest) returns (hypurr.HypurrFunCabalPerformanceResponse);
      */
     hypurrFunCabalPerformance(input: HypurrFunCabalPerformanceRequest, options?: RpcOptions): UnaryCall<HypurrFunCabalPerformanceRequest, HypurrFunCabalPerformanceResponse> {
-        const method = this.methods[20], opt = this._transport.mergeOptions(options);
+        const method = this.methods[28], opt = this._transport.mergeOptions(options);
         return stackIntercept<HypurrFunCabalPerformanceRequest, HypurrFunCabalPerformanceResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: SetHyperliquidWalletDeploySessionTarget(hypurr.SetHyperliquidWalletDeploySessionTargetRequest) returns (hypurr.SetHyperliquidWalletDeploySessionTargetResponse);
      */
     setHyperliquidWalletDeploySessionTarget(input: SetHyperliquidWalletDeploySessionTargetRequest, options?: RpcOptions): UnaryCall<SetHyperliquidWalletDeploySessionTargetRequest, SetHyperliquidWalletDeploySessionTargetResponse> {
-        const method = this.methods[21], opt = this._transport.mergeOptions(options);
+        const method = this.methods[29], opt = this._transport.mergeOptions(options);
         return stackIntercept<SetHyperliquidWalletDeploySessionTargetRequest, SetHyperliquidWalletDeploySessionTargetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: DeleteHyperliquidWalletDeploySessionTarget(hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest) returns (hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse);
      */
     deleteHyperliquidWalletDeploySessionTarget(input: DeleteHyperliquidWalletDeploySessionTargetRequest, options?: RpcOptions): UnaryCall<DeleteHyperliquidWalletDeploySessionTargetRequest, DeleteHyperliquidWalletDeploySessionTargetResponse> {
-        const method = this.methods[22], opt = this._transport.mergeOptions(options);
+        const method = this.methods[30], opt = this._transport.mergeOptions(options);
         return stackIntercept<DeleteHyperliquidWalletDeploySessionTargetRequest, DeleteHyperliquidWalletDeploySessionTargetResponse>("unary", this._transport, method, opt, input);
     }
 }
