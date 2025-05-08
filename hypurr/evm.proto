@@ -131,9 +131,9 @@ message HpumpV1LaunchToken {
   int64 graduated_at = 9;      // Timestamp when graduated
   HpumpV1LaunchPair pair = 10; // Embedded pair information
   string description = 11;
-  int64 telegram_id = 12;
+  int64 dev_telegram_id = 12;
   // Dev telegram user
-  TelegramUserPublic telegram_user = 13;
+  TelegramUserPublic dev_telegram_user = 13;
 }
 
 // HPump Launch Pair messages

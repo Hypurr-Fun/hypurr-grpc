@@ -425,15 +425,15 @@ export interface HpumpV1LaunchToken {
      */
     description: string;
     /**
-     * @generated from protobuf field: int64 telegram_id = 12;
+     * @generated from protobuf field: int64 dev_telegram_id = 12;
      */
-    telegramId: number;
+    devTelegramId: number;
     /**
      * Dev telegram user
      *
-     * @generated from protobuf field: hypurr.TelegramUserPublic telegram_user = 13;
+     * @generated from protobuf field: hypurr.TelegramUserPublic dev_telegram_user = 13;
      */
-    telegramUser?: TelegramUserPublic;
+    devTelegramUser?: TelegramUserPublic;
 }
 /**
  * HPump Launch Pair messages
@@ -1439,12 +1439,12 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
             { no: 9, name: "graduated_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 10, name: "pair", kind: "message", T: () => HpumpV1LaunchPair },
             { no: 11, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 12, name: "telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 13, name: "telegram_user", kind: "message", T: () => TelegramUserPublic }
+            { no: 12, name: "dev_telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 13, name: "dev_telegram_user", kind: "message", T: () => TelegramUserPublic }
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchToken>): HpumpV1LaunchToken {
-        const message = { address: "", symbol: "", name: "", devAddress: "", pairAddress: "", createdAt: 0, launchId: "", graduated: false, graduatedAt: 0, description: "", telegramId: 0 };
+        const message = { address: "", symbol: "", name: "", devAddress: "", pairAddress: "", createdAt: 0, launchId: "", graduated: false, graduatedAt: 0, description: "", devTelegramId: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchToken>(this, message, value);
@@ -1488,11 +1488,11 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
                 case /* string description */ 11:
                     message.description = reader.string();
                     break;
-                case /* int64 telegram_id */ 12:
-                    message.telegramId = reader.int64().toNumber();
+                case /* int64 dev_telegram_id */ 12:
+                    message.devTelegramId = reader.int64().toNumber();
                     break;
-                case /* hypurr.TelegramUserPublic telegram_user */ 13:
-                    message.telegramUser = TelegramUserPublic.internalBinaryRead(reader, reader.uint32(), options, message.telegramUser);
+                case /* hypurr.TelegramUserPublic dev_telegram_user */ 13:
+                    message.devTelegramUser = TelegramUserPublic.internalBinaryRead(reader, reader.uint32(), options, message.devTelegramUser);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1539,12 +1539,12 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
         /* string description = 11; */
         if (message.description !== "")
             writer.tag(11, WireType.LengthDelimited).string(message.description);
-        /* int64 telegram_id = 12; */
-        if (message.telegramId !== 0)
-            writer.tag(12, WireType.Varint).int64(message.telegramId);
-        /* hypurr.TelegramUserPublic telegram_user = 13; */
-        if (message.telegramUser)
-            TelegramUserPublic.internalBinaryWrite(message.telegramUser, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
+        /* int64 dev_telegram_id = 12; */
+        if (message.devTelegramId !== 0)
+            writer.tag(12, WireType.Varint).int64(message.devTelegramId);
+        /* hypurr.TelegramUserPublic dev_telegram_user = 13; */
+        if (message.devTelegramUser)
+            TelegramUserPublic.internalBinaryWrite(message.devTelegramUser, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
