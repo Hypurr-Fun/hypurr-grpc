@@ -13,14 +13,16 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
+from hypurr import common_pb2 as hypurr_dot_common__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/evm.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x10hypurr/evm.proto\x12\x06hypurr\"\xb0\x01\n\nERC20Token\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06symbol\x18\x03 \x01(\t\x12\x10\n\x08\x64\x65\x63imals\x18\x04 \x01(\x05\x12\x14\n\x0ctotal_supply\x18\x05 \x01(\t\x12\x16\n\x0eprice_in_whype\x18\x06 \x01(\x01\x12\x17\n\x0fvolume_in_whype\x18\x07 \x01(\x01\x12\x1a\n\x12last_volume_update\x18\x08 \x01(\x03\"[\n\x13\x45RC20AccountBalance\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x10\n\x08\x63ontract\x18\x02 \x01(\t\x12\x0f\n\x07\x62\x61lance\x18\x03 \x01(\t\x12\x10\n\x08is_owner\x18\x04 \x01(\x08\"\xf5\x01\n\tUniV2Pair\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\"\n\x06token0\x18\x02 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\"\n\x06token1\x18\x03 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\x10\n\x08reserve0\x18\x04 \x01(\t\x12\x10\n\x08reserve1\x18\x05 \x01(\t\x12\x14\n\x0ctotal_supply\x18\x06 \x01(\t\x12\x0f\n\x07\x66\x61\x63tory\x18\x07 \x01(\t\x12\x13\n\x0bvolume0_24h\x18\x08 \x01(\x01\x12\x13\n\x0bvolume1_24h\x18\t \x01(\x01\x12\x1a\n\x12last_volume_update\x18\n \x01(\x03\"v\n\tUniV2Swap\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04pair\x18\x02 \x01(\t\x12\x0e\n\x06sender\x18\x03 \x01(\t\x12\x0f\n\x07\x61mount0\x18\x04 \x01(\t\x12\x0f\n\x07\x61mount1\x18\x05 \x01(\t\x12\n\n\x02to\x18\x06 \x01(\t\x12\x11\n\ttimestamp\x18\x07 \x01(\x03\"o\n\x12\x45RC20TransferEvent\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x63ontract\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\t\x12\x11\n\ttimestamp\x18\x04 \x01(\x03\x12\x0c\n\x04\x66rom\x18\x05 \x01(\t\x12\n\n\x02to\x18\x06 \x01(\t\"u\n\x12\x45RC20ApprovalEvent\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x63ontract\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\t\x12\x11\n\ttimestamp\x18\x04 \x01(\x03\x12\r\n\x05owner\x18\x05 \x01(\t\x12\x0f\n\x07spender\x18\x06 \x01(\t\"@\n\x0e\x45RC20Allowance\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07spender\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\t\"\x84\x01\n\tUniCandle\x12\x11\n\ttimestamp\x18\x01 \x01(\x03\x12\x0c\n\x04open\x18\x02 \x01(\x01\x12\x0c\n\x04high\x18\x03 \x01(\x01\x12\x0b\n\x03low\x18\x04 \x01(\x01\x12\r\n\x05\x63lose\x18\x05 \x01(\x01\x12\x15\n\rvolume_token0\x18\x06 \x01(\t\x12\x15\n\rvolume_token1\x18\x07 \x01(\t\"\x97\x02\n\tUniV3Pool\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0f\n\x07\x66\x61\x63tory\x18\x02 \x01(\t\x12\"\n\x06token0\x18\x03 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\"\n\x06token1\x18\x04 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\x0b\n\x03\x66\x65\x65\x18\x05 \x01(\x05\x12\x14\n\x0ctick_spacing\x18\x06 \x01(\x05\x12\x11\n\tliquidity\x18\x07 \x01(\t\x12\x16\n\x0esqrt_price_x96\x18\x08 \x01(\t\x12\x0c\n\x04tick\x18\t \x01(\x05\x12\x13\n\x0bvolume0_24h\x18\n \x01(\x01\x12\x13\n\x0bvolume1_24h\x18\x0b \x01(\x01\x12\x1a\n\x12last_volume_update\x18\x0c \x01(\x03\"\xb6\x01\n\tUniV3Swap\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04pool\x18\x02 \x01(\t\x12\x0e\n\x06sender\x18\x03 \x01(\t\x12\x11\n\trecipient\x18\x04 \x01(\t\x12\x0f\n\x07\x61mount0\x18\x05 \x01(\t\x12\x0f\n\x07\x61mount1\x18\x06 \x01(\t\x12\x16\n\x0esqrt_price_x96\x18\x07 \x01(\t\x12\x11\n\tliquidity\x18\x08 \x01(\t\x12\x0c\n\x04tick\x18\t \x01(\x05\x12\x11\n\ttimestamp\x18\n \x01(\x03\"\xfc\x01\n\x12HpumpV1LaunchToken\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0e\n\x06symbol\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x13\n\x0b\x64\x65v_address\x18\x04 \x01(\t\x12\x14\n\x0cpair_address\x18\x05 \x01(\t\x12\x12\n\ncreated_at\x18\x06 \x01(\x03\x12\x11\n\tlaunch_id\x18\x07 \x01(\t\x12\x11\n\tgraduated\x18\x08 \x01(\x08\x12\x14\n\x0cgraduated_at\x18\t \x01(\x03\x12\'\n\x04pair\x18\n \x01(\x0b\x32\x19.hypurr.HpumpV1LaunchPair\x12\x13\n\x0b\x64\x65scription\x18\x0b \x01(\t\"\xc1\x01\n\x11HpumpV1LaunchPair\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\x12\x14\n\x0c\x62\x61se_reserve\x18\x03 \x01(\t\x12\x15\n\rquote_reserve\x18\x04 \x01(\t\x12\x1b\n\x13last_sync_timestamp\x18\x05 \x01(\x03\x12\x14\n\x0cgraduated_to\x18\x06 \x01(\t\x12,\n\x05swaps\x18\x07 \x03(\x0b\x32\x1d.hypurr.HpumpV1LaunchPairSwap\"\xb9\x01\n\x15HpumpV1LaunchPairSwap\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04pair\x18\x02 \x01(\t\x12\x0e\n\x06sender\x18\x03 \x01(\t\x12\x0e\n\x06origin\x18\x04 \x01(\t\x12\n\n\x02to\x18\x05 \x01(\t\x12\x17\n\x0fnet_base_amount\x18\x06 \x01(\t\x12\x18\n\x10net_quote_amount\x18\x07 \x01(\t\x12\x14\n\x0c\x62lock_number\x18\x08 \x01(\x05\x12\x11\n\ttimestamp\x18\t \x01(\x03\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
-)
+  serialized_pb=_b('\n\x10hypurr/evm.proto\x12\x06hypurr\x1a\x13hypurr/common.proto\"\xb0\x01\n\nERC20Token\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06symbol\x18\x03 \x01(\t\x12\x10\n\x08\x64\x65\x63imals\x18\x04 \x01(\x05\x12\x14\n\x0ctotal_supply\x18\x05 \x01(\t\x12\x16\n\x0eprice_in_whype\x18\x06 \x01(\x01\x12\x17\n\x0fvolume_in_whype\x18\x07 \x01(\x01\x12\x1a\n\x12last_volume_update\x18\x08 \x01(\x03\"[\n\x13\x45RC20AccountBalance\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x10\n\x08\x63ontract\x18\x02 \x01(\t\x12\x0f\n\x07\x62\x61lance\x18\x03 \x01(\t\x12\x10\n\x08is_owner\x18\x04 \x01(\x08\"\xf5\x01\n\tUniV2Pair\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\"\n\x06token0\x18\x02 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\"\n\x06token1\x18\x03 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\x10\n\x08reserve0\x18\x04 \x01(\t\x12\x10\n\x08reserve1\x18\x05 \x01(\t\x12\x14\n\x0ctotal_supply\x18\x06 \x01(\t\x12\x0f\n\x07\x66\x61\x63tory\x18\x07 \x01(\t\x12\x13\n\x0bvolume0_24h\x18\x08 \x01(\x01\x12\x13\n\x0bvolume1_24h\x18\t \x01(\x01\x12\x1a\n\x12last_volume_update\x18\n \x01(\x03\"v\n\tUniV2Swap\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04pair\x18\x02 \x01(\t\x12\x0e\n\x06sender\x18\x03 \x01(\t\x12\x0f\n\x07\x61mount0\x18\x04 \x01(\t\x12\x0f\n\x07\x61mount1\x18\x05 \x01(\t\x12\n\n\x02to\x18\x06 \x01(\t\x12\x11\n\ttimestamp\x18\x07 \x01(\x03\"o\n\x12\x45RC20TransferEvent\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x63ontract\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\t\x12\x11\n\ttimestamp\x18\x04 \x01(\x03\x12\x0c\n\x04\x66rom\x18\x05 \x01(\t\x12\n\n\x02to\x18\x06 \x01(\t\"u\n\x12\x45RC20ApprovalEvent\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x63ontract\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\t\x12\x11\n\ttimestamp\x18\x04 \x01(\x03\x12\r\n\x05owner\x18\x05 \x01(\t\x12\x0f\n\x07spender\x18\x06 \x01(\t\"@\n\x0e\x45RC20Allowance\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07spender\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\t\"\x84\x01\n\tUniCandle\x12\x11\n\ttimestamp\x18\x01 \x01(\x03\x12\x0c\n\x04open\x18\x02 \x01(\x01\x12\x0c\n\x04high\x18\x03 \x01(\x01\x12\x0b\n\x03low\x18\x04 \x01(\x01\x12\r\n\x05\x63lose\x18\x05 \x01(\x01\x12\x15\n\rvolume_token0\x18\x06 \x01(\t\x12\x15\n\rvolume_token1\x18\x07 \x01(\t\"\x97\x02\n\tUniV3Pool\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0f\n\x07\x66\x61\x63tory\x18\x02 \x01(\t\x12\"\n\x06token0\x18\x03 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\"\n\x06token1\x18\x04 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\x0b\n\x03\x66\x65\x65\x18\x05 \x01(\x05\x12\x14\n\x0ctick_spacing\x18\x06 \x01(\x05\x12\x11\n\tliquidity\x18\x07 \x01(\t\x12\x16\n\x0esqrt_price_x96\x18\x08 \x01(\t\x12\x0c\n\x04tick\x18\t \x01(\x05\x12\x13\n\x0bvolume0_24h\x18\n \x01(\x01\x12\x13\n\x0bvolume1_24h\x18\x0b \x01(\x01\x12\x1a\n\x12last_volume_update\x18\x0c \x01(\x03\"\xb6\x01\n\tUniV3Swap\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04pool\x18\x02 \x01(\t\x12\x0e\n\x06sender\x18\x03 \x01(\t\x12\x11\n\trecipient\x18\x04 \x01(\t\x12\x0f\n\x07\x61mount0\x18\x05 \x01(\t\x12\x0f\n\x07\x61mount1\x18\x06 \x01(\t\x12\x16\n\x0esqrt_price_x96\x18\x07 \x01(\t\x12\x11\n\tliquidity\x18\x08 \x01(\t\x12\x0c\n\x04tick\x18\t \x01(\x05\x12\x11\n\ttimestamp\x18\n \x01(\x03\"\xc4\x02\n\x12HpumpV1LaunchToken\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0e\n\x06symbol\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x13\n\x0b\x64\x65v_address\x18\x04 \x01(\t\x12\x14\n\x0cpair_address\x18\x05 \x01(\t\x12\x12\n\ncreated_at\x18\x06 \x01(\x03\x12\x11\n\tlaunch_id\x18\x07 \x01(\t\x12\x11\n\tgraduated\x18\x08 \x01(\x08\x12\x14\n\x0cgraduated_at\x18\t \x01(\x03\x12\'\n\x04pair\x18\n \x01(\x0b\x32\x19.hypurr.HpumpV1LaunchPair\x12\x13\n\x0b\x64\x65scription\x18\x0b \x01(\t\x12\x13\n\x0btelegram_id\x18\x0c \x01(\x03\x12\x31\n\rtelegram_user\x18\r \x01(\x0b\x32\x1a.hypurr.TelegramUserPublic\"\xc1\x01\n\x11HpumpV1LaunchPair\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\x12\x14\n\x0c\x62\x61se_reserve\x18\x03 \x01(\t\x12\x15\n\rquote_reserve\x18\x04 \x01(\t\x12\x1b\n\x13last_sync_timestamp\x18\x05 \x01(\x03\x12\x14\n\x0cgraduated_to\x18\x06 \x01(\t\x12,\n\x05swaps\x18\x07 \x03(\x0b\x32\x1d.hypurr.HpumpV1LaunchPairSwap\"\xb9\x01\n\x15HpumpV1LaunchPairSwap\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04pair\x18\x02 \x01(\t\x12\x0e\n\x06sender\x18\x03 \x01(\t\x12\x0e\n\x06origin\x18\x04 \x01(\t\x12\n\n\x02to\x18\x05 \x01(\t\x12\x17\n\x0fnet_base_amount\x18\x06 \x01(\t\x12\x18\n\x10net_quote_amount\x18\x07 \x01(\t\x12\x14\n\x0c\x62lock_number\x18\x08 \x01(\x05\x12\x11\n\ttimestamp\x18\t \x01(\x03\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  ,
+  dependencies=[hypurr_dot_common__pb2.DESCRIPTOR,])
 
 
 
@@ -100,8 +102,8 @@ _ERC20TOKEN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=29,
-  serialized_end=205,
+  serialized_start=50,
+  serialized_end=226,
 )
 
 
@@ -152,8 +154,8 @@ _ERC20ACCOUNTBALANCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=207,
-  serialized_end=298,
+  serialized_start=228,
+  serialized_end=319,
 )
 
 
@@ -246,8 +248,8 @@ _UNIV2PAIR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=301,
-  serialized_end=546,
+  serialized_start=322,
+  serialized_end=567,
 )
 
 
@@ -319,8 +321,8 @@ _UNIV2SWAP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=548,
-  serialized_end=666,
+  serialized_start=569,
+  serialized_end=687,
 )
 
 
@@ -385,8 +387,8 @@ _ERC20TRANSFEREVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=668,
-  serialized_end=779,
+  serialized_start=689,
+  serialized_end=800,
 )
 
 
@@ -451,8 +453,8 @@ _ERC20APPROVALEVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=781,
-  serialized_end=898,
+  serialized_start=802,
+  serialized_end=919,
 )
 
 
@@ -496,8 +498,8 @@ _ERC20ALLOWANCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=900,
-  serialized_end=964,
+  serialized_start=921,
+  serialized_end=985,
 )
 
 
@@ -569,8 +571,8 @@ _UNICANDLE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=967,
-  serialized_end=1099,
+  serialized_start=988,
+  serialized_end=1120,
 )
 
 
@@ -677,8 +679,8 @@ _UNIV3POOL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1102,
-  serialized_end=1381,
+  serialized_start=1123,
+  serialized_end=1402,
 )
 
 
@@ -771,8 +773,8 @@ _UNIV3SWAP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1384,
-  serialized_end=1566,
+  serialized_start=1405,
+  serialized_end=1587,
 )
 
 
@@ -860,6 +862,20 @@ _HPUMPV1LAUNCHTOKEN = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='telegram_id', full_name='hypurr.HpumpV1LaunchToken.telegram_id', index=11,
+      number=12, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='telegram_user', full_name='hypurr.HpumpV1LaunchToken.telegram_user', index=12,
+      number=13, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -872,8 +888,8 @@ _HPUMPV1LAUNCHTOKEN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1569,
-  serialized_end=1821,
+  serialized_start=1590,
+  serialized_end=1914,
 )
 
 
@@ -945,8 +961,8 @@ _HPUMPV1LAUNCHPAIR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1824,
-  serialized_end=2017,
+  serialized_start=1917,
+  serialized_end=2110,
 )
 
 
@@ -1032,8 +1048,8 @@ _HPUMPV1LAUNCHPAIRSWAP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2020,
-  serialized_end=2205,
+  serialized_start=2113,
+  serialized_end=2298,
 )
 
 _UNIV2PAIR.fields_by_name['token0'].message_type = _ERC20TOKEN
@@ -1041,6 +1057,7 @@ _UNIV2PAIR.fields_by_name['token1'].message_type = _ERC20TOKEN
 _UNIV3POOL.fields_by_name['token0'].message_type = _ERC20TOKEN
 _UNIV3POOL.fields_by_name['token1'].message_type = _ERC20TOKEN
 _HPUMPV1LAUNCHTOKEN.fields_by_name['pair'].message_type = _HPUMPV1LAUNCHPAIR
+_HPUMPV1LAUNCHTOKEN.fields_by_name['telegram_user'].message_type = hypurr_dot_common__pb2._TELEGRAMUSERPUBLIC
 _HPUMPV1LAUNCHPAIR.fields_by_name['swaps'].message_type = _HPUMPV1LAUNCHPAIRSWAP
 DESCRIPTOR.message_types_by_name['ERC20Token'] = _ERC20TOKEN
 DESCRIPTOR.message_types_by_name['ERC20AccountBalance'] = _ERC20ACCOUNTBALANCE

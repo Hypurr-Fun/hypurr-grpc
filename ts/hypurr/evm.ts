@@ -11,6 +11,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { TelegramUserPublic } from "./common";
 /**
  * ERC20 Token messages
  *
@@ -423,6 +424,16 @@ export interface HpumpV1LaunchToken {
      * @generated from protobuf field: string description = 11;
      */
     description: string;
+    /**
+     * @generated from protobuf field: int64 telegram_id = 12;
+     */
+    telegramId: number;
+    /**
+     * Dev telegram user
+     *
+     * @generated from protobuf field: hypurr.TelegramUserPublic telegram_user = 13;
+     */
+    telegramUser?: TelegramUserPublic;
 }
 /**
  * HPump Launch Pair messages
@@ -1427,11 +1438,13 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
             { no: 8, name: "graduated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 9, name: "graduated_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 10, name: "pair", kind: "message", T: () => HpumpV1LaunchPair },
-            { no: 11, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 11, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 12, name: "telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 13, name: "telegram_user", kind: "message", T: () => TelegramUserPublic }
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchToken>): HpumpV1LaunchToken {
-        const message = { address: "", symbol: "", name: "", devAddress: "", pairAddress: "", createdAt: 0, launchId: "", graduated: false, graduatedAt: 0, description: "" };
+        const message = { address: "", symbol: "", name: "", devAddress: "", pairAddress: "", createdAt: 0, launchId: "", graduated: false, graduatedAt: 0, description: "", telegramId: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchToken>(this, message, value);
@@ -1474,6 +1487,12 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
                     break;
                 case /* string description */ 11:
                     message.description = reader.string();
+                    break;
+                case /* int64 telegram_id */ 12:
+                    message.telegramId = reader.int64().toNumber();
+                    break;
+                case /* hypurr.TelegramUserPublic telegram_user */ 13:
+                    message.telegramUser = TelegramUserPublic.internalBinaryRead(reader, reader.uint32(), options, message.telegramUser);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1520,6 +1539,12 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
         /* string description = 11; */
         if (message.description !== "")
             writer.tag(11, WireType.LengthDelimited).string(message.description);
+        /* int64 telegram_id = 12; */
+        if (message.telegramId !== 0)
+            writer.tag(12, WireType.Varint).int64(message.telegramId);
+        /* hypurr.TelegramUserPublic telegram_user = 13; */
+        if (message.telegramUser)
+            TelegramUserPublic.internalBinaryWrite(message.telegramUser, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

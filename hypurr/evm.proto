@@ -3,6 +3,7 @@ syntax = "proto3";
 package hypurr;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
+import "hypurr/common.proto";
 
 // ERC20 Token messages
 message ERC20Token {
@@ -130,7 +131,9 @@ message HpumpV1LaunchToken {
   int64 graduated_at = 9;      // Timestamp when graduated
   HpumpV1LaunchPair pair = 10; // Embedded pair information
   string description = 11;
-
+  int64 telegram_id = 12;
+  // Dev telegram user
+  TelegramUserPublic telegram_user = 13;
 }
 
 // HPump Launch Pair messages
