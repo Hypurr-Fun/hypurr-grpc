@@ -272,6 +272,19 @@ export interface UniCandlesRequest {
     interval: string; // e.g. "5m", "1h", "1d"
 }
 /**
+ * @generated from protobuf message hypurr.UniCandlesStreamRequest
+ */
+export interface UniCandlesStreamRequest {
+    /**
+     * @generated from protobuf field: string pair_address = 1;
+     */
+    pairAddress: string;
+    /**
+     * @generated from protobuf field: string interval = 2;
+     */
+    interval: string; // e.g. "5m", "1h", "1d"
+}
+/**
  * @generated from protobuf message hypurr.UniCandlesResponse
  */
 export interface UniCandlesResponse {
@@ -1368,6 +1381,60 @@ class UniCandlesRequest$Type extends MessageType<UniCandlesRequest> {
  */
 export const UniCandlesRequest = new UniCandlesRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class UniCandlesStreamRequest$Type extends MessageType<UniCandlesStreamRequest> {
+    constructor() {
+        super("hypurr.UniCandlesStreamRequest", [
+            { no: 1, name: "pair_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "interval", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<UniCandlesStreamRequest>): UniCandlesStreamRequest {
+        const message = { pairAddress: "", interval: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UniCandlesStreamRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniCandlesStreamRequest): UniCandlesStreamRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string pair_address */ 1:
+                    message.pairAddress = reader.string();
+                    break;
+                case /* string interval */ 2:
+                    message.interval = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UniCandlesStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string pair_address = 1; */
+        if (message.pairAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.pairAddress);
+        /* string interval = 2; */
+        if (message.interval !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.interval);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UniCandlesStreamRequest
+ */
+export const UniCandlesStreamRequest = new UniCandlesStreamRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class UniCandlesResponse$Type extends MessageType<UniCandlesResponse> {
     constructor() {
         super("hypurr.UniCandlesResponse", [
@@ -1949,6 +2016,7 @@ export const EVM = new ServiceType("hypurr.EVM", [
     { name: "ERC20TransferEvents", options: {}, I: ERC20TransferEventsRequest, O: ERC20TransferEventsResponse },
     { name: "ERC20ApprovalEvents", options: {}, I: ERC20ApprovalEventsRequest, O: ERC20ApprovalEventsResponse },
     { name: "UniCandles", options: {}, I: UniCandlesRequest, O: UniCandlesResponse },
+    { name: "UniCandlesStream", serverStreaming: true, options: {}, I: UniCandlesStreamRequest, O: UniCandlesResponse },
     { name: "UniV2SwapStream", serverStreaming: true, options: {}, I: UniV2SwapStreamRequest, O: UniV2SwapStreamResponse },
     { name: "UniV3SwapStream", serverStreaming: true, options: {}, I: UniV3SwapStreamRequest, O: UniV3SwapStreamResponse }
 ]);

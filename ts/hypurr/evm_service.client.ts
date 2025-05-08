@@ -8,6 +8,7 @@ import type { UniV3SwapStreamResponse } from "./evm_service";
 import type { UniV3SwapStreamRequest } from "./evm_service";
 import type { UniV2SwapStreamResponse } from "./evm_service";
 import type { UniV2SwapStreamRequest } from "./evm_service";
+import type { UniCandlesStreamRequest } from "./evm_service";
 import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { UniCandlesResponse } from "./evm_service";
 import type { UniCandlesRequest } from "./evm_service";
@@ -98,6 +99,10 @@ export interface IEVMClient {
      * @generated from protobuf rpc: UniCandles(hypurr.UniCandlesRequest) returns (hypurr.UniCandlesResponse);
      */
     uniCandles(input: UniCandlesRequest, options?: RpcOptions): UnaryCall<UniCandlesRequest, UniCandlesResponse>;
+    /**
+     * @generated from protobuf rpc: UniCandlesStream(hypurr.UniCandlesStreamRequest) returns (stream hypurr.UniCandlesResponse);
+     */
+    uniCandlesStream(input: UniCandlesStreamRequest, options?: RpcOptions): ServerStreamingCall<UniCandlesStreamRequest, UniCandlesResponse>;
     /**
      * Streaming endpoints
      *
@@ -213,19 +218,26 @@ export class EVMClient implements IEVMClient, ServiceInfo {
         return stackIntercept<UniCandlesRequest, UniCandlesResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: UniCandlesStream(hypurr.UniCandlesStreamRequest) returns (stream hypurr.UniCandlesResponse);
+     */
+    uniCandlesStream(input: UniCandlesStreamRequest, options?: RpcOptions): ServerStreamingCall<UniCandlesStreamRequest, UniCandlesResponse> {
+        const method = this.methods[12], opt = this._transport.mergeOptions(options);
+        return stackIntercept<UniCandlesStreamRequest, UniCandlesResponse>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
      * Streaming endpoints
      *
      * @generated from protobuf rpc: UniV2SwapStream(hypurr.UniV2SwapStreamRequest) returns (stream hypurr.UniV2SwapStreamResponse);
      */
     uniV2SwapStream(input: UniV2SwapStreamRequest, options?: RpcOptions): ServerStreamingCall<UniV2SwapStreamRequest, UniV2SwapStreamResponse> {
-        const method = this.methods[12], opt = this._transport.mergeOptions(options);
+        const method = this.methods[13], opt = this._transport.mergeOptions(options);
         return stackIntercept<UniV2SwapStreamRequest, UniV2SwapStreamResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: UniV3SwapStream(hypurr.UniV3SwapStreamRequest) returns (stream hypurr.UniV3SwapStreamResponse);
      */
     uniV3SwapStream(input: UniV3SwapStreamRequest, options?: RpcOptions): ServerStreamingCall<UniV3SwapStreamRequest, UniV3SwapStreamResponse> {
-        const method = this.methods[13], opt = this._transport.mergeOptions(options);
+        const method = this.methods[14], opt = this._transport.mergeOptions(options);
         return stackIntercept<UniV3SwapStreamRequest, UniV3SwapStreamResponse>("serverStreaming", this._transport, method, opt, input);
     }
 }

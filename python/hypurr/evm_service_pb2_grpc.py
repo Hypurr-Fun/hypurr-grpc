@@ -74,6 +74,11 @@ class EVMStub(object):
         request_serializer=hypurr_dot_evm__service__pb2.UniCandlesRequest.SerializeToString,
         response_deserializer=hypurr_dot_evm__service__pb2.UniCandlesResponse.FromString,
         )
+    self.UniCandlesStream = channel.unary_stream(
+        '/hypurr.EVM/UniCandlesStream',
+        request_serializer=hypurr_dot_evm__service__pb2.UniCandlesStreamRequest.SerializeToString,
+        response_deserializer=hypurr_dot_evm__service__pb2.UniCandlesResponse.FromString,
+        )
     self.UniV2SwapStream = channel.unary_stream(
         '/hypurr.EVM/UniV2SwapStream',
         request_serializer=hypurr_dot_evm__service__pb2.UniV2SwapStreamRequest.SerializeToString,
@@ -174,6 +179,13 @@ class EVMServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def UniCandlesStream(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def UniV2SwapStream(self, request, context):
     """Streaming endpoints
     """
@@ -249,6 +261,11 @@ def add_EVMServicer_to_server(servicer, server):
       'UniCandles': grpc.unary_unary_rpc_method_handler(
           servicer.UniCandles,
           request_deserializer=hypurr_dot_evm__service__pb2.UniCandlesRequest.FromString,
+          response_serializer=hypurr_dot_evm__service__pb2.UniCandlesResponse.SerializeToString,
+      ),
+      'UniCandlesStream': grpc.unary_stream_rpc_method_handler(
+          servicer.UniCandlesStream,
+          request_deserializer=hypurr_dot_evm__service__pb2.UniCandlesStreamRequest.FromString,
           response_serializer=hypurr_dot_evm__service__pb2.UniCandlesResponse.SerializeToString,
       ),
       'UniV2SwapStream': grpc.unary_stream_rpc_method_handler(

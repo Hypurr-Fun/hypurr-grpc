@@ -99,6 +99,11 @@ message UniCandlesRequest {
   string interval = 4;  // e.g. "5m", "1h", "1d"
 }
 
+message UniCandlesStreamRequest {
+  string pair_address = 1;
+  string interval = 2;  // e.g. "5m", "1h", "1d"
+}
+
 message UniCandlesResponse {
   repeated UniCandle candles = 1;
 }
@@ -173,6 +178,7 @@ service EVM {
   
   // Price candle related endpoints
   rpc UniCandles(UniCandlesRequest) returns (UniCandlesResponse) {}
+  rpc UniCandlesStream(UniCandlesStreamRequest) returns (stream UniCandlesResponse) {}
 
   // Streaming endpoints
   rpc UniV2SwapStream(UniV2SwapStreamRequest) returns (stream UniV2SwapStreamResponse) {}
