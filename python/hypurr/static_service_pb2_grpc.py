@@ -144,10 +144,10 @@ class StaticStub(object):
         request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapStreamRequest.SerializeToString,
         response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapStreamResponse.FromString,
         )
-    self.HpumpV1CandleStream = channel.unary_stream(
-        '/hypurr.Static/HpumpV1CandleStream',
-        request_serializer=hypurr_dot_static__service__pb2.HpumpV1CandlesRequest.SerializeToString,
-        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1CandlesResponse.FromString,
+    self.HpumpV1LaunchCandleStream = channel.unary_stream(
+        '/hypurr.Static/HpumpV1LaunchCandleStream',
+        request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchCandlesRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchCandlesResponse.FromString,
         )
     self.HypurrFunCabals = channel.unary_unary(
         '/hypurr.Static/HypurrFunCabals',
@@ -357,7 +357,7 @@ class StaticServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def HpumpV1CandleStream(self, request, context):
+  def HpumpV1LaunchCandleStream(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -525,10 +525,10 @@ def add_StaticServicer_to_server(servicer, server):
           request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapStreamRequest.FromString,
           response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchPairSwapStreamResponse.SerializeToString,
       ),
-      'HpumpV1CandleStream': grpc.unary_stream_rpc_method_handler(
-          servicer.HpumpV1CandleStream,
-          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1CandlesRequest.FromString,
-          response_serializer=hypurr_dot_static__service__pb2.HpumpV1CandlesResponse.SerializeToString,
+      'HpumpV1LaunchCandleStream': grpc.unary_stream_rpc_method_handler(
+          servicer.HpumpV1LaunchCandleStream,
+          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchCandlesRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchCandlesResponse.SerializeToString,
       ),
       'HypurrFunCabals': grpc.unary_unary_rpc_method_handler(
           servicer.HypurrFunCabals,

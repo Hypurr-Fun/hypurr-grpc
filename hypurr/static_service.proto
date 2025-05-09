@@ -244,14 +244,14 @@ message HpumpV1LaunchPairSwapStreamResponse {
   repeated HpumpV1LaunchPairSwap swaps = 1;
 }
 
-message HpumpV1CandlesRequest {
+message HpumpV1LaunchCandlesRequest {
   string pair_address = 1;
   int64 from_timestamp = 2;
   int64 to_timestamp = 3;
   string interval = 4;  // e.g. "5m", "1h", "1d"
 }
 
-message HpumpV1CandlesResponse {
+message HpumpV1LaunchCandlesResponse {
   repeated PriceCandle candles = 1;
 }
 
@@ -321,7 +321,7 @@ service Static {
   rpc HpumpV1LaunchPairSwap(HpumpV1LaunchPairSwapRequest) returns (HpumpV1LaunchPairSwapResponse) {}
   rpc HpumpV1LaunchPairSwaps(HpumpV1LaunchPairSwapsRequest) returns (HpumpV1LaunchPairSwapsResponse) {}
   rpc HpumpV1LaunchPairSwapStream(HpumpV1LaunchPairSwapStreamRequest) returns (stream HpumpV1LaunchPairSwapStreamResponse) {}
-  rpc HpumpV1CandleStream(HpumpV1CandlesRequest) returns (stream HpumpV1CandlesResponse) {}
+  rpc HpumpV1LaunchCandleStream(HpumpV1LaunchCandlesRequest) returns (stream HpumpV1LaunchCandlesResponse) {}
 
   rpc HypurrFunCabals (HypurrFunCabalsRequest) returns (HypurrFunCabalsResponse) {}
 
