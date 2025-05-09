@@ -180,9 +180,9 @@ export interface IStaticClient {
      */
     hpumpV1LaunchPairSwapStream(input: HpumpV1LaunchPairSwapStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchPairSwapStreamRequest, HpumpV1LaunchPairSwapStreamResponse>;
     /**
-     * @generated from protobuf rpc: HpumpV1(hypurr.HpumpV1CandlesRequest) returns (hypurr.HpumpV1CandlesResponse);
+     * @generated from protobuf rpc: HpumpV1CandleStream(hypurr.HpumpV1CandlesRequest) returns (stream hypurr.HpumpV1CandlesResponse);
      */
-    hpumpV1(input: HpumpV1CandlesRequest, options?: RpcOptions): UnaryCall<HpumpV1CandlesRequest, HpumpV1CandlesResponse>;
+    hpumpV1CandleStream(input: HpumpV1CandlesRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1CandlesRequest, HpumpV1CandlesResponse>;
     /**
      * @generated from protobuf rpc: HypurrFunCabals(hypurr.HypurrFunCabalsRequest) returns (hypurr.HypurrFunCabalsResponse);
      */
@@ -396,11 +396,11 @@ export class StaticClient implements IStaticClient, ServiceInfo {
         return stackIntercept<HpumpV1LaunchPairSwapStreamRequest, HpumpV1LaunchPairSwapStreamResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: HpumpV1(hypurr.HpumpV1CandlesRequest) returns (hypurr.HpumpV1CandlesResponse);
+     * @generated from protobuf rpc: HpumpV1CandleStream(hypurr.HpumpV1CandlesRequest) returns (stream hypurr.HpumpV1CandlesResponse);
      */
-    hpumpV1(input: HpumpV1CandlesRequest, options?: RpcOptions): UnaryCall<HpumpV1CandlesRequest, HpumpV1CandlesResponse> {
+    hpumpV1CandleStream(input: HpumpV1CandlesRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1CandlesRequest, HpumpV1CandlesResponse> {
         const method = this.methods[26], opt = this._transport.mergeOptions(options);
-        return stackIntercept<HpumpV1CandlesRequest, HpumpV1CandlesResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<HpumpV1CandlesRequest, HpumpV1CandlesResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HypurrFunCabals(hypurr.HypurrFunCabalsRequest) returns (hypurr.HypurrFunCabalsResponse);

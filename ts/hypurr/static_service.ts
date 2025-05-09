@@ -3601,7 +3601,7 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "HpumpV1LaunchPairSwap", options: {}, I: HpumpV1LaunchPairSwapRequest, O: HpumpV1LaunchPairSwapResponse },
     { name: "HpumpV1LaunchPairSwaps", options: {}, I: HpumpV1LaunchPairSwapsRequest, O: HpumpV1LaunchPairSwapsResponse },
     { name: "HpumpV1LaunchPairSwapStream", serverStreaming: true, options: {}, I: HpumpV1LaunchPairSwapStreamRequest, O: HpumpV1LaunchPairSwapStreamResponse },
-    { name: "HpumpV1", options: {}, I: HpumpV1CandlesRequest, O: HpumpV1CandlesResponse },
+    { name: "HpumpV1CandleStream", serverStreaming: true, options: {}, I: HpumpV1CandlesRequest, O: HpumpV1CandlesResponse },
     { name: "HypurrFunCabals", options: {}, I: HypurrFunCabalsRequest, O: HypurrFunCabalsResponse },
     { name: "HypurrFunCabalPerformance", options: {}, I: HypurrFunCabalPerformanceRequest, O: HypurrFunCabalPerformanceResponse },
     { name: "SetHyperliquidWalletDeploySessionTarget", options: {}, I: SetHyperliquidWalletDeploySessionTargetRequest, O: SetHyperliquidWalletDeploySessionTargetResponse },

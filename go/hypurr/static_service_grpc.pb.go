@@ -45,7 +45,7 @@ const (
 	Static_HpumpV1LaunchPairSwap_FullMethodName                      = "/hypurr.Static/HpumpV1LaunchPairSwap"
 	Static_HpumpV1LaunchPairSwaps_FullMethodName                     = "/hypurr.Static/HpumpV1LaunchPairSwaps"
 	Static_HpumpV1LaunchPairSwapStream_FullMethodName                = "/hypurr.Static/HpumpV1LaunchPairSwapStream"
-	Static_HpumpV1_FullMethodName                                    = "/hypurr.Static/HpumpV1"
+	Static_HpumpV1CandleStream_FullMethodName                        = "/hypurr.Static/HpumpV1CandleStream"
 	Static_HypurrFunCabals_FullMethodName                            = "/hypurr.Static/HypurrFunCabals"
 	Static_HypurrFunCabalPerformance_FullMethodName                  = "/hypurr.Static/HypurrFunCabalPerformance"
 	Static_SetHyperliquidWalletDeploySessionTarget_FullMethodName    = "/hypurr.Static/SetHyperliquidWalletDeploySessionTarget"
@@ -84,7 +84,7 @@ type StaticClient interface {
 	HpumpV1LaunchPairSwap(ctx context.Context, in *HpumpV1LaunchPairSwapRequest, opts ...grpc.CallOption) (*HpumpV1LaunchPairSwapResponse, error)
 	HpumpV1LaunchPairSwaps(ctx context.Context, in *HpumpV1LaunchPairSwapsRequest, opts ...grpc.CallOption) (*HpumpV1LaunchPairSwapsResponse, error)
 	HpumpV1LaunchPairSwapStream(ctx context.Context, in *HpumpV1LaunchPairSwapStreamRequest, opts ...grpc.CallOption) (Static_HpumpV1LaunchPairSwapStreamClient, error)
-	HpumpV1(ctx context.Context, in *HpumpV1CandlesRequest, opts ...grpc.CallOption) (*HpumpV1CandlesResponse, error)
+	HpumpV1CandleStream(ctx context.Context, in *HpumpV1CandlesRequest, opts ...grpc.CallOption) (Static_HpumpV1CandleStreamClient, error)
 	HypurrFunCabals(ctx context.Context, in *HypurrFunCabalsRequest, opts ...grpc.CallOption) (*HypurrFunCabalsResponse, error)
 	HypurrFunCabalPerformance(ctx context.Context, in *HypurrFunCabalPerformanceRequest, opts ...grpc.CallOption) (*HypurrFunCabalPerformanceResponse, error)
 	SetHyperliquidWalletDeploySessionTarget(ctx context.Context, in *SetHyperliquidWalletDeploySessionTargetRequest, opts ...grpc.CallOption) (*SetHyperliquidWalletDeploySessionTargetResponse, error)
@@ -520,14 +520,37 @@ func (x *staticHpumpV1LaunchPairSwapStreamClient) Recv() (*HpumpV1LaunchPairSwap
 	return m, nil
 }
 
-func (c *staticClient) HpumpV1(ctx context.Context, in *HpumpV1CandlesRequest, opts ...grpc.CallOption) (*HpumpV1CandlesResponse, error) {
+func (c *staticClient) HpumpV1CandleStream(ctx context.Context, in *HpumpV1CandlesRequest, opts ...grpc.CallOption) (Static_HpumpV1CandleStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HpumpV1CandlesResponse)
-	err := c.cc.Invoke(ctx, Static_HpumpV1_FullMethodName, in, out, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &Static_ServiceDesc.Streams[7], Static_HpumpV1CandleStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &staticHpumpV1CandleStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Static_HpumpV1CandleStreamClient interface {
+	Recv() (*HpumpV1CandlesResponse, error)
+	grpc.ClientStream
+}
+
+type staticHpumpV1CandleStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *staticHpumpV1CandleStreamClient) Recv() (*HpumpV1CandlesResponse, error) {
+	m := new(HpumpV1CandlesResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *staticClient) HypurrFunCabals(ctx context.Context, in *HypurrFunCabalsRequest, opts ...grpc.CallOption) (*HypurrFunCabalsResponse, error) {
@@ -602,7 +625,7 @@ type StaticServer interface {
 	HpumpV1LaunchPairSwap(context.Context, *HpumpV1LaunchPairSwapRequest) (*HpumpV1LaunchPairSwapResponse, error)
 	HpumpV1LaunchPairSwaps(context.Context, *HpumpV1LaunchPairSwapsRequest) (*HpumpV1LaunchPairSwapsResponse, error)
 	HpumpV1LaunchPairSwapStream(*HpumpV1LaunchPairSwapStreamRequest, Static_HpumpV1LaunchPairSwapStreamServer) error
-	HpumpV1(context.Context, *HpumpV1CandlesRequest) (*HpumpV1CandlesResponse, error)
+	HpumpV1CandleStream(*HpumpV1CandlesRequest, Static_HpumpV1CandleStreamServer) error
 	HypurrFunCabals(context.Context, *HypurrFunCabalsRequest) (*HypurrFunCabalsResponse, error)
 	HypurrFunCabalPerformance(context.Context, *HypurrFunCabalPerformanceRequest) (*HypurrFunCabalPerformanceResponse, error)
 	SetHyperliquidWalletDeploySessionTarget(context.Context, *SetHyperliquidWalletDeploySessionTargetRequest) (*SetHyperliquidWalletDeploySessionTargetResponse, error)
@@ -692,8 +715,8 @@ func (UnimplementedStaticServer) HpumpV1LaunchPairSwaps(context.Context, *HpumpV
 func (UnimplementedStaticServer) HpumpV1LaunchPairSwapStream(*HpumpV1LaunchPairSwapStreamRequest, Static_HpumpV1LaunchPairSwapStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method HpumpV1LaunchPairSwapStream not implemented")
 }
-func (UnimplementedStaticServer) HpumpV1(context.Context, *HpumpV1CandlesRequest) (*HpumpV1CandlesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1 not implemented")
+func (UnimplementedStaticServer) HpumpV1CandleStream(*HpumpV1CandlesRequest, Static_HpumpV1CandleStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method HpumpV1CandleStream not implemented")
 }
 func (UnimplementedStaticServer) HypurrFunCabals(context.Context, *HypurrFunCabalsRequest) (*HypurrFunCabalsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HypurrFunCabals not implemented")
@@ -1209,22 +1232,25 @@ func (x *staticHpumpV1LaunchPairSwapStreamServer) Send(m *HpumpV1LaunchPairSwapS
 	return x.ServerStream.SendMsg(m)
 }
 
-func _Static_HpumpV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HpumpV1CandlesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
+func _Static_HpumpV1CandleStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(HpumpV1CandlesRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(StaticServer).HpumpV1(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Static_HpumpV1_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StaticServer).HpumpV1(ctx, req.(*HpumpV1CandlesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return srv.(StaticServer).HpumpV1CandleStream(m, &staticHpumpV1CandleStreamServer{ServerStream: stream})
+}
+
+type Static_HpumpV1CandleStreamServer interface {
+	Send(*HpumpV1CandlesResponse) error
+	grpc.ServerStream
+}
+
+type staticHpumpV1CandleStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *staticHpumpV1CandleStreamServer) Send(m *HpumpV1CandlesResponse) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _Static_HypurrFunCabals_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1383,10 +1409,6 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Static_HpumpV1LaunchPairSwaps_Handler,
 		},
 		{
-			MethodName: "HpumpV1",
-			Handler:    _Static_HpumpV1_Handler,
-		},
-		{
 			MethodName: "HypurrFunCabals",
 			Handler:    _Static_HypurrFunCabals_Handler,
 		},
@@ -1437,6 +1459,11 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "HpumpV1LaunchPairSwapStream",
 			Handler:       _Static_HpumpV1LaunchPairSwapStream_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "HpumpV1CandleStream",
+			Handler:       _Static_HpumpV1CandleStream_Handler,
 			ServerStreams: true,
 		},
 	},

@@ -321,7 +321,7 @@ service Static {
   rpc HpumpV1LaunchPairSwap(HpumpV1LaunchPairSwapRequest) returns (HpumpV1LaunchPairSwapResponse) {}
   rpc HpumpV1LaunchPairSwaps(HpumpV1LaunchPairSwapsRequest) returns (HpumpV1LaunchPairSwapsResponse) {}
   rpc HpumpV1LaunchPairSwapStream(HpumpV1LaunchPairSwapStreamRequest) returns (stream HpumpV1LaunchPairSwapStreamResponse) {}
-  rpc HpumpV1(HpumpV1CandlesRequest) returns (HpumpV1CandlesResponse) {}
+  rpc HpumpV1CandleStream(HpumpV1CandlesRequest) returns (stream HpumpV1CandlesResponse) {}
 
   rpc HypurrFunCabals (HypurrFunCabalsRequest) returns (HypurrFunCabalsResponse) {}
 
