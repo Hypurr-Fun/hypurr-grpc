@@ -242,6 +242,7 @@ message HpumpV1LaunchPairSwapStreamRequest {
 
 message HpumpV1LaunchPairSwapStreamResponse {
   repeated HpumpV1LaunchPairSwap swaps = 1;
+  repeated WalletPosition positions = 2;
 }
 
 message HpumpV1LaunchCandlesRequest {

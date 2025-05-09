@@ -66,6 +66,23 @@ export interface PriceCandle {
     volumeQuote: number;
 }
 /**
+ * @generated from protobuf message hypurr.WalletPosition
+ */
+export interface WalletPosition {
+    /**
+     * @generated from protobuf field: string address = 1;
+     */
+    address: string;
+    /**
+     * @generated from protobuf field: float balance = 2;
+     */
+    balance: number;
+    /**
+     * @generated from protobuf field: float cost = 3;
+     */
+    cost: number;
+}
+/**
  * @generated from protobuf enum hypurr.MediaType
  */
 export enum MediaType {
@@ -239,3 +256,64 @@ class PriceCandle$Type extends MessageType<PriceCandle> {
  * @generated MessageType for protobuf message hypurr.PriceCandle
  */
 export const PriceCandle = new PriceCandle$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletPosition$Type extends MessageType<WalletPosition> {
+    constructor() {
+        super("hypurr.WalletPosition", [
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "balance", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 3, name: "cost", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPosition>): WalletPosition {
+        const message = { address: "", balance: 0, cost: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<WalletPosition>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPosition): WalletPosition {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string address */ 1:
+                    message.address = reader.string();
+                    break;
+                case /* float balance */ 2:
+                    message.balance = reader.float();
+                    break;
+                case /* float cost */ 3:
+                    message.cost = reader.float();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPosition, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string address = 1; */
+        if (message.address !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.address);
+        /* float balance = 2; */
+        if (message.balance !== 0)
+            writer.tag(2, WireType.Bit32).float(message.balance);
+        /* float cost = 3; */
+        if (message.cost !== 0)
+            writer.tag(3, WireType.Bit32).float(message.cost);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.WalletPosition
+ */
+export const WalletPosition = new WalletPosition$Type();

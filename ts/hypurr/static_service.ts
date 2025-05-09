@@ -15,6 +15,7 @@ import { MessageType } from "@protobuf-ts/runtime";
 import { HypurrFunCabalPerformance } from "./cabal";
 import { HypurrFunCabal } from "./cabal";
 import { Performance } from "./wallet";
+import { WalletPosition } from "./common";
 import { Int32Value } from "../google/protobuf/wrappers";
 import { HpumpV1LaunchPairSwap } from "./hpumpv1";
 import { HpumpV1LaunchPair } from "./hpumpv1";
@@ -592,6 +593,10 @@ export interface HpumpV1LaunchPairSwapStreamResponse {
      * @generated from protobuf field: repeated hypurr.HpumpV1LaunchPairSwap swaps = 1;
      */
     swaps: HpumpV1LaunchPairSwap[];
+    /**
+     * @generated from protobuf field: repeated hypurr.WalletPosition positions = 2;
+     */
+    positions: WalletPosition[];
 }
 /**
  * @generated from protobuf message hypurr.HpumpV1LaunchCandlesRequest
@@ -3131,11 +3136,12 @@ export const HpumpV1LaunchPairSwapStreamRequest = new HpumpV1LaunchPairSwapStrea
 class HpumpV1LaunchPairSwapStreamResponse$Type extends MessageType<HpumpV1LaunchPairSwapStreamResponse> {
     constructor() {
         super("hypurr.HpumpV1LaunchPairSwapStreamResponse", [
-            { no: 1, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchPairSwap }
+            { no: 1, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchPairSwap },
+            { no: 2, name: "positions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletPosition }
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchPairSwapStreamResponse>): HpumpV1LaunchPairSwapStreamResponse {
-        const message = { swaps: [] };
+        const message = { swaps: [], positions: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchPairSwapStreamResponse>(this, message, value);
@@ -3148,6 +3154,9 @@ class HpumpV1LaunchPairSwapStreamResponse$Type extends MessageType<HpumpV1Launch
             switch (fieldNo) {
                 case /* repeated hypurr.HpumpV1LaunchPairSwap swaps */ 1:
                     message.swaps.push(HpumpV1LaunchPairSwap.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated hypurr.WalletPosition positions */ 2:
+                    message.positions.push(WalletPosition.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3164,6 +3173,9 @@ class HpumpV1LaunchPairSwapStreamResponse$Type extends MessageType<HpumpV1Launch
         /* repeated hypurr.HpumpV1LaunchPairSwap swaps = 1; */
         for (let i = 0; i < message.swaps.length; i++)
             HpumpV1LaunchPairSwap.internalBinaryWrite(message.swaps[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.WalletPosition positions = 2; */
+        for (let i = 0; i < message.positions.length; i++)
+            WalletPosition.internalBinaryWrite(message.positions[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
