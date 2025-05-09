@@ -56,6 +56,14 @@ export interface PriceCandle {
      * @generated from protobuf field: float close = 5;
      */
     close: number;
+    /**
+     * @generated from protobuf field: float volume_base = 6;
+     */
+    volumeBase: number;
+    /**
+     * @generated from protobuf field: float volume_quote = 7;
+     */
+    volumeQuote: number;
 }
 /**
  * @generated from protobuf enum hypurr.MediaType
@@ -150,11 +158,13 @@ class PriceCandle$Type extends MessageType<PriceCandle> {
             { no: 2, name: "open", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
             { no: 3, name: "high", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
             { no: 4, name: "low", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
-            { no: 5, name: "close", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+            { no: 5, name: "close", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 6, name: "volume_base", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 7, name: "volume_quote", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
         ]);
     }
     create(value?: PartialMessage<PriceCandle>): PriceCandle {
-        const message = { time: 0, open: 0, high: 0, low: 0, close: 0 };
+        const message = { time: 0, open: 0, high: 0, low: 0, close: 0, volumeBase: 0, volumeQuote: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PriceCandle>(this, message, value);
@@ -179,6 +189,12 @@ class PriceCandle$Type extends MessageType<PriceCandle> {
                     break;
                 case /* float close */ 5:
                     message.close = reader.float();
+                    break;
+                case /* float volume_base */ 6:
+                    message.volumeBase = reader.float();
+                    break;
+                case /* float volume_quote */ 7:
+                    message.volumeQuote = reader.float();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -207,6 +223,12 @@ class PriceCandle$Type extends MessageType<PriceCandle> {
         /* float close = 5; */
         if (message.close !== 0)
             writer.tag(5, WireType.Bit32).float(message.close);
+        /* float volume_base = 6; */
+        if (message.volumeBase !== 0)
+            writer.tag(6, WireType.Bit32).float(message.volumeBase);
+        /* float volume_quote = 7; */
+        if (message.volumeQuote !== 0)
+            writer.tag(7, WireType.Bit32).float(message.volumeQuote);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

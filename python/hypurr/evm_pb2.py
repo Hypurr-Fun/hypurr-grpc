@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/evm.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x10hypurr/evm.proto\x12\x06hypurr\x1a\x13hypurr/common.proto\"\xb0\x01\n\nERC20Token\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06symbol\x18\x03 \x01(\t\x12\x10\n\x08\x64\x65\x63imals\x18\x04 \x01(\x05\x12\x14\n\x0ctotal_supply\x18\x05 \x01(\t\x12\x16\n\x0eprice_in_whype\x18\x06 \x01(\x01\x12\x17\n\x0fvolume_in_whype\x18\x07 \x01(\x01\x12\x1a\n\x12last_volume_update\x18\x08 \x01(\x03\"[\n\x13\x45RC20AccountBalance\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x10\n\x08\x63ontract\x18\x02 \x01(\t\x12\x0f\n\x07\x62\x61lance\x18\x03 \x01(\t\x12\x10\n\x08is_owner\x18\x04 \x01(\x08\"\xf5\x01\n\tUniV2Pair\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\"\n\x06token0\x18\x02 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\"\n\x06token1\x18\x03 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\x10\n\x08reserve0\x18\x04 \x01(\t\x12\x10\n\x08reserve1\x18\x05 \x01(\t\x12\x14\n\x0ctotal_supply\x18\x06 \x01(\t\x12\x0f\n\x07\x66\x61\x63tory\x18\x07 \x01(\t\x12\x13\n\x0bvolume0_24h\x18\x08 \x01(\x01\x12\x13\n\x0bvolume1_24h\x18\t \x01(\x01\x12\x1a\n\x12last_volume_update\x18\n \x01(\x03\"v\n\tUniV2Swap\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04pair\x18\x02 \x01(\t\x12\x0e\n\x06sender\x18\x03 \x01(\t\x12\x0f\n\x07\x61mount0\x18\x04 \x01(\t\x12\x0f\n\x07\x61mount1\x18\x05 \x01(\t\x12\n\n\x02to\x18\x06 \x01(\t\x12\x11\n\ttimestamp\x18\x07 \x01(\x03\"o\n\x12\x45RC20TransferEvent\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x63ontract\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\t\x12\x11\n\ttimestamp\x18\x04 \x01(\x03\x12\x0c\n\x04\x66rom\x18\x05 \x01(\t\x12\n\n\x02to\x18\x06 \x01(\t\"u\n\x12\x45RC20ApprovalEvent\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x63ontract\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\t\x12\x11\n\ttimestamp\x18\x04 \x01(\x03\x12\r\n\x05owner\x18\x05 \x01(\t\x12\x0f\n\x07spender\x18\x06 \x01(\t\"@\n\x0e\x45RC20Allowance\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07spender\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\t\"\x84\x01\n\tUniCandle\x12\x11\n\ttimestamp\x18\x01 \x01(\x03\x12\x0c\n\x04open\x18\x02 \x01(\x01\x12\x0c\n\x04high\x18\x03 \x01(\x01\x12\x0b\n\x03low\x18\x04 \x01(\x01\x12\r\n\x05\x63lose\x18\x05 \x01(\x01\x12\x15\n\rvolume_token0\x18\x06 \x01(\t\x12\x15\n\rvolume_token1\x18\x07 \x01(\t\"\x97\x02\n\tUniV3Pool\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0f\n\x07\x66\x61\x63tory\x18\x02 \x01(\t\x12\"\n\x06token0\x18\x03 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\"\n\x06token1\x18\x04 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\x0b\n\x03\x66\x65\x65\x18\x05 \x01(\x05\x12\x14\n\x0ctick_spacing\x18\x06 \x01(\x05\x12\x11\n\tliquidity\x18\x07 \x01(\t\x12\x16\n\x0esqrt_price_x96\x18\x08 \x01(\t\x12\x0c\n\x04tick\x18\t \x01(\x05\x12\x13\n\x0bvolume0_24h\x18\n \x01(\x01\x12\x13\n\x0bvolume1_24h\x18\x0b \x01(\x01\x12\x1a\n\x12last_volume_update\x18\x0c \x01(\x03\"\xb6\x01\n\tUniV3Swap\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04pool\x18\x02 \x01(\t\x12\x0e\n\x06sender\x18\x03 \x01(\t\x12\x11\n\trecipient\x18\x04 \x01(\t\x12\x0f\n\x07\x61mount0\x18\x05 \x01(\t\x12\x0f\n\x07\x61mount1\x18\x06 \x01(\t\x12\x16\n\x0esqrt_price_x96\x18\x07 \x01(\t\x12\x11\n\tliquidity\x18\x08 \x01(\t\x12\x0c\n\x04tick\x18\t \x01(\x05\x12\x11\n\ttimestamp\x18\n \x01(\x03\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x10hypurr/evm.proto\x12\x06hypurr\x1a\x13hypurr/common.proto\"\xb0\x01\n\nERC20Token\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06symbol\x18\x03 \x01(\t\x12\x10\n\x08\x64\x65\x63imals\x18\x04 \x01(\x05\x12\x14\n\x0ctotal_supply\x18\x05 \x01(\t\x12\x16\n\x0eprice_in_whype\x18\x06 \x01(\x01\x12\x17\n\x0fvolume_in_whype\x18\x07 \x01(\x01\x12\x1a\n\x12last_volume_update\x18\x08 \x01(\x03\"[\n\x13\x45RC20AccountBalance\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x10\n\x08\x63ontract\x18\x02 \x01(\t\x12\x0f\n\x07\x62\x61lance\x18\x03 \x01(\t\x12\x10\n\x08is_owner\x18\x04 \x01(\x08\"\xf5\x01\n\tUniV2Pair\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\"\n\x06token0\x18\x02 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\"\n\x06token1\x18\x03 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\x10\n\x08reserve0\x18\x04 \x01(\t\x12\x10\n\x08reserve1\x18\x05 \x01(\t\x12\x14\n\x0ctotal_supply\x18\x06 \x01(\t\x12\x0f\n\x07\x66\x61\x63tory\x18\x07 \x01(\t\x12\x13\n\x0bvolume0_24h\x18\x08 \x01(\x01\x12\x13\n\x0bvolume1_24h\x18\t \x01(\x01\x12\x1a\n\x12last_volume_update\x18\n \x01(\x03\"v\n\tUniV2Swap\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04pair\x18\x02 \x01(\t\x12\x0e\n\x06sender\x18\x03 \x01(\t\x12\x0f\n\x07\x61mount0\x18\x04 \x01(\t\x12\x0f\n\x07\x61mount1\x18\x05 \x01(\t\x12\n\n\x02to\x18\x06 \x01(\t\x12\x11\n\ttimestamp\x18\x07 \x01(\x03\"o\n\x12\x45RC20TransferEvent\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x63ontract\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\t\x12\x11\n\ttimestamp\x18\x04 \x01(\x03\x12\x0c\n\x04\x66rom\x18\x05 \x01(\t\x12\n\n\x02to\x18\x06 \x01(\t\"u\n\x12\x45RC20ApprovalEvent\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x63ontract\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\t\x12\x11\n\ttimestamp\x18\x04 \x01(\x03\x12\r\n\x05owner\x18\x05 \x01(\t\x12\x0f\n\x07spender\x18\x06 \x01(\t\"@\n\x0e\x45RC20Allowance\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07spender\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\t\"\x97\x02\n\tUniV3Pool\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x0f\n\x07\x66\x61\x63tory\x18\x02 \x01(\t\x12\"\n\x06token0\x18\x03 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\"\n\x06token1\x18\x04 \x01(\x0b\x32\x12.hypurr.ERC20Token\x12\x0b\n\x03\x66\x65\x65\x18\x05 \x01(\x05\x12\x14\n\x0ctick_spacing\x18\x06 \x01(\x05\x12\x11\n\tliquidity\x18\x07 \x01(\t\x12\x16\n\x0esqrt_price_x96\x18\x08 \x01(\t\x12\x0c\n\x04tick\x18\t \x01(\x05\x12\x13\n\x0bvolume0_24h\x18\n \x01(\x01\x12\x13\n\x0bvolume1_24h\x18\x0b \x01(\x01\x12\x1a\n\x12last_volume_update\x18\x0c \x01(\x03\"\xb6\x01\n\tUniV3Swap\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04pool\x18\x02 \x01(\t\x12\x0e\n\x06sender\x18\x03 \x01(\t\x12\x11\n\trecipient\x18\x04 \x01(\t\x12\x0f\n\x07\x61mount0\x18\x05 \x01(\t\x12\x0f\n\x07\x61mount1\x18\x06 \x01(\t\x12\x16\n\x0esqrt_price_x96\x18\x07 \x01(\t\x12\x11\n\tliquidity\x18\x08 \x01(\t\x12\x0c\n\x04tick\x18\t \x01(\x05\x12\x11\n\ttimestamp\x18\n \x01(\x03\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
   ,
   dependencies=[hypurr_dot_common__pb2.DESCRIPTOR,])
 
@@ -503,79 +503,6 @@ _ERC20ALLOWANCE = _descriptor.Descriptor(
 )
 
 
-_UNICANDLE = _descriptor.Descriptor(
-  name='UniCandle',
-  full_name='hypurr.UniCandle',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='timestamp', full_name='hypurr.UniCandle.timestamp', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='open', full_name='hypurr.UniCandle.open', index=1,
-      number=2, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='high', full_name='hypurr.UniCandle.high', index=2,
-      number=3, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='low', full_name='hypurr.UniCandle.low', index=3,
-      number=4, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='close', full_name='hypurr.UniCandle.close', index=4,
-      number=5, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='volume_token0', full_name='hypurr.UniCandle.volume_token0', index=5,
-      number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='volume_token1', full_name='hypurr.UniCandle.volume_token1', index=6,
-      number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=988,
-  serialized_end=1120,
-)
-
-
 _UNIV3POOL = _descriptor.Descriptor(
   name='UniV3Pool',
   full_name='hypurr.UniV3Pool',
@@ -679,8 +606,8 @@ _UNIV3POOL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1123,
-  serialized_end=1402,
+  serialized_start=988,
+  serialized_end=1267,
 )
 
 
@@ -773,8 +700,8 @@ _UNIV3SWAP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1405,
-  serialized_end=1587,
+  serialized_start=1270,
+  serialized_end=1452,
 )
 
 _UNIV2PAIR.fields_by_name['token0'].message_type = _ERC20TOKEN
@@ -788,7 +715,6 @@ DESCRIPTOR.message_types_by_name['UniV2Swap'] = _UNIV2SWAP
 DESCRIPTOR.message_types_by_name['ERC20TransferEvent'] = _ERC20TRANSFEREVENT
 DESCRIPTOR.message_types_by_name['ERC20ApprovalEvent'] = _ERC20APPROVALEVENT
 DESCRIPTOR.message_types_by_name['ERC20Allowance'] = _ERC20ALLOWANCE
-DESCRIPTOR.message_types_by_name['UniCandle'] = _UNICANDLE
 DESCRIPTOR.message_types_by_name['UniV3Pool'] = _UNIV3POOL
 DESCRIPTOR.message_types_by_name['UniV3Swap'] = _UNIV3SWAP
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -841,13 +767,6 @@ ERC20Allowance = _reflection.GeneratedProtocolMessageType('ERC20Allowance', (_me
   # @@protoc_insertion_point(class_scope:hypurr.ERC20Allowance)
   ))
 _sym_db.RegisterMessage(ERC20Allowance)
-
-UniCandle = _reflection.GeneratedProtocolMessageType('UniCandle', (_message.Message,), dict(
-  DESCRIPTOR = _UNICANDLE,
-  __module__ = 'hypurr.evm_pb2'
-  # @@protoc_insertion_point(class_scope:hypurr.UniCandle)
-  ))
-_sym_db.RegisterMessage(UniCandle)
 
 UniV3Pool = _reflection.GeneratedProtocolMessageType('UniV3Pool', (_message.Message,), dict(
   DESCRIPTOR = _UNIV3POOL,

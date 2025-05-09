@@ -15,7 +15,7 @@ import { MessageType } from "@protobuf-ts/runtime";
 import { ERC20AccountBalance } from "./evm";
 import { Int32Value } from "../google/protobuf/wrappers";
 import { UniV3Swap } from "./evm";
-import { UniCandle } from "./evm";
+import { PriceCandle } from "./common";
 import { ERC20ApprovalEvent } from "./evm";
 import { ERC20TransferEvent } from "./evm";
 import { UniV2Swap } from "./evm";
@@ -289,9 +289,9 @@ export interface UniCandlesStreamRequest {
  */
 export interface UniCandlesResponse {
     /**
-     * @generated from protobuf field: repeated hypurr.UniCandle candles = 1;
+     * @generated from protobuf field: repeated hypurr.PriceCandle candles = 1;
      */
-    candles: UniCandle[];
+    candles: PriceCandle[];
 }
 /**
  * V3 Swap request/response messages
@@ -1438,7 +1438,7 @@ export const UniCandlesStreamRequest = new UniCandlesStreamRequest$Type();
 class UniCandlesResponse$Type extends MessageType<UniCandlesResponse> {
     constructor() {
         super("hypurr.UniCandlesResponse", [
-            { no: 1, name: "candles", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => UniCandle }
+            { no: 1, name: "candles", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PriceCandle }
         ]);
     }
     create(value?: PartialMessage<UniCandlesResponse>): UniCandlesResponse {
@@ -1453,8 +1453,8 @@ class UniCandlesResponse$Type extends MessageType<UniCandlesResponse> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypurr.UniCandle candles */ 1:
-                    message.candles.push(UniCandle.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.PriceCandle candles */ 1:
+                    message.candles.push(PriceCandle.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1468,9 +1468,9 @@ class UniCandlesResponse$Type extends MessageType<UniCandlesResponse> {
         return message;
     }
     internalBinaryWrite(message: UniCandlesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.UniCandle candles = 1; */
+        /* repeated hypurr.PriceCandle candles = 1; */
         for (let i = 0; i < message.candles.length; i++)
-            UniCandle.internalBinaryWrite(message.candles[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            PriceCandle.internalBinaryWrite(message.candles[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

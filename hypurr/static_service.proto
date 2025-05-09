@@ -11,6 +11,7 @@ import "hypurr/pairs.proto";
 import "hypurr/cabal.proto";
 import "hypurr/evm.proto";
 import "hypurr/hpumpv1.proto";
+import "hypurr/common.proto";
 
 message HyperliquidTokenHoldersRequest {
   int64 token_id = 1;
@@ -140,7 +141,7 @@ message HyperliquidLaunchCandlesRequest {
 }
 
 message HyperliquidLaunchCandlesResponse {
-  repeated HyperliquidLaunchCandle candles = 1;
+  repeated PriceCandle candles = 1;
 }
 
 message HyperliquidLaunchRequest {
@@ -251,7 +252,7 @@ message HpumpV1CandlesRequest {
 }
 
 message HpumpV1CandlesResponse {
-  repeated UniCandle candles = 1;
+  repeated PriceCandle candles = 1;
 }
 
 

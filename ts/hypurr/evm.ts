@@ -237,41 +237,6 @@ export interface ERC20Allowance {
     amount: string; // Using string for big integers
 }
 /**
- * UniV2 Price Candle messages
- *
- * @generated from protobuf message hypurr.UniCandle
- */
-export interface UniCandle {
-    /**
-     * @generated from protobuf field: int64 timestamp = 1;
-     */
-    timestamp: number;
-    /**
-     * @generated from protobuf field: double open = 2;
-     */
-    open: number;
-    /**
-     * @generated from protobuf field: double high = 3;
-     */
-    high: number;
-    /**
-     * @generated from protobuf field: double low = 4;
-     */
-    low: number;
-    /**
-     * @generated from protobuf field: double close = 5;
-     */
-    close: number;
-    /**
-     * @generated from protobuf field: string volume_token0 = 6;
-     */
-    volumeToken0: string; // Using string for big integers
-    /**
-     * @generated from protobuf field: string volume_token1 = 7;
-     */
-    volumeToken1: string; // Using string for big integers
-}
-/**
  * UniswapV3 Pool messages
  *
  * @generated from protobuf message hypurr.UniV3Pool
@@ -961,95 +926,6 @@ class ERC20Allowance$Type extends MessageType<ERC20Allowance> {
  * @generated MessageType for protobuf message hypurr.ERC20Allowance
  */
 export const ERC20Allowance = new ERC20Allowance$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class UniCandle$Type extends MessageType<UniCandle> {
-    constructor() {
-        super("hypurr.UniCandle", [
-            { no: 1, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "open", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 3, name: "high", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 4, name: "low", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 5, name: "close", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 6, name: "volume_token0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "volume_token1", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<UniCandle>): UniCandle {
-        const message = { timestamp: 0, open: 0, high: 0, low: 0, close: 0, volumeToken0: "", volumeToken1: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<UniCandle>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UniCandle): UniCandle {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 timestamp */ 1:
-                    message.timestamp = reader.int64().toNumber();
-                    break;
-                case /* double open */ 2:
-                    message.open = reader.double();
-                    break;
-                case /* double high */ 3:
-                    message.high = reader.double();
-                    break;
-                case /* double low */ 4:
-                    message.low = reader.double();
-                    break;
-                case /* double close */ 5:
-                    message.close = reader.double();
-                    break;
-                case /* string volume_token0 */ 6:
-                    message.volumeToken0 = reader.string();
-                    break;
-                case /* string volume_token1 */ 7:
-                    message.volumeToken1 = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: UniCandle, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 timestamp = 1; */
-        if (message.timestamp !== 0)
-            writer.tag(1, WireType.Varint).int64(message.timestamp);
-        /* double open = 2; */
-        if (message.open !== 0)
-            writer.tag(2, WireType.Bit64).double(message.open);
-        /* double high = 3; */
-        if (message.high !== 0)
-            writer.tag(3, WireType.Bit64).double(message.high);
-        /* double low = 4; */
-        if (message.low !== 0)
-            writer.tag(4, WireType.Bit64).double(message.low);
-        /* double close = 5; */
-        if (message.close !== 0)
-            writer.tag(5, WireType.Bit64).double(message.close);
-        /* string volume_token0 = 6; */
-        if (message.volumeToken0 !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.volumeToken0);
-        /* string volume_token1 = 7; */
-        if (message.volumeToken1 !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.volumeToken1);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.UniCandle
- */
-export const UniCandle = new UniCandle$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class UniV3Pool$Type extends MessageType<UniV3Pool> {
     constructor() {

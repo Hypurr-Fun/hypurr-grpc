@@ -105,7 +105,7 @@ message UniCandlesStreamRequest {
 }
 
 message UniCandlesResponse {
-  repeated UniCandle candles = 1;
+  repeated PriceCandle candles = 1;
 }
 
 // V3 Swap request/response messages

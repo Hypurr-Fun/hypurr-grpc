@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/evm_service.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x18hypurr/evm_service.proto\x12\x06hypurr\x1a\x10hypurr/evm.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x13hypurr/common.proto\"$\n\x11\x45RC20TokenRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\"7\n\x12\x45RC20TokenResponse\x12!\n\x05token\x18\x01 \x01(\x0b\x32\x12.hypurr.ERC20Token\";\n\x12\x45RC20TokensRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\"R\n\x13\x45RC20TokensResponse\x12\"\n\x06tokens\x18\x01 \x03(\x0b\x32\x12.hypurr.ERC20Token\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"#\n\x10UniV2PairRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\"4\n\x11UniV2PairResponse\x12\x1f\n\x04pair\x18\x01 \x01(\x0b\x32\x11.hypurr.UniV2Pair\"O\n\x0fUniPairsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x15\n\rtoken_address\x18\x03 \x01(\t\"u\n\x10UniPairsResponse\x12#\n\x08pairs_v2\x18\x01 \x03(\x0b\x32\x11.hypurr.UniV2Pair\x12#\n\x08pairs_v3\x18\x02 \x03(\x0b\x32\x11.hypurr.UniV3Pool\x12\x17\n\x0fnext_page_token\x18\x03 \x01(\t\"\x1e\n\x10UniV2SwapRequest\x12\n\n\x02id\x18\x01 \x01(\t\"4\n\x11UniV2SwapResponse\x12\x1f\n\x04swap\x18\x01 \x01(\x0b\x32\x11.hypurr.UniV2Swap\"\x82\x01\n\x11UniV2SwapsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x14\n\x0cpair_address\x18\x03 \x01(\t\x12\x16\n\x0esender_address\x18\x04 \x01(\t\x12\x18\n\x10receiver_address\x18\x05 \x01(\t\"O\n\x12UniV2SwapsResponse\x12 \n\x05swaps\x18\x01 \x03(\x0b\x32\x11.hypurr.UniV2Swap\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"\x84\x01\n\x1a\x45RC20TransferEventsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x15\n\rtoken_address\x18\x03 \x01(\t\x12\x14\n\x0c\x66rom_address\x18\x04 \x01(\t\x12\x12\n\nto_address\x18\x05 \x01(\t\"b\n\x1b\x45RC20TransferEventsResponse\x12*\n\x06\x65vents\x18\x01 \x03(\x0b\x32\x1a.hypurr.ERC20TransferEvent\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"\x8a\x01\n\x1a\x45RC20ApprovalEventsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x15\n\rtoken_address\x18\x03 \x01(\t\x12\x15\n\rowner_address\x18\x04 \x01(\t\x12\x17\n\x0fspender_address\x18\x05 \x01(\t\"b\n\x1b\x45RC20ApprovalEventsResponse\x12*\n\x06\x65vents\x18\x01 \x03(\x0b\x32\x1a.hypurr.ERC20ApprovalEvent\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"i\n\x11UniCandlesRequest\x12\x14\n\x0cpair_address\x18\x01 \x01(\t\x12\x16\n\x0e\x66rom_timestamp\x18\x02 \x01(\x03\x12\x14\n\x0cto_timestamp\x18\x03 \x01(\x03\x12\x10\n\x08interval\x18\x04 \x01(\t\"A\n\x17UniCandlesStreamRequest\x12\x14\n\x0cpair_address\x18\x01 \x01(\t\x12\x10\n\x08interval\x18\x02 \x01(\t\"8\n\x12UniCandlesResponse\x12\"\n\x07\x63\x61ndles\x18\x01 \x03(\x0b\x32\x11.hypurr.UniCandle\"\x1e\n\x10UniV3SwapRequest\x12\n\n\x02id\x18\x01 \x01(\t\"4\n\x11UniV3SwapResponse\x12\x1f\n\x04swap\x18\x01 \x01(\x0b\x32\x11.hypurr.UniV3Swap\"\x83\x01\n\x11UniV3SwapsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x14\n\x0cpool_address\x18\x03 \x01(\t\x12\x16\n\x0esender_address\x18\x04 \x01(\t\x12\x19\n\x11recipient_address\x18\x05 \x01(\t\"O\n\x12UniV3SwapsResponse\x12 \n\x05swaps\x18\x01 \x03(\x0b\x32\x11.hypurr.UniV3Swap\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"Z\n\x16UniV2SwapStreamRequest\x12\x14\n\x0cpair_address\x18\x01 \x01(\t\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\";\n\x17UniV2SwapStreamResponse\x12 \n\x05swaps\x18\x01 \x03(\x0b\x32\x11.hypurr.UniV2Swap\"Z\n\x16UniV3SwapStreamRequest\x12\x14\n\x0cpool_address\x18\x01 \x01(\t\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\";\n\x17UniV3SwapStreamResponse\x12 \n\x05swaps\x18\x01 \x03(\x0b\x32\x11.hypurr.UniV3Swap\".\n\x1b\x45RC20AccountBalancesRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\"U\n\x1c\x45RC20AccountBalancesResponse\x12\x35\n\x10\x61\x63\x63ount_balances\x18\x01 \x03(\x0b\x32\x1b.hypurr.ERC20AccountBalance2\xa6\t\n\x03\x45VM\x12\x45\n\nERC20Token\x12\x19.hypurr.ERC20TokenRequest\x1a\x1a.hypurr.ERC20TokenResponse\"\x00\x12H\n\x0b\x45RC20Tokens\x12\x1a.hypurr.ERC20TokensRequest\x1a\x1b.hypurr.ERC20TokensResponse\"\x00\x12\x63\n\x14\x45RC20AccountBalances\x12#.hypurr.ERC20AccountBalancesRequest\x1a$.hypurr.ERC20AccountBalancesResponse\"\x00\x12\x42\n\tUniV2Pair\x12\x18.hypurr.UniV2PairRequest\x1a\x19.hypurr.UniV2PairResponse\"\x00\x12?\n\x08UniPairs\x12\x17.hypurr.UniPairsRequest\x1a\x18.hypurr.UniPairsResponse\"\x00\x12\x42\n\tUniV2Swap\x12\x18.hypurr.UniV2SwapRequest\x1a\x19.hypurr.UniV2SwapResponse\"\x00\x12\x45\n\nUniV2Swaps\x12\x19.hypurr.UniV2SwapsRequest\x1a\x1a.hypurr.UniV2SwapsResponse\"\x00\x12\x42\n\tUniV3Swap\x12\x18.hypurr.UniV3SwapRequest\x1a\x19.hypurr.UniV3SwapResponse\"\x00\x12\x45\n\nUniV3Swaps\x12\x19.hypurr.UniV3SwapsRequest\x1a\x1a.hypurr.UniV3SwapsResponse\"\x00\x12`\n\x13\x45RC20TransferEvents\x12\".hypurr.ERC20TransferEventsRequest\x1a#.hypurr.ERC20TransferEventsResponse\"\x00\x12`\n\x13\x45RC20ApprovalEvents\x12\".hypurr.ERC20ApprovalEventsRequest\x1a#.hypurr.ERC20ApprovalEventsResponse\"\x00\x12\x45\n\nUniCandles\x12\x19.hypurr.UniCandlesRequest\x1a\x1a.hypurr.UniCandlesResponse\"\x00\x12S\n\x10UniCandlesStream\x12\x1f.hypurr.UniCandlesStreamRequest\x1a\x1a.hypurr.UniCandlesResponse\"\x00\x30\x01\x12V\n\x0fUniV2SwapStream\x12\x1e.hypurr.UniV2SwapStreamRequest\x1a\x1f.hypurr.UniV2SwapStreamResponse\"\x00\x30\x01\x12V\n\x0fUniV3SwapStream\x12\x1e.hypurr.UniV3SwapStreamRequest\x1a\x1f.hypurr.UniV3SwapStreamResponse\"\x00\x30\x01\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x18hypurr/evm_service.proto\x12\x06hypurr\x1a\x10hypurr/evm.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x13hypurr/common.proto\"$\n\x11\x45RC20TokenRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\"7\n\x12\x45RC20TokenResponse\x12!\n\x05token\x18\x01 \x01(\x0b\x32\x12.hypurr.ERC20Token\";\n\x12\x45RC20TokensRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\"R\n\x13\x45RC20TokensResponse\x12\"\n\x06tokens\x18\x01 \x03(\x0b\x32\x12.hypurr.ERC20Token\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"#\n\x10UniV2PairRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\"4\n\x11UniV2PairResponse\x12\x1f\n\x04pair\x18\x01 \x01(\x0b\x32\x11.hypurr.UniV2Pair\"O\n\x0fUniPairsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x15\n\rtoken_address\x18\x03 \x01(\t\"u\n\x10UniPairsResponse\x12#\n\x08pairs_v2\x18\x01 \x03(\x0b\x32\x11.hypurr.UniV2Pair\x12#\n\x08pairs_v3\x18\x02 \x03(\x0b\x32\x11.hypurr.UniV3Pool\x12\x17\n\x0fnext_page_token\x18\x03 \x01(\t\"\x1e\n\x10UniV2SwapRequest\x12\n\n\x02id\x18\x01 \x01(\t\"4\n\x11UniV2SwapResponse\x12\x1f\n\x04swap\x18\x01 \x01(\x0b\x32\x11.hypurr.UniV2Swap\"\x82\x01\n\x11UniV2SwapsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x14\n\x0cpair_address\x18\x03 \x01(\t\x12\x16\n\x0esender_address\x18\x04 \x01(\t\x12\x18\n\x10receiver_address\x18\x05 \x01(\t\"O\n\x12UniV2SwapsResponse\x12 \n\x05swaps\x18\x01 \x03(\x0b\x32\x11.hypurr.UniV2Swap\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"\x84\x01\n\x1a\x45RC20TransferEventsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x15\n\rtoken_address\x18\x03 \x01(\t\x12\x14\n\x0c\x66rom_address\x18\x04 \x01(\t\x12\x12\n\nto_address\x18\x05 \x01(\t\"b\n\x1b\x45RC20TransferEventsResponse\x12*\n\x06\x65vents\x18\x01 \x03(\x0b\x32\x1a.hypurr.ERC20TransferEvent\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"\x8a\x01\n\x1a\x45RC20ApprovalEventsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x15\n\rtoken_address\x18\x03 \x01(\t\x12\x15\n\rowner_address\x18\x04 \x01(\t\x12\x17\n\x0fspender_address\x18\x05 \x01(\t\"b\n\x1b\x45RC20ApprovalEventsResponse\x12*\n\x06\x65vents\x18\x01 \x03(\x0b\x32\x1a.hypurr.ERC20ApprovalEvent\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"i\n\x11UniCandlesRequest\x12\x14\n\x0cpair_address\x18\x01 \x01(\t\x12\x16\n\x0e\x66rom_timestamp\x18\x02 \x01(\x03\x12\x14\n\x0cto_timestamp\x18\x03 \x01(\x03\x12\x10\n\x08interval\x18\x04 \x01(\t\"A\n\x17UniCandlesStreamRequest\x12\x14\n\x0cpair_address\x18\x01 \x01(\t\x12\x10\n\x08interval\x18\x02 \x01(\t\":\n\x12UniCandlesResponse\x12$\n\x07\x63\x61ndles\x18\x01 \x03(\x0b\x32\x13.hypurr.PriceCandle\"\x1e\n\x10UniV3SwapRequest\x12\n\n\x02id\x18\x01 \x01(\t\"4\n\x11UniV3SwapResponse\x12\x1f\n\x04swap\x18\x01 \x01(\x0b\x32\x11.hypurr.UniV3Swap\"\x83\x01\n\x11UniV3SwapsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x14\n\x0cpool_address\x18\x03 \x01(\t\x12\x16\n\x0esender_address\x18\x04 \x01(\t\x12\x19\n\x11recipient_address\x18\x05 \x01(\t\"O\n\x12UniV3SwapsResponse\x12 \n\x05swaps\x18\x01 \x03(\x0b\x32\x11.hypurr.UniV3Swap\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"Z\n\x16UniV2SwapStreamRequest\x12\x14\n\x0cpair_address\x18\x01 \x01(\t\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\";\n\x17UniV2SwapStreamResponse\x12 \n\x05swaps\x18\x01 \x03(\x0b\x32\x11.hypurr.UniV2Swap\"Z\n\x16UniV3SwapStreamRequest\x12\x14\n\x0cpool_address\x18\x01 \x01(\t\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\";\n\x17UniV3SwapStreamResponse\x12 \n\x05swaps\x18\x01 \x03(\x0b\x32\x11.hypurr.UniV3Swap\".\n\x1b\x45RC20AccountBalancesRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\"U\n\x1c\x45RC20AccountBalancesResponse\x12\x35\n\x10\x61\x63\x63ount_balances\x18\x01 \x03(\x0b\x32\x1b.hypurr.ERC20AccountBalance2\xa6\t\n\x03\x45VM\x12\x45\n\nERC20Token\x12\x19.hypurr.ERC20TokenRequest\x1a\x1a.hypurr.ERC20TokenResponse\"\x00\x12H\n\x0b\x45RC20Tokens\x12\x1a.hypurr.ERC20TokensRequest\x1a\x1b.hypurr.ERC20TokensResponse\"\x00\x12\x63\n\x14\x45RC20AccountBalances\x12#.hypurr.ERC20AccountBalancesRequest\x1a$.hypurr.ERC20AccountBalancesResponse\"\x00\x12\x42\n\tUniV2Pair\x12\x18.hypurr.UniV2PairRequest\x1a\x19.hypurr.UniV2PairResponse\"\x00\x12?\n\x08UniPairs\x12\x17.hypurr.UniPairsRequest\x1a\x18.hypurr.UniPairsResponse\"\x00\x12\x42\n\tUniV2Swap\x12\x18.hypurr.UniV2SwapRequest\x1a\x19.hypurr.UniV2SwapResponse\"\x00\x12\x45\n\nUniV2Swaps\x12\x19.hypurr.UniV2SwapsRequest\x1a\x1a.hypurr.UniV2SwapsResponse\"\x00\x12\x42\n\tUniV3Swap\x12\x18.hypurr.UniV3SwapRequest\x1a\x19.hypurr.UniV3SwapResponse\"\x00\x12\x45\n\nUniV3Swaps\x12\x19.hypurr.UniV3SwapsRequest\x1a\x1a.hypurr.UniV3SwapsResponse\"\x00\x12`\n\x13\x45RC20TransferEvents\x12\".hypurr.ERC20TransferEventsRequest\x1a#.hypurr.ERC20TransferEventsResponse\"\x00\x12`\n\x13\x45RC20ApprovalEvents\x12\".hypurr.ERC20ApprovalEventsRequest\x1a#.hypurr.ERC20ApprovalEventsResponse\"\x00\x12\x45\n\nUniCandles\x12\x19.hypurr.UniCandlesRequest\x1a\x1a.hypurr.UniCandlesResponse\"\x00\x12S\n\x10UniCandlesStream\x12\x1f.hypurr.UniCandlesStreamRequest\x1a\x1a.hypurr.UniCandlesResponse\"\x00\x30\x01\x12V\n\x0fUniV2SwapStream\x12\x1e.hypurr.UniV2SwapStreamRequest\x1a\x1f.hypurr.UniV2SwapStreamResponse\"\x00\x30\x01\x12V\n\x0fUniV3SwapStream\x12\x1e.hypurr.UniV3SwapStreamRequest\x1a\x1f.hypurr.UniV3SwapStreamResponse\"\x00\x30\x01\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
   ,
   dependencies=[hypurr_dot_evm__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,hypurr_dot_common__pb2.DESCRIPTOR,])
 
@@ -789,7 +789,7 @@ _UNICANDLESRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1588,
-  serialized_end=1644,
+  serialized_end=1646,
 )
 
 
@@ -819,8 +819,8 @@ _UNIV3SWAPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1646,
-  serialized_end=1676,
+  serialized_start=1648,
+  serialized_end=1678,
 )
 
 
@@ -850,8 +850,8 @@ _UNIV3SWAPRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1678,
-  serialized_end=1730,
+  serialized_start=1680,
+  serialized_end=1732,
 )
 
 
@@ -909,8 +909,8 @@ _UNIV3SWAPSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1733,
-  serialized_end=1864,
+  serialized_start=1735,
+  serialized_end=1866,
 )
 
 
@@ -947,8 +947,8 @@ _UNIV3SWAPSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1866,
-  serialized_end=1945,
+  serialized_start=1868,
+  serialized_end=1947,
 )
 
 
@@ -985,8 +985,8 @@ _UNIV2SWAPSTREAMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1947,
-  serialized_end=2037,
+  serialized_start=1949,
+  serialized_end=2039,
 )
 
 
@@ -1016,8 +1016,8 @@ _UNIV2SWAPSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2039,
-  serialized_end=2098,
+  serialized_start=2041,
+  serialized_end=2100,
 )
 
 
@@ -1054,8 +1054,8 @@ _UNIV3SWAPSTREAMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2100,
-  serialized_end=2190,
+  serialized_start=2102,
+  serialized_end=2192,
 )
 
 
@@ -1085,8 +1085,8 @@ _UNIV3SWAPSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2192,
-  serialized_end=2251,
+  serialized_start=2194,
+  serialized_end=2253,
 )
 
 
@@ -1116,8 +1116,8 @@ _ERC20ACCOUNTBALANCESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2253,
-  serialized_end=2299,
+  serialized_start=2255,
+  serialized_end=2301,
 )
 
 
@@ -1147,8 +1147,8 @@ _ERC20ACCOUNTBALANCESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2301,
-  serialized_end=2386,
+  serialized_start=2303,
+  serialized_end=2388,
 )
 
 _ERC20TOKENRESPONSE.fields_by_name['token'].message_type = hypurr_dot_evm__pb2._ERC20TOKEN
@@ -1160,7 +1160,7 @@ _UNIV2SWAPRESPONSE.fields_by_name['swap'].message_type = hypurr_dot_evm__pb2._UN
 _UNIV2SWAPSRESPONSE.fields_by_name['swaps'].message_type = hypurr_dot_evm__pb2._UNIV2SWAP
 _ERC20TRANSFEREVENTSRESPONSE.fields_by_name['events'].message_type = hypurr_dot_evm__pb2._ERC20TRANSFEREVENT
 _ERC20APPROVALEVENTSRESPONSE.fields_by_name['events'].message_type = hypurr_dot_evm__pb2._ERC20APPROVALEVENT
-_UNICANDLESRESPONSE.fields_by_name['candles'].message_type = hypurr_dot_evm__pb2._UNICANDLE
+_UNICANDLESRESPONSE.fields_by_name['candles'].message_type = hypurr_dot_common__pb2._PRICECANDLE
 _UNIV3SWAPRESPONSE.fields_by_name['swap'].message_type = hypurr_dot_evm__pb2._UNIV3SWAP
 _UNIV3SWAPSRESPONSE.fields_by_name['swaps'].message_type = hypurr_dot_evm__pb2._UNIV3SWAP
 _UNIV2SWAPSTREAMREQUEST.fields_by_name['limit'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT32VALUE
@@ -1412,8 +1412,8 @@ _EVM = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=2389,
-  serialized_end=3579,
+  serialized_start=2391,
+  serialized_end=3581,
   methods=[
   _descriptor.MethodDescriptor(
     name='ERC20Token',

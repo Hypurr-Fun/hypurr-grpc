@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/common.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x13hypurr/common.proto\x12\x06hypurr\"e\n\x12TelegramUserPublic\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x17\n\x0fpicture_file_id\x18\x03 \x01(\t\x12\x18\n\x10reputation_score\x18\x04 \x01(\x03\"S\n\x0bPriceCandle\x12\x0c\n\x04time\x18\x01 \x01(\x03\x12\x0c\n\x04open\x18\x02 \x01(\x02\x12\x0c\n\x04high\x18\x03 \x01(\x02\x12\x0b\n\x03low\x18\x04 \x01(\x02\x12\r\n\x05\x63lose\x18\x05 \x01(\x02*Q\n\tMediaType\x12\x14\n\x10MEDIA_TYPE_PHOTO\x10\x00\x12\x18\n\x14MEDIA_TYPE_ANIMATION\x10\x01\x12\x14\n\x10MEDIA_TYPE_VIDEO\x10\x02\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x13hypurr/common.proto\x12\x06hypurr\"e\n\x12TelegramUserPublic\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x17\n\x0fpicture_file_id\x18\x03 \x01(\t\x12\x18\n\x10reputation_score\x18\x04 \x01(\x03\"~\n\x0bPriceCandle\x12\x0c\n\x04time\x18\x01 \x01(\x03\x12\x0c\n\x04open\x18\x02 \x01(\x02\x12\x0c\n\x04high\x18\x03 \x01(\x02\x12\x0b\n\x03low\x18\x04 \x01(\x02\x12\r\n\x05\x63lose\x18\x05 \x01(\x02\x12\x13\n\x0bvolume_base\x18\x06 \x01(\x02\x12\x14\n\x0cvolume_quote\x18\x07 \x01(\x02*Q\n\tMediaType\x12\x14\n\x10MEDIA_TYPE_PHOTO\x10\x00\x12\x18\n\x14MEDIA_TYPE_ANIMATION\x10\x01\x12\x14\n\x10MEDIA_TYPE_VIDEO\x10\x02\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
 )
 
 _MEDIATYPE = _descriptor.EnumDescriptor(
@@ -44,8 +44,8 @@ _MEDIATYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=219,
-  serialized_end=300,
+  serialized_start=262,
+  serialized_end=343,
 )
 _sym_db.RegisterEnumDescriptor(_MEDIATYPE)
 
@@ -150,6 +150,20 @@ _PRICECANDLE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='volume_base', full_name='hypurr.PriceCandle.volume_base', index=5,
+      number=6, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='volume_quote', full_name='hypurr.PriceCandle.volume_quote', index=6,
+      number=7, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -163,7 +177,7 @@ _PRICECANDLE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=134,
-  serialized_end=217,
+  serialized_end=260,
 )
 
 DESCRIPTOR.message_types_by_name['TelegramUserPublic'] = _TELEGRAMUSERPUBLIC

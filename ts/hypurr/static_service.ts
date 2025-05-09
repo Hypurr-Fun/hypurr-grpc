@@ -15,7 +15,6 @@ import { MessageType } from "@protobuf-ts/runtime";
 import { HypurrFunCabalPerformance } from "./cabal";
 import { HypurrFunCabal } from "./cabal";
 import { Performance } from "./wallet";
-import { UniCandle } from "./evm";
 import { Int32Value } from "../google/protobuf/wrappers";
 import { HpumpV1LaunchPairSwap } from "./hpumpv1";
 import { HpumpV1LaunchPair } from "./hpumpv1";
@@ -23,7 +22,7 @@ import { HpumpV1LaunchToken } from "./hpumpv1";
 import { HyperliquidLaunchHolder } from "./launch";
 import { HyperliquidLaunchMessage } from "./launch";
 import { BoolValue } from "../google/protobuf/wrappers";
-import { HyperliquidLaunchCandle } from "./launch";
+import { PriceCandle } from "./common";
 import { HyperliquidLaunchPosition } from "./launch";
 import { HyperliquidLaunchFill } from "./launch";
 import { HyperliquidWalletDeploySession } from "./wallet";
@@ -341,9 +340,9 @@ export interface HyperliquidLaunchCandlesRequest {
  */
 export interface HyperliquidLaunchCandlesResponse {
     /**
-     * @generated from protobuf field: repeated hypurr.HyperliquidLaunchCandle candles = 1;
+     * @generated from protobuf field: repeated hypurr.PriceCandle candles = 1;
      */
-    candles: HyperliquidLaunchCandle[];
+    candles: PriceCandle[];
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchRequest
@@ -620,9 +619,9 @@ export interface HpumpV1CandlesRequest {
  */
 export interface HpumpV1CandlesResponse {
     /**
-     * @generated from protobuf field: repeated hypurr.UniCandle candles = 1;
+     * @generated from protobuf field: repeated hypurr.PriceCandle candles = 1;
      */
-    candles: UniCandle[];
+    candles: PriceCandle[];
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletPerformanceRequest
@@ -2068,7 +2067,7 @@ export const HyperliquidLaunchCandlesRequest = new HyperliquidLaunchCandlesReque
 class HyperliquidLaunchCandlesResponse$Type extends MessageType<HyperliquidLaunchCandlesResponse> {
     constructor() {
         super("hypurr.HyperliquidLaunchCandlesResponse", [
-            { no: 1, name: "candles", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidLaunchCandle }
+            { no: 1, name: "candles", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PriceCandle }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchCandlesResponse>): HyperliquidLaunchCandlesResponse {
@@ -2083,8 +2082,8 @@ class HyperliquidLaunchCandlesResponse$Type extends MessageType<HyperliquidLaunc
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypurr.HyperliquidLaunchCandle candles */ 1:
-                    message.candles.push(HyperliquidLaunchCandle.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.PriceCandle candles */ 1:
+                    message.candles.push(PriceCandle.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2098,9 +2097,9 @@ class HyperliquidLaunchCandlesResponse$Type extends MessageType<HyperliquidLaunc
         return message;
     }
     internalBinaryWrite(message: HyperliquidLaunchCandlesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.HyperliquidLaunchCandle candles = 1; */
+        /* repeated hypurr.PriceCandle candles = 1; */
         for (let i = 0; i < message.candles.length; i++)
-            HyperliquidLaunchCandle.internalBinaryWrite(message.candles[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            PriceCandle.internalBinaryWrite(message.candles[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3247,7 +3246,7 @@ export const HpumpV1CandlesRequest = new HpumpV1CandlesRequest$Type();
 class HpumpV1CandlesResponse$Type extends MessageType<HpumpV1CandlesResponse> {
     constructor() {
         super("hypurr.HpumpV1CandlesResponse", [
-            { no: 1, name: "candles", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => UniCandle }
+            { no: 1, name: "candles", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PriceCandle }
         ]);
     }
     create(value?: PartialMessage<HpumpV1CandlesResponse>): HpumpV1CandlesResponse {
@@ -3262,8 +3261,8 @@ class HpumpV1CandlesResponse$Type extends MessageType<HpumpV1CandlesResponse> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypurr.UniCandle candles */ 1:
-                    message.candles.push(UniCandle.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.PriceCandle candles */ 1:
+                    message.candles.push(PriceCandle.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3277,9 +3276,9 @@ class HpumpV1CandlesResponse$Type extends MessageType<HpumpV1CandlesResponse> {
         return message;
     }
     internalBinaryWrite(message: HpumpV1CandlesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.UniCandle candles = 1; */
+        /* repeated hypurr.PriceCandle candles = 1; */
         for (let i = 0; i < message.candles.length; i++)
-            UniCandle.internalBinaryWrite(message.candles[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            PriceCandle.internalBinaryWrite(message.candles[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -84,15 +84,6 @@ message HyperliquidLaunchFill {
   int64 id = 9;
 }
 
-message HyperliquidLaunchCandle {
-  int64 time = 1;
-  float open = 2;
-  float high = 3;
-  float low = 4;
-  float close = 5;
-  float volume = 6;
-}
-
 message HyperliquidLaunchMessage {
   int64 id = 1;
   int64 timestamp = 2;
