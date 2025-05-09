@@ -96,15 +96,19 @@ export interface HpumpV1LaunchPair {
      */
     quoteReserve: string; // Using string for big integers
     /**
-     * @generated from protobuf field: int64 last_sync_timestamp = 5;
+     * @generated from protobuf field: string x0 = 5;
+     */
+    x0: string;
+    /**
+     * @generated from protobuf field: int64 last_sync_timestamp = 6;
      */
     lastSyncTimestamp: number;
     /**
-     * @generated from protobuf field: string graduated_to = 6;
+     * @generated from protobuf field: string graduated_to = 7;
      */
     graduatedTo: string; // Address of the new pair after graduation
     /**
-     * @generated from protobuf field: repeated hypurr.HpumpV1LaunchPairSwap swaps = 7;
+     * @generated from protobuf field: repeated hypurr.HpumpV1LaunchPairSwap swaps = 8;
      */
     swaps: HpumpV1LaunchPairSwap[]; // List of swaps
 }
@@ -290,13 +294,14 @@ class HpumpV1LaunchPair$Type extends MessageType<HpumpV1LaunchPair> {
             { no: 2, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "base_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "quote_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "last_sync_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 6, name: "graduated_to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchPairSwap }
+            { no: 5, name: "x0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "last_sync_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "graduated_to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchPairSwap }
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchPair>): HpumpV1LaunchPair {
-        const message = { address: "", token: "", baseReserve: "", quoteReserve: "", lastSyncTimestamp: 0, graduatedTo: "", swaps: [] };
+        const message = { address: "", token: "", baseReserve: "", quoteReserve: "", x0: "", lastSyncTimestamp: 0, graduatedTo: "", swaps: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchPair>(this, message, value);
@@ -319,13 +324,16 @@ class HpumpV1LaunchPair$Type extends MessageType<HpumpV1LaunchPair> {
                 case /* string quote_reserve */ 4:
                     message.quoteReserve = reader.string();
                     break;
-                case /* int64 last_sync_timestamp */ 5:
+                case /* string x0 */ 5:
+                    message.x0 = reader.string();
+                    break;
+                case /* int64 last_sync_timestamp */ 6:
                     message.lastSyncTimestamp = reader.int64().toNumber();
                     break;
-                case /* string graduated_to */ 6:
+                case /* string graduated_to */ 7:
                     message.graduatedTo = reader.string();
                     break;
-                case /* repeated hypurr.HpumpV1LaunchPairSwap swaps */ 7:
+                case /* repeated hypurr.HpumpV1LaunchPairSwap swaps */ 8:
                     message.swaps.push(HpumpV1LaunchPairSwap.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -352,15 +360,18 @@ class HpumpV1LaunchPair$Type extends MessageType<HpumpV1LaunchPair> {
         /* string quote_reserve = 4; */
         if (message.quoteReserve !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.quoteReserve);
-        /* int64 last_sync_timestamp = 5; */
+        /* string x0 = 5; */
+        if (message.x0 !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.x0);
+        /* int64 last_sync_timestamp = 6; */
         if (message.lastSyncTimestamp !== 0)
-            writer.tag(5, WireType.Varint).int64(message.lastSyncTimestamp);
-        /* string graduated_to = 6; */
+            writer.tag(6, WireType.Varint).int64(message.lastSyncTimestamp);
+        /* string graduated_to = 7; */
         if (message.graduatedTo !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.graduatedTo);
-        /* repeated hypurr.HpumpV1LaunchPairSwap swaps = 7; */
+            writer.tag(7, WireType.LengthDelimited).string(message.graduatedTo);
+        /* repeated hypurr.HpumpV1LaunchPairSwap swaps = 8; */
         for (let i = 0; i < message.swaps.length; i++)
-            HpumpV1LaunchPairSwap.internalBinaryWrite(message.swaps[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+            HpumpV1LaunchPairSwap.internalBinaryWrite(message.swaps[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

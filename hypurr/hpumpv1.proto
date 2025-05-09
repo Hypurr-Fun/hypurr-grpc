@@ -29,9 +29,10 @@ message HpumpV1LaunchPair {
   string token = 2;             // reference to the token
   string base_reserve = 3;      // Using string for big integers
   string quote_reserve = 4;     // Using string for big integers
-  int64 last_sync_timestamp = 5;
-  string graduated_to = 6;      // Address of the new pair after graduation
-  repeated HpumpV1LaunchPairSwap swaps = 7;  // List of swaps
+  string x0 = 5;
+  int64 last_sync_timestamp = 6;
+  string graduated_to = 7;      // Address of the new pair after graduation
+  repeated HpumpV1LaunchPairSwap swaps = 8;  // List of swaps
 }
 
 // HPump Launch Pair Swap messages
