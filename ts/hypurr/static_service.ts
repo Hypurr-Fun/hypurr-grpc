@@ -17,9 +17,8 @@ import { HypurrFunCabal } from "./cabal";
 import { Performance } from "./wallet";
 import { WalletPosition } from "./common";
 import { Int32Value } from "../google/protobuf/wrappers";
-import { HpumpV1LaunchPairSwap } from "./hpumpv1";
-import { HpumpV1LaunchPair } from "./hpumpv1";
-import { HpumpV1LaunchToken } from "./hpumpv1";
+import { HpumpV1LaunchSwap } from "./hpumpv1";
+import { HpumpV1Launch } from "./hpumpv1";
 import { HyperliquidLaunchHolder } from "./launch";
 import { HyperliquidLaunchMessage } from "./launch";
 import { BoolValue } from "../google/protobuf/wrappers";
@@ -415,27 +414,27 @@ export interface LatestHyperliquidLaunchFillsRequest {
 /**
  * HPump V1 Launch Token request/response messages
  *
- * @generated from protobuf message hypurr.HpumpV1LaunchTokenRequest
+ * @generated from protobuf message hypurr.HpumpV1LaunchRequest
  */
-export interface HpumpV1LaunchTokenRequest {
+export interface HpumpV1LaunchRequest {
     /**
      * @generated from protobuf field: string address = 1;
      */
     address: string;
 }
 /**
- * @generated from protobuf message hypurr.HpumpV1LaunchTokenResponse
+ * @generated from protobuf message hypurr.HpumpV1LaunchResponse
  */
-export interface HpumpV1LaunchTokenResponse {
+export interface HpumpV1LaunchResponse {
     /**
-     * @generated from protobuf field: hypurr.HpumpV1LaunchToken token = 1;
+     * @generated from protobuf field: hypurr.HpumpV1Launch launch = 1;
      */
-    token?: HpumpV1LaunchToken;
+    launch?: HpumpV1Launch;
 }
 /**
- * @generated from protobuf message hypurr.HpumpV1LaunchTokensRequest
+ * @generated from protobuf message hypurr.HpumpV1LaunchesRequest
  */
-export interface HpumpV1LaunchTokensRequest {
+export interface HpumpV1LaunchesRequest {
     /**
      * @generated from protobuf field: int32 page_size = 1;
      */
@@ -450,63 +449,13 @@ export interface HpumpV1LaunchTokensRequest {
     graduatedOnly: boolean;
 }
 /**
- * @generated from protobuf message hypurr.HpumpV1LaunchTokensResponse
+ * @generated from protobuf message hypurr.HpumpV1LaunchesResponse
  */
-export interface HpumpV1LaunchTokensResponse {
+export interface HpumpV1LaunchesResponse {
     /**
-     * @generated from protobuf field: repeated hypurr.HpumpV1LaunchToken tokens = 1;
+     * @generated from protobuf field: repeated hypurr.HpumpV1Launch launches = 1;
      */
-    tokens: HpumpV1LaunchToken[];
-    /**
-     * @generated from protobuf field: string next_page_token = 2;
-     */
-    nextPageToken: string;
-}
-/**
- * HPump V1 Launch Pair request/response messages
- *
- * @generated from protobuf message hypurr.HpumpV1LaunchPairRequest
- */
-export interface HpumpV1LaunchPairRequest {
-    /**
-     * @generated from protobuf field: string address = 1;
-     */
-    address: string;
-}
-/**
- * @generated from protobuf message hypurr.HpumpV1LaunchPairResponse
- */
-export interface HpumpV1LaunchPairResponse {
-    /**
-     * @generated from protobuf field: hypurr.HpumpV1LaunchPair pair = 1;
-     */
-    pair?: HpumpV1LaunchPair;
-}
-/**
- * @generated from protobuf message hypurr.HpumpV1LaunchPairsRequest
- */
-export interface HpumpV1LaunchPairsRequest {
-    /**
-     * @generated from protobuf field: int32 page_size = 1;
-     */
-    pageSize: number;
-    /**
-     * @generated from protobuf field: string page_token = 2;
-     */
-    pageToken: string;
-    /**
-     * @generated from protobuf field: string token_address = 3;
-     */
-    tokenAddress: string;
-}
-/**
- * @generated from protobuf message hypurr.HpumpV1LaunchPairsResponse
- */
-export interface HpumpV1LaunchPairsResponse {
-    /**
-     * @generated from protobuf field: repeated hypurr.HpumpV1LaunchPair pairs = 1;
-     */
-    pairs: HpumpV1LaunchPair[];
+    launches: HpumpV1Launch[];
     /**
      * @generated from protobuf field: string next_page_token = 2;
      */
@@ -515,27 +464,27 @@ export interface HpumpV1LaunchPairsResponse {
 /**
  * HPump V1 Swap request/response messages
  *
- * @generated from protobuf message hypurr.HpumpV1LaunchPairSwapRequest
+ * @generated from protobuf message hypurr.HpumpV1LaunchSwapRequest
  */
-export interface HpumpV1LaunchPairSwapRequest {
+export interface HpumpV1LaunchSwapRequest {
     /**
      * @generated from protobuf field: string id = 1;
      */
     id: string;
 }
 /**
- * @generated from protobuf message hypurr.HpumpV1LaunchPairSwapResponse
+ * @generated from protobuf message hypurr.HpumpV1LaunchSwapResponse
  */
-export interface HpumpV1LaunchPairSwapResponse {
+export interface HpumpV1LaunchSwapResponse {
     /**
-     * @generated from protobuf field: hypurr.HpumpV1LaunchPairSwap swap = 1;
+     * @generated from protobuf field: hypurr.HpumpV1LaunchSwap swap = 1;
      */
-    swap?: HpumpV1LaunchPairSwap;
+    swap?: HpumpV1LaunchSwap;
 }
 /**
- * @generated from protobuf message hypurr.HpumpV1LaunchPairSwapsRequest
+ * @generated from protobuf message hypurr.HpumpV1LaunchSwapsRequest
  */
-export interface HpumpV1LaunchPairSwapsRequest {
+export interface HpumpV1LaunchSwapsRequest {
     /**
      * @generated from protobuf field: int32 page_size = 1;
      */
@@ -545,9 +494,9 @@ export interface HpumpV1LaunchPairSwapsRequest {
      */
     pageToken: string;
     /**
-     * @generated from protobuf field: string pair_address = 3;
+     * @generated from protobuf field: string launch_address = 3;
      */
-    pairAddress: string;
+    launchAddress: string;
     /**
      * @generated from protobuf field: string origin_address = 4;
      */
@@ -558,13 +507,13 @@ export interface HpumpV1LaunchPairSwapsRequest {
     toAddress: string;
 }
 /**
- * @generated from protobuf message hypurr.HpumpV1LaunchPairSwapsResponse
+ * @generated from protobuf message hypurr.HpumpV1LaunchSwapsResponse
  */
-export interface HpumpV1LaunchPairSwapsResponse {
+export interface HpumpV1LaunchSwapsResponse {
     /**
-     * @generated from protobuf field: repeated hypurr.HpumpV1LaunchPairSwap swaps = 1;
+     * @generated from protobuf field: repeated hypurr.HpumpV1LaunchSwap swaps = 1;
      */
-    swaps: HpumpV1LaunchPairSwap[];
+    swaps: HpumpV1LaunchSwap[];
     /**
      * @generated from protobuf field: string next_page_token = 2;
      */
@@ -573,26 +522,26 @@ export interface HpumpV1LaunchPairSwapsResponse {
 /**
  * HPump V1 Swap streaming request/response messages
  *
- * @generated from protobuf message hypurr.HpumpV1LaunchPairSwapStreamRequest
+ * @generated from protobuf message hypurr.HpumpV1LaunchSwapStreamRequest
  */
-export interface HpumpV1LaunchPairSwapStreamRequest {
+export interface HpumpV1LaunchSwapStreamRequest {
     /**
-     * @generated from protobuf field: string pair_address = 1;
+     * @generated from protobuf field: string launch_address = 1;
      */
-    pairAddress: string;
+    launchAddress: string;
     /**
      * @generated from protobuf field: google.protobuf.Int32Value limit = 2;
      */
     limit?: Int32Value;
 }
 /**
- * @generated from protobuf message hypurr.HpumpV1LaunchPairSwapStreamResponse
+ * @generated from protobuf message hypurr.HpumpV1LaunchSwapStreamResponse
  */
-export interface HpumpV1LaunchPairSwapStreamResponse {
+export interface HpumpV1LaunchSwapStreamResponse {
     /**
-     * @generated from protobuf field: repeated hypurr.HpumpV1LaunchPairSwap swaps = 1;
+     * @generated from protobuf field: repeated hypurr.HpumpV1LaunchSwap swaps = 1;
      */
-    swaps: HpumpV1LaunchPairSwap[];
+    swaps: HpumpV1LaunchSwap[];
     /**
      * @generated from protobuf field: repeated hypurr.WalletPosition positions = 2;
      */
@@ -2438,20 +2387,20 @@ class LatestHyperliquidLaunchFillsRequest$Type extends MessageType<LatestHyperli
  */
 export const LatestHyperliquidLaunchFillsRequest = new LatestHyperliquidLaunchFillsRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchTokenRequest$Type extends MessageType<HpumpV1LaunchTokenRequest> {
+class HpumpV1LaunchRequest$Type extends MessageType<HpumpV1LaunchRequest> {
     constructor() {
-        super("hypurr.HpumpV1LaunchTokenRequest", [
+        super("hypurr.HpumpV1LaunchRequest", [
             { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<HpumpV1LaunchTokenRequest>): HpumpV1LaunchTokenRequest {
+    create(value?: PartialMessage<HpumpV1LaunchRequest>): HpumpV1LaunchRequest {
         const message = { address: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchTokenRequest>(this, message, value);
+            reflectionMergePartial<HpumpV1LaunchRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchTokenRequest): HpumpV1LaunchTokenRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchRequest): HpumpV1LaunchRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -2470,7 +2419,7 @@ class HpumpV1LaunchTokenRequest$Type extends MessageType<HpumpV1LaunchTokenReque
         }
         return message;
     }
-    internalBinaryWrite(message: HpumpV1LaunchTokenRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HpumpV1LaunchRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string address = 1; */
         if (message.address !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.address);
@@ -2481,30 +2430,30 @@ class HpumpV1LaunchTokenRequest$Type extends MessageType<HpumpV1LaunchTokenReque
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchTokenRequest
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchRequest
  */
-export const HpumpV1LaunchTokenRequest = new HpumpV1LaunchTokenRequest$Type();
+export const HpumpV1LaunchRequest = new HpumpV1LaunchRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchTokenResponse$Type extends MessageType<HpumpV1LaunchTokenResponse> {
+class HpumpV1LaunchResponse$Type extends MessageType<HpumpV1LaunchResponse> {
     constructor() {
-        super("hypurr.HpumpV1LaunchTokenResponse", [
-            { no: 1, name: "token", kind: "message", T: () => HpumpV1LaunchToken }
+        super("hypurr.HpumpV1LaunchResponse", [
+            { no: 1, name: "launch", kind: "message", T: () => HpumpV1Launch }
         ]);
     }
-    create(value?: PartialMessage<HpumpV1LaunchTokenResponse>): HpumpV1LaunchTokenResponse {
+    create(value?: PartialMessage<HpumpV1LaunchResponse>): HpumpV1LaunchResponse {
         const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchTokenResponse>(this, message, value);
+            reflectionMergePartial<HpumpV1LaunchResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchTokenResponse): HpumpV1LaunchTokenResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchResponse): HpumpV1LaunchResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* hypurr.HpumpV1LaunchToken token */ 1:
-                    message.token = HpumpV1LaunchToken.internalBinaryRead(reader, reader.uint32(), options, message.token);
+                case /* hypurr.HpumpV1Launch launch */ 1:
+                    message.launch = HpumpV1Launch.internalBinaryRead(reader, reader.uint32(), options, message.launch);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2517,10 +2466,10 @@ class HpumpV1LaunchTokenResponse$Type extends MessageType<HpumpV1LaunchTokenResp
         }
         return message;
     }
-    internalBinaryWrite(message: HpumpV1LaunchTokenResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* hypurr.HpumpV1LaunchToken token = 1; */
-        if (message.token)
-            HpumpV1LaunchToken.internalBinaryWrite(message.token, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+    internalBinaryWrite(message: HpumpV1LaunchResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.HpumpV1Launch launch = 1; */
+        if (message.launch)
+            HpumpV1Launch.internalBinaryWrite(message.launch, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2528,26 +2477,26 @@ class HpumpV1LaunchTokenResponse$Type extends MessageType<HpumpV1LaunchTokenResp
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchTokenResponse
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchResponse
  */
-export const HpumpV1LaunchTokenResponse = new HpumpV1LaunchTokenResponse$Type();
+export const HpumpV1LaunchResponse = new HpumpV1LaunchResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchTokensRequest$Type extends MessageType<HpumpV1LaunchTokensRequest> {
+class HpumpV1LaunchesRequest$Type extends MessageType<HpumpV1LaunchesRequest> {
     constructor() {
-        super("hypurr.HpumpV1LaunchTokensRequest", [
+        super("hypurr.HpumpV1LaunchesRequest", [
             { no: 1, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "graduated_only", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
-    create(value?: PartialMessage<HpumpV1LaunchTokensRequest>): HpumpV1LaunchTokensRequest {
+    create(value?: PartialMessage<HpumpV1LaunchesRequest>): HpumpV1LaunchesRequest {
         const message = { pageSize: 0, pageToken: "", graduatedOnly: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchTokensRequest>(this, message, value);
+            reflectionMergePartial<HpumpV1LaunchesRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchTokensRequest): HpumpV1LaunchTokensRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchesRequest): HpumpV1LaunchesRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -2572,7 +2521,7 @@ class HpumpV1LaunchTokensRequest$Type extends MessageType<HpumpV1LaunchTokensReq
         }
         return message;
     }
-    internalBinaryWrite(message: HpumpV1LaunchTokensRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HpumpV1LaunchesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* int32 page_size = 1; */
         if (message.pageSize !== 0)
             writer.tag(1, WireType.Varint).int32(message.pageSize);
@@ -2589,31 +2538,31 @@ class HpumpV1LaunchTokensRequest$Type extends MessageType<HpumpV1LaunchTokensReq
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchTokensRequest
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchesRequest
  */
-export const HpumpV1LaunchTokensRequest = new HpumpV1LaunchTokensRequest$Type();
+export const HpumpV1LaunchesRequest = new HpumpV1LaunchesRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchTokensResponse$Type extends MessageType<HpumpV1LaunchTokensResponse> {
+class HpumpV1LaunchesResponse$Type extends MessageType<HpumpV1LaunchesResponse> {
     constructor() {
-        super("hypurr.HpumpV1LaunchTokensResponse", [
-            { no: 1, name: "tokens", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchToken },
+        super("hypurr.HpumpV1LaunchesResponse", [
+            { no: 1, name: "launches", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1Launch },
             { no: 2, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<HpumpV1LaunchTokensResponse>): HpumpV1LaunchTokensResponse {
-        const message = { tokens: [], nextPageToken: "" };
+    create(value?: PartialMessage<HpumpV1LaunchesResponse>): HpumpV1LaunchesResponse {
+        const message = { launches: [], nextPageToken: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchTokensResponse>(this, message, value);
+            reflectionMergePartial<HpumpV1LaunchesResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchTokensResponse): HpumpV1LaunchTokensResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchesResponse): HpumpV1LaunchesResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypurr.HpumpV1LaunchToken tokens */ 1:
-                    message.tokens.push(HpumpV1LaunchToken.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.HpumpV1Launch launches */ 1:
+                    message.launches.push(HpumpV1Launch.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* string next_page_token */ 2:
                     message.nextPageToken = reader.string();
@@ -2629,10 +2578,10 @@ class HpumpV1LaunchTokensResponse$Type extends MessageType<HpumpV1LaunchTokensRe
         }
         return message;
     }
-    internalBinaryWrite(message: HpumpV1LaunchTokensResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.HpumpV1LaunchToken tokens = 1; */
-        for (let i = 0; i < message.tokens.length; i++)
-            HpumpV1LaunchToken.internalBinaryWrite(message.tokens[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+    internalBinaryWrite(message: HpumpV1LaunchesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.HpumpV1Launch launches = 1; */
+        for (let i = 0; i < message.launches.length; i++)
+            HpumpV1Launch.internalBinaryWrite(message.launches[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string next_page_token = 2; */
         if (message.nextPageToken !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.nextPageToken);
@@ -2643,233 +2592,24 @@ class HpumpV1LaunchTokensResponse$Type extends MessageType<HpumpV1LaunchTokensRe
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchTokensResponse
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchesResponse
  */
-export const HpumpV1LaunchTokensResponse = new HpumpV1LaunchTokensResponse$Type();
+export const HpumpV1LaunchesResponse = new HpumpV1LaunchesResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchPairRequest$Type extends MessageType<HpumpV1LaunchPairRequest> {
+class HpumpV1LaunchSwapRequest$Type extends MessageType<HpumpV1LaunchSwapRequest> {
     constructor() {
-        super("hypurr.HpumpV1LaunchPairRequest", [
-            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<HpumpV1LaunchPairRequest>): HpumpV1LaunchPairRequest {
-        const message = { address: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchPairRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPairRequest): HpumpV1LaunchPairRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string address */ 1:
-                    message.address = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: HpumpV1LaunchPairRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string address = 1; */
-        if (message.address !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.address);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPairRequest
- */
-export const HpumpV1LaunchPairRequest = new HpumpV1LaunchPairRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchPairResponse$Type extends MessageType<HpumpV1LaunchPairResponse> {
-    constructor() {
-        super("hypurr.HpumpV1LaunchPairResponse", [
-            { no: 1, name: "pair", kind: "message", T: () => HpumpV1LaunchPair }
-        ]);
-    }
-    create(value?: PartialMessage<HpumpV1LaunchPairResponse>): HpumpV1LaunchPairResponse {
-        const message = {};
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchPairResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPairResponse): HpumpV1LaunchPairResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* hypurr.HpumpV1LaunchPair pair */ 1:
-                    message.pair = HpumpV1LaunchPair.internalBinaryRead(reader, reader.uint32(), options, message.pair);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: HpumpV1LaunchPairResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* hypurr.HpumpV1LaunchPair pair = 1; */
-        if (message.pair)
-            HpumpV1LaunchPair.internalBinaryWrite(message.pair, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPairResponse
- */
-export const HpumpV1LaunchPairResponse = new HpumpV1LaunchPairResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchPairsRequest$Type extends MessageType<HpumpV1LaunchPairsRequest> {
-    constructor() {
-        super("hypurr.HpumpV1LaunchPairsRequest", [
-            { no: 1, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 2, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "token_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<HpumpV1LaunchPairsRequest>): HpumpV1LaunchPairsRequest {
-        const message = { pageSize: 0, pageToken: "", tokenAddress: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchPairsRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPairsRequest): HpumpV1LaunchPairsRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int32 page_size */ 1:
-                    message.pageSize = reader.int32();
-                    break;
-                case /* string page_token */ 2:
-                    message.pageToken = reader.string();
-                    break;
-                case /* string token_address */ 3:
-                    message.tokenAddress = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: HpumpV1LaunchPairsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int32 page_size = 1; */
-        if (message.pageSize !== 0)
-            writer.tag(1, WireType.Varint).int32(message.pageSize);
-        /* string page_token = 2; */
-        if (message.pageToken !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.pageToken);
-        /* string token_address = 3; */
-        if (message.tokenAddress !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.tokenAddress);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPairsRequest
- */
-export const HpumpV1LaunchPairsRequest = new HpumpV1LaunchPairsRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchPairsResponse$Type extends MessageType<HpumpV1LaunchPairsResponse> {
-    constructor() {
-        super("hypurr.HpumpV1LaunchPairsResponse", [
-            { no: 1, name: "pairs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchPair },
-            { no: 2, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<HpumpV1LaunchPairsResponse>): HpumpV1LaunchPairsResponse {
-        const message = { pairs: [], nextPageToken: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchPairsResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPairsResponse): HpumpV1LaunchPairsResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated hypurr.HpumpV1LaunchPair pairs */ 1:
-                    message.pairs.push(HpumpV1LaunchPair.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* string next_page_token */ 2:
-                    message.nextPageToken = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: HpumpV1LaunchPairsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.HpumpV1LaunchPair pairs = 1; */
-        for (let i = 0; i < message.pairs.length; i++)
-            HpumpV1LaunchPair.internalBinaryWrite(message.pairs[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* string next_page_token = 2; */
-        if (message.nextPageToken !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.nextPageToken);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPairsResponse
- */
-export const HpumpV1LaunchPairsResponse = new HpumpV1LaunchPairsResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchPairSwapRequest$Type extends MessageType<HpumpV1LaunchPairSwapRequest> {
-    constructor() {
-        super("hypurr.HpumpV1LaunchPairSwapRequest", [
+        super("hypurr.HpumpV1LaunchSwapRequest", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<HpumpV1LaunchPairSwapRequest>): HpumpV1LaunchPairSwapRequest {
+    create(value?: PartialMessage<HpumpV1LaunchSwapRequest>): HpumpV1LaunchSwapRequest {
         const message = { id: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchPairSwapRequest>(this, message, value);
+            reflectionMergePartial<HpumpV1LaunchSwapRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPairSwapRequest): HpumpV1LaunchPairSwapRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchSwapRequest): HpumpV1LaunchSwapRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -2888,7 +2628,7 @@ class HpumpV1LaunchPairSwapRequest$Type extends MessageType<HpumpV1LaunchPairSwa
         }
         return message;
     }
-    internalBinaryWrite(message: HpumpV1LaunchPairSwapRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HpumpV1LaunchSwapRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string id = 1; */
         if (message.id !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.id);
@@ -2899,30 +2639,30 @@ class HpumpV1LaunchPairSwapRequest$Type extends MessageType<HpumpV1LaunchPairSwa
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPairSwapRequest
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchSwapRequest
  */
-export const HpumpV1LaunchPairSwapRequest = new HpumpV1LaunchPairSwapRequest$Type();
+export const HpumpV1LaunchSwapRequest = new HpumpV1LaunchSwapRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchPairSwapResponse$Type extends MessageType<HpumpV1LaunchPairSwapResponse> {
+class HpumpV1LaunchSwapResponse$Type extends MessageType<HpumpV1LaunchSwapResponse> {
     constructor() {
-        super("hypurr.HpumpV1LaunchPairSwapResponse", [
-            { no: 1, name: "swap", kind: "message", T: () => HpumpV1LaunchPairSwap }
+        super("hypurr.HpumpV1LaunchSwapResponse", [
+            { no: 1, name: "swap", kind: "message", T: () => HpumpV1LaunchSwap }
         ]);
     }
-    create(value?: PartialMessage<HpumpV1LaunchPairSwapResponse>): HpumpV1LaunchPairSwapResponse {
+    create(value?: PartialMessage<HpumpV1LaunchSwapResponse>): HpumpV1LaunchSwapResponse {
         const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchPairSwapResponse>(this, message, value);
+            reflectionMergePartial<HpumpV1LaunchSwapResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPairSwapResponse): HpumpV1LaunchPairSwapResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchSwapResponse): HpumpV1LaunchSwapResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* hypurr.HpumpV1LaunchPairSwap swap */ 1:
-                    message.swap = HpumpV1LaunchPairSwap.internalBinaryRead(reader, reader.uint32(), options, message.swap);
+                case /* hypurr.HpumpV1LaunchSwap swap */ 1:
+                    message.swap = HpumpV1LaunchSwap.internalBinaryRead(reader, reader.uint32(), options, message.swap);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2935,10 +2675,10 @@ class HpumpV1LaunchPairSwapResponse$Type extends MessageType<HpumpV1LaunchPairSw
         }
         return message;
     }
-    internalBinaryWrite(message: HpumpV1LaunchPairSwapResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* hypurr.HpumpV1LaunchPairSwap swap = 1; */
+    internalBinaryWrite(message: HpumpV1LaunchSwapResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.HpumpV1LaunchSwap swap = 1; */
         if (message.swap)
-            HpumpV1LaunchPairSwap.internalBinaryWrite(message.swap, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            HpumpV1LaunchSwap.internalBinaryWrite(message.swap, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2946,28 +2686,28 @@ class HpumpV1LaunchPairSwapResponse$Type extends MessageType<HpumpV1LaunchPairSw
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPairSwapResponse
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchSwapResponse
  */
-export const HpumpV1LaunchPairSwapResponse = new HpumpV1LaunchPairSwapResponse$Type();
+export const HpumpV1LaunchSwapResponse = new HpumpV1LaunchSwapResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchPairSwapsRequest$Type extends MessageType<HpumpV1LaunchPairSwapsRequest> {
+class HpumpV1LaunchSwapsRequest$Type extends MessageType<HpumpV1LaunchSwapsRequest> {
     constructor() {
-        super("hypurr.HpumpV1LaunchPairSwapsRequest", [
+        super("hypurr.HpumpV1LaunchSwapsRequest", [
             { no: 1, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "pair_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "launch_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "origin_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "to_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<HpumpV1LaunchPairSwapsRequest>): HpumpV1LaunchPairSwapsRequest {
-        const message = { pageSize: 0, pageToken: "", pairAddress: "", originAddress: "", toAddress: "" };
+    create(value?: PartialMessage<HpumpV1LaunchSwapsRequest>): HpumpV1LaunchSwapsRequest {
+        const message = { pageSize: 0, pageToken: "", launchAddress: "", originAddress: "", toAddress: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchPairSwapsRequest>(this, message, value);
+            reflectionMergePartial<HpumpV1LaunchSwapsRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPairSwapsRequest): HpumpV1LaunchPairSwapsRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchSwapsRequest): HpumpV1LaunchSwapsRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -2978,8 +2718,8 @@ class HpumpV1LaunchPairSwapsRequest$Type extends MessageType<HpumpV1LaunchPairSw
                 case /* string page_token */ 2:
                     message.pageToken = reader.string();
                     break;
-                case /* string pair_address */ 3:
-                    message.pairAddress = reader.string();
+                case /* string launch_address */ 3:
+                    message.launchAddress = reader.string();
                     break;
                 case /* string origin_address */ 4:
                     message.originAddress = reader.string();
@@ -2998,16 +2738,16 @@ class HpumpV1LaunchPairSwapsRequest$Type extends MessageType<HpumpV1LaunchPairSw
         }
         return message;
     }
-    internalBinaryWrite(message: HpumpV1LaunchPairSwapsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HpumpV1LaunchSwapsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* int32 page_size = 1; */
         if (message.pageSize !== 0)
             writer.tag(1, WireType.Varint).int32(message.pageSize);
         /* string page_token = 2; */
         if (message.pageToken !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.pageToken);
-        /* string pair_address = 3; */
-        if (message.pairAddress !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.pairAddress);
+        /* string launch_address = 3; */
+        if (message.launchAddress !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.launchAddress);
         /* string origin_address = 4; */
         if (message.originAddress !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.originAddress);
@@ -3021,31 +2761,31 @@ class HpumpV1LaunchPairSwapsRequest$Type extends MessageType<HpumpV1LaunchPairSw
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPairSwapsRequest
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchSwapsRequest
  */
-export const HpumpV1LaunchPairSwapsRequest = new HpumpV1LaunchPairSwapsRequest$Type();
+export const HpumpV1LaunchSwapsRequest = new HpumpV1LaunchSwapsRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchPairSwapsResponse$Type extends MessageType<HpumpV1LaunchPairSwapsResponse> {
+class HpumpV1LaunchSwapsResponse$Type extends MessageType<HpumpV1LaunchSwapsResponse> {
     constructor() {
-        super("hypurr.HpumpV1LaunchPairSwapsResponse", [
-            { no: 1, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchPairSwap },
+        super("hypurr.HpumpV1LaunchSwapsResponse", [
+            { no: 1, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchSwap },
             { no: 2, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<HpumpV1LaunchPairSwapsResponse>): HpumpV1LaunchPairSwapsResponse {
+    create(value?: PartialMessage<HpumpV1LaunchSwapsResponse>): HpumpV1LaunchSwapsResponse {
         const message = { swaps: [], nextPageToken: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchPairSwapsResponse>(this, message, value);
+            reflectionMergePartial<HpumpV1LaunchSwapsResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPairSwapsResponse): HpumpV1LaunchPairSwapsResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchSwapsResponse): HpumpV1LaunchSwapsResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypurr.HpumpV1LaunchPairSwap swaps */ 1:
-                    message.swaps.push(HpumpV1LaunchPairSwap.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.HpumpV1LaunchSwap swaps */ 1:
+                    message.swaps.push(HpumpV1LaunchSwap.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* string next_page_token */ 2:
                     message.nextPageToken = reader.string();
@@ -3061,10 +2801,10 @@ class HpumpV1LaunchPairSwapsResponse$Type extends MessageType<HpumpV1LaunchPairS
         }
         return message;
     }
-    internalBinaryWrite(message: HpumpV1LaunchPairSwapsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.HpumpV1LaunchPairSwap swaps = 1; */
+    internalBinaryWrite(message: HpumpV1LaunchSwapsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.HpumpV1LaunchSwap swaps = 1; */
         for (let i = 0; i < message.swaps.length; i++)
-            HpumpV1LaunchPairSwap.internalBinaryWrite(message.swaps[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            HpumpV1LaunchSwap.internalBinaryWrite(message.swaps[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string next_page_token = 2; */
         if (message.nextPageToken !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.nextPageToken);
@@ -3075,31 +2815,31 @@ class HpumpV1LaunchPairSwapsResponse$Type extends MessageType<HpumpV1LaunchPairS
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPairSwapsResponse
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchSwapsResponse
  */
-export const HpumpV1LaunchPairSwapsResponse = new HpumpV1LaunchPairSwapsResponse$Type();
+export const HpumpV1LaunchSwapsResponse = new HpumpV1LaunchSwapsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchPairSwapStreamRequest$Type extends MessageType<HpumpV1LaunchPairSwapStreamRequest> {
+class HpumpV1LaunchSwapStreamRequest$Type extends MessageType<HpumpV1LaunchSwapStreamRequest> {
     constructor() {
-        super("hypurr.HpumpV1LaunchPairSwapStreamRequest", [
-            { no: 1, name: "pair_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+        super("hypurr.HpumpV1LaunchSwapStreamRequest", [
+            { no: 1, name: "launch_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "limit", kind: "message", T: () => Int32Value }
         ]);
     }
-    create(value?: PartialMessage<HpumpV1LaunchPairSwapStreamRequest>): HpumpV1LaunchPairSwapStreamRequest {
-        const message = { pairAddress: "" };
+    create(value?: PartialMessage<HpumpV1LaunchSwapStreamRequest>): HpumpV1LaunchSwapStreamRequest {
+        const message = { launchAddress: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchPairSwapStreamRequest>(this, message, value);
+            reflectionMergePartial<HpumpV1LaunchSwapStreamRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPairSwapStreamRequest): HpumpV1LaunchPairSwapStreamRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchSwapStreamRequest): HpumpV1LaunchSwapStreamRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string pair_address */ 1:
-                    message.pairAddress = reader.string();
+                case /* string launch_address */ 1:
+                    message.launchAddress = reader.string();
                     break;
                 case /* google.protobuf.Int32Value limit */ 2:
                     message.limit = Int32Value.internalBinaryRead(reader, reader.uint32(), options, message.limit);
@@ -3115,10 +2855,10 @@ class HpumpV1LaunchPairSwapStreamRequest$Type extends MessageType<HpumpV1LaunchP
         }
         return message;
     }
-    internalBinaryWrite(message: HpumpV1LaunchPairSwapStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string pair_address = 1; */
-        if (message.pairAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.pairAddress);
+    internalBinaryWrite(message: HpumpV1LaunchSwapStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string launch_address = 1; */
+        if (message.launchAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.launchAddress);
         /* google.protobuf.Int32Value limit = 2; */
         if (message.limit)
             Int32Value.internalBinaryWrite(message.limit, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
@@ -3129,31 +2869,31 @@ class HpumpV1LaunchPairSwapStreamRequest$Type extends MessageType<HpumpV1LaunchP
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPairSwapStreamRequest
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchSwapStreamRequest
  */
-export const HpumpV1LaunchPairSwapStreamRequest = new HpumpV1LaunchPairSwapStreamRequest$Type();
+export const HpumpV1LaunchSwapStreamRequest = new HpumpV1LaunchSwapStreamRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchPairSwapStreamResponse$Type extends MessageType<HpumpV1LaunchPairSwapStreamResponse> {
+class HpumpV1LaunchSwapStreamResponse$Type extends MessageType<HpumpV1LaunchSwapStreamResponse> {
     constructor() {
-        super("hypurr.HpumpV1LaunchPairSwapStreamResponse", [
-            { no: 1, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchPairSwap },
+        super("hypurr.HpumpV1LaunchSwapStreamResponse", [
+            { no: 1, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchSwap },
             { no: 2, name: "positions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletPosition }
         ]);
     }
-    create(value?: PartialMessage<HpumpV1LaunchPairSwapStreamResponse>): HpumpV1LaunchPairSwapStreamResponse {
+    create(value?: PartialMessage<HpumpV1LaunchSwapStreamResponse>): HpumpV1LaunchSwapStreamResponse {
         const message = { swaps: [], positions: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchPairSwapStreamResponse>(this, message, value);
+            reflectionMergePartial<HpumpV1LaunchSwapStreamResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPairSwapStreamResponse): HpumpV1LaunchPairSwapStreamResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchSwapStreamResponse): HpumpV1LaunchSwapStreamResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypurr.HpumpV1LaunchPairSwap swaps */ 1:
-                    message.swaps.push(HpumpV1LaunchPairSwap.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.HpumpV1LaunchSwap swaps */ 1:
+                    message.swaps.push(HpumpV1LaunchSwap.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* repeated hypurr.WalletPosition positions */ 2:
                     message.positions.push(WalletPosition.internalBinaryRead(reader, reader.uint32(), options));
@@ -3169,10 +2909,10 @@ class HpumpV1LaunchPairSwapStreamResponse$Type extends MessageType<HpumpV1Launch
         }
         return message;
     }
-    internalBinaryWrite(message: HpumpV1LaunchPairSwapStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.HpumpV1LaunchPairSwap swaps = 1; */
+    internalBinaryWrite(message: HpumpV1LaunchSwapStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.HpumpV1LaunchSwap swaps = 1; */
         for (let i = 0; i < message.swaps.length; i++)
-            HpumpV1LaunchPairSwap.internalBinaryWrite(message.swaps[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            HpumpV1LaunchSwap.internalBinaryWrite(message.swaps[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* repeated hypurr.WalletPosition positions = 2; */
         for (let i = 0; i < message.positions.length; i++)
             WalletPosition.internalBinaryWrite(message.positions[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
@@ -3183,9 +2923,9 @@ class HpumpV1LaunchPairSwapStreamResponse$Type extends MessageType<HpumpV1Launch
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPairSwapStreamResponse
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchSwapStreamResponse
  */
-export const HpumpV1LaunchPairSwapStreamResponse = new HpumpV1LaunchPairSwapStreamResponse$Type();
+export const HpumpV1LaunchSwapStreamResponse = new HpumpV1LaunchSwapStreamResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HpumpV1LaunchCandlesRequest$Type extends MessageType<HpumpV1LaunchCandlesRequest> {
     constructor() {
@@ -3606,13 +3346,11 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "HyperliquidLaunchMessages", serverStreaming: true, options: {}, I: HyperliquidLaunchMessagesRequest, O: HyperliquidLaunchMessagesResponse },
     { name: "LatestHyperliquidLaunchFills", serverStreaming: true, options: {}, I: LatestHyperliquidLaunchFillsRequest, O: HyperliquidLaunchFillsResponse },
     { name: "HyperliquidLaunchHolders", options: {}, I: HyperliquidLaunchHoldersRequest, O: HyperliquidLaunchHoldersResponse },
-    { name: "HpumpV1LaunchToken", options: {}, I: HpumpV1LaunchTokenRequest, O: HpumpV1LaunchTokenResponse },
-    { name: "HpumpV1LaunchTokens", options: {}, I: HpumpV1LaunchTokensRequest, O: HpumpV1LaunchTokensResponse },
-    { name: "HpumpV1LaunchPair", options: {}, I: HpumpV1LaunchPairRequest, O: HpumpV1LaunchPairResponse },
-    { name: "HpumpV1LaunchPairs", options: {}, I: HpumpV1LaunchPairsRequest, O: HpumpV1LaunchPairsResponse },
-    { name: "HpumpV1LaunchPairSwap", options: {}, I: HpumpV1LaunchPairSwapRequest, O: HpumpV1LaunchPairSwapResponse },
-    { name: "HpumpV1LaunchPairSwaps", options: {}, I: HpumpV1LaunchPairSwapsRequest, O: HpumpV1LaunchPairSwapsResponse },
-    { name: "HpumpV1LaunchPairSwapStream", serverStreaming: true, options: {}, I: HpumpV1LaunchPairSwapStreamRequest, O: HpumpV1LaunchPairSwapStreamResponse },
+    { name: "HpumpV1LaunchToken", options: {}, I: HpumpV1LaunchRequest, O: HpumpV1LaunchResponse },
+    { name: "HpumpV1LaunchTokens", options: {}, I: HpumpV1LaunchesRequest, O: HpumpV1LaunchesResponse },
+    { name: "HpumpV1LaunchPairSwap", options: {}, I: HpumpV1LaunchSwapRequest, O: HpumpV1LaunchSwapResponse },
+    { name: "HpumpV1LaunchPairSwaps", options: {}, I: HpumpV1LaunchSwapsRequest, O: HpumpV1LaunchSwapsResponse },
+    { name: "HpumpV1LaunchPairSwapStream", serverStreaming: true, options: {}, I: HpumpV1LaunchSwapStreamRequest, O: HpumpV1LaunchSwapStreamResponse },
     { name: "HpumpV1LaunchCandleStream", serverStreaming: true, options: {}, I: HpumpV1LaunchCandlesRequest, O: HpumpV1LaunchCandlesResponse },
     { name: "HypurrFunCabals", options: {}, I: HypurrFunCabalsRequest, O: HypurrFunCabalsResponse },
     { name: "HypurrFunCabalPerformance", options: {}, I: HypurrFunCabalPerformanceRequest, O: HypurrFunCabalPerformanceResponse },

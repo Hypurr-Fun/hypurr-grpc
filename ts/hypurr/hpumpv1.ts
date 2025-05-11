@@ -15,9 +15,9 @@ import { TelegramUserPublic } from "./common";
 /**
  * HPump Launch Token messages
  *
- * @generated from protobuf message hypurr.HpumpV1LaunchToken
+ * @generated from protobuf message hypurr.HpumpV1Launch
  */
-export interface HpumpV1LaunchToken {
+export interface HpumpV1Launch {
     /**
      * @generated from protobuf field: string address = 1;
      */
@@ -35,97 +35,70 @@ export interface HpumpV1LaunchToken {
      */
     devAddress: string;
     /**
-     * @generated from protobuf field: string pair_address = 5;
-     */
-    pairAddress: string;
-    /**
-     * @generated from protobuf field: int64 created_at = 6;
-     */
-    createdAt: number; // block timestamp
-    /**
-     * @generated from protobuf field: string launch_id = 7;
-     */
-    launchId: string; // the uint256 id from the event (using string for big integers)
-    /**
-     * @generated from protobuf field: bool graduated = 8;
-     */
-    graduated: boolean;
-    /**
-     * @generated from protobuf field: int64 graduated_at = 9;
-     */
-    graduatedAt: number; // Timestamp when graduated
-    /**
-     * @generated from protobuf field: hypurr.HpumpV1LaunchPair pair = 10;
-     */
-    pair?: HpumpV1LaunchPair; // Embedded pair information
-    /**
-     * @generated from protobuf field: string description = 11;
+     * @generated from protobuf field: string description = 5;
      */
     description: string;
     /**
-     * @generated from protobuf field: int64 dev_telegram_id = 12;
+     * @generated from protobuf field: int64 dev_telegram_id = 6;
      */
     devTelegramId: number;
     /**
+     * @generated from protobuf field: int64 created_at = 7;
+     */
+    createdAt: number; // block timestamp
+    /**
+     * @generated from protobuf field: string launch_id = 8;
+     */
+    launchId: string; // the uint256 id from the event (using string for big integers)
+    /**
+     * @generated from protobuf field: string base_reserve = 9;
+     */
+    baseReserve: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: string quote_reserve = 10;
+     */
+    quoteReserve: string; // Using string for big integers
+    /**
+     * @generated from protobuf field: string x0 = 11;
+     */
+    x0: string;
+    /**
+     * @generated from protobuf field: int64 last_sync_timestamp = 12;
+     */
+    lastSyncTimestamp: number;
+    /**
+     * @generated from protobuf field: bool graduated = 13;
+     */
+    graduated: boolean;
+    /**
+     * @generated from protobuf field: int64 graduated_at = 14;
+     */
+    graduatedAt: number; // Timestamp when graduated
+    /**
+     * @generated from protobuf field: string graduated_to = 15;
+     */
+    graduatedTo: string; // Address of the new token after graduation
+    /**
      * Dev telegram user
      *
-     * @generated from protobuf field: hypurr.TelegramUserPublic dev_telegram_user = 13;
+     * @generated from protobuf field: hypurr.TelegramUserPublic dev_telegram_user = 16;
      */
     devTelegramUser?: TelegramUserPublic;
 }
 /**
- * HPump Launch Pair messages
- *
- * @generated from protobuf message hypurr.HpumpV1LaunchPair
- */
-export interface HpumpV1LaunchPair {
-    /**
-     * @generated from protobuf field: string address = 1;
-     */
-    address: string; // pair address is unique
-    /**
-     * @generated from protobuf field: string token = 2;
-     */
-    token: string; // reference to the token
-    /**
-     * @generated from protobuf field: string base_reserve = 3;
-     */
-    baseReserve: string; // Using string for big integers
-    /**
-     * @generated from protobuf field: string quote_reserve = 4;
-     */
-    quoteReserve: string; // Using string for big integers
-    /**
-     * @generated from protobuf field: string x0 = 5;
-     */
-    x0: string;
-    /**
-     * @generated from protobuf field: int64 last_sync_timestamp = 6;
-     */
-    lastSyncTimestamp: number;
-    /**
-     * @generated from protobuf field: string graduated_to = 7;
-     */
-    graduatedTo: string; // Address of the new pair after graduation
-    /**
-     * @generated from protobuf field: repeated hypurr.HpumpV1LaunchPairSwap swaps = 8;
-     */
-    swaps: HpumpV1LaunchPairSwap[]; // List of swaps
-}
-/**
  * HPump Launch Pair Swap messages
  *
- * @generated from protobuf message hypurr.HpumpV1LaunchPairSwap
+ * @generated from protobuf message hypurr.HpumpV1LaunchSwap
  */
-export interface HpumpV1LaunchPairSwap {
+export interface HpumpV1LaunchSwap {
     /**
      * @generated from protobuf field: string id = 1;
      */
     id: string; // tx hash + log index
     /**
-     * @generated from protobuf field: string pair = 2;
+     * @generated from protobuf field: string launch = 2;
      */
-    pair: string; // launch pair address
+    launch: string; // launch pair address
     /**
      * @generated from protobuf field: string sender = 3;
      */
@@ -156,32 +129,35 @@ export interface HpumpV1LaunchPairSwap {
     timestamp: number;
 }
 // @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
+class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
     constructor() {
-        super("hypurr.HpumpV1LaunchToken", [
+        super("hypurr.HpumpV1Launch", [
             { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "symbol", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "dev_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "pair_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 7, name: "launch_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "graduated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 9, name: "graduated_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 10, name: "pair", kind: "message", T: () => HpumpV1LaunchPair },
-            { no: 11, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 12, name: "dev_telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 13, name: "dev_telegram_user", kind: "message", T: () => TelegramUserPublic }
+            { no: 5, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "dev_telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 8, name: "launch_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "base_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "quote_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "x0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 12, name: "last_sync_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 13, name: "graduated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 14, name: "graduated_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 15, name: "graduated_to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 16, name: "dev_telegram_user", kind: "message", T: () => TelegramUserPublic }
         ]);
     }
-    create(value?: PartialMessage<HpumpV1LaunchToken>): HpumpV1LaunchToken {
-        const message = { address: "", symbol: "", name: "", devAddress: "", pairAddress: "", createdAt: 0, launchId: "", graduated: false, graduatedAt: 0, description: "", devTelegramId: 0 };
+    create(value?: PartialMessage<HpumpV1Launch>): HpumpV1Launch {
+        const message = { address: "", symbol: "", name: "", devAddress: "", description: "", devTelegramId: 0, createdAt: 0, launchId: "", baseReserve: "", quoteReserve: "", x0: "", lastSyncTimestamp: 0, graduated: false, graduatedAt: 0, graduatedTo: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchToken>(this, message, value);
+            reflectionMergePartial<HpumpV1Launch>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchToken): HpumpV1LaunchToken {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1Launch): HpumpV1Launch {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -198,31 +174,40 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
                 case /* string dev_address */ 4:
                     message.devAddress = reader.string();
                     break;
-                case /* string pair_address */ 5:
-                    message.pairAddress = reader.string();
-                    break;
-                case /* int64 created_at */ 6:
-                    message.createdAt = reader.int64().toNumber();
-                    break;
-                case /* string launch_id */ 7:
-                    message.launchId = reader.string();
-                    break;
-                case /* bool graduated */ 8:
-                    message.graduated = reader.bool();
-                    break;
-                case /* int64 graduated_at */ 9:
-                    message.graduatedAt = reader.int64().toNumber();
-                    break;
-                case /* hypurr.HpumpV1LaunchPair pair */ 10:
-                    message.pair = HpumpV1LaunchPair.internalBinaryRead(reader, reader.uint32(), options, message.pair);
-                    break;
-                case /* string description */ 11:
+                case /* string description */ 5:
                     message.description = reader.string();
                     break;
-                case /* int64 dev_telegram_id */ 12:
+                case /* int64 dev_telegram_id */ 6:
                     message.devTelegramId = reader.int64().toNumber();
                     break;
-                case /* hypurr.TelegramUserPublic dev_telegram_user */ 13:
+                case /* int64 created_at */ 7:
+                    message.createdAt = reader.int64().toNumber();
+                    break;
+                case /* string launch_id */ 8:
+                    message.launchId = reader.string();
+                    break;
+                case /* string base_reserve */ 9:
+                    message.baseReserve = reader.string();
+                    break;
+                case /* string quote_reserve */ 10:
+                    message.quoteReserve = reader.string();
+                    break;
+                case /* string x0 */ 11:
+                    message.x0 = reader.string();
+                    break;
+                case /* int64 last_sync_timestamp */ 12:
+                    message.lastSyncTimestamp = reader.int64().toNumber();
+                    break;
+                case /* bool graduated */ 13:
+                    message.graduated = reader.bool();
+                    break;
+                case /* int64 graduated_at */ 14:
+                    message.graduatedAt = reader.int64().toNumber();
+                    break;
+                case /* string graduated_to */ 15:
+                    message.graduatedTo = reader.string();
+                    break;
+                case /* hypurr.TelegramUserPublic dev_telegram_user */ 16:
                     message.devTelegramUser = TelegramUserPublic.internalBinaryRead(reader, reader.uint32(), options, message.devTelegramUser);
                     break;
                 default:
@@ -236,7 +221,7 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
         }
         return message;
     }
-    internalBinaryWrite(message: HpumpV1LaunchToken, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HpumpV1Launch, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string address = 1; */
         if (message.address !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.address);
@@ -249,129 +234,42 @@ class HpumpV1LaunchToken$Type extends MessageType<HpumpV1LaunchToken> {
         /* string dev_address = 4; */
         if (message.devAddress !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.devAddress);
-        /* string pair_address = 5; */
-        if (message.pairAddress !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.pairAddress);
-        /* int64 created_at = 6; */
-        if (message.createdAt !== 0)
-            writer.tag(6, WireType.Varint).int64(message.createdAt);
-        /* string launch_id = 7; */
-        if (message.launchId !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.launchId);
-        /* bool graduated = 8; */
-        if (message.graduated !== false)
-            writer.tag(8, WireType.Varint).bool(message.graduated);
-        /* int64 graduated_at = 9; */
-        if (message.graduatedAt !== 0)
-            writer.tag(9, WireType.Varint).int64(message.graduatedAt);
-        /* hypurr.HpumpV1LaunchPair pair = 10; */
-        if (message.pair)
-            HpumpV1LaunchPair.internalBinaryWrite(message.pair, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
-        /* string description = 11; */
+        /* string description = 5; */
         if (message.description !== "")
-            writer.tag(11, WireType.LengthDelimited).string(message.description);
-        /* int64 dev_telegram_id = 12; */
+            writer.tag(5, WireType.LengthDelimited).string(message.description);
+        /* int64 dev_telegram_id = 6; */
         if (message.devTelegramId !== 0)
-            writer.tag(12, WireType.Varint).int64(message.devTelegramId);
-        /* hypurr.TelegramUserPublic dev_telegram_user = 13; */
-        if (message.devTelegramUser)
-            TelegramUserPublic.internalBinaryWrite(message.devTelegramUser, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchToken
- */
-export const HpumpV1LaunchToken = new HpumpV1LaunchToken$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchPair$Type extends MessageType<HpumpV1LaunchPair> {
-    constructor() {
-        super("hypurr.HpumpV1LaunchPair", [
-            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "base_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "quote_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "x0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "last_sync_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 7, name: "graduated_to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "swaps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchPairSwap }
-        ]);
-    }
-    create(value?: PartialMessage<HpumpV1LaunchPair>): HpumpV1LaunchPair {
-        const message = { address: "", token: "", baseReserve: "", quoteReserve: "", x0: "", lastSyncTimestamp: 0, graduatedTo: "", swaps: [] };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchPair>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPair): HpumpV1LaunchPair {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string address */ 1:
-                    message.address = reader.string();
-                    break;
-                case /* string token */ 2:
-                    message.token = reader.string();
-                    break;
-                case /* string base_reserve */ 3:
-                    message.baseReserve = reader.string();
-                    break;
-                case /* string quote_reserve */ 4:
-                    message.quoteReserve = reader.string();
-                    break;
-                case /* string x0 */ 5:
-                    message.x0 = reader.string();
-                    break;
-                case /* int64 last_sync_timestamp */ 6:
-                    message.lastSyncTimestamp = reader.int64().toNumber();
-                    break;
-                case /* string graduated_to */ 7:
-                    message.graduatedTo = reader.string();
-                    break;
-                case /* repeated hypurr.HpumpV1LaunchPairSwap swaps */ 8:
-                    message.swaps.push(HpumpV1LaunchPairSwap.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: HpumpV1LaunchPair, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string address = 1; */
-        if (message.address !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.address);
-        /* string token = 2; */
-        if (message.token !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.token);
-        /* string base_reserve = 3; */
+            writer.tag(6, WireType.Varint).int64(message.devTelegramId);
+        /* int64 created_at = 7; */
+        if (message.createdAt !== 0)
+            writer.tag(7, WireType.Varint).int64(message.createdAt);
+        /* string launch_id = 8; */
+        if (message.launchId !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.launchId);
+        /* string base_reserve = 9; */
         if (message.baseReserve !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.baseReserve);
-        /* string quote_reserve = 4; */
+            writer.tag(9, WireType.LengthDelimited).string(message.baseReserve);
+        /* string quote_reserve = 10; */
         if (message.quoteReserve !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.quoteReserve);
-        /* string x0 = 5; */
+            writer.tag(10, WireType.LengthDelimited).string(message.quoteReserve);
+        /* string x0 = 11; */
         if (message.x0 !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.x0);
-        /* int64 last_sync_timestamp = 6; */
+            writer.tag(11, WireType.LengthDelimited).string(message.x0);
+        /* int64 last_sync_timestamp = 12; */
         if (message.lastSyncTimestamp !== 0)
-            writer.tag(6, WireType.Varint).int64(message.lastSyncTimestamp);
-        /* string graduated_to = 7; */
+            writer.tag(12, WireType.Varint).int64(message.lastSyncTimestamp);
+        /* bool graduated = 13; */
+        if (message.graduated !== false)
+            writer.tag(13, WireType.Varint).bool(message.graduated);
+        /* int64 graduated_at = 14; */
+        if (message.graduatedAt !== 0)
+            writer.tag(14, WireType.Varint).int64(message.graduatedAt);
+        /* string graduated_to = 15; */
         if (message.graduatedTo !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.graduatedTo);
-        /* repeated hypurr.HpumpV1LaunchPairSwap swaps = 8; */
-        for (let i = 0; i < message.swaps.length; i++)
-            HpumpV1LaunchPairSwap.internalBinaryWrite(message.swaps[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+            writer.tag(15, WireType.LengthDelimited).string(message.graduatedTo);
+        /* hypurr.TelegramUserPublic dev_telegram_user = 16; */
+        if (message.devTelegramUser)
+            TelegramUserPublic.internalBinaryWrite(message.devTelegramUser, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -379,15 +277,15 @@ class HpumpV1LaunchPair$Type extends MessageType<HpumpV1LaunchPair> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPair
+ * @generated MessageType for protobuf message hypurr.HpumpV1Launch
  */
-export const HpumpV1LaunchPair = new HpumpV1LaunchPair$Type();
+export const HpumpV1Launch = new HpumpV1Launch$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HpumpV1LaunchPairSwap$Type extends MessageType<HpumpV1LaunchPairSwap> {
+class HpumpV1LaunchSwap$Type extends MessageType<HpumpV1LaunchSwap> {
     constructor() {
-        super("hypurr.HpumpV1LaunchPairSwap", [
+        super("hypurr.HpumpV1LaunchSwap", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "pair", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "launch", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "sender", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "origin", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -397,14 +295,14 @@ class HpumpV1LaunchPairSwap$Type extends MessageType<HpumpV1LaunchPairSwap> {
             { no: 9, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
-    create(value?: PartialMessage<HpumpV1LaunchPairSwap>): HpumpV1LaunchPairSwap {
-        const message = { id: "", pair: "", sender: "", origin: "", to: "", netBaseAmount: "", netQuoteAmount: "", blockNumber: 0, timestamp: 0 };
+    create(value?: PartialMessage<HpumpV1LaunchSwap>): HpumpV1LaunchSwap {
+        const message = { id: "", launch: "", sender: "", origin: "", to: "", netBaseAmount: "", netQuoteAmount: "", blockNumber: 0, timestamp: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HpumpV1LaunchPairSwap>(this, message, value);
+            reflectionMergePartial<HpumpV1LaunchSwap>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchPairSwap): HpumpV1LaunchPairSwap {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchSwap): HpumpV1LaunchSwap {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -412,8 +310,8 @@ class HpumpV1LaunchPairSwap$Type extends MessageType<HpumpV1LaunchPairSwap> {
                 case /* string id */ 1:
                     message.id = reader.string();
                     break;
-                case /* string pair */ 2:
-                    message.pair = reader.string();
+                case /* string launch */ 2:
+                    message.launch = reader.string();
                     break;
                 case /* string sender */ 3:
                     message.sender = reader.string();
@@ -447,13 +345,13 @@ class HpumpV1LaunchPairSwap$Type extends MessageType<HpumpV1LaunchPairSwap> {
         }
         return message;
     }
-    internalBinaryWrite(message: HpumpV1LaunchPairSwap, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HpumpV1LaunchSwap, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string id = 1; */
         if (message.id !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.id);
-        /* string pair = 2; */
-        if (message.pair !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.pair);
+        /* string launch = 2; */
+        if (message.launch !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.launch);
         /* string sender = 3; */
         if (message.sender !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.sender);
@@ -482,6 +380,6 @@ class HpumpV1LaunchPairSwap$Type extends MessageType<HpumpV1LaunchPairSwap> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HpumpV1LaunchPairSwap
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchSwap
  */
-export const HpumpV1LaunchPairSwap = new HpumpV1LaunchPairSwap$Type();
+export const HpumpV1LaunchSwap = new HpumpV1LaunchSwap$Type();
