@@ -152,7 +152,7 @@ message LaunchHpumpV1LaunchRequest {
 }
 
 message LaunchHpumpV1LaunchResponse {
-  HpumpV1LaunchToken launch = 1;
+  HpumpV1Launch launch = 1;
 }
 
 message EditHyperliquidLaunchRequest {

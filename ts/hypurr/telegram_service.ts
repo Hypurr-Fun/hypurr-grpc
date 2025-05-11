@@ -13,7 +13,7 @@ import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { BytesValue } from "../google/protobuf/wrappers";
-import { HpumpV1LaunchToken } from "./hpumpv1";
+import { HpumpV1Launch } from "./hpumpv1";
 import { HyperliquidLaunch } from "./launch";
 import { MediaType } from "./common";
 import { HyperliquidWalletSpotTwapSession } from "./tools";
@@ -426,9 +426,9 @@ export interface LaunchHpumpV1LaunchRequest {
  */
 export interface LaunchHpumpV1LaunchResponse {
     /**
-     * @generated from protobuf field: hypurr.HpumpV1LaunchToken launch = 1;
+     * @generated from protobuf field: hypurr.HpumpV1Launch launch = 1;
      */
-    launch?: HpumpV1LaunchToken;
+    launch?: HpumpV1Launch;
 }
 /**
  * @generated from protobuf message hypurr.EditHyperliquidLaunchRequest
@@ -2058,7 +2058,7 @@ export const LaunchHpumpV1LaunchRequest = new LaunchHpumpV1LaunchRequest$Type();
 class LaunchHpumpV1LaunchResponse$Type extends MessageType<LaunchHpumpV1LaunchResponse> {
     constructor() {
         super("hypurr.LaunchHpumpV1LaunchResponse", [
-            { no: 1, name: "launch", kind: "message", T: () => HpumpV1LaunchToken }
+            { no: 1, name: "launch", kind: "message", T: () => HpumpV1Launch }
         ]);
     }
     create(value?: PartialMessage<LaunchHpumpV1LaunchResponse>): LaunchHpumpV1LaunchResponse {
@@ -2073,8 +2073,8 @@ class LaunchHpumpV1LaunchResponse$Type extends MessageType<LaunchHpumpV1LaunchRe
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* hypurr.HpumpV1LaunchToken launch */ 1:
-                    message.launch = HpumpV1LaunchToken.internalBinaryRead(reader, reader.uint32(), options, message.launch);
+                case /* hypurr.HpumpV1Launch launch */ 1:
+                    message.launch = HpumpV1Launch.internalBinaryRead(reader, reader.uint32(), options, message.launch);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2088,9 +2088,9 @@ class LaunchHpumpV1LaunchResponse$Type extends MessageType<LaunchHpumpV1LaunchRe
         return message;
     }
     internalBinaryWrite(message: LaunchHpumpV1LaunchResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* hypurr.HpumpV1LaunchToken launch = 1; */
+        /* hypurr.HpumpV1Launch launch = 1; */
         if (message.launch)
-            HpumpV1LaunchToken.internalBinaryWrite(message.launch, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            HpumpV1Launch.internalBinaryWrite(message.launch, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
