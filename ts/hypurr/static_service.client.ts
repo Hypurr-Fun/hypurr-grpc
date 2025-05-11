@@ -156,17 +156,17 @@ export interface IStaticClient {
      */
     hpumpV1LaunchTokens(input: HpumpV1LaunchesRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchesRequest, HpumpV1LaunchesResponse>;
     /**
-     * @generated from protobuf rpc: HpumpV1LaunchPairSwap(hypurr.HpumpV1LaunchSwapRequest) returns (hypurr.HpumpV1LaunchSwapResponse);
+     * @generated from protobuf rpc: HpumpV1LaunchSwap(hypurr.HpumpV1LaunchSwapRequest) returns (hypurr.HpumpV1LaunchSwapResponse);
      */
-    hpumpV1LaunchPairSwap(input: HpumpV1LaunchSwapRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchSwapRequest, HpumpV1LaunchSwapResponse>;
+    hpumpV1LaunchSwap(input: HpumpV1LaunchSwapRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchSwapRequest, HpumpV1LaunchSwapResponse>;
     /**
-     * @generated from protobuf rpc: HpumpV1LaunchPairSwaps(hypurr.HpumpV1LaunchSwapsRequest) returns (hypurr.HpumpV1LaunchSwapsResponse);
+     * @generated from protobuf rpc: HpumpV1LaunchSwaps(hypurr.HpumpV1LaunchSwapsRequest) returns (hypurr.HpumpV1LaunchSwapsResponse);
      */
-    hpumpV1LaunchPairSwaps(input: HpumpV1LaunchSwapsRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchSwapsRequest, HpumpV1LaunchSwapsResponse>;
+    hpumpV1LaunchSwaps(input: HpumpV1LaunchSwapsRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchSwapsRequest, HpumpV1LaunchSwapsResponse>;
     /**
-     * @generated from protobuf rpc: HpumpV1LaunchPairSwapStream(hypurr.HpumpV1LaunchSwapStreamRequest) returns (stream hypurr.HpumpV1LaunchSwapStreamResponse);
+     * @generated from protobuf rpc: HpumpV1LaunchSwapStream(hypurr.HpumpV1LaunchSwapStreamRequest) returns (stream hypurr.HpumpV1LaunchSwapStreamResponse);
      */
-    hpumpV1LaunchPairSwapStream(input: HpumpV1LaunchSwapStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchSwapStreamRequest, HpumpV1LaunchSwapStreamResponse>;
+    hpumpV1LaunchSwapStream(input: HpumpV1LaunchSwapStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchSwapStreamRequest, HpumpV1LaunchSwapStreamResponse>;
     /**
      * @generated from protobuf rpc: HpumpV1LaunchCandleStream(hypurr.HpumpV1LaunchCandlesRequest) returns (stream hypurr.HpumpV1LaunchCandlesResponse);
      */
@@ -349,23 +349,23 @@ export class StaticClient implements IStaticClient, ServiceInfo {
         return stackIntercept<HpumpV1LaunchesRequest, HpumpV1LaunchesResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: HpumpV1LaunchPairSwap(hypurr.HpumpV1LaunchSwapRequest) returns (hypurr.HpumpV1LaunchSwapResponse);
+     * @generated from protobuf rpc: HpumpV1LaunchSwap(hypurr.HpumpV1LaunchSwapRequest) returns (hypurr.HpumpV1LaunchSwapResponse);
      */
-    hpumpV1LaunchPairSwap(input: HpumpV1LaunchSwapRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchSwapRequest, HpumpV1LaunchSwapResponse> {
+    hpumpV1LaunchSwap(input: HpumpV1LaunchSwapRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchSwapRequest, HpumpV1LaunchSwapResponse> {
         const method = this.methods[21], opt = this._transport.mergeOptions(options);
         return stackIntercept<HpumpV1LaunchSwapRequest, HpumpV1LaunchSwapResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: HpumpV1LaunchPairSwaps(hypurr.HpumpV1LaunchSwapsRequest) returns (hypurr.HpumpV1LaunchSwapsResponse);
+     * @generated from protobuf rpc: HpumpV1LaunchSwaps(hypurr.HpumpV1LaunchSwapsRequest) returns (hypurr.HpumpV1LaunchSwapsResponse);
      */
-    hpumpV1LaunchPairSwaps(input: HpumpV1LaunchSwapsRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchSwapsRequest, HpumpV1LaunchSwapsResponse> {
+    hpumpV1LaunchSwaps(input: HpumpV1LaunchSwapsRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchSwapsRequest, HpumpV1LaunchSwapsResponse> {
         const method = this.methods[22], opt = this._transport.mergeOptions(options);
         return stackIntercept<HpumpV1LaunchSwapsRequest, HpumpV1LaunchSwapsResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: HpumpV1LaunchPairSwapStream(hypurr.HpumpV1LaunchSwapStreamRequest) returns (stream hypurr.HpumpV1LaunchSwapStreamResponse);
+     * @generated from protobuf rpc: HpumpV1LaunchSwapStream(hypurr.HpumpV1LaunchSwapStreamRequest) returns (stream hypurr.HpumpV1LaunchSwapStreamResponse);
      */
-    hpumpV1LaunchPairSwapStream(input: HpumpV1LaunchSwapStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchSwapStreamRequest, HpumpV1LaunchSwapStreamResponse> {
+    hpumpV1LaunchSwapStream(input: HpumpV1LaunchSwapStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchSwapStreamRequest, HpumpV1LaunchSwapStreamResponse> {
         const method = this.methods[23], opt = this._transport.mergeOptions(options);
         return stackIntercept<HpumpV1LaunchSwapStreamRequest, HpumpV1LaunchSwapStreamResponse>("serverStreaming", this._transport, method, opt, input);
     }

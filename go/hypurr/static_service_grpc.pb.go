@@ -40,9 +40,9 @@ const (
 	Static_HyperliquidLaunchHolders_FullMethodName                   = "/hypurr.Static/HyperliquidLaunchHolders"
 	Static_HpumpV1LaunchToken_FullMethodName                         = "/hypurr.Static/HpumpV1LaunchToken"
 	Static_HpumpV1LaunchTokens_FullMethodName                        = "/hypurr.Static/HpumpV1LaunchTokens"
-	Static_HpumpV1LaunchPairSwap_FullMethodName                      = "/hypurr.Static/HpumpV1LaunchPairSwap"
-	Static_HpumpV1LaunchPairSwaps_FullMethodName                     = "/hypurr.Static/HpumpV1LaunchPairSwaps"
-	Static_HpumpV1LaunchPairSwapStream_FullMethodName                = "/hypurr.Static/HpumpV1LaunchPairSwapStream"
+	Static_HpumpV1LaunchSwap_FullMethodName                          = "/hypurr.Static/HpumpV1LaunchSwap"
+	Static_HpumpV1LaunchSwaps_FullMethodName                         = "/hypurr.Static/HpumpV1LaunchSwaps"
+	Static_HpumpV1LaunchSwapStream_FullMethodName                    = "/hypurr.Static/HpumpV1LaunchSwapStream"
 	Static_HpumpV1LaunchCandleStream_FullMethodName                  = "/hypurr.Static/HpumpV1LaunchCandleStream"
 	Static_HypurrFunCabals_FullMethodName                            = "/hypurr.Static/HypurrFunCabals"
 	Static_HypurrFunCabalPerformance_FullMethodName                  = "/hypurr.Static/HypurrFunCabalPerformance"
@@ -77,9 +77,9 @@ type StaticClient interface {
 	// HpumpV1
 	HpumpV1LaunchToken(ctx context.Context, in *HpumpV1LaunchRequest, opts ...grpc.CallOption) (*HpumpV1LaunchResponse, error)
 	HpumpV1LaunchTokens(ctx context.Context, in *HpumpV1LaunchesRequest, opts ...grpc.CallOption) (*HpumpV1LaunchesResponse, error)
-	HpumpV1LaunchPairSwap(ctx context.Context, in *HpumpV1LaunchSwapRequest, opts ...grpc.CallOption) (*HpumpV1LaunchSwapResponse, error)
-	HpumpV1LaunchPairSwaps(ctx context.Context, in *HpumpV1LaunchSwapsRequest, opts ...grpc.CallOption) (*HpumpV1LaunchSwapsResponse, error)
-	HpumpV1LaunchPairSwapStream(ctx context.Context, in *HpumpV1LaunchSwapStreamRequest, opts ...grpc.CallOption) (Static_HpumpV1LaunchPairSwapStreamClient, error)
+	HpumpV1LaunchSwap(ctx context.Context, in *HpumpV1LaunchSwapRequest, opts ...grpc.CallOption) (*HpumpV1LaunchSwapResponse, error)
+	HpumpV1LaunchSwaps(ctx context.Context, in *HpumpV1LaunchSwapsRequest, opts ...grpc.CallOption) (*HpumpV1LaunchSwapsResponse, error)
+	HpumpV1LaunchSwapStream(ctx context.Context, in *HpumpV1LaunchSwapStreamRequest, opts ...grpc.CallOption) (Static_HpumpV1LaunchSwapStreamClient, error)
 	HpumpV1LaunchCandleStream(ctx context.Context, in *HpumpV1LaunchCandlesRequest, opts ...grpc.CallOption) (Static_HpumpV1LaunchCandleStreamClient, error)
 	HypurrFunCabals(ctx context.Context, in *HypurrFunCabalsRequest, opts ...grpc.CallOption) (*HypurrFunCabalsResponse, error)
 	HypurrFunCabalPerformance(ctx context.Context, in *HypurrFunCabalPerformanceRequest, opts ...grpc.CallOption) (*HypurrFunCabalPerformanceResponse, error)
@@ -443,33 +443,33 @@ func (c *staticClient) HpumpV1LaunchTokens(ctx context.Context, in *HpumpV1Launc
 	return out, nil
 }
 
-func (c *staticClient) HpumpV1LaunchPairSwap(ctx context.Context, in *HpumpV1LaunchSwapRequest, opts ...grpc.CallOption) (*HpumpV1LaunchSwapResponse, error) {
+func (c *staticClient) HpumpV1LaunchSwap(ctx context.Context, in *HpumpV1LaunchSwapRequest, opts ...grpc.CallOption) (*HpumpV1LaunchSwapResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HpumpV1LaunchSwapResponse)
-	err := c.cc.Invoke(ctx, Static_HpumpV1LaunchPairSwap_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Static_HpumpV1LaunchSwap_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *staticClient) HpumpV1LaunchPairSwaps(ctx context.Context, in *HpumpV1LaunchSwapsRequest, opts ...grpc.CallOption) (*HpumpV1LaunchSwapsResponse, error) {
+func (c *staticClient) HpumpV1LaunchSwaps(ctx context.Context, in *HpumpV1LaunchSwapsRequest, opts ...grpc.CallOption) (*HpumpV1LaunchSwapsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HpumpV1LaunchSwapsResponse)
-	err := c.cc.Invoke(ctx, Static_HpumpV1LaunchPairSwaps_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Static_HpumpV1LaunchSwaps_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *staticClient) HpumpV1LaunchPairSwapStream(ctx context.Context, in *HpumpV1LaunchSwapStreamRequest, opts ...grpc.CallOption) (Static_HpumpV1LaunchPairSwapStreamClient, error) {
+func (c *staticClient) HpumpV1LaunchSwapStream(ctx context.Context, in *HpumpV1LaunchSwapStreamRequest, opts ...grpc.CallOption) (Static_HpumpV1LaunchSwapStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &Static_ServiceDesc.Streams[6], Static_HpumpV1LaunchPairSwapStream_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &Static_ServiceDesc.Streams[6], Static_HpumpV1LaunchSwapStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &staticHpumpV1LaunchPairSwapStreamClient{ClientStream: stream}
+	x := &staticHpumpV1LaunchSwapStreamClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -479,16 +479,16 @@ func (c *staticClient) HpumpV1LaunchPairSwapStream(ctx context.Context, in *Hpum
 	return x, nil
 }
 
-type Static_HpumpV1LaunchPairSwapStreamClient interface {
+type Static_HpumpV1LaunchSwapStreamClient interface {
 	Recv() (*HpumpV1LaunchSwapStreamResponse, error)
 	grpc.ClientStream
 }
 
-type staticHpumpV1LaunchPairSwapStreamClient struct {
+type staticHpumpV1LaunchSwapStreamClient struct {
 	grpc.ClientStream
 }
 
-func (x *staticHpumpV1LaunchPairSwapStreamClient) Recv() (*HpumpV1LaunchSwapStreamResponse, error) {
+func (x *staticHpumpV1LaunchSwapStreamClient) Recv() (*HpumpV1LaunchSwapStreamResponse, error) {
 	m := new(HpumpV1LaunchSwapStreamResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -596,9 +596,9 @@ type StaticServer interface {
 	// HpumpV1
 	HpumpV1LaunchToken(context.Context, *HpumpV1LaunchRequest) (*HpumpV1LaunchResponse, error)
 	HpumpV1LaunchTokens(context.Context, *HpumpV1LaunchesRequest) (*HpumpV1LaunchesResponse, error)
-	HpumpV1LaunchPairSwap(context.Context, *HpumpV1LaunchSwapRequest) (*HpumpV1LaunchSwapResponse, error)
-	HpumpV1LaunchPairSwaps(context.Context, *HpumpV1LaunchSwapsRequest) (*HpumpV1LaunchSwapsResponse, error)
-	HpumpV1LaunchPairSwapStream(*HpumpV1LaunchSwapStreamRequest, Static_HpumpV1LaunchPairSwapStreamServer) error
+	HpumpV1LaunchSwap(context.Context, *HpumpV1LaunchSwapRequest) (*HpumpV1LaunchSwapResponse, error)
+	HpumpV1LaunchSwaps(context.Context, *HpumpV1LaunchSwapsRequest) (*HpumpV1LaunchSwapsResponse, error)
+	HpumpV1LaunchSwapStream(*HpumpV1LaunchSwapStreamRequest, Static_HpumpV1LaunchSwapStreamServer) error
 	HpumpV1LaunchCandleStream(*HpumpV1LaunchCandlesRequest, Static_HpumpV1LaunchCandleStreamServer) error
 	HypurrFunCabals(context.Context, *HypurrFunCabalsRequest) (*HypurrFunCabalsResponse, error)
 	HypurrFunCabalPerformance(context.Context, *HypurrFunCabalPerformanceRequest) (*HypurrFunCabalPerformanceResponse, error)
@@ -674,14 +674,14 @@ func (UnimplementedStaticServer) HpumpV1LaunchToken(context.Context, *HpumpV1Lau
 func (UnimplementedStaticServer) HpumpV1LaunchTokens(context.Context, *HpumpV1LaunchesRequest) (*HpumpV1LaunchesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchTokens not implemented")
 }
-func (UnimplementedStaticServer) HpumpV1LaunchPairSwap(context.Context, *HpumpV1LaunchSwapRequest) (*HpumpV1LaunchSwapResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchPairSwap not implemented")
+func (UnimplementedStaticServer) HpumpV1LaunchSwap(context.Context, *HpumpV1LaunchSwapRequest) (*HpumpV1LaunchSwapResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchSwap not implemented")
 }
-func (UnimplementedStaticServer) HpumpV1LaunchPairSwaps(context.Context, *HpumpV1LaunchSwapsRequest) (*HpumpV1LaunchSwapsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchPairSwaps not implemented")
+func (UnimplementedStaticServer) HpumpV1LaunchSwaps(context.Context, *HpumpV1LaunchSwapsRequest) (*HpumpV1LaunchSwapsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchSwaps not implemented")
 }
-func (UnimplementedStaticServer) HpumpV1LaunchPairSwapStream(*HpumpV1LaunchSwapStreamRequest, Static_HpumpV1LaunchPairSwapStreamServer) error {
-	return status.Errorf(codes.Unimplemented, "method HpumpV1LaunchPairSwapStream not implemented")
+func (UnimplementedStaticServer) HpumpV1LaunchSwapStream(*HpumpV1LaunchSwapStreamRequest, Static_HpumpV1LaunchSwapStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method HpumpV1LaunchSwapStream not implemented")
 }
 func (UnimplementedStaticServer) HpumpV1LaunchCandleStream(*HpumpV1LaunchCandlesRequest, Static_HpumpV1LaunchCandleStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method HpumpV1LaunchCandleStream not implemented")
@@ -1107,60 +1107,60 @@ func _Static_HpumpV1LaunchTokens_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Static_HpumpV1LaunchPairSwap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Static_HpumpV1LaunchSwap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HpumpV1LaunchSwapRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StaticServer).HpumpV1LaunchPairSwap(ctx, in)
+		return srv.(StaticServer).HpumpV1LaunchSwap(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Static_HpumpV1LaunchPairSwap_FullMethodName,
+		FullMethod: Static_HpumpV1LaunchSwap_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StaticServer).HpumpV1LaunchPairSwap(ctx, req.(*HpumpV1LaunchSwapRequest))
+		return srv.(StaticServer).HpumpV1LaunchSwap(ctx, req.(*HpumpV1LaunchSwapRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Static_HpumpV1LaunchPairSwaps_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Static_HpumpV1LaunchSwaps_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HpumpV1LaunchSwapsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StaticServer).HpumpV1LaunchPairSwaps(ctx, in)
+		return srv.(StaticServer).HpumpV1LaunchSwaps(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Static_HpumpV1LaunchPairSwaps_FullMethodName,
+		FullMethod: Static_HpumpV1LaunchSwaps_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StaticServer).HpumpV1LaunchPairSwaps(ctx, req.(*HpumpV1LaunchSwapsRequest))
+		return srv.(StaticServer).HpumpV1LaunchSwaps(ctx, req.(*HpumpV1LaunchSwapsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Static_HpumpV1LaunchPairSwapStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _Static_HpumpV1LaunchSwapStream_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(HpumpV1LaunchSwapStreamRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(StaticServer).HpumpV1LaunchPairSwapStream(m, &staticHpumpV1LaunchPairSwapStreamServer{ServerStream: stream})
+	return srv.(StaticServer).HpumpV1LaunchSwapStream(m, &staticHpumpV1LaunchSwapStreamServer{ServerStream: stream})
 }
 
-type Static_HpumpV1LaunchPairSwapStreamServer interface {
+type Static_HpumpV1LaunchSwapStreamServer interface {
 	Send(*HpumpV1LaunchSwapStreamResponse) error
 	grpc.ServerStream
 }
 
-type staticHpumpV1LaunchPairSwapStreamServer struct {
+type staticHpumpV1LaunchSwapStreamServer struct {
 	grpc.ServerStream
 }
 
-func (x *staticHpumpV1LaunchPairSwapStreamServer) Send(m *HpumpV1LaunchSwapStreamResponse) error {
+func (x *staticHpumpV1LaunchSwapStreamServer) Send(m *HpumpV1LaunchSwapStreamResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -1325,12 +1325,12 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Static_HpumpV1LaunchTokens_Handler,
 		},
 		{
-			MethodName: "HpumpV1LaunchPairSwap",
-			Handler:    _Static_HpumpV1LaunchPairSwap_Handler,
+			MethodName: "HpumpV1LaunchSwap",
+			Handler:    _Static_HpumpV1LaunchSwap_Handler,
 		},
 		{
-			MethodName: "HpumpV1LaunchPairSwaps",
-			Handler:    _Static_HpumpV1LaunchPairSwaps_Handler,
+			MethodName: "HpumpV1LaunchSwaps",
+			Handler:    _Static_HpumpV1LaunchSwaps_Handler,
 		},
 		{
 			MethodName: "HypurrFunCabals",
@@ -1381,8 +1381,8 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 		{
-			StreamName:    "HpumpV1LaunchPairSwapStream",
-			Handler:       _Static_HpumpV1LaunchPairSwapStream_Handler,
+			StreamName:    "HpumpV1LaunchSwapStream",
+			Handler:       _Static_HpumpV1LaunchSwapStream_Handler,
 			ServerStreams: true,
 		},
 		{

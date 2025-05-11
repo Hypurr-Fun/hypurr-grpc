@@ -119,18 +119,18 @@ class StaticStub(object):
         request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchesRequest.SerializeToString,
         response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchesResponse.FromString,
         )
-    self.HpumpV1LaunchPairSwap = channel.unary_unary(
-        '/hypurr.Static/HpumpV1LaunchPairSwap',
+    self.HpumpV1LaunchSwap = channel.unary_unary(
+        '/hypurr.Static/HpumpV1LaunchSwap',
         request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapRequest.SerializeToString,
         response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapResponse.FromString,
         )
-    self.HpumpV1LaunchPairSwaps = channel.unary_unary(
-        '/hypurr.Static/HpumpV1LaunchPairSwaps',
+    self.HpumpV1LaunchSwaps = channel.unary_unary(
+        '/hypurr.Static/HpumpV1LaunchSwaps',
         request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapsRequest.SerializeToString,
         response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapsResponse.FromString,
         )
-    self.HpumpV1LaunchPairSwapStream = channel.unary_stream(
-        '/hypurr.Static/HpumpV1LaunchPairSwapStream',
+    self.HpumpV1LaunchSwapStream = channel.unary_stream(
+        '/hypurr.Static/HpumpV1LaunchSwapStream',
         request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapStreamRequest.SerializeToString,
         response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapStreamResponse.FromString,
         )
@@ -312,21 +312,21 @@ class StaticServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def HpumpV1LaunchPairSwap(self, request, context):
+  def HpumpV1LaunchSwap(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def HpumpV1LaunchPairSwaps(self, request, context):
+  def HpumpV1LaunchSwaps(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def HpumpV1LaunchPairSwapStream(self, request, context):
+  def HpumpV1LaunchSwapStream(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -476,18 +476,18 @@ def add_StaticServicer_to_server(servicer, server):
           request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchesRequest.FromString,
           response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchesResponse.SerializeToString,
       ),
-      'HpumpV1LaunchPairSwap': grpc.unary_unary_rpc_method_handler(
-          servicer.HpumpV1LaunchPairSwap,
+      'HpumpV1LaunchSwap': grpc.unary_unary_rpc_method_handler(
+          servicer.HpumpV1LaunchSwap,
           request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapRequest.FromString,
           response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapResponse.SerializeToString,
       ),
-      'HpumpV1LaunchPairSwaps': grpc.unary_unary_rpc_method_handler(
-          servicer.HpumpV1LaunchPairSwaps,
+      'HpumpV1LaunchSwaps': grpc.unary_unary_rpc_method_handler(
+          servicer.HpumpV1LaunchSwaps,
           request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapsRequest.FromString,
           response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapsResponse.SerializeToString,
       ),
-      'HpumpV1LaunchPairSwapStream': grpc.unary_stream_rpc_method_handler(
-          servicer.HpumpV1LaunchPairSwapStream,
+      'HpumpV1LaunchSwapStream': grpc.unary_stream_rpc_method_handler(
+          servicer.HpumpV1LaunchSwapStream,
           request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapStreamRequest.FromString,
           response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapStreamResponse.SerializeToString,
       ),
