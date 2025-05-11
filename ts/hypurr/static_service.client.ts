@@ -148,13 +148,13 @@ export interface IStaticClient {
     /**
      * HpumpV1
      *
-     * @generated from protobuf rpc: HpumpV1LaunchToken(hypurr.HpumpV1LaunchRequest) returns (hypurr.HpumpV1LaunchResponse);
+     * @generated from protobuf rpc: HpumpV1Launch(hypurr.HpumpV1LaunchRequest) returns (hypurr.HpumpV1LaunchResponse);
      */
-    hpumpV1LaunchToken(input: HpumpV1LaunchRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchRequest, HpumpV1LaunchResponse>;
+    hpumpV1Launch(input: HpumpV1LaunchRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchRequest, HpumpV1LaunchResponse>;
     /**
-     * @generated from protobuf rpc: HpumpV1LaunchTokens(hypurr.HpumpV1LaunchesRequest) returns (hypurr.HpumpV1LaunchesResponse);
+     * @generated from protobuf rpc: HpumpV1Launches(hypurr.HpumpV1LaunchesRequest) returns (hypurr.HpumpV1LaunchesResponse);
      */
-    hpumpV1LaunchTokens(input: HpumpV1LaunchesRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchesRequest, HpumpV1LaunchesResponse>;
+    hpumpV1Launches(input: HpumpV1LaunchesRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchesRequest, HpumpV1LaunchesResponse>;
     /**
      * @generated from protobuf rpc: HpumpV1LaunchSwap(hypurr.HpumpV1LaunchSwapRequest) returns (hypurr.HpumpV1LaunchSwapResponse);
      */
@@ -335,16 +335,16 @@ export class StaticClient implements IStaticClient, ServiceInfo {
     /**
      * HpumpV1
      *
-     * @generated from protobuf rpc: HpumpV1LaunchToken(hypurr.HpumpV1LaunchRequest) returns (hypurr.HpumpV1LaunchResponse);
+     * @generated from protobuf rpc: HpumpV1Launch(hypurr.HpumpV1LaunchRequest) returns (hypurr.HpumpV1LaunchResponse);
      */
-    hpumpV1LaunchToken(input: HpumpV1LaunchRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchRequest, HpumpV1LaunchResponse> {
+    hpumpV1Launch(input: HpumpV1LaunchRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchRequest, HpumpV1LaunchResponse> {
         const method = this.methods[19], opt = this._transport.mergeOptions(options);
         return stackIntercept<HpumpV1LaunchRequest, HpumpV1LaunchResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: HpumpV1LaunchTokens(hypurr.HpumpV1LaunchesRequest) returns (hypurr.HpumpV1LaunchesResponse);
+     * @generated from protobuf rpc: HpumpV1Launches(hypurr.HpumpV1LaunchesRequest) returns (hypurr.HpumpV1LaunchesResponse);
      */
-    hpumpV1LaunchTokens(input: HpumpV1LaunchesRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchesRequest, HpumpV1LaunchesResponse> {
+    hpumpV1Launches(input: HpumpV1LaunchesRequest, options?: RpcOptions): UnaryCall<HpumpV1LaunchesRequest, HpumpV1LaunchesResponse> {
         const method = this.methods[20], opt = this._transport.mergeOptions(options);
         return stackIntercept<HpumpV1LaunchesRequest, HpumpV1LaunchesResponse>("unary", this._transport, method, opt, input);
     }

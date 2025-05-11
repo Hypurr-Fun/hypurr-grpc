@@ -293,8 +293,8 @@ service Static {
   rpc HyperliquidLaunchHolders (HyperliquidLaunchHoldersRequest) returns (HyperliquidLaunchHoldersResponse) {}
 
   // HpumpV1
-  rpc HpumpV1LaunchToken(HpumpV1LaunchRequest) returns (HpumpV1LaunchResponse) {}
-  rpc HpumpV1LaunchTokens(HpumpV1LaunchesRequest) returns (HpumpV1LaunchesResponse) {}
+  rpc HpumpV1Launch(HpumpV1LaunchRequest) returns (HpumpV1LaunchResponse) {}
+  rpc HpumpV1Launches(HpumpV1LaunchesRequest) returns (HpumpV1LaunchesResponse) {}
   rpc HpumpV1LaunchSwap(HpumpV1LaunchSwapRequest) returns (HpumpV1LaunchSwapResponse) {}
   rpc HpumpV1LaunchSwaps(HpumpV1LaunchSwapsRequest) returns (HpumpV1LaunchSwapsResponse) {}
   rpc HpumpV1LaunchSwapStream(HpumpV1LaunchSwapStreamRequest) returns (stream HpumpV1LaunchSwapStreamResponse) {}

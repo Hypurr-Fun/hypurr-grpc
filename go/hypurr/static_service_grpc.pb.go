@@ -38,8 +38,8 @@ const (
 	Static_HyperliquidLaunchMessages_FullMethodName                  = "/hypurr.Static/HyperliquidLaunchMessages"
 	Static_LatestHyperliquidLaunchFills_FullMethodName               = "/hypurr.Static/LatestHyperliquidLaunchFills"
 	Static_HyperliquidLaunchHolders_FullMethodName                   = "/hypurr.Static/HyperliquidLaunchHolders"
-	Static_HpumpV1LaunchToken_FullMethodName                         = "/hypurr.Static/HpumpV1LaunchToken"
-	Static_HpumpV1LaunchTokens_FullMethodName                        = "/hypurr.Static/HpumpV1LaunchTokens"
+	Static_HpumpV1Launch_FullMethodName                              = "/hypurr.Static/HpumpV1Launch"
+	Static_HpumpV1Launches_FullMethodName                            = "/hypurr.Static/HpumpV1Launches"
 	Static_HpumpV1LaunchSwap_FullMethodName                          = "/hypurr.Static/HpumpV1LaunchSwap"
 	Static_HpumpV1LaunchSwaps_FullMethodName                         = "/hypurr.Static/HpumpV1LaunchSwaps"
 	Static_HpumpV1LaunchSwapStream_FullMethodName                    = "/hypurr.Static/HpumpV1LaunchSwapStream"
@@ -75,8 +75,8 @@ type StaticClient interface {
 	LatestHyperliquidLaunchFills(ctx context.Context, in *LatestHyperliquidLaunchFillsRequest, opts ...grpc.CallOption) (Static_LatestHyperliquidLaunchFillsClient, error)
 	HyperliquidLaunchHolders(ctx context.Context, in *HyperliquidLaunchHoldersRequest, opts ...grpc.CallOption) (*HyperliquidLaunchHoldersResponse, error)
 	// HpumpV1
-	HpumpV1LaunchToken(ctx context.Context, in *HpumpV1LaunchRequest, opts ...grpc.CallOption) (*HpumpV1LaunchResponse, error)
-	HpumpV1LaunchTokens(ctx context.Context, in *HpumpV1LaunchesRequest, opts ...grpc.CallOption) (*HpumpV1LaunchesResponse, error)
+	HpumpV1Launch(ctx context.Context, in *HpumpV1LaunchRequest, opts ...grpc.CallOption) (*HpumpV1LaunchResponse, error)
+	HpumpV1Launches(ctx context.Context, in *HpumpV1LaunchesRequest, opts ...grpc.CallOption) (*HpumpV1LaunchesResponse, error)
 	HpumpV1LaunchSwap(ctx context.Context, in *HpumpV1LaunchSwapRequest, opts ...grpc.CallOption) (*HpumpV1LaunchSwapResponse, error)
 	HpumpV1LaunchSwaps(ctx context.Context, in *HpumpV1LaunchSwapsRequest, opts ...grpc.CallOption) (*HpumpV1LaunchSwapsResponse, error)
 	HpumpV1LaunchSwapStream(ctx context.Context, in *HpumpV1LaunchSwapStreamRequest, opts ...grpc.CallOption) (Static_HpumpV1LaunchSwapStreamClient, error)
@@ -423,20 +423,20 @@ func (c *staticClient) HyperliquidLaunchHolders(ctx context.Context, in *Hyperli
 	return out, nil
 }
 
-func (c *staticClient) HpumpV1LaunchToken(ctx context.Context, in *HpumpV1LaunchRequest, opts ...grpc.CallOption) (*HpumpV1LaunchResponse, error) {
+func (c *staticClient) HpumpV1Launch(ctx context.Context, in *HpumpV1LaunchRequest, opts ...grpc.CallOption) (*HpumpV1LaunchResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HpumpV1LaunchResponse)
-	err := c.cc.Invoke(ctx, Static_HpumpV1LaunchToken_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Static_HpumpV1Launch_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *staticClient) HpumpV1LaunchTokens(ctx context.Context, in *HpumpV1LaunchesRequest, opts ...grpc.CallOption) (*HpumpV1LaunchesResponse, error) {
+func (c *staticClient) HpumpV1Launches(ctx context.Context, in *HpumpV1LaunchesRequest, opts ...grpc.CallOption) (*HpumpV1LaunchesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HpumpV1LaunchesResponse)
-	err := c.cc.Invoke(ctx, Static_HpumpV1LaunchTokens_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Static_HpumpV1Launches_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -594,8 +594,8 @@ type StaticServer interface {
 	LatestHyperliquidLaunchFills(*LatestHyperliquidLaunchFillsRequest, Static_LatestHyperliquidLaunchFillsServer) error
 	HyperliquidLaunchHolders(context.Context, *HyperliquidLaunchHoldersRequest) (*HyperliquidLaunchHoldersResponse, error)
 	// HpumpV1
-	HpumpV1LaunchToken(context.Context, *HpumpV1LaunchRequest) (*HpumpV1LaunchResponse, error)
-	HpumpV1LaunchTokens(context.Context, *HpumpV1LaunchesRequest) (*HpumpV1LaunchesResponse, error)
+	HpumpV1Launch(context.Context, *HpumpV1LaunchRequest) (*HpumpV1LaunchResponse, error)
+	HpumpV1Launches(context.Context, *HpumpV1LaunchesRequest) (*HpumpV1LaunchesResponse, error)
 	HpumpV1LaunchSwap(context.Context, *HpumpV1LaunchSwapRequest) (*HpumpV1LaunchSwapResponse, error)
 	HpumpV1LaunchSwaps(context.Context, *HpumpV1LaunchSwapsRequest) (*HpumpV1LaunchSwapsResponse, error)
 	HpumpV1LaunchSwapStream(*HpumpV1LaunchSwapStreamRequest, Static_HpumpV1LaunchSwapStreamServer) error
@@ -668,11 +668,11 @@ func (UnimplementedStaticServer) LatestHyperliquidLaunchFills(*LatestHyperliquid
 func (UnimplementedStaticServer) HyperliquidLaunchHolders(context.Context, *HyperliquidLaunchHoldersRequest) (*HyperliquidLaunchHoldersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidLaunchHolders not implemented")
 }
-func (UnimplementedStaticServer) HpumpV1LaunchToken(context.Context, *HpumpV1LaunchRequest) (*HpumpV1LaunchResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchToken not implemented")
+func (UnimplementedStaticServer) HpumpV1Launch(context.Context, *HpumpV1LaunchRequest) (*HpumpV1LaunchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1Launch not implemented")
 }
-func (UnimplementedStaticServer) HpumpV1LaunchTokens(context.Context, *HpumpV1LaunchesRequest) (*HpumpV1LaunchesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchTokens not implemented")
+func (UnimplementedStaticServer) HpumpV1Launches(context.Context, *HpumpV1LaunchesRequest) (*HpumpV1LaunchesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1Launches not implemented")
 }
 func (UnimplementedStaticServer) HpumpV1LaunchSwap(context.Context, *HpumpV1LaunchSwapRequest) (*HpumpV1LaunchSwapResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HpumpV1LaunchSwap not implemented")
@@ -1071,38 +1071,38 @@ func _Static_HyperliquidLaunchHolders_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Static_HpumpV1LaunchToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Static_HpumpV1Launch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HpumpV1LaunchRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StaticServer).HpumpV1LaunchToken(ctx, in)
+		return srv.(StaticServer).HpumpV1Launch(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Static_HpumpV1LaunchToken_FullMethodName,
+		FullMethod: Static_HpumpV1Launch_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StaticServer).HpumpV1LaunchToken(ctx, req.(*HpumpV1LaunchRequest))
+		return srv.(StaticServer).HpumpV1Launch(ctx, req.(*HpumpV1LaunchRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Static_HpumpV1LaunchTokens_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Static_HpumpV1Launches_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HpumpV1LaunchesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StaticServer).HpumpV1LaunchTokens(ctx, in)
+		return srv.(StaticServer).HpumpV1Launches(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Static_HpumpV1LaunchTokens_FullMethodName,
+		FullMethod: Static_HpumpV1Launches_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StaticServer).HpumpV1LaunchTokens(ctx, req.(*HpumpV1LaunchesRequest))
+		return srv.(StaticServer).HpumpV1Launches(ctx, req.(*HpumpV1LaunchesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1317,12 +1317,12 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Static_HyperliquidLaunchHolders_Handler,
 		},
 		{
-			MethodName: "HpumpV1LaunchToken",
-			Handler:    _Static_HpumpV1LaunchToken_Handler,
+			MethodName: "HpumpV1Launch",
+			Handler:    _Static_HpumpV1Launch_Handler,
 		},
 		{
-			MethodName: "HpumpV1LaunchTokens",
-			Handler:    _Static_HpumpV1LaunchTokens_Handler,
+			MethodName: "HpumpV1Launches",
+			Handler:    _Static_HpumpV1Launches_Handler,
 		},
 		{
 			MethodName: "HpumpV1LaunchSwap",
