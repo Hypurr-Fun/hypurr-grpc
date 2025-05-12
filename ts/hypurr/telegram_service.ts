@@ -148,9 +148,9 @@ export interface HpumpV1LaunchTradeRequest {
         [key: string]: string;
     };
     /**
-     * @generated from protobuf field: int64 pair_id = 2;
+     * @generated from protobuf field: int64 launch_ud = 2;
      */
-    pairId: number;
+    launchUd: number;
     /**
      * @generated from protobuf field: int64 wallet_id = 3;
      */
@@ -962,14 +962,14 @@ class HpumpV1LaunchTradeRequest$Type extends MessageType<HpumpV1LaunchTradeReque
     constructor() {
         super("hypurr.HpumpV1LaunchTradeRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "pair_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "launch_ud", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "direction", kind: "enum", T: () => ["hypurr.TradeDirection", TradeDirection] },
             { no: 5, name: "amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchTradeRequest>): HpumpV1LaunchTradeRequest {
-        const message = { authData: {}, pairId: 0, walletId: 0, direction: 0, amount: 0 };
+        const message = { authData: {}, launchUd: 0, walletId: 0, direction: 0, amount: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchTradeRequest>(this, message, value);
@@ -983,8 +983,8 @@ class HpumpV1LaunchTradeRequest$Type extends MessageType<HpumpV1LaunchTradeReque
                 case /* map<string, string> auth_data */ 1:
                     this.binaryReadMap1(message.authData, reader, options);
                     break;
-                case /* int64 pair_id */ 2:
-                    message.pairId = reader.int64().toNumber();
+                case /* int64 launch_ud */ 2:
+                    message.launchUd = reader.int64().toNumber();
                     break;
                 case /* int64 wallet_id */ 3:
                     message.walletId = reader.int64().toNumber();
@@ -1026,9 +1026,9 @@ class HpumpV1LaunchTradeRequest$Type extends MessageType<HpumpV1LaunchTradeReque
         /* map<string, string> auth_data = 1; */
         for (let k of Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
-        /* int64 pair_id = 2; */
-        if (message.pairId !== 0)
-            writer.tag(2, WireType.Varint).int64(message.pairId);
+        /* int64 launch_ud = 2; */
+        if (message.launchUd !== 0)
+            writer.tag(2, WireType.Varint).int64(message.launchUd);
         /* int64 wallet_id = 3; */
         if (message.walletId !== 0)
             writer.tag(3, WireType.Varint).int64(message.walletId);
