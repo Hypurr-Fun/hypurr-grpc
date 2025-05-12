@@ -61,12 +61,12 @@ message HpumpV1LaunchTradeRequest {
   int64 launch_id = 2;
   int64 wallet_id = 3;
   TradeDirection direction = 4;
-  double amount = 5;
+  string amount = 5;
 }
 
 message HpumpV1LaunchTradeResponse {
-  double base_amount = 1;
-  double quote_amount = 2;
+  string base_amount = 1;
+  string quote_amount = 2;
   string message = 3;
   bool success = 4;
 }

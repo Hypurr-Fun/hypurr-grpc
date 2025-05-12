@@ -160,22 +160,22 @@ export interface HpumpV1LaunchTradeRequest {
      */
     direction: TradeDirection;
     /**
-     * @generated from protobuf field: double amount = 5;
+     * @generated from protobuf field: string amount = 5;
      */
-    amount: number;
+    amount: string;
 }
 /**
  * @generated from protobuf message hypurr.HpumpV1LaunchTradeResponse
  */
 export interface HpumpV1LaunchTradeResponse {
     /**
-     * @generated from protobuf field: double base_amount = 1;
+     * @generated from protobuf field: string base_amount = 1;
      */
-    baseAmount: number;
+    baseAmount: string;
     /**
-     * @generated from protobuf field: double quote_amount = 2;
+     * @generated from protobuf field: string quote_amount = 2;
      */
-    quoteAmount: number;
+    quoteAmount: string;
     /**
      * @generated from protobuf field: string message = 3;
      */
@@ -965,11 +965,11 @@ class HpumpV1LaunchTradeRequest$Type extends MessageType<HpumpV1LaunchTradeReque
             { no: 2, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "direction", kind: "enum", T: () => ["hypurr.TradeDirection", TradeDirection] },
-            { no: 5, name: "amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 5, name: "amount", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchTradeRequest>): HpumpV1LaunchTradeRequest {
-        const message = { authData: {}, launchId: 0, walletId: 0, direction: 0, amount: 0 };
+        const message = { authData: {}, launchId: 0, walletId: 0, direction: 0, amount: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchTradeRequest>(this, message, value);
@@ -992,8 +992,8 @@ class HpumpV1LaunchTradeRequest$Type extends MessageType<HpumpV1LaunchTradeReque
                 case /* hypurr.TradeDirection direction */ 4:
                     message.direction = reader.int32();
                     break;
-                case /* double amount */ 5:
-                    message.amount = reader.double();
+                case /* string amount */ 5:
+                    message.amount = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1035,9 +1035,9 @@ class HpumpV1LaunchTradeRequest$Type extends MessageType<HpumpV1LaunchTradeReque
         /* hypurr.TradeDirection direction = 4; */
         if (message.direction !== 0)
             writer.tag(4, WireType.Varint).int32(message.direction);
-        /* double amount = 5; */
-        if (message.amount !== 0)
-            writer.tag(5, WireType.Bit64).double(message.amount);
+        /* string amount = 5; */
+        if (message.amount !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.amount);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1052,14 +1052,14 @@ export const HpumpV1LaunchTradeRequest = new HpumpV1LaunchTradeRequest$Type();
 class HpumpV1LaunchTradeResponse$Type extends MessageType<HpumpV1LaunchTradeResponse> {
     constructor() {
         super("hypurr.HpumpV1LaunchTradeResponse", [
-            { no: 1, name: "base_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 2, name: "quote_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 1, name: "base_amount", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "quote_amount", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchTradeResponse>): HpumpV1LaunchTradeResponse {
-        const message = { baseAmount: 0, quoteAmount: 0, message: "", success: false };
+        const message = { baseAmount: "", quoteAmount: "", message: "", success: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchTradeResponse>(this, message, value);
@@ -1070,11 +1070,11 @@ class HpumpV1LaunchTradeResponse$Type extends MessageType<HpumpV1LaunchTradeResp
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* double base_amount */ 1:
-                    message.baseAmount = reader.double();
+                case /* string base_amount */ 1:
+                    message.baseAmount = reader.string();
                     break;
-                case /* double quote_amount */ 2:
-                    message.quoteAmount = reader.double();
+                case /* string quote_amount */ 2:
+                    message.quoteAmount = reader.string();
                     break;
                 case /* string message */ 3:
                     message.message = reader.string();
@@ -1094,12 +1094,12 @@ class HpumpV1LaunchTradeResponse$Type extends MessageType<HpumpV1LaunchTradeResp
         return message;
     }
     internalBinaryWrite(message: HpumpV1LaunchTradeResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* double base_amount = 1; */
-        if (message.baseAmount !== 0)
-            writer.tag(1, WireType.Bit64).double(message.baseAmount);
-        /* double quote_amount = 2; */
-        if (message.quoteAmount !== 0)
-            writer.tag(2, WireType.Bit64).double(message.quoteAmount);
+        /* string base_amount = 1; */
+        if (message.baseAmount !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.baseAmount);
+        /* string quote_amount = 2; */
+        if (message.quoteAmount !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.quoteAmount);
         /* string message = 3; */
         if (message.message !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.message);
