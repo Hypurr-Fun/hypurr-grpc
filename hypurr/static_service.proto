@@ -192,6 +192,16 @@ message HpumpV1LaunchesResponse {
   string next_page_token = 2;
 }
 
+message HpumpV1LaunchStreamRequest {
+  google.protobuf.Int64Value launch_id = 1;
+  // Default: 200
+  google.protobuf.Int64Value limit = 2;
+}
+
+message HpumpV1LaunchStreamResponse {
+  repeated HpumpV1Launch launches = 1;
+}
+
 // HPump V1 Swap request/response messages
 message HpumpV1LaunchSwapRequest {
   string id = 1;
@@ -295,6 +305,7 @@ service Static {
   // HpumpV1
   rpc HpumpV1Launch(HpumpV1LaunchRequest) returns (HpumpV1LaunchResponse) {}
   rpc HpumpV1Launches(HpumpV1LaunchesRequest) returns (HpumpV1LaunchesResponse) {}
+  rpc HpumpV1LaunchStream(HpumpV1LaunchStreamRequest) returns (stream HpumpV1LaunchStreamResponse) {}
   rpc HpumpV1LaunchSwap(HpumpV1LaunchSwapRequest) returns (HpumpV1LaunchSwapResponse) {}
   rpc HpumpV1LaunchSwaps(HpumpV1LaunchSwapsRequest) returns (HpumpV1LaunchSwapsResponse) {}
   rpc HpumpV1LaunchSwapStream(HpumpV1LaunchSwapStreamRequest) returns (stream HpumpV1LaunchSwapStreamResponse) {}

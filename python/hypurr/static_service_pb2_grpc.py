@@ -119,6 +119,11 @@ class StaticStub(object):
         request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchesRequest.SerializeToString,
         response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchesResponse.FromString,
         )
+    self.HpumpV1LaunchStream = channel.unary_stream(
+        '/hypurr.Static/HpumpV1LaunchStream',
+        request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchStreamRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchStreamResponse.FromString,
+        )
     self.HpumpV1LaunchSwap = channel.unary_unary(
         '/hypurr.Static/HpumpV1LaunchSwap',
         request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchSwapRequest.SerializeToString,
@@ -312,6 +317,13 @@ class StaticServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def HpumpV1LaunchStream(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def HpumpV1LaunchSwap(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -475,6 +487,11 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.HpumpV1Launches,
           request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchesRequest.FromString,
           response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchesResponse.SerializeToString,
+      ),
+      'HpumpV1LaunchStream': grpc.unary_stream_rpc_method_handler(
+          servicer.HpumpV1LaunchStream,
+          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchStreamRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchStreamResponse.SerializeToString,
       ),
       'HpumpV1LaunchSwap': grpc.unary_unary_rpc_method_handler(
           servicer.HpumpV1LaunchSwap,
