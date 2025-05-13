@@ -62,6 +62,7 @@ message HpumpV1LaunchTradeRequest {
   int64 wallet_id = 3;
   TradeDirection direction = 4;
   string amount = 5;
+  double max_slippage = 6;
 }
 
 message HpumpV1LaunchTradeResponse {

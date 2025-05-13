@@ -163,6 +163,10 @@ export interface HpumpV1LaunchTradeRequest {
      * @generated from protobuf field: string amount = 5;
      */
     amount: string;
+    /**
+     * @generated from protobuf field: double max_slippage = 6;
+     */
+    maxSlippage: number;
 }
 /**
  * @generated from protobuf message hypurr.HpumpV1LaunchTradeResponse
@@ -965,11 +969,12 @@ class HpumpV1LaunchTradeRequest$Type extends MessageType<HpumpV1LaunchTradeReque
             { no: 2, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "direction", kind: "enum", T: () => ["hypurr.TradeDirection", TradeDirection] },
-            { no: 5, name: "amount", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 5, name: "amount", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "max_slippage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<HpumpV1LaunchTradeRequest>): HpumpV1LaunchTradeRequest {
-        const message = { authData: {}, launchId: 0, walletId: 0, direction: 0, amount: "" };
+        const message = { authData: {}, launchId: 0, walletId: 0, direction: 0, amount: "", maxSlippage: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1LaunchTradeRequest>(this, message, value);
@@ -994,6 +999,9 @@ class HpumpV1LaunchTradeRequest$Type extends MessageType<HpumpV1LaunchTradeReque
                     break;
                 case /* string amount */ 5:
                     message.amount = reader.string();
+                    break;
+                case /* double max_slippage */ 6:
+                    message.maxSlippage = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1038,6 +1046,9 @@ class HpumpV1LaunchTradeRequest$Type extends MessageType<HpumpV1LaunchTradeReque
         /* string amount = 5; */
         if (message.amount !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.amount);
+        /* double max_slippage = 6; */
+        if (message.maxSlippage !== 0)
+            writer.tag(6, WireType.Bit64).double(message.maxSlippage);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
