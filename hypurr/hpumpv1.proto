@@ -27,6 +27,7 @@ message HpumpV1Launch {
   string graduated_to = 18;     // Address of the new token after graduation
   // Dev telegram user
   TelegramUserPublic dev_telegram_user = 19;
+  double volume_24h = 20;         // Daily quote volume
 }
 
 // HPump Launch Pair Swap messages

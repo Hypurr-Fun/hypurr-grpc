@@ -96,6 +96,10 @@ export interface HpumpV1Launch {
      * @generated from protobuf field: hypurr.TelegramUserPublic dev_telegram_user = 19;
      */
     devTelegramUser?: TelegramUserPublic;
+    /**
+     * @generated from protobuf field: double volume_24h = 20 [json_name = "volume24h"];
+     */
+    volume24H: number; // Daily quote volume
 }
 /**
  * HPump Launch Pair Swap messages
@@ -162,11 +166,12 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
             { no: 16, name: "graduated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 17, name: "graduated_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 18, name: "graduated_to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 19, name: "dev_telegram_user", kind: "message", T: () => TelegramUserPublic }
+            { no: 19, name: "dev_telegram_user", kind: "message", T: () => TelegramUserPublic },
+            { no: 20, name: "volume_24h", kind: "scalar", jsonName: "volume24h", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<HpumpV1Launch>): HpumpV1Launch {
-        const message = { address: "", symbol: "", name: "", devAddress: "", description: "", mediaType: "", mediaUri: "", devTelegramId: 0, createdAt: 0, launchId: "", baseReserve: "", quoteReserve: "", x0: "", y0: "", lastSyncTimestamp: 0, graduated: false, graduatedAt: 0, graduatedTo: "" };
+        const message = { address: "", symbol: "", name: "", devAddress: "", description: "", mediaType: "", mediaUri: "", devTelegramId: 0, createdAt: 0, launchId: "", baseReserve: "", quoteReserve: "", x0: "", y0: "", lastSyncTimestamp: 0, graduated: false, graduatedAt: 0, graduatedTo: "", volume24H: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1Launch>(this, message, value);
@@ -233,6 +238,9 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
                     break;
                 case /* hypurr.TelegramUserPublic dev_telegram_user */ 19:
                     message.devTelegramUser = TelegramUserPublic.internalBinaryRead(reader, reader.uint32(), options, message.devTelegramUser);
+                    break;
+                case /* double volume_24h = 20 [json_name = "volume24h"];*/ 20:
+                    message.volume24H = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -303,6 +311,9 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
         /* hypurr.TelegramUserPublic dev_telegram_user = 19; */
         if (message.devTelegramUser)
             TelegramUserPublic.internalBinaryWrite(message.devTelegramUser, writer.tag(19, WireType.LengthDelimited).fork(), options).join();
+        /* double volume_24h = 20 [json_name = "volume24h"]; */
+        if (message.volume24H !== 0)
+            writer.tag(20, WireType.Bit64).double(message.volume24H);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
