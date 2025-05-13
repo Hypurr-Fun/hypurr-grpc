@@ -39,49 +39,57 @@ export interface HpumpV1Launch {
      */
     description: string;
     /**
-     * @generated from protobuf field: int64 dev_telegram_id = 6;
+     * @generated from protobuf field: string media_type = 6;
+     */
+    mediaType: string; // MEDIA_TYPE_PHOTO, MEDIA_TYPE_ANIMATION, MEDIA_TYPE_VIDEO
+    /**
+     * @generated from protobuf field: string media_uri = 7;
+     */
+    mediaUri: string;
+    /**
+     * @generated from protobuf field: int64 dev_telegram_id = 8;
      */
     devTelegramId: number;
     /**
-     * @generated from protobuf field: int64 created_at = 7;
+     * @generated from protobuf field: int64 created_at = 9;
      */
     createdAt: number; // block timestamp
     /**
-     * @generated from protobuf field: string launch_id = 8;
+     * @generated from protobuf field: string launch_id = 10;
      */
     launchId: string; // the uint256 id from the event (using string for big integers)
     /**
-     * @generated from protobuf field: string base_reserve = 9;
+     * @generated from protobuf field: string base_reserve = 11;
      */
     baseReserve: string; // Using string for big integers
     /**
-     * @generated from protobuf field: string quote_reserve = 10;
+     * @generated from protobuf field: string quote_reserve = 12;
      */
     quoteReserve: string; // Using string for big integers
     /**
-     * @generated from protobuf field: string x0 = 11;
+     * @generated from protobuf field: string x0 = 13;
      */
     x0: string;
     /**
-     * @generated from protobuf field: int64 last_sync_timestamp = 12;
+     * @generated from protobuf field: int64 last_sync_timestamp = 14;
      */
     lastSyncTimestamp: number;
     /**
-     * @generated from protobuf field: bool graduated = 13;
+     * @generated from protobuf field: bool graduated = 15;
      */
     graduated: boolean;
     /**
-     * @generated from protobuf field: int64 graduated_at = 14;
+     * @generated from protobuf field: int64 graduated_at = 16;
      */
     graduatedAt: number; // Timestamp when graduated
     /**
-     * @generated from protobuf field: string graduated_to = 15;
+     * @generated from protobuf field: string graduated_to = 17;
      */
     graduatedTo: string; // Address of the new token after graduation
     /**
      * Dev telegram user
      *
-     * @generated from protobuf field: hypurr.TelegramUserPublic dev_telegram_user = 16;
+     * @generated from protobuf field: hypurr.TelegramUserPublic dev_telegram_user = 18;
      */
     devTelegramUser?: TelegramUserPublic;
 }
@@ -137,21 +145,23 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
             { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "dev_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "dev_telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 7, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 8, name: "launch_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 9, name: "base_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 10, name: "quote_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 11, name: "x0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 12, name: "last_sync_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 13, name: "graduated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 14, name: "graduated_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 15, name: "graduated_to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 16, name: "dev_telegram_user", kind: "message", T: () => TelegramUserPublic }
+            { no: 6, name: "media_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "media_uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "dev_telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 9, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 10, name: "launch_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "base_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 12, name: "quote_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 13, name: "x0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 14, name: "last_sync_timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 15, name: "graduated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 16, name: "graduated_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 17, name: "graduated_to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 18, name: "dev_telegram_user", kind: "message", T: () => TelegramUserPublic }
         ]);
     }
     create(value?: PartialMessage<HpumpV1Launch>): HpumpV1Launch {
-        const message = { address: "", symbol: "", name: "", devAddress: "", description: "", devTelegramId: 0, createdAt: 0, launchId: "", baseReserve: "", quoteReserve: "", x0: "", lastSyncTimestamp: 0, graduated: false, graduatedAt: 0, graduatedTo: "" };
+        const message = { address: "", symbol: "", name: "", devAddress: "", description: "", mediaType: "", mediaUri: "", devTelegramId: 0, createdAt: 0, launchId: "", baseReserve: "", quoteReserve: "", x0: "", lastSyncTimestamp: 0, graduated: false, graduatedAt: 0, graduatedTo: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1Launch>(this, message, value);
@@ -177,37 +187,43 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
                 case /* string description */ 5:
                     message.description = reader.string();
                     break;
-                case /* int64 dev_telegram_id */ 6:
+                case /* string media_type */ 6:
+                    message.mediaType = reader.string();
+                    break;
+                case /* string media_uri */ 7:
+                    message.mediaUri = reader.string();
+                    break;
+                case /* int64 dev_telegram_id */ 8:
                     message.devTelegramId = reader.int64().toNumber();
                     break;
-                case /* int64 created_at */ 7:
+                case /* int64 created_at */ 9:
                     message.createdAt = reader.int64().toNumber();
                     break;
-                case /* string launch_id */ 8:
+                case /* string launch_id */ 10:
                     message.launchId = reader.string();
                     break;
-                case /* string base_reserve */ 9:
+                case /* string base_reserve */ 11:
                     message.baseReserve = reader.string();
                     break;
-                case /* string quote_reserve */ 10:
+                case /* string quote_reserve */ 12:
                     message.quoteReserve = reader.string();
                     break;
-                case /* string x0 */ 11:
+                case /* string x0 */ 13:
                     message.x0 = reader.string();
                     break;
-                case /* int64 last_sync_timestamp */ 12:
+                case /* int64 last_sync_timestamp */ 14:
                     message.lastSyncTimestamp = reader.int64().toNumber();
                     break;
-                case /* bool graduated */ 13:
+                case /* bool graduated */ 15:
                     message.graduated = reader.bool();
                     break;
-                case /* int64 graduated_at */ 14:
+                case /* int64 graduated_at */ 16:
                     message.graduatedAt = reader.int64().toNumber();
                     break;
-                case /* string graduated_to */ 15:
+                case /* string graduated_to */ 17:
                     message.graduatedTo = reader.string();
                     break;
-                case /* hypurr.TelegramUserPublic dev_telegram_user */ 16:
+                case /* hypurr.TelegramUserPublic dev_telegram_user */ 18:
                     message.devTelegramUser = TelegramUserPublic.internalBinaryRead(reader, reader.uint32(), options, message.devTelegramUser);
                     break;
                 default:
@@ -237,39 +253,45 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
         /* string description = 5; */
         if (message.description !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.description);
-        /* int64 dev_telegram_id = 6; */
+        /* string media_type = 6; */
+        if (message.mediaType !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.mediaType);
+        /* string media_uri = 7; */
+        if (message.mediaUri !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.mediaUri);
+        /* int64 dev_telegram_id = 8; */
         if (message.devTelegramId !== 0)
-            writer.tag(6, WireType.Varint).int64(message.devTelegramId);
-        /* int64 created_at = 7; */
+            writer.tag(8, WireType.Varint).int64(message.devTelegramId);
+        /* int64 created_at = 9; */
         if (message.createdAt !== 0)
-            writer.tag(7, WireType.Varint).int64(message.createdAt);
-        /* string launch_id = 8; */
+            writer.tag(9, WireType.Varint).int64(message.createdAt);
+        /* string launch_id = 10; */
         if (message.launchId !== "")
-            writer.tag(8, WireType.LengthDelimited).string(message.launchId);
-        /* string base_reserve = 9; */
+            writer.tag(10, WireType.LengthDelimited).string(message.launchId);
+        /* string base_reserve = 11; */
         if (message.baseReserve !== "")
-            writer.tag(9, WireType.LengthDelimited).string(message.baseReserve);
-        /* string quote_reserve = 10; */
+            writer.tag(11, WireType.LengthDelimited).string(message.baseReserve);
+        /* string quote_reserve = 12; */
         if (message.quoteReserve !== "")
-            writer.tag(10, WireType.LengthDelimited).string(message.quoteReserve);
-        /* string x0 = 11; */
+            writer.tag(12, WireType.LengthDelimited).string(message.quoteReserve);
+        /* string x0 = 13; */
         if (message.x0 !== "")
-            writer.tag(11, WireType.LengthDelimited).string(message.x0);
-        /* int64 last_sync_timestamp = 12; */
+            writer.tag(13, WireType.LengthDelimited).string(message.x0);
+        /* int64 last_sync_timestamp = 14; */
         if (message.lastSyncTimestamp !== 0)
-            writer.tag(12, WireType.Varint).int64(message.lastSyncTimestamp);
-        /* bool graduated = 13; */
+            writer.tag(14, WireType.Varint).int64(message.lastSyncTimestamp);
+        /* bool graduated = 15; */
         if (message.graduated !== false)
-            writer.tag(13, WireType.Varint).bool(message.graduated);
-        /* int64 graduated_at = 14; */
+            writer.tag(15, WireType.Varint).bool(message.graduated);
+        /* int64 graduated_at = 16; */
         if (message.graduatedAt !== 0)
-            writer.tag(14, WireType.Varint).int64(message.graduatedAt);
-        /* string graduated_to = 15; */
+            writer.tag(16, WireType.Varint).int64(message.graduatedAt);
+        /* string graduated_to = 17; */
         if (message.graduatedTo !== "")
-            writer.tag(15, WireType.LengthDelimited).string(message.graduatedTo);
-        /* hypurr.TelegramUserPublic dev_telegram_user = 16; */
+            writer.tag(17, WireType.LengthDelimited).string(message.graduatedTo);
+        /* hypurr.TelegramUserPublic dev_telegram_user = 18; */
         if (message.devTelegramUser)
-            TelegramUserPublic.internalBinaryWrite(message.devTelegramUser, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
+            TelegramUserPublic.internalBinaryWrite(message.devTelegramUser, writer.tag(18, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

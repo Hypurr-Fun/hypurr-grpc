@@ -12,18 +12,20 @@ message HpumpV1Launch {
   string name = 3;
   string dev_address = 4;
   string description = 5;
-  int64 dev_telegram_id = 6;
-  int64 created_at = 7;        // block timestamp
-  string launch_id = 8;        // the uint256 id from the event (using string for big integers)
-  string base_reserve = 9;      // Using string for big integers
-  string quote_reserve = 10;     // Using string for big integers
-  string x0 = 11;
-  int64 last_sync_timestamp = 12;
-  bool graduated = 13;
-  int64 graduated_at = 14;      // Timestamp when graduated
-  string graduated_to = 15;     // Address of the new token after graduation
+  string media_type = 6;      // MEDIA_TYPE_PHOTO, MEDIA_TYPE_ANIMATION, MEDIA_TYPE_VIDEO
+  string media_uri = 7;
+  int64 dev_telegram_id = 8;
+  int64 created_at = 9;        // block timestamp
+  string launch_id = 10;        // the uint256 id from the event (using string for big integers)
+  string base_reserve = 11;      // Using string for big integers
+  string quote_reserve = 12;     // Using string for big integers
+  string x0 = 13;
+  int64 last_sync_timestamp = 14;
+  bool graduated = 15;
+  int64 graduated_at = 16;      // Timestamp when graduated
+  string graduated_to = 17;     // Address of the new token after graduation
   // Dev telegram user
-  TelegramUserPublic dev_telegram_user = 16;
+  TelegramUserPublic dev_telegram_user = 18;
 }
 
 // HPump Launch Pair Swap messages
