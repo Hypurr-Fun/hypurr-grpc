@@ -66,7 +66,6 @@ message EOAUserAgentChallengeResponse {
 
 message EOAUserRequest {
   EIP712Signature signature = 1;
-  int64 chain_id = 2;
 }
 
 message EIP712Signature {
@@ -74,6 +73,7 @@ message EIP712Signature {
   string agentName = 2;
   int64 nonce = 3;
   string signature = 4;
+  int64 chain_id = 5;
 }
 
 message EOAUserResponse {
