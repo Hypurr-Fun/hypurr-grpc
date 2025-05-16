@@ -177,6 +177,10 @@ export interface EOAUserRequest {
      * @generated from protobuf field: eoa.EIP712Signature signature = 1;
      */
     signature?: EIP712Signature;
+    /**
+     * @generated from protobuf field: int64 chain_id = 2;
+     */
+    chainId: number;
 }
 /**
  * @generated from protobuf message eoa.EIP712Signature
@@ -818,11 +822,12 @@ export const EOAUserAgentChallengeResponse = new EOAUserAgentChallengeResponse$T
 class EOAUserRequest$Type extends MessageType<EOAUserRequest> {
     constructor() {
         super("eoa.EOAUserRequest", [
-            { no: 1, name: "signature", kind: "message", T: () => EIP712Signature }
+            { no: 1, name: "signature", kind: "message", T: () => EIP712Signature },
+            { no: 2, name: "chain_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<EOAUserRequest>): EOAUserRequest {
-        const message = {};
+        const message = { chainId: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<EOAUserRequest>(this, message, value);
@@ -835,6 +840,9 @@ class EOAUserRequest$Type extends MessageType<EOAUserRequest> {
             switch (fieldNo) {
                 case /* eoa.EIP712Signature signature */ 1:
                     message.signature = EIP712Signature.internalBinaryRead(reader, reader.uint32(), options, message.signature);
+                    break;
+                case /* int64 chain_id */ 2:
+                    message.chainId = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -851,6 +859,9 @@ class EOAUserRequest$Type extends MessageType<EOAUserRequest> {
         /* eoa.EIP712Signature signature = 1; */
         if (message.signature)
             EIP712Signature.internalBinaryWrite(message.signature, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* int64 chain_id = 2; */
+        if (message.chainId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.chainId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
