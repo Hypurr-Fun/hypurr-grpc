@@ -424,6 +424,10 @@ export interface LaunchHpumpV1LaunchRequest {
      * @generated from protobuf field: double initial_purchase_notional = 9;
      */
     initialPurchaseNotional: number;
+    /**
+     * @generated from protobuf field: string launch_factory = 10;
+     */
+    launchFactory: string;
 }
 /**
  * @generated from protobuf message hypurr.LaunchHpumpV1LaunchResponse
@@ -1958,11 +1962,12 @@ class LaunchHpumpV1LaunchRequest$Type extends MessageType<LaunchHpumpV1LaunchReq
             { no: 6, name: "media", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
             { no: 7, name: "media_type", kind: "enum", T: () => ["hypurr.MediaType", MediaType, "MEDIA_TYPE_"] },
             { no: 8, name: "dev_lockup_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 9, name: "initial_purchase_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 9, name: "initial_purchase_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "launch_factory", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<LaunchHpumpV1LaunchRequest>): LaunchHpumpV1LaunchRequest {
-        const message = { authData: {}, walletId: 0, description: "", fullName: "", tokenName: "", media: new Uint8Array(0), mediaType: 0, devLockupSeconds: 0, initialPurchaseNotional: 0 };
+        const message = { authData: {}, walletId: 0, description: "", fullName: "", tokenName: "", media: new Uint8Array(0), mediaType: 0, devLockupSeconds: 0, initialPurchaseNotional: 0, launchFactory: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<LaunchHpumpV1LaunchRequest>(this, message, value);
@@ -1999,6 +2004,9 @@ class LaunchHpumpV1LaunchRequest$Type extends MessageType<LaunchHpumpV1LaunchReq
                     break;
                 case /* double initial_purchase_notional */ 9:
                     message.initialPurchaseNotional = reader.double();
+                    break;
+                case /* string launch_factory */ 10:
+                    message.launchFactory = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2055,6 +2063,9 @@ class LaunchHpumpV1LaunchRequest$Type extends MessageType<LaunchHpumpV1LaunchReq
         /* double initial_purchase_notional = 9; */
         if (message.initialPurchaseNotional !== 0)
             writer.tag(9, WireType.Bit64).double(message.initialPurchaseNotional);
+        /* string launch_factory = 10; */
+        if (message.launchFactory !== "")
+            writer.tag(10, WireType.LengthDelimited).string(message.launchFactory);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

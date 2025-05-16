@@ -150,6 +150,7 @@ message LaunchHpumpV1LaunchRequest {
   MediaType media_type = 7;
   int64 dev_lockup_seconds = 8;
   double initial_purchase_notional = 9;
+  string launch_factory = 10;
 }
 
 message LaunchHpumpV1LaunchResponse {
