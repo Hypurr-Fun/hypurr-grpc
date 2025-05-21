@@ -298,11 +298,15 @@ export interface LaunchHpumpV1LaunchRequest {
      */
     description: string;
     /**
-     * @generated from protobuf field: bytes media = 2;
+     * @generated from protobuf field: string token_name = 2;
+     */
+    tokenName: string;
+    /**
+     * @generated from protobuf field: bytes media = 3;
      */
     media: Uint8Array;
     /**
-     * @generated from protobuf field: hypurr.MediaType media_type = 3;
+     * @generated from protobuf field: hypurr.MediaType media_type = 4;
      */
     mediaType: MediaType;
 }
@@ -1295,12 +1299,13 @@ class LaunchHpumpV1LaunchRequest$Type extends MessageType<LaunchHpumpV1LaunchReq
     constructor() {
         super("eoa.LaunchHpumpV1LaunchRequest", [
             { no: 1, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "media", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 3, name: "media_type", kind: "enum", T: () => ["hypurr.MediaType", MediaType, "MEDIA_TYPE_"] }
+            { no: 2, name: "token_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "media", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 4, name: "media_type", kind: "enum", T: () => ["hypurr.MediaType", MediaType, "MEDIA_TYPE_"] }
         ]);
     }
     create(value?: PartialMessage<LaunchHpumpV1LaunchRequest>): LaunchHpumpV1LaunchRequest {
-        const message = { description: "", media: new Uint8Array(0), mediaType: 0 };
+        const message = { description: "", tokenName: "", media: new Uint8Array(0), mediaType: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<LaunchHpumpV1LaunchRequest>(this, message, value);
@@ -1314,10 +1319,13 @@ class LaunchHpumpV1LaunchRequest$Type extends MessageType<LaunchHpumpV1LaunchReq
                 case /* string description */ 1:
                     message.description = reader.string();
                     break;
-                case /* bytes media */ 2:
+                case /* string token_name */ 2:
+                    message.tokenName = reader.string();
+                    break;
+                case /* bytes media */ 3:
                     message.media = reader.bytes();
                     break;
-                case /* hypurr.MediaType media_type */ 3:
+                case /* hypurr.MediaType media_type */ 4:
                     message.mediaType = reader.int32();
                     break;
                 default:
@@ -1335,12 +1343,15 @@ class LaunchHpumpV1LaunchRequest$Type extends MessageType<LaunchHpumpV1LaunchReq
         /* string description = 1; */
         if (message.description !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.description);
-        /* bytes media = 2; */
+        /* string token_name = 2; */
+        if (message.tokenName !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.tokenName);
+        /* bytes media = 3; */
         if (message.media.length)
-            writer.tag(2, WireType.LengthDelimited).bytes(message.media);
-        /* hypurr.MediaType media_type = 3; */
+            writer.tag(3, WireType.LengthDelimited).bytes(message.media);
+        /* hypurr.MediaType media_type = 4; */
         if (message.mediaType !== 0)
-            writer.tag(3, WireType.Varint).int32(message.mediaType);
+            writer.tag(4, WireType.Varint).int32(message.mediaType);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -25,7 +25,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/eoa/eoa_service.proto',
   package='eoa',
   syntax='proto3',
-  serialized_pb=_b('\n\x1chypurr/eoa/eoa_service.proto\x12\x03\x65oa\x1a\x13hypurr/wallet.proto\x1a\x13hypurr/launch.proto\x1a\x13hypurr/common.proto\x1a\x14hypurr/hpumpv1.proto\x1a\x1egoogle/protobuf/wrappers.proto\"/\n\x0c\x45OASignature\x12\t\n\x01r\x18\x01 \x01(\t\x12\t\n\x01s\x18\x02 \x01(\t\x12\t\n\x01v\x18\x03 \x01(\r\"\xdf\x01\n\x1dHyperliquidLaunchTradeRequest\x12\x11\n\tsignature\x18\x01 \x01(\t\x12\x11\n\tlaunch_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12\x37\n\tdirection\x18\x04 \x01(\x0e\x32$.eoa.HyperliquidLaunchTradeDirection\x12\x0e\n\x06\x61mount\x18\x05 \x01(\t\x12\x18\n\x10\x65thereum_address\x18\x06 \x01(\t\x12\x0c\n\x04time\x18\x07 \x01(\x03\x12\x14\n\x0cmax_slippage\x18\x08 \x01(\x01\"m\n\x1eHyperliquidLaunchTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"\x8a\x01\n\x1bHyperliquidSpotTradeRequest\x12\x0f\n\x07pair_id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x37\n\tdirection\x18\x03 \x01(\x0e\x32$.eoa.HyperliquidLaunchTradeDirection\x12\x0e\n\x06\x61mount\x18\x04 \x01(\x01\"k\n\x1cHyperliquidSpotTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"Y\n\x1eLaunchHyperliquidLaunchRequest\x12\x12\n\nbase_asset\x18\x01 \x01(\t\x12\x13\n\x0bquote_asset\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x01\"/\n\x1c\x45OAUserAgentChallengeRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\".\n\x1d\x45OAUserAgentChallengeResponse\x12\r\n\x05\x61gent\x18\x01 \x01(\t\"9\n\x0e\x45OAUserRequest\x12\'\n\tsignature\x18\x01 \x01(\x0b\x32\x14.eoa.EIP712Signature\"n\n\x0f\x45IP712Signature\x12\x14\n\x0c\x61gentAddress\x18\x01 \x01(\t\x12\x11\n\tagentName\x18\x02 \x01(\t\x12\r\n\x05nonce\x18\x03 \x01(\x03\x12\x11\n\tsignature\x18\x04 \x01(\t\x12\x10\n\x08\x63hain_id\x18\x05 \x01(\x03\"Z\n\x0f\x45OAUserResponse\x12\x1c\n\x05token\x18\x01 \x01(\x0b\x32\r.eoa.EOAToken\x12)\n\x06wallet\x18\x02 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\".\n\x08\x45OAToken\x12\x0e\n\x06secret\x18\x01 \x01(\t\x12\x12\n\nexpires_at\x18\x02 \x01(\x03\"!\n\x1fPendingHyperliquidLaunchRequest\"M\n PendingHyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\x9c\x02\n\x1c\x45\x64itHyperliquidLaunchRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x12\n\ntoken_name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x11\n\tfull_name\x18\x04 \x01(\t\x12*\n\x05media\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.BytesValue\x12%\n\nmedia_type\x18\x06 \x01(\x0e\x32\x11.hypurr.MediaType\x12\x1a\n\x12\x64\x65v_lockup_seconds\x18\x07 \x01(\x03\x12!\n\x19initial_purchase_notional\x18\x08 \x01(\x01\"J\n\x1d\x45\x64itHyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"g\n\x1aLaunchHpumpV1LaunchRequest\x12\x13\n\x0b\x64\x65scription\x18\x01 \x01(\t\x12\r\n\x05media\x18\x02 \x01(\x0c\x12%\n\nmedia_type\x18\x03 \x01(\x0e\x32\x11.hypurr.MediaType\"/\n\x1bLaunchHpumpV1LaunchResponse\x12\x10\n\x08ipfs_url\x18\x01 \x01(\t*4\n\x1fHyperliquidLaunchTradeDirection\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\x32\x8c\x05\n\x03\x45OA\x12`\n\x15\x45OAUserAgentChallenge\x12!.eoa.EOAUserAgentChallengeRequest\x1a\".eoa.EOAUserAgentChallengeResponse\"\x00\x12\x36\n\x07\x45OAUser\x12\x13.eoa.EOAUserRequest\x1a\x14.eoa.EOAUserResponse\"\x00\x12i\n\x18PendingHyperliquidLaunch\x12$.eoa.PendingHyperliquidLaunchRequest\x1a%.eoa.PendingHyperliquidLaunchResponse\"\x00\x12\x63\n\x16HyperliquidLaunchTrade\x12\".eoa.HyperliquidLaunchTradeRequest\x1a#.eoa.HyperliquidLaunchTradeResponse\"\x00\x12`\n\x15\x45\x64itHyperliquidLaunch\x12!.eoa.EditHyperliquidLaunchRequest\x1a\".eoa.EditHyperliquidLaunchResponse\"\x00\x12Z\n\x13LaunchHpumpV1Launch\x12\x1f.eoa.LaunchHpumpV1LaunchRequest\x1a .eoa.LaunchHpumpV1LaunchResponse\"\x00\x12]\n\x14HyperliquidSpotTrade\x12 .eoa.HyperliquidSpotTradeRequest\x1a!.eoa.HyperliquidSpotTradeResponse\"\x00\x42-Z+gitlab.com/hypurr/hypurr-grpc/go/hypurr/eoab\x06proto3')
+  serialized_pb=_b('\n\x1chypurr/eoa/eoa_service.proto\x12\x03\x65oa\x1a\x13hypurr/wallet.proto\x1a\x13hypurr/launch.proto\x1a\x13hypurr/common.proto\x1a\x14hypurr/hpumpv1.proto\x1a\x1egoogle/protobuf/wrappers.proto\"/\n\x0c\x45OASignature\x12\t\n\x01r\x18\x01 \x01(\t\x12\t\n\x01s\x18\x02 \x01(\t\x12\t\n\x01v\x18\x03 \x01(\r\"\xdf\x01\n\x1dHyperliquidLaunchTradeRequest\x12\x11\n\tsignature\x18\x01 \x01(\t\x12\x11\n\tlaunch_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12\x37\n\tdirection\x18\x04 \x01(\x0e\x32$.eoa.HyperliquidLaunchTradeDirection\x12\x0e\n\x06\x61mount\x18\x05 \x01(\t\x12\x18\n\x10\x65thereum_address\x18\x06 \x01(\t\x12\x0c\n\x04time\x18\x07 \x01(\x03\x12\x14\n\x0cmax_slippage\x18\x08 \x01(\x01\"m\n\x1eHyperliquidLaunchTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"\x8a\x01\n\x1bHyperliquidSpotTradeRequest\x12\x0f\n\x07pair_id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x37\n\tdirection\x18\x03 \x01(\x0e\x32$.eoa.HyperliquidLaunchTradeDirection\x12\x0e\n\x06\x61mount\x18\x04 \x01(\x01\"k\n\x1cHyperliquidSpotTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"Y\n\x1eLaunchHyperliquidLaunchRequest\x12\x12\n\nbase_asset\x18\x01 \x01(\t\x12\x13\n\x0bquote_asset\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x01\"/\n\x1c\x45OAUserAgentChallengeRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\".\n\x1d\x45OAUserAgentChallengeResponse\x12\r\n\x05\x61gent\x18\x01 \x01(\t\"9\n\x0e\x45OAUserRequest\x12\'\n\tsignature\x18\x01 \x01(\x0b\x32\x14.eoa.EIP712Signature\"n\n\x0f\x45IP712Signature\x12\x14\n\x0c\x61gentAddress\x18\x01 \x01(\t\x12\x11\n\tagentName\x18\x02 \x01(\t\x12\r\n\x05nonce\x18\x03 \x01(\x03\x12\x11\n\tsignature\x18\x04 \x01(\t\x12\x10\n\x08\x63hain_id\x18\x05 \x01(\x03\"Z\n\x0f\x45OAUserResponse\x12\x1c\n\x05token\x18\x01 \x01(\x0b\x32\r.eoa.EOAToken\x12)\n\x06wallet\x18\x02 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\".\n\x08\x45OAToken\x12\x0e\n\x06secret\x18\x01 \x01(\t\x12\x12\n\nexpires_at\x18\x02 \x01(\x03\"!\n\x1fPendingHyperliquidLaunchRequest\"M\n PendingHyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\x9c\x02\n\x1c\x45\x64itHyperliquidLaunchRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x12\n\ntoken_name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x11\n\tfull_name\x18\x04 \x01(\t\x12*\n\x05media\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.BytesValue\x12%\n\nmedia_type\x18\x06 \x01(\x0e\x32\x11.hypurr.MediaType\x12\x1a\n\x12\x64\x65v_lockup_seconds\x18\x07 \x01(\x03\x12!\n\x19initial_purchase_notional\x18\x08 \x01(\x01\"J\n\x1d\x45\x64itHyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"{\n\x1aLaunchHpumpV1LaunchRequest\x12\x13\n\x0b\x64\x65scription\x18\x01 \x01(\t\x12\x12\n\ntoken_name\x18\x02 \x01(\t\x12\r\n\x05media\x18\x03 \x01(\x0c\x12%\n\nmedia_type\x18\x04 \x01(\x0e\x32\x11.hypurr.MediaType\"/\n\x1bLaunchHpumpV1LaunchResponse\x12\x10\n\x08ipfs_url\x18\x01 \x01(\t*4\n\x1fHyperliquidLaunchTradeDirection\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\x32\x8c\x05\n\x03\x45OA\x12`\n\x15\x45OAUserAgentChallenge\x12!.eoa.EOAUserAgentChallengeRequest\x1a\".eoa.EOAUserAgentChallengeResponse\"\x00\x12\x36\n\x07\x45OAUser\x12\x13.eoa.EOAUserRequest\x1a\x14.eoa.EOAUserResponse\"\x00\x12i\n\x18PendingHyperliquidLaunch\x12$.eoa.PendingHyperliquidLaunchRequest\x1a%.eoa.PendingHyperliquidLaunchResponse\"\x00\x12\x63\n\x16HyperliquidLaunchTrade\x12\".eoa.HyperliquidLaunchTradeRequest\x1a#.eoa.HyperliquidLaunchTradeResponse\"\x00\x12`\n\x15\x45\x64itHyperliquidLaunch\x12!.eoa.EditHyperliquidLaunchRequest\x1a\".eoa.EditHyperliquidLaunchResponse\"\x00\x12Z\n\x13LaunchHpumpV1Launch\x12\x1f.eoa.LaunchHpumpV1LaunchRequest\x1a .eoa.LaunchHpumpV1LaunchResponse\"\x00\x12]\n\x14HyperliquidSpotTrade\x12 .eoa.HyperliquidSpotTradeRequest\x1a!.eoa.HyperliquidSpotTradeResponse\"\x00\x42-Z+gitlab.com/hypurr/hypurr-grpc/go/hypurr/eoab\x06proto3')
   ,
   dependencies=[hypurr_dot_wallet__pb2.DESCRIPTOR,hypurr_dot_launch__pb2.DESCRIPTOR,hypurr_dot_common__pb2.DESCRIPTOR,hypurr_dot_hpumpv1__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -46,8 +46,8 @@ _HYPERLIQUIDLAUNCHTRADEDIRECTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=1920,
-  serialized_end=1972,
+  serialized_start=1940,
+  serialized_end=1992,
 )
 _sym_db.RegisterEnumDescriptor(_HYPERLIQUIDLAUNCHTRADEDIRECTION)
 
@@ -792,15 +792,22 @@ _LAUNCHHPUMPV1LAUNCHREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='media', full_name='eoa.LaunchHpumpV1LaunchRequest.media', index=1,
-      number=2, type=12, cpp_type=9, label=1,
+      name='token_name', full_name='eoa.LaunchHpumpV1LaunchRequest.token_name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='media', full_name='eoa.LaunchHpumpV1LaunchRequest.media', index=2,
+      number=3, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='media_type', full_name='eoa.LaunchHpumpV1LaunchRequest.media_type', index=2,
-      number=3, type=14, cpp_type=8, label=1,
+      name='media_type', full_name='eoa.LaunchHpumpV1LaunchRequest.media_type', index=3,
+      number=4, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -818,7 +825,7 @@ _LAUNCHHPUMPV1LAUNCHREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1766,
-  serialized_end=1869,
+  serialized_end=1889,
 )
 
 
@@ -848,8 +855,8 @@ _LAUNCHHPUMPV1LAUNCHRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1871,
-  serialized_end=1918,
+  serialized_start=1891,
+  serialized_end=1938,
 )
 
 _HYPERLIQUIDLAUNCHTRADEREQUEST.fields_by_name['direction'].enum_type = _HYPERLIQUIDLAUNCHTRADEDIRECTION
@@ -1020,8 +1027,8 @@ _EOA = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=1975,
-  serialized_end=2627,
+  serialized_start=1995,
+  serialized_end=2647,
   methods=[
   _descriptor.MethodDescriptor(
     name='EOAUserAgentChallenge',
