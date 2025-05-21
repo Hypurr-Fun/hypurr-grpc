@@ -121,11 +121,19 @@ message LaunchHpumpV1LaunchResponse {
   string ipfs_url = 1;
 }
 
+message EOAUserEvmModifyRequest {
+  bool using_big_blocks = 1;
+}
+
+message EOAUserEvmModifyResponse {
+}
+
 
 // Authed endpoints
 service EOA {
   rpc EOAUserAgentChallenge (EOAUserAgentChallengeRequest) returns (EOAUserAgentChallengeResponse) {}
   rpc EOAUser (EOAUserRequest) returns (EOAUserResponse) {}
+  rpc EOAUserEvmModify (EOAUserEvmModifyRequest) returns (EOAUserEvmModifyResponse) {}
 
   // Launch
   rpc PendingHyperliquidLaunch (PendingHyperliquidLaunchRequest) returns (PendingHyperliquidLaunchResponse) {}

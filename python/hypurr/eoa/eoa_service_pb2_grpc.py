@@ -24,6 +24,11 @@ class EOAStub(object):
         request_serializer=hypurr_dot_eoa_dot_eoa__service__pb2.EOAUserRequest.SerializeToString,
         response_deserializer=hypurr_dot_eoa_dot_eoa__service__pb2.EOAUserResponse.FromString,
         )
+    self.EOAUserEvmModify = channel.unary_unary(
+        '/eoa.EOA/EOAUserEvmModify',
+        request_serializer=hypurr_dot_eoa_dot_eoa__service__pb2.EOAUserEvmModifyRequest.SerializeToString,
+        response_deserializer=hypurr_dot_eoa_dot_eoa__service__pb2.EOAUserEvmModifyResponse.FromString,
+        )
     self.PendingHyperliquidLaunch = channel.unary_unary(
         '/eoa.EOA/PendingHyperliquidLaunch',
         request_serializer=hypurr_dot_eoa_dot_eoa__service__pb2.PendingHyperliquidLaunchRequest.SerializeToString,
@@ -63,6 +68,13 @@ class EOAServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def EOAUser(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def EOAUserEvmModify(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -116,6 +128,11 @@ def add_EOAServicer_to_server(servicer, server):
           servicer.EOAUser,
           request_deserializer=hypurr_dot_eoa_dot_eoa__service__pb2.EOAUserRequest.FromString,
           response_serializer=hypurr_dot_eoa_dot_eoa__service__pb2.EOAUserResponse.SerializeToString,
+      ),
+      'EOAUserEvmModify': grpc.unary_unary_rpc_method_handler(
+          servicer.EOAUserEvmModify,
+          request_deserializer=hypurr_dot_eoa_dot_eoa__service__pb2.EOAUserEvmModifyRequest.FromString,
+          response_serializer=hypurr_dot_eoa_dot_eoa__service__pb2.EOAUserEvmModifyResponse.SerializeToString,
       ),
       'PendingHyperliquidLaunch': grpc.unary_unary_rpc_method_handler(
           servicer.PendingHyperliquidLaunch,

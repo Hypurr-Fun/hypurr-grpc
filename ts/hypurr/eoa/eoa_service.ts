@@ -320,6 +320,20 @@ export interface LaunchHpumpV1LaunchResponse {
     ipfsUrl: string;
 }
 /**
+ * @generated from protobuf message eoa.EOAUserEvmModifyRequest
+ */
+export interface EOAUserEvmModifyRequest {
+    /**
+     * @generated from protobuf field: bool using_big_blocks = 1;
+     */
+    usingBigBlocks: boolean;
+}
+/**
+ * @generated from protobuf message eoa.EOAUserEvmModifyResponse
+ */
+export interface EOAUserEvmModifyResponse {
+}
+/**
  * @generated from protobuf enum eoa.HyperliquidLaunchTradeDirection
  */
 export enum HyperliquidLaunchTradeDirection {
@@ -1409,12 +1423,86 @@ class LaunchHpumpV1LaunchResponse$Type extends MessageType<LaunchHpumpV1LaunchRe
  * @generated MessageType for protobuf message eoa.LaunchHpumpV1LaunchResponse
  */
 export const LaunchHpumpV1LaunchResponse = new LaunchHpumpV1LaunchResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EOAUserEvmModifyRequest$Type extends MessageType<EOAUserEvmModifyRequest> {
+    constructor() {
+        super("eoa.EOAUserEvmModifyRequest", [
+            { no: 1, name: "using_big_blocks", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<EOAUserEvmModifyRequest>): EOAUserEvmModifyRequest {
+        const message = { usingBigBlocks: false };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<EOAUserEvmModifyRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EOAUserEvmModifyRequest): EOAUserEvmModifyRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bool using_big_blocks */ 1:
+                    message.usingBigBlocks = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: EOAUserEvmModifyRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bool using_big_blocks = 1; */
+        if (message.usingBigBlocks !== false)
+            writer.tag(1, WireType.Varint).bool(message.usingBigBlocks);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message eoa.EOAUserEvmModifyRequest
+ */
+export const EOAUserEvmModifyRequest = new EOAUserEvmModifyRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EOAUserEvmModifyResponse$Type extends MessageType<EOAUserEvmModifyResponse> {
+    constructor() {
+        super("eoa.EOAUserEvmModifyResponse", []);
+    }
+    create(value?: PartialMessage<EOAUserEvmModifyResponse>): EOAUserEvmModifyResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<EOAUserEvmModifyResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EOAUserEvmModifyResponse): EOAUserEvmModifyResponse {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: EOAUserEvmModifyResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message eoa.EOAUserEvmModifyResponse
+ */
+export const EOAUserEvmModifyResponse = new EOAUserEvmModifyResponse$Type();
 /**
  * @generated ServiceType for protobuf service eoa.EOA
  */
 export const EOA = new ServiceType("eoa.EOA", [
     { name: "EOAUserAgentChallenge", options: {}, I: EOAUserAgentChallengeRequest, O: EOAUserAgentChallengeResponse },
     { name: "EOAUser", options: {}, I: EOAUserRequest, O: EOAUserResponse },
+    { name: "EOAUserEvmModify", options: {}, I: EOAUserEvmModifyRequest, O: EOAUserEvmModifyResponse },
     { name: "PendingHyperliquidLaunch", options: {}, I: PendingHyperliquidLaunchRequest, O: PendingHyperliquidLaunchResponse },
     { name: "HyperliquidLaunchTrade", options: {}, I: HyperliquidLaunchTradeRequest, O: HyperliquidLaunchTradeResponse },
     { name: "EditHyperliquidLaunch", options: {}, I: EditHyperliquidLaunchRequest, O: EditHyperliquidLaunchResponse },
