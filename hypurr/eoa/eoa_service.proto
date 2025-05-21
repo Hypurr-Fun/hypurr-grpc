@@ -112,17 +112,12 @@ message EditHyperliquidLaunchResponse {
 
 message LaunchHpumpV1LaunchRequest {
   string description = 1;
-  string full_name = 2;
-  string token_name = 3;
-  bytes media = 4;
-  hypurr.MediaType media_type = 5;
-  int64 dev_lockup_seconds = 6;
-  double initial_purchase_notional = 7;
-  string launch_factory = 8;
+  bytes media = 2;
+  hypurr.MediaType media_type = 3;
 }
 
 message LaunchHpumpV1LaunchResponse {
-  hypurr.HpumpV1Launch launch = 1;
+  string ipfs_url = 1;
 }
 
 
