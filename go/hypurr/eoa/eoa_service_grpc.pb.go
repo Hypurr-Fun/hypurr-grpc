@@ -24,6 +24,7 @@ const (
 	EOA_PendingHyperliquidLaunch_FullMethodName = "/eoa.EOA/PendingHyperliquidLaunch"
 	EOA_HyperliquidLaunchTrade_FullMethodName   = "/eoa.EOA/HyperliquidLaunchTrade"
 	EOA_EditHyperliquidLaunch_FullMethodName    = "/eoa.EOA/EditHyperliquidLaunch"
+	EOA_LaunchHpumpV1Launch_FullMethodName      = "/eoa.EOA/LaunchHpumpV1Launch"
 	EOA_HyperliquidSpotTrade_FullMethodName     = "/eoa.EOA/HyperliquidSpotTrade"
 )
 
@@ -39,6 +40,7 @@ type EOAClient interface {
 	PendingHyperliquidLaunch(ctx context.Context, in *PendingHyperliquidLaunchRequest, opts ...grpc.CallOption) (*PendingHyperliquidLaunchResponse, error)
 	HyperliquidLaunchTrade(ctx context.Context, in *HyperliquidLaunchTradeRequest, opts ...grpc.CallOption) (*HyperliquidLaunchTradeResponse, error)
 	EditHyperliquidLaunch(ctx context.Context, in *EditHyperliquidLaunchRequest, opts ...grpc.CallOption) (*EditHyperliquidLaunchResponse, error)
+	LaunchHpumpV1Launch(ctx context.Context, in *LaunchHpumpV1LaunchRequest, opts ...grpc.CallOption) (*LaunchHpumpV1LaunchResponse, error)
 	// Spot
 	HyperliquidSpotTrade(ctx context.Context, in *HyperliquidSpotTradeRequest, opts ...grpc.CallOption) (*HyperliquidSpotTradeResponse, error)
 }
@@ -101,6 +103,16 @@ func (c *eOAClient) EditHyperliquidLaunch(ctx context.Context, in *EditHyperliqu
 	return out, nil
 }
 
+func (c *eOAClient) LaunchHpumpV1Launch(ctx context.Context, in *LaunchHpumpV1LaunchRequest, opts ...grpc.CallOption) (*LaunchHpumpV1LaunchResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LaunchHpumpV1LaunchResponse)
+	err := c.cc.Invoke(ctx, EOA_LaunchHpumpV1Launch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *eOAClient) HyperliquidSpotTrade(ctx context.Context, in *HyperliquidSpotTradeRequest, opts ...grpc.CallOption) (*HyperliquidSpotTradeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HyperliquidSpotTradeResponse)
@@ -123,6 +135,7 @@ type EOAServer interface {
 	PendingHyperliquidLaunch(context.Context, *PendingHyperliquidLaunchRequest) (*PendingHyperliquidLaunchResponse, error)
 	HyperliquidLaunchTrade(context.Context, *HyperliquidLaunchTradeRequest) (*HyperliquidLaunchTradeResponse, error)
 	EditHyperliquidLaunch(context.Context, *EditHyperliquidLaunchRequest) (*EditHyperliquidLaunchResponse, error)
+	LaunchHpumpV1Launch(context.Context, *LaunchHpumpV1LaunchRequest) (*LaunchHpumpV1LaunchResponse, error)
 	// Spot
 	HyperliquidSpotTrade(context.Context, *HyperliquidSpotTradeRequest) (*HyperliquidSpotTradeResponse, error)
 	mustEmbedUnimplementedEOAServer()
@@ -146,6 +159,9 @@ func (UnimplementedEOAServer) HyperliquidLaunchTrade(context.Context, *Hyperliqu
 }
 func (UnimplementedEOAServer) EditHyperliquidLaunch(context.Context, *EditHyperliquidLaunchRequest) (*EditHyperliquidLaunchResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EditHyperliquidLaunch not implemented")
+}
+func (UnimplementedEOAServer) LaunchHpumpV1Launch(context.Context, *LaunchHpumpV1LaunchRequest) (*LaunchHpumpV1LaunchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LaunchHpumpV1Launch not implemented")
 }
 func (UnimplementedEOAServer) HyperliquidSpotTrade(context.Context, *HyperliquidSpotTradeRequest) (*HyperliquidSpotTradeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidSpotTrade not implemented")
@@ -253,6 +269,24 @@ func _EOA_EditHyperliquidLaunch_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _EOA_LaunchHpumpV1Launch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LaunchHpumpV1LaunchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EOAServer).LaunchHpumpV1Launch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: EOA_LaunchHpumpV1Launch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EOAServer).LaunchHpumpV1Launch(ctx, req.(*LaunchHpumpV1LaunchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _EOA_HyperliquidSpotTrade_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HyperliquidSpotTradeRequest)
 	if err := dec(in); err != nil {
@@ -297,6 +331,10 @@ var EOA_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EditHyperliquidLaunch",
 			Handler:    _EOA_EditHyperliquidLaunch_Handler,
+		},
+		{
+			MethodName: "LaunchHpumpV1Launch",
+			Handler:    _EOA_LaunchHpumpV1Launch_Handler,
 		},
 		{
 			MethodName: "HyperliquidSpotTrade",

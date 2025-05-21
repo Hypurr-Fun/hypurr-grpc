@@ -39,6 +39,11 @@ class EOAStub(object):
         request_serializer=hypurr_dot_eoa_dot_eoa__service__pb2.EditHyperliquidLaunchRequest.SerializeToString,
         response_deserializer=hypurr_dot_eoa_dot_eoa__service__pb2.EditHyperliquidLaunchResponse.FromString,
         )
+    self.LaunchHpumpV1Launch = channel.unary_unary(
+        '/eoa.EOA/LaunchHpumpV1Launch',
+        request_serializer=hypurr_dot_eoa_dot_eoa__service__pb2.LaunchHpumpV1LaunchRequest.SerializeToString,
+        response_deserializer=hypurr_dot_eoa_dot_eoa__service__pb2.LaunchHpumpV1LaunchResponse.FromString,
+        )
     self.HyperliquidSpotTrade = channel.unary_unary(
         '/eoa.EOA/HyperliquidSpotTrade',
         request_serializer=hypurr_dot_eoa_dot_eoa__service__pb2.HyperliquidSpotTradeRequest.SerializeToString,
@@ -85,6 +90,13 @@ class EOAServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def LaunchHpumpV1Launch(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def HyperliquidSpotTrade(self, request, context):
     """Spot
     """
@@ -119,6 +131,11 @@ def add_EOAServicer_to_server(servicer, server):
           servicer.EditHyperliquidLaunch,
           request_deserializer=hypurr_dot_eoa_dot_eoa__service__pb2.EditHyperliquidLaunchRequest.FromString,
           response_serializer=hypurr_dot_eoa_dot_eoa__service__pb2.EditHyperliquidLaunchResponse.SerializeToString,
+      ),
+      'LaunchHpumpV1Launch': grpc.unary_unary_rpc_method_handler(
+          servicer.LaunchHpumpV1Launch,
+          request_deserializer=hypurr_dot_eoa_dot_eoa__service__pb2.LaunchHpumpV1LaunchRequest.FromString,
+          response_serializer=hypurr_dot_eoa_dot_eoa__service__pb2.LaunchHpumpV1LaunchResponse.SerializeToString,
       ),
       'HyperliquidSpotTrade': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidSpotTrade,

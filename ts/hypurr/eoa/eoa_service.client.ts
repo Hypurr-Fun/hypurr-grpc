@@ -6,6 +6,8 @@ import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { EOA } from "./eoa_service";
 import type { HyperliquidSpotTradeResponse } from "./eoa_service";
 import type { HyperliquidSpotTradeRequest } from "./eoa_service";
+import type { LaunchHpumpV1LaunchResponse } from "./eoa_service";
+import type { LaunchHpumpV1LaunchRequest } from "./eoa_service";
 import type { EditHyperliquidLaunchResponse } from "./eoa_service";
 import type { EditHyperliquidLaunchRequest } from "./eoa_service";
 import type { HyperliquidLaunchTradeResponse } from "./eoa_service";
@@ -47,6 +49,10 @@ export interface IEOAClient {
      * @generated from protobuf rpc: EditHyperliquidLaunch(eoa.EditHyperliquidLaunchRequest) returns (eoa.EditHyperliquidLaunchResponse);
      */
     editHyperliquidLaunch(input: EditHyperliquidLaunchRequest, options?: RpcOptions): UnaryCall<EditHyperliquidLaunchRequest, EditHyperliquidLaunchResponse>;
+    /**
+     * @generated from protobuf rpc: LaunchHpumpV1Launch(eoa.LaunchHpumpV1LaunchRequest) returns (eoa.LaunchHpumpV1LaunchResponse);
+     */
+    launchHpumpV1Launch(input: LaunchHpumpV1LaunchRequest, options?: RpcOptions): UnaryCall<LaunchHpumpV1LaunchRequest, LaunchHpumpV1LaunchResponse>;
     /**
      * Spot
      *
@@ -103,12 +109,19 @@ export class EOAClient implements IEOAClient, ServiceInfo {
         return stackIntercept<EditHyperliquidLaunchRequest, EditHyperliquidLaunchResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: LaunchHpumpV1Launch(eoa.LaunchHpumpV1LaunchRequest) returns (eoa.LaunchHpumpV1LaunchResponse);
+     */
+    launchHpumpV1Launch(input: LaunchHpumpV1LaunchRequest, options?: RpcOptions): UnaryCall<LaunchHpumpV1LaunchRequest, LaunchHpumpV1LaunchResponse> {
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
+        return stackIntercept<LaunchHpumpV1LaunchRequest, LaunchHpumpV1LaunchResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * Spot
      *
      * @generated from protobuf rpc: HyperliquidSpotTrade(eoa.HyperliquidSpotTradeRequest) returns (eoa.HyperliquidSpotTradeResponse);
      */
     hyperliquidSpotTrade(input: HyperliquidSpotTradeRequest, options?: RpcOptions): UnaryCall<HyperliquidSpotTradeRequest, HyperliquidSpotTradeResponse> {
-        const method = this.methods[5], opt = this._transport.mergeOptions(options);
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
         return stackIntercept<HyperliquidSpotTradeRequest, HyperliquidSpotTradeResponse>("unary", this._transport, method, opt, input);
     }
 }

@@ -12,6 +12,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { HpumpV1Launch } from "../hpumpv1";
 import { MediaType } from "../common";
 import { BytesValue } from "../../google/protobuf/wrappers";
 import { Int64Value } from "../../google/protobuf/wrappers";
@@ -288,6 +289,52 @@ export interface EditHyperliquidLaunchResponse {
      * @generated from protobuf field: hypurr.HyperliquidLaunch launch = 1;
      */
     launch?: HyperliquidLaunch;
+}
+/**
+ * @generated from protobuf message eoa.LaunchHpumpV1LaunchRequest
+ */
+export interface LaunchHpumpV1LaunchRequest {
+    /**
+     * @generated from protobuf field: string description = 1;
+     */
+    description: string;
+    /**
+     * @generated from protobuf field: string full_name = 2;
+     */
+    fullName: string;
+    /**
+     * @generated from protobuf field: string token_name = 3;
+     */
+    tokenName: string;
+    /**
+     * @generated from protobuf field: bytes media = 4;
+     */
+    media: Uint8Array;
+    /**
+     * @generated from protobuf field: hypurr.MediaType media_type = 5;
+     */
+    mediaType: MediaType;
+    /**
+     * @generated from protobuf field: int64 dev_lockup_seconds = 6;
+     */
+    devLockupSeconds: number;
+    /**
+     * @generated from protobuf field: double initial_purchase_notional = 7;
+     */
+    initialPurchaseNotional: number;
+    /**
+     * @generated from protobuf field: string launch_factory = 8;
+     */
+    launchFactory: string;
+}
+/**
+ * @generated from protobuf message eoa.LaunchHpumpV1LaunchResponse
+ */
+export interface LaunchHpumpV1LaunchResponse {
+    /**
+     * @generated from protobuf field: hypurr.HpumpV1Launch launch = 1;
+     */
+    launch?: HpumpV1Launch;
 }
 /**
  * @generated from protobuf enum eoa.HyperliquidLaunchTradeDirection
@@ -1264,6 +1311,149 @@ class EditHyperliquidLaunchResponse$Type extends MessageType<EditHyperliquidLaun
  * @generated MessageType for protobuf message eoa.EditHyperliquidLaunchResponse
  */
 export const EditHyperliquidLaunchResponse = new EditHyperliquidLaunchResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LaunchHpumpV1LaunchRequest$Type extends MessageType<LaunchHpumpV1LaunchRequest> {
+    constructor() {
+        super("eoa.LaunchHpumpV1LaunchRequest", [
+            { no: 1, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "token_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "media", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 5, name: "media_type", kind: "enum", T: () => ["hypurr.MediaType", MediaType, "MEDIA_TYPE_"] },
+            { no: 6, name: "dev_lockup_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "initial_purchase_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "launch_factory", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<LaunchHpumpV1LaunchRequest>): LaunchHpumpV1LaunchRequest {
+        const message = { description: "", fullName: "", tokenName: "", media: new Uint8Array(0), mediaType: 0, devLockupSeconds: 0, initialPurchaseNotional: 0, launchFactory: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<LaunchHpumpV1LaunchRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LaunchHpumpV1LaunchRequest): LaunchHpumpV1LaunchRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string description */ 1:
+                    message.description = reader.string();
+                    break;
+                case /* string full_name */ 2:
+                    message.fullName = reader.string();
+                    break;
+                case /* string token_name */ 3:
+                    message.tokenName = reader.string();
+                    break;
+                case /* bytes media */ 4:
+                    message.media = reader.bytes();
+                    break;
+                case /* hypurr.MediaType media_type */ 5:
+                    message.mediaType = reader.int32();
+                    break;
+                case /* int64 dev_lockup_seconds */ 6:
+                    message.devLockupSeconds = reader.int64().toNumber();
+                    break;
+                case /* double initial_purchase_notional */ 7:
+                    message.initialPurchaseNotional = reader.double();
+                    break;
+                case /* string launch_factory */ 8:
+                    message.launchFactory = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: LaunchHpumpV1LaunchRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string description = 1; */
+        if (message.description !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.description);
+        /* string full_name = 2; */
+        if (message.fullName !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.fullName);
+        /* string token_name = 3; */
+        if (message.tokenName !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.tokenName);
+        /* bytes media = 4; */
+        if (message.media.length)
+            writer.tag(4, WireType.LengthDelimited).bytes(message.media);
+        /* hypurr.MediaType media_type = 5; */
+        if (message.mediaType !== 0)
+            writer.tag(5, WireType.Varint).int32(message.mediaType);
+        /* int64 dev_lockup_seconds = 6; */
+        if (message.devLockupSeconds !== 0)
+            writer.tag(6, WireType.Varint).int64(message.devLockupSeconds);
+        /* double initial_purchase_notional = 7; */
+        if (message.initialPurchaseNotional !== 0)
+            writer.tag(7, WireType.Bit64).double(message.initialPurchaseNotional);
+        /* string launch_factory = 8; */
+        if (message.launchFactory !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.launchFactory);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message eoa.LaunchHpumpV1LaunchRequest
+ */
+export const LaunchHpumpV1LaunchRequest = new LaunchHpumpV1LaunchRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LaunchHpumpV1LaunchResponse$Type extends MessageType<LaunchHpumpV1LaunchResponse> {
+    constructor() {
+        super("eoa.LaunchHpumpV1LaunchResponse", [
+            { no: 1, name: "launch", kind: "message", T: () => HpumpV1Launch }
+        ]);
+    }
+    create(value?: PartialMessage<LaunchHpumpV1LaunchResponse>): LaunchHpumpV1LaunchResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<LaunchHpumpV1LaunchResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LaunchHpumpV1LaunchResponse): LaunchHpumpV1LaunchResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.HpumpV1Launch launch */ 1:
+                    message.launch = HpumpV1Launch.internalBinaryRead(reader, reader.uint32(), options, message.launch);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: LaunchHpumpV1LaunchResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.HpumpV1Launch launch = 1; */
+        if (message.launch)
+            HpumpV1Launch.internalBinaryWrite(message.launch, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message eoa.LaunchHpumpV1LaunchResponse
+ */
+export const LaunchHpumpV1LaunchResponse = new LaunchHpumpV1LaunchResponse$Type();
 /**
  * @generated ServiceType for protobuf service eoa.EOA
  */
@@ -1273,5 +1463,6 @@ export const EOA = new ServiceType("eoa.EOA", [
     { name: "PendingHyperliquidLaunch", options: {}, I: PendingHyperliquidLaunchRequest, O: PendingHyperliquidLaunchResponse },
     { name: "HyperliquidLaunchTrade", options: {}, I: HyperliquidLaunchTradeRequest, O: HyperliquidLaunchTradeResponse },
     { name: "EditHyperliquidLaunch", options: {}, I: EditHyperliquidLaunchRequest, O: EditHyperliquidLaunchResponse },
+    { name: "LaunchHpumpV1Launch", options: {}, I: LaunchHpumpV1LaunchRequest, O: LaunchHpumpV1LaunchResponse },
     { name: "HyperliquidSpotTrade", options: {}, I: HyperliquidSpotTradeRequest, O: HyperliquidSpotTradeResponse }
 ]);
