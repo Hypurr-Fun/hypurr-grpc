@@ -71,9 +71,9 @@ export interface HyperliquidLaunchTradeRequest {
      */
     maxSlippage: number;
     /**
-     * @generated from protobuf field: string signature_chain_id = 9;
+     * @generated from protobuf field: int64 signature_chain_id = 9;
      */
-    signatureChainId: string;
+    signatureChainId: number;
 }
 /**
  * @generated from protobuf message eoa.HyperliquidLaunchTradeResponse
@@ -435,11 +435,11 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
             { no: 6, name: "ethereum_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 8, name: "max_slippage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 9, name: "signature_chain_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 9, name: "signature_chain_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidLaunchTradeRequest>): HyperliquidLaunchTradeRequest {
-        const message = { signature: "", launchId: 0, walletId: 0, direction: 0, amount: "", ethereumAddress: "", time: 0, maxSlippage: 0, signatureChainId: "" };
+        const message = { signature: "", launchId: 0, walletId: 0, direction: 0, amount: "", ethereumAddress: "", time: 0, maxSlippage: 0, signatureChainId: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidLaunchTradeRequest>(this, message, value);
@@ -474,8 +474,8 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
                 case /* double max_slippage */ 8:
                     message.maxSlippage = reader.double();
                     break;
-                case /* string signature_chain_id */ 9:
-                    message.signatureChainId = reader.string();
+                case /* int64 signature_chain_id */ 9:
+                    message.signatureChainId = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -513,9 +513,9 @@ class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTr
         /* double max_slippage = 8; */
         if (message.maxSlippage !== 0)
             writer.tag(8, WireType.Bit64).double(message.maxSlippage);
-        /* string signature_chain_id = 9; */
-        if (message.signatureChainId !== "")
-            writer.tag(9, WireType.LengthDelimited).string(message.signatureChainId);
+        /* int64 signature_chain_id = 9; */
+        if (message.signatureChainId !== 0)
+            writer.tag(9, WireType.Varint).int64(message.signatureChainId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
