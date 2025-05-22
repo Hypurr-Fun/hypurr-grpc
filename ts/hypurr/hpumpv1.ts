@@ -55,9 +55,9 @@ export interface HpumpV1Launch {
      */
     createdAt: number; // block timestamp
     /**
-     * @generated from protobuf field: string launch_id = 10;
+     * @generated from protobuf field: int64 launch_id = 10;
      */
-    launchId: string; // the uint256 id from the event (using string for big integers)
+    launchId: number; // the uint256 id from the event (using string for big integers)
     /**
      * @generated from protobuf field: string base_reserve = 11;
      */
@@ -157,7 +157,7 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
             { no: 7, name: "media_uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 8, name: "dev_telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 9, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 10, name: "launch_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 11, name: "base_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 12, name: "quote_reserve", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 13, name: "x0", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -171,7 +171,7 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
         ]);
     }
     create(value?: PartialMessage<HpumpV1Launch>): HpumpV1Launch {
-        const message = { address: "", symbol: "", name: "", devAddress: "", description: "", mediaType: "", mediaUri: "", devTelegramId: 0, createdAt: 0, launchId: "", baseReserve: "", quoteReserve: "", x0: "", y0: "", lastSyncTimestamp: 0, graduated: false, graduatedAt: 0, graduatedTo: "", volume24H: 0 };
+        const message = { address: "", symbol: "", name: "", devAddress: "", description: "", mediaType: "", mediaUri: "", devTelegramId: 0, createdAt: 0, launchId: 0, baseReserve: "", quoteReserve: "", x0: "", y0: "", lastSyncTimestamp: 0, graduated: false, graduatedAt: 0, graduatedTo: "", volume24H: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1Launch>(this, message, value);
@@ -209,8 +209,8 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
                 case /* int64 created_at */ 9:
                     message.createdAt = reader.int64().toNumber();
                     break;
-                case /* string launch_id */ 10:
-                    message.launchId = reader.string();
+                case /* int64 launch_id */ 10:
+                    message.launchId = reader.int64().toNumber();
                     break;
                 case /* string base_reserve */ 11:
                     message.baseReserve = reader.string();
@@ -281,9 +281,9 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
         /* int64 created_at = 9; */
         if (message.createdAt !== 0)
             writer.tag(9, WireType.Varint).int64(message.createdAt);
-        /* string launch_id = 10; */
-        if (message.launchId !== "")
-            writer.tag(10, WireType.LengthDelimited).string(message.launchId);
+        /* int64 launch_id = 10; */
+        if (message.launchId !== 0)
+            writer.tag(10, WireType.Varint).int64(message.launchId);
         /* string base_reserve = 11; */
         if (message.baseReserve !== "")
             writer.tag(11, WireType.LengthDelimited).string(message.baseReserve);

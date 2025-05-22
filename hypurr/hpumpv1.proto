@@ -16,7 +16,7 @@ message HpumpV1Launch {
   string media_uri = 7;
   int64 dev_telegram_id = 8;
   int64 created_at = 9;        // block timestamp
-  string launch_id = 10;        // the uint256 id from the event (using string for big integers)
+  int64 launch_id = 10;        // the uint256 id from the event (using string for big integers)
   string base_reserve = 11;      // Using string for big integers
   string quote_reserve = 12;     // Using string for big integers
   string x0 = 13;
