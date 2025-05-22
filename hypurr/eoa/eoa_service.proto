@@ -120,6 +120,8 @@ message LaunchHpumpV1LaunchRequest {
 
 message LaunchHpumpV1LaunchResponse {
   string ipfs_url = 1;
+  string token_name = 2;
+  string full_name = 3;
 }
 
 message EOAUserEvmModifyRequest {

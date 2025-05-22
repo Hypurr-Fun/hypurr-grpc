@@ -322,6 +322,14 @@ export interface LaunchHpumpV1LaunchResponse {
      * @generated from protobuf field: string ipfs_url = 1;
      */
     ipfsUrl: string;
+    /**
+     * @generated from protobuf field: string token_name = 2;
+     */
+    tokenName: string;
+    /**
+     * @generated from protobuf field: string full_name = 3;
+     */
+    fullName: string;
 }
 /**
  * @generated from protobuf message eoa.EOAUserEvmModifyRequest
@@ -1391,11 +1399,13 @@ export const LaunchHpumpV1LaunchRequest = new LaunchHpumpV1LaunchRequest$Type();
 class LaunchHpumpV1LaunchResponse$Type extends MessageType<LaunchHpumpV1LaunchResponse> {
     constructor() {
         super("eoa.LaunchHpumpV1LaunchResponse", [
-            { no: 1, name: "ipfs_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "ipfs_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "token_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<LaunchHpumpV1LaunchResponse>): LaunchHpumpV1LaunchResponse {
-        const message = { ipfsUrl: "" };
+        const message = { ipfsUrl: "", tokenName: "", fullName: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<LaunchHpumpV1LaunchResponse>(this, message, value);
@@ -1408,6 +1418,12 @@ class LaunchHpumpV1LaunchResponse$Type extends MessageType<LaunchHpumpV1LaunchRe
             switch (fieldNo) {
                 case /* string ipfs_url */ 1:
                     message.ipfsUrl = reader.string();
+                    break;
+                case /* string token_name */ 2:
+                    message.tokenName = reader.string();
+                    break;
+                case /* string full_name */ 3:
+                    message.fullName = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1424,6 +1440,12 @@ class LaunchHpumpV1LaunchResponse$Type extends MessageType<LaunchHpumpV1LaunchRe
         /* string ipfs_url = 1; */
         if (message.ipfsUrl !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.ipfsUrl);
+        /* string token_name = 2; */
+        if (message.tokenName !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.tokenName);
+        /* string full_name = 3; */
+        if (message.fullName !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.fullName);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
