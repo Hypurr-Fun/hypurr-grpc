@@ -113,8 +113,9 @@ message EditHyperliquidLaunchResponse {
 message LaunchHpumpV1LaunchRequest {
   string description = 1;
   string token_name = 2;
-  bytes media = 3;
-  hypurr.MediaType media_type = 4;
+  string full_name = 3;
+  bytes media = 4;
+  hypurr.MediaType media_type = 5;
 }
 
 message LaunchHpumpV1LaunchResponse {
