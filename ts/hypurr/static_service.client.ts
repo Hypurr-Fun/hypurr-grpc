@@ -12,8 +12,8 @@ import type { HypurrFunCabalPerformanceResponse } from "./static_service";
 import type { HypurrFunCabalPerformanceRequest } from "./static_service";
 import type { HypurrFunCabalsResponse } from "./static_service";
 import type { HypurrFunCabalsRequest } from "./static_service";
-import type { HpumpV1LaunchMessageStreamResponse } from "./static_service";
-import type { HpumpV1LaunchMessageStreamRequest } from "./static_service";
+import type { HpumpV1LaunchMessagesResponse } from "./static_service";
+import type { HpumpV1LaunchMessagesRequest } from "./static_service";
 import type { HpumpV1LaunchCandlesResponse } from "./static_service";
 import type { HpumpV1LaunchCandlesRequest } from "./static_service";
 import type { HpumpV1LaunchSwapStreamResponse } from "./static_service";
@@ -180,9 +180,9 @@ export interface IStaticClient {
      */
     hpumpV1LaunchCandleStream(input: HpumpV1LaunchCandlesRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchCandlesRequest, HpumpV1LaunchCandlesResponse>;
     /**
-     * @generated from protobuf rpc: HpumpV1LaunchMessageStream(hypurr.HpumpV1LaunchMessageStreamRequest) returns (stream hypurr.HpumpV1LaunchMessageStreamResponse);
+     * @generated from protobuf rpc: HpumpV1LaunchMessageStream(hypurr.HpumpV1LaunchMessagesRequest) returns (stream hypurr.HpumpV1LaunchMessagesResponse);
      */
-    hpumpV1LaunchMessageStream(input: HpumpV1LaunchMessageStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchMessageStreamRequest, HpumpV1LaunchMessageStreamResponse>;
+    hpumpV1LaunchMessageStream(input: HpumpV1LaunchMessagesRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchMessagesRequest, HpumpV1LaunchMessagesResponse>;
     /**
      * @generated from protobuf rpc: HypurrFunCabals(hypurr.HypurrFunCabalsRequest) returns (hypurr.HypurrFunCabalsResponse);
      */
@@ -396,11 +396,11 @@ export class StaticClient implements IStaticClient, ServiceInfo {
         return stackIntercept<HpumpV1LaunchCandlesRequest, HpumpV1LaunchCandlesResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: HpumpV1LaunchMessageStream(hypurr.HpumpV1LaunchMessageStreamRequest) returns (stream hypurr.HpumpV1LaunchMessageStreamResponse);
+     * @generated from protobuf rpc: HpumpV1LaunchMessageStream(hypurr.HpumpV1LaunchMessagesRequest) returns (stream hypurr.HpumpV1LaunchMessagesResponse);
      */
-    hpumpV1LaunchMessageStream(input: HpumpV1LaunchMessageStreamRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchMessageStreamRequest, HpumpV1LaunchMessageStreamResponse> {
+    hpumpV1LaunchMessageStream(input: HpumpV1LaunchMessagesRequest, options?: RpcOptions): ServerStreamingCall<HpumpV1LaunchMessagesRequest, HpumpV1LaunchMessagesResponse> {
         const method = this.methods[26], opt = this._transport.mergeOptions(options);
-        return stackIntercept<HpumpV1LaunchMessageStreamRequest, HpumpV1LaunchMessageStreamResponse>("serverStreaming", this._transport, method, opt, input);
+        return stackIntercept<HpumpV1LaunchMessagesRequest, HpumpV1LaunchMessagesResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HypurrFunCabals(hypurr.HypurrFunCabalsRequest) returns (hypurr.HypurrFunCabalsResponse);

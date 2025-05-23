@@ -146,8 +146,8 @@ class StaticStub(object):
         )
     self.HpumpV1LaunchMessageStream = channel.unary_stream(
         '/hypurr.Static/HpumpV1LaunchMessageStream',
-        request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchMessageStreamRequest.SerializeToString,
-        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchMessageStreamResponse.FromString,
+        request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchMessagesRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchMessagesResponse.FromString,
         )
     self.HypurrFunCabals = channel.unary_unary(
         '/hypurr.Static/HypurrFunCabals',
@@ -527,8 +527,8 @@ def add_StaticServicer_to_server(servicer, server):
       ),
       'HpumpV1LaunchMessageStream': grpc.unary_stream_rpc_method_handler(
           servicer.HpumpV1LaunchMessageStream,
-          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchMessageStreamRequest.FromString,
-          response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchMessageStreamResponse.SerializeToString,
+          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchMessagesRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchMessagesResponse.SerializeToString,
       ),
       'HypurrFunCabals': grpc.unary_unary_rpc_method_handler(
           servicer.HypurrFunCabals,

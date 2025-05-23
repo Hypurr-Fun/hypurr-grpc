@@ -246,12 +246,13 @@ message HpumpV1LaunchCandlesResponse {
   repeated PriceCandle candles = 1;
 }
 
-message HpumpV1LaunchMessageStreamRequest {
+message HpumpV1LaunchMessagesRequest {
   string launch_address = 1;
-  google.protobuf.Int32Value limit = 2;
+  google.protobuf.BoolValue pinned = 2;
+  google.protobuf.BoolValue dev = 3;
 }
 
-message HpumpV1LaunchMessageStreamResponse {
+message HpumpV1LaunchMessagesResponse {
   repeated HpumpV1LaunchMessage messages = 1;
 }
 
@@ -319,7 +320,7 @@ service Static {
   rpc HpumpV1LaunchSwaps(HpumpV1LaunchSwapsRequest) returns (HpumpV1LaunchSwapsResponse) {}
   rpc HpumpV1LaunchSwapStream(HpumpV1LaunchSwapStreamRequest) returns (stream HpumpV1LaunchSwapStreamResponse) {}
   rpc HpumpV1LaunchCandleStream(HpumpV1LaunchCandlesRequest) returns (stream HpumpV1LaunchCandlesResponse) {}
-  rpc HpumpV1LaunchMessageStream(HpumpV1LaunchMessageStreamRequest) returns (stream HpumpV1LaunchMessageStreamResponse) {}
+  rpc HpumpV1LaunchMessageStream(HpumpV1LaunchMessagesRequest) returns (stream HpumpV1LaunchMessagesResponse) {}
 
   rpc HypurrFunCabals (HypurrFunCabalsRequest) returns (HypurrFunCabalsResponse) {}
 
