@@ -148,6 +148,47 @@ export interface HpumpV1LaunchSwap {
      */
     timestamp: number;
 }
+/**
+ * @generated from protobuf message hypurr.HpumpV1LaunchMessage
+ */
+export interface HpumpV1LaunchMessage {
+    /**
+     * @generated from protobuf field: int64 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: int64 timestamp = 2;
+     */
+    timestamp: number;
+    /**
+     * @generated from protobuf field: int64 launch_id = 3;
+     */
+    launchId: number;
+    /**
+     * @generated from protobuf field: int64 telegram_id = 4;
+     */
+    telegramId: number;
+    /**
+     * @generated from protobuf field: hypurr.TelegramUserPublic author = 5;
+     */
+    author?: TelegramUserPublic;
+    /**
+     * @generated from protobuf field: int64 chat_id = 6;
+     */
+    chatId: number;
+    /**
+     * @generated from protobuf field: int64 topic_id = 7;
+     */
+    topicId: number;
+    /**
+     * @generated from protobuf field: string message = 8;
+     */
+    message: string;
+    /**
+     * @generated from protobuf field: bool pinned = 9;
+     */
+    pinned: boolean;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
     constructor() {
@@ -438,3 +479,106 @@ class HpumpV1LaunchSwap$Type extends MessageType<HpumpV1LaunchSwap> {
  * @generated MessageType for protobuf message hypurr.HpumpV1LaunchSwap
  */
 export const HpumpV1LaunchSwap = new HpumpV1LaunchSwap$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HpumpV1LaunchMessage$Type extends MessageType<HpumpV1LaunchMessage> {
+    constructor() {
+        super("hypurr.HpumpV1LaunchMessage", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "launch_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "author", kind: "message", T: () => TelegramUserPublic },
+            { no: 6, name: "chat_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "topic_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 8, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "pinned", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HpumpV1LaunchMessage>): HpumpV1LaunchMessage {
+        const message = { id: 0, timestamp: 0, launchId: 0, telegramId: 0, chatId: 0, topicId: 0, message: "", pinned: false };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HpumpV1LaunchMessage>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchMessage): HpumpV1LaunchMessage {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* int64 timestamp */ 2:
+                    message.timestamp = reader.int64().toNumber();
+                    break;
+                case /* int64 launch_id */ 3:
+                    message.launchId = reader.int64().toNumber();
+                    break;
+                case /* int64 telegram_id */ 4:
+                    message.telegramId = reader.int64().toNumber();
+                    break;
+                case /* hypurr.TelegramUserPublic author */ 5:
+                    message.author = TelegramUserPublic.internalBinaryRead(reader, reader.uint32(), options, message.author);
+                    break;
+                case /* int64 chat_id */ 6:
+                    message.chatId = reader.int64().toNumber();
+                    break;
+                case /* int64 topic_id */ 7:
+                    message.topicId = reader.int64().toNumber();
+                    break;
+                case /* string message */ 8:
+                    message.message = reader.string();
+                    break;
+                case /* bool pinned */ 9:
+                    message.pinned = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HpumpV1LaunchMessage, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* int64 timestamp = 2; */
+        if (message.timestamp !== 0)
+            writer.tag(2, WireType.Varint).int64(message.timestamp);
+        /* int64 launch_id = 3; */
+        if (message.launchId !== 0)
+            writer.tag(3, WireType.Varint).int64(message.launchId);
+        /* int64 telegram_id = 4; */
+        if (message.telegramId !== 0)
+            writer.tag(4, WireType.Varint).int64(message.telegramId);
+        /* hypurr.TelegramUserPublic author = 5; */
+        if (message.author)
+            TelegramUserPublic.internalBinaryWrite(message.author, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* int64 chat_id = 6; */
+        if (message.chatId !== 0)
+            writer.tag(6, WireType.Varint).int64(message.chatId);
+        /* int64 topic_id = 7; */
+        if (message.topicId !== 0)
+            writer.tag(7, WireType.Varint).int64(message.topicId);
+        /* string message = 8; */
+        if (message.message !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.message);
+        /* bool pinned = 9; */
+        if (message.pinned !== false)
+            writer.tag(9, WireType.Varint).bool(message.pinned);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchMessage
+ */
+export const HpumpV1LaunchMessage = new HpumpV1LaunchMessage$Type();
