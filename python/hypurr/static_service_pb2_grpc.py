@@ -144,6 +144,11 @@ class StaticStub(object):
         request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchCandlesRequest.SerializeToString,
         response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchCandlesResponse.FromString,
         )
+    self.HpumpV1LaunchMessageStream = channel.unary_stream(
+        '/hypurr.Static/HpumpV1LaunchMessageStream',
+        request_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchMessageStreamRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchMessageStreamResponse.FromString,
+        )
     self.HypurrFunCabals = channel.unary_unary(
         '/hypurr.Static/HypurrFunCabals',
         request_serializer=hypurr_dot_static__service__pb2.HypurrFunCabalsRequest.SerializeToString,
@@ -352,6 +357,13 @@ class StaticServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def HpumpV1LaunchMessageStream(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def HypurrFunCabals(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -512,6 +524,11 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.HpumpV1LaunchCandleStream,
           request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchCandlesRequest.FromString,
           response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchCandlesResponse.SerializeToString,
+      ),
+      'HpumpV1LaunchMessageStream': grpc.unary_stream_rpc_method_handler(
+          servicer.HpumpV1LaunchMessageStream,
+          request_deserializer=hypurr_dot_static__service__pb2.HpumpV1LaunchMessageStreamRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.HpumpV1LaunchMessageStreamResponse.SerializeToString,
       ),
       'HypurrFunCabals': grpc.unary_unary_rpc_method_handler(
           servicer.HypurrFunCabals,

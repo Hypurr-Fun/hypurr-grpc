@@ -246,6 +246,15 @@ message HpumpV1LaunchCandlesResponse {
   repeated PriceCandle candles = 1;
 }
 
+message HpumpV1LaunchMessageStreamRequest {
+  string launch_address = 1;
+  google.protobuf.Int32Value limit = 2;
+}
+
+message HpumpV1LaunchMessageStreamResponse {
+  repeated HpumpV1LaunchMessage messages = 1;
+}
+
 message HyperliquidWalletPerformanceRequest {
   google.protobuf.StringValue ethereum_address = 1;
   string account_type = 2;
@@ -310,6 +319,7 @@ service Static {
   rpc HpumpV1LaunchSwaps(HpumpV1LaunchSwapsRequest) returns (HpumpV1LaunchSwapsResponse) {}
   rpc HpumpV1LaunchSwapStream(HpumpV1LaunchSwapStreamRequest) returns (stream HpumpV1LaunchSwapStreamResponse) {}
   rpc HpumpV1LaunchCandleStream(HpumpV1LaunchCandlesRequest) returns (stream HpumpV1LaunchCandlesResponse) {}
+  rpc HpumpV1LaunchMessageStream(HpumpV1LaunchMessageStreamRequest) returns (stream HpumpV1LaunchMessageStreamResponse) {}
 
   rpc HypurrFunCabals (HypurrFunCabalsRequest) returns (HypurrFunCabalsResponse) {}
 

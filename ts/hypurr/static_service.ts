@@ -15,6 +15,7 @@ import { MessageType } from "@protobuf-ts/runtime";
 import { HypurrFunCabalPerformance } from "./cabal";
 import { HypurrFunCabal } from "./cabal";
 import { Performance } from "./wallet";
+import { HpumpV1LaunchMessage } from "./hpumpv1";
 import { WalletPosition } from "./common";
 import { Int32Value } from "../google/protobuf/wrappers";
 import { HpumpV1LaunchSwap } from "./hpumpv1";
@@ -600,6 +601,28 @@ export interface HpumpV1LaunchCandlesResponse {
      * @generated from protobuf field: repeated hypurr.PriceCandle candles = 1;
      */
     candles: PriceCandle[];
+}
+/**
+ * @generated from protobuf message hypurr.HpumpV1LaunchMessageStreamRequest
+ */
+export interface HpumpV1LaunchMessageStreamRequest {
+    /**
+     * @generated from protobuf field: string launch_address = 1;
+     */
+    launchAddress: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Int32Value limit = 2;
+     */
+    limit?: Int32Value;
+}
+/**
+ * @generated from protobuf message hypurr.HpumpV1LaunchMessageStreamResponse
+ */
+export interface HpumpV1LaunchMessageStreamResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.HpumpV1LaunchMessage messages = 1;
+     */
+    messages: HpumpV1LaunchMessage[];
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletPerformanceRequest
@@ -3167,6 +3190,107 @@ class HpumpV1LaunchCandlesResponse$Type extends MessageType<HpumpV1LaunchCandles
  */
 export const HpumpV1LaunchCandlesResponse = new HpumpV1LaunchCandlesResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class HpumpV1LaunchMessageStreamRequest$Type extends MessageType<HpumpV1LaunchMessageStreamRequest> {
+    constructor() {
+        super("hypurr.HpumpV1LaunchMessageStreamRequest", [
+            { no: 1, name: "launch_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "limit", kind: "message", T: () => Int32Value }
+        ]);
+    }
+    create(value?: PartialMessage<HpumpV1LaunchMessageStreamRequest>): HpumpV1LaunchMessageStreamRequest {
+        const message = { launchAddress: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HpumpV1LaunchMessageStreamRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchMessageStreamRequest): HpumpV1LaunchMessageStreamRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string launch_address */ 1:
+                    message.launchAddress = reader.string();
+                    break;
+                case /* google.protobuf.Int32Value limit */ 2:
+                    message.limit = Int32Value.internalBinaryRead(reader, reader.uint32(), options, message.limit);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HpumpV1LaunchMessageStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string launch_address = 1; */
+        if (message.launchAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.launchAddress);
+        /* google.protobuf.Int32Value limit = 2; */
+        if (message.limit)
+            Int32Value.internalBinaryWrite(message.limit, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchMessageStreamRequest
+ */
+export const HpumpV1LaunchMessageStreamRequest = new HpumpV1LaunchMessageStreamRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HpumpV1LaunchMessageStreamResponse$Type extends MessageType<HpumpV1LaunchMessageStreamResponse> {
+    constructor() {
+        super("hypurr.HpumpV1LaunchMessageStreamResponse", [
+            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HpumpV1LaunchMessage }
+        ]);
+    }
+    create(value?: PartialMessage<HpumpV1LaunchMessageStreamResponse>): HpumpV1LaunchMessageStreamResponse {
+        const message = { messages: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HpumpV1LaunchMessageStreamResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HpumpV1LaunchMessageStreamResponse): HpumpV1LaunchMessageStreamResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.HpumpV1LaunchMessage messages */ 1:
+                    message.messages.push(HpumpV1LaunchMessage.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HpumpV1LaunchMessageStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.HpumpV1LaunchMessage messages = 1; */
+        for (let i = 0; i < message.messages.length; i++)
+            HpumpV1LaunchMessage.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HpumpV1LaunchMessageStreamResponse
+ */
+export const HpumpV1LaunchMessageStreamResponse = new HpumpV1LaunchMessageStreamResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidWalletPerformanceRequest$Type extends MessageType<HyperliquidWalletPerformanceRequest> {
     constructor() {
         super("hypurr.HyperliquidWalletPerformanceRequest", [
@@ -3478,6 +3602,7 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "HpumpV1LaunchSwaps", options: {}, I: HpumpV1LaunchSwapsRequest, O: HpumpV1LaunchSwapsResponse },
     { name: "HpumpV1LaunchSwapStream", serverStreaming: true, options: {}, I: HpumpV1LaunchSwapStreamRequest, O: HpumpV1LaunchSwapStreamResponse },
     { name: "HpumpV1LaunchCandleStream", serverStreaming: true, options: {}, I: HpumpV1LaunchCandlesRequest, O: HpumpV1LaunchCandlesResponse },
+    { name: "HpumpV1LaunchMessageStream", serverStreaming: true, options: {}, I: HpumpV1LaunchMessageStreamRequest, O: HpumpV1LaunchMessageStreamResponse },
     { name: "HypurrFunCabals", options: {}, I: HypurrFunCabalsRequest, O: HypurrFunCabalsResponse },
     { name: "HypurrFunCabalPerformance", options: {}, I: HypurrFunCabalPerformanceRequest, O: HypurrFunCabalPerformanceResponse },
     { name: "SetHyperliquidWalletDeploySessionTarget", options: {}, I: SetHyperliquidWalletDeploySessionTargetRequest, O: SetHyperliquidWalletDeploySessionTargetResponse },
