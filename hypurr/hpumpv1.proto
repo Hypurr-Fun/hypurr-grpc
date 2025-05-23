@@ -28,6 +28,7 @@ message HpumpV1Launch {
   // Dev telegram user
   TelegramUserPublic dev_telegram_user = 19;
   double volume_24h = 20;         // Daily quote volume
+  double previous_day_price = 21;
 }
 
 // HPump Launch Pair Swap messages
