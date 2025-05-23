@@ -63,6 +63,7 @@ message HpumpV1LaunchTradeRequest {
   TradeDirection direction = 4;
   string amount = 5;
   double max_slippage = 6;
+  double max_gas_cost_usd = 7;
 }
 
 message HpumpV1LaunchTradeResponse {
