@@ -28,7 +28,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/static_service.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x1bhypurr/static_service.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x12hypurr/token.proto\x1a\x13hypurr/wallet.proto\x1a\x13hypurr/launch.proto\x1a\x12hypurr/pairs.proto\x1a\x12hypurr/cabal.proto\x1a\x10hypurr/evm.proto\x1a\x14hypurr/hpumpv1.proto\x1a\x13hypurr/common.proto\"2\n\x1eHyperliquidTokenHoldersRequest\x12\x10\n\x08token_id\x18\x01 \x01(\x03\"R\n\x1fHyperliquidTokenHoldersResponse\x12/\n\x07holders\x18\x01 \x03(\x0b\x32\x1e.hypurr.HyperliquidTokenHolder\"!\n\x1fHyperliquidDeployAuctionRequest\"U\n HyperliquidDeployAuctionResponse\x12\x31\n\x07\x61uction\x18\x01 \x01(\x0b\x32 .hypurr.HyperliquidDeployAuction\"\x1a\n\x18HyperliquidTokensRequest\"E\n\x19HyperliquidTokensResponse\x12(\n\x06tokens\x18\x01 \x03(\x0b\x32\x18.hypurr.HyperliquidToken\"3\n\x1fHyperliquidTokenMessagesRequest\x12\x10\n\x08token_id\x18\x01 \x01(\x03\"U\n HyperliquidTokenMessagesResponse\x12\x31\n\x08messages\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidTokenMessage\"(\n\x1aHyperliquidSpotPairRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"H\n\x1bHyperliquidSpotPairResponse\x12)\n\x04pair\x18\x01 \x01(\x0b\x32\x1b.hypurr.HyperliquidSpotPair\"\x1d\n\x1bHyperliquidSpotPairsRequest\"J\n\x1cHyperliquidSpotPairsResponse\x12*\n\x05pairs\x18\x01 \x03(\x0b\x32\x1b.hypurr.HyperliquidSpotPair\"\x1d\n\x1bHyperliquidPerpPairsRequest\"J\n\x1cHyperliquidPerpPairsResponse\x12*\n\x05pairs\x18\x01 \x03(\x0b\x32\x1b.hypurr.HyperliquidPerpPair\"R\n\x18HyperliquidWalletRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"F\n\x19HyperliquidWalletResponse\x12)\n\x06wallet\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\"0\n\x1aHyperliquidLaunchesRequest\x12\x12\n\nlaunch_ids\x18\x01 \x03(\x03\"J\n\x1bHyperliquidLaunchesResponse\x12+\n\x08launches\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\"|\n\x1eHyperliquidLaunchStreamRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"N\n\x1fHyperliquidLaunchStreamResponse\x12+\n\x08launches\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\xf3\x01\n&HyperliquidWalletDeploySessionsRequest\x12\x30\n\x0btelegram_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12.\n\twallet_id\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12/\n\nsession_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x36\n\x10\x65thereum_address\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"c\n\'HyperliquidWalletDeploySessionsResponse\x12\x38\n\x08sessions\x18\x01 \x03(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"\xa9\x01\n.SetHyperliquidWalletDeploySessionTargetRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x12\n\nsession_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x0e\n\x06target\x18\x04 \x01(\t\x12\r\n\x05share\x18\x05 \x01(\x05\"j\n/SetHyperliquidWalletDeploySessionTargetResponse\x12\x37\n\x07session\x18\x01 \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"\x8d\x01\n1DeleteHyperliquidWalletDeploySessionTargetRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x12\n\nsession_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\"m\n2DeleteHyperliquidWalletDeploySessionTargetResponse\x12\x37\n\x07session\x18\x01 \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"{\n\x1dHyperliquidLaunchFillsRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"\x84\x01\n\x1eHyperliquidLaunchFillsResponse\x12,\n\x05\x66ills\x18\x01 \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\x12\x34\n\tpositions\x18\x02 \x03(\x0b\x32!.hypurr.HyperliquidLaunchPosition\"F\n\x1fHyperliquidLaunchCandlesRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12\x10\n\x08interval\x18\x02 \x01(\t\"H\n HyperliquidLaunchCandlesResponse\x12$\n\x07\x63\x61ndles\x18\x01 \x03(\x0b\x32\x13.hypurr.PriceCandle\"&\n\x18HyperliquidLaunchRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"F\n\x19HyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\x8a\x01\n HyperliquidLaunchMessagesRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12*\n\x06pinned\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12\'\n\x03\x64\x65v\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\"W\n!HyperliquidLaunchMessagesResponse\x12\x32\n\x08messages\x18\x01 \x03(\x0b\x32 .hypurr.HyperliquidLaunchMessage\"4\n\x1fHyperliquidLaunchHoldersRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\"T\n HyperliquidLaunchHoldersResponse\x12\x30\n\x07holders\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidLaunchHolder\"%\n#LatestHyperliquidLaunchFillsRequest\"\'\n\x14HpumpV1LaunchRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\">\n\x15HpumpV1LaunchResponse\x12%\n\x06launch\x18\x01 \x01(\x0b\x32\x15.hypurr.HpumpV1Launch\"W\n\x16HpumpV1LaunchesRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x16\n\x0egraduated_only\x18\x03 \x01(\x08\"[\n\x17HpumpV1LaunchesResponse\x12\'\n\x08launches\x18\x01 \x03(\x0b\x32\x15.hypurr.HpumpV1Launch\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"x\n\x1aHpumpV1LaunchStreamRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"F\n\x1bHpumpV1LaunchStreamResponse\x12\'\n\x08launches\x18\x01 \x03(\x0b\x32\x15.hypurr.HpumpV1Launch\"&\n\x18HpumpV1LaunchSwapRequest\x12\n\n\x02id\x18\x01 \x01(\t\"D\n\x19HpumpV1LaunchSwapResponse\x12\'\n\x04swap\x18\x01 \x01(\x0b\x32\x19.hypurr.HpumpV1LaunchSwap\"\x86\x01\n\x19HpumpV1LaunchSwapsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x16\n\x0elaunch_address\x18\x03 \x01(\t\x12\x16\n\x0eorigin_address\x18\x04 \x01(\t\x12\x12\n\nto_address\x18\x05 \x01(\t\"_\n\x1aHpumpV1LaunchSwapsResponse\x12(\n\x05swaps\x18\x01 \x03(\x0b\x32\x19.hypurr.HpumpV1LaunchSwap\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"d\n\x1eHpumpV1LaunchSwapStreamRequest\x12\x16\n\x0elaunch_address\x18\x01 \x01(\t\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\"v\n\x1fHpumpV1LaunchSwapStreamResponse\x12(\n\x05swaps\x18\x01 \x03(\x0b\x32\x19.hypurr.HpumpV1LaunchSwap\x12)\n\tpositions\x18\x02 \x03(\x0b\x32\x16.hypurr.WalletPosition\"s\n\x1bHpumpV1LaunchCandlesRequest\x12\x14\n\x0cpair_address\x18\x01 \x01(\t\x12\x16\n\x0e\x66rom_timestamp\x18\x02 \x01(\x03\x12\x14\n\x0cto_timestamp\x18\x03 \x01(\x03\x12\x10\n\x08interval\x18\x04 \x01(\t\"D\n\x1cHpumpV1LaunchCandlesResponse\x12$\n\x07\x63\x61ndles\x18\x01 \x03(\x0b\x32\x13.hypurr.PriceCandle\"\x8b\x01\n\x1cHpumpV1LaunchMessagesRequest\x12\x16\n\x0elaunch_address\x18\x01 \x01(\t\x12*\n\x06pinned\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12\'\n\x03\x64\x65v\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\"O\n\x1dHpumpV1LaunchMessagesResponse\x12.\n\x08messages\x18\x01 \x03(\x0b\x32\x1c.hypurr.HpumpV1LaunchMessage\"s\n#HyperliquidWalletPerformanceRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x14\n\x0c\x61\x63\x63ount_type\x18\x02 \x01(\t\"\x91\x01\n$HyperliquidWalletPerformanceResponse\x12!\n\x04spot\x18\x01 \x01(\x0b\x32\x13.hypurr.Performance\x12!\n\x04perp\x18\x02 \x01(\x0b\x32\x13.hypurr.Performance\x12#\n\x06launch\x18\x03 \x01(\x0b\x32\x13.hypurr.Performance\"\x18\n\x16HypurrFunCabalsRequest\"A\n\x17HypurrFunCabalsResponse\x12&\n\x06\x63\x61\x62\x61ls\x18\x01 \x03(\x0b\x32\x16.hypurr.HypurrFunCabal\"<\n HypurrFunCabalPerformanceRequest\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\"\\\n!HypurrFunCabalPerformanceResponse\x12\x37\n\x0cperformances\x18\x01 \x03(\x0b\x32!.hypurr.HypurrFunCabalPerformance2\xc7\x1a\n\x06Static\x12o\n\x18HyperliquidDeployAuction\x12\'.hypurr.HyperliquidDeployAuctionRequest\x1a(.hypurr.HyperliquidDeployAuctionResponse\"\x00\x12Z\n\x11HyperliquidTokens\x12 .hypurr.HyperliquidTokensRequest\x1a!.hypurr.HyperliquidTokensResponse\"\x00\x12l\n\x17HyperliquidTokenHolders\x12&.hypurr.HyperliquidTokenHoldersRequest\x1a\'.hypurr.HyperliquidTokenHoldersResponse\"\x00\x12q\n\x18HyperliquidTokenMessages\x12\'.hypurr.HyperliquidTokenMessagesRequest\x1a(.hypurr.HyperliquidTokenMessagesResponse\"\x00\x30\x01\x12`\n\x13HyperliquidSpotPair\x12\".hypurr.HyperliquidSpotPairRequest\x1a#.hypurr.HyperliquidSpotPairResponse\"\x00\x12\x63\n\x14HyperliquidSpotPairs\x12#.hypurr.HyperliquidSpotPairsRequest\x1a$.hypurr.HyperliquidSpotPairsResponse\"\x00\x12\x63\n\x14HyperliquidPerpPairs\x12#.hypurr.HyperliquidPerpPairsRequest\x1a$.hypurr.HyperliquidPerpPairsResponse\"\x00\x12Z\n\x11HyperliquidWallet\x12 .hypurr.HyperliquidWalletRequest\x1a!.hypurr.HyperliquidWalletResponse\"\x00\x12\x84\x01\n\x1fHyperliquidWalletDeploySessions\x12..hypurr.HyperliquidWalletDeploySessionsRequest\x1a/.hypurr.HyperliquidWalletDeploySessionsResponse\"\x00\x12{\n\x1cHyperliquidWalletPerformance\x12+.hypurr.HyperliquidWalletPerformanceRequest\x1a,.hypurr.HyperliquidWalletPerformanceResponse\"\x00\x12Z\n\x11HyperliquidLaunch\x12 .hypurr.HyperliquidLaunchRequest\x1a!.hypurr.HyperliquidLaunchResponse\"\x00\x12`\n\x13HyperliquidLaunches\x12\".hypurr.HyperliquidLaunchesRequest\x1a#.hypurr.HyperliquidLaunchesResponse\"\x00\x12n\n\x17HyperliquidLaunchStream\x12&.hypurr.HyperliquidLaunchStreamRequest\x1a\'.hypurr.HyperliquidLaunchStreamResponse\"\x00\x30\x01\x12k\n\x16HyperliquidLaunchFills\x12%.hypurr.HyperliquidLaunchFillsRequest\x1a&.hypurr.HyperliquidLaunchFillsResponse\"\x00\x30\x01\x12o\n\x18HyperliquidLaunchCandles\x12\'.hypurr.HyperliquidLaunchCandlesRequest\x1a(.hypurr.HyperliquidLaunchCandlesResponse\"\x00\x12v\n\x1dHyperliquidLaunchCandleStream\x12\'.hypurr.HyperliquidLaunchCandlesRequest\x1a(.hypurr.HyperliquidLaunchCandlesResponse\"\x00\x30\x01\x12t\n\x19HyperliquidLaunchMessages\x12(.hypurr.HyperliquidLaunchMessagesRequest\x1a).hypurr.HyperliquidLaunchMessagesResponse\"\x00\x30\x01\x12w\n\x1cLatestHyperliquidLaunchFills\x12+.hypurr.LatestHyperliquidLaunchFillsRequest\x1a&.hypurr.HyperliquidLaunchFillsResponse\"\x00\x30\x01\x12o\n\x18HyperliquidLaunchHolders\x12\'.hypurr.HyperliquidLaunchHoldersRequest\x1a(.hypurr.HyperliquidLaunchHoldersResponse\"\x00\x12N\n\rHpumpV1Launch\x12\x1c.hypurr.HpumpV1LaunchRequest\x1a\x1d.hypurr.HpumpV1LaunchResponse\"\x00\x12T\n\x0fHpumpV1Launches\x12\x1e.hypurr.HpumpV1LaunchesRequest\x1a\x1f.hypurr.HpumpV1LaunchesResponse\"\x00\x12\x62\n\x13HpumpV1LaunchStream\x12\".hypurr.HpumpV1LaunchStreamRequest\x1a#.hypurr.HpumpV1LaunchStreamResponse\"\x00\x30\x01\x12Z\n\x11HpumpV1LaunchSwap\x12 .hypurr.HpumpV1LaunchSwapRequest\x1a!.hypurr.HpumpV1LaunchSwapResponse\"\x00\x12]\n\x12HpumpV1LaunchSwaps\x12!.hypurr.HpumpV1LaunchSwapsRequest\x1a\".hypurr.HpumpV1LaunchSwapsResponse\"\x00\x12n\n\x17HpumpV1LaunchSwapStream\x12&.hypurr.HpumpV1LaunchSwapStreamRequest\x1a\'.hypurr.HpumpV1LaunchSwapStreamResponse\"\x00\x30\x01\x12j\n\x19HpumpV1LaunchCandleStream\x12#.hypurr.HpumpV1LaunchCandlesRequest\x1a$.hypurr.HpumpV1LaunchCandlesResponse\"\x00\x30\x01\x12m\n\x1aHpumpV1LaunchMessageStream\x12$.hypurr.HpumpV1LaunchMessagesRequest\x1a%.hypurr.HpumpV1LaunchMessagesResponse\"\x00\x30\x01\x12T\n\x0fHypurrFunCabals\x12\x1e.hypurr.HypurrFunCabalsRequest\x1a\x1f.hypurr.HypurrFunCabalsResponse\"\x00\x12r\n\x19HypurrFunCabalPerformance\x12(.hypurr.HypurrFunCabalPerformanceRequest\x1a).hypurr.HypurrFunCabalPerformanceResponse\"\x00\x12\x9c\x01\n\'SetHyperliquidWalletDeploySessionTarget\x12\x36.hypurr.SetHyperliquidWalletDeploySessionTargetRequest\x1a\x37.hypurr.SetHyperliquidWalletDeploySessionTargetResponse\"\x00\x12\xa5\x01\n*DeleteHyperliquidWalletDeploySessionTarget\x12\x39.hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest\x1a:.hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse\"\x00\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x1bhypurr/static_service.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x12hypurr/token.proto\x1a\x13hypurr/wallet.proto\x1a\x13hypurr/launch.proto\x1a\x12hypurr/pairs.proto\x1a\x12hypurr/cabal.proto\x1a\x10hypurr/evm.proto\x1a\x14hypurr/hpumpv1.proto\x1a\x13hypurr/common.proto\"2\n\x1eHyperliquidTokenHoldersRequest\x12\x10\n\x08token_id\x18\x01 \x01(\x03\"R\n\x1fHyperliquidTokenHoldersResponse\x12/\n\x07holders\x18\x01 \x03(\x0b\x32\x1e.hypurr.HyperliquidTokenHolder\"!\n\x1fHyperliquidDeployAuctionRequest\"U\n HyperliquidDeployAuctionResponse\x12\x31\n\x07\x61uction\x18\x01 \x01(\x0b\x32 .hypurr.HyperliquidDeployAuction\"\x1a\n\x18HyperliquidTokensRequest\"E\n\x19HyperliquidTokensResponse\x12(\n\x06tokens\x18\x01 \x03(\x0b\x32\x18.hypurr.HyperliquidToken\"3\n\x1fHyperliquidTokenMessagesRequest\x12\x10\n\x08token_id\x18\x01 \x01(\x03\"U\n HyperliquidTokenMessagesResponse\x12\x31\n\x08messages\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidTokenMessage\"(\n\x1aHyperliquidSpotPairRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"H\n\x1bHyperliquidSpotPairResponse\x12)\n\x04pair\x18\x01 \x01(\x0b\x32\x1b.hypurr.HyperliquidSpotPair\"\x1d\n\x1bHyperliquidSpotPairsRequest\"J\n\x1cHyperliquidSpotPairsResponse\x12*\n\x05pairs\x18\x01 \x03(\x0b\x32\x1b.hypurr.HyperliquidSpotPair\"\x1d\n\x1bHyperliquidPerpPairsRequest\"J\n\x1cHyperliquidPerpPairsResponse\x12*\n\x05pairs\x18\x01 \x03(\x0b\x32\x1b.hypurr.HyperliquidPerpPair\"R\n\x18HyperliquidWalletRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"F\n\x19HyperliquidWalletResponse\x12)\n\x06wallet\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\"0\n\x1aHyperliquidLaunchesRequest\x12\x12\n\nlaunch_ids\x18\x01 \x03(\x03\"J\n\x1bHyperliquidLaunchesResponse\x12+\n\x08launches\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\"|\n\x1eHyperliquidLaunchStreamRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"N\n\x1fHyperliquidLaunchStreamResponse\x12+\n\x08launches\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\xf3\x01\n&HyperliquidWalletDeploySessionsRequest\x12\x30\n\x0btelegram_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12.\n\twallet_id\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12/\n\nsession_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x36\n\x10\x65thereum_address\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"c\n\'HyperliquidWalletDeploySessionsResponse\x12\x38\n\x08sessions\x18\x01 \x03(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"\xa9\x01\n.SetHyperliquidWalletDeploySessionTargetRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x12\n\nsession_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x0e\n\x06target\x18\x04 \x01(\t\x12\r\n\x05share\x18\x05 \x01(\x05\"j\n/SetHyperliquidWalletDeploySessionTargetResponse\x12\x37\n\x07session\x18\x01 \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"\x8d\x01\n1DeleteHyperliquidWalletDeploySessionTargetRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x12\n\nsession_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\"m\n2DeleteHyperliquidWalletDeploySessionTargetResponse\x12\x37\n\x07session\x18\x01 \x01(\x0b\x32&.hypurr.HyperliquidWalletDeploySession\"{\n\x1dHyperliquidLaunchFillsRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"\x84\x01\n\x1eHyperliquidLaunchFillsResponse\x12,\n\x05\x66ills\x18\x01 \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\x12\x34\n\tpositions\x18\x02 \x03(\x0b\x32!.hypurr.HyperliquidLaunchPosition\"F\n\x1fHyperliquidLaunchCandlesRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12\x10\n\x08interval\x18\x02 \x01(\t\"H\n HyperliquidLaunchCandlesResponse\x12$\n\x07\x63\x61ndles\x18\x01 \x03(\x0b\x32\x13.hypurr.PriceCandle\"&\n\x18HyperliquidLaunchRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"F\n\x19HyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\x8a\x01\n HyperliquidLaunchMessagesRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\x12*\n\x06pinned\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12\'\n\x03\x64\x65v\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\"W\n!HyperliquidLaunchMessagesResponse\x12\x32\n\x08messages\x18\x01 \x03(\x0b\x32 .hypurr.HyperliquidLaunchMessage\"4\n\x1fHyperliquidLaunchHoldersRequest\x12\x11\n\tlaunch_id\x18\x01 \x01(\x03\"T\n HyperliquidLaunchHoldersResponse\x12\x30\n\x07holders\x18\x01 \x03(\x0b\x32\x1f.hypurr.HyperliquidLaunchHolder\"%\n#LatestHyperliquidLaunchFillsRequest\"\'\n\x14HpumpV1LaunchRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\">\n\x15HpumpV1LaunchResponse\x12%\n\x06launch\x18\x01 \x01(\x0b\x32\x15.hypurr.HpumpV1Launch\"W\n\x16HpumpV1LaunchesRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x16\n\x0egraduated_only\x18\x03 \x01(\x08\"[\n\x17HpumpV1LaunchesResponse\x12\'\n\x08launches\x18\x01 \x03(\x0b\x32\x15.hypurr.HpumpV1Launch\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"\xa7\x01\n\x1aHpumpV1LaunchStreamRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12-\n\tgraduated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\"F\n\x1bHpumpV1LaunchStreamResponse\x12\'\n\x08launches\x18\x01 \x03(\x0b\x32\x15.hypurr.HpumpV1Launch\"&\n\x18HpumpV1LaunchSwapRequest\x12\n\n\x02id\x18\x01 \x01(\t\"D\n\x19HpumpV1LaunchSwapResponse\x12\'\n\x04swap\x18\x01 \x01(\x0b\x32\x19.hypurr.HpumpV1LaunchSwap\"\x86\x01\n\x19HpumpV1LaunchSwapsRequest\x12\x11\n\tpage_size\x18\x01 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\x12\x16\n\x0elaunch_address\x18\x03 \x01(\t\x12\x16\n\x0eorigin_address\x18\x04 \x01(\t\x12\x12\n\nto_address\x18\x05 \x01(\t\"_\n\x1aHpumpV1LaunchSwapsResponse\x12(\n\x05swaps\x18\x01 \x03(\x0b\x32\x19.hypurr.HpumpV1LaunchSwap\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"d\n\x1eHpumpV1LaunchSwapStreamRequest\x12\x16\n\x0elaunch_address\x18\x01 \x01(\t\x12*\n\x05limit\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int32Value\"v\n\x1fHpumpV1LaunchSwapStreamResponse\x12(\n\x05swaps\x18\x01 \x03(\x0b\x32\x19.hypurr.HpumpV1LaunchSwap\x12)\n\tpositions\x18\x02 \x03(\x0b\x32\x16.hypurr.WalletPosition\"s\n\x1bHpumpV1LaunchCandlesRequest\x12\x14\n\x0cpair_address\x18\x01 \x01(\t\x12\x16\n\x0e\x66rom_timestamp\x18\x02 \x01(\x03\x12\x14\n\x0cto_timestamp\x18\x03 \x01(\x03\x12\x10\n\x08interval\x18\x04 \x01(\t\"D\n\x1cHpumpV1LaunchCandlesResponse\x12$\n\x07\x63\x61ndles\x18\x01 \x03(\x0b\x32\x13.hypurr.PriceCandle\"\x8b\x01\n\x1cHpumpV1LaunchMessagesRequest\x12\x16\n\x0elaunch_address\x18\x01 \x01(\t\x12*\n\x06pinned\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\x12\'\n\x03\x64\x65v\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.BoolValue\"O\n\x1dHpumpV1LaunchMessagesResponse\x12.\n\x08messages\x18\x01 \x03(\x0b\x32\x1c.hypurr.HpumpV1LaunchMessage\"s\n#HyperliquidWalletPerformanceRequest\x12\x36\n\x10\x65thereum_address\x18\x01 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x14\n\x0c\x61\x63\x63ount_type\x18\x02 \x01(\t\"\x91\x01\n$HyperliquidWalletPerformanceResponse\x12!\n\x04spot\x18\x01 \x01(\x0b\x32\x13.hypurr.Performance\x12!\n\x04perp\x18\x02 \x01(\x0b\x32\x13.hypurr.Performance\x12#\n\x06launch\x18\x03 \x01(\x0b\x32\x13.hypurr.Performance\"\x18\n\x16HypurrFunCabalsRequest\"A\n\x17HypurrFunCabalsResponse\x12&\n\x06\x63\x61\x62\x61ls\x18\x01 \x03(\x0b\x32\x16.hypurr.HypurrFunCabal\"<\n HypurrFunCabalPerformanceRequest\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\"\\\n!HypurrFunCabalPerformanceResponse\x12\x37\n\x0cperformances\x18\x01 \x03(\x0b\x32!.hypurr.HypurrFunCabalPerformance2\xc7\x1a\n\x06Static\x12o\n\x18HyperliquidDeployAuction\x12\'.hypurr.HyperliquidDeployAuctionRequest\x1a(.hypurr.HyperliquidDeployAuctionResponse\"\x00\x12Z\n\x11HyperliquidTokens\x12 .hypurr.HyperliquidTokensRequest\x1a!.hypurr.HyperliquidTokensResponse\"\x00\x12l\n\x17HyperliquidTokenHolders\x12&.hypurr.HyperliquidTokenHoldersRequest\x1a\'.hypurr.HyperliquidTokenHoldersResponse\"\x00\x12q\n\x18HyperliquidTokenMessages\x12\'.hypurr.HyperliquidTokenMessagesRequest\x1a(.hypurr.HyperliquidTokenMessagesResponse\"\x00\x30\x01\x12`\n\x13HyperliquidSpotPair\x12\".hypurr.HyperliquidSpotPairRequest\x1a#.hypurr.HyperliquidSpotPairResponse\"\x00\x12\x63\n\x14HyperliquidSpotPairs\x12#.hypurr.HyperliquidSpotPairsRequest\x1a$.hypurr.HyperliquidSpotPairsResponse\"\x00\x12\x63\n\x14HyperliquidPerpPairs\x12#.hypurr.HyperliquidPerpPairsRequest\x1a$.hypurr.HyperliquidPerpPairsResponse\"\x00\x12Z\n\x11HyperliquidWallet\x12 .hypurr.HyperliquidWalletRequest\x1a!.hypurr.HyperliquidWalletResponse\"\x00\x12\x84\x01\n\x1fHyperliquidWalletDeploySessions\x12..hypurr.HyperliquidWalletDeploySessionsRequest\x1a/.hypurr.HyperliquidWalletDeploySessionsResponse\"\x00\x12{\n\x1cHyperliquidWalletPerformance\x12+.hypurr.HyperliquidWalletPerformanceRequest\x1a,.hypurr.HyperliquidWalletPerformanceResponse\"\x00\x12Z\n\x11HyperliquidLaunch\x12 .hypurr.HyperliquidLaunchRequest\x1a!.hypurr.HyperliquidLaunchResponse\"\x00\x12`\n\x13HyperliquidLaunches\x12\".hypurr.HyperliquidLaunchesRequest\x1a#.hypurr.HyperliquidLaunchesResponse\"\x00\x12n\n\x17HyperliquidLaunchStream\x12&.hypurr.HyperliquidLaunchStreamRequest\x1a\'.hypurr.HyperliquidLaunchStreamResponse\"\x00\x30\x01\x12k\n\x16HyperliquidLaunchFills\x12%.hypurr.HyperliquidLaunchFillsRequest\x1a&.hypurr.HyperliquidLaunchFillsResponse\"\x00\x30\x01\x12o\n\x18HyperliquidLaunchCandles\x12\'.hypurr.HyperliquidLaunchCandlesRequest\x1a(.hypurr.HyperliquidLaunchCandlesResponse\"\x00\x12v\n\x1dHyperliquidLaunchCandleStream\x12\'.hypurr.HyperliquidLaunchCandlesRequest\x1a(.hypurr.HyperliquidLaunchCandlesResponse\"\x00\x30\x01\x12t\n\x19HyperliquidLaunchMessages\x12(.hypurr.HyperliquidLaunchMessagesRequest\x1a).hypurr.HyperliquidLaunchMessagesResponse\"\x00\x30\x01\x12w\n\x1cLatestHyperliquidLaunchFills\x12+.hypurr.LatestHyperliquidLaunchFillsRequest\x1a&.hypurr.HyperliquidLaunchFillsResponse\"\x00\x30\x01\x12o\n\x18HyperliquidLaunchHolders\x12\'.hypurr.HyperliquidLaunchHoldersRequest\x1a(.hypurr.HyperliquidLaunchHoldersResponse\"\x00\x12N\n\rHpumpV1Launch\x12\x1c.hypurr.HpumpV1LaunchRequest\x1a\x1d.hypurr.HpumpV1LaunchResponse\"\x00\x12T\n\x0fHpumpV1Launches\x12\x1e.hypurr.HpumpV1LaunchesRequest\x1a\x1f.hypurr.HpumpV1LaunchesResponse\"\x00\x12\x62\n\x13HpumpV1LaunchStream\x12\".hypurr.HpumpV1LaunchStreamRequest\x1a#.hypurr.HpumpV1LaunchStreamResponse\"\x00\x30\x01\x12Z\n\x11HpumpV1LaunchSwap\x12 .hypurr.HpumpV1LaunchSwapRequest\x1a!.hypurr.HpumpV1LaunchSwapResponse\"\x00\x12]\n\x12HpumpV1LaunchSwaps\x12!.hypurr.HpumpV1LaunchSwapsRequest\x1a\".hypurr.HpumpV1LaunchSwapsResponse\"\x00\x12n\n\x17HpumpV1LaunchSwapStream\x12&.hypurr.HpumpV1LaunchSwapStreamRequest\x1a\'.hypurr.HpumpV1LaunchSwapStreamResponse\"\x00\x30\x01\x12j\n\x19HpumpV1LaunchCandleStream\x12#.hypurr.HpumpV1LaunchCandlesRequest\x1a$.hypurr.HpumpV1LaunchCandlesResponse\"\x00\x30\x01\x12m\n\x1aHpumpV1LaunchMessageStream\x12$.hypurr.HpumpV1LaunchMessagesRequest\x1a%.hypurr.HpumpV1LaunchMessagesResponse\"\x00\x30\x01\x12T\n\x0fHypurrFunCabals\x12\x1e.hypurr.HypurrFunCabalsRequest\x1a\x1f.hypurr.HypurrFunCabalsResponse\"\x00\x12r\n\x19HypurrFunCabalPerformance\x12(.hypurr.HypurrFunCabalPerformanceRequest\x1a).hypurr.HypurrFunCabalPerformanceResponse\"\x00\x12\x9c\x01\n\'SetHyperliquidWalletDeploySessionTarget\x12\x36.hypurr.SetHyperliquidWalletDeploySessionTargetRequest\x1a\x37.hypurr.SetHyperliquidWalletDeploySessionTargetResponse\"\x00\x12\xa5\x01\n*DeleteHyperliquidWalletDeploySessionTarget\x12\x39.hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest\x1a:.hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse\"\x00\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,hypurr_dot_token__pb2.DESCRIPTOR,hypurr_dot_wallet__pb2.DESCRIPTOR,hypurr_dot_launch__pb2.DESCRIPTOR,hypurr_dot_pairs__pb2.DESCRIPTOR,hypurr_dot_cabal__pb2.DESCRIPTOR,hypurr_dot_evm__pb2.DESCRIPTOR,hypurr_dot_hpumpv1__pb2.DESCRIPTOR,hypurr_dot_common__pb2.DESCRIPTOR,])
 
@@ -1418,6 +1418,13 @@ _HPUMPV1LAUNCHSTREAMREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='graduated', full_name='hypurr.HpumpV1LaunchStreamRequest.graduated', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -1430,8 +1437,8 @@ _HPUMPV1LAUNCHSTREAMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3645,
-  serialized_end=3765,
+  serialized_start=3646,
+  serialized_end=3813,
 )
 
 
@@ -1461,8 +1468,8 @@ _HPUMPV1LAUNCHSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3767,
-  serialized_end=3837,
+  serialized_start=3815,
+  serialized_end=3885,
 )
 
 
@@ -1492,8 +1499,8 @@ _HPUMPV1LAUNCHSWAPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3839,
-  serialized_end=3877,
+  serialized_start=3887,
+  serialized_end=3925,
 )
 
 
@@ -1523,8 +1530,8 @@ _HPUMPV1LAUNCHSWAPRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3879,
-  serialized_end=3947,
+  serialized_start=3927,
+  serialized_end=3995,
 )
 
 
@@ -1582,8 +1589,8 @@ _HPUMPV1LAUNCHSWAPSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3950,
-  serialized_end=4084,
+  serialized_start=3998,
+  serialized_end=4132,
 )
 
 
@@ -1620,8 +1627,8 @@ _HPUMPV1LAUNCHSWAPSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4086,
-  serialized_end=4181,
+  serialized_start=4134,
+  serialized_end=4229,
 )
 
 
@@ -1658,8 +1665,8 @@ _HPUMPV1LAUNCHSWAPSTREAMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4183,
-  serialized_end=4283,
+  serialized_start=4231,
+  serialized_end=4331,
 )
 
 
@@ -1696,8 +1703,8 @@ _HPUMPV1LAUNCHSWAPSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4285,
-  serialized_end=4403,
+  serialized_start=4333,
+  serialized_end=4451,
 )
 
 
@@ -1748,8 +1755,8 @@ _HPUMPV1LAUNCHCANDLESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4405,
-  serialized_end=4520,
+  serialized_start=4453,
+  serialized_end=4568,
 )
 
 
@@ -1779,8 +1786,8 @@ _HPUMPV1LAUNCHCANDLESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4522,
-  serialized_end=4590,
+  serialized_start=4570,
+  serialized_end=4638,
 )
 
 
@@ -1824,8 +1831,8 @@ _HPUMPV1LAUNCHMESSAGESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4593,
-  serialized_end=4732,
+  serialized_start=4641,
+  serialized_end=4780,
 )
 
 
@@ -1855,8 +1862,8 @@ _HPUMPV1LAUNCHMESSAGESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4734,
-  serialized_end=4813,
+  serialized_start=4782,
+  serialized_end=4861,
 )
 
 
@@ -1893,8 +1900,8 @@ _HYPERLIQUIDWALLETPERFORMANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4815,
-  serialized_end=4930,
+  serialized_start=4863,
+  serialized_end=4978,
 )
 
 
@@ -1938,8 +1945,8 @@ _HYPERLIQUIDWALLETPERFORMANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4933,
-  serialized_end=5078,
+  serialized_start=4981,
+  serialized_end=5126,
 )
 
 
@@ -1962,8 +1969,8 @@ _HYPURRFUNCABALSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5080,
-  serialized_end=5104,
+  serialized_start=5128,
+  serialized_end=5152,
 )
 
 
@@ -1993,8 +2000,8 @@ _HYPURRFUNCABALSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5106,
-  serialized_end=5171,
+  serialized_start=5154,
+  serialized_end=5219,
 )
 
 
@@ -2024,8 +2031,8 @@ _HYPURRFUNCABALPERFORMANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5173,
-  serialized_end=5233,
+  serialized_start=5221,
+  serialized_end=5281,
 )
 
 
@@ -2055,8 +2062,8 @@ _HYPURRFUNCABALPERFORMANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5235,
-  serialized_end=5327,
+  serialized_start=5283,
+  serialized_end=5375,
 )
 
 _HYPERLIQUIDTOKENHOLDERSRESPONSE.fields_by_name['holders'].message_type = hypurr_dot_token__pb2._HYPERLIQUIDTOKENHOLDER
@@ -2095,6 +2102,7 @@ _HPUMPV1LAUNCHRESPONSE.fields_by_name['launch'].message_type = hypurr_dot_hpumpv
 _HPUMPV1LAUNCHESRESPONSE.fields_by_name['launches'].message_type = hypurr_dot_hpumpv1__pb2._HPUMPV1LAUNCH
 _HPUMPV1LAUNCHSTREAMREQUEST.fields_by_name['launch_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
 _HPUMPV1LAUNCHSTREAMREQUEST.fields_by_name['limit'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_HPUMPV1LAUNCHSTREAMREQUEST.fields_by_name['graduated'].message_type = google_dot_protobuf_dot_wrappers__pb2._BOOLVALUE
 _HPUMPV1LAUNCHSTREAMRESPONSE.fields_by_name['launches'].message_type = hypurr_dot_hpumpv1__pb2._HPUMPV1LAUNCH
 _HPUMPV1LAUNCHSWAPRESPONSE.fields_by_name['swap'].message_type = hypurr_dot_hpumpv1__pb2._HPUMPV1LAUNCHSWAP
 _HPUMPV1LAUNCHSWAPSRESPONSE.fields_by_name['swaps'].message_type = hypurr_dot_hpumpv1__pb2._HPUMPV1LAUNCHSWAP
@@ -2595,8 +2603,8 @@ _STATIC = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=5330,
-  serialized_end=8729,
+  serialized_start=5378,
+  serialized_end=8777,
   methods=[
   _descriptor.MethodDescriptor(
     name='HyperliquidDeployAuction',

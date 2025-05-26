@@ -196,6 +196,7 @@ message HpumpV1LaunchStreamRequest {
   google.protobuf.Int64Value launch_id = 1;
   // Default: 200
   google.protobuf.Int64Value limit = 2;
+  google.protobuf.BoolValue graduated = 3;
 }
 
 message HpumpV1LaunchStreamResponse {
