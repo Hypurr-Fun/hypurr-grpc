@@ -104,6 +104,10 @@ export interface HpumpV1Launch {
      * @generated from protobuf field: double previous_day_price = 21;
      */
     previousDayPrice: number;
+    /**
+     * @generated from protobuf field: int64 topic_id = 22;
+     */
+    topicId: number; // Telegram topic id for launch chat
 }
 /**
  * HPump Launch Pair Swap messages
@@ -217,11 +221,12 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
             { no: 18, name: "graduated_to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 19, name: "dev_telegram_user", kind: "message", T: () => TelegramUserPublic },
             { no: 20, name: "volume_24h", kind: "scalar", jsonName: "volume24h", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 21, name: "previous_day_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 21, name: "previous_day_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 22, name: "topic_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HpumpV1Launch>): HpumpV1Launch {
-        const message = { address: "", symbol: "", name: "", devAddress: "", description: "", mediaType: "", mediaUri: "", devTelegramId: 0, createdAt: 0, launchId: 0, baseReserve: "", quoteReserve: "", x0: "", y0: "", lastSyncTimestamp: 0, graduated: false, graduatedAt: 0, graduatedTo: "", volume24H: 0, previousDayPrice: 0 };
+        const message = { address: "", symbol: "", name: "", devAddress: "", description: "", mediaType: "", mediaUri: "", devTelegramId: 0, createdAt: 0, launchId: 0, baseReserve: "", quoteReserve: "", x0: "", y0: "", lastSyncTimestamp: 0, graduated: false, graduatedAt: 0, graduatedTo: "", volume24H: 0, previousDayPrice: 0, topicId: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HpumpV1Launch>(this, message, value);
@@ -294,6 +299,9 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
                     break;
                 case /* double previous_day_price */ 21:
                     message.previousDayPrice = reader.double();
+                    break;
+                case /* int64 topic_id */ 22:
+                    message.topicId = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -370,6 +378,9 @@ class HpumpV1Launch$Type extends MessageType<HpumpV1Launch> {
         /* double previous_day_price = 21; */
         if (message.previousDayPrice !== 0)
             writer.tag(21, WireType.Bit64).double(message.previousDayPrice);
+        /* int64 topic_id = 22; */
+        if (message.topicId !== 0)
+            writer.tag(22, WireType.Varint).int64(message.topicId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
