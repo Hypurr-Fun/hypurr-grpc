@@ -4,6 +4,7 @@ package hypurr;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
 import "hypurr/common.proto";
+import "google/protobuf/wrappers.proto";
 
 // HPump Launch Token messages
 message HpumpV1Launch {
@@ -29,7 +30,7 @@ message HpumpV1Launch {
   TelegramUserPublic dev_telegram_user = 19;
   double volume_24h = 20;         // Daily quote volume
   double previous_day_price = 21;
-  int64 topic_id = 22; // Telegram topic id for launch chat
+  google.protobuf.Int64Value topic_id = 22; // Telegram topic id for launch chat
 }
 
 // HPump Launch Pair Swap messages
