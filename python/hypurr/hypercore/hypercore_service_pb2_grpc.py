@@ -29,6 +29,11 @@ class HyperCoreStub(object):
         request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesStreamRequest.SerializeToString,
         response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesStreamResponse.FromString,
         )
+    self.WalletTradesStream = channel.unary_stream(
+        '/hypercore.HyperCore/WalletTradesStream',
+        request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesStreamRequest.SerializeToString,
+        response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesStreamResponse.FromString,
+        )
     self.ValidatorDelegators = channel.unary_unary(
         '/hypercore.HyperCore/ValidatorDelegators',
         request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ValidatorDelegatorsRequest.SerializeToString,
@@ -61,6 +66,13 @@ class HyperCoreServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def WalletTradesStream(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def ValidatorDelegators(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -85,6 +97,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
           servicer.WalletBalancesStream,
           request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesStreamRequest.FromString,
           response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesStreamResponse.SerializeToString,
+      ),
+      'WalletTradesStream': grpc.unary_stream_rpc_method_handler(
+          servicer.WalletTradesStream,
+          request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesStreamRequest.FromString,
+          response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesStreamResponse.SerializeToString,
       ),
       'ValidatorDelegators': grpc.unary_unary_rpc_method_handler(
           servicer.ValidatorDelegators,

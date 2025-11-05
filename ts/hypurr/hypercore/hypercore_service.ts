@@ -2,16 +2,80 @@
 // @generated from protobuf file "hypurr/hypercore/hypercore_service.proto" (package "hypercore", syntax proto3)
 // tslint:disable
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
-import { WireType } from "@protobuf-ts/runtime";
 import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
 import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
+import { WireType } from "@protobuf-ts/runtime";
 import type { BinaryReadOptions } from "@protobuf-ts/runtime";
 import type { IBinaryReader } from "@protobuf-ts/runtime";
+import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { StringValue } from "../../google/protobuf/wrappers";
+import { UInt64Value } from "../../google/protobuf/wrappers";
+/**
+ * @generated from protobuf message hypercore.TradeSideInfo
+ */
+export interface TradeSideInfo {
+    /**
+     * @generated from protobuf field: string user = 1;
+     */
+    user: string; // user
+    /**
+     * @generated from protobuf field: string start_pos = 2;
+     */
+    startPos: string; // start_pos
+    /**
+     * @generated from protobuf field: int64 oid = 3;
+     */
+    oid: number; // oid
+    /**
+     * @generated from protobuf field: google.protobuf.UInt64Value twap_id = 4;
+     */
+    twapId?: UInt64Value; // twap_id (nullable interface)
+    /**
+     * @generated from protobuf field: google.protobuf.StringValue cloid = 5;
+     */
+    cloid?: StringValue; // cloid (nullable string)
+}
+/**
+ * @generated from protobuf message hypercore.WalletTrade
+ */
+export interface WalletTrade {
+    /**
+     * @generated from protobuf field: string coin = 1;
+     */
+    coin: string; // Perp symbol or @ notation
+    /**
+     * @generated from protobuf field: string side = 2;
+     */
+    side: string; // A or B
+    /**
+     * @generated from protobuf field: string time = 3;
+     */
+    time: string; // Timestamp in nanoseconds
+    /**
+     * @generated from protobuf field: string px = 4;
+     */
+    px: string; // Price
+    /**
+     * @generated from protobuf field: string sz = 5;
+     */
+    sz: string; // Size
+    /**
+     * @generated from protobuf field: string hash = 6;
+     */
+    hash: string; // Hash (string to be safe)
+    /**
+     * @generated from protobuf field: hypercore.TradeDirOverride trade_dir_override = 7;
+     */
+    tradeDirOverride: TradeDirOverride; // enum
+    /**
+     * @generated from protobuf field: repeated hypercore.TradeSideInfo side_info = 8;
+     */
+    sideInfo: TradeSideInfo[]; // side_info[]
+}
 /**
  * @generated from protobuf message hypercore.WalletMovement
  */
@@ -108,6 +172,28 @@ export interface WalletBalancesResponse {
     perpBalances: WalletPerpBalance[];
 }
 /**
+ * @generated from protobuf message hypercore.WalletTradesStreamRequest
+ */
+export interface WalletTradesStreamRequest {
+    /**
+     * @generated from protobuf field: string wallet_address = 1;
+     */
+    walletAddress: string;
+}
+/**
+ * @generated from protobuf message hypercore.WalletTradesStreamResponse
+ */
+export interface WalletTradesStreamResponse {
+    /**
+     * @generated from protobuf field: string wallet_address = 1;
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletTrade trades = 2;
+     */
+    trades: WalletTrade[];
+}
+/**
  * @generated from protobuf message hypercore.WalletBalancesStreamRequest
  */
 export interface WalletBalancesStreamRequest {
@@ -168,6 +254,214 @@ export interface ValidatorDelegator {
      */
     stake: number;
 }
+/**
+ *
+ * type Trade struct {
+ * Coin             string           `json:"coin"`               // Perp symbol or @ notation
+ * Side             string           `json:"side"`               // A or B
+ * Time             string           `json:"time"`               // Timestamp in nanoseconds
+ * Px               string           `json:"px"`                 // Price
+ * Sz               string           `json:"sz"`                 // Size
+ * Hash             string           `json:"hash"`               // Hash (can be 0)
+ * TradeDirOverride TradeDirOverride `json:"trade_dir_override"` // ??
+ * SideInfo         []struct {
+ * User     string      `json:"user"`
+ * StartPos string      `json:"start_pos"`
+ * Oid      int64       `json:"oid"`
+ * TwapId   interface{} `json:"twap_id"`
+ * Cloid    *string     `json:"cloid"`
+ * } `json:"side_info"`
+ * }
+ *
+ *
+ *
+ * @generated from protobuf enum hypercore.TradeDirOverride
+ */
+export enum TradeDirOverride {
+    /**
+     * @generated from protobuf enum value: TRADE_DIR_OVERRIDE_UNSPECIFIED = 0;
+     */
+    TRADE_DIR_OVERRIDE_UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: TRADE_DIR_OVERRIDE_A = 1;
+     */
+    TRADE_DIR_OVERRIDE_A = 1,
+    /**
+     * @generated from protobuf enum value: TRADE_DIR_OVERRIDE_B = 2;
+     */
+    TRADE_DIR_OVERRIDE_B = 2
+}
+// @generated message type with reflection information, may provide speed optimized methods
+class TradeSideInfo$Type extends MessageType<TradeSideInfo> {
+    constructor() {
+        super("hypercore.TradeSideInfo", [
+            { no: 1, name: "user", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "start_pos", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "oid", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "twap_id", kind: "message", T: () => UInt64Value },
+            { no: 5, name: "cloid", kind: "message", T: () => StringValue }
+        ]);
+    }
+    create(value?: PartialMessage<TradeSideInfo>): TradeSideInfo {
+        const message = { user: "", startPos: "", oid: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<TradeSideInfo>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TradeSideInfo): TradeSideInfo {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string user */ 1:
+                    message.user = reader.string();
+                    break;
+                case /* string start_pos */ 2:
+                    message.startPos = reader.string();
+                    break;
+                case /* int64 oid */ 3:
+                    message.oid = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.UInt64Value twap_id */ 4:
+                    message.twapId = UInt64Value.internalBinaryRead(reader, reader.uint32(), options, message.twapId);
+                    break;
+                case /* google.protobuf.StringValue cloid */ 5:
+                    message.cloid = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.cloid);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TradeSideInfo, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string user = 1; */
+        if (message.user !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.user);
+        /* string start_pos = 2; */
+        if (message.startPos !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.startPos);
+        /* int64 oid = 3; */
+        if (message.oid !== 0)
+            writer.tag(3, WireType.Varint).int64(message.oid);
+        /* google.protobuf.UInt64Value twap_id = 4; */
+        if (message.twapId)
+            UInt64Value.internalBinaryWrite(message.twapId, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.StringValue cloid = 5; */
+        if (message.cloid)
+            StringValue.internalBinaryWrite(message.cloid, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.TradeSideInfo
+ */
+export const TradeSideInfo = new TradeSideInfo$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletTrade$Type extends MessageType<WalletTrade> {
+    constructor() {
+        super("hypercore.WalletTrade", [
+            { no: 1, name: "coin", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "side", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "time", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "px", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "sz", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "hash", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "trade_dir_override", kind: "enum", T: () => ["hypercore.TradeDirOverride", TradeDirOverride] },
+            { no: 8, name: "side_info", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => TradeSideInfo }
+        ]);
+    }
+    create(value?: PartialMessage<WalletTrade>): WalletTrade {
+        const message = { coin: "", side: "", time: "", px: "", sz: "", hash: "", tradeDirOverride: 0, sideInfo: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<WalletTrade>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletTrade): WalletTrade {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string coin */ 1:
+                    message.coin = reader.string();
+                    break;
+                case /* string side */ 2:
+                    message.side = reader.string();
+                    break;
+                case /* string time */ 3:
+                    message.time = reader.string();
+                    break;
+                case /* string px */ 4:
+                    message.px = reader.string();
+                    break;
+                case /* string sz */ 5:
+                    message.sz = reader.string();
+                    break;
+                case /* string hash */ 6:
+                    message.hash = reader.string();
+                    break;
+                case /* hypercore.TradeDirOverride trade_dir_override */ 7:
+                    message.tradeDirOverride = reader.int32();
+                    break;
+                case /* repeated hypercore.TradeSideInfo side_info */ 8:
+                    message.sideInfo.push(TradeSideInfo.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletTrade, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string coin = 1; */
+        if (message.coin !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.coin);
+        /* string side = 2; */
+        if (message.side !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.side);
+        /* string time = 3; */
+        if (message.time !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.time);
+        /* string px = 4; */
+        if (message.px !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.px);
+        /* string sz = 5; */
+        if (message.sz !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.sz);
+        /* string hash = 6; */
+        if (message.hash !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.hash);
+        /* hypercore.TradeDirOverride trade_dir_override = 7; */
+        if (message.tradeDirOverride !== 0)
+            writer.tag(7, WireType.Varint).int32(message.tradeDirOverride);
+        /* repeated hypercore.TradeSideInfo side_info = 8; */
+        for (let i = 0; i < message.sideInfo.length; i++)
+            TradeSideInfo.internalBinaryWrite(message.sideInfo[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletTrade
+ */
+export const WalletTrade = new WalletTrade$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class WalletMovement$Type extends MessageType<WalletMovement> {
     constructor() {
@@ -540,6 +834,107 @@ class WalletBalancesResponse$Type extends MessageType<WalletBalancesResponse> {
  */
 export const WalletBalancesResponse = new WalletBalancesResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class WalletTradesStreamRequest$Type extends MessageType<WalletTradesStreamRequest> {
+    constructor() {
+        super("hypercore.WalletTradesStreamRequest", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletTradesStreamRequest>): WalletTradesStreamRequest {
+        const message = { walletAddress: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<WalletTradesStreamRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletTradesStreamRequest): WalletTradesStreamRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletTradesStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletTradesStreamRequest
+ */
+export const WalletTradesStreamRequest = new WalletTradesStreamRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletTradesStreamResponse$Type extends MessageType<WalletTradesStreamResponse> {
+    constructor() {
+        super("hypercore.WalletTradesStreamResponse", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "trades", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletTrade }
+        ]);
+    }
+    create(value?: PartialMessage<WalletTradesStreamResponse>): WalletTradesStreamResponse {
+        const message = { walletAddress: "", trades: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<WalletTradesStreamResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletTradesStreamResponse): WalletTradesStreamResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* repeated hypercore.WalletTrade trades */ 2:
+                    message.trades.push(WalletTrade.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletTradesStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* repeated hypercore.WalletTrade trades = 2; */
+        for (let i = 0; i < message.trades.length; i++)
+            WalletTrade.internalBinaryWrite(message.trades[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletTradesStreamResponse
+ */
+export const WalletTradesStreamResponse = new WalletTradesStreamResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class WalletBalancesStreamRequest$Type extends MessageType<WalletBalancesStreamRequest> {
     constructor() {
         super("hypercore.WalletBalancesStreamRequest", [
@@ -809,5 +1204,6 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletMovements", options: {}, I: WalletMovementsRequest, O: WalletMovementsResponse },
     { name: "WalletBalances", options: {}, I: WalletBalancesRequest, O: WalletBalancesResponse },
     { name: "WalletBalancesStream", serverStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
+    { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },
     { name: "ValidatorDelegators", options: {}, I: ValidatorDelegatorsRequest, O: ValidatorDelegatorsResponse }
 ]);

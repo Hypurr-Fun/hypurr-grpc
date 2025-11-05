@@ -4,6 +4,51 @@ option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/hypercore";
 
 import "google/protobuf/wrappers.proto";
 
+/*
+type Trade struct {
+	Coin             string           `json:"coin"`               // Perp symbol or @ notation
+	Side             string           `json:"side"`               // A or B
+	Time             string           `json:"time"`               // Timestamp in nanoseconds
+	Px               string           `json:"px"`                 // Price
+	Sz               string           `json:"sz"`                 // Size
+	Hash             string           `json:"hash"`               // Hash (can be 0)
+	TradeDirOverride TradeDirOverride `json:"trade_dir_override"` // ??
+	SideInfo         []struct {
+		User     string      `json:"user"`
+		StartPos string      `json:"start_pos"`
+		Oid      int64       `json:"oid"`
+		TwapId   interface{} `json:"twap_id"`
+		Cloid    *string     `json:"cloid"`
+	} `json:"side_info"`
+}
+*
+
+ */
+enum TradeDirOverride {
+  TRADE_DIR_OVERRIDE_UNSPECIFIED = 0;
+  TRADE_DIR_OVERRIDE_A = 1;
+  TRADE_DIR_OVERRIDE_B = 2;
+}
+
+message TradeSideInfo {
+  string user = 1;                          // user
+  string start_pos = 2;                     // start_pos
+  int64 oid = 3;                            // oid
+  google.protobuf.UInt64Value twap_id = 4;  // twap_id (nullable interface)
+  google.protobuf.StringValue cloid = 5;    // cloid (nullable string)
+}
+
+message WalletTrade {
+  string coin = 1;                           // Perp symbol or @ notation
+  string side = 2;                           // A or B
+  string time = 3;                           // Timestamp in nanoseconds
+  string px = 4;                             // Price
+  string sz = 5;                             // Size
+  string hash = 6;                           // Hash (string to be safe)
+  TradeDirOverride trade_dir_override = 7;   // enum
+  repeated TradeSideInfo side_info = 8;      // side_info[]
+}
+
 message WalletMovement {
 }
 
@@ -40,6 +85,15 @@ message WalletBalancesResponse {
   repeated WalletPerpBalance perp_balances = 3;
 }
 
+message WalletTradesStreamRequest {
+  string wallet_address = 1;
+}
+
+message WalletTradesStreamResponse {
+  string wallet_address = 1;
+  repeated WalletTrade trades = 2;
+}
+
 message WalletBalancesStreamRequest {
   bytes bloom_filter = 1;
 }
@@ -68,6 +122,7 @@ service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
   rpc WalletBalancesStream(WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
+  rpc WalletTradesStream(WalletTradesStreamRequest) returns (stream WalletTradesStreamResponse) {}
   rpc ValidatorDelegators(ValidatorDelegatorsRequest) returns (ValidatorDelegatorsResponse) {}
 }
 

@@ -6,6 +6,8 @@ import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
 import type { ValidatorDelegatorsResponse } from "./hypercore_service";
 import type { ValidatorDelegatorsRequest } from "./hypercore_service";
+import type { WalletTradesStreamResponse } from "./hypercore_service";
+import type { WalletTradesStreamRequest } from "./hypercore_service";
 import type { WalletBalancesStreamResponse } from "./hypercore_service";
 import type { WalletBalancesStreamRequest } from "./hypercore_service";
 import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
@@ -32,6 +34,10 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: WalletBalancesStream(hypercore.WalletBalancesStreamRequest) returns (stream hypercore.WalletBalancesStreamResponse);
      */
     walletBalancesStream(input: WalletBalancesStreamRequest, options?: RpcOptions): ServerStreamingCall<WalletBalancesStreamRequest, WalletBalancesStreamResponse>;
+    /**
+     * @generated from protobuf rpc: WalletTradesStream(hypercore.WalletTradesStreamRequest) returns (stream hypercore.WalletTradesStreamResponse);
+     */
+    walletTradesStream(input: WalletTradesStreamRequest, options?: RpcOptions): ServerStreamingCall<WalletTradesStreamRequest, WalletTradesStreamResponse>;
     /**
      * @generated from protobuf rpc: ValidatorDelegators(hypercore.ValidatorDelegatorsRequest) returns (hypercore.ValidatorDelegatorsResponse);
      */
@@ -68,10 +74,17 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
         return stackIntercept<WalletBalancesStreamRequest, WalletBalancesStreamResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: WalletTradesStream(hypercore.WalletTradesStreamRequest) returns (stream hypercore.WalletTradesStreamResponse);
+     */
+    walletTradesStream(input: WalletTradesStreamRequest, options?: RpcOptions): ServerStreamingCall<WalletTradesStreamRequest, WalletTradesStreamResponse> {
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        return stackIntercept<WalletTradesStreamRequest, WalletTradesStreamResponse>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: ValidatorDelegators(hypercore.ValidatorDelegatorsRequest) returns (hypercore.ValidatorDelegatorsResponse);
      */
     validatorDelegators(input: ValidatorDelegatorsRequest, options?: RpcOptions): UnaryCall<ValidatorDelegatorsRequest, ValidatorDelegatorsResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<ValidatorDelegatorsRequest, ValidatorDelegatorsResponse>("unary", this._transport, method, opt, input);
     }
 }
