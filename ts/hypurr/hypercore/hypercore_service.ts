@@ -179,6 +179,10 @@ export interface WalletTradesStreamRequest {
      * @generated from protobuf field: string wallet_address = 1;
      */
     walletAddress: string;
+    /**
+     * @generated from protobuf field: bytes bloom_filter = 2;
+     */
+    bloomFilter: Uint8Array;
 }
 /**
  * @generated from protobuf message hypercore.WalletTradesStreamResponse
@@ -837,11 +841,12 @@ export const WalletBalancesResponse = new WalletBalancesResponse$Type();
 class WalletTradesStreamRequest$Type extends MessageType<WalletTradesStreamRequest> {
     constructor() {
         super("hypercore.WalletTradesStreamRequest", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "bloom_filter", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<WalletTradesStreamRequest>): WalletTradesStreamRequest {
-        const message = { walletAddress: "" };
+        const message = { walletAddress: "", bloomFilter: new Uint8Array(0) };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<WalletTradesStreamRequest>(this, message, value);
@@ -854,6 +859,9 @@ class WalletTradesStreamRequest$Type extends MessageType<WalletTradesStreamReque
             switch (fieldNo) {
                 case /* string wallet_address */ 1:
                     message.walletAddress = reader.string();
+                    break;
+                case /* bytes bloom_filter */ 2:
+                    message.bloomFilter = reader.bytes();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -870,6 +878,9 @@ class WalletTradesStreamRequest$Type extends MessageType<WalletTradesStreamReque
         /* string wallet_address = 1; */
         if (message.walletAddress !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* bytes bloom_filter = 2; */
+        if (message.bloomFilter.length)
+            writer.tag(2, WireType.LengthDelimited).bytes(message.bloomFilter);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
