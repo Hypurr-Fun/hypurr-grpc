@@ -8,9 +8,10 @@ import type { ValidatorDelegatorsResponse } from "./hypercore_service";
 import type { ValidatorDelegatorsRequest } from "./hypercore_service";
 import type { WalletTradesStreamResponse } from "./hypercore_service";
 import type { WalletTradesStreamRequest } from "./hypercore_service";
+import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { WalletBalancesStreamResponse } from "./hypercore_service";
 import type { WalletBalancesStreamRequest } from "./hypercore_service";
-import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
+import type { DuplexStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { WalletBalancesResponse } from "./hypercore_service";
 import type { WalletBalancesRequest } from "./hypercore_service";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
@@ -31,9 +32,9 @@ export interface IHyperCoreClient {
      */
     walletBalances(input: WalletBalancesRequest, options?: RpcOptions): UnaryCall<WalletBalancesRequest, WalletBalancesResponse>;
     /**
-     * @generated from protobuf rpc: WalletBalancesStream(hypercore.WalletBalancesStreamRequest) returns (stream hypercore.WalletBalancesStreamResponse);
+     * @generated from protobuf rpc: WalletBalancesStream(stream hypercore.WalletBalancesStreamRequest) returns (stream hypercore.WalletBalancesStreamResponse);
      */
-    walletBalancesStream(input: WalletBalancesStreamRequest, options?: RpcOptions): ServerStreamingCall<WalletBalancesStreamRequest, WalletBalancesStreamResponse>;
+    walletBalancesStream(options?: RpcOptions): DuplexStreamingCall<WalletBalancesStreamRequest, WalletBalancesStreamResponse>;
     /**
      * @generated from protobuf rpc: WalletTradesStream(hypercore.WalletTradesStreamRequest) returns (stream hypercore.WalletTradesStreamResponse);
      */
@@ -67,11 +68,11 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
         return stackIntercept<WalletBalancesRequest, WalletBalancesResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: WalletBalancesStream(hypercore.WalletBalancesStreamRequest) returns (stream hypercore.WalletBalancesStreamResponse);
+     * @generated from protobuf rpc: WalletBalancesStream(stream hypercore.WalletBalancesStreamRequest) returns (stream hypercore.WalletBalancesStreamResponse);
      */
-    walletBalancesStream(input: WalletBalancesStreamRequest, options?: RpcOptions): ServerStreamingCall<WalletBalancesStreamRequest, WalletBalancesStreamResponse> {
+    walletBalancesStream(options?: RpcOptions): DuplexStreamingCall<WalletBalancesStreamRequest, WalletBalancesStreamResponse> {
         const method = this.methods[2], opt = this._transport.mergeOptions(options);
-        return stackIntercept<WalletBalancesStreamRequest, WalletBalancesStreamResponse>("serverStreaming", this._transport, method, opt, input);
+        return stackIntercept<WalletBalancesStreamRequest, WalletBalancesStreamResponse>("duplex", this._transport, method, opt);
     }
     /**
      * @generated from protobuf rpc: WalletTradesStream(hypercore.WalletTradesStreamRequest) returns (stream hypercore.WalletTradesStreamResponse);

@@ -122,7 +122,7 @@ message ValidatorDelegator {
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
-  rpc WalletBalancesStream(WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
+  rpc WalletBalancesStream(stream WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
   rpc WalletTradesStream(WalletTradesStreamRequest) returns (stream WalletTradesStreamResponse) {}
   rpc ValidatorDelegators(ValidatorDelegatorsRequest) returns (ValidatorDelegatorsResponse) {}
 }

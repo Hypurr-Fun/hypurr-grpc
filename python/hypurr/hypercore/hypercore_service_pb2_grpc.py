@@ -24,7 +24,7 @@ class HyperCoreStub(object):
         request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesRequest.SerializeToString,
         response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesResponse.FromString,
         )
-    self.WalletBalancesStream = channel.unary_stream(
+    self.WalletBalancesStream = channel.stream_stream(
         '/hypercore.HyperCore/WalletBalancesStream',
         request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesStreamRequest.SerializeToString,
         response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesStreamResponse.FromString,
@@ -59,7 +59,7 @@ class HyperCoreServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def WalletBalancesStream(self, request, context):
+  def WalletBalancesStream(self, request_iterator, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -93,7 +93,7 @@ def add_HyperCoreServicer_to_server(servicer, server):
           request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesRequest.FromString,
           response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesResponse.SerializeToString,
       ),
-      'WalletBalancesStream': grpc.unary_stream_rpc_method_handler(
+      'WalletBalancesStream': grpc.stream_stream_rpc_method_handler(
           servicer.WalletBalancesStream,
           request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesStreamRequest.FromString,
           response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesStreamResponse.SerializeToString,

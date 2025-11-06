@@ -1214,7 +1214,7 @@ export const ValidatorDelegator = new ValidatorDelegator$Type();
 export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletMovements", options: {}, I: WalletMovementsRequest, O: WalletMovementsResponse },
     { name: "WalletBalances", options: {}, I: WalletBalancesRequest, O: WalletBalancesResponse },
-    { name: "WalletBalancesStream", serverStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
+    { name: "WalletBalancesStream", serverStreaming: true, clientStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
     { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },
     { name: "ValidatorDelegators", options: {}, I: ValidatorDelegatorsRequest, O: ValidatorDelegatorsResponse }
 ]);
