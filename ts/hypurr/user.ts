@@ -187,6 +187,10 @@ export interface HyperliquidWalletLabel {
      * @generated from protobuf field: string label = 2;
      */
     label: string;
+    /**
+     * @generated from protobuf field: string source = 3;
+     */
+    source: string;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUser$Type extends MessageType<TelegramUser> {
@@ -565,11 +569,12 @@ class HyperliquidWalletLabel$Type extends MessageType<HyperliquidWalletLabel> {
     constructor() {
         super("hypurr.HyperliquidWalletLabel", [
             { no: 1, name: "ethereum_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "source", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWalletLabel>): HyperliquidWalletLabel {
-        const message = { ethereumAddress: "", label: "" };
+        const message = { ethereumAddress: "", label: "", source: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWalletLabel>(this, message, value);
@@ -585,6 +590,9 @@ class HyperliquidWalletLabel$Type extends MessageType<HyperliquidWalletLabel> {
                     break;
                 case /* string label */ 2:
                     message.label = reader.string();
+                    break;
+                case /* string source */ 3:
+                    message.source = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -604,6 +612,9 @@ class HyperliquidWalletLabel$Type extends MessageType<HyperliquidWalletLabel> {
         /* string label = 2; */
         if (message.label !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.label);
+        /* string source = 3; */
+        if (message.source !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.source);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

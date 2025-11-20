@@ -53,4 +53,5 @@ message TelegramUserReputation {
 message HyperliquidWalletLabel {
   string ethereum_address = 1;
   string label = 2;
+  string source = 3;
 }
