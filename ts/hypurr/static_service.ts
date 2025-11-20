@@ -12,6 +12,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { TelegramUserPublic } from "./common";
 import { HypurrFunCabalPerformance } from "./cabal";
 import { HypurrFunCabal } from "./cabal";
 import { Performance } from "./wallet";
@@ -693,6 +694,24 @@ export interface HypurrFunCabalPerformanceResponse {
      * @generated from protobuf field: repeated hypurr.HypurrFunCabalPerformance performances = 1;
      */
     performances: HypurrFunCabalPerformance[];
+}
+/**
+ * @generated from protobuf message hypurr.TelegramUserPublicRequest
+ */
+export interface TelegramUserPublicRequest {
+    /**
+     * @generated from protobuf field: int64 telegram_id = 1;
+     */
+    telegramId: number;
+}
+/**
+ * @generated from protobuf message hypurr.TelegramUserPublicResponse
+ */
+export interface TelegramUserPublicResponse {
+    /**
+     * @generated from protobuf field: hypurr.TelegramUserPublic user = 1;
+     */
+    user?: TelegramUserPublic;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidTokenHoldersRequest$Type extends MessageType<HyperliquidTokenHoldersRequest> {
@@ -3594,6 +3613,100 @@ class HypurrFunCabalPerformanceResponse$Type extends MessageType<HypurrFunCabalP
  * @generated MessageType for protobuf message hypurr.HypurrFunCabalPerformanceResponse
  */
 export const HypurrFunCabalPerformanceResponse = new HypurrFunCabalPerformanceResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TelegramUserPublicRequest$Type extends MessageType<TelegramUserPublicRequest> {
+    constructor() {
+        super("hypurr.TelegramUserPublicRequest", [
+            { no: 1, name: "telegram_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TelegramUserPublicRequest>): TelegramUserPublicRequest {
+        const message = { telegramId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<TelegramUserPublicRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramUserPublicRequest): TelegramUserPublicRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 telegram_id */ 1:
+                    message.telegramId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TelegramUserPublicRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 telegram_id = 1; */
+        if (message.telegramId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.telegramId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.TelegramUserPublicRequest
+ */
+export const TelegramUserPublicRequest = new TelegramUserPublicRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TelegramUserPublicResponse$Type extends MessageType<TelegramUserPublicResponse> {
+    constructor() {
+        super("hypurr.TelegramUserPublicResponse", [
+            { no: 1, name: "user", kind: "message", T: () => TelegramUserPublic }
+        ]);
+    }
+    create(value?: PartialMessage<TelegramUserPublicResponse>): TelegramUserPublicResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<TelegramUserPublicResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramUserPublicResponse): TelegramUserPublicResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.TelegramUserPublic user */ 1:
+                    message.user = TelegramUserPublic.internalBinaryRead(reader, reader.uint32(), options, message.user);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TelegramUserPublicResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.TelegramUserPublic user = 1; */
+        if (message.user)
+            TelegramUserPublic.internalBinaryWrite(message.user, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.TelegramUserPublicResponse
+ */
+export const TelegramUserPublicResponse = new TelegramUserPublicResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Static
  */
@@ -3627,6 +3740,7 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "HpumpV1LaunchMessageStream", serverStreaming: true, options: {}, I: HpumpV1LaunchMessagesRequest, O: HpumpV1LaunchMessagesResponse },
     { name: "HypurrFunCabals", options: {}, I: HypurrFunCabalsRequest, O: HypurrFunCabalsResponse },
     { name: "HypurrFunCabalPerformance", options: {}, I: HypurrFunCabalPerformanceRequest, O: HypurrFunCabalPerformanceResponse },
+    { name: "TelegramUserPublic", options: {}, I: TelegramUserPublicRequest, O: TelegramUserPublicResponse },
     { name: "SetHyperliquidWalletDeploySessionTarget", options: {}, I: SetHyperliquidWalletDeploySessionTargetRequest, O: SetHyperliquidWalletDeploySessionTargetResponse },
     { name: "DeleteHyperliquidWalletDeploySessionTarget", options: {}, I: DeleteHyperliquidWalletDeploySessionTargetRequest, O: DeleteHyperliquidWalletDeploySessionTargetResponse }
 ]);

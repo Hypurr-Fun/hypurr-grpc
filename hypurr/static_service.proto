@@ -285,7 +285,13 @@ message HypurrFunCabalPerformanceResponse {
   repeated HypurrFunCabalPerformance performances = 1;
 }
 
+message TelegramUserPublicRequest {
+  int64 telegram_id = 1;
+}
 
+message TelegramUserPublicResponse {
+  TelegramUserPublic user = 1;
+}
 
 service Static {
   rpc HyperliquidDeployAuction (HyperliquidDeployAuctionRequest) returns (HyperliquidDeployAuctionResponse) {}
@@ -326,6 +332,8 @@ service Static {
   rpc HypurrFunCabals (HypurrFunCabalsRequest) returns (HypurrFunCabalsResponse) {}
 
   rpc HypurrFunCabalPerformance (HypurrFunCabalPerformanceRequest) returns (HypurrFunCabalPerformanceResponse) {}
+
+  rpc TelegramUserPublic (TelegramUserPublicRequest) returns (TelegramUserPublicResponse) {}
 
   rpc SetHyperliquidWalletDeploySessionTarget (SetHyperliquidWalletDeploySessionTargetRequest) returns (SetHyperliquidWalletDeploySessionTargetResponse) {}
   rpc DeleteHyperliquidWalletDeploySessionTarget (DeleteHyperliquidWalletDeploySessionTargetRequest) returns (DeleteHyperliquidWalletDeploySessionTargetResponse) {}

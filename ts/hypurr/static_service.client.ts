@@ -8,6 +8,8 @@ import type { DeleteHyperliquidWalletDeploySessionTargetResponse } from "./stati
 import type { DeleteHyperliquidWalletDeploySessionTargetRequest } from "./static_service";
 import type { SetHyperliquidWalletDeploySessionTargetResponse } from "./static_service";
 import type { SetHyperliquidWalletDeploySessionTargetRequest } from "./static_service";
+import type { TelegramUserPublicResponse } from "./static_service";
+import type { TelegramUserPublicRequest } from "./static_service";
 import type { HypurrFunCabalPerformanceResponse } from "./static_service";
 import type { HypurrFunCabalPerformanceRequest } from "./static_service";
 import type { HypurrFunCabalsResponse } from "./static_service";
@@ -191,6 +193,10 @@ export interface IStaticClient {
      * @generated from protobuf rpc: HypurrFunCabalPerformance(hypurr.HypurrFunCabalPerformanceRequest) returns (hypurr.HypurrFunCabalPerformanceResponse);
      */
     hypurrFunCabalPerformance(input: HypurrFunCabalPerformanceRequest, options?: RpcOptions): UnaryCall<HypurrFunCabalPerformanceRequest, HypurrFunCabalPerformanceResponse>;
+    /**
+     * @generated from protobuf rpc: TelegramUserPublic(hypurr.TelegramUserPublicRequest) returns (hypurr.TelegramUserPublicResponse);
+     */
+    telegramUserPublic(input: TelegramUserPublicRequest, options?: RpcOptions): UnaryCall<TelegramUserPublicRequest, TelegramUserPublicResponse>;
     /**
      * @generated from protobuf rpc: SetHyperliquidWalletDeploySessionTarget(hypurr.SetHyperliquidWalletDeploySessionTargetRequest) returns (hypurr.SetHyperliquidWalletDeploySessionTargetResponse);
      */
@@ -417,17 +423,24 @@ export class StaticClient implements IStaticClient, ServiceInfo {
         return stackIntercept<HypurrFunCabalPerformanceRequest, HypurrFunCabalPerformanceResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: TelegramUserPublic(hypurr.TelegramUserPublicRequest) returns (hypurr.TelegramUserPublicResponse);
+     */
+    telegramUserPublic(input: TelegramUserPublicRequest, options?: RpcOptions): UnaryCall<TelegramUserPublicRequest, TelegramUserPublicResponse> {
+        const method = this.methods[29], opt = this._transport.mergeOptions(options);
+        return stackIntercept<TelegramUserPublicRequest, TelegramUserPublicResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: SetHyperliquidWalletDeploySessionTarget(hypurr.SetHyperliquidWalletDeploySessionTargetRequest) returns (hypurr.SetHyperliquidWalletDeploySessionTargetResponse);
      */
     setHyperliquidWalletDeploySessionTarget(input: SetHyperliquidWalletDeploySessionTargetRequest, options?: RpcOptions): UnaryCall<SetHyperliquidWalletDeploySessionTargetRequest, SetHyperliquidWalletDeploySessionTargetResponse> {
-        const method = this.methods[29], opt = this._transport.mergeOptions(options);
+        const method = this.methods[30], opt = this._transport.mergeOptions(options);
         return stackIntercept<SetHyperliquidWalletDeploySessionTargetRequest, SetHyperliquidWalletDeploySessionTargetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: DeleteHyperliquidWalletDeploySessionTarget(hypurr.DeleteHyperliquidWalletDeploySessionTargetRequest) returns (hypurr.DeleteHyperliquidWalletDeploySessionTargetResponse);
      */
     deleteHyperliquidWalletDeploySessionTarget(input: DeleteHyperliquidWalletDeploySessionTargetRequest, options?: RpcOptions): UnaryCall<DeleteHyperliquidWalletDeploySessionTargetRequest, DeleteHyperliquidWalletDeploySessionTargetResponse> {
-        const method = this.methods[30], opt = this._transport.mergeOptions(options);
+        const method = this.methods[31], opt = this._transport.mergeOptions(options);
         return stackIntercept<DeleteHyperliquidWalletDeploySessionTargetRequest, DeleteHyperliquidWalletDeploySessionTargetResponse>("unary", this._transport, method, opt, input);
     }
 }

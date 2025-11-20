@@ -48,6 +48,7 @@ const (
 	Static_HpumpV1LaunchMessageStream_FullMethodName                 = "/hypurr.Static/HpumpV1LaunchMessageStream"
 	Static_HypurrFunCabals_FullMethodName                            = "/hypurr.Static/HypurrFunCabals"
 	Static_HypurrFunCabalPerformance_FullMethodName                  = "/hypurr.Static/HypurrFunCabalPerformance"
+	Static_TelegramUserPublic_FullMethodName                         = "/hypurr.Static/TelegramUserPublic"
 	Static_SetHyperliquidWalletDeploySessionTarget_FullMethodName    = "/hypurr.Static/SetHyperliquidWalletDeploySessionTarget"
 	Static_DeleteHyperliquidWalletDeploySessionTarget_FullMethodName = "/hypurr.Static/DeleteHyperliquidWalletDeploySessionTarget"
 )
@@ -87,6 +88,7 @@ type StaticClient interface {
 	HpumpV1LaunchMessageStream(ctx context.Context, in *HpumpV1LaunchMessagesRequest, opts ...grpc.CallOption) (Static_HpumpV1LaunchMessageStreamClient, error)
 	HypurrFunCabals(ctx context.Context, in *HypurrFunCabalsRequest, opts ...grpc.CallOption) (*HypurrFunCabalsResponse, error)
 	HypurrFunCabalPerformance(ctx context.Context, in *HypurrFunCabalPerformanceRequest, opts ...grpc.CallOption) (*HypurrFunCabalPerformanceResponse, error)
+	TelegramUserPublic(ctx context.Context, in *TelegramUserPublicRequest, opts ...grpc.CallOption) (*TelegramUserPublicResponse, error)
 	SetHyperliquidWalletDeploySessionTarget(ctx context.Context, in *SetHyperliquidWalletDeploySessionTargetRequest, opts ...grpc.CallOption) (*SetHyperliquidWalletDeploySessionTargetResponse, error)
 	DeleteHyperliquidWalletDeploySessionTarget(ctx context.Context, in *DeleteHyperliquidWalletDeploySessionTargetRequest, opts ...grpc.CallOption) (*DeleteHyperliquidWalletDeploySessionTargetResponse, error)
 }
@@ -619,6 +621,16 @@ func (c *staticClient) HypurrFunCabalPerformance(ctx context.Context, in *Hypurr
 	return out, nil
 }
 
+func (c *staticClient) TelegramUserPublic(ctx context.Context, in *TelegramUserPublicRequest, opts ...grpc.CallOption) (*TelegramUserPublicResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TelegramUserPublicResponse)
+	err := c.cc.Invoke(ctx, Static_TelegramUserPublic_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *staticClient) SetHyperliquidWalletDeploySessionTarget(ctx context.Context, in *SetHyperliquidWalletDeploySessionTargetRequest, opts ...grpc.CallOption) (*SetHyperliquidWalletDeploySessionTargetResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SetHyperliquidWalletDeploySessionTargetResponse)
@@ -674,6 +686,7 @@ type StaticServer interface {
 	HpumpV1LaunchMessageStream(*HpumpV1LaunchMessagesRequest, Static_HpumpV1LaunchMessageStreamServer) error
 	HypurrFunCabals(context.Context, *HypurrFunCabalsRequest) (*HypurrFunCabalsResponse, error)
 	HypurrFunCabalPerformance(context.Context, *HypurrFunCabalPerformanceRequest) (*HypurrFunCabalPerformanceResponse, error)
+	TelegramUserPublic(context.Context, *TelegramUserPublicRequest) (*TelegramUserPublicResponse, error)
 	SetHyperliquidWalletDeploySessionTarget(context.Context, *SetHyperliquidWalletDeploySessionTargetRequest) (*SetHyperliquidWalletDeploySessionTargetResponse, error)
 	DeleteHyperliquidWalletDeploySessionTarget(context.Context, *DeleteHyperliquidWalletDeploySessionTargetRequest) (*DeleteHyperliquidWalletDeploySessionTargetResponse, error)
 	mustEmbedUnimplementedStaticServer()
@@ -769,6 +782,9 @@ func (UnimplementedStaticServer) HypurrFunCabals(context.Context, *HypurrFunCaba
 }
 func (UnimplementedStaticServer) HypurrFunCabalPerformance(context.Context, *HypurrFunCabalPerformanceRequest) (*HypurrFunCabalPerformanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HypurrFunCabalPerformance not implemented")
+}
+func (UnimplementedStaticServer) TelegramUserPublic(context.Context, *TelegramUserPublicRequest) (*TelegramUserPublicResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TelegramUserPublic not implemented")
 }
 func (UnimplementedStaticServer) SetHyperliquidWalletDeploySessionTarget(context.Context, *SetHyperliquidWalletDeploySessionTargetRequest) (*SetHyperliquidWalletDeploySessionTargetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetHyperliquidWalletDeploySessionTarget not implemented")
@@ -1341,6 +1357,24 @@ func _Static_HypurrFunCabalPerformance_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Static_TelegramUserPublic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TelegramUserPublicRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).TelegramUserPublic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_TelegramUserPublic_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).TelegramUserPublic(ctx, req.(*TelegramUserPublicRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Static_SetHyperliquidWalletDeploySessionTarget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SetHyperliquidWalletDeploySessionTargetRequest)
 	if err := dec(in); err != nil {
@@ -1459,6 +1493,10 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HypurrFunCabalPerformance",
 			Handler:    _Static_HypurrFunCabalPerformance_Handler,
+		},
+		{
+			MethodName: "TelegramUserPublic",
+			Handler:    _Static_TelegramUserPublic_Handler,
 		},
 		{
 			MethodName: "SetHyperliquidWalletDeploySessionTarget",

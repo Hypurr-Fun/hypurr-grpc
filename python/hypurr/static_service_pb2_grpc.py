@@ -159,6 +159,11 @@ class StaticStub(object):
         request_serializer=hypurr_dot_static__service__pb2.HypurrFunCabalPerformanceRequest.SerializeToString,
         response_deserializer=hypurr_dot_static__service__pb2.HypurrFunCabalPerformanceResponse.FromString,
         )
+    self.TelegramUserPublic = channel.unary_unary(
+        '/hypurr.Static/TelegramUserPublic',
+        request_serializer=hypurr_dot_static__service__pb2.TelegramUserPublicRequest.SerializeToString,
+        response_deserializer=hypurr_dot_static__service__pb2.TelegramUserPublicResponse.FromString,
+        )
     self.SetHyperliquidWalletDeploySessionTarget = channel.unary_unary(
         '/hypurr.Static/SetHyperliquidWalletDeploySessionTarget',
         request_serializer=hypurr_dot_static__service__pb2.SetHyperliquidWalletDeploySessionTargetRequest.SerializeToString,
@@ -378,6 +383,13 @@ class StaticServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def TelegramUserPublic(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def SetHyperliquidWalletDeploySessionTarget(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -539,6 +551,11 @@ def add_StaticServicer_to_server(servicer, server):
           servicer.HypurrFunCabalPerformance,
           request_deserializer=hypurr_dot_static__service__pb2.HypurrFunCabalPerformanceRequest.FromString,
           response_serializer=hypurr_dot_static__service__pb2.HypurrFunCabalPerformanceResponse.SerializeToString,
+      ),
+      'TelegramUserPublic': grpc.unary_unary_rpc_method_handler(
+          servicer.TelegramUserPublic,
+          request_deserializer=hypurr_dot_static__service__pb2.TelegramUserPublicRequest.FromString,
+          response_serializer=hypurr_dot_static__service__pb2.TelegramUserPublicResponse.SerializeToString,
       ),
       'SetHyperliquidWalletDeploySessionTarget': grpc.unary_unary_rpc_method_handler(
           servicer.SetHyperliquidWalletDeploySessionTarget,
