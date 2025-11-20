@@ -11,6 +11,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { Int64Value } from "../google/protobuf/wrappers";
 import { HyperliquidLaunchFill } from "./launch";
 import { HyperliquidWalletMovement } from "./wallet";
 import { HyperliquidWalletBalance } from "./wallet";
@@ -191,6 +192,10 @@ export interface HyperliquidWalletLabel {
      * @generated from protobuf field: string source = 3;
      */
     source: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value telegram_id = 4;
+     */
+    telegramId?: Int64Value;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUser$Type extends MessageType<TelegramUser> {
@@ -570,7 +575,8 @@ class HyperliquidWalletLabel$Type extends MessageType<HyperliquidWalletLabel> {
         super("hypurr.HyperliquidWalletLabel", [
             { no: 1, name: "ethereum_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "source", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "source", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "telegram_id", kind: "message", T: () => Int64Value }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWalletLabel>): HyperliquidWalletLabel {
@@ -594,6 +600,9 @@ class HyperliquidWalletLabel$Type extends MessageType<HyperliquidWalletLabel> {
                 case /* string source */ 3:
                     message.source = reader.string();
                     break;
+                case /* google.protobuf.Int64Value telegram_id */ 4:
+                    message.telegramId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.telegramId);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -615,6 +624,9 @@ class HyperliquidWalletLabel$Type extends MessageType<HyperliquidWalletLabel> {
         /* string source = 3; */
         if (message.source !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.source);
+        /* google.protobuf.Int64Value telegram_id = 4; */
+        if (message.telegramId)
+            Int64Value.internalBinaryWrite(message.telegramId, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

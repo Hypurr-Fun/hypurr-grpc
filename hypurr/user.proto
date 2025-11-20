@@ -4,6 +4,7 @@ package hypurr;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 import "hypurr/wallet.proto";
 import "hypurr/launch.proto";
+import "google/protobuf/wrappers.proto";
 
 message TelegramUser {
   int64 telegram_id = 1;
@@ -54,4 +55,5 @@ message HyperliquidWalletLabel {
   string ethereum_address = 1;
   string label = 2;
   string source = 3;
+  google.protobuf.Int64Value telegram_id = 4;
 }
