@@ -8,12 +8,12 @@ import type { ValidatorDelegatorsResponse } from "./hypercore_service";
 import type { ValidatorDelegatorsRequest } from "./hypercore_service";
 import type { WalletTradesStreamResponse } from "./hypercore_service";
 import type { WalletTradesStreamRequest } from "./hypercore_service";
-import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { WalletBalancesStreamResponse } from "./hypercore_service";
 import type { WalletBalancesStreamRequest } from "./hypercore_service";
 import type { DuplexStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { AggregatedWalletPositioningStreamResponse } from "./hypercore_service";
 import type { AggregatedWalletPositioningStreamRequest } from "./hypercore_service";
+import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { WalletBalancesResponse } from "./hypercore_service";
 import type { WalletBalancesRequest } from "./hypercore_service";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
@@ -34,9 +34,9 @@ export interface IHyperCoreClient {
      */
     walletBalances(input: WalletBalancesRequest, options?: RpcOptions): UnaryCall<WalletBalancesRequest, WalletBalancesResponse>;
     /**
-     * @generated from protobuf rpc: AggregatedWalletPositioningStream(hypercore.AggregatedWalletPositioningStreamRequest) returns (hypercore.AggregatedWalletPositioningStreamResponse);
+     * @generated from protobuf rpc: AggregatedWalletPositioningStream(hypercore.AggregatedWalletPositioningStreamRequest) returns (stream hypercore.AggregatedWalletPositioningStreamResponse);
      */
-    aggregatedWalletPositioningStream(input: AggregatedWalletPositioningStreamRequest, options?: RpcOptions): UnaryCall<AggregatedWalletPositioningStreamRequest, AggregatedWalletPositioningStreamResponse>;
+    aggregatedWalletPositioningStream(input: AggregatedWalletPositioningStreamRequest, options?: RpcOptions): ServerStreamingCall<AggregatedWalletPositioningStreamRequest, AggregatedWalletPositioningStreamResponse>;
     /**
      * @generated from protobuf rpc: WalletBalancesStream(stream hypercore.WalletBalancesStreamRequest) returns (stream hypercore.WalletBalancesStreamResponse);
      */
@@ -74,11 +74,11 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
         return stackIntercept<WalletBalancesRequest, WalletBalancesResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: AggregatedWalletPositioningStream(hypercore.AggregatedWalletPositioningStreamRequest) returns (hypercore.AggregatedWalletPositioningStreamResponse);
+     * @generated from protobuf rpc: AggregatedWalletPositioningStream(hypercore.AggregatedWalletPositioningStreamRequest) returns (stream hypercore.AggregatedWalletPositioningStreamResponse);
      */
-    aggregatedWalletPositioningStream(input: AggregatedWalletPositioningStreamRequest, options?: RpcOptions): UnaryCall<AggregatedWalletPositioningStreamRequest, AggregatedWalletPositioningStreamResponse> {
+    aggregatedWalletPositioningStream(input: AggregatedWalletPositioningStreamRequest, options?: RpcOptions): ServerStreamingCall<AggregatedWalletPositioningStreamRequest, AggregatedWalletPositioningStreamResponse> {
         const method = this.methods[2], opt = this._transport.mergeOptions(options);
-        return stackIntercept<AggregatedWalletPositioningStreamRequest, AggregatedWalletPositioningStreamResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<AggregatedWalletPositioningStreamRequest, AggregatedWalletPositioningStreamResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: WalletBalancesStream(stream hypercore.WalletBalancesStreamRequest) returns (stream hypercore.WalletBalancesStreamResponse);

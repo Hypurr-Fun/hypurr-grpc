@@ -33,7 +33,7 @@ const (
 type HyperCoreClient interface {
 	WalletMovements(ctx context.Context, in *WalletMovementsRequest, opts ...grpc.CallOption) (*WalletMovementsResponse, error)
 	WalletBalances(ctx context.Context, in *WalletBalancesRequest, opts ...grpc.CallOption) (*WalletBalancesResponse, error)
-	AggregatedWalletPositioningStream(ctx context.Context, in *AggregatedWalletPositioningStreamRequest, opts ...grpc.CallOption) (*AggregatedWalletPositioningStreamResponse, error)
+	AggregatedWalletPositioningStream(ctx context.Context, in *AggregatedWalletPositioningStreamRequest, opts ...grpc.CallOption) (HyperCore_AggregatedWalletPositioningStreamClient, error)
 	WalletBalancesStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_WalletBalancesStreamClient, error)
 	WalletTradesStream(ctx context.Context, in *WalletTradesStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletTradesStreamClient, error)
 	ValidatorDelegators(ctx context.Context, in *ValidatorDelegatorsRequest, opts ...grpc.CallOption) (*ValidatorDelegatorsResponse, error)
@@ -67,19 +67,42 @@ func (c *hyperCoreClient) WalletBalances(ctx context.Context, in *WalletBalances
 	return out, nil
 }
 
-func (c *hyperCoreClient) AggregatedWalletPositioningStream(ctx context.Context, in *AggregatedWalletPositioningStreamRequest, opts ...grpc.CallOption) (*AggregatedWalletPositioningStreamResponse, error) {
+func (c *hyperCoreClient) AggregatedWalletPositioningStream(ctx context.Context, in *AggregatedWalletPositioningStreamRequest, opts ...grpc.CallOption) (HyperCore_AggregatedWalletPositioningStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AggregatedWalletPositioningStreamResponse)
-	err := c.cc.Invoke(ctx, HyperCore_AggregatedWalletPositioningStream_FullMethodName, in, out, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[0], HyperCore_AggregatedWalletPositioningStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &hyperCoreAggregatedWalletPositioningStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type HyperCore_AggregatedWalletPositioningStreamClient interface {
+	Recv() (*AggregatedWalletPositioningStreamResponse, error)
+	grpc.ClientStream
+}
+
+type hyperCoreAggregatedWalletPositioningStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *hyperCoreAggregatedWalletPositioningStreamClient) Recv() (*AggregatedWalletPositioningStreamResponse, error) {
+	m := new(AggregatedWalletPositioningStreamResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *hyperCoreClient) WalletBalancesStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_WalletBalancesStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[0], HyperCore_WalletBalancesStream_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[1], HyperCore_WalletBalancesStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +134,7 @@ func (x *hyperCoreWalletBalancesStreamClient) Recv() (*WalletBalancesStreamRespo
 
 func (c *hyperCoreClient) WalletTradesStream(ctx context.Context, in *WalletTradesStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletTradesStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[1], HyperCore_WalletTradesStream_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[2], HyperCore_WalletTradesStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +181,7 @@ func (c *hyperCoreClient) ValidatorDelegators(ctx context.Context, in *Validator
 type HyperCoreServer interface {
 	WalletMovements(context.Context, *WalletMovementsRequest) (*WalletMovementsResponse, error)
 	WalletBalances(context.Context, *WalletBalancesRequest) (*WalletBalancesResponse, error)
-	AggregatedWalletPositioningStream(context.Context, *AggregatedWalletPositioningStreamRequest) (*AggregatedWalletPositioningStreamResponse, error)
+	AggregatedWalletPositioningStream(*AggregatedWalletPositioningStreamRequest, HyperCore_AggregatedWalletPositioningStreamServer) error
 	WalletBalancesStream(HyperCore_WalletBalancesStreamServer) error
 	WalletTradesStream(*WalletTradesStreamRequest, HyperCore_WalletTradesStreamServer) error
 	ValidatorDelegators(context.Context, *ValidatorDelegatorsRequest) (*ValidatorDelegatorsResponse, error)
@@ -175,8 +198,8 @@ func (UnimplementedHyperCoreServer) WalletMovements(context.Context, *WalletMove
 func (UnimplementedHyperCoreServer) WalletBalances(context.Context, *WalletBalancesRequest) (*WalletBalancesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletBalances not implemented")
 }
-func (UnimplementedHyperCoreServer) AggregatedWalletPositioningStream(context.Context, *AggregatedWalletPositioningStreamRequest) (*AggregatedWalletPositioningStreamResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AggregatedWalletPositioningStream not implemented")
+func (UnimplementedHyperCoreServer) AggregatedWalletPositioningStream(*AggregatedWalletPositioningStreamRequest, HyperCore_AggregatedWalletPositioningStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method AggregatedWalletPositioningStream not implemented")
 }
 func (UnimplementedHyperCoreServer) WalletBalancesStream(HyperCore_WalletBalancesStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method WalletBalancesStream not implemented")
@@ -236,22 +259,25 @@ func _HyperCore_WalletBalances_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HyperCore_AggregatedWalletPositioningStream_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AggregatedWalletPositioningStreamRequest)
-	if err := dec(in); err != nil {
-		return nil, err
+func _HyperCore_AggregatedWalletPositioningStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(AggregatedWalletPositioningStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(HyperCoreServer).AggregatedWalletPositioningStream(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: HyperCore_AggregatedWalletPositioningStream_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HyperCoreServer).AggregatedWalletPositioningStream(ctx, req.(*AggregatedWalletPositioningStreamRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return srv.(HyperCoreServer).AggregatedWalletPositioningStream(m, &hyperCoreAggregatedWalletPositioningStreamServer{ServerStream: stream})
+}
+
+type HyperCore_AggregatedWalletPositioningStreamServer interface {
+	Send(*AggregatedWalletPositioningStreamResponse) error
+	grpc.ServerStream
+}
+
+type hyperCoreAggregatedWalletPositioningStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *hyperCoreAggregatedWalletPositioningStreamServer) Send(m *AggregatedWalletPositioningStreamResponse) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _HyperCore_WalletBalancesStream_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -335,15 +361,16 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _HyperCore_WalletBalances_Handler,
 		},
 		{
-			MethodName: "AggregatedWalletPositioningStream",
-			Handler:    _HyperCore_AggregatedWalletPositioningStream_Handler,
-		},
-		{
 			MethodName: "ValidatorDelegators",
 			Handler:    _HyperCore_ValidatorDelegators_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "AggregatedWalletPositioningStream",
+			Handler:       _HyperCore_AggregatedWalletPositioningStream_Handler,
+			ServerStreams: true,
+		},
 		{
 			StreamName:    "WalletBalancesStream",
 			Handler:       _HyperCore_WalletBalancesStream_Handler,
