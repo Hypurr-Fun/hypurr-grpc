@@ -12,6 +12,8 @@ import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { WalletBalancesStreamResponse } from "./hypercore_service";
 import type { WalletBalancesStreamRequest } from "./hypercore_service";
 import type { DuplexStreamingCall } from "@protobuf-ts/runtime-rpc";
+import type { AggregatedWalletPositioningStreamResponse } from "./hypercore_service";
+import type { AggregatedWalletPositioningStreamRequest } from "./hypercore_service";
 import type { WalletBalancesResponse } from "./hypercore_service";
 import type { WalletBalancesRequest } from "./hypercore_service";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
@@ -31,6 +33,10 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: WalletBalances(hypercore.WalletBalancesRequest) returns (hypercore.WalletBalancesResponse);
      */
     walletBalances(input: WalletBalancesRequest, options?: RpcOptions): UnaryCall<WalletBalancesRequest, WalletBalancesResponse>;
+    /**
+     * @generated from protobuf rpc: AggregatedWalletPositioningStream(hypercore.AggregatedWalletPositioningStreamRequest) returns (hypercore.AggregatedWalletPositioningStreamResponse);
+     */
+    aggregatedWalletPositioningStream(input: AggregatedWalletPositioningStreamRequest, options?: RpcOptions): UnaryCall<AggregatedWalletPositioningStreamRequest, AggregatedWalletPositioningStreamResponse>;
     /**
      * @generated from protobuf rpc: WalletBalancesStream(stream hypercore.WalletBalancesStreamRequest) returns (stream hypercore.WalletBalancesStreamResponse);
      */
@@ -68,24 +74,31 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
         return stackIntercept<WalletBalancesRequest, WalletBalancesResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: AggregatedWalletPositioningStream(hypercore.AggregatedWalletPositioningStreamRequest) returns (hypercore.AggregatedWalletPositioningStreamResponse);
+     */
+    aggregatedWalletPositioningStream(input: AggregatedWalletPositioningStreamRequest, options?: RpcOptions): UnaryCall<AggregatedWalletPositioningStreamRequest, AggregatedWalletPositioningStreamResponse> {
+        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        return stackIntercept<AggregatedWalletPositioningStreamRequest, AggregatedWalletPositioningStreamResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: WalletBalancesStream(stream hypercore.WalletBalancesStreamRequest) returns (stream hypercore.WalletBalancesStreamResponse);
      */
     walletBalancesStream(options?: RpcOptions): DuplexStreamingCall<WalletBalancesStreamRequest, WalletBalancesStreamResponse> {
-        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
         return stackIntercept<WalletBalancesStreamRequest, WalletBalancesStreamResponse>("duplex", this._transport, method, opt);
     }
     /**
      * @generated from protobuf rpc: WalletTradesStream(hypercore.WalletTradesStreamRequest) returns (stream hypercore.WalletTradesStreamResponse);
      */
     walletTradesStream(input: WalletTradesStreamRequest, options?: RpcOptions): ServerStreamingCall<WalletTradesStreamRequest, WalletTradesStreamResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<WalletTradesStreamRequest, WalletTradesStreamResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: ValidatorDelegators(hypercore.ValidatorDelegatorsRequest) returns (hypercore.ValidatorDelegatorsResponse);
      */
     validatorDelegators(input: ValidatorDelegatorsRequest, options?: RpcOptions): UnaryCall<ValidatorDelegatorsRequest, ValidatorDelegatorsResponse> {
-        const method = this.methods[4], opt = this._transport.mergeOptions(options);
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
         return stackIntercept<ValidatorDelegatorsRequest, ValidatorDelegatorsResponse>("unary", this._transport, method, opt, input);
     }
 }

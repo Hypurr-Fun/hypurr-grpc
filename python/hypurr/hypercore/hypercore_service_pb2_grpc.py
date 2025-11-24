@@ -24,6 +24,11 @@ class HyperCoreStub(object):
         request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesRequest.SerializeToString,
         response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesResponse.FromString,
         )
+    self.AggregatedWalletPositioningStream = channel.unary_unary(
+        '/hypercore.HyperCore/AggregatedWalletPositioningStream',
+        request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletPositioningStreamRequest.SerializeToString,
+        response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletPositioningStreamResponse.FromString,
+        )
     self.WalletBalancesStream = channel.stream_stream(
         '/hypercore.HyperCore/WalletBalancesStream',
         request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesStreamRequest.SerializeToString,
@@ -53,6 +58,13 @@ class HyperCoreServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def WalletBalances(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def AggregatedWalletPositioningStream(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -92,6 +104,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
           servicer.WalletBalances,
           request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesRequest.FromString,
           response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesResponse.SerializeToString,
+      ),
+      'AggregatedWalletPositioningStream': grpc.unary_unary_rpc_method_handler(
+          servicer.AggregatedWalletPositioningStream,
+          request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletPositioningStreamRequest.FromString,
+          response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletPositioningStreamResponse.SerializeToString,
       ),
       'WalletBalancesStream': grpc.stream_stream_rpc_method_handler(
           servicer.WalletBalancesStream,

@@ -95,6 +95,18 @@ message WalletTradesStreamResponse {
   repeated WalletTrade trades = 2;
 }
 
+message AggregatedWalletPositioningStreamRequest {
+  repeated string wallet_addresses = 1;
+  uint64 instrument_id = 2;
+}
+
+message AggregatedWalletPositioningStreamResponse {
+  uint64 wallet_short_count = 1;
+  repeated WalletPerpBalance aggregated_short_balances = 2;
+  uint64 wallet_long_count = 3;
+  repeated WalletPerpBalance aggregated_long_balances = 4;
+}
+
 message WalletBalancesStreamRequest {
   bytes bloom_filter = 1;
 }
@@ -122,6 +134,7 @@ message ValidatorDelegator {
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
+  rpc AggregatedWalletPositioningStream(AggregatedWalletPositioningStreamRequest) returns (AggregatedWalletPositioningStreamResponse) {}
   rpc WalletBalancesStream(stream WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
   rpc WalletTradesStream(WalletTradesStreamRequest) returns (stream WalletTradesStreamResponse) {}
   rpc ValidatorDelegators(ValidatorDelegatorsRequest) returns (ValidatorDelegatorsResponse) {}
