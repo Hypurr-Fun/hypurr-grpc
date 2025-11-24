@@ -219,17 +219,17 @@ export interface AggregatedWalletPositioningStreamResponse {
      */
     walletShortCount: number;
     /**
-     * @generated from protobuf field: repeated hypercore.WalletPerpBalance aggregated_short_balances = 2;
+     * @generated from protobuf field: hypercore.WalletPerpBalance aggregated_short_balance = 2;
      */
-    aggregatedShortBalances: WalletPerpBalance[];
+    aggregatedShortBalance?: WalletPerpBalance;
     /**
      * @generated from protobuf field: uint64 wallet_long_count = 3;
      */
     walletLongCount: number;
     /**
-     * @generated from protobuf field: repeated hypercore.WalletPerpBalance aggregated_long_balances = 4;
+     * @generated from protobuf field: hypercore.WalletPerpBalance aggregated_long_balance = 4;
      */
-    aggregatedLongBalances: WalletPerpBalance[];
+    aggregatedLongBalance?: WalletPerpBalance;
 }
 /**
  * @generated from protobuf message hypercore.WalletBalancesStreamRequest
@@ -1038,13 +1038,13 @@ class AggregatedWalletPositioningStreamResponse$Type extends MessageType<Aggrega
     constructor() {
         super("hypercore.AggregatedWalletPositioningStreamResponse", [
             { no: 1, name: "wallet_short_count", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "aggregated_short_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletPerpBalance },
+            { no: 2, name: "aggregated_short_balance", kind: "message", T: () => WalletPerpBalance },
             { no: 3, name: "wallet_long_count", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "aggregated_long_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletPerpBalance }
+            { no: 4, name: "aggregated_long_balance", kind: "message", T: () => WalletPerpBalance }
         ]);
     }
     create(value?: PartialMessage<AggregatedWalletPositioningStreamResponse>): AggregatedWalletPositioningStreamResponse {
-        const message = { walletShortCount: 0, aggregatedShortBalances: [], walletLongCount: 0, aggregatedLongBalances: [] };
+        const message = { walletShortCount: 0, walletLongCount: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<AggregatedWalletPositioningStreamResponse>(this, message, value);
@@ -1058,14 +1058,14 @@ class AggregatedWalletPositioningStreamResponse$Type extends MessageType<Aggrega
                 case /* uint64 wallet_short_count */ 1:
                     message.walletShortCount = reader.uint64().toNumber();
                     break;
-                case /* repeated hypercore.WalletPerpBalance aggregated_short_balances */ 2:
-                    message.aggregatedShortBalances.push(WalletPerpBalance.internalBinaryRead(reader, reader.uint32(), options));
+                case /* hypercore.WalletPerpBalance aggregated_short_balance */ 2:
+                    message.aggregatedShortBalance = WalletPerpBalance.internalBinaryRead(reader, reader.uint32(), options, message.aggregatedShortBalance);
                     break;
                 case /* uint64 wallet_long_count */ 3:
                     message.walletLongCount = reader.uint64().toNumber();
                     break;
-                case /* repeated hypercore.WalletPerpBalance aggregated_long_balances */ 4:
-                    message.aggregatedLongBalances.push(WalletPerpBalance.internalBinaryRead(reader, reader.uint32(), options));
+                case /* hypercore.WalletPerpBalance aggregated_long_balance */ 4:
+                    message.aggregatedLongBalance = WalletPerpBalance.internalBinaryRead(reader, reader.uint32(), options, message.aggregatedLongBalance);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1082,15 +1082,15 @@ class AggregatedWalletPositioningStreamResponse$Type extends MessageType<Aggrega
         /* uint64 wallet_short_count = 1; */
         if (message.walletShortCount !== 0)
             writer.tag(1, WireType.Varint).uint64(message.walletShortCount);
-        /* repeated hypercore.WalletPerpBalance aggregated_short_balances = 2; */
-        for (let i = 0; i < message.aggregatedShortBalances.length; i++)
-            WalletPerpBalance.internalBinaryWrite(message.aggregatedShortBalances[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* hypercore.WalletPerpBalance aggregated_short_balance = 2; */
+        if (message.aggregatedShortBalance)
+            WalletPerpBalance.internalBinaryWrite(message.aggregatedShortBalance, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* uint64 wallet_long_count = 3; */
         if (message.walletLongCount !== 0)
             writer.tag(3, WireType.Varint).uint64(message.walletLongCount);
-        /* repeated hypercore.WalletPerpBalance aggregated_long_balances = 4; */
-        for (let i = 0; i < message.aggregatedLongBalances.length; i++)
-            WalletPerpBalance.internalBinaryWrite(message.aggregatedLongBalances[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* hypercore.WalletPerpBalance aggregated_long_balance = 4; */
+        if (message.aggregatedLongBalance)
+            WalletPerpBalance.internalBinaryWrite(message.aggregatedLongBalance, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

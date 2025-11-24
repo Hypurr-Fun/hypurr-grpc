@@ -102,9 +102,9 @@ message AggregatedWalletPositioningStreamRequest {
 
 message AggregatedWalletPositioningStreamResponse {
   uint64 wallet_short_count = 1;
-  repeated WalletPerpBalance aggregated_short_balances = 2;
+  WalletPerpBalance aggregated_short_balance = 2;
   uint64 wallet_long_count = 3;
-  repeated WalletPerpBalance aggregated_long_balances = 4;
+  WalletPerpBalance aggregated_long_balance = 4;
 }
 
 message WalletBalancesStreamRequest {
