@@ -86,7 +86,7 @@ message WalletBalancesResponse {
 }
 
 message WalletTradesStreamRequest {
-  string wallet_address = 1;
+  string wallet_addresses = 1;
   bytes bloom_filter = 2;
 }
 
@@ -97,26 +97,21 @@ message WalletTradesStreamResponse {
 
 message AggregatedWalletPositioningStreamRequest {
   repeated string wallet_addresses = 1;
-  uint64 instrument_id = 2;
+  bytes bloom_filter = 2;
+  uint64 instrument_id = 3;
+  bool detailed = 4;
 }
 
 message AggregatedWalletPositioningStreamResponse {
+  AggregatedWalletPositioningSummary summary = 1;
+  repeated WalletPerpBalance perp_balances = 2;
+}
+
+message AggregatedWalletPositioningSummary {
   uint64 wallet_short_count = 1;
   WalletPerpBalance aggregated_short_balance = 2;
   uint64 wallet_long_count = 3;
   WalletPerpBalance aggregated_long_balance = 4;
-}
-
-message WalletPositioningStreamRequest {
-  bytes bloom_filter = 1;
-  repeated string wallet_addresses = 2;
-  google.protobuf.Int64Value instrument_id = 3;
-}
-
-message WalletPositioningStreamResponse {
-  string wallet_address = 1;
-  WalletPerpBalance perp_balance = 2;
-  string reason = 3;
 }
 
 message WalletBalancesStreamRequest {
@@ -146,7 +141,6 @@ message ValidatorDelegator {
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
-  rpc WalletPositioningStream(WalletPositioningStreamRequest) returns (stream WalletPositioningStreamResponse) {}
   rpc AggregatedWalletPositioningStream(AggregatedWalletPositioningStreamRequest) returns (stream AggregatedWalletPositioningStreamResponse) {}
   rpc WalletBalancesStream(stream WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
   rpc WalletTradesStream(WalletTradesStreamRequest) returns (stream WalletTradesStreamResponse) {}

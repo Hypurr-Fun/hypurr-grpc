@@ -12,7 +12,6 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { Int64Value } from "../../google/protobuf/wrappers";
 import { StringValue } from "../../google/protobuf/wrappers";
 import { UInt64Value } from "../../google/protobuf/wrappers";
 /**
@@ -177,9 +176,9 @@ export interface WalletBalancesResponse {
  */
 export interface WalletTradesStreamRequest {
     /**
-     * @generated from protobuf field: string wallet_address = 1;
+     * @generated from protobuf field: string wallet_addresses = 1;
      */
-    walletAddress: string;
+    walletAddresses: string;
     /**
      * @generated from protobuf field: bytes bloom_filter = 2;
      */
@@ -207,14 +206,35 @@ export interface AggregatedWalletPositioningStreamRequest {
      */
     walletAddresses: string[];
     /**
-     * @generated from protobuf field: uint64 instrument_id = 2;
+     * @generated from protobuf field: bytes bloom_filter = 2;
+     */
+    bloomFilter: Uint8Array;
+    /**
+     * @generated from protobuf field: uint64 instrument_id = 3;
      */
     instrumentId: number;
+    /**
+     * @generated from protobuf field: bool detailed = 4;
+     */
+    detailed: boolean;
 }
 /**
  * @generated from protobuf message hypercore.AggregatedWalletPositioningStreamResponse
  */
 export interface AggregatedWalletPositioningStreamResponse {
+    /**
+     * @generated from protobuf field: hypercore.AggregatedWalletPositioningSummary summary = 1;
+     */
+    summary?: AggregatedWalletPositioningSummary;
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletPerpBalance perp_balances = 2;
+     */
+    perpBalances: WalletPerpBalance[];
+}
+/**
+ * @generated from protobuf message hypercore.AggregatedWalletPositioningSummary
+ */
+export interface AggregatedWalletPositioningSummary {
     /**
      * @generated from protobuf field: uint64 wallet_short_count = 1;
      */
@@ -231,40 +251,6 @@ export interface AggregatedWalletPositioningStreamResponse {
      * @generated from protobuf field: hypercore.WalletPerpBalance aggregated_long_balance = 4;
      */
     aggregatedLongBalance?: WalletPerpBalance;
-}
-/**
- * @generated from protobuf message hypercore.WalletPositioningStreamRequest
- */
-export interface WalletPositioningStreamRequest {
-    /**
-     * @generated from protobuf field: bytes bloom_filter = 1;
-     */
-    bloomFilter: Uint8Array;
-    /**
-     * @generated from protobuf field: repeated string wallet_addresses = 2;
-     */
-    walletAddresses: string[];
-    /**
-     * @generated from protobuf field: google.protobuf.Int64Value instrument_id = 3;
-     */
-    instrumentId?: Int64Value;
-}
-/**
- * @generated from protobuf message hypercore.WalletPositioningStreamResponse
- */
-export interface WalletPositioningStreamResponse {
-    /**
-     * @generated from protobuf field: string wallet_address = 1;
-     */
-    walletAddress: string;
-    /**
-     * @generated from protobuf field: hypercore.WalletPerpBalance perp_balance = 2;
-     */
-    perpBalance?: WalletPerpBalance;
-    /**
-     * @generated from protobuf field: string reason = 3;
-     */
-    reason: string;
 }
 /**
  * @generated from protobuf message hypercore.WalletBalancesStreamRequest
@@ -910,12 +896,12 @@ export const WalletBalancesResponse = new WalletBalancesResponse$Type();
 class WalletTradesStreamRequest$Type extends MessageType<WalletTradesStreamRequest> {
     constructor() {
         super("hypercore.WalletTradesStreamRequest", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "wallet_addresses", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "bloom_filter", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<WalletTradesStreamRequest>): WalletTradesStreamRequest {
-        const message = { walletAddress: "", bloomFilter: new Uint8Array(0) };
+        const message = { walletAddresses: "", bloomFilter: new Uint8Array(0) };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<WalletTradesStreamRequest>(this, message, value);
@@ -926,8 +912,8 @@ class WalletTradesStreamRequest$Type extends MessageType<WalletTradesStreamReque
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string wallet_address */ 1:
-                    message.walletAddress = reader.string();
+                case /* string wallet_addresses */ 1:
+                    message.walletAddresses = reader.string();
                     break;
                 case /* bytes bloom_filter */ 2:
                     message.bloomFilter = reader.bytes();
@@ -944,9 +930,9 @@ class WalletTradesStreamRequest$Type extends MessageType<WalletTradesStreamReque
         return message;
     }
     internalBinaryWrite(message: WalletTradesStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_address = 1; */
-        if (message.walletAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* string wallet_addresses = 1; */
+        if (message.walletAddresses !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses);
         /* bytes bloom_filter = 2; */
         if (message.bloomFilter.length)
             writer.tag(2, WireType.LengthDelimited).bytes(message.bloomFilter);
@@ -1019,11 +1005,13 @@ class AggregatedWalletPositioningStreamRequest$Type extends MessageType<Aggregat
     constructor() {
         super("hypercore.AggregatedWalletPositioningStreamRequest", [
             { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 2, name: "bloom_filter", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 3, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "detailed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<AggregatedWalletPositioningStreamRequest>): AggregatedWalletPositioningStreamRequest {
-        const message = { walletAddresses: [], instrumentId: 0 };
+        const message = { walletAddresses: [], bloomFilter: new Uint8Array(0), instrumentId: 0, detailed: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<AggregatedWalletPositioningStreamRequest>(this, message, value);
@@ -1037,8 +1025,14 @@ class AggregatedWalletPositioningStreamRequest$Type extends MessageType<Aggregat
                 case /* repeated string wallet_addresses */ 1:
                     message.walletAddresses.push(reader.string());
                     break;
-                case /* uint64 instrument_id */ 2:
+                case /* bytes bloom_filter */ 2:
+                    message.bloomFilter = reader.bytes();
+                    break;
+                case /* uint64 instrument_id */ 3:
                     message.instrumentId = reader.uint64().toNumber();
+                    break;
+                case /* bool detailed */ 4:
+                    message.detailed = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1055,9 +1049,15 @@ class AggregatedWalletPositioningStreamRequest$Type extends MessageType<Aggregat
         /* repeated string wallet_addresses = 1; */
         for (let i = 0; i < message.walletAddresses.length; i++)
             writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
-        /* uint64 instrument_id = 2; */
+        /* bytes bloom_filter = 2; */
+        if (message.bloomFilter.length)
+            writer.tag(2, WireType.LengthDelimited).bytes(message.bloomFilter);
+        /* uint64 instrument_id = 3; */
         if (message.instrumentId !== 0)
-            writer.tag(2, WireType.Varint).uint64(message.instrumentId);
+            writer.tag(3, WireType.Varint).uint64(message.instrumentId);
+        /* bool detailed = 4; */
+        if (message.detailed !== false)
+            writer.tag(4, WireType.Varint).bool(message.detailed);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1072,20 +1072,74 @@ export const AggregatedWalletPositioningStreamRequest = new AggregatedWalletPosi
 class AggregatedWalletPositioningStreamResponse$Type extends MessageType<AggregatedWalletPositioningStreamResponse> {
     constructor() {
         super("hypercore.AggregatedWalletPositioningStreamResponse", [
-            { no: 1, name: "wallet_short_count", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "aggregated_short_balance", kind: "message", T: () => WalletPerpBalance },
-            { no: 3, name: "wallet_long_count", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "aggregated_long_balance", kind: "message", T: () => WalletPerpBalance }
+            { no: 1, name: "summary", kind: "message", T: () => AggregatedWalletPositioningSummary },
+            { no: 2, name: "perp_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletPerpBalance }
         ]);
     }
     create(value?: PartialMessage<AggregatedWalletPositioningStreamResponse>): AggregatedWalletPositioningStreamResponse {
-        const message = { walletShortCount: 0, walletLongCount: 0 };
+        const message = { perpBalances: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<AggregatedWalletPositioningStreamResponse>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AggregatedWalletPositioningStreamResponse): AggregatedWalletPositioningStreamResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypercore.AggregatedWalletPositioningSummary summary */ 1:
+                    message.summary = AggregatedWalletPositioningSummary.internalBinaryRead(reader, reader.uint32(), options, message.summary);
+                    break;
+                case /* repeated hypercore.WalletPerpBalance perp_balances */ 2:
+                    message.perpBalances.push(WalletPerpBalance.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AggregatedWalletPositioningStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypercore.AggregatedWalletPositioningSummary summary = 1; */
+        if (message.summary)
+            AggregatedWalletPositioningSummary.internalBinaryWrite(message.summary, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypercore.WalletPerpBalance perp_balances = 2; */
+        for (let i = 0; i < message.perpBalances.length; i++)
+            WalletPerpBalance.internalBinaryWrite(message.perpBalances[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.AggregatedWalletPositioningStreamResponse
+ */
+export const AggregatedWalletPositioningStreamResponse = new AggregatedWalletPositioningStreamResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AggregatedWalletPositioningSummary$Type extends MessageType<AggregatedWalletPositioningSummary> {
+    constructor() {
+        super("hypercore.AggregatedWalletPositioningSummary", [
+            { no: 1, name: "wallet_short_count", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "aggregated_short_balance", kind: "message", T: () => WalletPerpBalance },
+            { no: 3, name: "wallet_long_count", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "aggregated_long_balance", kind: "message", T: () => WalletPerpBalance }
+        ]);
+    }
+    create(value?: PartialMessage<AggregatedWalletPositioningSummary>): AggregatedWalletPositioningSummary {
+        const message = { walletShortCount: 0, walletLongCount: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<AggregatedWalletPositioningSummary>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AggregatedWalletPositioningSummary): AggregatedWalletPositioningSummary {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1113,7 +1167,7 @@ class AggregatedWalletPositioningStreamResponse$Type extends MessageType<Aggrega
         }
         return message;
     }
-    internalBinaryWrite(message: AggregatedWalletPositioningStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: AggregatedWalletPositioningSummary, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* uint64 wallet_short_count = 1; */
         if (message.walletShortCount !== 0)
             writer.tag(1, WireType.Varint).uint64(message.walletShortCount);
@@ -1133,131 +1187,9 @@ class AggregatedWalletPositioningStreamResponse$Type extends MessageType<Aggrega
     }
 }
 /**
- * @generated MessageType for protobuf message hypercore.AggregatedWalletPositioningStreamResponse
+ * @generated MessageType for protobuf message hypercore.AggregatedWalletPositioningSummary
  */
-export const AggregatedWalletPositioningStreamResponse = new AggregatedWalletPositioningStreamResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class WalletPositioningStreamRequest$Type extends MessageType<WalletPositioningStreamRequest> {
-    constructor() {
-        super("hypercore.WalletPositioningStreamRequest", [
-            { no: 1, name: "bloom_filter", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "instrument_id", kind: "message", T: () => Int64Value }
-        ]);
-    }
-    create(value?: PartialMessage<WalletPositioningStreamRequest>): WalletPositioningStreamRequest {
-        const message = { bloomFilter: new Uint8Array(0), walletAddresses: [] };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<WalletPositioningStreamRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPositioningStreamRequest): WalletPositioningStreamRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bytes bloom_filter */ 1:
-                    message.bloomFilter = reader.bytes();
-                    break;
-                case /* repeated string wallet_addresses */ 2:
-                    message.walletAddresses.push(reader.string());
-                    break;
-                case /* google.protobuf.Int64Value instrument_id */ 3:
-                    message.instrumentId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.instrumentId);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: WalletPositioningStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bytes bloom_filter = 1; */
-        if (message.bloomFilter.length)
-            writer.tag(1, WireType.LengthDelimited).bytes(message.bloomFilter);
-        /* repeated string wallet_addresses = 2; */
-        for (let i = 0; i < message.walletAddresses.length; i++)
-            writer.tag(2, WireType.LengthDelimited).string(message.walletAddresses[i]);
-        /* google.protobuf.Int64Value instrument_id = 3; */
-        if (message.instrumentId)
-            Int64Value.internalBinaryWrite(message.instrumentId, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypercore.WalletPositioningStreamRequest
- */
-export const WalletPositioningStreamRequest = new WalletPositioningStreamRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class WalletPositioningStreamResponse$Type extends MessageType<WalletPositioningStreamResponse> {
-    constructor() {
-        super("hypercore.WalletPositioningStreamResponse", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "perp_balance", kind: "message", T: () => WalletPerpBalance },
-            { no: 3, name: "reason", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<WalletPositioningStreamResponse>): WalletPositioningStreamResponse {
-        const message = { walletAddress: "", reason: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<WalletPositioningStreamResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPositioningStreamResponse): WalletPositioningStreamResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string wallet_address */ 1:
-                    message.walletAddress = reader.string();
-                    break;
-                case /* hypercore.WalletPerpBalance perp_balance */ 2:
-                    message.perpBalance = WalletPerpBalance.internalBinaryRead(reader, reader.uint32(), options, message.perpBalance);
-                    break;
-                case /* string reason */ 3:
-                    message.reason = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: WalletPositioningStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_address = 1; */
-        if (message.walletAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
-        /* hypercore.WalletPerpBalance perp_balance = 2; */
-        if (message.perpBalance)
-            WalletPerpBalance.internalBinaryWrite(message.perpBalance, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* string reason = 3; */
-        if (message.reason !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.reason);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypercore.WalletPositioningStreamResponse
- */
-export const WalletPositioningStreamResponse = new WalletPositioningStreamResponse$Type();
+export const AggregatedWalletPositioningSummary = new AggregatedWalletPositioningSummary$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class WalletBalancesStreamRequest$Type extends MessageType<WalletBalancesStreamRequest> {
     constructor() {
@@ -1527,7 +1459,6 @@ export const ValidatorDelegator = new ValidatorDelegator$Type();
 export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletMovements", options: {}, I: WalletMovementsRequest, O: WalletMovementsResponse },
     { name: "WalletBalances", options: {}, I: WalletBalancesRequest, O: WalletBalancesResponse },
-    { name: "WalletPositioningStream", serverStreaming: true, options: {}, I: WalletPositioningStreamRequest, O: WalletPositioningStreamResponse },
     { name: "AggregatedWalletPositioningStream", serverStreaming: true, options: {}, I: AggregatedWalletPositioningStreamRequest, O: AggregatedWalletPositioningStreamResponse },
     { name: "WalletBalancesStream", serverStreaming: true, clientStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
     { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },

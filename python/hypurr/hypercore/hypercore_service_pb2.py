@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/hypercore/hypercore_service.proto',
   package='hypercore',
   syntax='proto3',
-  serialized_pb=_b('\n(hypurr/hypercore/hypercore_service.proto\x12\thypercore\x1a\x1egoogle/protobuf/wrappers.proto\"\x99\x01\n\rTradeSideInfo\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x11\n\tstart_pos\x18\x02 \x01(\t\x12\x0b\n\x03oid\x18\x03 \x01(\x03\x12-\n\x07twap_id\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt64Value\x12+\n\x05\x63loid\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"\xc3\x01\n\x0bWalletTrade\x12\x0c\n\x04\x63oin\x18\x01 \x01(\t\x12\x0c\n\x04side\x18\x02 \x01(\t\x12\x0c\n\x04time\x18\x03 \x01(\t\x12\n\n\x02px\x18\x04 \x01(\t\x12\n\n\x02sz\x18\x05 \x01(\t\x12\x0c\n\x04hash\x18\x06 \x01(\t\x12\x37\n\x12trade_dir_override\x18\x07 \x01(\x0e\x32\x1b.hypercore.TradeDirOverride\x12+\n\tside_info\x18\x08 \x03(\x0b\x32\x18.hypercore.TradeSideInfo\"\x10\n\x0eWalletMovement\"0\n\x16WalletMovementsRequest\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\"f\n\x17WalletMovementsResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x33\n\x10wallet_movements\x18\x02 \x03(\x0b\x32\x19.hypercore.WalletMovement\"P\n\x11WalletSpotBalance\x12\r\n\x05token\x18\x01 \x01(\x03\x12\x0f\n\x07\x62\x61lance\x18\x02 \x01(\x01\x12\x0c\n\x04\x63ost\x18\x03 \x01(\x01\x12\r\n\x05\x64\x65lta\x18\x04 \x01(\x01\"W\n\x11WalletPerpBalance\x12\x12\n\ninstrument\x18\x01 \x01(\x03\x12\x0f\n\x07\x62\x61lance\x18\x02 \x01(\x01\x12\x0c\n\x04\x63ost\x18\x03 \x01(\x01\x12\x0f\n\x07\x66unding\x18\x04 \x01(\x01\"/\n\x15WalletBalancesRequest\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\"\x9a\x01\n\x16WalletBalancesResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x33\n\rspot_balances\x18\x02 \x03(\x0b\x32\x1c.hypercore.WalletSpotBalance\x12\x33\n\rperp_balances\x18\x03 \x03(\x0b\x32\x1c.hypercore.WalletPerpBalance\"I\n\x19WalletTradesStreamRequest\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x14\n\x0c\x62loom_filter\x18\x02 \x01(\x0c\"\\\n\x1aWalletTradesStreamResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12&\n\x06trades\x18\x02 \x03(\x0b\x32\x16.hypercore.WalletTrade\"[\n(AggregatedWalletPositioningStreamRequest\x12\x18\n\x10wallet_addresses\x18\x01 \x03(\t\x12\x15\n\rinstrument_id\x18\x02 \x01(\x04\"\xe1\x01\n)AggregatedWalletPositioningStreamResponse\x12\x1a\n\x12wallet_short_count\x18\x01 \x01(\x04\x12>\n\x18\x61ggregated_short_balance\x18\x02 \x01(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x19\n\x11wallet_long_count\x18\x03 \x01(\x04\x12=\n\x17\x61ggregated_long_balance\x18\x04 \x01(\x0b\x32\x1c.hypercore.WalletPerpBalance\"\x84\x01\n\x1eWalletPositioningStreamRequest\x12\x14\n\x0c\x62loom_filter\x18\x01 \x01(\x0c\x12\x18\n\x10wallet_addresses\x18\x02 \x03(\t\x12\x32\n\rinstrument_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"}\n\x1fWalletPositioningStreamResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x32\n\x0cperp_balance\x18\x02 \x01(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x0e\n\x06reason\x18\x03 \x01(\t\"3\n\x1bWalletBalancesStreamRequest\x12\x14\n\x0c\x62loom_filter\x18\x01 \x01(\x0c\"\xb0\x01\n\x1cWalletBalancesStreamResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x33\n\rspot_balances\x18\x02 \x03(\x0b\x32\x1c.hypercore.WalletSpotBalance\x12\x33\n\rperp_balances\x18\x03 \x03(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x0e\n\x06reason\x18\x04 \x01(\t\"7\n\x1aValidatorDelegatorsRequest\x12\x19\n\x11validator_address\x18\x01 \x01(\t\"P\n\x1bValidatorDelegatorsResponse\x12\x31\n\ndelegators\x18\x01 \x03(\x0b\x32\x1d.hypercore.ValidatorDelegator\";\n\x12ValidatorDelegator\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\r\n\x05stake\x18\x02 \x01(\x01*j\n\x10TradeDirOverride\x12\"\n\x1eTRADE_DIR_OVERRIDE_UNSPECIFIED\x10\x00\x12\x18\n\x14TRADE_DIR_OVERRIDE_A\x10\x01\x12\x18\n\x14TRADE_DIR_OVERRIDE_B\x10\x02\x32\x89\x06\n\tHyperCore\x12Z\n\x0fWalletMovements\x12!.hypercore.WalletMovementsRequest\x1a\".hypercore.WalletMovementsResponse\"\x00\x12W\n\x0eWalletBalances\x12 .hypercore.WalletBalancesRequest\x1a!.hypercore.WalletBalancesResponse\"\x00\x12t\n\x17WalletPositioningStream\x12).hypercore.WalletPositioningStreamRequest\x1a*.hypercore.WalletPositioningStreamResponse\"\x00\x30\x01\x12\x92\x01\n!AggregatedWalletPositioningStream\x12\x33.hypercore.AggregatedWalletPositioningStreamRequest\x1a\x34.hypercore.AggregatedWalletPositioningStreamResponse\"\x00\x30\x01\x12m\n\x14WalletBalancesStream\x12&.hypercore.WalletBalancesStreamRequest\x1a\'.hypercore.WalletBalancesStreamResponse\"\x00(\x01\x30\x01\x12\x65\n\x12WalletTradesStream\x12$.hypercore.WalletTradesStreamRequest\x1a%.hypercore.WalletTradesStreamResponse\"\x00\x30\x01\x12\x66\n\x13ValidatorDelegators\x12%.hypercore.ValidatorDelegatorsRequest\x1a&.hypercore.ValidatorDelegatorsResponse\"\x00\x42\x33Z1gitlab.com/hypurr/hypurr-grpc/go/hypurr/hypercoreb\x06proto3')
+  serialized_pb=_b('\n(hypurr/hypercore/hypercore_service.proto\x12\thypercore\x1a\x1egoogle/protobuf/wrappers.proto\"\x99\x01\n\rTradeSideInfo\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x11\n\tstart_pos\x18\x02 \x01(\t\x12\x0b\n\x03oid\x18\x03 \x01(\x03\x12-\n\x07twap_id\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt64Value\x12+\n\x05\x63loid\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"\xc3\x01\n\x0bWalletTrade\x12\x0c\n\x04\x63oin\x18\x01 \x01(\t\x12\x0c\n\x04side\x18\x02 \x01(\t\x12\x0c\n\x04time\x18\x03 \x01(\t\x12\n\n\x02px\x18\x04 \x01(\t\x12\n\n\x02sz\x18\x05 \x01(\t\x12\x0c\n\x04hash\x18\x06 \x01(\t\x12\x37\n\x12trade_dir_override\x18\x07 \x01(\x0e\x32\x1b.hypercore.TradeDirOverride\x12+\n\tside_info\x18\x08 \x03(\x0b\x32\x18.hypercore.TradeSideInfo\"\x10\n\x0eWalletMovement\"0\n\x16WalletMovementsRequest\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\"f\n\x17WalletMovementsResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x33\n\x10wallet_movements\x18\x02 \x03(\x0b\x32\x19.hypercore.WalletMovement\"P\n\x11WalletSpotBalance\x12\r\n\x05token\x18\x01 \x01(\x03\x12\x0f\n\x07\x62\x61lance\x18\x02 \x01(\x01\x12\x0c\n\x04\x63ost\x18\x03 \x01(\x01\x12\r\n\x05\x64\x65lta\x18\x04 \x01(\x01\"W\n\x11WalletPerpBalance\x12\x12\n\ninstrument\x18\x01 \x01(\x03\x12\x0f\n\x07\x62\x61lance\x18\x02 \x01(\x01\x12\x0c\n\x04\x63ost\x18\x03 \x01(\x01\x12\x0f\n\x07\x66unding\x18\x04 \x01(\x01\"/\n\x15WalletBalancesRequest\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\"\x9a\x01\n\x16WalletBalancesResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x33\n\rspot_balances\x18\x02 \x03(\x0b\x32\x1c.hypercore.WalletSpotBalance\x12\x33\n\rperp_balances\x18\x03 \x03(\x0b\x32\x1c.hypercore.WalletPerpBalance\"K\n\x19WalletTradesStreamRequest\x12\x18\n\x10wallet_addresses\x18\x01 \x01(\t\x12\x14\n\x0c\x62loom_filter\x18\x02 \x01(\x0c\"\\\n\x1aWalletTradesStreamResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12&\n\x06trades\x18\x02 \x03(\x0b\x32\x16.hypercore.WalletTrade\"\x83\x01\n(AggregatedWalletPositioningStreamRequest\x12\x18\n\x10wallet_addresses\x18\x01 \x03(\t\x12\x14\n\x0c\x62loom_filter\x18\x02 \x01(\x0c\x12\x15\n\rinstrument_id\x18\x03 \x01(\x04\x12\x10\n\x08\x64\x65tailed\x18\x04 \x01(\x08\"\xa0\x01\n)AggregatedWalletPositioningStreamResponse\x12>\n\x07summary\x18\x01 \x01(\x0b\x32-.hypercore.AggregatedWalletPositioningSummary\x12\x33\n\rperp_balances\x18\x02 \x03(\x0b\x32\x1c.hypercore.WalletPerpBalance\"\xda\x01\n\"AggregatedWalletPositioningSummary\x12\x1a\n\x12wallet_short_count\x18\x01 \x01(\x04\x12>\n\x18\x61ggregated_short_balance\x18\x02 \x01(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x19\n\x11wallet_long_count\x18\x03 \x01(\x04\x12=\n\x17\x61ggregated_long_balance\x18\x04 \x01(\x0b\x32\x1c.hypercore.WalletPerpBalance\"3\n\x1bWalletBalancesStreamRequest\x12\x14\n\x0c\x62loom_filter\x18\x01 \x01(\x0c\"\xb0\x01\n\x1cWalletBalancesStreamResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x33\n\rspot_balances\x18\x02 \x03(\x0b\x32\x1c.hypercore.WalletSpotBalance\x12\x33\n\rperp_balances\x18\x03 \x03(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x0e\n\x06reason\x18\x04 \x01(\t\"7\n\x1aValidatorDelegatorsRequest\x12\x19\n\x11validator_address\x18\x01 \x01(\t\"P\n\x1bValidatorDelegatorsResponse\x12\x31\n\ndelegators\x18\x01 \x03(\x0b\x32\x1d.hypercore.ValidatorDelegator\";\n\x12ValidatorDelegator\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\r\n\x05stake\x18\x02 \x01(\x01*j\n\x10TradeDirOverride\x12\"\n\x1eTRADE_DIR_OVERRIDE_UNSPECIFIED\x10\x00\x12\x18\n\x14TRADE_DIR_OVERRIDE_A\x10\x01\x12\x18\n\x14TRADE_DIR_OVERRIDE_B\x10\x02\x32\x93\x05\n\tHyperCore\x12Z\n\x0fWalletMovements\x12!.hypercore.WalletMovementsRequest\x1a\".hypercore.WalletMovementsResponse\"\x00\x12W\n\x0eWalletBalances\x12 .hypercore.WalletBalancesRequest\x1a!.hypercore.WalletBalancesResponse\"\x00\x12\x92\x01\n!AggregatedWalletPositioningStream\x12\x33.hypercore.AggregatedWalletPositioningStreamRequest\x1a\x34.hypercore.AggregatedWalletPositioningStreamResponse\"\x00\x30\x01\x12m\n\x14WalletBalancesStream\x12&.hypercore.WalletBalancesStreamRequest\x1a\'.hypercore.WalletBalancesStreamResponse\"\x00(\x01\x30\x01\x12\x65\n\x12WalletTradesStream\x12$.hypercore.WalletTradesStreamRequest\x1a%.hypercore.WalletTradesStreamResponse\"\x00\x30\x01\x12\x66\n\x13ValidatorDelegators\x12%.hypercore.ValidatorDelegatorsRequest\x1a&.hypercore.ValidatorDelegatorsResponse\"\x00\x42\x33Z1gitlab.com/hypurr/hypurr-grpc/go/hypurr/hypercoreb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -46,8 +46,8 @@ _TRADEDIROVERRIDE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=2174,
-  serialized_end=2280,
+  serialized_start=2111,
+  serialized_end=2217,
 )
 _sym_db.RegisterEnumDescriptor(_TRADEDIROVERRIDE)
 
@@ -478,7 +478,7 @@ _WALLETTRADESSTREAMREQUEST = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='wallet_address', full_name='hypercore.WalletTradesStreamRequest.wallet_address', index=0,
+      name='wallet_addresses', full_name='hypercore.WalletTradesStreamRequest.wallet_addresses', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -504,7 +504,7 @@ _WALLETTRADESSTREAMREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=990,
-  serialized_end=1063,
+  serialized_end=1065,
 )
 
 
@@ -541,8 +541,8 @@ _WALLETTRADESSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1065,
-  serialized_end=1157,
+  serialized_start=1067,
+  serialized_end=1159,
 )
 
 
@@ -561,9 +561,23 @@ _AGGREGATEDWALLETPOSITIONINGSTREAMREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='instrument_id', full_name='hypercore.AggregatedWalletPositioningStreamRequest.instrument_id', index=1,
-      number=2, type=4, cpp_type=4, label=1,
+      name='bloom_filter', full_name='hypercore.AggregatedWalletPositioningStreamRequest.bloom_filter', index=1,
+      number=2, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='instrument_id', full_name='hypercore.AggregatedWalletPositioningStreamRequest.instrument_id', index=2,
+      number=3, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='detailed', full_name='hypercore.AggregatedWalletPositioningStreamRequest.detailed', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
@@ -579,8 +593,8 @@ _AGGREGATEDWALLETPOSITIONINGSTREAMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1159,
-  serialized_end=1250,
+  serialized_start=1162,
+  serialized_end=1293,
 )
 
 
@@ -592,28 +606,66 @@ _AGGREGATEDWALLETPOSITIONINGSTREAMRESPONSE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='wallet_short_count', full_name='hypercore.AggregatedWalletPositioningStreamResponse.wallet_short_count', index=0,
+      name='summary', full_name='hypercore.AggregatedWalletPositioningStreamResponse.summary', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='perp_balances', full_name='hypercore.AggregatedWalletPositioningStreamResponse.perp_balances', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1296,
+  serialized_end=1456,
+)
+
+
+_AGGREGATEDWALLETPOSITIONINGSUMMARY = _descriptor.Descriptor(
+  name='AggregatedWalletPositioningSummary',
+  full_name='hypercore.AggregatedWalletPositioningSummary',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='wallet_short_count', full_name='hypercore.AggregatedWalletPositioningSummary.wallet_short_count', index=0,
       number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='aggregated_short_balance', full_name='hypercore.AggregatedWalletPositioningStreamResponse.aggregated_short_balance', index=1,
+      name='aggregated_short_balance', full_name='hypercore.AggregatedWalletPositioningSummary.aggregated_short_balance', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='wallet_long_count', full_name='hypercore.AggregatedWalletPositioningStreamResponse.wallet_long_count', index=2,
+      name='wallet_long_count', full_name='hypercore.AggregatedWalletPositioningSummary.wallet_long_count', index=2,
       number=3, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='aggregated_long_balance', full_name='hypercore.AggregatedWalletPositioningStreamResponse.aggregated_long_balance', index=3,
+      name='aggregated_long_balance', full_name='hypercore.AggregatedWalletPositioningSummary.aggregated_long_balance', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -631,98 +683,8 @@ _AGGREGATEDWALLETPOSITIONINGSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1253,
-  serialized_end=1478,
-)
-
-
-_WALLETPOSITIONINGSTREAMREQUEST = _descriptor.Descriptor(
-  name='WalletPositioningStreamRequest',
-  full_name='hypercore.WalletPositioningStreamRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='bloom_filter', full_name='hypercore.WalletPositioningStreamRequest.bloom_filter', index=0,
-      number=1, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b(""),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='wallet_addresses', full_name='hypercore.WalletPositioningStreamRequest.wallet_addresses', index=1,
-      number=2, type=9, cpp_type=9, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='instrument_id', full_name='hypercore.WalletPositioningStreamRequest.instrument_id', index=2,
-      number=3, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1481,
-  serialized_end=1613,
-)
-
-
-_WALLETPOSITIONINGSTREAMRESPONSE = _descriptor.Descriptor(
-  name='WalletPositioningStreamResponse',
-  full_name='hypercore.WalletPositioningStreamResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='wallet_address', full_name='hypercore.WalletPositioningStreamResponse.wallet_address', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='perp_balance', full_name='hypercore.WalletPositioningStreamResponse.perp_balance', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='reason', full_name='hypercore.WalletPositioningStreamResponse.reason', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1615,
-  serialized_end=1740,
+  serialized_start=1459,
+  serialized_end=1677,
 )
 
 
@@ -752,8 +714,8 @@ _WALLETBALANCESSTREAMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1742,
-  serialized_end=1793,
+  serialized_start=1679,
+  serialized_end=1730,
 )
 
 
@@ -804,8 +766,8 @@ _WALLETBALANCESSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1796,
-  serialized_end=1972,
+  serialized_start=1733,
+  serialized_end=1909,
 )
 
 
@@ -835,8 +797,8 @@ _VALIDATORDELEGATORSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1974,
-  serialized_end=2029,
+  serialized_start=1911,
+  serialized_end=1966,
 )
 
 
@@ -866,8 +828,8 @@ _VALIDATORDELEGATORSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2031,
-  serialized_end=2111,
+  serialized_start=1968,
+  serialized_end=2048,
 )
 
 
@@ -904,8 +866,8 @@ _VALIDATORDELEGATOR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2113,
-  serialized_end=2172,
+  serialized_start=2050,
+  serialized_end=2109,
 )
 
 _TRADESIDEINFO.fields_by_name['twap_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT64VALUE
@@ -916,10 +878,10 @@ _WALLETMOVEMENTSRESPONSE.fields_by_name['wallet_movements'].message_type = _WALL
 _WALLETBALANCESRESPONSE.fields_by_name['spot_balances'].message_type = _WALLETSPOTBALANCE
 _WALLETBALANCESRESPONSE.fields_by_name['perp_balances'].message_type = _WALLETPERPBALANCE
 _WALLETTRADESSTREAMRESPONSE.fields_by_name['trades'].message_type = _WALLETTRADE
-_AGGREGATEDWALLETPOSITIONINGSTREAMRESPONSE.fields_by_name['aggregated_short_balance'].message_type = _WALLETPERPBALANCE
-_AGGREGATEDWALLETPOSITIONINGSTREAMRESPONSE.fields_by_name['aggregated_long_balance'].message_type = _WALLETPERPBALANCE
-_WALLETPOSITIONINGSTREAMREQUEST.fields_by_name['instrument_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
-_WALLETPOSITIONINGSTREAMRESPONSE.fields_by_name['perp_balance'].message_type = _WALLETPERPBALANCE
+_AGGREGATEDWALLETPOSITIONINGSTREAMRESPONSE.fields_by_name['summary'].message_type = _AGGREGATEDWALLETPOSITIONINGSUMMARY
+_AGGREGATEDWALLETPOSITIONINGSTREAMRESPONSE.fields_by_name['perp_balances'].message_type = _WALLETPERPBALANCE
+_AGGREGATEDWALLETPOSITIONINGSUMMARY.fields_by_name['aggregated_short_balance'].message_type = _WALLETPERPBALANCE
+_AGGREGATEDWALLETPOSITIONINGSUMMARY.fields_by_name['aggregated_long_balance'].message_type = _WALLETPERPBALANCE
 _WALLETBALANCESSTREAMRESPONSE.fields_by_name['spot_balances'].message_type = _WALLETSPOTBALANCE
 _WALLETBALANCESSTREAMRESPONSE.fields_by_name['perp_balances'].message_type = _WALLETPERPBALANCE
 _VALIDATORDELEGATORSRESPONSE.fields_by_name['delegators'].message_type = _VALIDATORDELEGATOR
@@ -936,8 +898,7 @@ DESCRIPTOR.message_types_by_name['WalletTradesStreamRequest'] = _WALLETTRADESSTR
 DESCRIPTOR.message_types_by_name['WalletTradesStreamResponse'] = _WALLETTRADESSTREAMRESPONSE
 DESCRIPTOR.message_types_by_name['AggregatedWalletPositioningStreamRequest'] = _AGGREGATEDWALLETPOSITIONINGSTREAMREQUEST
 DESCRIPTOR.message_types_by_name['AggregatedWalletPositioningStreamResponse'] = _AGGREGATEDWALLETPOSITIONINGSTREAMRESPONSE
-DESCRIPTOR.message_types_by_name['WalletPositioningStreamRequest'] = _WALLETPOSITIONINGSTREAMREQUEST
-DESCRIPTOR.message_types_by_name['WalletPositioningStreamResponse'] = _WALLETPOSITIONINGSTREAMRESPONSE
+DESCRIPTOR.message_types_by_name['AggregatedWalletPositioningSummary'] = _AGGREGATEDWALLETPOSITIONINGSUMMARY
 DESCRIPTOR.message_types_by_name['WalletBalancesStreamRequest'] = _WALLETBALANCESSTREAMREQUEST
 DESCRIPTOR.message_types_by_name['WalletBalancesStreamResponse'] = _WALLETBALANCESSTREAMRESPONSE
 DESCRIPTOR.message_types_by_name['ValidatorDelegatorsRequest'] = _VALIDATORDELEGATORSREQUEST
@@ -1037,19 +998,12 @@ AggregatedWalletPositioningStreamResponse = _reflection.GeneratedProtocolMessage
   ))
 _sym_db.RegisterMessage(AggregatedWalletPositioningStreamResponse)
 
-WalletPositioningStreamRequest = _reflection.GeneratedProtocolMessageType('WalletPositioningStreamRequest', (_message.Message,), dict(
-  DESCRIPTOR = _WALLETPOSITIONINGSTREAMREQUEST,
+AggregatedWalletPositioningSummary = _reflection.GeneratedProtocolMessageType('AggregatedWalletPositioningSummary', (_message.Message,), dict(
+  DESCRIPTOR = _AGGREGATEDWALLETPOSITIONINGSUMMARY,
   __module__ = 'hypurr.hypercore.hypercore_service_pb2'
-  # @@protoc_insertion_point(class_scope:hypercore.WalletPositioningStreamRequest)
+  # @@protoc_insertion_point(class_scope:hypercore.AggregatedWalletPositioningSummary)
   ))
-_sym_db.RegisterMessage(WalletPositioningStreamRequest)
-
-WalletPositioningStreamResponse = _reflection.GeneratedProtocolMessageType('WalletPositioningStreamResponse', (_message.Message,), dict(
-  DESCRIPTOR = _WALLETPOSITIONINGSTREAMRESPONSE,
-  __module__ = 'hypurr.hypercore.hypercore_service_pb2'
-  # @@protoc_insertion_point(class_scope:hypercore.WalletPositioningStreamResponse)
-  ))
-_sym_db.RegisterMessage(WalletPositioningStreamResponse)
+_sym_db.RegisterMessage(AggregatedWalletPositioningSummary)
 
 WalletBalancesStreamRequest = _reflection.GeneratedProtocolMessageType('WalletBalancesStreamRequest', (_message.Message,), dict(
   DESCRIPTOR = _WALLETBALANCESSTREAMREQUEST,
@@ -1096,8 +1050,8 @@ _HYPERCORE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=2283,
-  serialized_end=3060,
+  serialized_start=2220,
+  serialized_end=2879,
   methods=[
   _descriptor.MethodDescriptor(
     name='WalletMovements',
@@ -1118,18 +1072,9 @@ _HYPERCORE = _descriptor.ServiceDescriptor(
     options=None,
   ),
   _descriptor.MethodDescriptor(
-    name='WalletPositioningStream',
-    full_name='hypercore.HyperCore.WalletPositioningStream',
-    index=2,
-    containing_service=None,
-    input_type=_WALLETPOSITIONINGSTREAMREQUEST,
-    output_type=_WALLETPOSITIONINGSTREAMRESPONSE,
-    options=None,
-  ),
-  _descriptor.MethodDescriptor(
     name='AggregatedWalletPositioningStream',
     full_name='hypercore.HyperCore.AggregatedWalletPositioningStream',
-    index=3,
+    index=2,
     containing_service=None,
     input_type=_AGGREGATEDWALLETPOSITIONINGSTREAMREQUEST,
     output_type=_AGGREGATEDWALLETPOSITIONINGSTREAMRESPONSE,
@@ -1138,7 +1083,7 @@ _HYPERCORE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='WalletBalancesStream',
     full_name='hypercore.HyperCore.WalletBalancesStream',
-    index=4,
+    index=3,
     containing_service=None,
     input_type=_WALLETBALANCESSTREAMREQUEST,
     output_type=_WALLETBALANCESSTREAMRESPONSE,
@@ -1147,7 +1092,7 @@ _HYPERCORE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='WalletTradesStream',
     full_name='hypercore.HyperCore.WalletTradesStream',
-    index=5,
+    index=4,
     containing_service=None,
     input_type=_WALLETTRADESSTREAMREQUEST,
     output_type=_WALLETTRADESSTREAMRESPONSE,
@@ -1156,7 +1101,7 @@ _HYPERCORE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='ValidatorDelegators',
     full_name='hypercore.HyperCore.ValidatorDelegators',
-    index=6,
+    index=5,
     containing_service=None,
     input_type=_VALIDATORDELEGATORSREQUEST,
     output_type=_VALIDATORDELEGATORSRESPONSE,
