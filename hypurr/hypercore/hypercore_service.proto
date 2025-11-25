@@ -104,7 +104,12 @@ message AggregatedWalletPositioningStreamRequest {
 
 message AggregatedWalletPositioningStreamResponse {
   AggregatedWalletPositioningSummary summary = 1;
-  repeated WalletBalancesResponse perp_balances = 2;
+  repeated WalletPositioning wallet_positions = 2;
+}
+
+message WalletPositioning {
+  string wallet_address = 1;
+  WalletPerpBalance perp_balance = 2;
 }
 
 message AggregatedWalletPositioningSummary {
