@@ -227,9 +227,9 @@ export interface AggregatedWalletPositioningStreamResponse {
      */
     summary?: AggregatedWalletPositioningSummary;
     /**
-     * @generated from protobuf field: repeated hypercore.WalletPerpBalance perp_balances = 2;
+     * @generated from protobuf field: repeated hypercore.WalletBalancesResponse perp_balances = 2;
      */
-    perpBalances: WalletPerpBalance[];
+    perpBalances: WalletBalancesResponse[];
 }
 /**
  * @generated from protobuf message hypercore.AggregatedWalletPositioningSummary
@@ -1073,7 +1073,7 @@ class AggregatedWalletPositioningStreamResponse$Type extends MessageType<Aggrega
     constructor() {
         super("hypercore.AggregatedWalletPositioningStreamResponse", [
             { no: 1, name: "summary", kind: "message", T: () => AggregatedWalletPositioningSummary },
-            { no: 2, name: "perp_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletPerpBalance }
+            { no: 2, name: "perp_balances", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletBalancesResponse }
         ]);
     }
     create(value?: PartialMessage<AggregatedWalletPositioningStreamResponse>): AggregatedWalletPositioningStreamResponse {
@@ -1091,8 +1091,8 @@ class AggregatedWalletPositioningStreamResponse$Type extends MessageType<Aggrega
                 case /* hypercore.AggregatedWalletPositioningSummary summary */ 1:
                     message.summary = AggregatedWalletPositioningSummary.internalBinaryRead(reader, reader.uint32(), options, message.summary);
                     break;
-                case /* repeated hypercore.WalletPerpBalance perp_balances */ 2:
-                    message.perpBalances.push(WalletPerpBalance.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypercore.WalletBalancesResponse perp_balances */ 2:
+                    message.perpBalances.push(WalletBalancesResponse.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1109,9 +1109,9 @@ class AggregatedWalletPositioningStreamResponse$Type extends MessageType<Aggrega
         /* hypercore.AggregatedWalletPositioningSummary summary = 1; */
         if (message.summary)
             AggregatedWalletPositioningSummary.internalBinaryWrite(message.summary, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* repeated hypercore.WalletPerpBalance perp_balances = 2; */
+        /* repeated hypercore.WalletBalancesResponse perp_balances = 2; */
         for (let i = 0; i < message.perpBalances.length; i++)
-            WalletPerpBalance.internalBinaryWrite(message.perpBalances[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            WalletBalancesResponse.internalBinaryWrite(message.perpBalances[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

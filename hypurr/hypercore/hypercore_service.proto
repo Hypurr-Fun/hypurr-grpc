@@ -104,7 +104,7 @@ message AggregatedWalletPositioningStreamRequest {
 
 message AggregatedWalletPositioningStreamResponse {
   AggregatedWalletPositioningSummary summary = 1;
-  repeated WalletPerpBalance perp_balances = 2;
+  repeated WalletBalancesResponse perp_balances = 2;
 }
 
 message AggregatedWalletPositioningSummary {
