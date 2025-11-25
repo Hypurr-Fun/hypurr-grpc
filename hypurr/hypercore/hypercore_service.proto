@@ -86,7 +86,7 @@ message WalletBalancesResponse {
 }
 
 message WalletTradesStreamRequest {
-  string wallet_addresses = 1;
+  repeated string wallet_addresses = 1;
   bytes bloom_filter = 2;
 }
 

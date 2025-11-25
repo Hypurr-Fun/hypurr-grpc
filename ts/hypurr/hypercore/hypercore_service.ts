@@ -176,9 +176,9 @@ export interface WalletBalancesResponse {
  */
 export interface WalletTradesStreamRequest {
     /**
-     * @generated from protobuf field: string wallet_addresses = 1;
+     * @generated from protobuf field: repeated string wallet_addresses = 1;
      */
-    walletAddresses: string;
+    walletAddresses: string[];
     /**
      * @generated from protobuf field: bytes bloom_filter = 2;
      */
@@ -896,12 +896,12 @@ export const WalletBalancesResponse = new WalletBalancesResponse$Type();
 class WalletTradesStreamRequest$Type extends MessageType<WalletTradesStreamRequest> {
     constructor() {
         super("hypercore.WalletTradesStreamRequest", [
-            { no: 1, name: "wallet_addresses", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "bloom_filter", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<WalletTradesStreamRequest>): WalletTradesStreamRequest {
-        const message = { walletAddresses: "", bloomFilter: new Uint8Array(0) };
+        const message = { walletAddresses: [], bloomFilter: new Uint8Array(0) };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<WalletTradesStreamRequest>(this, message, value);
@@ -912,8 +912,8 @@ class WalletTradesStreamRequest$Type extends MessageType<WalletTradesStreamReque
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string wallet_addresses */ 1:
-                    message.walletAddresses = reader.string();
+                case /* repeated string wallet_addresses */ 1:
+                    message.walletAddresses.push(reader.string());
                     break;
                 case /* bytes bloom_filter */ 2:
                     message.bloomFilter = reader.bytes();
@@ -930,9 +930,9 @@ class WalletTradesStreamRequest$Type extends MessageType<WalletTradesStreamReque
         return message;
     }
     internalBinaryWrite(message: WalletTradesStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_addresses = 1; */
-        if (message.walletAddresses !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses);
+        /* repeated string wallet_addresses = 1; */
+        for (let i = 0; i < message.walletAddresses.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
         /* bytes bloom_filter = 2; */
         if (message.bloomFilter.length)
             writer.tag(2, WireType.LengthDelimited).bytes(message.bloomFilter);
