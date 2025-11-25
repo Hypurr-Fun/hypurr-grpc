@@ -109,6 +109,8 @@ message AggregatedWalletPositioningStreamResponse {
 
 message WalletBalancesStreamRequest {
   bytes bloom_filter = 1;
+  repeated string wallet_addresses = 2;
+  google.protobuf.Int64Value instrument_id = 3;
 }
 
 message WalletBalancesStreamResponse {
