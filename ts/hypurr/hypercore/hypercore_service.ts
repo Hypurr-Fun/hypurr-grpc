@@ -210,11 +210,15 @@ export interface AggregatedWalletPositioningStreamRequest {
      */
     bloomFilter: Uint8Array;
     /**
-     * @generated from protobuf field: uint64 instrument_id = 3;
+     * @generated from protobuf field: hypercore.WalletTag tag = 3;
+     */
+    tag: WalletTag;
+    /**
+     * @generated from protobuf field: uint64 instrument_id = 4;
      */
     instrumentId: number;
     /**
-     * @generated from protobuf field: bool detailed = 4;
+     * @generated from protobuf field: bool detailed = 5;
      */
     detailed: boolean;
 }
@@ -326,27 +330,56 @@ export interface ValidatorDelegator {
      */
     stake: number;
 }
+// 
+// type Trade struct {
+// Coin             string           `json:"coin"`               // Perp symbol or @ notation
+// Side             string           `json:"side"`               // A or B
+// Time             string           `json:"time"`               // Timestamp in nanoseconds
+// Px               string           `json:"px"`                 // Price
+// Sz               string           `json:"sz"`                 // Size
+// Hash             string           `json:"hash"`               // Hash (can be 0)
+// TradeDirOverride TradeDirOverride `json:"trade_dir_override"` // ??
+// SideInfo         []struct {
+// User     string      `json:"user"`
+// StartPos string      `json:"start_pos"`
+// Oid      int64       `json:"oid"`
+// TwapId   interface{} `json:"twap_id"`
+// Cloid    *string     `json:"cloid"`
+// } `json:"side_info"`
+// }
+// 
+// 
+
 /**
- *
- * type Trade struct {
- * Coin             string           `json:"coin"`               // Perp symbol or @ notation
- * Side             string           `json:"side"`               // A or B
- * Time             string           `json:"time"`               // Timestamp in nanoseconds
- * Px               string           `json:"px"`                 // Price
- * Sz               string           `json:"sz"`                 // Size
- * Hash             string           `json:"hash"`               // Hash (can be 0)
- * TradeDirOverride TradeDirOverride `json:"trade_dir_override"` // ??
- * SideInfo         []struct {
- * User     string      `json:"user"`
- * StartPos string      `json:"start_pos"`
- * Oid      int64       `json:"oid"`
- * TwapId   interface{} `json:"twap_id"`
- * Cloid    *string     `json:"cloid"`
- * } `json:"side_info"`
- * }
- *
- *
- *
+ * @generated from protobuf enum hypercore.WalletTag
+ */
+export enum WalletTag {
+    /**
+     * @generated from protobuf enum value: WALLET_TAG_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: WALLET_TAG_ALL = 1;
+     */
+    ALL = 1,
+    /**
+     * @generated from protobuf enum value: WALLET_TAG_MARKET_MAKER = 2;
+     */
+    MARKET_MAKER = 2,
+    /**
+     * @generated from protobuf enum value: WALLET_TAG_WHALE = 3;
+     */
+    WHALE = 3,
+    /**
+     * @generated from protobuf enum value: WALLET_TAG_SMART_TRADER = 4;
+     */
+    SMART_TRADER = 4,
+    /**
+     * @generated from protobuf enum value: WALLET_TAG_LEADERBOARD = 5;
+     */
+    LEADERBOARD = 5
+}
+/**
  * @generated from protobuf enum hypercore.TradeDirOverride
  */
 export enum TradeDirOverride {
@@ -1019,12 +1052,13 @@ class AggregatedWalletPositioningStreamRequest$Type extends MessageType<Aggregat
         super("hypercore.AggregatedWalletPositioningStreamRequest", [
             { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "bloom_filter", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 3, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "detailed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 3, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] },
+            { no: 4, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "detailed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<AggregatedWalletPositioningStreamRequest>): AggregatedWalletPositioningStreamRequest {
-        const message = { walletAddresses: [], bloomFilter: new Uint8Array(0), instrumentId: 0, detailed: false };
+        const message = { walletAddresses: [], bloomFilter: new Uint8Array(0), tag: 0, instrumentId: 0, detailed: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<AggregatedWalletPositioningStreamRequest>(this, message, value);
@@ -1041,10 +1075,13 @@ class AggregatedWalletPositioningStreamRequest$Type extends MessageType<Aggregat
                 case /* bytes bloom_filter */ 2:
                     message.bloomFilter = reader.bytes();
                     break;
-                case /* uint64 instrument_id */ 3:
+                case /* hypercore.WalletTag tag */ 3:
+                    message.tag = reader.int32();
+                    break;
+                case /* uint64 instrument_id */ 4:
                     message.instrumentId = reader.uint64().toNumber();
                     break;
-                case /* bool detailed */ 4:
+                case /* bool detailed */ 5:
                     message.detailed = reader.bool();
                     break;
                 default:
@@ -1065,12 +1102,15 @@ class AggregatedWalletPositioningStreamRequest$Type extends MessageType<Aggregat
         /* bytes bloom_filter = 2; */
         if (message.bloomFilter.length)
             writer.tag(2, WireType.LengthDelimited).bytes(message.bloomFilter);
-        /* uint64 instrument_id = 3; */
+        /* hypercore.WalletTag tag = 3; */
+        if (message.tag !== 0)
+            writer.tag(3, WireType.Varint).int32(message.tag);
+        /* uint64 instrument_id = 4; */
         if (message.instrumentId !== 0)
-            writer.tag(3, WireType.Varint).uint64(message.instrumentId);
-        /* bool detailed = 4; */
+            writer.tag(4, WireType.Varint).uint64(message.instrumentId);
+        /* bool detailed = 5; */
         if (message.detailed !== false)
-            writer.tag(4, WireType.Varint).bool(message.detailed);
+            writer.tag(5, WireType.Varint).bool(message.detailed);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

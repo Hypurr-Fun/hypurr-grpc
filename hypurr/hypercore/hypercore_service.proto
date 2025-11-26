@@ -24,6 +24,16 @@ type Trade struct {
 *
 
  */
+
+enum WalletTag {
+  WALLET_TAG_UNSPECIFIED = 0;
+  WALLET_TAG_ALL = 1;
+  WALLET_TAG_MARKET_MAKER = 2;
+  WALLET_TAG_WHALE = 3;
+  WALLET_TAG_SMART_TRADER = 4;
+  WALLET_TAG_LEADERBOARD = 5;
+}
+
 enum TradeDirOverride {
   TRADE_DIR_OVERRIDE_UNSPECIFIED = 0;
   TRADE_DIR_OVERRIDE_A = 1;
@@ -98,8 +108,9 @@ message WalletTradesStreamResponse {
 message AggregatedWalletPositioningStreamRequest {
   repeated string wallet_addresses = 1;
   bytes bloom_filter = 2;
-  uint64 instrument_id = 3;
-  bool detailed = 4;
+  WalletTag tag = 3;
+  uint64 instrument_id = 4;
+  bool detailed = 5;
 }
 
 message AggregatedWalletPositioningStreamResponse {
