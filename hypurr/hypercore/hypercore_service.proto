@@ -32,6 +32,7 @@ enum WalletTag {
   WALLET_TAG_WHALE = 3;
   WALLET_TAG_SMART_TRADER = 4;
   WALLET_TAG_LEADERBOARD = 5;
+  WALLET_TAG_RETAIL = 6;
 }
 
 enum TradeDirOverride {
