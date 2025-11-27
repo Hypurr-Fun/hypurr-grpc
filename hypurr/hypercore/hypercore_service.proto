@@ -122,6 +122,7 @@ message AggregatedWalletPositioningStreamResponse {
 message WalletPositioning {
   string wallet_address = 1;
   WalletPerpBalance perp_balance = 2;
+  WalletSpotBalance spot_balance = 3;
 }
 
 message AggregatedWalletPositioningSummary {
@@ -129,6 +130,8 @@ message AggregatedWalletPositioningSummary {
   WalletPerpBalance aggregated_short_balance = 2;
   uint64 wallet_long_count = 3;
   WalletPerpBalance aggregated_long_balance = 4;
+  uint64 wallet_hold_count = 5;
+  WalletSpotBalance aggregated_hold_balance = 6;
 }
 
 message WalletBalancesStreamRequest {

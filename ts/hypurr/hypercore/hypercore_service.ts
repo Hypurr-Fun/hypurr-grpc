@@ -247,6 +247,10 @@ export interface WalletPositioning {
      * @generated from protobuf field: hypercore.WalletPerpBalance perp_balance = 2;
      */
     perpBalance?: WalletPerpBalance;
+    /**
+     * @generated from protobuf field: hypercore.WalletSpotBalance spot_balance = 3;
+     */
+    spotBalance?: WalletSpotBalance;
 }
 /**
  * @generated from protobuf message hypercore.AggregatedWalletPositioningSummary
@@ -268,6 +272,14 @@ export interface AggregatedWalletPositioningSummary {
      * @generated from protobuf field: hypercore.WalletPerpBalance aggregated_long_balance = 4;
      */
     aggregatedLongBalance?: WalletPerpBalance;
+    /**
+     * @generated from protobuf field: uint64 wallet_hold_count = 5;
+     */
+    walletHoldCount: number;
+    /**
+     * @generated from protobuf field: hypercore.WalletSpotBalance aggregated_hold_balance = 6;
+     */
+    aggregatedHoldBalance?: WalletSpotBalance;
 }
 /**
  * @generated from protobuf message hypercore.WalletBalancesStreamRequest
@@ -1184,7 +1196,8 @@ class WalletPositioning$Type extends MessageType<WalletPositioning> {
     constructor() {
         super("hypercore.WalletPositioning", [
             { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "perp_balance", kind: "message", T: () => WalletPerpBalance }
+            { no: 2, name: "perp_balance", kind: "message", T: () => WalletPerpBalance },
+            { no: 3, name: "spot_balance", kind: "message", T: () => WalletSpotBalance }
         ]);
     }
     create(value?: PartialMessage<WalletPositioning>): WalletPositioning {
@@ -1205,6 +1218,9 @@ class WalletPositioning$Type extends MessageType<WalletPositioning> {
                 case /* hypercore.WalletPerpBalance perp_balance */ 2:
                     message.perpBalance = WalletPerpBalance.internalBinaryRead(reader, reader.uint32(), options, message.perpBalance);
                     break;
+                case /* hypercore.WalletSpotBalance spot_balance */ 3:
+                    message.spotBalance = WalletSpotBalance.internalBinaryRead(reader, reader.uint32(), options, message.spotBalance);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1223,6 +1239,9 @@ class WalletPositioning$Type extends MessageType<WalletPositioning> {
         /* hypercore.WalletPerpBalance perp_balance = 2; */
         if (message.perpBalance)
             WalletPerpBalance.internalBinaryWrite(message.perpBalance, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* hypercore.WalletSpotBalance spot_balance = 3; */
+        if (message.spotBalance)
+            WalletSpotBalance.internalBinaryWrite(message.spotBalance, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1240,11 +1259,13 @@ class AggregatedWalletPositioningSummary$Type extends MessageType<AggregatedWall
             { no: 1, name: "wallet_short_count", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "aggregated_short_balance", kind: "message", T: () => WalletPerpBalance },
             { no: 3, name: "wallet_long_count", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "aggregated_long_balance", kind: "message", T: () => WalletPerpBalance }
+            { no: 4, name: "aggregated_long_balance", kind: "message", T: () => WalletPerpBalance },
+            { no: 5, name: "wallet_hold_count", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "aggregated_hold_balance", kind: "message", T: () => WalletSpotBalance }
         ]);
     }
     create(value?: PartialMessage<AggregatedWalletPositioningSummary>): AggregatedWalletPositioningSummary {
-        const message = { walletShortCount: 0, walletLongCount: 0 };
+        const message = { walletShortCount: 0, walletLongCount: 0, walletHoldCount: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<AggregatedWalletPositioningSummary>(this, message, value);
@@ -1266,6 +1287,12 @@ class AggregatedWalletPositioningSummary$Type extends MessageType<AggregatedWall
                     break;
                 case /* hypercore.WalletPerpBalance aggregated_long_balance */ 4:
                     message.aggregatedLongBalance = WalletPerpBalance.internalBinaryRead(reader, reader.uint32(), options, message.aggregatedLongBalance);
+                    break;
+                case /* uint64 wallet_hold_count */ 5:
+                    message.walletHoldCount = reader.uint64().toNumber();
+                    break;
+                case /* hypercore.WalletSpotBalance aggregated_hold_balance */ 6:
+                    message.aggregatedHoldBalance = WalletSpotBalance.internalBinaryRead(reader, reader.uint32(), options, message.aggregatedHoldBalance);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1291,6 +1318,12 @@ class AggregatedWalletPositioningSummary$Type extends MessageType<AggregatedWall
         /* hypercore.WalletPerpBalance aggregated_long_balance = 4; */
         if (message.aggregatedLongBalance)
             WalletPerpBalance.internalBinaryWrite(message.aggregatedLongBalance, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* uint64 wallet_hold_count = 5; */
+        if (message.walletHoldCount !== 0)
+            writer.tag(5, WireType.Varint).uint64(message.walletHoldCount);
+        /* hypercore.WalletSpotBalance aggregated_hold_balance = 6; */
+        if (message.aggregatedHoldBalance)
+            WalletSpotBalance.internalBinaryWrite(message.aggregatedHoldBalance, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
