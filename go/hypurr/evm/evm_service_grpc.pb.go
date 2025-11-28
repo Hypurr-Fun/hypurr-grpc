@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.4.0
 // - protoc             v3.21.12
-// source: hypurr/evm_service.proto
+// source: hypurr/evm/evm_service.proto
 
 package hypurr
 
@@ -732,5 +732,5 @@ var EVM_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "hypurr/evm_service.proto",
+	Metadata: "hypurr/evm/evm_service.proto",
 }

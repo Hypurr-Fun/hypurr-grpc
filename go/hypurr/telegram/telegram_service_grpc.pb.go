@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.4.0
 // - protoc             v3.21.12
-// source: hypurr/telegram_service.proto
+// source: hypurr/telegram/telegram_service.proto
 
 package hypurr
 
@@ -568,5 +568,5 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "hypurr/telegram_service.proto",
+	Metadata: "hypurr/telegram/telegram_service.proto",
 }

@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.4.0
 // - protoc             v3.21.12
-// source: hypurr/static_service.proto
+// source: hypurr/static/static_service.proto
 
 package hypurr
 
@@ -1559,5 +1559,5 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "hypurr/static_service.proto",
+	Metadata: "hypurr/static/static_service.proto",
 }
