@@ -1,6 +1,7 @@
 syntax = "proto3";
 package hypurr;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
+import "google/protobuf/wrappers.proto";
 
 enum TradeDirection {
   BUY = 0;
@@ -37,5 +38,5 @@ message HyperliquidCoreOrder {
   double size = 4;
   bool reduce_only = 5;
   OrderType order_type = 6;
-  string client_order_id = 7;
+  google.protobuf.StringValue client_order_id = 7;
 }
