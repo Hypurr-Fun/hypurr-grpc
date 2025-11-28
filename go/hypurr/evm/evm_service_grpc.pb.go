@@ -4,7 +4,7 @@
 // - protoc             v3.21.12
 // source: hypurr/evm/evm_service.proto
 
-package hypurr
+package evm
 
 import (
 	context "context"

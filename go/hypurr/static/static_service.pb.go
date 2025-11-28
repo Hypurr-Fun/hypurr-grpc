@@ -4,9 +4,10 @@
 // 	protoc        v3.21.12
 // source: hypurr/static/static_service.proto
 
-package hypurr
+package static
 
 import (
+	hypurr "gitlab.com/hypurr/hypurr-grpc/go/hypurr"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
@@ -73,7 +74,7 @@ type HyperliquidTokenHoldersResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Holders []*HyperliquidTokenHolder `protobuf:"bytes,1,rep,name=holders,proto3" json:"holders,omitempty"`
+	Holders []*hypurr.HyperliquidTokenHolder `protobuf:"bytes,1,rep,name=holders,proto3" json:"holders,omitempty"`
 }
 
 func (x *HyperliquidTokenHoldersResponse) Reset() {
@@ -108,7 +109,7 @@ func (*HyperliquidTokenHoldersResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *HyperliquidTokenHoldersResponse) GetHolders() []*HyperliquidTokenHolder {
+func (x *HyperliquidTokenHoldersResponse) GetHolders() []*hypurr.HyperliquidTokenHolder {
 	if x != nil {
 		return x.Holders
 	}
@@ -158,7 +159,7 @@ type HyperliquidDeployAuctionResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Auction *HyperliquidDeployAuction `protobuf:"bytes,1,opt,name=auction,proto3" json:"auction,omitempty"`
+	Auction *hypurr.HyperliquidDeployAuction `protobuf:"bytes,1,opt,name=auction,proto3" json:"auction,omitempty"`
 }
 
 func (x *HyperliquidDeployAuctionResponse) Reset() {
@@ -193,7 +194,7 @@ func (*HyperliquidDeployAuctionResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *HyperliquidDeployAuctionResponse) GetAuction() *HyperliquidDeployAuction {
+func (x *HyperliquidDeployAuctionResponse) GetAuction() *hypurr.HyperliquidDeployAuction {
 	if x != nil {
 		return x.Auction
 	}
@@ -243,7 +244,7 @@ type HyperliquidTokensResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Tokens []*HyperliquidToken `protobuf:"bytes,1,rep,name=tokens,proto3" json:"tokens,omitempty"`
+	Tokens []*hypurr.HyperliquidToken `protobuf:"bytes,1,rep,name=tokens,proto3" json:"tokens,omitempty"`
 }
 
 func (x *HyperliquidTokensResponse) Reset() {
@@ -278,7 +279,7 @@ func (*HyperliquidTokensResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *HyperliquidTokensResponse) GetTokens() []*HyperliquidToken {
+func (x *HyperliquidTokensResponse) GetTokens() []*hypurr.HyperliquidToken {
 	if x != nil {
 		return x.Tokens
 	}
@@ -337,7 +338,7 @@ type HyperliquidTokenMessagesResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Messages []*HyperliquidTokenMessage `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
+	Messages []*hypurr.HyperliquidTokenMessage `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
 }
 
 func (x *HyperliquidTokenMessagesResponse) Reset() {
@@ -372,7 +373,7 @@ func (*HyperliquidTokenMessagesResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *HyperliquidTokenMessagesResponse) GetMessages() []*HyperliquidTokenMessage {
+func (x *HyperliquidTokenMessagesResponse) GetMessages() []*hypurr.HyperliquidTokenMessage {
 	if x != nil {
 		return x.Messages
 	}
@@ -431,7 +432,7 @@ type HyperliquidSpotPairResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Pair *HyperliquidSpotPair `protobuf:"bytes,1,opt,name=pair,proto3" json:"pair,omitempty"`
+	Pair *hypurr.HyperliquidSpotPair `protobuf:"bytes,1,opt,name=pair,proto3" json:"pair,omitempty"`
 }
 
 func (x *HyperliquidSpotPairResponse) Reset() {
@@ -466,7 +467,7 @@ func (*HyperliquidSpotPairResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *HyperliquidSpotPairResponse) GetPair() *HyperliquidSpotPair {
+func (x *HyperliquidSpotPairResponse) GetPair() *hypurr.HyperliquidSpotPair {
 	if x != nil {
 		return x.Pair
 	}
@@ -516,7 +517,7 @@ type HyperliquidSpotPairsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Pairs []*HyperliquidSpotPair `protobuf:"bytes,1,rep,name=pairs,proto3" json:"pairs,omitempty"`
+	Pairs []*hypurr.HyperliquidSpotPair `protobuf:"bytes,1,rep,name=pairs,proto3" json:"pairs,omitempty"`
 }
 
 func (x *HyperliquidSpotPairsResponse) Reset() {
@@ -551,7 +552,7 @@ func (*HyperliquidSpotPairsResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *HyperliquidSpotPairsResponse) GetPairs() []*HyperliquidSpotPair {
+func (x *HyperliquidSpotPairsResponse) GetPairs() []*hypurr.HyperliquidSpotPair {
 	if x != nil {
 		return x.Pairs
 	}
@@ -601,7 +602,7 @@ type HyperliquidPerpPairsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Pairs []*HyperliquidPerpPair `protobuf:"bytes,1,rep,name=pairs,proto3" json:"pairs,omitempty"`
+	Pairs []*hypurr.HyperliquidPerpPair `protobuf:"bytes,1,rep,name=pairs,proto3" json:"pairs,omitempty"`
 }
 
 func (x *HyperliquidPerpPairsResponse) Reset() {
@@ -636,7 +637,7 @@ func (*HyperliquidPerpPairsResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *HyperliquidPerpPairsResponse) GetPairs() []*HyperliquidPerpPair {
+func (x *HyperliquidPerpPairsResponse) GetPairs() []*hypurr.HyperliquidPerpPair {
 	if x != nil {
 		return x.Pairs
 	}
@@ -695,7 +696,7 @@ type HyperliquidWalletResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Wallet *HyperliquidWallet `protobuf:"bytes,1,opt,name=wallet,proto3" json:"wallet,omitempty"`
+	Wallet *hypurr.HyperliquidWallet `protobuf:"bytes,1,opt,name=wallet,proto3" json:"wallet,omitempty"`
 }
 
 func (x *HyperliquidWalletResponse) Reset() {
@@ -730,7 +731,7 @@ func (*HyperliquidWalletResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *HyperliquidWalletResponse) GetWallet() *HyperliquidWallet {
+func (x *HyperliquidWalletResponse) GetWallet() *hypurr.HyperliquidWallet {
 	if x != nil {
 		return x.Wallet
 	}
@@ -789,7 +790,7 @@ type HyperliquidLaunchesResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Launches []*HyperliquidLaunch `protobuf:"bytes,1,rep,name=launches,proto3" json:"launches,omitempty"`
+	Launches []*hypurr.HyperliquidLaunch `protobuf:"bytes,1,rep,name=launches,proto3" json:"launches,omitempty"`
 }
 
 func (x *HyperliquidLaunchesResponse) Reset() {
@@ -824,7 +825,7 @@ func (*HyperliquidLaunchesResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{17}
 }
 
-func (x *HyperliquidLaunchesResponse) GetLaunches() []*HyperliquidLaunch {
+func (x *HyperliquidLaunchesResponse) GetLaunches() []*hypurr.HyperliquidLaunch {
 	if x != nil {
 		return x.Launches
 	}
@@ -892,7 +893,7 @@ type HyperliquidLaunchStreamResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Launches []*HyperliquidLaunch `protobuf:"bytes,1,rep,name=launches,proto3" json:"launches,omitempty"`
+	Launches []*hypurr.HyperliquidLaunch `protobuf:"bytes,1,rep,name=launches,proto3" json:"launches,omitempty"`
 }
 
 func (x *HyperliquidLaunchStreamResponse) Reset() {
@@ -927,7 +928,7 @@ func (*HyperliquidLaunchStreamResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{19}
 }
 
-func (x *HyperliquidLaunchStreamResponse) GetLaunches() []*HyperliquidLaunch {
+func (x *HyperliquidLaunchStreamResponse) GetLaunches() []*hypurr.HyperliquidLaunch {
 	if x != nil {
 		return x.Launches
 	}
@@ -1010,7 +1011,7 @@ type HyperliquidWalletDeploySessionsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Sessions []*HyperliquidWalletDeploySession `protobuf:"bytes,1,rep,name=sessions,proto3" json:"sessions,omitempty"`
+	Sessions []*hypurr.HyperliquidWalletDeploySession `protobuf:"bytes,1,rep,name=sessions,proto3" json:"sessions,omitempty"`
 }
 
 func (x *HyperliquidWalletDeploySessionsResponse) Reset() {
@@ -1045,7 +1046,7 @@ func (*HyperliquidWalletDeploySessionsResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{21}
 }
 
-func (x *HyperliquidWalletDeploySessionsResponse) GetSessions() []*HyperliquidWalletDeploySession {
+func (x *HyperliquidWalletDeploySessionsResponse) GetSessions() []*hypurr.HyperliquidWalletDeploySession {
 	if x != nil {
 		return x.Sessions
 	}
@@ -1136,7 +1137,7 @@ type SetHyperliquidWalletDeploySessionTargetResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Session *HyperliquidWalletDeploySession `protobuf:"bytes,1,opt,name=session,proto3" json:"session,omitempty"`
+	Session *hypurr.HyperliquidWalletDeploySession `protobuf:"bytes,1,opt,name=session,proto3" json:"session,omitempty"`
 }
 
 func (x *SetHyperliquidWalletDeploySessionTargetResponse) Reset() {
@@ -1171,7 +1172,7 @@ func (*SetHyperliquidWalletDeploySessionTargetResponse) Descriptor() ([]byte, []
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{23}
 }
 
-func (x *SetHyperliquidWalletDeploySessionTargetResponse) GetSession() *HyperliquidWalletDeploySession {
+func (x *SetHyperliquidWalletDeploySessionTargetResponse) GetSession() *hypurr.HyperliquidWalletDeploySession {
 	if x != nil {
 		return x.Session
 	}
@@ -1246,7 +1247,7 @@ type DeleteHyperliquidWalletDeploySessionTargetResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Session *HyperliquidWalletDeploySession `protobuf:"bytes,1,opt,name=session,proto3" json:"session,omitempty"`
+	Session *hypurr.HyperliquidWalletDeploySession `protobuf:"bytes,1,opt,name=session,proto3" json:"session,omitempty"`
 }
 
 func (x *DeleteHyperliquidWalletDeploySessionTargetResponse) Reset() {
@@ -1281,7 +1282,7 @@ func (*DeleteHyperliquidWalletDeploySessionTargetResponse) Descriptor() ([]byte,
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{25}
 }
 
-func (x *DeleteHyperliquidWalletDeploySessionTargetResponse) GetSession() *HyperliquidWalletDeploySession {
+func (x *DeleteHyperliquidWalletDeploySessionTargetResponse) GetSession() *hypurr.HyperliquidWalletDeploySession {
 	if x != nil {
 		return x.Session
 	}
@@ -1348,8 +1349,8 @@ type HyperliquidLaunchFillsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Fills     []*HyperliquidLaunchFill     `protobuf:"bytes,1,rep,name=fills,proto3" json:"fills,omitempty"`
-	Positions []*HyperliquidLaunchPosition `protobuf:"bytes,2,rep,name=positions,proto3" json:"positions,omitempty"`
+	Fills     []*hypurr.HyperliquidLaunchFill     `protobuf:"bytes,1,rep,name=fills,proto3" json:"fills,omitempty"`
+	Positions []*hypurr.HyperliquidLaunchPosition `protobuf:"bytes,2,rep,name=positions,proto3" json:"positions,omitempty"`
 }
 
 func (x *HyperliquidLaunchFillsResponse) Reset() {
@@ -1384,14 +1385,14 @@ func (*HyperliquidLaunchFillsResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{27}
 }
 
-func (x *HyperliquidLaunchFillsResponse) GetFills() []*HyperliquidLaunchFill {
+func (x *HyperliquidLaunchFillsResponse) GetFills() []*hypurr.HyperliquidLaunchFill {
 	if x != nil {
 		return x.Fills
 	}
 	return nil
 }
 
-func (x *HyperliquidLaunchFillsResponse) GetPositions() []*HyperliquidLaunchPosition {
+func (x *HyperliquidLaunchFillsResponse) GetPositions() []*hypurr.HyperliquidLaunchPosition {
 	if x != nil {
 		return x.Positions
 	}
@@ -1458,7 +1459,7 @@ type HyperliquidLaunchCandlesResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Candles []*PriceCandle `protobuf:"bytes,1,rep,name=candles,proto3" json:"candles,omitempty"`
+	Candles []*hypurr.PriceCandle `protobuf:"bytes,1,rep,name=candles,proto3" json:"candles,omitempty"`
 }
 
 func (x *HyperliquidLaunchCandlesResponse) Reset() {
@@ -1493,7 +1494,7 @@ func (*HyperliquidLaunchCandlesResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{29}
 }
 
-func (x *HyperliquidLaunchCandlesResponse) GetCandles() []*PriceCandle {
+func (x *HyperliquidLaunchCandlesResponse) GetCandles() []*hypurr.PriceCandle {
 	if x != nil {
 		return x.Candles
 	}
@@ -1552,7 +1553,7 @@ type HyperliquidLaunchResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Launch *HyperliquidLaunch `protobuf:"bytes,1,opt,name=launch,proto3" json:"launch,omitempty"`
+	Launch *hypurr.HyperliquidLaunch `protobuf:"bytes,1,opt,name=launch,proto3" json:"launch,omitempty"`
 }
 
 func (x *HyperliquidLaunchResponse) Reset() {
@@ -1587,7 +1588,7 @@ func (*HyperliquidLaunchResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{31}
 }
 
-func (x *HyperliquidLaunchResponse) GetLaunch() *HyperliquidLaunch {
+func (x *HyperliquidLaunchResponse) GetLaunch() *hypurr.HyperliquidLaunch {
 	if x != nil {
 		return x.Launch
 	}
@@ -1662,7 +1663,7 @@ type HyperliquidLaunchMessagesResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Messages []*HyperliquidLaunchMessage `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
+	Messages []*hypurr.HyperliquidLaunchMessage `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
 }
 
 func (x *HyperliquidLaunchMessagesResponse) Reset() {
@@ -1697,7 +1698,7 @@ func (*HyperliquidLaunchMessagesResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{33}
 }
 
-func (x *HyperliquidLaunchMessagesResponse) GetMessages() []*HyperliquidLaunchMessage {
+func (x *HyperliquidLaunchMessagesResponse) GetMessages() []*hypurr.HyperliquidLaunchMessage {
 	if x != nil {
 		return x.Messages
 	}
@@ -1756,7 +1757,7 @@ type HyperliquidLaunchHoldersResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Holders []*HyperliquidLaunchHolder `protobuf:"bytes,1,rep,name=holders,proto3" json:"holders,omitempty"`
+	Holders []*hypurr.HyperliquidLaunchHolder `protobuf:"bytes,1,rep,name=holders,proto3" json:"holders,omitempty"`
 }
 
 func (x *HyperliquidLaunchHoldersResponse) Reset() {
@@ -1791,7 +1792,7 @@ func (*HyperliquidLaunchHoldersResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{35}
 }
 
-func (x *HyperliquidLaunchHoldersResponse) GetHolders() []*HyperliquidLaunchHolder {
+func (x *HyperliquidLaunchHoldersResponse) GetHolders() []*hypurr.HyperliquidLaunchHolder {
 	if x != nil {
 		return x.Holders
 	}
@@ -1889,7 +1890,7 @@ type HpumpV1LaunchResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Launch *HpumpV1Launch `protobuf:"bytes,1,opt,name=launch,proto3" json:"launch,omitempty"`
+	Launch *hypurr.HpumpV1Launch `protobuf:"bytes,1,opt,name=launch,proto3" json:"launch,omitempty"`
 }
 
 func (x *HpumpV1LaunchResponse) Reset() {
@@ -1924,7 +1925,7 @@ func (*HpumpV1LaunchResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{38}
 }
 
-func (x *HpumpV1LaunchResponse) GetLaunch() *HpumpV1Launch {
+func (x *HpumpV1LaunchResponse) GetLaunch() *hypurr.HpumpV1Launch {
 	if x != nil {
 		return x.Launch
 	}
@@ -1999,8 +2000,8 @@ type HpumpV1LaunchesResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Launches      []*HpumpV1Launch `protobuf:"bytes,1,rep,name=launches,proto3" json:"launches,omitempty"`
-	NextPageToken string           `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Launches      []*hypurr.HpumpV1Launch `protobuf:"bytes,1,rep,name=launches,proto3" json:"launches,omitempty"`
+	NextPageToken string                  `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 }
 
 func (x *HpumpV1LaunchesResponse) Reset() {
@@ -2035,7 +2036,7 @@ func (*HpumpV1LaunchesResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{40}
 }
 
-func (x *HpumpV1LaunchesResponse) GetLaunches() []*HpumpV1Launch {
+func (x *HpumpV1LaunchesResponse) GetLaunches() []*hypurr.HpumpV1Launch {
 	if x != nil {
 		return x.Launches
 	}
@@ -2118,7 +2119,7 @@ type HpumpV1LaunchStreamResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Launches []*HpumpV1Launch `protobuf:"bytes,1,rep,name=launches,proto3" json:"launches,omitempty"`
+	Launches []*hypurr.HpumpV1Launch `protobuf:"bytes,1,rep,name=launches,proto3" json:"launches,omitempty"`
 }
 
 func (x *HpumpV1LaunchStreamResponse) Reset() {
@@ -2153,7 +2154,7 @@ func (*HpumpV1LaunchStreamResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{42}
 }
 
-func (x *HpumpV1LaunchStreamResponse) GetLaunches() []*HpumpV1Launch {
+func (x *HpumpV1LaunchStreamResponse) GetLaunches() []*hypurr.HpumpV1Launch {
 	if x != nil {
 		return x.Launches
 	}
@@ -2213,7 +2214,7 @@ type HpumpV1LaunchSwapResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Swap *HpumpV1LaunchSwap `protobuf:"bytes,1,opt,name=swap,proto3" json:"swap,omitempty"`
+	Swap *hypurr.HpumpV1LaunchSwap `protobuf:"bytes,1,opt,name=swap,proto3" json:"swap,omitempty"`
 }
 
 func (x *HpumpV1LaunchSwapResponse) Reset() {
@@ -2248,7 +2249,7 @@ func (*HpumpV1LaunchSwapResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{44}
 }
 
-func (x *HpumpV1LaunchSwapResponse) GetSwap() *HpumpV1LaunchSwap {
+func (x *HpumpV1LaunchSwapResponse) GetSwap() *hypurr.HpumpV1LaunchSwap {
 	if x != nil {
 		return x.Swap
 	}
@@ -2339,8 +2340,8 @@ type HpumpV1LaunchSwapsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Swaps         []*HpumpV1LaunchSwap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
-	NextPageToken string               `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Swaps         []*hypurr.HpumpV1LaunchSwap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
+	NextPageToken string                      `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 }
 
 func (x *HpumpV1LaunchSwapsResponse) Reset() {
@@ -2375,7 +2376,7 @@ func (*HpumpV1LaunchSwapsResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{46}
 }
 
-func (x *HpumpV1LaunchSwapsResponse) GetSwaps() []*HpumpV1LaunchSwap {
+func (x *HpumpV1LaunchSwapsResponse) GetSwaps() []*hypurr.HpumpV1LaunchSwap {
 	if x != nil {
 		return x.Swaps
 	}
@@ -2450,8 +2451,8 @@ type HpumpV1LaunchSwapStreamResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Swaps     []*HpumpV1LaunchSwap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
-	Positions []*WalletPosition    `protobuf:"bytes,2,rep,name=positions,proto3" json:"positions,omitempty"`
+	Swaps     []*hypurr.HpumpV1LaunchSwap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
+	Positions []*hypurr.WalletPosition    `protobuf:"bytes,2,rep,name=positions,proto3" json:"positions,omitempty"`
 }
 
 func (x *HpumpV1LaunchSwapStreamResponse) Reset() {
@@ -2486,14 +2487,14 @@ func (*HpumpV1LaunchSwapStreamResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{48}
 }
 
-func (x *HpumpV1LaunchSwapStreamResponse) GetSwaps() []*HpumpV1LaunchSwap {
+func (x *HpumpV1LaunchSwapStreamResponse) GetSwaps() []*hypurr.HpumpV1LaunchSwap {
 	if x != nil {
 		return x.Swaps
 	}
 	return nil
 }
 
-func (x *HpumpV1LaunchSwapStreamResponse) GetPositions() []*WalletPosition {
+func (x *HpumpV1LaunchSwapStreamResponse) GetPositions() []*hypurr.WalletPosition {
 	if x != nil {
 		return x.Positions
 	}
@@ -2576,7 +2577,7 @@ type HpumpV1LaunchCandlesResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Candles []*PriceCandle `protobuf:"bytes,1,rep,name=candles,proto3" json:"candles,omitempty"`
+	Candles []*hypurr.PriceCandle `protobuf:"bytes,1,rep,name=candles,proto3" json:"candles,omitempty"`
 }
 
 func (x *HpumpV1LaunchCandlesResponse) Reset() {
@@ -2611,7 +2612,7 @@ func (*HpumpV1LaunchCandlesResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{50}
 }
 
-func (x *HpumpV1LaunchCandlesResponse) GetCandles() []*PriceCandle {
+func (x *HpumpV1LaunchCandlesResponse) GetCandles() []*hypurr.PriceCandle {
 	if x != nil {
 		return x.Candles
 	}
@@ -2686,7 +2687,7 @@ type HpumpV1LaunchMessagesResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Messages []*HpumpV1LaunchMessage `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
+	Messages []*hypurr.HpumpV1LaunchMessage `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
 }
 
 func (x *HpumpV1LaunchMessagesResponse) Reset() {
@@ -2721,7 +2722,7 @@ func (*HpumpV1LaunchMessagesResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{52}
 }
 
-func (x *HpumpV1LaunchMessagesResponse) GetMessages() []*HpumpV1LaunchMessage {
+func (x *HpumpV1LaunchMessagesResponse) GetMessages() []*hypurr.HpumpV1LaunchMessage {
 	if x != nil {
 		return x.Messages
 	}
@@ -2788,9 +2789,9 @@ type HyperliquidWalletPerformanceResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Spot   *Performance `protobuf:"bytes,1,opt,name=spot,proto3" json:"spot,omitempty"`
-	Perp   *Performance `protobuf:"bytes,2,opt,name=perp,proto3" json:"perp,omitempty"`
-	Launch *Performance `protobuf:"bytes,3,opt,name=launch,proto3" json:"launch,omitempty"`
+	Spot   *hypurr.Performance `protobuf:"bytes,1,opt,name=spot,proto3" json:"spot,omitempty"`
+	Perp   *hypurr.Performance `protobuf:"bytes,2,opt,name=perp,proto3" json:"perp,omitempty"`
+	Launch *hypurr.Performance `protobuf:"bytes,3,opt,name=launch,proto3" json:"launch,omitempty"`
 }
 
 func (x *HyperliquidWalletPerformanceResponse) Reset() {
@@ -2825,21 +2826,21 @@ func (*HyperliquidWalletPerformanceResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{54}
 }
 
-func (x *HyperliquidWalletPerformanceResponse) GetSpot() *Performance {
+func (x *HyperliquidWalletPerformanceResponse) GetSpot() *hypurr.Performance {
 	if x != nil {
 		return x.Spot
 	}
 	return nil
 }
 
-func (x *HyperliquidWalletPerformanceResponse) GetPerp() *Performance {
+func (x *HyperliquidWalletPerformanceResponse) GetPerp() *hypurr.Performance {
 	if x != nil {
 		return x.Perp
 	}
 	return nil
 }
 
-func (x *HyperliquidWalletPerformanceResponse) GetLaunch() *Performance {
+func (x *HyperliquidWalletPerformanceResponse) GetLaunch() *hypurr.Performance {
 	if x != nil {
 		return x.Launch
 	}
@@ -2889,7 +2890,7 @@ type HypurrFunCabalsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Cabals []*HypurrFunCabal `protobuf:"bytes,1,rep,name=cabals,proto3" json:"cabals,omitempty"`
+	Cabals []*hypurr.HypurrFunCabal `protobuf:"bytes,1,rep,name=cabals,proto3" json:"cabals,omitempty"`
 }
 
 func (x *HypurrFunCabalsResponse) Reset() {
@@ -2924,7 +2925,7 @@ func (*HypurrFunCabalsResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{56}
 }
 
-func (x *HypurrFunCabalsResponse) GetCabals() []*HypurrFunCabal {
+func (x *HypurrFunCabalsResponse) GetCabals() []*hypurr.HypurrFunCabal {
 	if x != nil {
 		return x.Cabals
 	}
@@ -2983,7 +2984,7 @@ type HypurrFunCabalPerformanceResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Performances []*HypurrFunCabalPerformance `protobuf:"bytes,1,rep,name=performances,proto3" json:"performances,omitempty"`
+	Performances []*hypurr.HypurrFunCabalPerformance `protobuf:"bytes,1,rep,name=performances,proto3" json:"performances,omitempty"`
 }
 
 func (x *HypurrFunCabalPerformanceResponse) Reset() {
@@ -3018,7 +3019,7 @@ func (*HypurrFunCabalPerformanceResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{58}
 }
 
-func (x *HypurrFunCabalPerformanceResponse) GetPerformances() []*HypurrFunCabalPerformance {
+func (x *HypurrFunCabalPerformanceResponse) GetPerformances() []*hypurr.HypurrFunCabalPerformance {
 	if x != nil {
 		return x.Performances
 	}
@@ -3077,7 +3078,7 @@ type TelegramUserPublicResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	User *TelegramUserPublic `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	User *hypurr.TelegramUserPublic `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 }
 
 func (x *TelegramUserPublicResponse) Reset() {
@@ -3112,7 +3113,7 @@ func (*TelegramUserPublicResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_static_static_service_proto_rawDescGZIP(), []int{60}
 }
 
-func (x *TelegramUserPublicResponse) GetUser() *TelegramUserPublic {
+func (x *TelegramUserPublicResponse) GetUser() *hypurr.TelegramUserPublic {
 	if x != nil {
 		return x.User
 	}
@@ -3740,10 +3741,11 @@ var file_hypurr_static_static_service_proto_rawDesc = []byte{
 	0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x48, 0x79,
 	0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x44,
 	0x65, 0x70, 0x6c, 0x6f, 0x79, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x54, 0x61, 0x72, 0x67,
-	0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x29, 0x5a, 0x27,
+	0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x30, 0x5a, 0x2e,
 	0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72,
 	0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f,
-	0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x73, 0x74, 0x61, 0x74, 0x69, 0x63, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3821,32 +3823,32 @@ var file_hypurr_static_static_service_proto_goTypes = []any{
 	(*HypurrFunCabalPerformanceResponse)(nil),                  // 58: hypurr.HypurrFunCabalPerformanceResponse
 	(*TelegramUserPublicRequest)(nil),                          // 59: hypurr.TelegramUserPublicRequest
 	(*TelegramUserPublicResponse)(nil),                         // 60: hypurr.TelegramUserPublicResponse
-	(*HyperliquidTokenHolder)(nil),                             // 61: hypurr.HyperliquidTokenHolder
-	(*HyperliquidDeployAuction)(nil),                           // 62: hypurr.HyperliquidDeployAuction
-	(*HyperliquidToken)(nil),                                   // 63: hypurr.HyperliquidToken
-	(*HyperliquidTokenMessage)(nil),                            // 64: hypurr.HyperliquidTokenMessage
-	(*HyperliquidSpotPair)(nil),                                // 65: hypurr.HyperliquidSpotPair
-	(*HyperliquidPerpPair)(nil),                                // 66: hypurr.HyperliquidPerpPair
+	(*hypurr.HyperliquidTokenHolder)(nil),                      // 61: hypurr.HyperliquidTokenHolder
+	(*hypurr.HyperliquidDeployAuction)(nil),                    // 62: hypurr.HyperliquidDeployAuction
+	(*hypurr.HyperliquidToken)(nil),                            // 63: hypurr.HyperliquidToken
+	(*hypurr.HyperliquidTokenMessage)(nil),                     // 64: hypurr.HyperliquidTokenMessage
+	(*hypurr.HyperliquidSpotPair)(nil),                         // 65: hypurr.HyperliquidSpotPair
+	(*hypurr.HyperliquidPerpPair)(nil),                         // 66: hypurr.HyperliquidPerpPair
 	(*wrapperspb.StringValue)(nil),                             // 67: google.protobuf.StringValue
-	(*HyperliquidWallet)(nil),                                  // 68: hypurr.HyperliquidWallet
-	(*HyperliquidLaunch)(nil),                                  // 69: hypurr.HyperliquidLaunch
+	(*hypurr.HyperliquidWallet)(nil),                           // 68: hypurr.HyperliquidWallet
+	(*hypurr.HyperliquidLaunch)(nil),                           // 69: hypurr.HyperliquidLaunch
 	(*wrapperspb.Int64Value)(nil),                              // 70: google.protobuf.Int64Value
-	(*HyperliquidWalletDeploySession)(nil),                     // 71: hypurr.HyperliquidWalletDeploySession
-	(*HyperliquidLaunchFill)(nil),                              // 72: hypurr.HyperliquidLaunchFill
-	(*HyperliquidLaunchPosition)(nil),                          // 73: hypurr.HyperliquidLaunchPosition
-	(*PriceCandle)(nil),                                        // 74: hypurr.PriceCandle
+	(*hypurr.HyperliquidWalletDeploySession)(nil),              // 71: hypurr.HyperliquidWalletDeploySession
+	(*hypurr.HyperliquidLaunchFill)(nil),                       // 72: hypurr.HyperliquidLaunchFill
+	(*hypurr.HyperliquidLaunchPosition)(nil),                   // 73: hypurr.HyperliquidLaunchPosition
+	(*hypurr.PriceCandle)(nil),                                 // 74: hypurr.PriceCandle
 	(*wrapperspb.BoolValue)(nil),                               // 75: google.protobuf.BoolValue
-	(*HyperliquidLaunchMessage)(nil),                           // 76: hypurr.HyperliquidLaunchMessage
-	(*HyperliquidLaunchHolder)(nil),                            // 77: hypurr.HyperliquidLaunchHolder
-	(*HpumpV1Launch)(nil),                                      // 78: hypurr.HpumpV1Launch
-	(*HpumpV1LaunchSwap)(nil),                                  // 79: hypurr.HpumpV1LaunchSwap
+	(*hypurr.HyperliquidLaunchMessage)(nil),                    // 76: hypurr.HyperliquidLaunchMessage
+	(*hypurr.HyperliquidLaunchHolder)(nil),                     // 77: hypurr.HyperliquidLaunchHolder
+	(*hypurr.HpumpV1Launch)(nil),                               // 78: hypurr.HpumpV1Launch
+	(*hypurr.HpumpV1LaunchSwap)(nil),                           // 79: hypurr.HpumpV1LaunchSwap
 	(*wrapperspb.Int32Value)(nil),                              // 80: google.protobuf.Int32Value
-	(*WalletPosition)(nil),                                     // 81: hypurr.WalletPosition
-	(*HpumpV1LaunchMessage)(nil),                               // 82: hypurr.HpumpV1LaunchMessage
-	(*Performance)(nil),                                        // 83: hypurr.Performance
-	(*HypurrFunCabal)(nil),                                     // 84: hypurr.HypurrFunCabal
-	(*HypurrFunCabalPerformance)(nil),                          // 85: hypurr.HypurrFunCabalPerformance
-	(*TelegramUserPublic)(nil),                                 // 86: hypurr.TelegramUserPublic
+	(*hypurr.WalletPosition)(nil),                              // 81: hypurr.WalletPosition
+	(*hypurr.HpumpV1LaunchMessage)(nil),                        // 82: hypurr.HpumpV1LaunchMessage
+	(*hypurr.Performance)(nil),                                 // 83: hypurr.Performance
+	(*hypurr.HypurrFunCabal)(nil),                              // 84: hypurr.HypurrFunCabal
+	(*hypurr.HypurrFunCabalPerformance)(nil),                   // 85: hypurr.HypurrFunCabalPerformance
+	(*hypurr.TelegramUserPublic)(nil),                          // 86: hypurr.TelegramUserPublic
 }
 var file_hypurr_static_static_service_proto_depIdxs = []int32{
 	61, // 0: hypurr.HyperliquidTokenHoldersResponse.holders:type_name -> hypurr.HyperliquidTokenHolder
@@ -3979,14 +3981,6 @@ func file_hypurr_static_static_service_proto_init() {
 	if File_hypurr_static_static_service_proto != nil {
 		return
 	}
-	file_hypurr_token_proto_init()
-	file_hypurr_wallet_proto_init()
-	file_hypurr_launch_proto_init()
-	file_hypurr_pairs_proto_init()
-	file_hypurr_cabal_proto_init()
-	file_hypurr_evm_proto_init()
-	file_hypurr_hpumpv1_proto_init()
-	file_hypurr_common_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_hypurr_static_static_service_proto_msgTypes[0].Exporter = func(v any, i int) any {
 			switch v := v.(*HyperliquidTokenHoldersRequest); i {

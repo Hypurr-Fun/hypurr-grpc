@@ -4,9 +4,10 @@
 // 	protoc        v3.21.12
 // source: hypurr/evm/evm_service.proto
 
-package hypurr
+package evm
 
 import (
+	hypurr "gitlab.com/hypurr/hypurr-grpc/go/hypurr"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
@@ -73,7 +74,7 @@ type ERC20TokenResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Token *ERC20Token `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	Token *hypurr.ERC20Token `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 }
 
 func (x *ERC20TokenResponse) Reset() {
@@ -108,7 +109,7 @@ func (*ERC20TokenResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *ERC20TokenResponse) GetToken() *ERC20Token {
+func (x *ERC20TokenResponse) GetToken() *hypurr.ERC20Token {
 	if x != nil {
 		return x.Token
 	}
@@ -175,8 +176,8 @@ type ERC20TokensResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Tokens        []*ERC20Token `protobuf:"bytes,1,rep,name=tokens,proto3" json:"tokens,omitempty"`
-	NextPageToken string        `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Tokens        []*hypurr.ERC20Token `protobuf:"bytes,1,rep,name=tokens,proto3" json:"tokens,omitempty"`
+	NextPageToken string               `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 }
 
 func (x *ERC20TokensResponse) Reset() {
@@ -211,7 +212,7 @@ func (*ERC20TokensResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ERC20TokensResponse) GetTokens() []*ERC20Token {
+func (x *ERC20TokensResponse) GetTokens() []*hypurr.ERC20Token {
 	if x != nil {
 		return x.Tokens
 	}
@@ -277,7 +278,7 @@ type UniV2PairResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Pair *UniV2Pair `protobuf:"bytes,1,opt,name=pair,proto3" json:"pair,omitempty"`
+	Pair *hypurr.UniV2Pair `protobuf:"bytes,1,opt,name=pair,proto3" json:"pair,omitempty"`
 }
 
 func (x *UniV2PairResponse) Reset() {
@@ -312,7 +313,7 @@ func (*UniV2PairResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *UniV2PairResponse) GetPair() *UniV2Pair {
+func (x *UniV2PairResponse) GetPair() *hypurr.UniV2Pair {
 	if x != nil {
 		return x.Pair
 	}
@@ -387,9 +388,9 @@ type UniPairsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PairsV2       []*UniV2Pair `protobuf:"bytes,1,rep,name=pairs_v2,json=pairsV2,proto3" json:"pairs_v2,omitempty"`
-	PairsV3       []*UniV3Pool `protobuf:"bytes,2,rep,name=pairs_v3,json=pairsV3,proto3" json:"pairs_v3,omitempty"`
-	NextPageToken string       `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	PairsV2       []*hypurr.UniV2Pair `protobuf:"bytes,1,rep,name=pairs_v2,json=pairsV2,proto3" json:"pairs_v2,omitempty"`
+	PairsV3       []*hypurr.UniV3Pool `protobuf:"bytes,2,rep,name=pairs_v3,json=pairsV3,proto3" json:"pairs_v3,omitempty"`
+	NextPageToken string              `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 }
 
 func (x *UniPairsResponse) Reset() {
@@ -424,14 +425,14 @@ func (*UniPairsResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *UniPairsResponse) GetPairsV2() []*UniV2Pair {
+func (x *UniPairsResponse) GetPairsV2() []*hypurr.UniV2Pair {
 	if x != nil {
 		return x.PairsV2
 	}
 	return nil
 }
 
-func (x *UniPairsResponse) GetPairsV3() []*UniV3Pool {
+func (x *UniPairsResponse) GetPairsV3() []*hypurr.UniV3Pool {
 	if x != nil {
 		return x.PairsV3
 	}
@@ -497,7 +498,7 @@ type UniV2SwapResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Swap *UniV2Swap `protobuf:"bytes,1,opt,name=swap,proto3" json:"swap,omitempty"`
+	Swap *hypurr.UniV2Swap `protobuf:"bytes,1,opt,name=swap,proto3" json:"swap,omitempty"`
 }
 
 func (x *UniV2SwapResponse) Reset() {
@@ -532,7 +533,7 @@ func (*UniV2SwapResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *UniV2SwapResponse) GetSwap() *UniV2Swap {
+func (x *UniV2SwapResponse) GetSwap() *hypurr.UniV2Swap {
 	if x != nil {
 		return x.Swap
 	}
@@ -623,8 +624,8 @@ type UniV2SwapsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Swaps         []*UniV2Swap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
-	NextPageToken string       `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Swaps         []*hypurr.UniV2Swap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
+	NextPageToken string              `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 }
 
 func (x *UniV2SwapsResponse) Reset() {
@@ -659,7 +660,7 @@ func (*UniV2SwapsResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *UniV2SwapsResponse) GetSwaps() []*UniV2Swap {
+func (x *UniV2SwapsResponse) GetSwaps() []*hypurr.UniV2Swap {
 	if x != nil {
 		return x.Swaps
 	}
@@ -757,8 +758,8 @@ type ERC20TransferEventsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Events        []*ERC20TransferEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
-	NextPageToken string                `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Events        []*hypurr.ERC20TransferEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+	NextPageToken string                       `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 }
 
 func (x *ERC20TransferEventsResponse) Reset() {
@@ -793,7 +794,7 @@ func (*ERC20TransferEventsResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *ERC20TransferEventsResponse) GetEvents() []*ERC20TransferEvent {
+func (x *ERC20TransferEventsResponse) GetEvents() []*hypurr.ERC20TransferEvent {
 	if x != nil {
 		return x.Events
 	}
@@ -891,8 +892,8 @@ type ERC20ApprovalEventsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Events        []*ERC20ApprovalEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
-	NextPageToken string                `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Events        []*hypurr.ERC20ApprovalEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+	NextPageToken string                       `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 }
 
 func (x *ERC20ApprovalEventsResponse) Reset() {
@@ -927,7 +928,7 @@ func (*ERC20ApprovalEventsResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *ERC20ApprovalEventsResponse) GetEvents() []*ERC20ApprovalEvent {
+func (x *ERC20ApprovalEventsResponse) GetEvents() []*hypurr.ERC20ApprovalEvent {
 	if x != nil {
 		return x.Events
 	}
@@ -1072,7 +1073,7 @@ type UniCandlesResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Candles []*PriceCandle `protobuf:"bytes,1,rep,name=candles,proto3" json:"candles,omitempty"`
+	Candles []*hypurr.PriceCandle `protobuf:"bytes,1,rep,name=candles,proto3" json:"candles,omitempty"`
 }
 
 func (x *UniCandlesResponse) Reset() {
@@ -1107,7 +1108,7 @@ func (*UniCandlesResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *UniCandlesResponse) GetCandles() []*PriceCandle {
+func (x *UniCandlesResponse) GetCandles() []*hypurr.PriceCandle {
 	if x != nil {
 		return x.Candles
 	}
@@ -1167,7 +1168,7 @@ type UniV3SwapResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Swap *UniV3Swap `protobuf:"bytes,1,opt,name=swap,proto3" json:"swap,omitempty"`
+	Swap *hypurr.UniV3Swap `protobuf:"bytes,1,opt,name=swap,proto3" json:"swap,omitempty"`
 }
 
 func (x *UniV3SwapResponse) Reset() {
@@ -1202,7 +1203,7 @@ func (*UniV3SwapResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *UniV3SwapResponse) GetSwap() *UniV3Swap {
+func (x *UniV3SwapResponse) GetSwap() *hypurr.UniV3Swap {
 	if x != nil {
 		return x.Swap
 	}
@@ -1293,8 +1294,8 @@ type UniV3SwapsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Swaps         []*UniV3Swap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
-	NextPageToken string       `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	Swaps         []*hypurr.UniV3Swap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
+	NextPageToken string              `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 }
 
 func (x *UniV3SwapsResponse) Reset() {
@@ -1329,7 +1330,7 @@ func (*UniV3SwapsResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{22}
 }
 
-func (x *UniV3SwapsResponse) GetSwaps() []*UniV3Swap {
+func (x *UniV3SwapsResponse) GetSwaps() []*hypurr.UniV3Swap {
 	if x != nil {
 		return x.Swaps
 	}
@@ -1403,7 +1404,7 @@ type UniV2SwapStreamResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Swaps []*UniV2Swap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
+	Swaps []*hypurr.UniV2Swap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
 }
 
 func (x *UniV2SwapStreamResponse) Reset() {
@@ -1438,7 +1439,7 @@ func (*UniV2SwapStreamResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{24}
 }
 
-func (x *UniV2SwapStreamResponse) GetSwaps() []*UniV2Swap {
+func (x *UniV2SwapStreamResponse) GetSwaps() []*hypurr.UniV2Swap {
 	if x != nil {
 		return x.Swaps
 	}
@@ -1505,7 +1506,7 @@ type UniV3SwapStreamResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Swaps []*UniV3Swap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
+	Swaps []*hypurr.UniV3Swap `protobuf:"bytes,1,rep,name=swaps,proto3" json:"swaps,omitempty"`
 }
 
 func (x *UniV3SwapStreamResponse) Reset() {
@@ -1540,7 +1541,7 @@ func (*UniV3SwapStreamResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{26}
 }
 
-func (x *UniV3SwapStreamResponse) GetSwaps() []*UniV3Swap {
+func (x *UniV3SwapStreamResponse) GetSwaps() []*hypurr.UniV3Swap {
 	if x != nil {
 		return x.Swaps
 	}
@@ -1599,7 +1600,7 @@ type ERC20AccountBalancesResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AccountBalances []*ERC20AccountBalance `protobuf:"bytes,1,rep,name=account_balances,json=accountBalances,proto3" json:"account_balances,omitempty"`
+	AccountBalances []*hypurr.ERC20AccountBalance `protobuf:"bytes,1,rep,name=account_balances,json=accountBalances,proto3" json:"account_balances,omitempty"`
 }
 
 func (x *ERC20AccountBalancesResponse) Reset() {
@@ -1634,7 +1635,7 @@ func (*ERC20AccountBalancesResponse) Descriptor() ([]byte, []int) {
 	return file_hypurr_evm_evm_service_proto_rawDescGZIP(), []int{28}
 }
 
-func (x *ERC20AccountBalancesResponse) GetAccountBalances() []*ERC20AccountBalance {
+func (x *ERC20AccountBalancesResponse) GetAccountBalances() []*hypurr.ERC20AccountBalance {
 	if x != nil {
 		return x.AccountBalances
 	}
@@ -1910,10 +1911,10 @@ var file_hypurr_evm_evm_service_proto_rawDesc = []byte{
 	0x61, 0x70, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
 	0x1f, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x55, 0x6e, 0x69, 0x56, 0x33, 0x53, 0x77,
 	0x61, 0x70, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x22, 0x00, 0x30, 0x01, 0x42, 0x29, 0x5a, 0x27, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63,
+	0x22, 0x00, 0x30, 0x01, 0x42, 0x2d, 0x5a, 0x2b, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63,
 	0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72,
-	0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f,
+	0x65, 0x76, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1959,16 +1960,16 @@ var file_hypurr_evm_evm_service_proto_goTypes = []any{
 	(*UniV3SwapStreamResponse)(nil),      // 26: hypurr.UniV3SwapStreamResponse
 	(*ERC20AccountBalancesRequest)(nil),  // 27: hypurr.ERC20AccountBalancesRequest
 	(*ERC20AccountBalancesResponse)(nil), // 28: hypurr.ERC20AccountBalancesResponse
-	(*ERC20Token)(nil),                   // 29: hypurr.ERC20Token
-	(*UniV2Pair)(nil),                    // 30: hypurr.UniV2Pair
-	(*UniV3Pool)(nil),                    // 31: hypurr.UniV3Pool
-	(*UniV2Swap)(nil),                    // 32: hypurr.UniV2Swap
-	(*ERC20TransferEvent)(nil),           // 33: hypurr.ERC20TransferEvent
-	(*ERC20ApprovalEvent)(nil),           // 34: hypurr.ERC20ApprovalEvent
-	(*PriceCandle)(nil),                  // 35: hypurr.PriceCandle
-	(*UniV3Swap)(nil),                    // 36: hypurr.UniV3Swap
+	(*hypurr.ERC20Token)(nil),            // 29: hypurr.ERC20Token
+	(*hypurr.UniV2Pair)(nil),             // 30: hypurr.UniV2Pair
+	(*hypurr.UniV3Pool)(nil),             // 31: hypurr.UniV3Pool
+	(*hypurr.UniV2Swap)(nil),             // 32: hypurr.UniV2Swap
+	(*hypurr.ERC20TransferEvent)(nil),    // 33: hypurr.ERC20TransferEvent
+	(*hypurr.ERC20ApprovalEvent)(nil),    // 34: hypurr.ERC20ApprovalEvent
+	(*hypurr.PriceCandle)(nil),           // 35: hypurr.PriceCandle
+	(*hypurr.UniV3Swap)(nil),             // 36: hypurr.UniV3Swap
 	(*wrapperspb.Int32Value)(nil),        // 37: google.protobuf.Int32Value
-	(*ERC20AccountBalance)(nil),          // 38: hypurr.ERC20AccountBalance
+	(*hypurr.ERC20AccountBalance)(nil),   // 38: hypurr.ERC20AccountBalance
 }
 var file_hypurr_evm_evm_service_proto_depIdxs = []int32{
 	29, // 0: hypurr.ERC20TokenResponse.token:type_name -> hypurr.ERC20Token
@@ -2030,8 +2031,6 @@ func file_hypurr_evm_evm_service_proto_init() {
 	if File_hypurr_evm_evm_service_proto != nil {
 		return
 	}
-	file_hypurr_evm_proto_init()
-	file_hypurr_common_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_hypurr_evm_evm_service_proto_msgTypes[0].Exporter = func(v any, i int) any {
 			switch v := v.(*ERC20TokenRequest); i {

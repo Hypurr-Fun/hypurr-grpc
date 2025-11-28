@@ -1,0 +1,41 @@
+syntax = "proto3";
+package hypurr;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
+
+enum TradeDirection {
+  BUY = 0;
+  SELL = 1;
+}
+
+enum TimeInForce {
+  GTC = 0;
+  ALO = 1;
+  IOC = 2;
+}
+
+message LimitOrderTypeData {
+  TimeInForce time_in_force = 1;
+}
+
+message TriggerOrderTypeData {
+  double trigger_price = 1;
+  bool is_market = 2;
+  double tpsl = 3;
+}
+
+message OrderType {
+  oneof type {
+    LimitOrderTypeData limit = 1;
+    TriggerOrderTypeData trigger = 2;
+  }
+}
+
+message HyperliquidCoreOrder {
+  int64 instrument_id = 1;
+  TradeDirection direction = 2;
+  double limit_price = 3;
+  double size = 4;
+  bool reduce_only = 5;
+  OrderType order_type = 6;
+  string client_order_id = 7;
+}

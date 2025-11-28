@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package hypurr;
-option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/evm";
 
 import "hypurr/evm.proto";
 import "google/protobuf/wrappers.proto";

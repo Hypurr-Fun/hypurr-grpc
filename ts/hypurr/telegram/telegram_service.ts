@@ -18,6 +18,8 @@ import { HyperliquidLaunch } from "../launch";
 import { MediaType } from "../common";
 import { HyperliquidWalletSpotTwapSession } from "../tools";
 import { HyperliquidSpotSniperConfig } from "../tools";
+import { TradeDirection } from "../trade";
+import { HyperliquidCoreOrder } from "../trade";
 import { HyperliquidWallet } from "../wallet";
 import { TelegramUser } from "../user";
 /**
@@ -61,6 +63,57 @@ export interface TelegramUserWalletsResponse {
      * @generated from protobuf field: repeated hypurr.HyperliquidWallet wallets = 1;
      */
     wallets: HyperliquidWallet[];
+}
+// 
+// 
+// type TriggerOrderTypeData struct {
+// TriggerPx string `json:"triggerPx" msgpack:"triggerPx"`
+// IsMarket  bool   `json:"isMarket" msgpack:"isMarket"`
+// Tpsl      string `json:"tpsl" msgpack:"tpsl"`
+// }
+// type LimitOrderTypeData struct {
+// TimeInForce TimeInForce `json:"tif" msgpack:"tif"`
+// }
+
+/**
+ * @generated from protobuf message hypurr.HyperliquidCoreTradeRequest
+ */
+export interface HyperliquidCoreTradeRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: int64 wallet_id = 2;
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidCoreOrder order = 3;
+     */
+    order?: HyperliquidCoreOrder;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidCoreTradeResponse
+ */
+export interface HyperliquidCoreTradeResponse {
+    /**
+     * @generated from protobuf field: double base_amount = 1;
+     */
+    baseAmount: number;
+    /**
+     * @generated from protobuf field: double quote_amount = 2;
+     */
+    quoteAmount: number;
+    /**
+     * @generated from protobuf field: string message = 3;
+     */
+    message: string;
+    /**
+     * @generated from protobuf field: bool success = 4;
+     */
+    success: boolean;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchTradeRequest
@@ -486,19 +539,6 @@ export interface EditHyperliquidLaunchResponse {
      */
     launch?: HyperliquidLaunch;
 }
-/**
- * @generated from protobuf enum hypurr.TradeDirection
- */
-export enum TradeDirection {
-    /**
-     * @generated from protobuf enum value: BUY = 0;
-     */
-    BUY = 0,
-    /**
-     * @generated from protobuf enum value: SELL = 1;
-     */
-    SELL = 1
-}
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserRequest$Type extends MessageType<TelegramUserRequest> {
     constructor() {
@@ -719,6 +759,151 @@ class TelegramUserWalletsResponse$Type extends MessageType<TelegramUserWalletsRe
  * @generated MessageType for protobuf message hypurr.TelegramUserWalletsResponse
  */
 export const TelegramUserWalletsResponse = new TelegramUserWalletsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidCoreTradeRequest$Type extends MessageType<HyperliquidCoreTradeRequest> {
+    constructor() {
+        super("hypurr.HyperliquidCoreTradeRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "order", kind: "message", T: () => HyperliquidCoreOrder }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidCoreTradeRequest>): HyperliquidCoreTradeRequest {
+        const message = { authData: {}, walletId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidCoreTradeRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidCoreTradeRequest): HyperliquidCoreTradeRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* hypurr.HyperliquidCoreOrder order */ 3:
+                    message.order = HyperliquidCoreOrder.internalBinaryRead(reader, reader.uint32(), options, message.order);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: HyperliquidCoreTradeRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HyperliquidCoreTradeRequest["authData"] | undefined, val: HyperliquidCoreTradeRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HyperliquidCoreTradeRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: HyperliquidCoreTradeRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* hypurr.HyperliquidCoreOrder order = 3; */
+        if (message.order)
+            HyperliquidCoreOrder.internalBinaryWrite(message.order, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidCoreTradeRequest
+ */
+export const HyperliquidCoreTradeRequest = new HyperliquidCoreTradeRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidCoreTradeResponse$Type extends MessageType<HyperliquidCoreTradeResponse> {
+    constructor() {
+        super("hypurr.HyperliquidCoreTradeResponse", [
+            { no: 1, name: "base_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 2, name: "quote_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidCoreTradeResponse>): HyperliquidCoreTradeResponse {
+        const message = { baseAmount: 0, quoteAmount: 0, message: "", success: false };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidCoreTradeResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidCoreTradeResponse): HyperliquidCoreTradeResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* double base_amount */ 1:
+                    message.baseAmount = reader.double();
+                    break;
+                case /* double quote_amount */ 2:
+                    message.quoteAmount = reader.double();
+                    break;
+                case /* string message */ 3:
+                    message.message = reader.string();
+                    break;
+                case /* bool success */ 4:
+                    message.success = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidCoreTradeResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* double base_amount = 1; */
+        if (message.baseAmount !== 0)
+            writer.tag(1, WireType.Bit64).double(message.baseAmount);
+        /* double quote_amount = 2; */
+        if (message.quoteAmount !== 0)
+            writer.tag(2, WireType.Bit64).double(message.quoteAmount);
+        /* string message = 3; */
+        if (message.message !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.message);
+        /* bool success = 4; */
+        if (message.success !== false)
+            writer.tag(4, WireType.Varint).bool(message.success);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidCoreTradeResponse
+ */
+export const HyperliquidCoreTradeResponse = new HyperliquidCoreTradeResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTradeRequest> {
     constructor() {

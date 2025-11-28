@@ -4,7 +4,7 @@
 // - protoc             v3.21.12
 // source: hypurr/static/static_service.proto
 
-package hypurr
+package static
 
 import (
 	context "context"
