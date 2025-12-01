@@ -136,6 +136,24 @@ message HyperliquidWalletSpotTwapSessionsResponse {
   repeated HyperliquidWalletSpotTwapSession sessions = 1;
 }
 
+message HyperliquidWalletTwapSessionsRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+}
+
+message HyperliquidWalletTwapSessionsResponse {
+  repeated HyperliquidWalletTwapSession sessions = 1;
+}
+
+message HyperliquidWalletScaleSessionsRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+}
+
+message HyperliquidWalletScaleSessionsResponse {
+  repeated HyperliquidWalletScaleSession sessions = 1;
+}
+
 message LaunchHyperliquidLaunchRequest {
   map<string, string> auth_data = 1;
   int64 wallet_id = 2;
@@ -200,6 +218,8 @@ service Telegram {
   rpc HyperliquidSpotTrade (HyperliquidSpotTradeRequest) returns (HyperliquidSpotTradeResponse) {}
 
   rpc HyperliquidWalletSpotTwapSessions (HyperliquidWalletSpotTwapSessionsRequest) returns (HyperliquidWalletSpotTwapSessionsResponse) {}
+  rpc HyperliquidWalletTwapSessions (HyperliquidWalletTwapSessionsRequest) returns (HyperliquidWalletTwapSessionsResponse) {}
+  rpc HyperliquidWalletScaleSessions (HyperliquidWalletScaleSessionsRequest) returns (HyperliquidWalletScaleSessionsResponse) {}
 
   rpc HyperliquidSpotSniperConfigs (HyperliquidSpotSniperConfigsRequest) returns (HyperliquidSpotSniperConfigsResponse) {}
   rpc CreateHyperliquidSpotSniperConfig (CreateHyperliquidSpotSniperConfigRequest) returns (CreateHyperliquidSpotSniperConfigResponse) {}

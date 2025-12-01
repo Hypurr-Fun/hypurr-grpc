@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/tools.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x12hypurr/tools.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\"\xa8\x02\n\x1bHyperliquidSpotSniperConfig\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x14\n\x0ctarget_token\x18\x04 \x01(\t\x12\x16\n\x0emax_market_cap\x18\x05 \x01(\x01\x12\x14\n\x0cmax_notional\x18\x06 \x01(\x01\x12\x14\n\x0cmax_slippage\x18\x07 \x01(\x03\x12\x1b\n\x13max_user_allocation\x18\x08 \x01(\x03\x12 \n\x18max_liquidity_allocation\x18\t \x01(\x03\x12\x1e\n\x16max_airdrop_allocation\x18\n \x01(\x03\x12\x0f\n\x07\x65nabled\x18\x0b \x01(\x08\x12\x10\n\x08\x61nti_rug\x18\x0c \x01(\x08\"\x8a\x02\n HyperliquidWalletSpotTwapSession\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x0f\n\x07pair_id\x18\x03 \x01(\x03\x12\x30\n\x0btelegram_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x17\n\x0ftarget_notional\x18\x05 \x01(\x01\x12\x17\n\x0f\x66illed_quantity\x18\x06 \x01(\x01\x12\x13\n\x0b\x66illed_cost\x18\x07 \x01(\x01\x12\x10\n\x08\x64uration\x18\x08 \x01(\x03\x12\x0f\n\x07\x65nabled\x18\t \x01(\x08\x12\x0b\n\x03\x62uy\x18\n \x01(\x08\x12\r\n\x05\x65nded\x18\x0b \x01(\x08\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x12hypurr/tools.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\"\xa8\x02\n\x1bHyperliquidSpotSniperConfig\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x14\n\x0ctarget_token\x18\x04 \x01(\t\x12\x16\n\x0emax_market_cap\x18\x05 \x01(\x01\x12\x14\n\x0cmax_notional\x18\x06 \x01(\x01\x12\x14\n\x0cmax_slippage\x18\x07 \x01(\x03\x12\x1b\n\x13max_user_allocation\x18\x08 \x01(\x03\x12 \n\x18max_liquidity_allocation\x18\t \x01(\x03\x12\x1e\n\x16max_airdrop_allocation\x18\n \x01(\x03\x12\x0f\n\x07\x65nabled\x18\x0b \x01(\x08\x12\x10\n\x08\x61nti_rug\x18\x0c \x01(\x08\"\x96\x03\n HyperliquidWalletSpotTwapSession\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x0f\n\x07pair_id\x18\x03 \x01(\x03\x12\x30\n\x0btelegram_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x17\n\x0ftarget_notional\x18\x05 \x01(\x01\x12\x17\n\x0f\x66illed_quantity\x18\x06 \x01(\x01\x12\x13\n\x0b\x66illed_cost\x18\x07 \x01(\x01\x12\x10\n\x08\x64uration\x18\x08 \x01(\x03\x12\x0f\n\x07\x65nabled\x18\t \x01(\x08\x12\x0b\n\x03\x62uy\x18\n \x01(\x08\x12\r\n\x05\x65nded\x18\x0b \x01(\x08\x12\x13\n\x0buse_chasing\x18\x0c \x01(\x08\x12\x13\n\x0breduce_only\x18\r \x01(\x08\x12/\n\tmin_price\x18\x0e \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmax_price\x18\x0f \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\"\xe7\x03\n\x1cHyperliquidWalletTwapSession\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x31\n\x0cspot_pair_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x31\n\x0cperp_pair_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x30\n\x0btelegram_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x35\n\x0ftarget_notional\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_quantity\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_leverage\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x17\n\x0f\x66illed_quantity\x18\t \x01(\x01\x12\x13\n\x0b\x66illed_cost\x18\n \x01(\x01\x12\x10\n\x08\x64uration\x18\x0b \x01(\x03\x12\x0f\n\x07\x65nabled\x18\x0c \x01(\x08\x12\x0b\n\x03\x62uy\x18\r \x01(\x08\x12\r\n\x05\x65nded\x18\x0e \x01(\x08\"\xa1\x05\n\x1dHyperliquidWalletScaleSession\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x31\n\x0cspot_pair_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x31\n\x0cperp_pair_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x30\n\x0btelegram_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x35\n\x0ftarget_notional\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_quantity\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_leverage\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x17\n\x0f\x66illed_quantity\x18\t \x01(\x01\x12\x13\n\x0b\x66illed_cost\x18\n \x01(\x01\x12\x13\n\x0border_count\x18\x0b \x01(\x03\x12\x0f\n\x07\x65nabled\x18\x0c \x01(\x08\x12\x0b\n\x03\x62uy\x18\r \x01(\x08\x12\r\n\x05\x65nded\x18\x0e \x01(\x08\x12\x31\n\x0bstart_price\x18\x0f \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tend_price\x18\x10 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x18\n\x10max_placed_index\x18\x11 \x01(\x03\x12\x36\n\x10max_placed_price\x18\x12 \x01(\x0b\x32\x1c.google.protobuf.DoubleValueB)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -219,6 +219,34 @@ _HYPERLIQUIDWALLETSPOTTWAPSESSION = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='use_chasing', full_name='hypurr.HyperliquidWalletSpotTwapSession.use_chasing', index=11,
+      number=12, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='reduce_only', full_name='hypurr.HyperliquidWalletSpotTwapSession.reduce_only', index=12,
+      number=13, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='min_price', full_name='hypurr.HyperliquidWalletSpotTwapSession.min_price', index=13,
+      number=14, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='max_price', full_name='hypurr.HyperliquidWalletSpotTwapSession.max_price', index=14,
+      number=15, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -232,12 +260,303 @@ _HYPERLIQUIDWALLETSPOTTWAPSESSION = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=362,
-  serialized_end=628,
+  serialized_end=768,
+)
+
+
+_HYPERLIQUIDWALLETTWAPSESSION = _descriptor.Descriptor(
+  name='HyperliquidWalletTwapSession',
+  full_name='hypurr.HyperliquidWalletTwapSession',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='hypurr.HyperliquidWalletTwapSession.id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='wallet_id', full_name='hypurr.HyperliquidWalletTwapSession.wallet_id', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='spot_pair_id', full_name='hypurr.HyperliquidWalletTwapSession.spot_pair_id', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='perp_pair_id', full_name='hypurr.HyperliquidWalletTwapSession.perp_pair_id', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='telegram_id', full_name='hypurr.HyperliquidWalletTwapSession.telegram_id', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='target_notional', full_name='hypurr.HyperliquidWalletTwapSession.target_notional', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='target_quantity', full_name='hypurr.HyperliquidWalletTwapSession.target_quantity', index=6,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='target_leverage', full_name='hypurr.HyperliquidWalletTwapSession.target_leverage', index=7,
+      number=8, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='filled_quantity', full_name='hypurr.HyperliquidWalletTwapSession.filled_quantity', index=8,
+      number=9, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='filled_cost', full_name='hypurr.HyperliquidWalletTwapSession.filled_cost', index=9,
+      number=10, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='duration', full_name='hypurr.HyperliquidWalletTwapSession.duration', index=10,
+      number=11, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='enabled', full_name='hypurr.HyperliquidWalletTwapSession.enabled', index=11,
+      number=12, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='buy', full_name='hypurr.HyperliquidWalletTwapSession.buy', index=12,
+      number=13, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='ended', full_name='hypurr.HyperliquidWalletTwapSession.ended', index=13,
+      number=14, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=771,
+  serialized_end=1258,
+)
+
+
+_HYPERLIQUIDWALLETSCALESESSION = _descriptor.Descriptor(
+  name='HyperliquidWalletScaleSession',
+  full_name='hypurr.HyperliquidWalletScaleSession',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='hypurr.HyperliquidWalletScaleSession.id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='wallet_id', full_name='hypurr.HyperliquidWalletScaleSession.wallet_id', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='spot_pair_id', full_name='hypurr.HyperliquidWalletScaleSession.spot_pair_id', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='perp_pair_id', full_name='hypurr.HyperliquidWalletScaleSession.perp_pair_id', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='telegram_id', full_name='hypurr.HyperliquidWalletScaleSession.telegram_id', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='target_notional', full_name='hypurr.HyperliquidWalletScaleSession.target_notional', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='target_quantity', full_name='hypurr.HyperliquidWalletScaleSession.target_quantity', index=6,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='target_leverage', full_name='hypurr.HyperliquidWalletScaleSession.target_leverage', index=7,
+      number=8, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='filled_quantity', full_name='hypurr.HyperliquidWalletScaleSession.filled_quantity', index=8,
+      number=9, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='filled_cost', full_name='hypurr.HyperliquidWalletScaleSession.filled_cost', index=9,
+      number=10, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='order_count', full_name='hypurr.HyperliquidWalletScaleSession.order_count', index=10,
+      number=11, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='enabled', full_name='hypurr.HyperliquidWalletScaleSession.enabled', index=11,
+      number=12, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='buy', full_name='hypurr.HyperliquidWalletScaleSession.buy', index=12,
+      number=13, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='ended', full_name='hypurr.HyperliquidWalletScaleSession.ended', index=13,
+      number=14, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='start_price', full_name='hypurr.HyperliquidWalletScaleSession.start_price', index=14,
+      number=15, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='end_price', full_name='hypurr.HyperliquidWalletScaleSession.end_price', index=15,
+      number=16, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='max_placed_index', full_name='hypurr.HyperliquidWalletScaleSession.max_placed_index', index=16,
+      number=17, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='max_placed_price', full_name='hypurr.HyperliquidWalletScaleSession.max_placed_price', index=17,
+      number=18, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1261,
+  serialized_end=1934,
 )
 
 _HYPERLIQUIDWALLETSPOTTWAPSESSION.fields_by_name['telegram_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_HYPERLIQUIDWALLETSPOTTWAPSESSION.fields_by_name['min_price'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_HYPERLIQUIDWALLETSPOTTWAPSESSION.fields_by_name['max_price'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_HYPERLIQUIDWALLETTWAPSESSION.fields_by_name['spot_pair_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_HYPERLIQUIDWALLETTWAPSESSION.fields_by_name['perp_pair_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_HYPERLIQUIDWALLETTWAPSESSION.fields_by_name['telegram_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_HYPERLIQUIDWALLETTWAPSESSION.fields_by_name['target_notional'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_HYPERLIQUIDWALLETTWAPSESSION.fields_by_name['target_quantity'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_HYPERLIQUIDWALLETTWAPSESSION.fields_by_name['target_leverage'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_HYPERLIQUIDWALLETSCALESESSION.fields_by_name['spot_pair_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_HYPERLIQUIDWALLETSCALESESSION.fields_by_name['perp_pair_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_HYPERLIQUIDWALLETSCALESESSION.fields_by_name['telegram_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_HYPERLIQUIDWALLETSCALESESSION.fields_by_name['target_notional'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_HYPERLIQUIDWALLETSCALESESSION.fields_by_name['target_quantity'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_HYPERLIQUIDWALLETSCALESESSION.fields_by_name['target_leverage'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_HYPERLIQUIDWALLETSCALESESSION.fields_by_name['start_price'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_HYPERLIQUIDWALLETSCALESESSION.fields_by_name['end_price'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_HYPERLIQUIDWALLETSCALESESSION.fields_by_name['max_placed_price'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
 DESCRIPTOR.message_types_by_name['HyperliquidSpotSniperConfig'] = _HYPERLIQUIDSPOTSNIPERCONFIG
 DESCRIPTOR.message_types_by_name['HyperliquidWalletSpotTwapSession'] = _HYPERLIQUIDWALLETSPOTTWAPSESSION
+DESCRIPTOR.message_types_by_name['HyperliquidWalletTwapSession'] = _HYPERLIQUIDWALLETTWAPSESSION
+DESCRIPTOR.message_types_by_name['HyperliquidWalletScaleSession'] = _HYPERLIQUIDWALLETSCALESESSION
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 HyperliquidSpotSniperConfig = _reflection.GeneratedProtocolMessageType('HyperliquidSpotSniperConfig', (_message.Message,), dict(
@@ -253,6 +572,20 @@ HyperliquidWalletSpotTwapSession = _reflection.GeneratedProtocolMessageType('Hyp
   # @@protoc_insertion_point(class_scope:hypurr.HyperliquidWalletSpotTwapSession)
   ))
 _sym_db.RegisterMessage(HyperliquidWalletSpotTwapSession)
+
+HyperliquidWalletTwapSession = _reflection.GeneratedProtocolMessageType('HyperliquidWalletTwapSession', (_message.Message,), dict(
+  DESCRIPTOR = _HYPERLIQUIDWALLETTWAPSESSION,
+  __module__ = 'hypurr.tools_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HyperliquidWalletTwapSession)
+  ))
+_sym_db.RegisterMessage(HyperliquidWalletTwapSession)
+
+HyperliquidWalletScaleSession = _reflection.GeneratedProtocolMessageType('HyperliquidWalletScaleSession', (_message.Message,), dict(
+  DESCRIPTOR = _HYPERLIQUIDWALLETSCALESESSION,
+  __module__ = 'hypurr.tools_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HyperliquidWalletScaleSession)
+  ))
+_sym_db.RegisterMessage(HyperliquidWalletScaleSession)
 
 
 DESCRIPTOR.has_options = True

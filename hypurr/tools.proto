@@ -5,30 +5,73 @@ option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 import "google/protobuf/wrappers.proto";
 
 message HyperliquidSpotSniperConfig {
-    int64 id = 1;
-    int64 telegram_id = 2;
-    string name = 3;
-    string target_token = 4;
-    double max_market_cap = 5;
-    double max_notional = 6;
-    int64 max_slippage = 7;
-    int64 max_user_allocation = 8;
-    int64 max_liquidity_allocation = 9;
-    int64 max_airdrop_allocation = 10;
-    bool enabled = 11;
-    bool anti_rug = 12;
+  int64 id = 1;
+  int64 telegram_id = 2;
+  string name = 3;
+  string target_token = 4;
+  double max_market_cap = 5;
+  double max_notional = 6;
+  int64 max_slippage = 7;
+  int64 max_user_allocation = 8;
+  int64 max_liquidity_allocation = 9;
+  int64 max_airdrop_allocation = 10;
+  bool enabled = 11;
+  bool anti_rug = 12;
 }
 
+// Deprecated
 message HyperliquidWalletSpotTwapSession {
-    int64 id = 1;
-    int64 wallet_id = 2;
-    int64 pair_id = 3;
-    google.protobuf.Int64Value telegram_id = 4;
-    double target_notional = 5;
-    double filled_quantity = 6;
-    double filled_cost = 7;
-    int64 duration = 8;
-    bool enabled = 9;
-    bool buy = 10;
-    bool ended = 11;
+  int64 id = 1;
+  int64 wallet_id = 2;
+  int64 pair_id = 3;
+  google.protobuf.Int64Value telegram_id = 4;
+  double target_notional = 5;
+  double filled_quantity = 6;
+  double filled_cost = 7;
+  int64 duration = 8;
+  bool enabled = 9;
+  bool buy = 10;
+  bool ended = 11;
+  bool use_chasing = 12;
+  bool reduce_only = 13;
+  google.protobuf.DoubleValue min_price = 14;
+  google.protobuf.DoubleValue max_price = 15;
+}
+
+message HyperliquidWalletTwapSession {
+  int64 id = 1;
+  int64 wallet_id = 2;
+  google.protobuf.Int64Value spot_pair_id = 3;
+  google.protobuf.Int64Value perp_pair_id = 4;
+  google.protobuf.Int64Value telegram_id = 5;
+  google.protobuf.DoubleValue target_notional = 6;
+  google.protobuf.DoubleValue target_quantity = 7;
+  google.protobuf.DoubleValue target_leverage = 8;
+  double filled_quantity = 9;
+  double filled_cost = 10;
+  int64 duration = 11;
+  bool enabled = 12;
+  bool buy = 13;
+  bool ended = 14;
+}
+
+message HyperliquidWalletScaleSession {
+  int64 id = 1;
+  int64 wallet_id = 2;
+  google.protobuf.Int64Value spot_pair_id = 3;
+  google.protobuf.Int64Value perp_pair_id = 4;
+  google.protobuf.Int64Value telegram_id = 5;
+  google.protobuf.DoubleValue target_notional = 6;
+  google.protobuf.DoubleValue target_quantity = 7;
+  google.protobuf.DoubleValue target_leverage = 8;
+  double filled_quantity = 9;
+  double filled_cost = 10;
+  int64 order_count = 11;
+  bool enabled = 12;
+  bool buy = 13;
+  bool ended = 14;
+  google.protobuf.DoubleValue start_price = 15;
+  google.protobuf.DoubleValue end_price = 16;
+  int64 max_placed_index = 17;
+  google.protobuf.DoubleValue max_placed_price = 18;
 }

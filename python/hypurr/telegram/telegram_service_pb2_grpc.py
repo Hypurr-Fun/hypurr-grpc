@@ -59,6 +59,16 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSpotTwapSessionsRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSpotTwapSessionsResponse.FromString,
         )
+    self.HyperliquidWalletTwapSessions = channel.unary_unary(
+        '/hypurr.Telegram/HyperliquidWalletTwapSessions',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletTwapSessionsRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletTwapSessionsResponse.FromString,
+        )
+    self.HyperliquidWalletScaleSessions = channel.unary_unary(
+        '/hypurr.Telegram/HyperliquidWalletScaleSessions',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletScaleSessionsRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletScaleSessionsResponse.FromString,
+        )
     self.HyperliquidSpotSniperConfigs = channel.unary_unary(
         '/hypurr.Telegram/HyperliquidSpotSniperConfigs',
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidSpotSniperConfigsRequest.SerializeToString,
@@ -148,6 +158,20 @@ class TelegramServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def HyperliquidWalletTwapSessions(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HyperliquidWalletScaleSessions(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def HyperliquidSpotSniperConfigs(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -223,6 +247,16 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.HyperliquidWalletSpotTwapSessions,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSpotTwapSessionsRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSpotTwapSessionsResponse.SerializeToString,
+      ),
+      'HyperliquidWalletTwapSessions': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidWalletTwapSessions,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletTwapSessionsRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletTwapSessionsResponse.SerializeToString,
+      ),
+      'HyperliquidWalletScaleSessions': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidWalletScaleSessions,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletScaleSessionsRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletScaleSessionsResponse.SerializeToString,
       ),
       'HyperliquidSpotSniperConfigs': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidSpotSniperConfigs,

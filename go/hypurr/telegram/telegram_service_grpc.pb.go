@@ -28,6 +28,8 @@ const (
 	Telegram_LaunchHpumpV1Launch_FullMethodName               = "/hypurr.Telegram/LaunchHpumpV1Launch"
 	Telegram_HyperliquidSpotTrade_FullMethodName              = "/hypurr.Telegram/HyperliquidSpotTrade"
 	Telegram_HyperliquidWalletSpotTwapSessions_FullMethodName = "/hypurr.Telegram/HyperliquidWalletSpotTwapSessions"
+	Telegram_HyperliquidWalletTwapSessions_FullMethodName     = "/hypurr.Telegram/HyperliquidWalletTwapSessions"
+	Telegram_HyperliquidWalletScaleSessions_FullMethodName    = "/hypurr.Telegram/HyperliquidWalletScaleSessions"
 	Telegram_HyperliquidSpotSniperConfigs_FullMethodName      = "/hypurr.Telegram/HyperliquidSpotSniperConfigs"
 	Telegram_CreateHyperliquidSpotSniperConfig_FullMethodName = "/hypurr.Telegram/CreateHyperliquidSpotSniperConfig"
 	Telegram_DeleteHyperliquidSpotSniperConfig_FullMethodName = "/hypurr.Telegram/DeleteHyperliquidSpotSniperConfig"
@@ -50,6 +52,8 @@ type TelegramClient interface {
 	// Spot
 	HyperliquidSpotTrade(ctx context.Context, in *HyperliquidSpotTradeRequest, opts ...grpc.CallOption) (*HyperliquidSpotTradeResponse, error)
 	HyperliquidWalletSpotTwapSessions(ctx context.Context, in *HyperliquidWalletSpotTwapSessionsRequest, opts ...grpc.CallOption) (*HyperliquidWalletSpotTwapSessionsResponse, error)
+	HyperliquidWalletTwapSessions(ctx context.Context, in *HyperliquidWalletTwapSessionsRequest, opts ...grpc.CallOption) (*HyperliquidWalletTwapSessionsResponse, error)
+	HyperliquidWalletScaleSessions(ctx context.Context, in *HyperliquidWalletScaleSessionsRequest, opts ...grpc.CallOption) (*HyperliquidWalletScaleSessionsResponse, error)
 	HyperliquidSpotSniperConfigs(ctx context.Context, in *HyperliquidSpotSniperConfigsRequest, opts ...grpc.CallOption) (*HyperliquidSpotSniperConfigsResponse, error)
 	CreateHyperliquidSpotSniperConfig(ctx context.Context, in *CreateHyperliquidSpotSniperConfigRequest, opts ...grpc.CallOption) (*CreateHyperliquidSpotSniperConfigResponse, error)
 	DeleteHyperliquidSpotSniperConfig(ctx context.Context, in *DeleteHyperliquidSpotSniperConfigRequest, opts ...grpc.CallOption) (*DeleteHyperliquidSpotSniperConfigResponse, error)
@@ -154,6 +158,26 @@ func (c *telegramClient) HyperliquidWalletSpotTwapSessions(ctx context.Context, 
 	return out, nil
 }
 
+func (c *telegramClient) HyperliquidWalletTwapSessions(ctx context.Context, in *HyperliquidWalletTwapSessionsRequest, opts ...grpc.CallOption) (*HyperliquidWalletTwapSessionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HyperliquidWalletTwapSessionsResponse)
+	err := c.cc.Invoke(ctx, Telegram_HyperliquidWalletTwapSessions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) HyperliquidWalletScaleSessions(ctx context.Context, in *HyperliquidWalletScaleSessionsRequest, opts ...grpc.CallOption) (*HyperliquidWalletScaleSessionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HyperliquidWalletScaleSessionsResponse)
+	err := c.cc.Invoke(ctx, Telegram_HyperliquidWalletScaleSessions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *telegramClient) HyperliquidSpotSniperConfigs(ctx context.Context, in *HyperliquidSpotSniperConfigsRequest, opts ...grpc.CallOption) (*HyperliquidSpotSniperConfigsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HyperliquidSpotSniperConfigsResponse)
@@ -210,6 +234,8 @@ type TelegramServer interface {
 	// Spot
 	HyperliquidSpotTrade(context.Context, *HyperliquidSpotTradeRequest) (*HyperliquidSpotTradeResponse, error)
 	HyperliquidWalletSpotTwapSessions(context.Context, *HyperliquidWalletSpotTwapSessionsRequest) (*HyperliquidWalletSpotTwapSessionsResponse, error)
+	HyperliquidWalletTwapSessions(context.Context, *HyperliquidWalletTwapSessionsRequest) (*HyperliquidWalletTwapSessionsResponse, error)
+	HyperliquidWalletScaleSessions(context.Context, *HyperliquidWalletScaleSessionsRequest) (*HyperliquidWalletScaleSessionsResponse, error)
 	HyperliquidSpotSniperConfigs(context.Context, *HyperliquidSpotSniperConfigsRequest) (*HyperliquidSpotSniperConfigsResponse, error)
 	CreateHyperliquidSpotSniperConfig(context.Context, *CreateHyperliquidSpotSniperConfigRequest) (*CreateHyperliquidSpotSniperConfigResponse, error)
 	DeleteHyperliquidSpotSniperConfig(context.Context, *DeleteHyperliquidSpotSniperConfigRequest) (*DeleteHyperliquidSpotSniperConfigResponse, error)
@@ -247,6 +273,12 @@ func (UnimplementedTelegramServer) HyperliquidSpotTrade(context.Context, *Hyperl
 }
 func (UnimplementedTelegramServer) HyperliquidWalletSpotTwapSessions(context.Context, *HyperliquidWalletSpotTwapSessionsRequest) (*HyperliquidWalletSpotTwapSessionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidWalletSpotTwapSessions not implemented")
+}
+func (UnimplementedTelegramServer) HyperliquidWalletTwapSessions(context.Context, *HyperliquidWalletTwapSessionsRequest) (*HyperliquidWalletTwapSessionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidWalletTwapSessions not implemented")
+}
+func (UnimplementedTelegramServer) HyperliquidWalletScaleSessions(context.Context, *HyperliquidWalletScaleSessionsRequest) (*HyperliquidWalletScaleSessionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidWalletScaleSessions not implemented")
 }
 func (UnimplementedTelegramServer) HyperliquidSpotSniperConfigs(context.Context, *HyperliquidSpotSniperConfigsRequest) (*HyperliquidSpotSniperConfigsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidSpotSniperConfigs not implemented")
@@ -435,6 +467,42 @@ func _Telegram_HyperliquidWalletSpotTwapSessions_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Telegram_HyperliquidWalletTwapSessions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HyperliquidWalletTwapSessionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).HyperliquidWalletTwapSessions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_HyperliquidWalletTwapSessions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).HyperliquidWalletTwapSessions(ctx, req.(*HyperliquidWalletTwapSessionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_HyperliquidWalletScaleSessions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HyperliquidWalletScaleSessionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).HyperliquidWalletScaleSessions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_HyperliquidWalletScaleSessions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).HyperliquidWalletScaleSessions(ctx, req.(*HyperliquidWalletScaleSessionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Telegram_HyperliquidSpotSniperConfigs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HyperliquidSpotSniperConfigsRequest)
 	if err := dec(in); err != nil {
@@ -549,6 +617,14 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HyperliquidWalletSpotTwapSessions",
 			Handler:    _Telegram_HyperliquidWalletSpotTwapSessions_Handler,
+		},
+		{
+			MethodName: "HyperliquidWalletTwapSessions",
+			Handler:    _Telegram_HyperliquidWalletTwapSessions_Handler,
+		},
+		{
+			MethodName: "HyperliquidWalletScaleSessions",
+			Handler:    _Telegram_HyperliquidWalletScaleSessions_Handler,
 		},
 		{
 			MethodName: "HyperliquidSpotSniperConfigs",

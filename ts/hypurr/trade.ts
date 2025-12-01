@@ -11,6 +11,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { StringValue } from "../google/protobuf/wrappers";
 /**
  * @generated from protobuf message hypurr.LimitOrderTypeData
  */
@@ -89,9 +90,9 @@ export interface HyperliquidCoreOrder {
      */
     orderType?: OrderType;
     /**
-     * @generated from protobuf field: string client_order_id = 7;
+     * @generated from protobuf field: google.protobuf.StringValue client_order_id = 7;
      */
-    clientOrderId: string;
+    clientOrderId?: StringValue;
 }
 /**
  * @generated from protobuf enum hypurr.TradeDirection
@@ -301,11 +302,11 @@ class HyperliquidCoreOrder$Type extends MessageType<HyperliquidCoreOrder> {
             { no: 4, name: "size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 5, name: "reduce_only", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 6, name: "order_type", kind: "message", T: () => OrderType },
-            { no: 7, name: "client_order_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 7, name: "client_order_id", kind: "message", T: () => StringValue }
         ]);
     }
     create(value?: PartialMessage<HyperliquidCoreOrder>): HyperliquidCoreOrder {
-        const message = { instrumentId: 0, direction: 0, limitPrice: 0, size: 0, reduceOnly: false, clientOrderId: "" };
+        const message = { instrumentId: 0, direction: 0, limitPrice: 0, size: 0, reduceOnly: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidCoreOrder>(this, message, value);
@@ -334,8 +335,8 @@ class HyperliquidCoreOrder$Type extends MessageType<HyperliquidCoreOrder> {
                 case /* hypurr.OrderType order_type */ 6:
                     message.orderType = OrderType.internalBinaryRead(reader, reader.uint32(), options, message.orderType);
                     break;
-                case /* string client_order_id */ 7:
-                    message.clientOrderId = reader.string();
+                case /* google.protobuf.StringValue client_order_id */ 7:
+                    message.clientOrderId = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.clientOrderId);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -367,9 +368,9 @@ class HyperliquidCoreOrder$Type extends MessageType<HyperliquidCoreOrder> {
         /* hypurr.OrderType order_type = 6; */
         if (message.orderType)
             OrderType.internalBinaryWrite(message.orderType, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* string client_order_id = 7; */
-        if (message.clientOrderId !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.clientOrderId);
+        /* google.protobuf.StringValue client_order_id = 7; */
+        if (message.clientOrderId)
+            StringValue.internalBinaryWrite(message.clientOrderId, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

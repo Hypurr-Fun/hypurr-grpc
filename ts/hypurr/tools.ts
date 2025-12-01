@@ -11,6 +11,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { DoubleValue } from "../google/protobuf/wrappers";
 import { Int64Value } from "../google/protobuf/wrappers";
 /**
  * @generated from protobuf message hypurr.HyperliquidSpotSniperConfig
@@ -66,6 +67,8 @@ export interface HyperliquidSpotSniperConfig {
     antiRug: boolean;
 }
 /**
+ * Deprecated
+ *
  * @generated from protobuf message hypurr.HyperliquidWalletSpotTwapSession
  */
 export interface HyperliquidWalletSpotTwapSession {
@@ -113,6 +116,160 @@ export interface HyperliquidWalletSpotTwapSession {
      * @generated from protobuf field: bool ended = 11;
      */
     ended: boolean;
+    /**
+     * @generated from protobuf field: bool use_chasing = 12;
+     */
+    useChasing: boolean;
+    /**
+     * @generated from protobuf field: bool reduce_only = 13;
+     */
+    reduceOnly: boolean;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue min_price = 14;
+     */
+    minPrice?: DoubleValue;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue max_price = 15;
+     */
+    maxPrice?: DoubleValue;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidWalletTwapSession
+ */
+export interface HyperliquidWalletTwapSession {
+    /**
+     * @generated from protobuf field: int64 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: int64 wallet_id = 2;
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value spot_pair_id = 3;
+     */
+    spotPairId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value perp_pair_id = 4;
+     */
+    perpPairId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value telegram_id = 5;
+     */
+    telegramId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue target_notional = 6;
+     */
+    targetNotional?: DoubleValue;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue target_quantity = 7;
+     */
+    targetQuantity?: DoubleValue;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue target_leverage = 8;
+     */
+    targetLeverage?: DoubleValue;
+    /**
+     * @generated from protobuf field: double filled_quantity = 9;
+     */
+    filledQuantity: number;
+    /**
+     * @generated from protobuf field: double filled_cost = 10;
+     */
+    filledCost: number;
+    /**
+     * @generated from protobuf field: int64 duration = 11;
+     */
+    duration: number;
+    /**
+     * @generated from protobuf field: bool enabled = 12;
+     */
+    enabled: boolean;
+    /**
+     * @generated from protobuf field: bool buy = 13;
+     */
+    buy: boolean;
+    /**
+     * @generated from protobuf field: bool ended = 14;
+     */
+    ended: boolean;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidWalletScaleSession
+ */
+export interface HyperliquidWalletScaleSession {
+    /**
+     * @generated from protobuf field: int64 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: int64 wallet_id = 2;
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value spot_pair_id = 3;
+     */
+    spotPairId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value perp_pair_id = 4;
+     */
+    perpPairId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value telegram_id = 5;
+     */
+    telegramId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue target_notional = 6;
+     */
+    targetNotional?: DoubleValue;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue target_quantity = 7;
+     */
+    targetQuantity?: DoubleValue;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue target_leverage = 8;
+     */
+    targetLeverage?: DoubleValue;
+    /**
+     * @generated from protobuf field: double filled_quantity = 9;
+     */
+    filledQuantity: number;
+    /**
+     * @generated from protobuf field: double filled_cost = 10;
+     */
+    filledCost: number;
+    /**
+     * @generated from protobuf field: int64 order_count = 11;
+     */
+    orderCount: number;
+    /**
+     * @generated from protobuf field: bool enabled = 12;
+     */
+    enabled: boolean;
+    /**
+     * @generated from protobuf field: bool buy = 13;
+     */
+    buy: boolean;
+    /**
+     * @generated from protobuf field: bool ended = 14;
+     */
+    ended: boolean;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue start_price = 15;
+     */
+    startPrice?: DoubleValue;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue end_price = 16;
+     */
+    endPrice?: DoubleValue;
+    /**
+     * @generated from protobuf field: int64 max_placed_index = 17;
+     */
+    maxPlacedIndex: number;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue max_placed_price = 18;
+     */
+    maxPlacedPrice?: DoubleValue;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidSpotSniperConfig$Type extends MessageType<HyperliquidSpotSniperConfig> {
@@ -252,11 +409,15 @@ class HyperliquidWalletSpotTwapSession$Type extends MessageType<HyperliquidWalle
             { no: 8, name: "duration", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 9, name: "enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 10, name: "buy", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 11, name: "ended", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 11, name: "ended", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 12, name: "use_chasing", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 13, name: "reduce_only", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 14, name: "min_price", kind: "message", T: () => DoubleValue },
+            { no: 15, name: "max_price", kind: "message", T: () => DoubleValue }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWalletSpotTwapSession>): HyperliquidWalletSpotTwapSession {
-        const message = { id: 0, walletId: 0, pairId: 0, targetNotional: 0, filledQuantity: 0, filledCost: 0, duration: 0, enabled: false, buy: false, ended: false };
+        const message = { id: 0, walletId: 0, pairId: 0, targetNotional: 0, filledQuantity: 0, filledCost: 0, duration: 0, enabled: false, buy: false, ended: false, useChasing: false, reduceOnly: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWalletSpotTwapSession>(this, message, value);
@@ -299,6 +460,18 @@ class HyperliquidWalletSpotTwapSession$Type extends MessageType<HyperliquidWalle
                     break;
                 case /* bool ended */ 11:
                     message.ended = reader.bool();
+                    break;
+                case /* bool use_chasing */ 12:
+                    message.useChasing = reader.bool();
+                    break;
+                case /* bool reduce_only */ 13:
+                    message.reduceOnly = reader.bool();
+                    break;
+                case /* google.protobuf.DoubleValue min_price */ 14:
+                    message.minPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.minPrice);
+                    break;
+                case /* google.protobuf.DoubleValue max_price */ 15:
+                    message.maxPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.maxPrice);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -345,6 +518,18 @@ class HyperliquidWalletSpotTwapSession$Type extends MessageType<HyperliquidWalle
         /* bool ended = 11; */
         if (message.ended !== false)
             writer.tag(11, WireType.Varint).bool(message.ended);
+        /* bool use_chasing = 12; */
+        if (message.useChasing !== false)
+            writer.tag(12, WireType.Varint).bool(message.useChasing);
+        /* bool reduce_only = 13; */
+        if (message.reduceOnly !== false)
+            writer.tag(13, WireType.Varint).bool(message.reduceOnly);
+        /* google.protobuf.DoubleValue min_price = 14; */
+        if (message.minPrice)
+            DoubleValue.internalBinaryWrite(message.minPrice, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue max_price = 15; */
+        if (message.maxPrice)
+            DoubleValue.internalBinaryWrite(message.maxPrice, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -355,3 +540,307 @@ class HyperliquidWalletSpotTwapSession$Type extends MessageType<HyperliquidWalle
  * @generated MessageType for protobuf message hypurr.HyperliquidWalletSpotTwapSession
  */
 export const HyperliquidWalletSpotTwapSession = new HyperliquidWalletSpotTwapSession$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidWalletTwapSession$Type extends MessageType<HyperliquidWalletTwapSession> {
+    constructor() {
+        super("hypurr.HyperliquidWalletTwapSession", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "spot_pair_id", kind: "message", T: () => Int64Value },
+            { no: 4, name: "perp_pair_id", kind: "message", T: () => Int64Value },
+            { no: 5, name: "telegram_id", kind: "message", T: () => Int64Value },
+            { no: 6, name: "target_notional", kind: "message", T: () => DoubleValue },
+            { no: 7, name: "target_quantity", kind: "message", T: () => DoubleValue },
+            { no: 8, name: "target_leverage", kind: "message", T: () => DoubleValue },
+            { no: 9, name: "filled_quantity", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "filled_cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "duration", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 12, name: "enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 13, name: "buy", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 14, name: "ended", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidWalletTwapSession>): HyperliquidWalletTwapSession {
+        const message = { id: 0, walletId: 0, filledQuantity: 0, filledCost: 0, duration: 0, enabled: false, buy: false, ended: false };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidWalletTwapSession>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidWalletTwapSession): HyperliquidWalletTwapSession {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.Int64Value spot_pair_id */ 3:
+                    message.spotPairId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.spotPairId);
+                    break;
+                case /* google.protobuf.Int64Value perp_pair_id */ 4:
+                    message.perpPairId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.perpPairId);
+                    break;
+                case /* google.protobuf.Int64Value telegram_id */ 5:
+                    message.telegramId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.telegramId);
+                    break;
+                case /* google.protobuf.DoubleValue target_notional */ 6:
+                    message.targetNotional = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.targetNotional);
+                    break;
+                case /* google.protobuf.DoubleValue target_quantity */ 7:
+                    message.targetQuantity = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.targetQuantity);
+                    break;
+                case /* google.protobuf.DoubleValue target_leverage */ 8:
+                    message.targetLeverage = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.targetLeverage);
+                    break;
+                case /* double filled_quantity */ 9:
+                    message.filledQuantity = reader.double();
+                    break;
+                case /* double filled_cost */ 10:
+                    message.filledCost = reader.double();
+                    break;
+                case /* int64 duration */ 11:
+                    message.duration = reader.int64().toNumber();
+                    break;
+                case /* bool enabled */ 12:
+                    message.enabled = reader.bool();
+                    break;
+                case /* bool buy */ 13:
+                    message.buy = reader.bool();
+                    break;
+                case /* bool ended */ 14:
+                    message.ended = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidWalletTwapSession, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* google.protobuf.Int64Value spot_pair_id = 3; */
+        if (message.spotPairId)
+            Int64Value.internalBinaryWrite(message.spotPairId, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value perp_pair_id = 4; */
+        if (message.perpPairId)
+            Int64Value.internalBinaryWrite(message.perpPairId, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value telegram_id = 5; */
+        if (message.telegramId)
+            Int64Value.internalBinaryWrite(message.telegramId, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue target_notional = 6; */
+        if (message.targetNotional)
+            DoubleValue.internalBinaryWrite(message.targetNotional, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue target_quantity = 7; */
+        if (message.targetQuantity)
+            DoubleValue.internalBinaryWrite(message.targetQuantity, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue target_leverage = 8; */
+        if (message.targetLeverage)
+            DoubleValue.internalBinaryWrite(message.targetLeverage, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* double filled_quantity = 9; */
+        if (message.filledQuantity !== 0)
+            writer.tag(9, WireType.Bit64).double(message.filledQuantity);
+        /* double filled_cost = 10; */
+        if (message.filledCost !== 0)
+            writer.tag(10, WireType.Bit64).double(message.filledCost);
+        /* int64 duration = 11; */
+        if (message.duration !== 0)
+            writer.tag(11, WireType.Varint).int64(message.duration);
+        /* bool enabled = 12; */
+        if (message.enabled !== false)
+            writer.tag(12, WireType.Varint).bool(message.enabled);
+        /* bool buy = 13; */
+        if (message.buy !== false)
+            writer.tag(13, WireType.Varint).bool(message.buy);
+        /* bool ended = 14; */
+        if (message.ended !== false)
+            writer.tag(14, WireType.Varint).bool(message.ended);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidWalletTwapSession
+ */
+export const HyperliquidWalletTwapSession = new HyperliquidWalletTwapSession$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidWalletScaleSession$Type extends MessageType<HyperliquidWalletScaleSession> {
+    constructor() {
+        super("hypurr.HyperliquidWalletScaleSession", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "spot_pair_id", kind: "message", T: () => Int64Value },
+            { no: 4, name: "perp_pair_id", kind: "message", T: () => Int64Value },
+            { no: 5, name: "telegram_id", kind: "message", T: () => Int64Value },
+            { no: 6, name: "target_notional", kind: "message", T: () => DoubleValue },
+            { no: 7, name: "target_quantity", kind: "message", T: () => DoubleValue },
+            { no: 8, name: "target_leverage", kind: "message", T: () => DoubleValue },
+            { no: 9, name: "filled_quantity", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "filled_cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "order_count", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 12, name: "enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 13, name: "buy", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 14, name: "ended", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 15, name: "start_price", kind: "message", T: () => DoubleValue },
+            { no: 16, name: "end_price", kind: "message", T: () => DoubleValue },
+            { no: 17, name: "max_placed_index", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 18, name: "max_placed_price", kind: "message", T: () => DoubleValue }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidWalletScaleSession>): HyperliquidWalletScaleSession {
+        const message = { id: 0, walletId: 0, filledQuantity: 0, filledCost: 0, orderCount: 0, enabled: false, buy: false, ended: false, maxPlacedIndex: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidWalletScaleSession>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidWalletScaleSession): HyperliquidWalletScaleSession {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.Int64Value spot_pair_id */ 3:
+                    message.spotPairId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.spotPairId);
+                    break;
+                case /* google.protobuf.Int64Value perp_pair_id */ 4:
+                    message.perpPairId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.perpPairId);
+                    break;
+                case /* google.protobuf.Int64Value telegram_id */ 5:
+                    message.telegramId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.telegramId);
+                    break;
+                case /* google.protobuf.DoubleValue target_notional */ 6:
+                    message.targetNotional = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.targetNotional);
+                    break;
+                case /* google.protobuf.DoubleValue target_quantity */ 7:
+                    message.targetQuantity = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.targetQuantity);
+                    break;
+                case /* google.protobuf.DoubleValue target_leverage */ 8:
+                    message.targetLeverage = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.targetLeverage);
+                    break;
+                case /* double filled_quantity */ 9:
+                    message.filledQuantity = reader.double();
+                    break;
+                case /* double filled_cost */ 10:
+                    message.filledCost = reader.double();
+                    break;
+                case /* int64 order_count */ 11:
+                    message.orderCount = reader.int64().toNumber();
+                    break;
+                case /* bool enabled */ 12:
+                    message.enabled = reader.bool();
+                    break;
+                case /* bool buy */ 13:
+                    message.buy = reader.bool();
+                    break;
+                case /* bool ended */ 14:
+                    message.ended = reader.bool();
+                    break;
+                case /* google.protobuf.DoubleValue start_price */ 15:
+                    message.startPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.startPrice);
+                    break;
+                case /* google.protobuf.DoubleValue end_price */ 16:
+                    message.endPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.endPrice);
+                    break;
+                case /* int64 max_placed_index */ 17:
+                    message.maxPlacedIndex = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.DoubleValue max_placed_price */ 18:
+                    message.maxPlacedPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.maxPlacedPrice);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidWalletScaleSession, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* google.protobuf.Int64Value spot_pair_id = 3; */
+        if (message.spotPairId)
+            Int64Value.internalBinaryWrite(message.spotPairId, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value perp_pair_id = 4; */
+        if (message.perpPairId)
+            Int64Value.internalBinaryWrite(message.perpPairId, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value telegram_id = 5; */
+        if (message.telegramId)
+            Int64Value.internalBinaryWrite(message.telegramId, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue target_notional = 6; */
+        if (message.targetNotional)
+            DoubleValue.internalBinaryWrite(message.targetNotional, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue target_quantity = 7; */
+        if (message.targetQuantity)
+            DoubleValue.internalBinaryWrite(message.targetQuantity, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue target_leverage = 8; */
+        if (message.targetLeverage)
+            DoubleValue.internalBinaryWrite(message.targetLeverage, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* double filled_quantity = 9; */
+        if (message.filledQuantity !== 0)
+            writer.tag(9, WireType.Bit64).double(message.filledQuantity);
+        /* double filled_cost = 10; */
+        if (message.filledCost !== 0)
+            writer.tag(10, WireType.Bit64).double(message.filledCost);
+        /* int64 order_count = 11; */
+        if (message.orderCount !== 0)
+            writer.tag(11, WireType.Varint).int64(message.orderCount);
+        /* bool enabled = 12; */
+        if (message.enabled !== false)
+            writer.tag(12, WireType.Varint).bool(message.enabled);
+        /* bool buy = 13; */
+        if (message.buy !== false)
+            writer.tag(13, WireType.Varint).bool(message.buy);
+        /* bool ended = 14; */
+        if (message.ended !== false)
+            writer.tag(14, WireType.Varint).bool(message.ended);
+        /* google.protobuf.DoubleValue start_price = 15; */
+        if (message.startPrice)
+            DoubleValue.internalBinaryWrite(message.startPrice, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue end_price = 16; */
+        if (message.endPrice)
+            DoubleValue.internalBinaryWrite(message.endPrice, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
+        /* int64 max_placed_index = 17; */
+        if (message.maxPlacedIndex !== 0)
+            writer.tag(17, WireType.Varint).int64(message.maxPlacedIndex);
+        /* google.protobuf.DoubleValue max_placed_price = 18; */
+        if (message.maxPlacedPrice)
+            DoubleValue.internalBinaryWrite(message.maxPlacedPrice, writer.tag(18, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidWalletScaleSession
+ */
+export const HyperliquidWalletScaleSession = new HyperliquidWalletScaleSession$Type();
