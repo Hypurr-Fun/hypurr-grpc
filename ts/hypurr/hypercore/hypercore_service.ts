@@ -393,7 +393,11 @@ export enum WalletTag {
     /**
      * @generated from protobuf enum value: WALLET_TAG_RETAIL = 6;
      */
-    RETAIL = 6
+    RETAIL = 6,
+    /**
+     * @generated from protobuf enum value: WALLET_TAG_PRO_TERMINAL = 7;
+     */
+    PRO_TERMINAL = 7
 }
 /**
  * @generated from protobuf enum hypercore.TradeDirOverride

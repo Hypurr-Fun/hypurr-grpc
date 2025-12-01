@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/tools.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x12hypurr/tools.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\"\xa8\x02\n\x1bHyperliquidSpotSniperConfig\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x14\n\x0ctarget_token\x18\x04 \x01(\t\x12\x16\n\x0emax_market_cap\x18\x05 \x01(\x01\x12\x14\n\x0cmax_notional\x18\x06 \x01(\x01\x12\x14\n\x0cmax_slippage\x18\x07 \x01(\x03\x12\x1b\n\x13max_user_allocation\x18\x08 \x01(\x03\x12 \n\x18max_liquidity_allocation\x18\t \x01(\x03\x12\x1e\n\x16max_airdrop_allocation\x18\n \x01(\x03\x12\x0f\n\x07\x65nabled\x18\x0b \x01(\x08\x12\x10\n\x08\x61nti_rug\x18\x0c \x01(\x08\"\x96\x03\n HyperliquidWalletSpotTwapSession\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x0f\n\x07pair_id\x18\x03 \x01(\x03\x12\x30\n\x0btelegram_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x17\n\x0ftarget_notional\x18\x05 \x01(\x01\x12\x17\n\x0f\x66illed_quantity\x18\x06 \x01(\x01\x12\x13\n\x0b\x66illed_cost\x18\x07 \x01(\x01\x12\x10\n\x08\x64uration\x18\x08 \x01(\x03\x12\x0f\n\x07\x65nabled\x18\t \x01(\x08\x12\x0b\n\x03\x62uy\x18\n \x01(\x08\x12\r\n\x05\x65nded\x18\x0b \x01(\x08\x12\x13\n\x0buse_chasing\x18\x0c \x01(\x08\x12\x13\n\x0breduce_only\x18\r \x01(\x08\x12/\n\tmin_price\x18\x0e \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmax_price\x18\x0f \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\"\xe7\x03\n\x1cHyperliquidWalletTwapSession\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x31\n\x0cspot_pair_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x31\n\x0cperp_pair_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x30\n\x0btelegram_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x35\n\x0ftarget_notional\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_quantity\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_leverage\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x17\n\x0f\x66illed_quantity\x18\t \x01(\x01\x12\x13\n\x0b\x66illed_cost\x18\n \x01(\x01\x12\x10\n\x08\x64uration\x18\x0b \x01(\x03\x12\x0f\n\x07\x65nabled\x18\x0c \x01(\x08\x12\x0b\n\x03\x62uy\x18\r \x01(\x08\x12\r\n\x05\x65nded\x18\x0e \x01(\x08\"\xa1\x05\n\x1dHyperliquidWalletScaleSession\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x31\n\x0cspot_pair_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x31\n\x0cperp_pair_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x30\n\x0btelegram_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x35\n\x0ftarget_notional\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_quantity\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_leverage\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x17\n\x0f\x66illed_quantity\x18\t \x01(\x01\x12\x13\n\x0b\x66illed_cost\x18\n \x01(\x01\x12\x13\n\x0border_count\x18\x0b \x01(\x03\x12\x0f\n\x07\x65nabled\x18\x0c \x01(\x08\x12\x0b\n\x03\x62uy\x18\r \x01(\x08\x12\r\n\x05\x65nded\x18\x0e \x01(\x08\x12\x31\n\x0bstart_price\x18\x0f \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tend_price\x18\x10 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x18\n\x10max_placed_index\x18\x11 \x01(\x03\x12\x36\n\x10max_placed_price\x18\x12 \x01(\x0b\x32\x1c.google.protobuf.DoubleValueB)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x12hypurr/tools.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\"\xa8\x02\n\x1bHyperliquidSpotSniperConfig\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x14\n\x0ctarget_token\x18\x04 \x01(\t\x12\x16\n\x0emax_market_cap\x18\x05 \x01(\x01\x12\x14\n\x0cmax_notional\x18\x06 \x01(\x01\x12\x14\n\x0cmax_slippage\x18\x07 \x01(\x03\x12\x1b\n\x13max_user_allocation\x18\x08 \x01(\x03\x12 \n\x18max_liquidity_allocation\x18\t \x01(\x03\x12\x1e\n\x16max_airdrop_allocation\x18\n \x01(\x03\x12\x0f\n\x07\x65nabled\x18\x0b \x01(\x08\x12\x10\n\x08\x61nti_rug\x18\x0c \x01(\x08\"\x96\x03\n HyperliquidWalletSpotTwapSession\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x0f\n\x07pair_id\x18\x03 \x01(\x03\x12\x30\n\x0btelegram_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x17\n\x0ftarget_notional\x18\x05 \x01(\x01\x12\x17\n\x0f\x66illed_quantity\x18\x06 \x01(\x01\x12\x13\n\x0b\x66illed_cost\x18\x07 \x01(\x01\x12\x10\n\x08\x64uration\x18\x08 \x01(\x03\x12\x0f\n\x07\x65nabled\x18\t \x01(\x08\x12\x0b\n\x03\x62uy\x18\n \x01(\x08\x12\r\n\x05\x65nded\x18\x0b \x01(\x08\x12\x13\n\x0buse_chasing\x18\x0c \x01(\x08\x12\x13\n\x0breduce_only\x18\r \x01(\x08\x12/\n\tmin_price\x18\x0e \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmax_price\x18\x0f \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\"\xf3\x04\n\x1cHyperliquidWalletTwapSession\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x31\n\x0cspot_pair_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x31\n\x0cperp_pair_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x30\n\x0btelegram_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x35\n\x0ftarget_notional\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_quantity\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_leverage\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x17\n\x0f\x66illed_quantity\x18\t \x01(\x01\x12\x13\n\x0b\x66illed_cost\x18\n \x01(\x01\x12\x10\n\x08\x64uration\x18\x0b \x01(\x03\x12\x0f\n\x07\x65nabled\x18\x0c \x01(\x08\x12\x0b\n\x03\x62uy\x18\r \x01(\x08\x12\r\n\x05\x65nded\x18\x0e \x01(\x08\x12/\n\tmin_price\x18\x0f \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmax_price\x18\x10 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x13\n\x0buse_chasing\x18\x11 \x01(\x08\x12\x13\n\x0breduce_only\x18\x12 \x01(\x08\"\xa1\x05\n\x1dHyperliquidWalletScaleSession\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x31\n\x0cspot_pair_id\x18\x03 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x31\n\x0cperp_pair_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x30\n\x0btelegram_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x35\n\x0ftarget_notional\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_quantity\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_leverage\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x17\n\x0f\x66illed_quantity\x18\t \x01(\x01\x12\x13\n\x0b\x66illed_cost\x18\n \x01(\x01\x12\x13\n\x0border_count\x18\x0b \x01(\x03\x12\x0f\n\x07\x65nabled\x18\x0c \x01(\x08\x12\x0b\n\x03\x62uy\x18\r \x01(\x08\x12\r\n\x05\x65nded\x18\x0e \x01(\x08\x12\x31\n\x0bstart_price\x18\x0f \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tend_price\x18\x10 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x18\n\x10max_placed_index\x18\x11 \x01(\x03\x12\x36\n\x10max_placed_price\x18\x12 \x01(\x0b\x32\x1c.google.protobuf.DoubleValueB)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -369,6 +369,34 @@ _HYPERLIQUIDWALLETTWAPSESSION = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='min_price', full_name='hypurr.HyperliquidWalletTwapSession.min_price', index=14,
+      number=15, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='max_price', full_name='hypurr.HyperliquidWalletTwapSession.max_price', index=15,
+      number=16, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='use_chasing', full_name='hypurr.HyperliquidWalletTwapSession.use_chasing', index=16,
+      number=17, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='reduce_only', full_name='hypurr.HyperliquidWalletTwapSession.reduce_only', index=17,
+      number=18, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -382,7 +410,7 @@ _HYPERLIQUIDWALLETTWAPSESSION = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=771,
-  serialized_end=1258,
+  serialized_end=1398,
 )
 
 
@@ -531,8 +559,8 @@ _HYPERLIQUIDWALLETSCALESESSION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1261,
-  serialized_end=1934,
+  serialized_start=1401,
+  serialized_end=2074,
 )
 
 _HYPERLIQUIDWALLETSPOTTWAPSESSION.fields_by_name['telegram_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
@@ -544,6 +572,8 @@ _HYPERLIQUIDWALLETTWAPSESSION.fields_by_name['telegram_id'].message_type = googl
 _HYPERLIQUIDWALLETTWAPSESSION.fields_by_name['target_notional'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
 _HYPERLIQUIDWALLETTWAPSESSION.fields_by_name['target_quantity'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
 _HYPERLIQUIDWALLETTWAPSESSION.fields_by_name['target_leverage'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_HYPERLIQUIDWALLETTWAPSESSION.fields_by_name['min_price'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
+_HYPERLIQUIDWALLETTWAPSESSION.fields_by_name['max_price'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
 _HYPERLIQUIDWALLETSCALESESSION.fields_by_name['spot_pair_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
 _HYPERLIQUIDWALLETSCALESESSION.fields_by_name['perp_pair_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
 _HYPERLIQUIDWALLETSCALESESSION.fields_by_name['telegram_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE

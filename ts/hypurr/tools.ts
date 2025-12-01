@@ -193,6 +193,22 @@ export interface HyperliquidWalletTwapSession {
      * @generated from protobuf field: bool ended = 14;
      */
     ended: boolean;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue min_price = 15;
+     */
+    minPrice?: DoubleValue;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue max_price = 16;
+     */
+    maxPrice?: DoubleValue;
+    /**
+     * @generated from protobuf field: bool use_chasing = 17;
+     */
+    useChasing: boolean;
+    /**
+     * @generated from protobuf field: bool reduce_only = 18;
+     */
+    reduceOnly: boolean;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletScaleSession
@@ -557,11 +573,15 @@ class HyperliquidWalletTwapSession$Type extends MessageType<HyperliquidWalletTwa
             { no: 11, name: "duration", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 12, name: "enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 13, name: "buy", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 14, name: "ended", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 14, name: "ended", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 15, name: "min_price", kind: "message", T: () => DoubleValue },
+            { no: 16, name: "max_price", kind: "message", T: () => DoubleValue },
+            { no: 17, name: "use_chasing", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 18, name: "reduce_only", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWalletTwapSession>): HyperliquidWalletTwapSession {
-        const message = { id: 0, walletId: 0, filledQuantity: 0, filledCost: 0, duration: 0, enabled: false, buy: false, ended: false };
+        const message = { id: 0, walletId: 0, filledQuantity: 0, filledCost: 0, duration: 0, enabled: false, buy: false, ended: false, useChasing: false, reduceOnly: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWalletTwapSession>(this, message, value);
@@ -613,6 +633,18 @@ class HyperliquidWalletTwapSession$Type extends MessageType<HyperliquidWalletTwa
                     break;
                 case /* bool ended */ 14:
                     message.ended = reader.bool();
+                    break;
+                case /* google.protobuf.DoubleValue min_price */ 15:
+                    message.minPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.minPrice);
+                    break;
+                case /* google.protobuf.DoubleValue max_price */ 16:
+                    message.maxPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.maxPrice);
+                    break;
+                case /* bool use_chasing */ 17:
+                    message.useChasing = reader.bool();
+                    break;
+                case /* bool reduce_only */ 18:
+                    message.reduceOnly = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -668,6 +700,18 @@ class HyperliquidWalletTwapSession$Type extends MessageType<HyperliquidWalletTwa
         /* bool ended = 14; */
         if (message.ended !== false)
             writer.tag(14, WireType.Varint).bool(message.ended);
+        /* google.protobuf.DoubleValue min_price = 15; */
+        if (message.minPrice)
+            DoubleValue.internalBinaryWrite(message.minPrice, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue max_price = 16; */
+        if (message.maxPrice)
+            DoubleValue.internalBinaryWrite(message.maxPrice, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
+        /* bool use_chasing = 17; */
+        if (message.useChasing !== false)
+            writer.tag(17, WireType.Varint).bool(message.useChasing);
+        /* bool reduce_only = 18; */
+        if (message.reduceOnly !== false)
+            writer.tag(18, WireType.Varint).bool(message.reduceOnly);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

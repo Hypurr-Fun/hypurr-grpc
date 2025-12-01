@@ -53,6 +53,10 @@ message HyperliquidWalletTwapSession {
   bool enabled = 12;
   bool buy = 13;
   bool ended = 14;
+  google.protobuf.DoubleValue min_price = 15;
+  google.protobuf.DoubleValue max_price = 16;
+  bool use_chasing = 17;
+  bool reduce_only = 18;
 }
 
 message HyperliquidWalletScaleSession {
