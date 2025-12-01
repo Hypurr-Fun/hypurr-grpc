@@ -216,6 +216,7 @@ service Telegram {
 
   // Spot
   rpc HyperliquidSpotTrade (HyperliquidSpotTradeRequest) returns (HyperliquidSpotTradeResponse) {}
+  rpc HyperliquidCoreTrade (HyperliquidCoreTradeRequest) returns (HyperliquidCoreTradeResponse) {}
 
   rpc HyperliquidWalletSpotTwapSessions (HyperliquidWalletSpotTwapSessionsRequest) returns (HyperliquidWalletSpotTwapSessionsResponse) {}
   rpc HyperliquidWalletTwapSessions (HyperliquidWalletTwapSessionsRequest) returns (HyperliquidWalletTwapSessionsResponse) {}

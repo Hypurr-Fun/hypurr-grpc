@@ -54,6 +54,11 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidSpotTradeRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidSpotTradeResponse.FromString,
         )
+    self.HyperliquidCoreTrade = channel.unary_unary(
+        '/hypurr.Telegram/HyperliquidCoreTrade',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidCoreTradeRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidCoreTradeResponse.FromString,
+        )
     self.HyperliquidWalletSpotTwapSessions = channel.unary_unary(
         '/hypurr.Telegram/HyperliquidWalletSpotTwapSessions',
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSpotTwapSessionsRequest.SerializeToString,
@@ -151,6 +156,13 @@ class TelegramServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def HyperliquidCoreTrade(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def HyperliquidWalletSpotTwapSessions(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -242,6 +254,11 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.HyperliquidSpotTrade,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidSpotTradeRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidSpotTradeResponse.SerializeToString,
+      ),
+      'HyperliquidCoreTrade': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidCoreTrade,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidCoreTradeRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidCoreTradeResponse.SerializeToString,
       ),
       'HyperliquidWalletSpotTwapSessions': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidWalletSpotTwapSessions,

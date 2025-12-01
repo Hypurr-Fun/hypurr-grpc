@@ -2756,6 +2756,7 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "HpumpV1LaunchTrade", options: {}, I: HpumpV1LaunchTradeRequest, O: HpumpV1LaunchTradeResponse },
     { name: "LaunchHpumpV1Launch", options: {}, I: LaunchHpumpV1LaunchRequest, O: LaunchHpumpV1LaunchResponse },
     { name: "HyperliquidSpotTrade", options: {}, I: HyperliquidSpotTradeRequest, O: HyperliquidSpotTradeResponse },
+    { name: "HyperliquidCoreTrade", options: {}, I: HyperliquidCoreTradeRequest, O: HyperliquidCoreTradeResponse },
     { name: "HyperliquidWalletSpotTwapSessions", options: {}, I: HyperliquidWalletSpotTwapSessionsRequest, O: HyperliquidWalletSpotTwapSessionsResponse },
     { name: "HyperliquidWalletTwapSessions", options: {}, I: HyperliquidWalletTwapSessionsRequest, O: HyperliquidWalletTwapSessionsResponse },
     { name: "HyperliquidWalletScaleSessions", options: {}, I: HyperliquidWalletScaleSessionsRequest, O: HyperliquidWalletScaleSessionsResponse },
