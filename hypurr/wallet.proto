@@ -4,6 +4,7 @@ option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
 import "google/protobuf/wrappers.proto";
 import "hypurr/token.proto";
+import "hypurr/tools.proto";
 
 message HyperliquidWallet {
   int64 id = 1;
@@ -16,6 +17,8 @@ message HyperliquidWallet {
   repeated HyperliquidLaunchBalance launch_balances = 8;
   bool is_agent = 9;
   bool is_read_only = 10;
+  repeated HyperliquidWalletScaleSession scale_sessions = 11;
+  repeated HyperliquidWalletTwapSession twap_sessions = 12;
 }
 
 message HyperliquidWalletMovement {
