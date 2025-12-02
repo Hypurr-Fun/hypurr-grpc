@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
+import type { ReferrerWalletResponse } from "./hypercore_service";
+import type { ReferrerWalletRequest } from "./hypercore_service";
 import type { ValidatorDelegatorsResponse } from "./hypercore_service";
 import type { ValidatorDelegatorsRequest } from "./hypercore_service";
 import type { WalletTradesStreamResponse } from "./hypercore_service";
@@ -49,6 +51,10 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: ValidatorDelegators(hypercore.ValidatorDelegatorsRequest) returns (hypercore.ValidatorDelegatorsResponse);
      */
     validatorDelegators(input: ValidatorDelegatorsRequest, options?: RpcOptions): UnaryCall<ValidatorDelegatorsRequest, ValidatorDelegatorsResponse>;
+    /**
+     * @generated from protobuf rpc: ReferrerWallet(hypercore.ReferrerWalletRequest) returns (hypercore.ReferrerWalletResponse);
+     */
+    referrerWallet(input: ReferrerWalletRequest, options?: RpcOptions): UnaryCall<ReferrerWalletRequest, ReferrerWalletResponse>;
 }
 /**
  * @generated from protobuf service hypercore.HyperCore
@@ -100,5 +106,12 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
     validatorDelegators(input: ValidatorDelegatorsRequest, options?: RpcOptions): UnaryCall<ValidatorDelegatorsRequest, ValidatorDelegatorsResponse> {
         const method = this.methods[5], opt = this._transport.mergeOptions(options);
         return stackIntercept<ValidatorDelegatorsRequest, ValidatorDelegatorsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: ReferrerWallet(hypercore.ReferrerWalletRequest) returns (hypercore.ReferrerWalletResponse);
+     */
+    referrerWallet(input: ReferrerWalletRequest, options?: RpcOptions): UnaryCall<ReferrerWalletRequest, ReferrerWalletResponse> {
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        return stackIntercept<ReferrerWalletRequest, ReferrerWalletResponse>("unary", this._transport, method, opt, input);
     }
 }

@@ -342,6 +342,24 @@ export interface ValidatorDelegator {
      */
     stake: number;
 }
+/**
+ * @generated from protobuf message hypercore.ReferrerWalletRequest
+ */
+export interface ReferrerWalletRequest {
+    /**
+     * @generated from protobuf field: string referrer_code = 1;
+     */
+    referrerCode: string;
+}
+/**
+ * @generated from protobuf message hypercore.ReferrerWalletResponse
+ */
+export interface ReferrerWalletResponse {
+    /**
+     * @generated from protobuf field: string wallet_address = 1;
+     */
+    walletAddress: string;
+}
 // 
 // type Trade struct {
 // Coin             string           `json:"coin"`               // Perp symbol or @ notation
@@ -1601,6 +1619,100 @@ class ValidatorDelegator$Type extends MessageType<ValidatorDelegator> {
  * @generated MessageType for protobuf message hypercore.ValidatorDelegator
  */
 export const ValidatorDelegator = new ValidatorDelegator$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ReferrerWalletRequest$Type extends MessageType<ReferrerWalletRequest> {
+    constructor() {
+        super("hypercore.ReferrerWalletRequest", [
+            { no: 1, name: "referrer_code", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ReferrerWalletRequest>): ReferrerWalletRequest {
+        const message = { referrerCode: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ReferrerWalletRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ReferrerWalletRequest): ReferrerWalletRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string referrer_code */ 1:
+                    message.referrerCode = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ReferrerWalletRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string referrer_code = 1; */
+        if (message.referrerCode !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.referrerCode);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.ReferrerWalletRequest
+ */
+export const ReferrerWalletRequest = new ReferrerWalletRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ReferrerWalletResponse$Type extends MessageType<ReferrerWalletResponse> {
+    constructor() {
+        super("hypercore.ReferrerWalletResponse", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ReferrerWalletResponse>): ReferrerWalletResponse {
+        const message = { walletAddress: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ReferrerWalletResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ReferrerWalletResponse): ReferrerWalletResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ReferrerWalletResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.ReferrerWalletResponse
+ */
+export const ReferrerWalletResponse = new ReferrerWalletResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypercore.HyperCore
  */
@@ -1610,5 +1722,6 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "AggregatedWalletPositioningStream", serverStreaming: true, options: {}, I: AggregatedWalletPositioningStreamRequest, O: AggregatedWalletPositioningStreamResponse },
     { name: "WalletBalancesStream", serverStreaming: true, clientStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
     { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },
-    { name: "ValidatorDelegators", options: {}, I: ValidatorDelegatorsRequest, O: ValidatorDelegatorsResponse }
+    { name: "ValidatorDelegators", options: {}, I: ValidatorDelegatorsRequest, O: ValidatorDelegatorsResponse },
+    { name: "ReferrerWallet", options: {}, I: ReferrerWalletRequest, O: ReferrerWalletResponse }
 ]);

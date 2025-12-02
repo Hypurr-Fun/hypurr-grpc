@@ -25,6 +25,7 @@ const (
 	HyperCore_WalletBalancesStream_FullMethodName              = "/hypercore.HyperCore/WalletBalancesStream"
 	HyperCore_WalletTradesStream_FullMethodName                = "/hypercore.HyperCore/WalletTradesStream"
 	HyperCore_ValidatorDelegators_FullMethodName               = "/hypercore.HyperCore/ValidatorDelegators"
+	HyperCore_ReferrerWallet_FullMethodName                    = "/hypercore.HyperCore/ReferrerWallet"
 )
 
 // HyperCoreClient is the client API for HyperCore service.
@@ -37,6 +38,7 @@ type HyperCoreClient interface {
 	WalletBalancesStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_WalletBalancesStreamClient, error)
 	WalletTradesStream(ctx context.Context, in *WalletTradesStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletTradesStreamClient, error)
 	ValidatorDelegators(ctx context.Context, in *ValidatorDelegatorsRequest, opts ...grpc.CallOption) (*ValidatorDelegatorsResponse, error)
+	ReferrerWallet(ctx context.Context, in *ReferrerWalletRequest, opts ...grpc.CallOption) (*ReferrerWalletResponse, error)
 }
 
 type hyperCoreClient struct {
@@ -175,6 +177,16 @@ func (c *hyperCoreClient) ValidatorDelegators(ctx context.Context, in *Validator
 	return out, nil
 }
 
+func (c *hyperCoreClient) ReferrerWallet(ctx context.Context, in *ReferrerWalletRequest, opts ...grpc.CallOption) (*ReferrerWalletResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ReferrerWalletResponse)
+	err := c.cc.Invoke(ctx, HyperCore_ReferrerWallet_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HyperCoreServer is the server API for HyperCore service.
 // All implementations must embed UnimplementedHyperCoreServer
 // for forward compatibility
@@ -185,6 +197,7 @@ type HyperCoreServer interface {
 	WalletBalancesStream(HyperCore_WalletBalancesStreamServer) error
 	WalletTradesStream(*WalletTradesStreamRequest, HyperCore_WalletTradesStreamServer) error
 	ValidatorDelegators(context.Context, *ValidatorDelegatorsRequest) (*ValidatorDelegatorsResponse, error)
+	ReferrerWallet(context.Context, *ReferrerWalletRequest) (*ReferrerWalletResponse, error)
 	mustEmbedUnimplementedHyperCoreServer()
 }
 
@@ -209,6 +222,9 @@ func (UnimplementedHyperCoreServer) WalletTradesStream(*WalletTradesStreamReques
 }
 func (UnimplementedHyperCoreServer) ValidatorDelegators(context.Context, *ValidatorDelegatorsRequest) (*ValidatorDelegatorsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidatorDelegators not implemented")
+}
+func (UnimplementedHyperCoreServer) ReferrerWallet(context.Context, *ReferrerWalletRequest) (*ReferrerWalletResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReferrerWallet not implemented")
 }
 func (UnimplementedHyperCoreServer) mustEmbedUnimplementedHyperCoreServer() {}
 
@@ -345,6 +361,24 @@ func _HyperCore_ValidatorDelegators_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_ReferrerWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReferrerWalletRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).ReferrerWallet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_ReferrerWallet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).ReferrerWallet(ctx, req.(*ReferrerWalletRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HyperCore_ServiceDesc is the grpc.ServiceDesc for HyperCore service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -363,6 +397,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ValidatorDelegators",
 			Handler:    _HyperCore_ValidatorDelegators_Handler,
+		},
+		{
+			MethodName: "ReferrerWallet",
+			Handler:    _HyperCore_ReferrerWallet_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

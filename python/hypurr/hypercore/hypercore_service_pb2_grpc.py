@@ -44,6 +44,11 @@ class HyperCoreStub(object):
         request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ValidatorDelegatorsRequest.SerializeToString,
         response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ValidatorDelegatorsResponse.FromString,
         )
+    self.ReferrerWallet = channel.unary_unary(
+        '/hypercore.HyperCore/ReferrerWallet',
+        request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ReferrerWalletRequest.SerializeToString,
+        response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ReferrerWalletResponse.FromString,
+        )
 
 
 class HyperCoreServicer(object):
@@ -92,6 +97,13 @@ class HyperCoreServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def ReferrerWallet(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_HyperCoreServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -124,6 +136,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
           servicer.ValidatorDelegators,
           request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ValidatorDelegatorsRequest.FromString,
           response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ValidatorDelegatorsResponse.SerializeToString,
+      ),
+      'ReferrerWallet': grpc.unary_unary_rpc_method_handler(
+          servicer.ReferrerWallet,
+          request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ReferrerWalletRequest.FromString,
+          response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ReferrerWalletResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
