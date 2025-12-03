@@ -402,6 +402,305 @@ func (x *HyperliquidCoreOrder) GetClientOrderId() *wrapperspb.StringValue {
 	return nil
 }
 
+type HyperliquidCoreCancel struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	InstrumentId  int64                   `protobuf:"varint,1,opt,name=instrument_id,json=instrumentId,proto3" json:"instrument_id,omitempty"`
+	OrderId       *wrapperspb.Int64Value  `protobuf:"bytes,2,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	ClientOrderId *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=client_order_id,json=clientOrderId,proto3" json:"client_order_id,omitempty"`
+}
+
+func (x *HyperliquidCoreCancel) Reset() {
+	*x = HyperliquidCoreCancel{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_trade_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HyperliquidCoreCancel) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HyperliquidCoreCancel) ProtoMessage() {}
+
+func (x *HyperliquidCoreCancel) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_trade_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HyperliquidCoreCancel.ProtoReflect.Descriptor instead.
+func (*HyperliquidCoreCancel) Descriptor() ([]byte, []int) {
+	return file_hypurr_trade_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *HyperliquidCoreCancel) GetInstrumentId() int64 {
+	if x != nil {
+		return x.InstrumentId
+	}
+	return 0
+}
+
+func (x *HyperliquidCoreCancel) GetOrderId() *wrapperspb.Int64Value {
+	if x != nil {
+		return x.OrderId
+	}
+	return nil
+}
+
+func (x *HyperliquidCoreCancel) GetClientOrderId() *wrapperspb.StringValue {
+	if x != nil {
+		return x.ClientOrderId
+	}
+	return nil
+}
+
+type HyperliquidCoreOrderPlacedStatus struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	State   string                       `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+	Filled  *HyperliquidCoreOrderFilled  `protobuf:"bytes,2,opt,name=filled,proto3" json:"filled,omitempty"`
+	Resting *HyperliquidCoreOrderResting `protobuf:"bytes,3,opt,name=resting,proto3" json:"resting,omitempty"`
+}
+
+func (x *HyperliquidCoreOrderPlacedStatus) Reset() {
+	*x = HyperliquidCoreOrderPlacedStatus{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_trade_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HyperliquidCoreOrderPlacedStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HyperliquidCoreOrderPlacedStatus) ProtoMessage() {}
+
+func (x *HyperliquidCoreOrderPlacedStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_trade_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HyperliquidCoreOrderPlacedStatus.ProtoReflect.Descriptor instead.
+func (*HyperliquidCoreOrderPlacedStatus) Descriptor() ([]byte, []int) {
+	return file_hypurr_trade_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *HyperliquidCoreOrderPlacedStatus) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *HyperliquidCoreOrderPlacedStatus) GetFilled() *HyperliquidCoreOrderFilled {
+	if x != nil {
+		return x.Filled
+	}
+	return nil
+}
+
+func (x *HyperliquidCoreOrderPlacedStatus) GetResting() *HyperliquidCoreOrderResting {
+	if x != nil {
+		return x.Resting
+	}
+	return nil
+}
+
+type HyperliquidCoreOrderCanceledStatus struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	State string `protobuf:"bytes,1,opt,name=state,proto3" json:"state,omitempty"`
+	Error string `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+}
+
+func (x *HyperliquidCoreOrderCanceledStatus) Reset() {
+	*x = HyperliquidCoreOrderCanceledStatus{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_trade_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HyperliquidCoreOrderCanceledStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HyperliquidCoreOrderCanceledStatus) ProtoMessage() {}
+
+func (x *HyperliquidCoreOrderCanceledStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_trade_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HyperliquidCoreOrderCanceledStatus.ProtoReflect.Descriptor instead.
+func (*HyperliquidCoreOrderCanceledStatus) Descriptor() ([]byte, []int) {
+	return file_hypurr_trade_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *HyperliquidCoreOrderCanceledStatus) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *HyperliquidCoreOrderCanceledStatus) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+type HyperliquidCoreOrderResting struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OrderId       int64                   `protobuf:"varint,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	ClientOrderId *wrapperspb.StringValue `protobuf:"bytes,2,opt,name=client_order_id,json=clientOrderId,proto3" json:"client_order_id,omitempty"`
+}
+
+func (x *HyperliquidCoreOrderResting) Reset() {
+	*x = HyperliquidCoreOrderResting{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_trade_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HyperliquidCoreOrderResting) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HyperliquidCoreOrderResting) ProtoMessage() {}
+
+func (x *HyperliquidCoreOrderResting) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_trade_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HyperliquidCoreOrderResting.ProtoReflect.Descriptor instead.
+func (*HyperliquidCoreOrderResting) Descriptor() ([]byte, []int) {
+	return file_hypurr_trade_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *HyperliquidCoreOrderResting) GetOrderId() int64 {
+	if x != nil {
+		return x.OrderId
+	}
+	return 0
+}
+
+func (x *HyperliquidCoreOrderResting) GetClientOrderId() *wrapperspb.StringValue {
+	if x != nil {
+		return x.ClientOrderId
+	}
+	return nil
+}
+
+type HyperliquidCoreOrderFilled struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OrderId      int64   `protobuf:"varint,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	TotalSize    float64 `protobuf:"fixed64,2,opt,name=total_size,json=totalSize,proto3" json:"total_size,omitempty"`
+	AveragePrice float64 `protobuf:"fixed64,3,opt,name=average_price,json=averagePrice,proto3" json:"average_price,omitempty"`
+}
+
+func (x *HyperliquidCoreOrderFilled) Reset() {
+	*x = HyperliquidCoreOrderFilled{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_trade_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HyperliquidCoreOrderFilled) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HyperliquidCoreOrderFilled) ProtoMessage() {}
+
+func (x *HyperliquidCoreOrderFilled) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_trade_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HyperliquidCoreOrderFilled.ProtoReflect.Descriptor instead.
+func (*HyperliquidCoreOrderFilled) Descriptor() ([]byte, []int) {
+	return file_hypurr_trade_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *HyperliquidCoreOrderFilled) GetOrderId() int64 {
+	if x != nil {
+		return x.OrderId
+	}
+	return 0
+}
+
+func (x *HyperliquidCoreOrderFilled) GetTotalSize() float64 {
+	if x != nil {
+		return x.TotalSize
+	}
+	return 0
+}
+
+func (x *HyperliquidCoreOrderFilled) GetAveragePrice() float64 {
+	if x != nil {
+		return x.AveragePrice
+	}
+	return 0
+}
+
 var File_hypurr_trade_proto protoreflect.FileDescriptor
 
 var file_hypurr_trade_proto_rawDesc = []byte{
@@ -448,16 +747,60 @@ var file_hypurr_trade_proto_rawDesc = []byte{
 	0x65, 0x6e, 0x74, 0x5f, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x07, 0x20, 0x01,
 	0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x56, 0x61, 0x6c, 0x75, 0x65,
-	0x52, 0x0d, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x2a,
-	0x23, 0x0a, 0x0e, 0x54, 0x72, 0x61, 0x64, 0x65, 0x44, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f,
-	0x6e, 0x12, 0x07, 0x0a, 0x03, 0x42, 0x55, 0x59, 0x10, 0x00, 0x12, 0x08, 0x0a, 0x04, 0x53, 0x45,
-	0x4c, 0x4c, 0x10, 0x01, 0x2a, 0x28, 0x0a, 0x0b, 0x54, 0x69, 0x6d, 0x65, 0x49, 0x6e, 0x46, 0x6f,
-	0x72, 0x63, 0x65, 0x12, 0x07, 0x0a, 0x03, 0x47, 0x54, 0x43, 0x10, 0x00, 0x12, 0x07, 0x0a, 0x03,
-	0x41, 0x4c, 0x4f, 0x10, 0x01, 0x12, 0x07, 0x0a, 0x03, 0x49, 0x4f, 0x43, 0x10, 0x02, 0x42, 0x29,
-	0x5a, 0x27, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70,
-	0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f,
-	0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x52, 0x0d, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x22,
+	0xba, 0x01, 0x0a, 0x15, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x43,
+	0x6f, 0x72, 0x65, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x12, 0x23, 0x0a, 0x0d, 0x69, 0x6e, 0x73,
+	0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x0c, 0x69, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x36,
+	0x0a, 0x08, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x1b, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2e, 0x49, 0x6e, 0x74, 0x36, 0x34, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x07, 0x6f,
+	0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x12, 0x44, 0x0a, 0x0f, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74,
+	0x5f, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
+	0x66, 0x2e, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x0d, 0x63,
+	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x22, 0xb3, 0x01, 0x0a,
+	0x20, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x43, 0x6f, 0x72, 0x65,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x50, 0x6c, 0x61, 0x63, 0x65, 0x64, 0x53, 0x74, 0x61, 0x74, 0x75,
+	0x73, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x3a, 0x0a, 0x06, 0x66, 0x69, 0x6c, 0x6c, 0x65,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72,
+	0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x43, 0x6f, 0x72, 0x65,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x46, 0x69, 0x6c, 0x6c, 0x65, 0x64, 0x52, 0x06, 0x66, 0x69, 0x6c,
+	0x6c, 0x65, 0x64, 0x12, 0x3d, 0x0a, 0x07, 0x72, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x67, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79,
+	0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x43, 0x6f, 0x72, 0x65, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x52, 0x65, 0x73, 0x74, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x72, 0x65, 0x73, 0x74, 0x69,
+	0x6e, 0x67, 0x22, 0x50, 0x0a, 0x22, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69,
+	0x64, 0x43, 0x6f, 0x72, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c,
+	0x65, 0x64, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x14,
+	0x0a, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65,
+	0x72, 0x72, 0x6f, 0x72, 0x22, 0x7e, 0x0a, 0x1b, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71,
+	0x75, 0x69, 0x64, 0x43, 0x6f, 0x72, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x74,
+	0x69, 0x6e, 0x67, 0x12, 0x19, 0x0a, 0x08, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x12, 0x44,
+	0x0a, 0x0f, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x69,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67,
+	0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x0d, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x49, 0x64, 0x22, 0x7b, 0x0a, 0x1a, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71,
+	0x75, 0x69, 0x64, 0x43, 0x6f, 0x72, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x46, 0x69, 0x6c, 0x6c,
+	0x65, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1d, 0x0a,
+	0x0a, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x01, 0x52, 0x09, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x23, 0x0a, 0x0d,
+	0x61, 0x76, 0x65, 0x72, 0x61, 0x67, 0x65, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x0c, 0x61, 0x76, 0x65, 0x72, 0x61, 0x67, 0x65, 0x50, 0x72, 0x69, 0x63,
+	0x65, 0x2a, 0x23, 0x0a, 0x0e, 0x54, 0x72, 0x61, 0x64, 0x65, 0x44, 0x69, 0x72, 0x65, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x12, 0x07, 0x0a, 0x03, 0x42, 0x55, 0x59, 0x10, 0x00, 0x12, 0x08, 0x0a, 0x04,
+	0x53, 0x45, 0x4c, 0x4c, 0x10, 0x01, 0x2a, 0x28, 0x0a, 0x0b, 0x54, 0x69, 0x6d, 0x65, 0x49, 0x6e,
+	0x46, 0x6f, 0x72, 0x63, 0x65, 0x12, 0x07, 0x0a, 0x03, 0x47, 0x54, 0x43, 0x10, 0x00, 0x12, 0x07,
+	0x0a, 0x03, 0x41, 0x4c, 0x4f, 0x10, 0x01, 0x12, 0x07, 0x0a, 0x03, 0x49, 0x4f, 0x43, 0x10, 0x02,
+	0x42, 0x29, 0x5a, 0x27, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68,
+	0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70,
+	0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -473,28 +816,39 @@ func file_hypurr_trade_proto_rawDescGZIP() []byte {
 }
 
 var file_hypurr_trade_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_hypurr_trade_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_hypurr_trade_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_hypurr_trade_proto_goTypes = []any{
-	(TradeDirection)(0),            // 0: hypurr.TradeDirection
-	(TimeInForce)(0),               // 1: hypurr.TimeInForce
-	(*LimitOrderTypeData)(nil),     // 2: hypurr.LimitOrderTypeData
-	(*TriggerOrderTypeData)(nil),   // 3: hypurr.TriggerOrderTypeData
-	(*OrderType)(nil),              // 4: hypurr.OrderType
-	(*HyperliquidCoreOrder)(nil),   // 5: hypurr.HyperliquidCoreOrder
-	(*wrapperspb.StringValue)(nil), // 6: google.protobuf.StringValue
+	(TradeDirection)(0),                        // 0: hypurr.TradeDirection
+	(TimeInForce)(0),                           // 1: hypurr.TimeInForce
+	(*LimitOrderTypeData)(nil),                 // 2: hypurr.LimitOrderTypeData
+	(*TriggerOrderTypeData)(nil),               // 3: hypurr.TriggerOrderTypeData
+	(*OrderType)(nil),                          // 4: hypurr.OrderType
+	(*HyperliquidCoreOrder)(nil),               // 5: hypurr.HyperliquidCoreOrder
+	(*HyperliquidCoreCancel)(nil),              // 6: hypurr.HyperliquidCoreCancel
+	(*HyperliquidCoreOrderPlacedStatus)(nil),   // 7: hypurr.HyperliquidCoreOrderPlacedStatus
+	(*HyperliquidCoreOrderCanceledStatus)(nil), // 8: hypurr.HyperliquidCoreOrderCanceledStatus
+	(*HyperliquidCoreOrderResting)(nil),        // 9: hypurr.HyperliquidCoreOrderResting
+	(*HyperliquidCoreOrderFilled)(nil),         // 10: hypurr.HyperliquidCoreOrderFilled
+	(*wrapperspb.StringValue)(nil),             // 11: google.protobuf.StringValue
+	(*wrapperspb.Int64Value)(nil),              // 12: google.protobuf.Int64Value
 }
 var file_hypurr_trade_proto_depIdxs = []int32{
-	1, // 0: hypurr.LimitOrderTypeData.time_in_force:type_name -> hypurr.TimeInForce
-	2, // 1: hypurr.OrderType.limit:type_name -> hypurr.LimitOrderTypeData
-	3, // 2: hypurr.OrderType.trigger:type_name -> hypurr.TriggerOrderTypeData
-	0, // 3: hypurr.HyperliquidCoreOrder.direction:type_name -> hypurr.TradeDirection
-	4, // 4: hypurr.HyperliquidCoreOrder.order_type:type_name -> hypurr.OrderType
-	6, // 5: hypurr.HyperliquidCoreOrder.client_order_id:type_name -> google.protobuf.StringValue
-	6, // [6:6] is the sub-list for method output_type
-	6, // [6:6] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	1,  // 0: hypurr.LimitOrderTypeData.time_in_force:type_name -> hypurr.TimeInForce
+	2,  // 1: hypurr.OrderType.limit:type_name -> hypurr.LimitOrderTypeData
+	3,  // 2: hypurr.OrderType.trigger:type_name -> hypurr.TriggerOrderTypeData
+	0,  // 3: hypurr.HyperliquidCoreOrder.direction:type_name -> hypurr.TradeDirection
+	4,  // 4: hypurr.HyperliquidCoreOrder.order_type:type_name -> hypurr.OrderType
+	11, // 5: hypurr.HyperliquidCoreOrder.client_order_id:type_name -> google.protobuf.StringValue
+	12, // 6: hypurr.HyperliquidCoreCancel.order_id:type_name -> google.protobuf.Int64Value
+	11, // 7: hypurr.HyperliquidCoreCancel.client_order_id:type_name -> google.protobuf.StringValue
+	10, // 8: hypurr.HyperliquidCoreOrderPlacedStatus.filled:type_name -> hypurr.HyperliquidCoreOrderFilled
+	9,  // 9: hypurr.HyperliquidCoreOrderPlacedStatus.resting:type_name -> hypurr.HyperliquidCoreOrderResting
+	11, // 10: hypurr.HyperliquidCoreOrderResting.client_order_id:type_name -> google.protobuf.StringValue
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_hypurr_trade_proto_init() }
@@ -551,6 +905,66 @@ func file_hypurr_trade_proto_init() {
 				return nil
 			}
 		}
+		file_hypurr_trade_proto_msgTypes[4].Exporter = func(v any, i int) any {
+			switch v := v.(*HyperliquidCoreCancel); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_trade_proto_msgTypes[5].Exporter = func(v any, i int) any {
+			switch v := v.(*HyperliquidCoreOrderPlacedStatus); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_trade_proto_msgTypes[6].Exporter = func(v any, i int) any {
+			switch v := v.(*HyperliquidCoreOrderCanceledStatus); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_trade_proto_msgTypes[7].Exporter = func(v any, i int) any {
+			switch v := v.(*HyperliquidCoreOrderResting); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_trade_proto_msgTypes[8].Exporter = func(v any, i int) any {
+			switch v := v.(*HyperliquidCoreOrderFilled); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	file_hypurr_trade_proto_msgTypes[2].OneofWrappers = []any{
 		(*OrderType_Limit)(nil),
@@ -562,7 +976,7 @@ func file_hypurr_trade_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hypurr_trade_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   4,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

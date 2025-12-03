@@ -274,6 +274,116 @@ func (x *HyperliquidCoreTradeRequest) GetOrder() *hypurr.HyperliquidCoreOrder {
 	return nil
 }
 
+type HyperliquidCoreCancelOrdersRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AuthData map[string]string               `protobuf:"bytes,1,rep,name=auth_data,json=authData,proto3" json:"auth_data,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	WalletId int64                           `protobuf:"varint,2,opt,name=wallet_id,json=walletId,proto3" json:"wallet_id,omitempty"`
+	Cancels  []*hypurr.HyperliquidCoreCancel `protobuf:"bytes,3,rep,name=cancels,proto3" json:"cancels,omitempty"`
+}
+
+func (x *HyperliquidCoreCancelOrdersRequest) Reset() {
+	*x = HyperliquidCoreCancelOrdersRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HyperliquidCoreCancelOrdersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HyperliquidCoreCancelOrdersRequest) ProtoMessage() {}
+
+func (x *HyperliquidCoreCancelOrdersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HyperliquidCoreCancelOrdersRequest.ProtoReflect.Descriptor instead.
+func (*HyperliquidCoreCancelOrdersRequest) Descriptor() ([]byte, []int) {
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *HyperliquidCoreCancelOrdersRequest) GetAuthData() map[string]string {
+	if x != nil {
+		return x.AuthData
+	}
+	return nil
+}
+
+func (x *HyperliquidCoreCancelOrdersRequest) GetWalletId() int64 {
+	if x != nil {
+		return x.WalletId
+	}
+	return 0
+}
+
+func (x *HyperliquidCoreCancelOrdersRequest) GetCancels() []*hypurr.HyperliquidCoreCancel {
+	if x != nil {
+		return x.Cancels
+	}
+	return nil
+}
+
+type HyperliquidCoreCancelOrdersResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Statuses []*hypurr.HyperliquidCoreOrderCanceledStatus `protobuf:"bytes,1,rep,name=statuses,proto3" json:"statuses,omitempty"`
+}
+
+func (x *HyperliquidCoreCancelOrdersResponse) Reset() {
+	*x = HyperliquidCoreCancelOrdersResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HyperliquidCoreCancelOrdersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HyperliquidCoreCancelOrdersResponse) ProtoMessage() {}
+
+func (x *HyperliquidCoreCancelOrdersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HyperliquidCoreCancelOrdersResponse.ProtoReflect.Descriptor instead.
+func (*HyperliquidCoreCancelOrdersResponse) Descriptor() ([]byte, []int) {
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *HyperliquidCoreCancelOrdersResponse) GetStatuses() []*hypurr.HyperliquidCoreOrderCanceledStatus {
+	if x != nil {
+		return x.Statuses
+	}
+	return nil
+}
+
 type HyperliquidCoreTradeResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -288,7 +398,7 @@ type HyperliquidCoreTradeResponse struct {
 func (x *HyperliquidCoreTradeResponse) Reset() {
 	*x = HyperliquidCoreTradeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[5]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -301,7 +411,7 @@ func (x *HyperliquidCoreTradeResponse) String() string {
 func (*HyperliquidCoreTradeResponse) ProtoMessage() {}
 
 func (x *HyperliquidCoreTradeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[5]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -314,7 +424,7 @@ func (x *HyperliquidCoreTradeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HyperliquidCoreTradeResponse.ProtoReflect.Descriptor instead.
 func (*HyperliquidCoreTradeResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{5}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *HyperliquidCoreTradeResponse) GetBaseAmount() float64 {
@@ -360,7 +470,7 @@ type HyperliquidLaunchTradeRequest struct {
 func (x *HyperliquidLaunchTradeRequest) Reset() {
 	*x = HyperliquidLaunchTradeRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[6]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -373,7 +483,7 @@ func (x *HyperliquidLaunchTradeRequest) String() string {
 func (*HyperliquidLaunchTradeRequest) ProtoMessage() {}
 
 func (x *HyperliquidLaunchTradeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[6]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -386,7 +496,7 @@ func (x *HyperliquidLaunchTradeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HyperliquidLaunchTradeRequest.ProtoReflect.Descriptor instead.
 func (*HyperliquidLaunchTradeRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{6}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *HyperliquidLaunchTradeRequest) GetAuthData() map[string]string {
@@ -438,7 +548,7 @@ type HyperliquidLaunchTradeResponse struct {
 func (x *HyperliquidLaunchTradeResponse) Reset() {
 	*x = HyperliquidLaunchTradeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[7]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -451,7 +561,7 @@ func (x *HyperliquidLaunchTradeResponse) String() string {
 func (*HyperliquidLaunchTradeResponse) ProtoMessage() {}
 
 func (x *HyperliquidLaunchTradeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[7]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -464,7 +574,7 @@ func (x *HyperliquidLaunchTradeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HyperliquidLaunchTradeResponse.ProtoReflect.Descriptor instead.
 func (*HyperliquidLaunchTradeResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{7}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *HyperliquidLaunchTradeResponse) GetBaseAmount() float64 {
@@ -510,7 +620,7 @@ type HyperliquidSpotTradeRequest struct {
 func (x *HyperliquidSpotTradeRequest) Reset() {
 	*x = HyperliquidSpotTradeRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[8]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -523,7 +633,7 @@ func (x *HyperliquidSpotTradeRequest) String() string {
 func (*HyperliquidSpotTradeRequest) ProtoMessage() {}
 
 func (x *HyperliquidSpotTradeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[8]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -536,7 +646,7 @@ func (x *HyperliquidSpotTradeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HyperliquidSpotTradeRequest.ProtoReflect.Descriptor instead.
 func (*HyperliquidSpotTradeRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{8}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *HyperliquidSpotTradeRequest) GetAuthData() map[string]string {
@@ -591,7 +701,7 @@ type HpumpV1LaunchTradeRequest struct {
 func (x *HpumpV1LaunchTradeRequest) Reset() {
 	*x = HpumpV1LaunchTradeRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[9]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -604,7 +714,7 @@ func (x *HpumpV1LaunchTradeRequest) String() string {
 func (*HpumpV1LaunchTradeRequest) ProtoMessage() {}
 
 func (x *HpumpV1LaunchTradeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[9]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -617,7 +727,7 @@ func (x *HpumpV1LaunchTradeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HpumpV1LaunchTradeRequest.ProtoReflect.Descriptor instead.
 func (*HpumpV1LaunchTradeRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{9}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *HpumpV1LaunchTradeRequest) GetAuthData() map[string]string {
@@ -683,7 +793,7 @@ type HpumpV1LaunchTradeResponse struct {
 func (x *HpumpV1LaunchTradeResponse) Reset() {
 	*x = HpumpV1LaunchTradeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[10]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -696,7 +806,7 @@ func (x *HpumpV1LaunchTradeResponse) String() string {
 func (*HpumpV1LaunchTradeResponse) ProtoMessage() {}
 
 func (x *HpumpV1LaunchTradeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[10]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -709,7 +819,7 @@ func (x *HpumpV1LaunchTradeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HpumpV1LaunchTradeResponse.ProtoReflect.Descriptor instead.
 func (*HpumpV1LaunchTradeResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{10}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *HpumpV1LaunchTradeResponse) GetBaseAmount() string {
@@ -754,7 +864,7 @@ type HyperliquidSpotTradeResponse struct {
 func (x *HyperliquidSpotTradeResponse) Reset() {
 	*x = HyperliquidSpotTradeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[11]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -767,7 +877,7 @@ func (x *HyperliquidSpotTradeResponse) String() string {
 func (*HyperliquidSpotTradeResponse) ProtoMessage() {}
 
 func (x *HyperliquidSpotTradeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[11]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -780,7 +890,7 @@ func (x *HyperliquidSpotTradeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HyperliquidSpotTradeResponse.ProtoReflect.Descriptor instead.
 func (*HyperliquidSpotTradeResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{11}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *HyperliquidSpotTradeResponse) GetBaseAmount() float64 {
@@ -822,7 +932,7 @@ type HyperliquidSpotSniperConfigsRequest struct {
 func (x *HyperliquidSpotSniperConfigsRequest) Reset() {
 	*x = HyperliquidSpotSniperConfigsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[12]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -835,7 +945,7 @@ func (x *HyperliquidSpotSniperConfigsRequest) String() string {
 func (*HyperliquidSpotSniperConfigsRequest) ProtoMessage() {}
 
 func (x *HyperliquidSpotSniperConfigsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[12]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -848,7 +958,7 @@ func (x *HyperliquidSpotSniperConfigsRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use HyperliquidSpotSniperConfigsRequest.ProtoReflect.Descriptor instead.
 func (*HyperliquidSpotSniperConfigsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{12}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *HyperliquidSpotSniperConfigsRequest) GetAuthData() map[string]string {
@@ -869,7 +979,7 @@ type HyperliquidSpotSniperConfigsResponse struct {
 func (x *HyperliquidSpotSniperConfigsResponse) Reset() {
 	*x = HyperliquidSpotSniperConfigsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[13]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -882,7 +992,7 @@ func (x *HyperliquidSpotSniperConfigsResponse) String() string {
 func (*HyperliquidSpotSniperConfigsResponse) ProtoMessage() {}
 
 func (x *HyperliquidSpotSniperConfigsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[13]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -895,7 +1005,7 @@ func (x *HyperliquidSpotSniperConfigsResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use HyperliquidSpotSniperConfigsResponse.ProtoReflect.Descriptor instead.
 func (*HyperliquidSpotSniperConfigsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{13}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *HyperliquidSpotSniperConfigsResponse) GetConfigs() []*hypurr.HyperliquidSpotSniperConfig {
@@ -917,7 +1027,7 @@ type DeleteHyperliquidSpotSniperConfigRequest struct {
 func (x *DeleteHyperliquidSpotSniperConfigRequest) Reset() {
 	*x = DeleteHyperliquidSpotSniperConfigRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[14]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -930,7 +1040,7 @@ func (x *DeleteHyperliquidSpotSniperConfigRequest) String() string {
 func (*DeleteHyperliquidSpotSniperConfigRequest) ProtoMessage() {}
 
 func (x *DeleteHyperliquidSpotSniperConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[14]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -943,7 +1053,7 @@ func (x *DeleteHyperliquidSpotSniperConfigRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use DeleteHyperliquidSpotSniperConfigRequest.ProtoReflect.Descriptor instead.
 func (*DeleteHyperliquidSpotSniperConfigRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{14}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *DeleteHyperliquidSpotSniperConfigRequest) GetAuthData() map[string]string {
@@ -971,7 +1081,7 @@ type DeleteHyperliquidSpotSniperConfigResponse struct {
 func (x *DeleteHyperliquidSpotSniperConfigResponse) Reset() {
 	*x = DeleteHyperliquidSpotSniperConfigResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[15]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -984,7 +1094,7 @@ func (x *DeleteHyperliquidSpotSniperConfigResponse) String() string {
 func (*DeleteHyperliquidSpotSniperConfigResponse) ProtoMessage() {}
 
 func (x *DeleteHyperliquidSpotSniperConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[15]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -997,7 +1107,7 @@ func (x *DeleteHyperliquidSpotSniperConfigResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use DeleteHyperliquidSpotSniperConfigResponse.ProtoReflect.Descriptor instead.
 func (*DeleteHyperliquidSpotSniperConfigResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{15}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *DeleteHyperliquidSpotSniperConfigResponse) GetSuccess() bool {
@@ -1019,7 +1129,7 @@ type CreateHyperliquidSpotSniperConfigRequest struct {
 func (x *CreateHyperliquidSpotSniperConfigRequest) Reset() {
 	*x = CreateHyperliquidSpotSniperConfigRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[16]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1032,7 +1142,7 @@ func (x *CreateHyperliquidSpotSniperConfigRequest) String() string {
 func (*CreateHyperliquidSpotSniperConfigRequest) ProtoMessage() {}
 
 func (x *CreateHyperliquidSpotSniperConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[16]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1045,7 +1155,7 @@ func (x *CreateHyperliquidSpotSniperConfigRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use CreateHyperliquidSpotSniperConfigRequest.ProtoReflect.Descriptor instead.
 func (*CreateHyperliquidSpotSniperConfigRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{16}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *CreateHyperliquidSpotSniperConfigRequest) GetAuthData() map[string]string {
@@ -1074,7 +1184,7 @@ type CreateHyperliquidSpotSniperConfigResponse struct {
 func (x *CreateHyperliquidSpotSniperConfigResponse) Reset() {
 	*x = CreateHyperliquidSpotSniperConfigResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[17]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1087,7 +1197,7 @@ func (x *CreateHyperliquidSpotSniperConfigResponse) String() string {
 func (*CreateHyperliquidSpotSniperConfigResponse) ProtoMessage() {}
 
 func (x *CreateHyperliquidSpotSniperConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[17]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1100,7 +1210,7 @@ func (x *CreateHyperliquidSpotSniperConfigResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use CreateHyperliquidSpotSniperConfigResponse.ProtoReflect.Descriptor instead.
 func (*CreateHyperliquidSpotSniperConfigResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{17}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *CreateHyperliquidSpotSniperConfigResponse) GetSuccess() bool {
@@ -1129,7 +1239,7 @@ type UpdateHyperliquidSpotSniperConfigRequest struct {
 func (x *UpdateHyperliquidSpotSniperConfigRequest) Reset() {
 	*x = UpdateHyperliquidSpotSniperConfigRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[18]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1142,7 +1252,7 @@ func (x *UpdateHyperliquidSpotSniperConfigRequest) String() string {
 func (*UpdateHyperliquidSpotSniperConfigRequest) ProtoMessage() {}
 
 func (x *UpdateHyperliquidSpotSniperConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[18]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1155,7 +1265,7 @@ func (x *UpdateHyperliquidSpotSniperConfigRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use UpdateHyperliquidSpotSniperConfigRequest.ProtoReflect.Descriptor instead.
 func (*UpdateHyperliquidSpotSniperConfigRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{18}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *UpdateHyperliquidSpotSniperConfigRequest) GetAuthData() map[string]string {
@@ -1183,7 +1293,7 @@ type UpdateHyperliquidSpotSniperConfigResponse struct {
 func (x *UpdateHyperliquidSpotSniperConfigResponse) Reset() {
 	*x = UpdateHyperliquidSpotSniperConfigResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[19]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1196,7 +1306,7 @@ func (x *UpdateHyperliquidSpotSniperConfigResponse) String() string {
 func (*UpdateHyperliquidSpotSniperConfigResponse) ProtoMessage() {}
 
 func (x *UpdateHyperliquidSpotSniperConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[19]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1209,7 +1319,7 @@ func (x *UpdateHyperliquidSpotSniperConfigResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use UpdateHyperliquidSpotSniperConfigResponse.ProtoReflect.Descriptor instead.
 func (*UpdateHyperliquidSpotSniperConfigResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{19}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *UpdateHyperliquidSpotSniperConfigResponse) GetSuccess() bool {
@@ -1231,7 +1341,7 @@ type HyperliquidWalletSpotTwapSessionsRequest struct {
 func (x *HyperliquidWalletSpotTwapSessionsRequest) Reset() {
 	*x = HyperliquidWalletSpotTwapSessionsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[20]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1244,7 +1354,7 @@ func (x *HyperliquidWalletSpotTwapSessionsRequest) String() string {
 func (*HyperliquidWalletSpotTwapSessionsRequest) ProtoMessage() {}
 
 func (x *HyperliquidWalletSpotTwapSessionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[20]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1257,7 +1367,7 @@ func (x *HyperliquidWalletSpotTwapSessionsRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use HyperliquidWalletSpotTwapSessionsRequest.ProtoReflect.Descriptor instead.
 func (*HyperliquidWalletSpotTwapSessionsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{20}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *HyperliquidWalletSpotTwapSessionsRequest) GetAuthData() map[string]string {
@@ -1285,7 +1395,7 @@ type HyperliquidWalletSpotTwapSessionsResponse struct {
 func (x *HyperliquidWalletSpotTwapSessionsResponse) Reset() {
 	*x = HyperliquidWalletSpotTwapSessionsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[21]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1298,7 +1408,7 @@ func (x *HyperliquidWalletSpotTwapSessionsResponse) String() string {
 func (*HyperliquidWalletSpotTwapSessionsResponse) ProtoMessage() {}
 
 func (x *HyperliquidWalletSpotTwapSessionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[21]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1311,7 +1421,7 @@ func (x *HyperliquidWalletSpotTwapSessionsResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use HyperliquidWalletSpotTwapSessionsResponse.ProtoReflect.Descriptor instead.
 func (*HyperliquidWalletSpotTwapSessionsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{21}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *HyperliquidWalletSpotTwapSessionsResponse) GetSessions() []*hypurr.HyperliquidWalletSpotTwapSession {
@@ -1333,7 +1443,7 @@ type HyperliquidWalletTwapSessionsRequest struct {
 func (x *HyperliquidWalletTwapSessionsRequest) Reset() {
 	*x = HyperliquidWalletTwapSessionsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[22]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1346,7 +1456,7 @@ func (x *HyperliquidWalletTwapSessionsRequest) String() string {
 func (*HyperliquidWalletTwapSessionsRequest) ProtoMessage() {}
 
 func (x *HyperliquidWalletTwapSessionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[22]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1359,7 +1469,7 @@ func (x *HyperliquidWalletTwapSessionsRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use HyperliquidWalletTwapSessionsRequest.ProtoReflect.Descriptor instead.
 func (*HyperliquidWalletTwapSessionsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{22}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *HyperliquidWalletTwapSessionsRequest) GetAuthData() map[string]string {
@@ -1387,7 +1497,7 @@ type HyperliquidWalletTwapSessionsResponse struct {
 func (x *HyperliquidWalletTwapSessionsResponse) Reset() {
 	*x = HyperliquidWalletTwapSessionsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[23]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1400,7 +1510,7 @@ func (x *HyperliquidWalletTwapSessionsResponse) String() string {
 func (*HyperliquidWalletTwapSessionsResponse) ProtoMessage() {}
 
 func (x *HyperliquidWalletTwapSessionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[23]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1413,7 +1523,7 @@ func (x *HyperliquidWalletTwapSessionsResponse) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use HyperliquidWalletTwapSessionsResponse.ProtoReflect.Descriptor instead.
 func (*HyperliquidWalletTwapSessionsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{23}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *HyperliquidWalletTwapSessionsResponse) GetSessions() []*hypurr.HyperliquidWalletTwapSession {
@@ -1435,7 +1545,7 @@ type HyperliquidWalletScaleSessionsRequest struct {
 func (x *HyperliquidWalletScaleSessionsRequest) Reset() {
 	*x = HyperliquidWalletScaleSessionsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[24]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1448,7 +1558,7 @@ func (x *HyperliquidWalletScaleSessionsRequest) String() string {
 func (*HyperliquidWalletScaleSessionsRequest) ProtoMessage() {}
 
 func (x *HyperliquidWalletScaleSessionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[24]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1461,7 +1571,7 @@ func (x *HyperliquidWalletScaleSessionsRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use HyperliquidWalletScaleSessionsRequest.ProtoReflect.Descriptor instead.
 func (*HyperliquidWalletScaleSessionsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{24}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *HyperliquidWalletScaleSessionsRequest) GetAuthData() map[string]string {
@@ -1489,7 +1599,7 @@ type HyperliquidWalletScaleSessionsResponse struct {
 func (x *HyperliquidWalletScaleSessionsResponse) Reset() {
 	*x = HyperliquidWalletScaleSessionsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[25]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1502,7 +1612,7 @@ func (x *HyperliquidWalletScaleSessionsResponse) String() string {
 func (*HyperliquidWalletScaleSessionsResponse) ProtoMessage() {}
 
 func (x *HyperliquidWalletScaleSessionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[25]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1515,7 +1625,7 @@ func (x *HyperliquidWalletScaleSessionsResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use HyperliquidWalletScaleSessionsResponse.ProtoReflect.Descriptor instead.
 func (*HyperliquidWalletScaleSessionsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{25}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *HyperliquidWalletScaleSessionsResponse) GetSessions() []*hypurr.HyperliquidWalletScaleSession {
@@ -1544,7 +1654,7 @@ type LaunchHyperliquidLaunchRequest struct {
 func (x *LaunchHyperliquidLaunchRequest) Reset() {
 	*x = LaunchHyperliquidLaunchRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[26]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1557,7 +1667,7 @@ func (x *LaunchHyperliquidLaunchRequest) String() string {
 func (*LaunchHyperliquidLaunchRequest) ProtoMessage() {}
 
 func (x *LaunchHyperliquidLaunchRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[26]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1570,7 +1680,7 @@ func (x *LaunchHyperliquidLaunchRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LaunchHyperliquidLaunchRequest.ProtoReflect.Descriptor instead.
 func (*LaunchHyperliquidLaunchRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{26}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *LaunchHyperliquidLaunchRequest) GetAuthData() map[string]string {
@@ -1647,7 +1757,7 @@ type LaunchHyperliquidLaunchResponse struct {
 func (x *LaunchHyperliquidLaunchResponse) Reset() {
 	*x = LaunchHyperliquidLaunchResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[27]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1660,7 +1770,7 @@ func (x *LaunchHyperliquidLaunchResponse) String() string {
 func (*LaunchHyperliquidLaunchResponse) ProtoMessage() {}
 
 func (x *LaunchHyperliquidLaunchResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[27]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1673,7 +1783,7 @@ func (x *LaunchHyperliquidLaunchResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LaunchHyperliquidLaunchResponse.ProtoReflect.Descriptor instead.
 func (*LaunchHyperliquidLaunchResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{27}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *LaunchHyperliquidLaunchResponse) GetLaunch() *hypurr.HyperliquidLaunch {
@@ -1703,7 +1813,7 @@ type LaunchHpumpV1LaunchRequest struct {
 func (x *LaunchHpumpV1LaunchRequest) Reset() {
 	*x = LaunchHpumpV1LaunchRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[28]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1716,7 +1826,7 @@ func (x *LaunchHpumpV1LaunchRequest) String() string {
 func (*LaunchHpumpV1LaunchRequest) ProtoMessage() {}
 
 func (x *LaunchHpumpV1LaunchRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[28]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1729,7 +1839,7 @@ func (x *LaunchHpumpV1LaunchRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LaunchHpumpV1LaunchRequest.ProtoReflect.Descriptor instead.
 func (*LaunchHpumpV1LaunchRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{28}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *LaunchHpumpV1LaunchRequest) GetAuthData() map[string]string {
@@ -1813,7 +1923,7 @@ type LaunchHpumpV1LaunchResponse struct {
 func (x *LaunchHpumpV1LaunchResponse) Reset() {
 	*x = LaunchHpumpV1LaunchResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[29]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1826,7 +1936,7 @@ func (x *LaunchHpumpV1LaunchResponse) String() string {
 func (*LaunchHpumpV1LaunchResponse) ProtoMessage() {}
 
 func (x *LaunchHpumpV1LaunchResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[29]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1839,7 +1949,7 @@ func (x *LaunchHpumpV1LaunchResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LaunchHpumpV1LaunchResponse.ProtoReflect.Descriptor instead.
 func (*LaunchHpumpV1LaunchResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{29}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *LaunchHpumpV1LaunchResponse) GetLaunch() *hypurr.HpumpV1Launch {
@@ -1866,7 +1976,7 @@ type EditHyperliquidLaunchRequest struct {
 func (x *EditHyperliquidLaunchRequest) Reset() {
 	*x = EditHyperliquidLaunchRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[30]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1879,7 +1989,7 @@ func (x *EditHyperliquidLaunchRequest) String() string {
 func (*EditHyperliquidLaunchRequest) ProtoMessage() {}
 
 func (x *EditHyperliquidLaunchRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[30]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1892,7 +2002,7 @@ func (x *EditHyperliquidLaunchRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EditHyperliquidLaunchRequest.ProtoReflect.Descriptor instead.
 func (*EditHyperliquidLaunchRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{30}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *EditHyperliquidLaunchRequest) GetAuthData() map[string]string {
@@ -1955,7 +2065,7 @@ type EditHyperliquidLaunchResponse struct {
 func (x *EditHyperliquidLaunchResponse) Reset() {
 	*x = EditHyperliquidLaunchResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[31]
+		mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1968,7 +2078,7 @@ func (x *EditHyperliquidLaunchResponse) String() string {
 func (*EditHyperliquidLaunchResponse) ProtoMessage() {}
 
 func (x *EditHyperliquidLaunchResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[31]
+	mi := &file_hypurr_telegram_telegram_service_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1981,7 +2091,7 @@ func (x *EditHyperliquidLaunchResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EditHyperliquidLaunchResponse.ProtoReflect.Descriptor instead.
 func (*EditHyperliquidLaunchResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{31}
+	return file_hypurr_telegram_telegram_service_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *EditHyperliquidLaunchResponse) GetLaunch() *hypurr.HyperliquidLaunch {
@@ -2053,7 +2163,31 @@ var file_hypurr_telegram_telegram_service_proto_rawDesc = []byte{
 	0x3b, 0x0a, 0x0d, 0x41, 0x75, 0x74, 0x68, 0x44, 0x61, 0x74, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79,
 	0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b,
 	0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x96, 0x01, 0x0a,
+	0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x8e, 0x02, 0x0a,
+	0x22, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x43, 0x6f, 0x72, 0x65,
+	0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x55, 0x0a, 0x09, 0x61, 0x75, 0x74, 0x68, 0x5f, 0x64, 0x61, 0x74, 0x61,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x38, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e,
+	0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x43, 0x6f, 0x72, 0x65, 0x43,
+	0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x44, 0x61, 0x74, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79,
+	0x52, 0x08, 0x61, 0x75, 0x74, 0x68, 0x44, 0x61, 0x74, 0x61, 0x12, 0x1b, 0x0a, 0x09, 0x77, 0x61,
+	0x6c, 0x6c, 0x65, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x77,
+	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x49, 0x64, 0x12, 0x37, 0x0a, 0x07, 0x63, 0x61, 0x6e, 0x63, 0x65,
+	0x6c, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72,
+	0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x43, 0x6f, 0x72,
+	0x65, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x52, 0x07, 0x63, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x73,
+	0x1a, 0x3b, 0x0a, 0x0d, 0x41, 0x75, 0x74, 0x68, 0x44, 0x61, 0x74, 0x61, 0x45, 0x6e, 0x74, 0x72,
+	0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
+	0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x6d, 0x0a,
+	0x23, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x43, 0x6f, 0x72, 0x65,
+	0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x46, 0x0a, 0x08, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x65, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e,
+	0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x43, 0x6f, 0x72, 0x65, 0x4f,
+	0x72, 0x64, 0x65, 0x72, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x65, 0x64, 0x53, 0x74, 0x61, 0x74,
+	0x75, 0x73, 0x52, 0x08, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x65, 0x73, 0x22, 0x96, 0x01, 0x0a,
 	0x1c, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x43, 0x6f, 0x72, 0x65,
 	0x54, 0x72, 0x61, 0x64, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1f, 0x0a,
 	0x0b, 0x62, 0x61, 0x73, 0x65, 0x5f, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01,
@@ -2402,7 +2536,7 @@ var file_hypurr_telegram_telegram_service_proto_rawDesc = []byte{
 	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x31, 0x0a, 0x06, 0x6c, 0x61, 0x75, 0x6e, 0x63, 0x68, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48,
 	0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x4c, 0x61, 0x75, 0x6e, 0x63, 0x68,
-	0x52, 0x06, 0x6c, 0x61, 0x75, 0x6e, 0x63, 0x68, 0x32, 0xba, 0x0e, 0x0a, 0x08, 0x54, 0x65, 0x6c,
+	0x52, 0x06, 0x6c, 0x61, 0x75, 0x6e, 0x63, 0x68, 0x32, 0xb4, 0x0f, 0x0a, 0x08, 0x54, 0x65, 0x6c,
 	0x65, 0x67, 0x72, 0x61, 0x6d, 0x12, 0x4b, 0x0a, 0x0c, 0x54, 0x65, 0x6c, 0x65, 0x67, 0x72, 0x61,
 	0x6d, 0x55, 0x73, 0x65, 0x72, 0x12, 0x1b, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x54,
 	0x65, 0x6c, 0x65, 0x67, 0x72, 0x61, 0x6d, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65,
@@ -2459,70 +2593,77 @@ var file_hypurr_telegram_telegram_service_proto_rawDesc = []byte{
 	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x24, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72,
 	0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x43, 0x6f, 0x72,
 	0x65, 0x54, 0x72, 0x61, 0x64, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
-	0x12, 0x8a, 0x01, 0x0a, 0x21, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64,
-	0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x53, 0x70, 0x6f, 0x74, 0x54, 0x77, 0x61, 0x70, 0x53, 0x65,
-	0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x30, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e,
-	0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65,
-	0x74, 0x53, 0x70, 0x6f, 0x74, 0x54, 0x77, 0x61, 0x70, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e,
-	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x31, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72,
+	0x12, 0x78, 0x0a, 0x1b, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x43,
+	0x6f, 0x72, 0x65, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x73, 0x12,
+	0x2a, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69,
+	0x71, 0x75, 0x69, 0x64, 0x43, 0x6f, 0x72, 0x65, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4f, 0x72,
+	0x64, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x68, 0x79,
+	0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64,
+	0x43, 0x6f, 0x72, 0x65, 0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x73,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x8a, 0x01, 0x0a, 0x21, 0x48,
+	0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74,
+	0x53, 0x70, 0x6f, 0x74, 0x54, 0x77, 0x61, 0x70, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73,
+	0x12, 0x30, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c,
+	0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x53, 0x70, 0x6f, 0x74, 0x54,
+	0x77, 0x61, 0x70, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x31, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65,
+	0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x53, 0x70, 0x6f,
+	0x74, 0x54, 0x77, 0x61, 0x70, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x7e, 0x0a, 0x1d, 0x48, 0x79, 0x70, 0x65, 0x72,
+	0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x54, 0x77, 0x61, 0x70,
+	0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x2c, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72,
 	0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c,
-	0x6c, 0x65, 0x74, 0x53, 0x70, 0x6f, 0x74, 0x54, 0x77, 0x61, 0x70, 0x53, 0x65, 0x73, 0x73, 0x69,
-	0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x7e, 0x0a,
-	0x1d, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c, 0x6c,
-	0x65, 0x74, 0x54, 0x77, 0x61, 0x70, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x2c,
-	0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71,
-	0x75, 0x69, 0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x54, 0x77, 0x61, 0x70, 0x53, 0x65, 0x73,
-	0x73, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2d, 0x2e, 0x68,
-	0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69,
-	0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x54, 0x77, 0x61, 0x70, 0x53, 0x65, 0x73, 0x73, 0x69,
-	0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x81, 0x01,
-	0x0a, 0x1e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c,
-	0x6c, 0x65, 0x74, 0x53, 0x63, 0x61, 0x6c, 0x65, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73,
-	0x12, 0x2d, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c,
-	0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x53, 0x63, 0x61, 0x6c, 0x65,
-	0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
-	0x2e, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69,
-	0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x53, 0x63, 0x61, 0x6c, 0x65, 0x53,
-	0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
-	0x00, 0x12, 0x7b, 0x0a, 0x1c, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64,
+	0x6c, 0x65, 0x74, 0x54, 0x77, 0x61, 0x70, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2d, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e,
+	0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65,
+	0x74, 0x54, 0x77, 0x61, 0x70, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x81, 0x01, 0x0a, 0x1e, 0x48, 0x79, 0x70, 0x65,
+	0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x53, 0x63, 0x61,
+	0x6c, 0x65, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x2d, 0x2e, 0x68, 0x79, 0x70,
+	0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x57,
+	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x53, 0x63, 0x61, 0x6c, 0x65, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f,
+	0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2e, 0x2e, 0x68, 0x79, 0x70, 0x75,
+	0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x57, 0x61,
+	0x6c, 0x6c, 0x65, 0x74, 0x53, 0x63, 0x61, 0x6c, 0x65, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e,
+	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x7b, 0x0a, 0x1c, 0x48,
+	0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e,
+	0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x12, 0x2b, 0x2e, 0x68, 0x79,
+	0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64,
 	0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
-	0x73, 0x12, 0x2b, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72,
-	0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72,
-	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2c,
-	0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71,
-	0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e,
-	0x66, 0x69, 0x67, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x8a,
-	0x01, 0x0a, 0x21, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69,
-	0x71, 0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f,
-	0x6e, 0x66, 0x69, 0x67, 0x12, 0x30, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x43, 0x72,
-	0x65, 0x61, 0x74, 0x65, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53,
-	0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x31, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e,
-	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69,
-	0x64, 0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69,
-	0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x8a, 0x01, 0x0a, 0x21,
-	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69,
-	0x64, 0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69,
-	0x67, 0x12, 0x30, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74,
-	0x65, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74,
-	0x53, 0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x1a, 0x31, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x44, 0x65, 0x6c,
-	0x65, 0x74, 0x65, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70,
-	0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x8a, 0x01, 0x0a, 0x21, 0x55, 0x70, 0x64,
+	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2c, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72,
+	0x72, 0x2e, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70, 0x6f,
+	0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x8a, 0x01, 0x0a, 0x21, 0x43, 0x72, 0x65,
 	0x61, 0x74, 0x65, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70,
 	0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x30,
-	0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x48, 0x79,
+	0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x48, 0x79,
 	0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69,
 	0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x31, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x1a, 0x31, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
 	0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74, 0x53,
 	0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x32, 0x5a, 0x30, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72,
-	0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72,
-	0x2f, 0x74, 0x65, 0x6c, 0x65, 0x67, 0x72, 0x61, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x8a, 0x01, 0x0a, 0x21, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74, 0x53,
+	0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x30, 0x2e, 0x68, 0x79,
+	0x70, 0x75, 0x72, 0x72, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x48, 0x79, 0x70, 0x65, 0x72,
+	0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x31, 0x2e,
+	0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x48, 0x79, 0x70,
+	0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70,
+	0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x00, 0x12, 0x8a, 0x01, 0x0a, 0x21, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x48, 0x79, 0x70,
+	0x65, 0x72, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70,
+	0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x30, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72,
+	0x72, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c, 0x69, 0x71,
+	0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x6e,
+	0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x31, 0x2e, 0x68, 0x79, 0x70,
+	0x75, 0x72, 0x72, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x48, 0x79, 0x70, 0x65, 0x72, 0x6c,
+	0x69, 0x71, 0x75, 0x69, 0x64, 0x53, 0x70, 0x6f, 0x74, 0x53, 0x6e, 0x69, 0x70, 0x65, 0x72, 0x43,
+	0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42,
+	0x32, 0x5a, 0x30, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79,
+	0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63,
+	0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x74, 0x65, 0x6c, 0x65, 0x67,
+	0x72, 0x61, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2537,143 +2678,153 @@ func file_hypurr_telegram_telegram_service_proto_rawDescGZIP() []byte {
 	return file_hypurr_telegram_telegram_service_proto_rawDescData
 }
 
-var file_hypurr_telegram_telegram_service_proto_msgTypes = make([]protoimpl.MessageInfo, 48)
+var file_hypurr_telegram_telegram_service_proto_msgTypes = make([]protoimpl.MessageInfo, 51)
 var file_hypurr_telegram_telegram_service_proto_goTypes = []any{
 	(*TelegramUserRequest)(nil),                       // 0: hypurr.TelegramUserRequest
 	(*TelegramUserResponse)(nil),                      // 1: hypurr.TelegramUserResponse
 	(*TelegramUserWalletsRequest)(nil),                // 2: hypurr.TelegramUserWalletsRequest
 	(*TelegramUserWalletsResponse)(nil),               // 3: hypurr.TelegramUserWalletsResponse
 	(*HyperliquidCoreTradeRequest)(nil),               // 4: hypurr.HyperliquidCoreTradeRequest
-	(*HyperliquidCoreTradeResponse)(nil),              // 5: hypurr.HyperliquidCoreTradeResponse
-	(*HyperliquidLaunchTradeRequest)(nil),             // 6: hypurr.HyperliquidLaunchTradeRequest
-	(*HyperliquidLaunchTradeResponse)(nil),            // 7: hypurr.HyperliquidLaunchTradeResponse
-	(*HyperliquidSpotTradeRequest)(nil),               // 8: hypurr.HyperliquidSpotTradeRequest
-	(*HpumpV1LaunchTradeRequest)(nil),                 // 9: hypurr.HpumpV1LaunchTradeRequest
-	(*HpumpV1LaunchTradeResponse)(nil),                // 10: hypurr.HpumpV1LaunchTradeResponse
-	(*HyperliquidSpotTradeResponse)(nil),              // 11: hypurr.HyperliquidSpotTradeResponse
-	(*HyperliquidSpotSniperConfigsRequest)(nil),       // 12: hypurr.HyperliquidSpotSniperConfigsRequest
-	(*HyperliquidSpotSniperConfigsResponse)(nil),      // 13: hypurr.HyperliquidSpotSniperConfigsResponse
-	(*DeleteHyperliquidSpotSniperConfigRequest)(nil),  // 14: hypurr.DeleteHyperliquidSpotSniperConfigRequest
-	(*DeleteHyperliquidSpotSniperConfigResponse)(nil), // 15: hypurr.DeleteHyperliquidSpotSniperConfigResponse
-	(*CreateHyperliquidSpotSniperConfigRequest)(nil),  // 16: hypurr.CreateHyperliquidSpotSniperConfigRequest
-	(*CreateHyperliquidSpotSniperConfigResponse)(nil), // 17: hypurr.CreateHyperliquidSpotSniperConfigResponse
-	(*UpdateHyperliquidSpotSniperConfigRequest)(nil),  // 18: hypurr.UpdateHyperliquidSpotSniperConfigRequest
-	(*UpdateHyperliquidSpotSniperConfigResponse)(nil), // 19: hypurr.UpdateHyperliquidSpotSniperConfigResponse
-	(*HyperliquidWalletSpotTwapSessionsRequest)(nil),  // 20: hypurr.HyperliquidWalletSpotTwapSessionsRequest
-	(*HyperliquidWalletSpotTwapSessionsResponse)(nil), // 21: hypurr.HyperliquidWalletSpotTwapSessionsResponse
-	(*HyperliquidWalletTwapSessionsRequest)(nil),      // 22: hypurr.HyperliquidWalletTwapSessionsRequest
-	(*HyperliquidWalletTwapSessionsResponse)(nil),     // 23: hypurr.HyperliquidWalletTwapSessionsResponse
-	(*HyperliquidWalletScaleSessionsRequest)(nil),     // 24: hypurr.HyperliquidWalletScaleSessionsRequest
-	(*HyperliquidWalletScaleSessionsResponse)(nil),    // 25: hypurr.HyperliquidWalletScaleSessionsResponse
-	(*LaunchHyperliquidLaunchRequest)(nil),            // 26: hypurr.LaunchHyperliquidLaunchRequest
-	(*LaunchHyperliquidLaunchResponse)(nil),           // 27: hypurr.LaunchHyperliquidLaunchResponse
-	(*LaunchHpumpV1LaunchRequest)(nil),                // 28: hypurr.LaunchHpumpV1LaunchRequest
-	(*LaunchHpumpV1LaunchResponse)(nil),               // 29: hypurr.LaunchHpumpV1LaunchResponse
-	(*EditHyperliquidLaunchRequest)(nil),              // 30: hypurr.EditHyperliquidLaunchRequest
-	(*EditHyperliquidLaunchResponse)(nil),             // 31: hypurr.EditHyperliquidLaunchResponse
-	nil,                                               // 32: hypurr.TelegramUserRequest.AuthDataEntry
-	nil,                                               // 33: hypurr.TelegramUserWalletsRequest.AuthDataEntry
-	nil,                                               // 34: hypurr.HyperliquidCoreTradeRequest.AuthDataEntry
-	nil,                                               // 35: hypurr.HyperliquidLaunchTradeRequest.AuthDataEntry
-	nil,                                               // 36: hypurr.HyperliquidSpotTradeRequest.AuthDataEntry
-	nil,                                               // 37: hypurr.HpumpV1LaunchTradeRequest.AuthDataEntry
-	nil,                                               // 38: hypurr.HyperliquidSpotSniperConfigsRequest.AuthDataEntry
-	nil,                                               // 39: hypurr.DeleteHyperliquidSpotSniperConfigRequest.AuthDataEntry
-	nil,                                               // 40: hypurr.CreateHyperliquidSpotSniperConfigRequest.AuthDataEntry
-	nil,                                               // 41: hypurr.UpdateHyperliquidSpotSniperConfigRequest.AuthDataEntry
-	nil,                                               // 42: hypurr.HyperliquidWalletSpotTwapSessionsRequest.AuthDataEntry
-	nil,                                               // 43: hypurr.HyperliquidWalletTwapSessionsRequest.AuthDataEntry
-	nil,                                               // 44: hypurr.HyperliquidWalletScaleSessionsRequest.AuthDataEntry
-	nil,                                               // 45: hypurr.LaunchHyperliquidLaunchRequest.AuthDataEntry
-	nil,                                               // 46: hypurr.LaunchHpumpV1LaunchRequest.AuthDataEntry
-	nil,                                               // 47: hypurr.EditHyperliquidLaunchRequest.AuthDataEntry
-	(*hypurr.TelegramUser)(nil),                       // 48: hypurr.TelegramUser
-	(*hypurr.HyperliquidWallet)(nil),                  // 49: hypurr.HyperliquidWallet
-	(*hypurr.HyperliquidCoreOrder)(nil),               // 50: hypurr.HyperliquidCoreOrder
-	(hypurr.TradeDirection)(0),                        // 51: hypurr.TradeDirection
-	(*hypurr.HyperliquidSpotSniperConfig)(nil),        // 52: hypurr.HyperliquidSpotSniperConfig
-	(*hypurr.HyperliquidWalletSpotTwapSession)(nil), // 53: hypurr.HyperliquidWalletSpotTwapSession
-	(*hypurr.HyperliquidWalletTwapSession)(nil),     // 54: hypurr.HyperliquidWalletTwapSession
-	(*hypurr.HyperliquidWalletScaleSession)(nil),    // 55: hypurr.HyperliquidWalletScaleSession
-	(hypurr.MediaType)(0),                           // 56: hypurr.MediaType
-	(*hypurr.HyperliquidLaunch)(nil),                // 57: hypurr.HyperliquidLaunch
-	(*hypurr.HpumpV1Launch)(nil),                    // 58: hypurr.HpumpV1Launch
-	(*wrapperspb.BytesValue)(nil),                   // 59: google.protobuf.BytesValue
+	(*HyperliquidCoreCancelOrdersRequest)(nil),        // 5: hypurr.HyperliquidCoreCancelOrdersRequest
+	(*HyperliquidCoreCancelOrdersResponse)(nil),       // 6: hypurr.HyperliquidCoreCancelOrdersResponse
+	(*HyperliquidCoreTradeResponse)(nil),              // 7: hypurr.HyperliquidCoreTradeResponse
+	(*HyperliquidLaunchTradeRequest)(nil),             // 8: hypurr.HyperliquidLaunchTradeRequest
+	(*HyperliquidLaunchTradeResponse)(nil),            // 9: hypurr.HyperliquidLaunchTradeResponse
+	(*HyperliquidSpotTradeRequest)(nil),               // 10: hypurr.HyperliquidSpotTradeRequest
+	(*HpumpV1LaunchTradeRequest)(nil),                 // 11: hypurr.HpumpV1LaunchTradeRequest
+	(*HpumpV1LaunchTradeResponse)(nil),                // 12: hypurr.HpumpV1LaunchTradeResponse
+	(*HyperliquidSpotTradeResponse)(nil),              // 13: hypurr.HyperliquidSpotTradeResponse
+	(*HyperliquidSpotSniperConfigsRequest)(nil),       // 14: hypurr.HyperliquidSpotSniperConfigsRequest
+	(*HyperliquidSpotSniperConfigsResponse)(nil),      // 15: hypurr.HyperliquidSpotSniperConfigsResponse
+	(*DeleteHyperliquidSpotSniperConfigRequest)(nil),  // 16: hypurr.DeleteHyperliquidSpotSniperConfigRequest
+	(*DeleteHyperliquidSpotSniperConfigResponse)(nil), // 17: hypurr.DeleteHyperliquidSpotSniperConfigResponse
+	(*CreateHyperliquidSpotSniperConfigRequest)(nil),  // 18: hypurr.CreateHyperliquidSpotSniperConfigRequest
+	(*CreateHyperliquidSpotSniperConfigResponse)(nil), // 19: hypurr.CreateHyperliquidSpotSniperConfigResponse
+	(*UpdateHyperliquidSpotSniperConfigRequest)(nil),  // 20: hypurr.UpdateHyperliquidSpotSniperConfigRequest
+	(*UpdateHyperliquidSpotSniperConfigResponse)(nil), // 21: hypurr.UpdateHyperliquidSpotSniperConfigResponse
+	(*HyperliquidWalletSpotTwapSessionsRequest)(nil),  // 22: hypurr.HyperliquidWalletSpotTwapSessionsRequest
+	(*HyperliquidWalletSpotTwapSessionsResponse)(nil), // 23: hypurr.HyperliquidWalletSpotTwapSessionsResponse
+	(*HyperliquidWalletTwapSessionsRequest)(nil),      // 24: hypurr.HyperliquidWalletTwapSessionsRequest
+	(*HyperliquidWalletTwapSessionsResponse)(nil),     // 25: hypurr.HyperliquidWalletTwapSessionsResponse
+	(*HyperliquidWalletScaleSessionsRequest)(nil),     // 26: hypurr.HyperliquidWalletScaleSessionsRequest
+	(*HyperliquidWalletScaleSessionsResponse)(nil),    // 27: hypurr.HyperliquidWalletScaleSessionsResponse
+	(*LaunchHyperliquidLaunchRequest)(nil),            // 28: hypurr.LaunchHyperliquidLaunchRequest
+	(*LaunchHyperliquidLaunchResponse)(nil),           // 29: hypurr.LaunchHyperliquidLaunchResponse
+	(*LaunchHpumpV1LaunchRequest)(nil),                // 30: hypurr.LaunchHpumpV1LaunchRequest
+	(*LaunchHpumpV1LaunchResponse)(nil),               // 31: hypurr.LaunchHpumpV1LaunchResponse
+	(*EditHyperliquidLaunchRequest)(nil),              // 32: hypurr.EditHyperliquidLaunchRequest
+	(*EditHyperliquidLaunchResponse)(nil),             // 33: hypurr.EditHyperliquidLaunchResponse
+	nil,                                               // 34: hypurr.TelegramUserRequest.AuthDataEntry
+	nil,                                               // 35: hypurr.TelegramUserWalletsRequest.AuthDataEntry
+	nil,                                               // 36: hypurr.HyperliquidCoreTradeRequest.AuthDataEntry
+	nil,                                               // 37: hypurr.HyperliquidCoreCancelOrdersRequest.AuthDataEntry
+	nil,                                               // 38: hypurr.HyperliquidLaunchTradeRequest.AuthDataEntry
+	nil,                                               // 39: hypurr.HyperliquidSpotTradeRequest.AuthDataEntry
+	nil,                                               // 40: hypurr.HpumpV1LaunchTradeRequest.AuthDataEntry
+	nil,                                               // 41: hypurr.HyperliquidSpotSniperConfigsRequest.AuthDataEntry
+	nil,                                               // 42: hypurr.DeleteHyperliquidSpotSniperConfigRequest.AuthDataEntry
+	nil,                                               // 43: hypurr.CreateHyperliquidSpotSniperConfigRequest.AuthDataEntry
+	nil,                                               // 44: hypurr.UpdateHyperliquidSpotSniperConfigRequest.AuthDataEntry
+	nil,                                               // 45: hypurr.HyperliquidWalletSpotTwapSessionsRequest.AuthDataEntry
+	nil,                                               // 46: hypurr.HyperliquidWalletTwapSessionsRequest.AuthDataEntry
+	nil,                                               // 47: hypurr.HyperliquidWalletScaleSessionsRequest.AuthDataEntry
+	nil,                                               // 48: hypurr.LaunchHyperliquidLaunchRequest.AuthDataEntry
+	nil,                                               // 49: hypurr.LaunchHpumpV1LaunchRequest.AuthDataEntry
+	nil,                                               // 50: hypurr.EditHyperliquidLaunchRequest.AuthDataEntry
+	(*hypurr.TelegramUser)(nil),                       // 51: hypurr.TelegramUser
+	(*hypurr.HyperliquidWallet)(nil),                  // 52: hypurr.HyperliquidWallet
+	(*hypurr.HyperliquidCoreOrder)(nil),               // 53: hypurr.HyperliquidCoreOrder
+	(*hypurr.HyperliquidCoreCancel)(nil),              // 54: hypurr.HyperliquidCoreCancel
+	(*hypurr.HyperliquidCoreOrderCanceledStatus)(nil), // 55: hypurr.HyperliquidCoreOrderCanceledStatus
+	(hypurr.TradeDirection)(0),                        // 56: hypurr.TradeDirection
+	(*hypurr.HyperliquidSpotSniperConfig)(nil),        // 57: hypurr.HyperliquidSpotSniperConfig
+	(*hypurr.HyperliquidWalletSpotTwapSession)(nil),   // 58: hypurr.HyperliquidWalletSpotTwapSession
+	(*hypurr.HyperliquidWalletTwapSession)(nil),       // 59: hypurr.HyperliquidWalletTwapSession
+	(*hypurr.HyperliquidWalletScaleSession)(nil),      // 60: hypurr.HyperliquidWalletScaleSession
+	(hypurr.MediaType)(0),                             // 61: hypurr.MediaType
+	(*hypurr.HyperliquidLaunch)(nil),                  // 62: hypurr.HyperliquidLaunch
+	(*hypurr.HpumpV1Launch)(nil),                      // 63: hypurr.HpumpV1Launch
+	(*wrapperspb.BytesValue)(nil),                     // 64: google.protobuf.BytesValue
 }
 var file_hypurr_telegram_telegram_service_proto_depIdxs = []int32{
-	32, // 0: hypurr.TelegramUserRequest.auth_data:type_name -> hypurr.TelegramUserRequest.AuthDataEntry
-	48, // 1: hypurr.TelegramUserResponse.user:type_name -> hypurr.TelegramUser
-	33, // 2: hypurr.TelegramUserWalletsRequest.auth_data:type_name -> hypurr.TelegramUserWalletsRequest.AuthDataEntry
-	49, // 3: hypurr.TelegramUserWalletsResponse.wallets:type_name -> hypurr.HyperliquidWallet
-	34, // 4: hypurr.HyperliquidCoreTradeRequest.auth_data:type_name -> hypurr.HyperliquidCoreTradeRequest.AuthDataEntry
-	50, // 5: hypurr.HyperliquidCoreTradeRequest.order:type_name -> hypurr.HyperliquidCoreOrder
-	35, // 6: hypurr.HyperliquidLaunchTradeRequest.auth_data:type_name -> hypurr.HyperliquidLaunchTradeRequest.AuthDataEntry
-	51, // 7: hypurr.HyperliquidLaunchTradeRequest.direction:type_name -> hypurr.TradeDirection
-	36, // 8: hypurr.HyperliquidSpotTradeRequest.auth_data:type_name -> hypurr.HyperliquidSpotTradeRequest.AuthDataEntry
-	51, // 9: hypurr.HyperliquidSpotTradeRequest.direction:type_name -> hypurr.TradeDirection
-	37, // 10: hypurr.HpumpV1LaunchTradeRequest.auth_data:type_name -> hypurr.HpumpV1LaunchTradeRequest.AuthDataEntry
-	51, // 11: hypurr.HpumpV1LaunchTradeRequest.direction:type_name -> hypurr.TradeDirection
-	38, // 12: hypurr.HyperliquidSpotSniperConfigsRequest.auth_data:type_name -> hypurr.HyperliquidSpotSniperConfigsRequest.AuthDataEntry
-	52, // 13: hypurr.HyperliquidSpotSniperConfigsResponse.configs:type_name -> hypurr.HyperliquidSpotSniperConfig
-	39, // 14: hypurr.DeleteHyperliquidSpotSniperConfigRequest.auth_data:type_name -> hypurr.DeleteHyperliquidSpotSniperConfigRequest.AuthDataEntry
-	40, // 15: hypurr.CreateHyperliquidSpotSniperConfigRequest.auth_data:type_name -> hypurr.CreateHyperliquidSpotSniperConfigRequest.AuthDataEntry
-	52, // 16: hypurr.CreateHyperliquidSpotSniperConfigRequest.config:type_name -> hypurr.HyperliquidSpotSniperConfig
-	52, // 17: hypurr.CreateHyperliquidSpotSniperConfigResponse.config:type_name -> hypurr.HyperliquidSpotSniperConfig
-	41, // 18: hypurr.UpdateHyperliquidSpotSniperConfigRequest.auth_data:type_name -> hypurr.UpdateHyperliquidSpotSniperConfigRequest.AuthDataEntry
-	52, // 19: hypurr.UpdateHyperliquidSpotSniperConfigRequest.config:type_name -> hypurr.HyperliquidSpotSniperConfig
-	42, // 20: hypurr.HyperliquidWalletSpotTwapSessionsRequest.auth_data:type_name -> hypurr.HyperliquidWalletSpotTwapSessionsRequest.AuthDataEntry
-	53, // 21: hypurr.HyperliquidWalletSpotTwapSessionsResponse.sessions:type_name -> hypurr.HyperliquidWalletSpotTwapSession
-	43, // 22: hypurr.HyperliquidWalletTwapSessionsRequest.auth_data:type_name -> hypurr.HyperliquidWalletTwapSessionsRequest.AuthDataEntry
-	54, // 23: hypurr.HyperliquidWalletTwapSessionsResponse.sessions:type_name -> hypurr.HyperliquidWalletTwapSession
-	44, // 24: hypurr.HyperliquidWalletScaleSessionsRequest.auth_data:type_name -> hypurr.HyperliquidWalletScaleSessionsRequest.AuthDataEntry
-	55, // 25: hypurr.HyperliquidWalletScaleSessionsResponse.sessions:type_name -> hypurr.HyperliquidWalletScaleSession
-	45, // 26: hypurr.LaunchHyperliquidLaunchRequest.auth_data:type_name -> hypurr.LaunchHyperliquidLaunchRequest.AuthDataEntry
-	56, // 27: hypurr.LaunchHyperliquidLaunchRequest.media_type:type_name -> hypurr.MediaType
-	57, // 28: hypurr.LaunchHyperliquidLaunchResponse.launch:type_name -> hypurr.HyperliquidLaunch
-	46, // 29: hypurr.LaunchHpumpV1LaunchRequest.auth_data:type_name -> hypurr.LaunchHpumpV1LaunchRequest.AuthDataEntry
-	56, // 30: hypurr.LaunchHpumpV1LaunchRequest.media_type:type_name -> hypurr.MediaType
-	58, // 31: hypurr.LaunchHpumpV1LaunchResponse.launch:type_name -> hypurr.HpumpV1Launch
-	47, // 32: hypurr.EditHyperliquidLaunchRequest.auth_data:type_name -> hypurr.EditHyperliquidLaunchRequest.AuthDataEntry
-	59, // 33: hypurr.EditHyperliquidLaunchRequest.media:type_name -> google.protobuf.BytesValue
-	56, // 34: hypurr.EditHyperliquidLaunchRequest.media_type:type_name -> hypurr.MediaType
-	57, // 35: hypurr.EditHyperliquidLaunchResponse.launch:type_name -> hypurr.HyperliquidLaunch
-	0,  // 36: hypurr.Telegram.TelegramUser:input_type -> hypurr.TelegramUserRequest
-	2,  // 37: hypurr.Telegram.TelegramUserWallets:input_type -> hypurr.TelegramUserWalletsRequest
-	6,  // 38: hypurr.Telegram.HyperliquidLaunchTrade:input_type -> hypurr.HyperliquidLaunchTradeRequest
-	26, // 39: hypurr.Telegram.LaunchHyperliquidLaunch:input_type -> hypurr.LaunchHyperliquidLaunchRequest
-	30, // 40: hypurr.Telegram.EditHyperliquidLaunch:input_type -> hypurr.EditHyperliquidLaunchRequest
-	9,  // 41: hypurr.Telegram.HpumpV1LaunchTrade:input_type -> hypurr.HpumpV1LaunchTradeRequest
-	28, // 42: hypurr.Telegram.LaunchHpumpV1Launch:input_type -> hypurr.LaunchHpumpV1LaunchRequest
-	8,  // 43: hypurr.Telegram.HyperliquidSpotTrade:input_type -> hypurr.HyperliquidSpotTradeRequest
-	4,  // 44: hypurr.Telegram.HyperliquidCoreTrade:input_type -> hypurr.HyperliquidCoreTradeRequest
-	20, // 45: hypurr.Telegram.HyperliquidWalletSpotTwapSessions:input_type -> hypurr.HyperliquidWalletSpotTwapSessionsRequest
-	22, // 46: hypurr.Telegram.HyperliquidWalletTwapSessions:input_type -> hypurr.HyperliquidWalletTwapSessionsRequest
-	24, // 47: hypurr.Telegram.HyperliquidWalletScaleSessions:input_type -> hypurr.HyperliquidWalletScaleSessionsRequest
-	12, // 48: hypurr.Telegram.HyperliquidSpotSniperConfigs:input_type -> hypurr.HyperliquidSpotSniperConfigsRequest
-	16, // 49: hypurr.Telegram.CreateHyperliquidSpotSniperConfig:input_type -> hypurr.CreateHyperliquidSpotSniperConfigRequest
-	14, // 50: hypurr.Telegram.DeleteHyperliquidSpotSniperConfig:input_type -> hypurr.DeleteHyperliquidSpotSniperConfigRequest
-	18, // 51: hypurr.Telegram.UpdateHyperliquidSpotSniperConfig:input_type -> hypurr.UpdateHyperliquidSpotSniperConfigRequest
-	1,  // 52: hypurr.Telegram.TelegramUser:output_type -> hypurr.TelegramUserResponse
-	3,  // 53: hypurr.Telegram.TelegramUserWallets:output_type -> hypurr.TelegramUserWalletsResponse
-	7,  // 54: hypurr.Telegram.HyperliquidLaunchTrade:output_type -> hypurr.HyperliquidLaunchTradeResponse
-	27, // 55: hypurr.Telegram.LaunchHyperliquidLaunch:output_type -> hypurr.LaunchHyperliquidLaunchResponse
-	31, // 56: hypurr.Telegram.EditHyperliquidLaunch:output_type -> hypurr.EditHyperliquidLaunchResponse
-	10, // 57: hypurr.Telegram.HpumpV1LaunchTrade:output_type -> hypurr.HpumpV1LaunchTradeResponse
-	29, // 58: hypurr.Telegram.LaunchHpumpV1Launch:output_type -> hypurr.LaunchHpumpV1LaunchResponse
-	11, // 59: hypurr.Telegram.HyperliquidSpotTrade:output_type -> hypurr.HyperliquidSpotTradeResponse
-	5,  // 60: hypurr.Telegram.HyperliquidCoreTrade:output_type -> hypurr.HyperliquidCoreTradeResponse
-	21, // 61: hypurr.Telegram.HyperliquidWalletSpotTwapSessions:output_type -> hypurr.HyperliquidWalletSpotTwapSessionsResponse
-	23, // 62: hypurr.Telegram.HyperliquidWalletTwapSessions:output_type -> hypurr.HyperliquidWalletTwapSessionsResponse
-	25, // 63: hypurr.Telegram.HyperliquidWalletScaleSessions:output_type -> hypurr.HyperliquidWalletScaleSessionsResponse
-	13, // 64: hypurr.Telegram.HyperliquidSpotSniperConfigs:output_type -> hypurr.HyperliquidSpotSniperConfigsResponse
-	17, // 65: hypurr.Telegram.CreateHyperliquidSpotSniperConfig:output_type -> hypurr.CreateHyperliquidSpotSniperConfigResponse
-	15, // 66: hypurr.Telegram.DeleteHyperliquidSpotSniperConfig:output_type -> hypurr.DeleteHyperliquidSpotSniperConfigResponse
-	19, // 67: hypurr.Telegram.UpdateHyperliquidSpotSniperConfig:output_type -> hypurr.UpdateHyperliquidSpotSniperConfigResponse
-	52, // [52:68] is the sub-list for method output_type
-	36, // [36:52] is the sub-list for method input_type
-	36, // [36:36] is the sub-list for extension type_name
-	36, // [36:36] is the sub-list for extension extendee
-	0,  // [0:36] is the sub-list for field type_name
+	34, // 0: hypurr.TelegramUserRequest.auth_data:type_name -> hypurr.TelegramUserRequest.AuthDataEntry
+	51, // 1: hypurr.TelegramUserResponse.user:type_name -> hypurr.TelegramUser
+	35, // 2: hypurr.TelegramUserWalletsRequest.auth_data:type_name -> hypurr.TelegramUserWalletsRequest.AuthDataEntry
+	52, // 3: hypurr.TelegramUserWalletsResponse.wallets:type_name -> hypurr.HyperliquidWallet
+	36, // 4: hypurr.HyperliquidCoreTradeRequest.auth_data:type_name -> hypurr.HyperliquidCoreTradeRequest.AuthDataEntry
+	53, // 5: hypurr.HyperliquidCoreTradeRequest.order:type_name -> hypurr.HyperliquidCoreOrder
+	37, // 6: hypurr.HyperliquidCoreCancelOrdersRequest.auth_data:type_name -> hypurr.HyperliquidCoreCancelOrdersRequest.AuthDataEntry
+	54, // 7: hypurr.HyperliquidCoreCancelOrdersRequest.cancels:type_name -> hypurr.HyperliquidCoreCancel
+	55, // 8: hypurr.HyperliquidCoreCancelOrdersResponse.statuses:type_name -> hypurr.HyperliquidCoreOrderCanceledStatus
+	38, // 9: hypurr.HyperliquidLaunchTradeRequest.auth_data:type_name -> hypurr.HyperliquidLaunchTradeRequest.AuthDataEntry
+	56, // 10: hypurr.HyperliquidLaunchTradeRequest.direction:type_name -> hypurr.TradeDirection
+	39, // 11: hypurr.HyperliquidSpotTradeRequest.auth_data:type_name -> hypurr.HyperliquidSpotTradeRequest.AuthDataEntry
+	56, // 12: hypurr.HyperliquidSpotTradeRequest.direction:type_name -> hypurr.TradeDirection
+	40, // 13: hypurr.HpumpV1LaunchTradeRequest.auth_data:type_name -> hypurr.HpumpV1LaunchTradeRequest.AuthDataEntry
+	56, // 14: hypurr.HpumpV1LaunchTradeRequest.direction:type_name -> hypurr.TradeDirection
+	41, // 15: hypurr.HyperliquidSpotSniperConfigsRequest.auth_data:type_name -> hypurr.HyperliquidSpotSniperConfigsRequest.AuthDataEntry
+	57, // 16: hypurr.HyperliquidSpotSniperConfigsResponse.configs:type_name -> hypurr.HyperliquidSpotSniperConfig
+	42, // 17: hypurr.DeleteHyperliquidSpotSniperConfigRequest.auth_data:type_name -> hypurr.DeleteHyperliquidSpotSniperConfigRequest.AuthDataEntry
+	43, // 18: hypurr.CreateHyperliquidSpotSniperConfigRequest.auth_data:type_name -> hypurr.CreateHyperliquidSpotSniperConfigRequest.AuthDataEntry
+	57, // 19: hypurr.CreateHyperliquidSpotSniperConfigRequest.config:type_name -> hypurr.HyperliquidSpotSniperConfig
+	57, // 20: hypurr.CreateHyperliquidSpotSniperConfigResponse.config:type_name -> hypurr.HyperliquidSpotSniperConfig
+	44, // 21: hypurr.UpdateHyperliquidSpotSniperConfigRequest.auth_data:type_name -> hypurr.UpdateHyperliquidSpotSniperConfigRequest.AuthDataEntry
+	57, // 22: hypurr.UpdateHyperliquidSpotSniperConfigRequest.config:type_name -> hypurr.HyperliquidSpotSniperConfig
+	45, // 23: hypurr.HyperliquidWalletSpotTwapSessionsRequest.auth_data:type_name -> hypurr.HyperliquidWalletSpotTwapSessionsRequest.AuthDataEntry
+	58, // 24: hypurr.HyperliquidWalletSpotTwapSessionsResponse.sessions:type_name -> hypurr.HyperliquidWalletSpotTwapSession
+	46, // 25: hypurr.HyperliquidWalletTwapSessionsRequest.auth_data:type_name -> hypurr.HyperliquidWalletTwapSessionsRequest.AuthDataEntry
+	59, // 26: hypurr.HyperliquidWalletTwapSessionsResponse.sessions:type_name -> hypurr.HyperliquidWalletTwapSession
+	47, // 27: hypurr.HyperliquidWalletScaleSessionsRequest.auth_data:type_name -> hypurr.HyperliquidWalletScaleSessionsRequest.AuthDataEntry
+	60, // 28: hypurr.HyperliquidWalletScaleSessionsResponse.sessions:type_name -> hypurr.HyperliquidWalletScaleSession
+	48, // 29: hypurr.LaunchHyperliquidLaunchRequest.auth_data:type_name -> hypurr.LaunchHyperliquidLaunchRequest.AuthDataEntry
+	61, // 30: hypurr.LaunchHyperliquidLaunchRequest.media_type:type_name -> hypurr.MediaType
+	62, // 31: hypurr.LaunchHyperliquidLaunchResponse.launch:type_name -> hypurr.HyperliquidLaunch
+	49, // 32: hypurr.LaunchHpumpV1LaunchRequest.auth_data:type_name -> hypurr.LaunchHpumpV1LaunchRequest.AuthDataEntry
+	61, // 33: hypurr.LaunchHpumpV1LaunchRequest.media_type:type_name -> hypurr.MediaType
+	63, // 34: hypurr.LaunchHpumpV1LaunchResponse.launch:type_name -> hypurr.HpumpV1Launch
+	50, // 35: hypurr.EditHyperliquidLaunchRequest.auth_data:type_name -> hypurr.EditHyperliquidLaunchRequest.AuthDataEntry
+	64, // 36: hypurr.EditHyperliquidLaunchRequest.media:type_name -> google.protobuf.BytesValue
+	61, // 37: hypurr.EditHyperliquidLaunchRequest.media_type:type_name -> hypurr.MediaType
+	62, // 38: hypurr.EditHyperliquidLaunchResponse.launch:type_name -> hypurr.HyperliquidLaunch
+	0,  // 39: hypurr.Telegram.TelegramUser:input_type -> hypurr.TelegramUserRequest
+	2,  // 40: hypurr.Telegram.TelegramUserWallets:input_type -> hypurr.TelegramUserWalletsRequest
+	8,  // 41: hypurr.Telegram.HyperliquidLaunchTrade:input_type -> hypurr.HyperliquidLaunchTradeRequest
+	28, // 42: hypurr.Telegram.LaunchHyperliquidLaunch:input_type -> hypurr.LaunchHyperliquidLaunchRequest
+	32, // 43: hypurr.Telegram.EditHyperliquidLaunch:input_type -> hypurr.EditHyperliquidLaunchRequest
+	11, // 44: hypurr.Telegram.HpumpV1LaunchTrade:input_type -> hypurr.HpumpV1LaunchTradeRequest
+	30, // 45: hypurr.Telegram.LaunchHpumpV1Launch:input_type -> hypurr.LaunchHpumpV1LaunchRequest
+	10, // 46: hypurr.Telegram.HyperliquidSpotTrade:input_type -> hypurr.HyperliquidSpotTradeRequest
+	4,  // 47: hypurr.Telegram.HyperliquidCoreTrade:input_type -> hypurr.HyperliquidCoreTradeRequest
+	5,  // 48: hypurr.Telegram.HyperliquidCoreCancelOrders:input_type -> hypurr.HyperliquidCoreCancelOrdersRequest
+	22, // 49: hypurr.Telegram.HyperliquidWalletSpotTwapSessions:input_type -> hypurr.HyperliquidWalletSpotTwapSessionsRequest
+	24, // 50: hypurr.Telegram.HyperliquidWalletTwapSessions:input_type -> hypurr.HyperliquidWalletTwapSessionsRequest
+	26, // 51: hypurr.Telegram.HyperliquidWalletScaleSessions:input_type -> hypurr.HyperliquidWalletScaleSessionsRequest
+	14, // 52: hypurr.Telegram.HyperliquidSpotSniperConfigs:input_type -> hypurr.HyperliquidSpotSniperConfigsRequest
+	18, // 53: hypurr.Telegram.CreateHyperliquidSpotSniperConfig:input_type -> hypurr.CreateHyperliquidSpotSniperConfigRequest
+	16, // 54: hypurr.Telegram.DeleteHyperliquidSpotSniperConfig:input_type -> hypurr.DeleteHyperliquidSpotSniperConfigRequest
+	20, // 55: hypurr.Telegram.UpdateHyperliquidSpotSniperConfig:input_type -> hypurr.UpdateHyperliquidSpotSniperConfigRequest
+	1,  // 56: hypurr.Telegram.TelegramUser:output_type -> hypurr.TelegramUserResponse
+	3,  // 57: hypurr.Telegram.TelegramUserWallets:output_type -> hypurr.TelegramUserWalletsResponse
+	9,  // 58: hypurr.Telegram.HyperliquidLaunchTrade:output_type -> hypurr.HyperliquidLaunchTradeResponse
+	29, // 59: hypurr.Telegram.LaunchHyperliquidLaunch:output_type -> hypurr.LaunchHyperliquidLaunchResponse
+	33, // 60: hypurr.Telegram.EditHyperliquidLaunch:output_type -> hypurr.EditHyperliquidLaunchResponse
+	12, // 61: hypurr.Telegram.HpumpV1LaunchTrade:output_type -> hypurr.HpumpV1LaunchTradeResponse
+	31, // 62: hypurr.Telegram.LaunchHpumpV1Launch:output_type -> hypurr.LaunchHpumpV1LaunchResponse
+	13, // 63: hypurr.Telegram.HyperliquidSpotTrade:output_type -> hypurr.HyperliquidSpotTradeResponse
+	7,  // 64: hypurr.Telegram.HyperliquidCoreTrade:output_type -> hypurr.HyperliquidCoreTradeResponse
+	6,  // 65: hypurr.Telegram.HyperliquidCoreCancelOrders:output_type -> hypurr.HyperliquidCoreCancelOrdersResponse
+	23, // 66: hypurr.Telegram.HyperliquidWalletSpotTwapSessions:output_type -> hypurr.HyperliquidWalletSpotTwapSessionsResponse
+	25, // 67: hypurr.Telegram.HyperliquidWalletTwapSessions:output_type -> hypurr.HyperliquidWalletTwapSessionsResponse
+	27, // 68: hypurr.Telegram.HyperliquidWalletScaleSessions:output_type -> hypurr.HyperliquidWalletScaleSessionsResponse
+	15, // 69: hypurr.Telegram.HyperliquidSpotSniperConfigs:output_type -> hypurr.HyperliquidSpotSniperConfigsResponse
+	19, // 70: hypurr.Telegram.CreateHyperliquidSpotSniperConfig:output_type -> hypurr.CreateHyperliquidSpotSniperConfigResponse
+	17, // 71: hypurr.Telegram.DeleteHyperliquidSpotSniperConfig:output_type -> hypurr.DeleteHyperliquidSpotSniperConfigResponse
+	21, // 72: hypurr.Telegram.UpdateHyperliquidSpotSniperConfig:output_type -> hypurr.UpdateHyperliquidSpotSniperConfigResponse
+	56, // [56:73] is the sub-list for method output_type
+	39, // [39:56] is the sub-list for method input_type
+	39, // [39:39] is the sub-list for extension type_name
+	39, // [39:39] is the sub-list for extension extendee
+	0,  // [0:39] is the sub-list for field type_name
 }
 
 func init() { file_hypurr_telegram_telegram_service_proto_init() }
@@ -2743,7 +2894,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[5].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidCoreTradeResponse); i {
+			switch v := v.(*HyperliquidCoreCancelOrdersRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2755,7 +2906,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[6].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidLaunchTradeRequest); i {
+			switch v := v.(*HyperliquidCoreCancelOrdersResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2767,7 +2918,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[7].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidLaunchTradeResponse); i {
+			switch v := v.(*HyperliquidCoreTradeResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2779,7 +2930,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[8].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidSpotTradeRequest); i {
+			switch v := v.(*HyperliquidLaunchTradeRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2791,7 +2942,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[9].Exporter = func(v any, i int) any {
-			switch v := v.(*HpumpV1LaunchTradeRequest); i {
+			switch v := v.(*HyperliquidLaunchTradeResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2803,7 +2954,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[10].Exporter = func(v any, i int) any {
-			switch v := v.(*HpumpV1LaunchTradeResponse); i {
+			switch v := v.(*HyperliquidSpotTradeRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2815,7 +2966,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[11].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidSpotTradeResponse); i {
+			switch v := v.(*HpumpV1LaunchTradeRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2827,7 +2978,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[12].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidSpotSniperConfigsRequest); i {
+			switch v := v.(*HpumpV1LaunchTradeResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2839,7 +2990,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[13].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidSpotSniperConfigsResponse); i {
+			switch v := v.(*HyperliquidSpotTradeResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2851,7 +3002,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[14].Exporter = func(v any, i int) any {
-			switch v := v.(*DeleteHyperliquidSpotSniperConfigRequest); i {
+			switch v := v.(*HyperliquidSpotSniperConfigsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2863,7 +3014,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[15].Exporter = func(v any, i int) any {
-			switch v := v.(*DeleteHyperliquidSpotSniperConfigResponse); i {
+			switch v := v.(*HyperliquidSpotSniperConfigsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2875,7 +3026,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[16].Exporter = func(v any, i int) any {
-			switch v := v.(*CreateHyperliquidSpotSniperConfigRequest); i {
+			switch v := v.(*DeleteHyperliquidSpotSniperConfigRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2887,7 +3038,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[17].Exporter = func(v any, i int) any {
-			switch v := v.(*CreateHyperliquidSpotSniperConfigResponse); i {
+			switch v := v.(*DeleteHyperliquidSpotSniperConfigResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2899,7 +3050,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[18].Exporter = func(v any, i int) any {
-			switch v := v.(*UpdateHyperliquidSpotSniperConfigRequest); i {
+			switch v := v.(*CreateHyperliquidSpotSniperConfigRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2911,7 +3062,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[19].Exporter = func(v any, i int) any {
-			switch v := v.(*UpdateHyperliquidSpotSniperConfigResponse); i {
+			switch v := v.(*CreateHyperliquidSpotSniperConfigResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2923,7 +3074,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[20].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidWalletSpotTwapSessionsRequest); i {
+			switch v := v.(*UpdateHyperliquidSpotSniperConfigRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2935,7 +3086,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[21].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidWalletSpotTwapSessionsResponse); i {
+			switch v := v.(*UpdateHyperliquidSpotSniperConfigResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2947,7 +3098,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[22].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidWalletTwapSessionsRequest); i {
+			switch v := v.(*HyperliquidWalletSpotTwapSessionsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2959,7 +3110,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[23].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidWalletTwapSessionsResponse); i {
+			switch v := v.(*HyperliquidWalletSpotTwapSessionsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2971,7 +3122,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[24].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidWalletScaleSessionsRequest); i {
+			switch v := v.(*HyperliquidWalletTwapSessionsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2983,7 +3134,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[25].Exporter = func(v any, i int) any {
-			switch v := v.(*HyperliquidWalletScaleSessionsResponse); i {
+			switch v := v.(*HyperliquidWalletTwapSessionsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2995,7 +3146,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[26].Exporter = func(v any, i int) any {
-			switch v := v.(*LaunchHyperliquidLaunchRequest); i {
+			switch v := v.(*HyperliquidWalletScaleSessionsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3007,7 +3158,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[27].Exporter = func(v any, i int) any {
-			switch v := v.(*LaunchHyperliquidLaunchResponse); i {
+			switch v := v.(*HyperliquidWalletScaleSessionsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3019,7 +3170,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[28].Exporter = func(v any, i int) any {
-			switch v := v.(*LaunchHpumpV1LaunchRequest); i {
+			switch v := v.(*LaunchHyperliquidLaunchRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3031,7 +3182,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[29].Exporter = func(v any, i int) any {
-			switch v := v.(*LaunchHpumpV1LaunchResponse); i {
+			switch v := v.(*LaunchHyperliquidLaunchResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3043,7 +3194,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[30].Exporter = func(v any, i int) any {
-			switch v := v.(*EditHyperliquidLaunchRequest); i {
+			switch v := v.(*LaunchHpumpV1LaunchRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3055,6 +3206,30 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			}
 		}
 		file_hypurr_telegram_telegram_service_proto_msgTypes[31].Exporter = func(v any, i int) any {
+			switch v := v.(*LaunchHpumpV1LaunchResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_telegram_telegram_service_proto_msgTypes[32].Exporter = func(v any, i int) any {
+			switch v := v.(*EditHyperliquidLaunchRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_telegram_telegram_service_proto_msgTypes[33].Exporter = func(v any, i int) any {
 			switch v := v.(*EditHyperliquidLaunchResponse); i {
 			case 0:
 				return &v.state
@@ -3073,7 +3248,7 @@ func file_hypurr_telegram_telegram_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hypurr_telegram_telegram_service_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   48,
+			NumMessages:   51,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -11,6 +11,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { Int64Value } from "../google/protobuf/wrappers";
 import { StringValue } from "../google/protobuf/wrappers";
 /**
  * @generated from protobuf message hypurr.LimitOrderTypeData
@@ -93,6 +94,83 @@ export interface HyperliquidCoreOrder {
      * @generated from protobuf field: google.protobuf.StringValue client_order_id = 7;
      */
     clientOrderId?: StringValue;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidCoreCancel
+ */
+export interface HyperliquidCoreCancel {
+    /**
+     * @generated from protobuf field: int64 instrument_id = 1;
+     */
+    instrumentId: number;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value order_id = 2;
+     */
+    orderId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.StringValue client_order_id = 3;
+     */
+    clientOrderId?: StringValue;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidCoreOrderPlacedStatus
+ */
+export interface HyperliquidCoreOrderPlacedStatus {
+    /**
+     * @generated from protobuf field: string state = 1;
+     */
+    state: string;
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidCoreOrderFilled filled = 2;
+     */
+    filled?: HyperliquidCoreOrderFilled;
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidCoreOrderResting resting = 3;
+     */
+    resting?: HyperliquidCoreOrderResting;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidCoreOrderCanceledStatus
+ */
+export interface HyperliquidCoreOrderCanceledStatus {
+    /**
+     * @generated from protobuf field: string state = 1;
+     */
+    state: string;
+    /**
+     * @generated from protobuf field: string error = 2;
+     */
+    error: string;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidCoreOrderResting
+ */
+export interface HyperliquidCoreOrderResting {
+    /**
+     * @generated from protobuf field: int64 order_id = 1;
+     */
+    orderId: number;
+    /**
+     * @generated from protobuf field: google.protobuf.StringValue client_order_id = 2;
+     */
+    clientOrderId?: StringValue;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidCoreOrderFilled
+ */
+export interface HyperliquidCoreOrderFilled {
+    /**
+     * @generated from protobuf field: int64 order_id = 1;
+     */
+    orderId: number;
+    /**
+     * @generated from protobuf field: double total_size = 2;
+     */
+    totalSize: number;
+    /**
+     * @generated from protobuf field: double average_price = 3;
+     */
+    averagePrice: number;
 }
 /**
  * @generated from protobuf enum hypurr.TradeDirection
@@ -381,3 +459,294 @@ class HyperliquidCoreOrder$Type extends MessageType<HyperliquidCoreOrder> {
  * @generated MessageType for protobuf message hypurr.HyperliquidCoreOrder
  */
 export const HyperliquidCoreOrder = new HyperliquidCoreOrder$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidCoreCancel$Type extends MessageType<HyperliquidCoreCancel> {
+    constructor() {
+        super("hypurr.HyperliquidCoreCancel", [
+            { no: 1, name: "instrument_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "order_id", kind: "message", T: () => Int64Value },
+            { no: 3, name: "client_order_id", kind: "message", T: () => StringValue }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidCoreCancel>): HyperliquidCoreCancel {
+        const message = { instrumentId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidCoreCancel>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidCoreCancel): HyperliquidCoreCancel {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 instrument_id */ 1:
+                    message.instrumentId = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.Int64Value order_id */ 2:
+                    message.orderId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.orderId);
+                    break;
+                case /* google.protobuf.StringValue client_order_id */ 3:
+                    message.clientOrderId = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.clientOrderId);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidCoreCancel, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 instrument_id = 1; */
+        if (message.instrumentId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.instrumentId);
+        /* google.protobuf.Int64Value order_id = 2; */
+        if (message.orderId)
+            Int64Value.internalBinaryWrite(message.orderId, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.StringValue client_order_id = 3; */
+        if (message.clientOrderId)
+            StringValue.internalBinaryWrite(message.clientOrderId, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidCoreCancel
+ */
+export const HyperliquidCoreCancel = new HyperliquidCoreCancel$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidCoreOrderPlacedStatus$Type extends MessageType<HyperliquidCoreOrderPlacedStatus> {
+    constructor() {
+        super("hypurr.HyperliquidCoreOrderPlacedStatus", [
+            { no: 1, name: "state", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "filled", kind: "message", T: () => HyperliquidCoreOrderFilled },
+            { no: 3, name: "resting", kind: "message", T: () => HyperliquidCoreOrderResting }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidCoreOrderPlacedStatus>): HyperliquidCoreOrderPlacedStatus {
+        const message = { state: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidCoreOrderPlacedStatus>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidCoreOrderPlacedStatus): HyperliquidCoreOrderPlacedStatus {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string state */ 1:
+                    message.state = reader.string();
+                    break;
+                case /* hypurr.HyperliquidCoreOrderFilled filled */ 2:
+                    message.filled = HyperliquidCoreOrderFilled.internalBinaryRead(reader, reader.uint32(), options, message.filled);
+                    break;
+                case /* hypurr.HyperliquidCoreOrderResting resting */ 3:
+                    message.resting = HyperliquidCoreOrderResting.internalBinaryRead(reader, reader.uint32(), options, message.resting);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidCoreOrderPlacedStatus, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string state = 1; */
+        if (message.state !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.state);
+        /* hypurr.HyperliquidCoreOrderFilled filled = 2; */
+        if (message.filled)
+            HyperliquidCoreOrderFilled.internalBinaryWrite(message.filled, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.HyperliquidCoreOrderResting resting = 3; */
+        if (message.resting)
+            HyperliquidCoreOrderResting.internalBinaryWrite(message.resting, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidCoreOrderPlacedStatus
+ */
+export const HyperliquidCoreOrderPlacedStatus = new HyperliquidCoreOrderPlacedStatus$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidCoreOrderCanceledStatus$Type extends MessageType<HyperliquidCoreOrderCanceledStatus> {
+    constructor() {
+        super("hypurr.HyperliquidCoreOrderCanceledStatus", [
+            { no: 1, name: "state", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "error", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidCoreOrderCanceledStatus>): HyperliquidCoreOrderCanceledStatus {
+        const message = { state: "", error: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidCoreOrderCanceledStatus>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidCoreOrderCanceledStatus): HyperliquidCoreOrderCanceledStatus {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string state */ 1:
+                    message.state = reader.string();
+                    break;
+                case /* string error */ 2:
+                    message.error = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidCoreOrderCanceledStatus, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string state = 1; */
+        if (message.state !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.state);
+        /* string error = 2; */
+        if (message.error !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.error);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidCoreOrderCanceledStatus
+ */
+export const HyperliquidCoreOrderCanceledStatus = new HyperliquidCoreOrderCanceledStatus$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidCoreOrderResting$Type extends MessageType<HyperliquidCoreOrderResting> {
+    constructor() {
+        super("hypurr.HyperliquidCoreOrderResting", [
+            { no: 1, name: "order_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "client_order_id", kind: "message", T: () => StringValue }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidCoreOrderResting>): HyperliquidCoreOrderResting {
+        const message = { orderId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidCoreOrderResting>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidCoreOrderResting): HyperliquidCoreOrderResting {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 order_id */ 1:
+                    message.orderId = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.StringValue client_order_id */ 2:
+                    message.clientOrderId = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.clientOrderId);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidCoreOrderResting, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 order_id = 1; */
+        if (message.orderId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.orderId);
+        /* google.protobuf.StringValue client_order_id = 2; */
+        if (message.clientOrderId)
+            StringValue.internalBinaryWrite(message.clientOrderId, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidCoreOrderResting
+ */
+export const HyperliquidCoreOrderResting = new HyperliquidCoreOrderResting$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidCoreOrderFilled$Type extends MessageType<HyperliquidCoreOrderFilled> {
+    constructor() {
+        super("hypurr.HyperliquidCoreOrderFilled", [
+            { no: 1, name: "order_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "total_size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "average_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidCoreOrderFilled>): HyperliquidCoreOrderFilled {
+        const message = { orderId: 0, totalSize: 0, averagePrice: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidCoreOrderFilled>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidCoreOrderFilled): HyperliquidCoreOrderFilled {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 order_id */ 1:
+                    message.orderId = reader.int64().toNumber();
+                    break;
+                case /* double total_size */ 2:
+                    message.totalSize = reader.double();
+                    break;
+                case /* double average_price */ 3:
+                    message.averagePrice = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidCoreOrderFilled, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 order_id = 1; */
+        if (message.orderId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.orderId);
+        /* double total_size = 2; */
+        if (message.totalSize !== 0)
+            writer.tag(2, WireType.Bit64).double(message.totalSize);
+        /* double average_price = 3; */
+        if (message.averagePrice !== 0)
+            writer.tag(3, WireType.Bit64).double(message.averagePrice);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidCoreOrderFilled
+ */
+export const HyperliquidCoreOrderFilled = new HyperliquidCoreOrderFilled$Type();

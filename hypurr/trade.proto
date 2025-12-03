@@ -40,3 +40,31 @@ message HyperliquidCoreOrder {
   OrderType order_type = 6;
   google.protobuf.StringValue client_order_id = 7;
 }
+
+message HyperliquidCoreCancel {
+  int64 instrument_id = 1;
+  google.protobuf.Int64Value order_id = 2;
+  google.protobuf.StringValue client_order_id = 3;
+}
+
+message HyperliquidCoreOrderPlacedStatus {
+  string state = 1;
+  HyperliquidCoreOrderFilled filled = 2;
+  HyperliquidCoreOrderResting resting = 3;
+}
+
+message HyperliquidCoreOrderCanceledStatus {
+  string state = 1;
+  string error = 2;
+}
+
+message HyperliquidCoreOrderResting {
+  int64 order_id = 1;
+  google.protobuf.StringValue client_order_id = 2;
+}
+
+message HyperliquidCoreOrderFilled {
+  int64 order_id = 1;
+  double total_size = 2;
+  double average_price = 3;
+}

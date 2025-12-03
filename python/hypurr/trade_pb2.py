@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/trade.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x12hypurr/trade.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\"@\n\x12LimitOrderTypeData\x12*\n\rtime_in_force\x18\x01 \x01(\x0e\x32\x13.hypurr.TimeInForce\"N\n\x14TriggerOrderTypeData\x12\x15\n\rtrigger_price\x18\x01 \x01(\x01\x12\x11\n\tis_market\x18\x02 \x01(\x08\x12\x0c\n\x04tpsl\x18\x03 \x01(\x01\"q\n\tOrderType\x12+\n\x05limit\x18\x01 \x01(\x0b\x32\x1a.hypurr.LimitOrderTypeDataH\x00\x12/\n\x07trigger\x18\x02 \x01(\x0b\x32\x1c.hypurr.TriggerOrderTypeDataH\x00\x42\x06\n\x04type\"\xee\x01\n\x14HyperliquidCoreOrder\x12\x15\n\rinstrument_id\x18\x01 \x01(\x03\x12)\n\tdirection\x18\x02 \x01(\x0e\x32\x16.hypurr.TradeDirection\x12\x13\n\x0blimit_price\x18\x03 \x01(\x01\x12\x0c\n\x04size\x18\x04 \x01(\x01\x12\x13\n\x0breduce_only\x18\x05 \x01(\x08\x12%\n\norder_type\x18\x06 \x01(\x0b\x32\x11.hypurr.OrderType\x12\x35\n\x0f\x63lient_order_id\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.StringValue*#\n\x0eTradeDirection\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01*(\n\x0bTimeInForce\x12\x07\n\x03GTC\x10\x00\x12\x07\n\x03\x41LO\x10\x01\x12\x07\n\x03IOC\x10\x02\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x12hypurr/trade.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\"@\n\x12LimitOrderTypeData\x12*\n\rtime_in_force\x18\x01 \x01(\x0e\x32\x13.hypurr.TimeInForce\"N\n\x14TriggerOrderTypeData\x12\x15\n\rtrigger_price\x18\x01 \x01(\x01\x12\x11\n\tis_market\x18\x02 \x01(\x08\x12\x0c\n\x04tpsl\x18\x03 \x01(\x01\"q\n\tOrderType\x12+\n\x05limit\x18\x01 \x01(\x0b\x32\x1a.hypurr.LimitOrderTypeDataH\x00\x12/\n\x07trigger\x18\x02 \x01(\x0b\x32\x1c.hypurr.TriggerOrderTypeDataH\x00\x42\x06\n\x04type\"\xee\x01\n\x14HyperliquidCoreOrder\x12\x15\n\rinstrument_id\x18\x01 \x01(\x03\x12)\n\tdirection\x18\x02 \x01(\x0e\x32\x16.hypurr.TradeDirection\x12\x13\n\x0blimit_price\x18\x03 \x01(\x01\x12\x0c\n\x04size\x18\x04 \x01(\x01\x12\x13\n\x0breduce_only\x18\x05 \x01(\x08\x12%\n\norder_type\x18\x06 \x01(\x0b\x32\x11.hypurr.OrderType\x12\x35\n\x0f\x63lient_order_id\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"\x94\x01\n\x15HyperliquidCoreCancel\x12\x15\n\rinstrument_id\x18\x01 \x01(\x03\x12-\n\x08order_id\x18\x02 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x35\n\x0f\x63lient_order_id\x18\x03 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"\x9b\x01\n HyperliquidCoreOrderPlacedStatus\x12\r\n\x05state\x18\x01 \x01(\t\x12\x32\n\x06\x66illed\x18\x02 \x01(\x0b\x32\".hypurr.HyperliquidCoreOrderFilled\x12\x34\n\x07resting\x18\x03 \x01(\x0b\x32#.hypurr.HyperliquidCoreOrderResting\"B\n\"HyperliquidCoreOrderCanceledStatus\x12\r\n\x05state\x18\x01 \x01(\t\x12\r\n\x05\x65rror\x18\x02 \x01(\t\"f\n\x1bHyperliquidCoreOrderResting\x12\x10\n\x08order_id\x18\x01 \x01(\x03\x12\x35\n\x0f\x63lient_order_id\x18\x02 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"Y\n\x1aHyperliquidCoreOrderFilled\x12\x10\n\x08order_id\x18\x01 \x01(\x03\x12\x12\n\ntotal_size\x18\x02 \x01(\x01\x12\x15\n\raverage_price\x18\x03 \x01(\x01*#\n\x0eTradeDirection\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01*(\n\x0bTimeInForce\x12\x07\n\x03GTC\x10\x00\x12\x07\n\x03\x41LO\x10\x01\x12\x07\n\x03IOC\x10\x02\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -42,8 +42,8 @@ _TRADEDIRECTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=564,
-  serialized_end=599,
+  serialized_start=1136,
+  serialized_end=1171,
 )
 _sym_db.RegisterEnumDescriptor(_TRADEDIRECTION)
 
@@ -69,8 +69,8 @@ _TIMEINFORCE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=601,
-  serialized_end=641,
+  serialized_start=1173,
+  serialized_end=1213,
 )
 _sym_db.RegisterEnumDescriptor(_TIMEINFORCE)
 
@@ -272,6 +272,217 @@ _HYPERLIQUIDCOREORDER = _descriptor.Descriptor(
   serialized_end=562,
 )
 
+
+_HYPERLIQUIDCORECANCEL = _descriptor.Descriptor(
+  name='HyperliquidCoreCancel',
+  full_name='hypurr.HyperliquidCoreCancel',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='instrument_id', full_name='hypurr.HyperliquidCoreCancel.instrument_id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='order_id', full_name='hypurr.HyperliquidCoreCancel.order_id', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='client_order_id', full_name='hypurr.HyperliquidCoreCancel.client_order_id', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=565,
+  serialized_end=713,
+)
+
+
+_HYPERLIQUIDCOREORDERPLACEDSTATUS = _descriptor.Descriptor(
+  name='HyperliquidCoreOrderPlacedStatus',
+  full_name='hypurr.HyperliquidCoreOrderPlacedStatus',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='state', full_name='hypurr.HyperliquidCoreOrderPlacedStatus.state', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='filled', full_name='hypurr.HyperliquidCoreOrderPlacedStatus.filled', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='resting', full_name='hypurr.HyperliquidCoreOrderPlacedStatus.resting', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=716,
+  serialized_end=871,
+)
+
+
+_HYPERLIQUIDCOREORDERCANCELEDSTATUS = _descriptor.Descriptor(
+  name='HyperliquidCoreOrderCanceledStatus',
+  full_name='hypurr.HyperliquidCoreOrderCanceledStatus',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='state', full_name='hypurr.HyperliquidCoreOrderCanceledStatus.state', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='error', full_name='hypurr.HyperliquidCoreOrderCanceledStatus.error', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=873,
+  serialized_end=939,
+)
+
+
+_HYPERLIQUIDCOREORDERRESTING = _descriptor.Descriptor(
+  name='HyperliquidCoreOrderResting',
+  full_name='hypurr.HyperliquidCoreOrderResting',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='order_id', full_name='hypurr.HyperliquidCoreOrderResting.order_id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='client_order_id', full_name='hypurr.HyperliquidCoreOrderResting.client_order_id', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=941,
+  serialized_end=1043,
+)
+
+
+_HYPERLIQUIDCOREORDERFILLED = _descriptor.Descriptor(
+  name='HyperliquidCoreOrderFilled',
+  full_name='hypurr.HyperliquidCoreOrderFilled',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='order_id', full_name='hypurr.HyperliquidCoreOrderFilled.order_id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='total_size', full_name='hypurr.HyperliquidCoreOrderFilled.total_size', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='average_price', full_name='hypurr.HyperliquidCoreOrderFilled.average_price', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1045,
+  serialized_end=1134,
+)
+
 _LIMITORDERTYPEDATA.fields_by_name['time_in_force'].enum_type = _TIMEINFORCE
 _ORDERTYPE.fields_by_name['limit'].message_type = _LIMITORDERTYPEDATA
 _ORDERTYPE.fields_by_name['trigger'].message_type = _TRIGGERORDERTYPEDATA
@@ -284,10 +495,20 @@ _ORDERTYPE.fields_by_name['trigger'].containing_oneof = _ORDERTYPE.oneofs_by_nam
 _HYPERLIQUIDCOREORDER.fields_by_name['direction'].enum_type = _TRADEDIRECTION
 _HYPERLIQUIDCOREORDER.fields_by_name['order_type'].message_type = _ORDERTYPE
 _HYPERLIQUIDCOREORDER.fields_by_name['client_order_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._STRINGVALUE
+_HYPERLIQUIDCORECANCEL.fields_by_name['order_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_HYPERLIQUIDCORECANCEL.fields_by_name['client_order_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._STRINGVALUE
+_HYPERLIQUIDCOREORDERPLACEDSTATUS.fields_by_name['filled'].message_type = _HYPERLIQUIDCOREORDERFILLED
+_HYPERLIQUIDCOREORDERPLACEDSTATUS.fields_by_name['resting'].message_type = _HYPERLIQUIDCOREORDERRESTING
+_HYPERLIQUIDCOREORDERRESTING.fields_by_name['client_order_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._STRINGVALUE
 DESCRIPTOR.message_types_by_name['LimitOrderTypeData'] = _LIMITORDERTYPEDATA
 DESCRIPTOR.message_types_by_name['TriggerOrderTypeData'] = _TRIGGERORDERTYPEDATA
 DESCRIPTOR.message_types_by_name['OrderType'] = _ORDERTYPE
 DESCRIPTOR.message_types_by_name['HyperliquidCoreOrder'] = _HYPERLIQUIDCOREORDER
+DESCRIPTOR.message_types_by_name['HyperliquidCoreCancel'] = _HYPERLIQUIDCORECANCEL
+DESCRIPTOR.message_types_by_name['HyperliquidCoreOrderPlacedStatus'] = _HYPERLIQUIDCOREORDERPLACEDSTATUS
+DESCRIPTOR.message_types_by_name['HyperliquidCoreOrderCanceledStatus'] = _HYPERLIQUIDCOREORDERCANCELEDSTATUS
+DESCRIPTOR.message_types_by_name['HyperliquidCoreOrderResting'] = _HYPERLIQUIDCOREORDERRESTING
+DESCRIPTOR.message_types_by_name['HyperliquidCoreOrderFilled'] = _HYPERLIQUIDCOREORDERFILLED
 DESCRIPTOR.enum_types_by_name['TradeDirection'] = _TRADEDIRECTION
 DESCRIPTOR.enum_types_by_name['TimeInForce'] = _TIMEINFORCE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -319,6 +540,41 @@ HyperliquidCoreOrder = _reflection.GeneratedProtocolMessageType('HyperliquidCore
   # @@protoc_insertion_point(class_scope:hypurr.HyperliquidCoreOrder)
   ))
 _sym_db.RegisterMessage(HyperliquidCoreOrder)
+
+HyperliquidCoreCancel = _reflection.GeneratedProtocolMessageType('HyperliquidCoreCancel', (_message.Message,), dict(
+  DESCRIPTOR = _HYPERLIQUIDCORECANCEL,
+  __module__ = 'hypurr.trade_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HyperliquidCoreCancel)
+  ))
+_sym_db.RegisterMessage(HyperliquidCoreCancel)
+
+HyperliquidCoreOrderPlacedStatus = _reflection.GeneratedProtocolMessageType('HyperliquidCoreOrderPlacedStatus', (_message.Message,), dict(
+  DESCRIPTOR = _HYPERLIQUIDCOREORDERPLACEDSTATUS,
+  __module__ = 'hypurr.trade_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HyperliquidCoreOrderPlacedStatus)
+  ))
+_sym_db.RegisterMessage(HyperliquidCoreOrderPlacedStatus)
+
+HyperliquidCoreOrderCanceledStatus = _reflection.GeneratedProtocolMessageType('HyperliquidCoreOrderCanceledStatus', (_message.Message,), dict(
+  DESCRIPTOR = _HYPERLIQUIDCOREORDERCANCELEDSTATUS,
+  __module__ = 'hypurr.trade_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HyperliquidCoreOrderCanceledStatus)
+  ))
+_sym_db.RegisterMessage(HyperliquidCoreOrderCanceledStatus)
+
+HyperliquidCoreOrderResting = _reflection.GeneratedProtocolMessageType('HyperliquidCoreOrderResting', (_message.Message,), dict(
+  DESCRIPTOR = _HYPERLIQUIDCOREORDERRESTING,
+  __module__ = 'hypurr.trade_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HyperliquidCoreOrderResting)
+  ))
+_sym_db.RegisterMessage(HyperliquidCoreOrderResting)
+
+HyperliquidCoreOrderFilled = _reflection.GeneratedProtocolMessageType('HyperliquidCoreOrderFilled', (_message.Message,), dict(
+  DESCRIPTOR = _HYPERLIQUIDCOREORDERFILLED,
+  __module__ = 'hypurr.trade_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HyperliquidCoreOrderFilled)
+  ))
+_sym_db.RegisterMessage(HyperliquidCoreOrderFilled)
 
 
 DESCRIPTOR.has_options = True
