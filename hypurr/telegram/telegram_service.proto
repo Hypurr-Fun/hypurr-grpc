@@ -37,6 +37,13 @@ message HyperliquidCoreTradeRequest {
   HyperliquidCoreOrder order = 3;
 }
 
+message HyperliquidCoreTradeResponse {
+  double base_amount = 1;
+  double quote_amount = 2;
+  string message = 3;
+  bool success = 4;
+}
+
 message HyperliquidCoreCancelOrdersRequest {
   map<string, string> auth_data = 1;
   int64 wallet_id = 2;
@@ -47,11 +54,22 @@ message HyperliquidCoreCancelOrdersResponse {
   repeated HyperliquidCoreOrderCanceledStatus statuses = 1;
 }
 
-message HyperliquidCoreTradeResponse {
-  double base_amount = 1;
-  double quote_amount = 2;
-  string message = 3;
-  bool success = 4;
+message HyperliquidTwapCancelRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  int64 twap_session_id = 3;
+}
+
+message HyperliquidTwapCancelResponse {
+}
+
+message HyperliquidScaleCancelRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  int64 scale_session_id = 3;
+}
+
+message HyperliquidScaleCancelResponse {
 }
 
 message HyperliquidLaunchTradeRequest {
@@ -232,6 +250,9 @@ service Telegram {
   rpc HyperliquidWalletSpotTwapSessions (HyperliquidWalletSpotTwapSessionsRequest) returns (HyperliquidWalletSpotTwapSessionsResponse) {}
   rpc HyperliquidWalletTwapSessions (HyperliquidWalletTwapSessionsRequest) returns (HyperliquidWalletTwapSessionsResponse) {}
   rpc HyperliquidWalletScaleSessions (HyperliquidWalletScaleSessionsRequest) returns (HyperliquidWalletScaleSessionsResponse) {}
+
+  rpc HyperliquidTwapCancel (HyperliquidTwapCancelRequest) returns (HyperliquidTwapCancelResponse) {}
+  rpc HyperliquidScaleCancel (HyperliquidScaleCancelRequest) returns (HyperliquidScaleCancelResponse) {}
 
   rpc HyperliquidSpotSniperConfigs (HyperliquidSpotSniperConfigsRequest) returns (HyperliquidSpotSniperConfigsResponse) {}
   rpc CreateHyperliquidSpotSniperConfig (CreateHyperliquidSpotSniperConfigRequest) returns (CreateHyperliquidSpotSniperConfigResponse) {}

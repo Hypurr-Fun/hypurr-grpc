@@ -88,6 +88,27 @@ export interface HyperliquidCoreTradeRequest {
     order?: HyperliquidCoreOrder;
 }
 /**
+ * @generated from protobuf message hypurr.HyperliquidCoreTradeResponse
+ */
+export interface HyperliquidCoreTradeResponse {
+    /**
+     * @generated from protobuf field: double base_amount = 1;
+     */
+    baseAmount: number;
+    /**
+     * @generated from protobuf field: double quote_amount = 2;
+     */
+    quoteAmount: number;
+    /**
+     * @generated from protobuf field: string message = 3;
+     */
+    message: string;
+    /**
+     * @generated from protobuf field: bool success = 4;
+     */
+    success: boolean;
+}
+/**
  * @generated from protobuf message hypurr.HyperliquidCoreCancelOrdersRequest
  */
 export interface HyperliquidCoreCancelOrdersRequest {
@@ -116,25 +137,52 @@ export interface HyperliquidCoreCancelOrdersResponse {
     statuses: HyperliquidCoreOrderCanceledStatus[];
 }
 /**
- * @generated from protobuf message hypurr.HyperliquidCoreTradeResponse
+ * @generated from protobuf message hypurr.HyperliquidTwapCancelRequest
  */
-export interface HyperliquidCoreTradeResponse {
+export interface HyperliquidTwapCancelRequest {
     /**
-     * @generated from protobuf field: double base_amount = 1;
+     * @generated from protobuf field: map<string, string> auth_data = 1;
      */
-    baseAmount: number;
+    authData: {
+        [key: string]: string;
+    };
     /**
-     * @generated from protobuf field: double quote_amount = 2;
+     * @generated from protobuf field: int64 wallet_id = 2;
      */
-    quoteAmount: number;
+    walletId: number;
     /**
-     * @generated from protobuf field: string message = 3;
+     * @generated from protobuf field: int64 twap_session_id = 3;
      */
-    message: string;
+    twapSessionId: number;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidTwapCancelResponse
+ */
+export interface HyperliquidTwapCancelResponse {
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidScaleCancelRequest
+ */
+export interface HyperliquidScaleCancelRequest {
     /**
-     * @generated from protobuf field: bool success = 4;
+     * @generated from protobuf field: map<string, string> auth_data = 1;
      */
-    success: boolean;
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: int64 wallet_id = 2;
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: int64 scale_session_id = 3;
+     */
+    scaleSessionId: number;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidScaleCancelResponse
+ */
+export interface HyperliquidScaleCancelResponse {
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidLaunchTradeRequest
@@ -906,6 +954,74 @@ class HyperliquidCoreTradeRequest$Type extends MessageType<HyperliquidCoreTradeR
  */
 export const HyperliquidCoreTradeRequest = new HyperliquidCoreTradeRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidCoreTradeResponse$Type extends MessageType<HyperliquidCoreTradeResponse> {
+    constructor() {
+        super("hypurr.HyperliquidCoreTradeResponse", [
+            { no: 1, name: "base_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 2, name: "quote_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidCoreTradeResponse>): HyperliquidCoreTradeResponse {
+        const message = { baseAmount: 0, quoteAmount: 0, message: "", success: false };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidCoreTradeResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidCoreTradeResponse): HyperliquidCoreTradeResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* double base_amount */ 1:
+                    message.baseAmount = reader.double();
+                    break;
+                case /* double quote_amount */ 2:
+                    message.quoteAmount = reader.double();
+                    break;
+                case /* string message */ 3:
+                    message.message = reader.string();
+                    break;
+                case /* bool success */ 4:
+                    message.success = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidCoreTradeResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* double base_amount = 1; */
+        if (message.baseAmount !== 0)
+            writer.tag(1, WireType.Bit64).double(message.baseAmount);
+        /* double quote_amount = 2; */
+        if (message.quoteAmount !== 0)
+            writer.tag(2, WireType.Bit64).double(message.quoteAmount);
+        /* string message = 3; */
+        if (message.message !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.message);
+        /* bool success = 4; */
+        if (message.success !== false)
+            writer.tag(4, WireType.Varint).bool(message.success);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidCoreTradeResponse
+ */
+export const HyperliquidCoreTradeResponse = new HyperliquidCoreTradeResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidCoreCancelOrdersRequest$Type extends MessageType<HyperliquidCoreCancelOrdersRequest> {
     constructor() {
         super("hypurr.HyperliquidCoreCancelOrdersRequest", [
@@ -1030,38 +1146,34 @@ class HyperliquidCoreCancelOrdersResponse$Type extends MessageType<HyperliquidCo
  */
 export const HyperliquidCoreCancelOrdersResponse = new HyperliquidCoreCancelOrdersResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HyperliquidCoreTradeResponse$Type extends MessageType<HyperliquidCoreTradeResponse> {
+class HyperliquidTwapCancelRequest$Type extends MessageType<HyperliquidTwapCancelRequest> {
     constructor() {
-        super("hypurr.HyperliquidCoreTradeResponse", [
-            { no: 1, name: "base_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 2, name: "quote_amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 3, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        super("hypurr.HyperliquidTwapCancelRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "twap_session_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
-    create(value?: PartialMessage<HyperliquidCoreTradeResponse>): HyperliquidCoreTradeResponse {
-        const message = { baseAmount: 0, quoteAmount: 0, message: "", success: false };
+    create(value?: PartialMessage<HyperliquidTwapCancelRequest>): HyperliquidTwapCancelRequest {
+        const message = { authData: {}, walletId: 0, twapSessionId: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HyperliquidCoreTradeResponse>(this, message, value);
+            reflectionMergePartial<HyperliquidTwapCancelRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidCoreTradeResponse): HyperliquidCoreTradeResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidTwapCancelRequest): HyperliquidTwapCancelRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* double base_amount */ 1:
-                    message.baseAmount = reader.double();
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
                     break;
-                case /* double quote_amount */ 2:
-                    message.quoteAmount = reader.double();
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
                     break;
-                case /* string message */ 3:
-                    message.message = reader.string();
-                    break;
-                case /* bool success */ 4:
-                    message.success = reader.bool();
+                case /* int64 twap_session_id */ 3:
+                    message.twapSessionId = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1074,19 +1186,32 @@ class HyperliquidCoreTradeResponse$Type extends MessageType<HyperliquidCoreTrade
         }
         return message;
     }
-    internalBinaryWrite(message: HyperliquidCoreTradeResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* double base_amount = 1; */
-        if (message.baseAmount !== 0)
-            writer.tag(1, WireType.Bit64).double(message.baseAmount);
-        /* double quote_amount = 2; */
-        if (message.quoteAmount !== 0)
-            writer.tag(2, WireType.Bit64).double(message.quoteAmount);
-        /* string message = 3; */
-        if (message.message !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.message);
-        /* bool success = 4; */
-        if (message.success !== false)
-            writer.tag(4, WireType.Varint).bool(message.success);
+    private binaryReadMap1(map: HyperliquidTwapCancelRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HyperliquidTwapCancelRequest["authData"] | undefined, val: HyperliquidTwapCancelRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HyperliquidTwapCancelRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: HyperliquidTwapCancelRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* int64 twap_session_id = 3; */
+        if (message.twapSessionId !== 0)
+            writer.tag(3, WireType.Varint).int64(message.twapSessionId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1094,9 +1219,138 @@ class HyperliquidCoreTradeResponse$Type extends MessageType<HyperliquidCoreTrade
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HyperliquidCoreTradeResponse
+ * @generated MessageType for protobuf message hypurr.HyperliquidTwapCancelRequest
  */
-export const HyperliquidCoreTradeResponse = new HyperliquidCoreTradeResponse$Type();
+export const HyperliquidTwapCancelRequest = new HyperliquidTwapCancelRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidTwapCancelResponse$Type extends MessageType<HyperliquidTwapCancelResponse> {
+    constructor() {
+        super("hypurr.HyperliquidTwapCancelResponse", []);
+    }
+    create(value?: PartialMessage<HyperliquidTwapCancelResponse>): HyperliquidTwapCancelResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidTwapCancelResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidTwapCancelResponse): HyperliquidTwapCancelResponse {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: HyperliquidTwapCancelResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidTwapCancelResponse
+ */
+export const HyperliquidTwapCancelResponse = new HyperliquidTwapCancelResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidScaleCancelRequest$Type extends MessageType<HyperliquidScaleCancelRequest> {
+    constructor() {
+        super("hypurr.HyperliquidScaleCancelRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "scale_session_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidScaleCancelRequest>): HyperliquidScaleCancelRequest {
+        const message = { authData: {}, walletId: 0, scaleSessionId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidScaleCancelRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidScaleCancelRequest): HyperliquidScaleCancelRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* int64 scale_session_id */ 3:
+                    message.scaleSessionId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: HyperliquidScaleCancelRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HyperliquidScaleCancelRequest["authData"] | undefined, val: HyperliquidScaleCancelRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HyperliquidScaleCancelRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: HyperliquidScaleCancelRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* int64 scale_session_id = 3; */
+        if (message.scaleSessionId !== 0)
+            writer.tag(3, WireType.Varint).int64(message.scaleSessionId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidScaleCancelRequest
+ */
+export const HyperliquidScaleCancelRequest = new HyperliquidScaleCancelRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidScaleCancelResponse$Type extends MessageType<HyperliquidScaleCancelResponse> {
+    constructor() {
+        super("hypurr.HyperliquidScaleCancelResponse", []);
+    }
+    create(value?: PartialMessage<HyperliquidScaleCancelResponse>): HyperliquidScaleCancelResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidScaleCancelResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidScaleCancelResponse): HyperliquidScaleCancelResponse {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: HyperliquidScaleCancelResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidScaleCancelResponse
+ */
+export const HyperliquidScaleCancelResponse = new HyperliquidScaleCancelResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidLaunchTradeRequest$Type extends MessageType<HyperliquidLaunchTradeRequest> {
     constructor() {
@@ -2915,6 +3169,8 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "HyperliquidWalletSpotTwapSessions", options: {}, I: HyperliquidWalletSpotTwapSessionsRequest, O: HyperliquidWalletSpotTwapSessionsResponse },
     { name: "HyperliquidWalletTwapSessions", options: {}, I: HyperliquidWalletTwapSessionsRequest, O: HyperliquidWalletTwapSessionsResponse },
     { name: "HyperliquidWalletScaleSessions", options: {}, I: HyperliquidWalletScaleSessionsRequest, O: HyperliquidWalletScaleSessionsResponse },
+    { name: "HyperliquidTwapCancel", options: {}, I: HyperliquidTwapCancelRequest, O: HyperliquidTwapCancelResponse },
+    { name: "HyperliquidScaleCancel", options: {}, I: HyperliquidScaleCancelRequest, O: HyperliquidScaleCancelResponse },
     { name: "HyperliquidSpotSniperConfigs", options: {}, I: HyperliquidSpotSniperConfigsRequest, O: HyperliquidSpotSniperConfigsResponse },
     { name: "CreateHyperliquidSpotSniperConfig", options: {}, I: CreateHyperliquidSpotSniperConfigRequest, O: CreateHyperliquidSpotSniperConfigResponse },
     { name: "DeleteHyperliquidSpotSniperConfig", options: {}, I: DeleteHyperliquidSpotSniperConfigRequest, O: DeleteHyperliquidSpotSniperConfigResponse },
