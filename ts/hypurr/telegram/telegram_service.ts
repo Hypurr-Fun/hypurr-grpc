@@ -221,23 +221,27 @@ export interface HyperliquidTwapModifyRequest {
      */
     walletId: number;
     /**
-     * @generated from protobuf field: google.protobuf.DoubleValue target_notional = 3;
+     * @generated from protobuf field: int64 session_id = 3;
+     */
+    sessionId: number;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue target_notional = 4;
      */
     targetNotional?: DoubleValue;
     /**
-     * @generated from protobuf field: google.protobuf.DoubleValue target_quantity = 4;
+     * @generated from protobuf field: google.protobuf.DoubleValue target_quantity = 5;
      */
     targetQuantity?: DoubleValue;
     /**
-     * @generated from protobuf field: google.protobuf.DoubleValue target_leverage = 5;
+     * @generated from protobuf field: google.protobuf.DoubleValue target_leverage = 6;
      */
     targetLeverage?: DoubleValue;
     /**
-     * @generated from protobuf field: google.protobuf.DoubleValue min_price = 6;
+     * @generated from protobuf field: google.protobuf.DoubleValue min_price = 7;
      */
     minPrice?: DoubleValue;
     /**
-     * @generated from protobuf field: google.protobuf.DoubleValue max_price = 7;
+     * @generated from protobuf field: google.protobuf.DoubleValue max_price = 8;
      */
     maxPrice?: DoubleValue;
 }
@@ -1519,15 +1523,16 @@ class HyperliquidTwapModifyRequest$Type extends MessageType<HyperliquidTwapModif
         super("hypurr.HyperliquidTwapModifyRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "target_notional", kind: "message", T: () => DoubleValue },
-            { no: 4, name: "target_quantity", kind: "message", T: () => DoubleValue },
-            { no: 5, name: "target_leverage", kind: "message", T: () => DoubleValue },
-            { no: 6, name: "min_price", kind: "message", T: () => DoubleValue },
-            { no: 7, name: "max_price", kind: "message", T: () => DoubleValue }
+            { no: 3, name: "session_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "target_notional", kind: "message", T: () => DoubleValue },
+            { no: 5, name: "target_quantity", kind: "message", T: () => DoubleValue },
+            { no: 6, name: "target_leverage", kind: "message", T: () => DoubleValue },
+            { no: 7, name: "min_price", kind: "message", T: () => DoubleValue },
+            { no: 8, name: "max_price", kind: "message", T: () => DoubleValue }
         ]);
     }
     create(value?: PartialMessage<HyperliquidTwapModifyRequest>): HyperliquidTwapModifyRequest {
-        const message = { authData: {}, walletId: 0 };
+        const message = { authData: {}, walletId: 0, sessionId: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidTwapModifyRequest>(this, message, value);
@@ -1544,19 +1549,22 @@ class HyperliquidTwapModifyRequest$Type extends MessageType<HyperliquidTwapModif
                 case /* int64 wallet_id */ 2:
                     message.walletId = reader.int64().toNumber();
                     break;
-                case /* google.protobuf.DoubleValue target_notional */ 3:
+                case /* int64 session_id */ 3:
+                    message.sessionId = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.DoubleValue target_notional */ 4:
                     message.targetNotional = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.targetNotional);
                     break;
-                case /* google.protobuf.DoubleValue target_quantity */ 4:
+                case /* google.protobuf.DoubleValue target_quantity */ 5:
                     message.targetQuantity = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.targetQuantity);
                     break;
-                case /* google.protobuf.DoubleValue target_leverage */ 5:
+                case /* google.protobuf.DoubleValue target_leverage */ 6:
                     message.targetLeverage = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.targetLeverage);
                     break;
-                case /* google.protobuf.DoubleValue min_price */ 6:
+                case /* google.protobuf.DoubleValue min_price */ 7:
                     message.minPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.minPrice);
                     break;
-                case /* google.protobuf.DoubleValue max_price */ 7:
+                case /* google.protobuf.DoubleValue max_price */ 8:
                     message.maxPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.maxPrice);
                     break;
                 default:
@@ -1593,21 +1601,24 @@ class HyperliquidTwapModifyRequest$Type extends MessageType<HyperliquidTwapModif
         /* int64 wallet_id = 2; */
         if (message.walletId !== 0)
             writer.tag(2, WireType.Varint).int64(message.walletId);
-        /* google.protobuf.DoubleValue target_notional = 3; */
+        /* int64 session_id = 3; */
+        if (message.sessionId !== 0)
+            writer.tag(3, WireType.Varint).int64(message.sessionId);
+        /* google.protobuf.DoubleValue target_notional = 4; */
         if (message.targetNotional)
-            DoubleValue.internalBinaryWrite(message.targetNotional, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.DoubleValue target_quantity = 4; */
+            DoubleValue.internalBinaryWrite(message.targetNotional, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue target_quantity = 5; */
         if (message.targetQuantity)
-            DoubleValue.internalBinaryWrite(message.targetQuantity, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.DoubleValue target_leverage = 5; */
+            DoubleValue.internalBinaryWrite(message.targetQuantity, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue target_leverage = 6; */
         if (message.targetLeverage)
-            DoubleValue.internalBinaryWrite(message.targetLeverage, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.DoubleValue min_price = 6; */
+            DoubleValue.internalBinaryWrite(message.targetLeverage, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue min_price = 7; */
         if (message.minPrice)
-            DoubleValue.internalBinaryWrite(message.minPrice, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.DoubleValue max_price = 7; */
+            DoubleValue.internalBinaryWrite(message.minPrice, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue max_price = 8; */
         if (message.maxPrice)
-            DoubleValue.internalBinaryWrite(message.maxPrice, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+            DoubleValue.internalBinaryWrite(message.maxPrice, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
