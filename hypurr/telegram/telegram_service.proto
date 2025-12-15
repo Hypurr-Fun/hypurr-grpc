@@ -54,6 +54,40 @@ message HyperliquidCoreCancelOrdersResponse {
   repeated HyperliquidCoreOrderCanceledStatus statuses = 1;
 }
 
+message HyperliquidTwapCreateRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  int64 duration = 3;
+  bool buy = 4;
+  bool use_chasing = 5;
+  bool reduce_only = 6;
+  google.protobuf.Int64Value spot_pair_id = 7;
+  google.protobuf.Int64Value perp_pair_id = 8;
+  google.protobuf.DoubleValue target_notional = 9;
+  google.protobuf.DoubleValue target_quantity = 10;
+  google.protobuf.DoubleValue target_leverage = 11;
+  google.protobuf.DoubleValue min_price = 12;
+  google.protobuf.DoubleValue max_price = 13;
+}
+
+message HyperliquidTwapCreateResponse {
+  HyperliquidWalletTwapSession session = 1;
+}
+
+message HyperliquidTwapModifyRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  google.protobuf.DoubleValue target_notional = 3;
+  google.protobuf.DoubleValue target_quantity = 4;
+  google.protobuf.DoubleValue target_leverage = 5;
+  google.protobuf.DoubleValue min_price = 6;
+  google.protobuf.DoubleValue max_price = 7;
+}
+
+message HyperliquidTwapModifyResponse {
+  HyperliquidWalletTwapSession session = 1;
+}
+
 message HyperliquidTwapCancelRequest {
   map<string, string> auth_data = 1;
   int64 wallet_id = 2;
@@ -61,6 +95,24 @@ message HyperliquidTwapCancelRequest {
 }
 
 message HyperliquidTwapCancelResponse {
+}
+
+message HyperliquidScaleCreateRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  int64 order_count = 3;
+  bool buy = 4;
+  google.protobuf.Int64Value spot_pair_id = 5;
+  google.protobuf.Int64Value perp_pair_id = 6;
+  google.protobuf.DoubleValue target_notional = 7;
+  google.protobuf.DoubleValue target_quantity = 8;
+  google.protobuf.DoubleValue target_leverage = 9;
+  google.protobuf.DoubleValue min_price = 10;
+  google.protobuf.DoubleValue max_price = 11;
+}
+
+message HyperliquidScaleCreateResponse {
+  HyperliquidWalletScaleSession session = 1;
 }
 
 message HyperliquidScaleCancelRequest {
@@ -251,7 +303,10 @@ service Telegram {
   rpc HyperliquidWalletTwapSessions (HyperliquidWalletTwapSessionsRequest) returns (HyperliquidWalletTwapSessionsResponse) {}
   rpc HyperliquidWalletScaleSessions (HyperliquidWalletScaleSessionsRequest) returns (HyperliquidWalletScaleSessionsResponse) {}
 
+  rpc HyperliquidTwapCreate (HyperliquidTwapCreateRequest) returns (HyperliquidTwapCreateResponse) {}
+  rpc HyperliquidTwapModify (HyperliquidTwapModifyRequest) returns (HyperliquidTwapModifyResponse) {}
   rpc HyperliquidTwapCancel (HyperliquidTwapCancelRequest) returns (HyperliquidTwapCancelResponse) {}
+  rpc HyperliquidScaleCreate (HyperliquidScaleCreateRequest) returns (HyperliquidScaleCreateResponse) {}
   rpc HyperliquidScaleCancel (HyperliquidScaleCancelRequest) returns (HyperliquidScaleCancelResponse) {}
 
   rpc HyperliquidSpotSniperConfigs (HyperliquidSpotSniperConfigsRequest) returns (HyperliquidSpotSniperConfigsResponse) {}

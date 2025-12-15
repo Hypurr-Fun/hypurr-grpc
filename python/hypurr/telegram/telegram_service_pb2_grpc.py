@@ -79,10 +79,25 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletScaleSessionsRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletScaleSessionsResponse.FromString,
         )
+    self.HyperliquidTwapCreate = channel.unary_unary(
+        '/hypurr.Telegram/HyperliquidTwapCreate',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidTwapCreateRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidTwapCreateResponse.FromString,
+        )
+    self.HyperliquidTwapModify = channel.unary_unary(
+        '/hypurr.Telegram/HyperliquidTwapModify',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidTwapModifyRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidTwapModifyResponse.FromString,
+        )
     self.HyperliquidTwapCancel = channel.unary_unary(
         '/hypurr.Telegram/HyperliquidTwapCancel',
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidTwapCancelRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidTwapCancelResponse.FromString,
+        )
+    self.HyperliquidScaleCreate = channel.unary_unary(
+        '/hypurr.Telegram/HyperliquidScaleCreate',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCreateRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCreateResponse.FromString,
         )
     self.HyperliquidScaleCancel = channel.unary_unary(
         '/hypurr.Telegram/HyperliquidScaleCancel',
@@ -206,7 +221,28 @@ class TelegramServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def HyperliquidTwapCreate(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HyperliquidTwapModify(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def HyperliquidTwapCancel(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HyperliquidScaleCreate(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -316,10 +352,25 @@ def add_TelegramServicer_to_server(servicer, server):
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletScaleSessionsRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletScaleSessionsResponse.SerializeToString,
       ),
+      'HyperliquidTwapCreate': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidTwapCreate,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidTwapCreateRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidTwapCreateResponse.SerializeToString,
+      ),
+      'HyperliquidTwapModify': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidTwapModify,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidTwapModifyRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidTwapModifyResponse.SerializeToString,
+      ),
       'HyperliquidTwapCancel': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidTwapCancel,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidTwapCancelRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidTwapCancelResponse.SerializeToString,
+      ),
+      'HyperliquidScaleCreate': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidScaleCreate,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCreateRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCreateResponse.SerializeToString,
       ),
       'HyperliquidScaleCancel': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidScaleCancel,
