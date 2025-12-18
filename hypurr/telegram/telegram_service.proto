@@ -290,6 +290,32 @@ message HfunCabalAlertsResponse {
   repeated HypurrFunCabalAlert alerts = 1;
 }
 
+message HfunCabalWalletLabelAddRequest {
+  string wallet_address = 1;
+  string wallet_label = 2;
+}
+
+message HfunCabalWalletLabelAddResponse {
+
+}
+
+message HfunCabalWalletLabelModifyRequest {
+  string wallet_label_old = 1;
+  string wallet_label_new = 2;
+}
+
+message HfunCabalWalletLabelModifyResponse {
+
+}
+
+message HfunCabalWalletLabelDeleteRequest {
+  string wallet_label = 1;
+}
+
+message HfunCabalWalletLabelDeleteResponse {
+
+}
+
 service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
@@ -326,4 +352,7 @@ service Telegram {
 
   // Cabal
   rpc HfunCabalAlerts (HfunCabalAlertsRequest) returns (stream HfunCabalAlertsResponse) {}
+  rpc HfunCabalWalletLabelAdd (HfunCabalWalletLabelAddRequest) returns (stream HfunCabalWalletLabelAddResponse) {}
+  rpc HfunCabalWalletLabelModify (HfunCabalWalletLabelModifyRequest) returns (stream HfunCabalWalletLabelModifyResponse) {}
+  rpc HfunCabalWalletLabelRemove (HfunCabalWalletLabelDeleteRequest) returns (stream HfunCabalWalletLabelDeleteResponse) {}
 }

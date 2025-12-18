@@ -4,6 +4,12 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Telegram } from "./telegram_service";
+import type { HfunCabalWalletLabelDeleteResponse } from "./telegram_service";
+import type { HfunCabalWalletLabelDeleteRequest } from "./telegram_service";
+import type { HfunCabalWalletLabelModifyResponse } from "./telegram_service";
+import type { HfunCabalWalletLabelModifyRequest } from "./telegram_service";
+import type { HfunCabalWalletLabelAddResponse } from "./telegram_service";
+import type { HfunCabalWalletLabelAddRequest } from "./telegram_service";
 import type { HfunCabalAlertsResponse } from "./telegram_service";
 import type { HfunCabalAlertsRequest } from "./telegram_service";
 import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
@@ -160,6 +166,18 @@ export interface ITelegramClient {
      * @generated from protobuf rpc: HfunCabalAlerts(hypurr.HfunCabalAlertsRequest) returns (stream hypurr.HfunCabalAlertsResponse);
      */
     hfunCabalAlerts(input: HfunCabalAlertsRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalAlertsRequest, HfunCabalAlertsResponse>;
+    /**
+     * @generated from protobuf rpc: HfunCabalWalletLabelAdd(hypurr.HfunCabalWalletLabelAddRequest) returns (stream hypurr.HfunCabalWalletLabelAddResponse);
+     */
+    hfunCabalWalletLabelAdd(input: HfunCabalWalletLabelAddRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalWalletLabelAddRequest, HfunCabalWalletLabelAddResponse>;
+    /**
+     * @generated from protobuf rpc: HfunCabalWalletLabelModify(hypurr.HfunCabalWalletLabelModifyRequest) returns (stream hypurr.HfunCabalWalletLabelModifyResponse);
+     */
+    hfunCabalWalletLabelModify(input: HfunCabalWalletLabelModifyRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalWalletLabelModifyRequest, HfunCabalWalletLabelModifyResponse>;
+    /**
+     * @generated from protobuf rpc: HfunCabalWalletLabelRemove(hypurr.HfunCabalWalletLabelDeleteRequest) returns (stream hypurr.HfunCabalWalletLabelDeleteResponse);
+     */
+    hfunCabalWalletLabelRemove(input: HfunCabalWalletLabelDeleteRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalWalletLabelDeleteRequest, HfunCabalWalletLabelDeleteResponse>;
 }
 /**
  * @generated from protobuf service hypurr.Telegram
@@ -340,5 +358,26 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
     hfunCabalAlerts(input: HfunCabalAlertsRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalAlertsRequest, HfunCabalAlertsResponse> {
         const method = this.methods[22], opt = this._transport.mergeOptions(options);
         return stackIntercept<HfunCabalAlertsRequest, HfunCabalAlertsResponse>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HfunCabalWalletLabelAdd(hypurr.HfunCabalWalletLabelAddRequest) returns (stream hypurr.HfunCabalWalletLabelAddResponse);
+     */
+    hfunCabalWalletLabelAdd(input: HfunCabalWalletLabelAddRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalWalletLabelAddRequest, HfunCabalWalletLabelAddResponse> {
+        const method = this.methods[23], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HfunCabalWalletLabelAddRequest, HfunCabalWalletLabelAddResponse>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HfunCabalWalletLabelModify(hypurr.HfunCabalWalletLabelModifyRequest) returns (stream hypurr.HfunCabalWalletLabelModifyResponse);
+     */
+    hfunCabalWalletLabelModify(input: HfunCabalWalletLabelModifyRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalWalletLabelModifyRequest, HfunCabalWalletLabelModifyResponse> {
+        const method = this.methods[24], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HfunCabalWalletLabelModifyRequest, HfunCabalWalletLabelModifyResponse>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HfunCabalWalletLabelRemove(hypurr.HfunCabalWalletLabelDeleteRequest) returns (stream hypurr.HfunCabalWalletLabelDeleteResponse);
+     */
+    hfunCabalWalletLabelRemove(input: HfunCabalWalletLabelDeleteRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalWalletLabelDeleteRequest, HfunCabalWalletLabelDeleteResponse> {
+        const method = this.methods[25], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HfunCabalWalletLabelDeleteRequest, HfunCabalWalletLabelDeleteResponse>("serverStreaming", this._transport, method, opt, input);
     }
 }

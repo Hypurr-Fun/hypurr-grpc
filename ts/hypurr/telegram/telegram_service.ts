@@ -855,6 +855,56 @@ export interface HfunCabalAlertsResponse {
      */
     alerts: HypurrFunCabalAlert[];
 }
+/**
+ * @generated from protobuf message hypurr.HfunCabalWalletLabelAddRequest
+ */
+export interface HfunCabalWalletLabelAddRequest {
+    /**
+     * @generated from protobuf field: string wallet_address = 1;
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: string wallet_label = 2;
+     */
+    walletLabel: string;
+}
+/**
+ * @generated from protobuf message hypurr.HfunCabalWalletLabelAddResponse
+ */
+export interface HfunCabalWalletLabelAddResponse {
+}
+/**
+ * @generated from protobuf message hypurr.HfunCabalWalletLabelModifyRequest
+ */
+export interface HfunCabalWalletLabelModifyRequest {
+    /**
+     * @generated from protobuf field: string wallet_label_old = 1;
+     */
+    walletLabelOld: string;
+    /**
+     * @generated from protobuf field: string wallet_label_new = 2;
+     */
+    walletLabelNew: string;
+}
+/**
+ * @generated from protobuf message hypurr.HfunCabalWalletLabelModifyResponse
+ */
+export interface HfunCabalWalletLabelModifyResponse {
+}
+/**
+ * @generated from protobuf message hypurr.HfunCabalWalletLabelDeleteRequest
+ */
+export interface HfunCabalWalletLabelDeleteRequest {
+    /**
+     * @generated from protobuf field: string wallet_label = 1;
+     */
+    walletLabel: string;
+}
+/**
+ * @generated from protobuf message hypurr.HfunCabalWalletLabelDeleteResponse
+ */
+export interface HfunCabalWalletLabelDeleteResponse {
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserRequest$Type extends MessageType<TelegramUserRequest> {
     constructor() {
@@ -3994,6 +4044,239 @@ class HfunCabalAlertsResponse$Type extends MessageType<HfunCabalAlertsResponse> 
  * @generated MessageType for protobuf message hypurr.HfunCabalAlertsResponse
  */
 export const HfunCabalAlertsResponse = new HfunCabalAlertsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HfunCabalWalletLabelAddRequest$Type extends MessageType<HfunCabalWalletLabelAddRequest> {
+    constructor() {
+        super("hypurr.HfunCabalWalletLabelAddRequest", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "wallet_label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HfunCabalWalletLabelAddRequest>): HfunCabalWalletLabelAddRequest {
+        const message = { walletAddress: "", walletLabel: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HfunCabalWalletLabelAddRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalWalletLabelAddRequest): HfunCabalWalletLabelAddRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* string wallet_label */ 2:
+                    message.walletLabel = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HfunCabalWalletLabelAddRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* string wallet_label = 2; */
+        if (message.walletLabel !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.walletLabel);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelAddRequest
+ */
+export const HfunCabalWalletLabelAddRequest = new HfunCabalWalletLabelAddRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HfunCabalWalletLabelAddResponse$Type extends MessageType<HfunCabalWalletLabelAddResponse> {
+    constructor() {
+        super("hypurr.HfunCabalWalletLabelAddResponse", []);
+    }
+    create(value?: PartialMessage<HfunCabalWalletLabelAddResponse>): HfunCabalWalletLabelAddResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HfunCabalWalletLabelAddResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalWalletLabelAddResponse): HfunCabalWalletLabelAddResponse {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: HfunCabalWalletLabelAddResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelAddResponse
+ */
+export const HfunCabalWalletLabelAddResponse = new HfunCabalWalletLabelAddResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HfunCabalWalletLabelModifyRequest$Type extends MessageType<HfunCabalWalletLabelModifyRequest> {
+    constructor() {
+        super("hypurr.HfunCabalWalletLabelModifyRequest", [
+            { no: 1, name: "wallet_label_old", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "wallet_label_new", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HfunCabalWalletLabelModifyRequest>): HfunCabalWalletLabelModifyRequest {
+        const message = { walletLabelOld: "", walletLabelNew: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HfunCabalWalletLabelModifyRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalWalletLabelModifyRequest): HfunCabalWalletLabelModifyRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_label_old */ 1:
+                    message.walletLabelOld = reader.string();
+                    break;
+                case /* string wallet_label_new */ 2:
+                    message.walletLabelNew = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HfunCabalWalletLabelModifyRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_label_old = 1; */
+        if (message.walletLabelOld !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletLabelOld);
+        /* string wallet_label_new = 2; */
+        if (message.walletLabelNew !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.walletLabelNew);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelModifyRequest
+ */
+export const HfunCabalWalletLabelModifyRequest = new HfunCabalWalletLabelModifyRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HfunCabalWalletLabelModifyResponse$Type extends MessageType<HfunCabalWalletLabelModifyResponse> {
+    constructor() {
+        super("hypurr.HfunCabalWalletLabelModifyResponse", []);
+    }
+    create(value?: PartialMessage<HfunCabalWalletLabelModifyResponse>): HfunCabalWalletLabelModifyResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HfunCabalWalletLabelModifyResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalWalletLabelModifyResponse): HfunCabalWalletLabelModifyResponse {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: HfunCabalWalletLabelModifyResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelModifyResponse
+ */
+export const HfunCabalWalletLabelModifyResponse = new HfunCabalWalletLabelModifyResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HfunCabalWalletLabelDeleteRequest$Type extends MessageType<HfunCabalWalletLabelDeleteRequest> {
+    constructor() {
+        super("hypurr.HfunCabalWalletLabelDeleteRequest", [
+            { no: 1, name: "wallet_label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HfunCabalWalletLabelDeleteRequest>): HfunCabalWalletLabelDeleteRequest {
+        const message = { walletLabel: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HfunCabalWalletLabelDeleteRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalWalletLabelDeleteRequest): HfunCabalWalletLabelDeleteRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_label */ 1:
+                    message.walletLabel = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HfunCabalWalletLabelDeleteRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_label = 1; */
+        if (message.walletLabel !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletLabel);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelDeleteRequest
+ */
+export const HfunCabalWalletLabelDeleteRequest = new HfunCabalWalletLabelDeleteRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HfunCabalWalletLabelDeleteResponse$Type extends MessageType<HfunCabalWalletLabelDeleteResponse> {
+    constructor() {
+        super("hypurr.HfunCabalWalletLabelDeleteResponse", []);
+    }
+    create(value?: PartialMessage<HfunCabalWalletLabelDeleteResponse>): HfunCabalWalletLabelDeleteResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HfunCabalWalletLabelDeleteResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalWalletLabelDeleteResponse): HfunCabalWalletLabelDeleteResponse {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: HfunCabalWalletLabelDeleteResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelDeleteResponse
+ */
+export const HfunCabalWalletLabelDeleteResponse = new HfunCabalWalletLabelDeleteResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Telegram
  */
@@ -4020,5 +4303,8 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "CreateHyperliquidSpotSniperConfig", options: {}, I: CreateHyperliquidSpotSniperConfigRequest, O: CreateHyperliquidSpotSniperConfigResponse },
     { name: "DeleteHyperliquidSpotSniperConfig", options: {}, I: DeleteHyperliquidSpotSniperConfigRequest, O: DeleteHyperliquidSpotSniperConfigResponse },
     { name: "UpdateHyperliquidSpotSniperConfig", options: {}, I: UpdateHyperliquidSpotSniperConfigRequest, O: UpdateHyperliquidSpotSniperConfigResponse },
-    { name: "HfunCabalAlerts", serverStreaming: true, options: {}, I: HfunCabalAlertsRequest, O: HfunCabalAlertsResponse }
+    { name: "HfunCabalAlerts", serverStreaming: true, options: {}, I: HfunCabalAlertsRequest, O: HfunCabalAlertsResponse },
+    { name: "HfunCabalWalletLabelAdd", serverStreaming: true, options: {}, I: HfunCabalWalletLabelAddRequest, O: HfunCabalWalletLabelAddResponse },
+    { name: "HfunCabalWalletLabelModify", serverStreaming: true, options: {}, I: HfunCabalWalletLabelModifyRequest, O: HfunCabalWalletLabelModifyResponse },
+    { name: "HfunCabalWalletLabelRemove", serverStreaming: true, options: {}, I: HfunCabalWalletLabelDeleteRequest, O: HfunCabalWalletLabelDeleteResponse }
 ]);

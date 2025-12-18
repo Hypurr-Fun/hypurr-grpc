@@ -42,6 +42,9 @@ const (
 	Telegram_DeleteHyperliquidSpotSniperConfig_FullMethodName = "/hypurr.Telegram/DeleteHyperliquidSpotSniperConfig"
 	Telegram_UpdateHyperliquidSpotSniperConfig_FullMethodName = "/hypurr.Telegram/UpdateHyperliquidSpotSniperConfig"
 	Telegram_HfunCabalAlerts_FullMethodName                   = "/hypurr.Telegram/HfunCabalAlerts"
+	Telegram_HfunCabalWalletLabelAdd_FullMethodName           = "/hypurr.Telegram/HfunCabalWalletLabelAdd"
+	Telegram_HfunCabalWalletLabelModify_FullMethodName        = "/hypurr.Telegram/HfunCabalWalletLabelModify"
+	Telegram_HfunCabalWalletLabelRemove_FullMethodName        = "/hypurr.Telegram/HfunCabalWalletLabelRemove"
 )
 
 // TelegramClient is the client API for Telegram service.
@@ -76,6 +79,9 @@ type TelegramClient interface {
 	UpdateHyperliquidSpotSniperConfig(ctx context.Context, in *UpdateHyperliquidSpotSniperConfigRequest, opts ...grpc.CallOption) (*UpdateHyperliquidSpotSniperConfigResponse, error)
 	// Cabal
 	HfunCabalAlerts(ctx context.Context, in *HfunCabalAlertsRequest, opts ...grpc.CallOption) (Telegram_HfunCabalAlertsClient, error)
+	HfunCabalWalletLabelAdd(ctx context.Context, in *HfunCabalWalletLabelAddRequest, opts ...grpc.CallOption) (Telegram_HfunCabalWalletLabelAddClient, error)
+	HfunCabalWalletLabelModify(ctx context.Context, in *HfunCabalWalletLabelModifyRequest, opts ...grpc.CallOption) (Telegram_HfunCabalWalletLabelModifyClient, error)
+	HfunCabalWalletLabelRemove(ctx context.Context, in *HfunCabalWalletLabelDeleteRequest, opts ...grpc.CallOption) (Telegram_HfunCabalWalletLabelRemoveClient, error)
 }
 
 type telegramClient struct {
@@ -339,6 +345,105 @@ func (x *telegramHfunCabalAlertsClient) Recv() (*HfunCabalAlertsResponse, error)
 	return m, nil
 }
 
+func (c *telegramClient) HfunCabalWalletLabelAdd(ctx context.Context, in *HfunCabalWalletLabelAddRequest, opts ...grpc.CallOption) (Telegram_HfunCabalWalletLabelAddClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Telegram_ServiceDesc.Streams[1], Telegram_HfunCabalWalletLabelAdd_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &telegramHfunCabalWalletLabelAddClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Telegram_HfunCabalWalletLabelAddClient interface {
+	Recv() (*HfunCabalWalletLabelAddResponse, error)
+	grpc.ClientStream
+}
+
+type telegramHfunCabalWalletLabelAddClient struct {
+	grpc.ClientStream
+}
+
+func (x *telegramHfunCabalWalletLabelAddClient) Recv() (*HfunCabalWalletLabelAddResponse, error) {
+	m := new(HfunCabalWalletLabelAddResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *telegramClient) HfunCabalWalletLabelModify(ctx context.Context, in *HfunCabalWalletLabelModifyRequest, opts ...grpc.CallOption) (Telegram_HfunCabalWalletLabelModifyClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Telegram_ServiceDesc.Streams[2], Telegram_HfunCabalWalletLabelModify_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &telegramHfunCabalWalletLabelModifyClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Telegram_HfunCabalWalletLabelModifyClient interface {
+	Recv() (*HfunCabalWalletLabelModifyResponse, error)
+	grpc.ClientStream
+}
+
+type telegramHfunCabalWalletLabelModifyClient struct {
+	grpc.ClientStream
+}
+
+func (x *telegramHfunCabalWalletLabelModifyClient) Recv() (*HfunCabalWalletLabelModifyResponse, error) {
+	m := new(HfunCabalWalletLabelModifyResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *telegramClient) HfunCabalWalletLabelRemove(ctx context.Context, in *HfunCabalWalletLabelDeleteRequest, opts ...grpc.CallOption) (Telegram_HfunCabalWalletLabelRemoveClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Telegram_ServiceDesc.Streams[3], Telegram_HfunCabalWalletLabelRemove_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &telegramHfunCabalWalletLabelRemoveClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Telegram_HfunCabalWalletLabelRemoveClient interface {
+	Recv() (*HfunCabalWalletLabelDeleteResponse, error)
+	grpc.ClientStream
+}
+
+type telegramHfunCabalWalletLabelRemoveClient struct {
+	grpc.ClientStream
+}
+
+func (x *telegramHfunCabalWalletLabelRemoveClient) Recv() (*HfunCabalWalletLabelDeleteResponse, error) {
+	m := new(HfunCabalWalletLabelDeleteResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // TelegramServer is the server API for Telegram service.
 // All implementations must embed UnimplementedTelegramServer
 // for forward compatibility
@@ -371,6 +476,9 @@ type TelegramServer interface {
 	UpdateHyperliquidSpotSniperConfig(context.Context, *UpdateHyperliquidSpotSniperConfigRequest) (*UpdateHyperliquidSpotSniperConfigResponse, error)
 	// Cabal
 	HfunCabalAlerts(*HfunCabalAlertsRequest, Telegram_HfunCabalAlertsServer) error
+	HfunCabalWalletLabelAdd(*HfunCabalWalletLabelAddRequest, Telegram_HfunCabalWalletLabelAddServer) error
+	HfunCabalWalletLabelModify(*HfunCabalWalletLabelModifyRequest, Telegram_HfunCabalWalletLabelModifyServer) error
+	HfunCabalWalletLabelRemove(*HfunCabalWalletLabelDeleteRequest, Telegram_HfunCabalWalletLabelRemoveServer) error
 	mustEmbedUnimplementedTelegramServer()
 }
 
@@ -446,6 +554,15 @@ func (UnimplementedTelegramServer) UpdateHyperliquidSpotSniperConfig(context.Con
 }
 func (UnimplementedTelegramServer) HfunCabalAlerts(*HfunCabalAlertsRequest, Telegram_HfunCabalAlertsServer) error {
 	return status.Errorf(codes.Unimplemented, "method HfunCabalAlerts not implemented")
+}
+func (UnimplementedTelegramServer) HfunCabalWalletLabelAdd(*HfunCabalWalletLabelAddRequest, Telegram_HfunCabalWalletLabelAddServer) error {
+	return status.Errorf(codes.Unimplemented, "method HfunCabalWalletLabelAdd not implemented")
+}
+func (UnimplementedTelegramServer) HfunCabalWalletLabelModify(*HfunCabalWalletLabelModifyRequest, Telegram_HfunCabalWalletLabelModifyServer) error {
+	return status.Errorf(codes.Unimplemented, "method HfunCabalWalletLabelModify not implemented")
+}
+func (UnimplementedTelegramServer) HfunCabalWalletLabelRemove(*HfunCabalWalletLabelDeleteRequest, Telegram_HfunCabalWalletLabelRemoveServer) error {
+	return status.Errorf(codes.Unimplemented, "method HfunCabalWalletLabelRemove not implemented")
 }
 func (UnimplementedTelegramServer) mustEmbedUnimplementedTelegramServer() {}
 
@@ -877,6 +994,69 @@ func (x *telegramHfunCabalAlertsServer) Send(m *HfunCabalAlertsResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _Telegram_HfunCabalWalletLabelAdd_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(HfunCabalWalletLabelAddRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(TelegramServer).HfunCabalWalletLabelAdd(m, &telegramHfunCabalWalletLabelAddServer{ServerStream: stream})
+}
+
+type Telegram_HfunCabalWalletLabelAddServer interface {
+	Send(*HfunCabalWalletLabelAddResponse) error
+	grpc.ServerStream
+}
+
+type telegramHfunCabalWalletLabelAddServer struct {
+	grpc.ServerStream
+}
+
+func (x *telegramHfunCabalWalletLabelAddServer) Send(m *HfunCabalWalletLabelAddResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _Telegram_HfunCabalWalletLabelModify_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(HfunCabalWalletLabelModifyRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(TelegramServer).HfunCabalWalletLabelModify(m, &telegramHfunCabalWalletLabelModifyServer{ServerStream: stream})
+}
+
+type Telegram_HfunCabalWalletLabelModifyServer interface {
+	Send(*HfunCabalWalletLabelModifyResponse) error
+	grpc.ServerStream
+}
+
+type telegramHfunCabalWalletLabelModifyServer struct {
+	grpc.ServerStream
+}
+
+func (x *telegramHfunCabalWalletLabelModifyServer) Send(m *HfunCabalWalletLabelModifyResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _Telegram_HfunCabalWalletLabelRemove_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(HfunCabalWalletLabelDeleteRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(TelegramServer).HfunCabalWalletLabelRemove(m, &telegramHfunCabalWalletLabelRemoveServer{ServerStream: stream})
+}
+
+type Telegram_HfunCabalWalletLabelRemoveServer interface {
+	Send(*HfunCabalWalletLabelDeleteResponse) error
+	grpc.ServerStream
+}
+
+type telegramHfunCabalWalletLabelRemoveServer struct {
+	grpc.ServerStream
+}
+
+func (x *telegramHfunCabalWalletLabelRemoveServer) Send(m *HfunCabalWalletLabelDeleteResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // Telegram_ServiceDesc is the grpc.ServiceDesc for Telegram service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -977,6 +1157,21 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "HfunCabalAlerts",
 			Handler:       _Telegram_HfunCabalAlerts_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "HfunCabalWalletLabelAdd",
+			Handler:       _Telegram_HfunCabalWalletLabelAdd_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "HfunCabalWalletLabelModify",
+			Handler:       _Telegram_HfunCabalWalletLabelModify_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "HfunCabalWalletLabelRemove",
+			Handler:       _Telegram_HfunCabalWalletLabelRemove_Handler,
 			ServerStreams: true,
 		},
 	},

@@ -129,6 +129,21 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsResponse.FromString,
         )
+    self.HfunCabalWalletLabelAdd = channel.unary_stream(
+        '/hypurr.Telegram/HfunCabalWalletLabelAdd',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelAddRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelAddResponse.FromString,
+        )
+    self.HfunCabalWalletLabelModify = channel.unary_stream(
+        '/hypurr.Telegram/HfunCabalWalletLabelModify',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelModifyRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelModifyResponse.FromString,
+        )
+    self.HfunCabalWalletLabelRemove = channel.unary_stream(
+        '/hypurr.Telegram/HfunCabalWalletLabelRemove',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelDeleteRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelDeleteResponse.FromString,
+        )
 
 
 class TelegramServicer(object):
@@ -296,6 +311,27 @@ class TelegramServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def HfunCabalWalletLabelAdd(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HfunCabalWalletLabelModify(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HfunCabalWalletLabelRemove(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_TelegramServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -413,6 +449,21 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.HfunCabalAlerts,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsResponse.SerializeToString,
+      ),
+      'HfunCabalWalletLabelAdd': grpc.unary_stream_rpc_method_handler(
+          servicer.HfunCabalWalletLabelAdd,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelAddRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelAddResponse.SerializeToString,
+      ),
+      'HfunCabalWalletLabelModify': grpc.unary_stream_rpc_method_handler(
+          servicer.HfunCabalWalletLabelModify,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelModifyRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelModifyResponse.SerializeToString,
+      ),
+      'HfunCabalWalletLabelRemove': grpc.unary_stream_rpc_method_handler(
+          servicer.HfunCabalWalletLabelRemove,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelDeleteRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelDeleteResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
