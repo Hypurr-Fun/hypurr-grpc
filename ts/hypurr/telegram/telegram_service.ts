@@ -12,6 +12,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { HypurrFunCabalAlert } from "../cabal";
 import { BytesValue } from "../../google/protobuf/wrappers";
 import { HpumpV1Launch } from "../hpumpv1";
 import { HyperliquidLaunch } from "../launch";
@@ -833,6 +834,26 @@ export interface EditHyperliquidLaunchResponse {
      * @generated from protobuf field: hypurr.HyperliquidLaunch launch = 1;
      */
     launch?: HyperliquidLaunch;
+}
+/**
+ * @generated from protobuf message hypurr.HfunCabalAlertsRequest
+ */
+export interface HfunCabalAlertsRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+}
+/**
+ * @generated from protobuf message hypurr.HfunCabalAlertsResponse
+ */
+export interface HfunCabalAlertsResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.HypurrFunCabalAlert alerts = 1;
+     */
+    alerts: HypurrFunCabalAlert[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserRequest$Type extends MessageType<TelegramUserRequest> {
@@ -3863,6 +3884,116 @@ class EditHyperliquidLaunchResponse$Type extends MessageType<EditHyperliquidLaun
  * @generated MessageType for protobuf message hypurr.EditHyperliquidLaunchResponse
  */
 export const EditHyperliquidLaunchResponse = new EditHyperliquidLaunchResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HfunCabalAlertsRequest$Type extends MessageType<HfunCabalAlertsRequest> {
+    constructor() {
+        super("hypurr.HfunCabalAlertsRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+        ]);
+    }
+    create(value?: PartialMessage<HfunCabalAlertsRequest>): HfunCabalAlertsRequest {
+        const message = { authData: {} };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HfunCabalAlertsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalAlertsRequest): HfunCabalAlertsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: HfunCabalAlertsRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HfunCabalAlertsRequest["authData"] | undefined, val: HfunCabalAlertsRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HfunCabalAlertsRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: HfunCabalAlertsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HfunCabalAlertsRequest
+ */
+export const HfunCabalAlertsRequest = new HfunCabalAlertsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HfunCabalAlertsResponse$Type extends MessageType<HfunCabalAlertsResponse> {
+    constructor() {
+        super("hypurr.HfunCabalAlertsResponse", [
+            { no: 1, name: "alerts", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HypurrFunCabalAlert }
+        ]);
+    }
+    create(value?: PartialMessage<HfunCabalAlertsResponse>): HfunCabalAlertsResponse {
+        const message = { alerts: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HfunCabalAlertsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalAlertsResponse): HfunCabalAlertsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.HypurrFunCabalAlert alerts */ 1:
+                    message.alerts.push(HypurrFunCabalAlert.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HfunCabalAlertsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.HypurrFunCabalAlert alerts = 1; */
+        for (let i = 0; i < message.alerts.length; i++)
+            HypurrFunCabalAlert.internalBinaryWrite(message.alerts[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HfunCabalAlertsResponse
+ */
+export const HfunCabalAlertsResponse = new HfunCabalAlertsResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Telegram
  */
@@ -3888,5 +4019,6 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "HyperliquidSpotSniperConfigs", options: {}, I: HyperliquidSpotSniperConfigsRequest, O: HyperliquidSpotSniperConfigsResponse },
     { name: "CreateHyperliquidSpotSniperConfig", options: {}, I: CreateHyperliquidSpotSniperConfigRequest, O: CreateHyperliquidSpotSniperConfigResponse },
     { name: "DeleteHyperliquidSpotSniperConfig", options: {}, I: DeleteHyperliquidSpotSniperConfigRequest, O: DeleteHyperliquidSpotSniperConfigResponse },
-    { name: "UpdateHyperliquidSpotSniperConfig", options: {}, I: UpdateHyperliquidSpotSniperConfigRequest, O: UpdateHyperliquidSpotSniperConfigResponse }
+    { name: "UpdateHyperliquidSpotSniperConfig", options: {}, I: UpdateHyperliquidSpotSniperConfigRequest, O: UpdateHyperliquidSpotSniperConfigResponse },
+    { name: "HfunCabalAlerts", serverStreaming: true, options: {}, I: HfunCabalAlertsRequest, O: HfunCabalAlertsResponse }
 ]);

@@ -77,3 +77,16 @@ message HypurrFunCabalPerformance {
   int64 season_start_time = 5;
   int64 season_end_time = 6;
 }
+
+message HypurrFunCabalAlert {
+  int64 id = 1;
+  int64 created_at = 2;
+  int64 telegram_chat_id = 3;
+  int64 wallet_id = 4;
+  string wallet_address = 5;
+  string alert_type = 6;
+  double size_delta = 7;
+  double cost_delta = 8;
+  google.protobuf.Int64Value perp_pair_id = 9;
+  google.protobuf.Int64Value spot_token_id = 10;
+}

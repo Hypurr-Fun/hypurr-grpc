@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/cabal.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x12hypurr/cabal.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x13hypurr/wallet.proto\"\xa2\x02\n\x0eHypurrFunCabal\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x17\n\x0fpicture_file_id\x18\x03 \x01(\t\x12)\n\x05users\x18\x04 \x03(\x0b\x32\x1a.hypurr.HypurrFunCabalUser\x12<\n\x0ftracked_wallets\x18\x05 \x03(\x0b\x32#.hypurr.HypurrFunCabalTrackedWallet\x12\x36\n\x0cuser_seasons\x18\x06 \x03(\x0b\x32 .hypurr.HypurrFunCabalUserSeason\x12.\n\x07summary\x18\x07 \x01(\x0b\x32\x1d.hypurr.HypurrFunCabalSummary\"x\n\x15HypurrFunCabalSummary\x12\x12\n\nuser_count\x18\x01 \x01(\x03\x12\x17\n\x0fseason_spot_pnl\x18\x02 \x01(\x01\x12\x17\n\x0fseason_perp_pnl\x18\x03 \x01(\x01\x12\x19\n\x11season_launch_pnl\x18\x04 \x01(\x01\"\x88\x02\n\x12HypurrFunCabalUser\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12)\n\x06wallet\x18\x03 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x11\n\twallet_id\x18\x04 \x01(\x03\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x10\n\x08spot_pnl\x18\x06 \x01(\x01\x12\x13\n\x0bspot_equity\x18\x07 \x01(\x01\x12\x12\n\nlaunch_pnl\x18\x08 \x01(\x01\x12\x15\n\rlaunch_equity\x18\t \x01(\x01\x12\x10\n\x08perp_pnl\x18\n \x01(\x01\x12\x13\n\x0bperp_equity\x18\x0b \x01(\x01\"\xac\x01\n\x1bHypurrFunCabalTrackedWallet\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12)\n\x06wallet\x18\x03 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\r\n\x05label\x18\x04 \x01(\t\x12\x12\n\nalert_spot\x18\x05 \x01(\x08\x12\x12\n\nalert_perp\x18\x06 \x01(\x08\"\xe6\x01\n\x14HypurrFunCabalSeason\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x12\n\nstart_time\x18\x02 \x01(\x03\x12\x10\n\x08\x65nd_time\x18\x03 \x01(\x03\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x36\n\x0cuser_seasons\x18\x05 \x03(\x0b\x32 .hypurr.HypurrFunCabalUserSeason\x12.\n\twinner_id\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12&\n\x06winner\x18\x07 \x01(\x0b\x32\x16.hypurr.HypurrFunCabal\"\xf4\x01\n\x18HypurrFunCabalUserSeason\x12\x17\n\x0f\x63\x61\x62\x61l_season_id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12\x18\n\x10telegram_chat_id\x18\x04 \x01(\x03\x12\x10\n\x08spot_pnl\x18\x05 \x01(\x01\x12\x12\n\nlaunch_pnl\x18\x06 \x01(\x01\x12\x10\n\x08perp_pnl\x18\x07 \x01(\x01\x12\x15\n\rlast_spot_pnl\x18\x08 \x01(\x01\x12\x17\n\x0flast_launch_pnl\x18\t \x01(\x01\x12\x15\n\rlast_perp_pnl\x18\n \x01(\x01\"\x9a\x01\n\x19HypurrFunCabalPerformance\x12\x11\n\tseason_id\x18\x01 \x01(\x03\x12\x10\n\x08spot_pnl\x18\x02 \x01(\x01\x12\x12\n\nlaunch_pnl\x18\x03 \x01(\x01\x12\x10\n\x08perp_pnl\x18\x04 \x01(\x01\x12\x19\n\x11season_start_time\x18\x05 \x01(\x03\x12\x17\n\x0fseason_end_time\x18\x06 \x01(\x03\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x12hypurr/cabal.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x13hypurr/wallet.proto\"\xa2\x02\n\x0eHypurrFunCabal\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x17\n\x0fpicture_file_id\x18\x03 \x01(\t\x12)\n\x05users\x18\x04 \x03(\x0b\x32\x1a.hypurr.HypurrFunCabalUser\x12<\n\x0ftracked_wallets\x18\x05 \x03(\x0b\x32#.hypurr.HypurrFunCabalTrackedWallet\x12\x36\n\x0cuser_seasons\x18\x06 \x03(\x0b\x32 .hypurr.HypurrFunCabalUserSeason\x12.\n\x07summary\x18\x07 \x01(\x0b\x32\x1d.hypurr.HypurrFunCabalSummary\"x\n\x15HypurrFunCabalSummary\x12\x12\n\nuser_count\x18\x01 \x01(\x03\x12\x17\n\x0fseason_spot_pnl\x18\x02 \x01(\x01\x12\x17\n\x0fseason_perp_pnl\x18\x03 \x01(\x01\x12\x19\n\x11season_launch_pnl\x18\x04 \x01(\x01\"\x88\x02\n\x12HypurrFunCabalUser\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12)\n\x06wallet\x18\x03 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x11\n\twallet_id\x18\x04 \x01(\x03\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x10\n\x08spot_pnl\x18\x06 \x01(\x01\x12\x13\n\x0bspot_equity\x18\x07 \x01(\x01\x12\x12\n\nlaunch_pnl\x18\x08 \x01(\x01\x12\x15\n\rlaunch_equity\x18\t \x01(\x01\x12\x10\n\x08perp_pnl\x18\n \x01(\x01\x12\x13\n\x0bperp_equity\x18\x0b \x01(\x01\"\xac\x01\n\x1bHypurrFunCabalTrackedWallet\x12\x18\n\x10telegram_chat_id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12)\n\x06wallet\x18\x03 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\r\n\x05label\x18\x04 \x01(\t\x12\x12\n\nalert_spot\x18\x05 \x01(\x08\x12\x12\n\nalert_perp\x18\x06 \x01(\x08\"\xe6\x01\n\x14HypurrFunCabalSeason\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x12\n\nstart_time\x18\x02 \x01(\x03\x12\x10\n\x08\x65nd_time\x18\x03 \x01(\x03\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x36\n\x0cuser_seasons\x18\x05 \x03(\x0b\x32 .hypurr.HypurrFunCabalUserSeason\x12.\n\twinner_id\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12&\n\x06winner\x18\x07 \x01(\x0b\x32\x16.hypurr.HypurrFunCabal\"\xf4\x01\n\x18HypurrFunCabalUserSeason\x12\x17\n\x0f\x63\x61\x62\x61l_season_id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12\x18\n\x10telegram_chat_id\x18\x04 \x01(\x03\x12\x10\n\x08spot_pnl\x18\x05 \x01(\x01\x12\x12\n\nlaunch_pnl\x18\x06 \x01(\x01\x12\x10\n\x08perp_pnl\x18\x07 \x01(\x01\x12\x15\n\rlast_spot_pnl\x18\x08 \x01(\x01\x12\x17\n\x0flast_launch_pnl\x18\t \x01(\x01\x12\x15\n\rlast_perp_pnl\x18\n \x01(\x01\"\x9a\x01\n\x19HypurrFunCabalPerformance\x12\x11\n\tseason_id\x18\x01 \x01(\x03\x12\x10\n\x08spot_pnl\x18\x02 \x01(\x01\x12\x12\n\nlaunch_pnl\x18\x03 \x01(\x01\x12\x10\n\x08perp_pnl\x18\x04 \x01(\x01\x12\x19\n\x11season_start_time\x18\x05 \x01(\x03\x12\x17\n\x0fseason_end_time\x18\x06 \x01(\x03\"\x9d\x02\n\x13HypurrFunCabalAlert\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x12\n\ncreated_at\x18\x02 \x01(\x03\x12\x18\n\x10telegram_chat_id\x18\x03 \x01(\x03\x12\x11\n\twallet_id\x18\x04 \x01(\x03\x12\x16\n\x0ewallet_address\x18\x05 \x01(\t\x12\x12\n\nalert_type\x18\x06 \x01(\t\x12\x12\n\nsize_delta\x18\x07 \x01(\x01\x12\x12\n\ncost_delta\x18\x08 \x01(\x01\x12\x31\n\x0cperp_pair_id\x18\t \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x32\n\rspot_token_id\x18\n \x01(\x0b\x32\x1b.google.protobuf.Int64ValueB)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,hypurr_dot_wallet__pb2.DESCRIPTOR,])
 
@@ -552,6 +552,100 @@ _HYPURRFUNCABALPERFORMANCE = _descriptor.Descriptor(
   serialized_end=1575,
 )
 
+
+_HYPURRFUNCABALALERT = _descriptor.Descriptor(
+  name='HypurrFunCabalAlert',
+  full_name='hypurr.HypurrFunCabalAlert',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='hypurr.HypurrFunCabalAlert.id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='created_at', full_name='hypurr.HypurrFunCabalAlert.created_at', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='telegram_chat_id', full_name='hypurr.HypurrFunCabalAlert.telegram_chat_id', index=2,
+      number=3, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='wallet_id', full_name='hypurr.HypurrFunCabalAlert.wallet_id', index=3,
+      number=4, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='wallet_address', full_name='hypurr.HypurrFunCabalAlert.wallet_address', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='alert_type', full_name='hypurr.HypurrFunCabalAlert.alert_type', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='size_delta', full_name='hypurr.HypurrFunCabalAlert.size_delta', index=6,
+      number=7, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='cost_delta', full_name='hypurr.HypurrFunCabalAlert.cost_delta', index=7,
+      number=8, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='perp_pair_id', full_name='hypurr.HypurrFunCabalAlert.perp_pair_id', index=8,
+      number=9, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='spot_token_id', full_name='hypurr.HypurrFunCabalAlert.spot_token_id', index=9,
+      number=10, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1578,
+  serialized_end=1863,
+)
+
 _HYPURRFUNCABAL.fields_by_name['users'].message_type = _HYPURRFUNCABALUSER
 _HYPURRFUNCABAL.fields_by_name['tracked_wallets'].message_type = _HYPURRFUNCABALTRACKEDWALLET
 _HYPURRFUNCABAL.fields_by_name['user_seasons'].message_type = _HYPURRFUNCABALUSERSEASON
@@ -561,6 +655,8 @@ _HYPURRFUNCABALTRACKEDWALLET.fields_by_name['wallet'].message_type = hypurr_dot_
 _HYPURRFUNCABALSEASON.fields_by_name['user_seasons'].message_type = _HYPURRFUNCABALUSERSEASON
 _HYPURRFUNCABALSEASON.fields_by_name['winner_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
 _HYPURRFUNCABALSEASON.fields_by_name['winner'].message_type = _HYPURRFUNCABAL
+_HYPURRFUNCABALALERT.fields_by_name['perp_pair_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_HYPURRFUNCABALALERT.fields_by_name['spot_token_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
 DESCRIPTOR.message_types_by_name['HypurrFunCabal'] = _HYPURRFUNCABAL
 DESCRIPTOR.message_types_by_name['HypurrFunCabalSummary'] = _HYPURRFUNCABALSUMMARY
 DESCRIPTOR.message_types_by_name['HypurrFunCabalUser'] = _HYPURRFUNCABALUSER
@@ -568,6 +664,7 @@ DESCRIPTOR.message_types_by_name['HypurrFunCabalTrackedWallet'] = _HYPURRFUNCABA
 DESCRIPTOR.message_types_by_name['HypurrFunCabalSeason'] = _HYPURRFUNCABALSEASON
 DESCRIPTOR.message_types_by_name['HypurrFunCabalUserSeason'] = _HYPURRFUNCABALUSERSEASON
 DESCRIPTOR.message_types_by_name['HypurrFunCabalPerformance'] = _HYPURRFUNCABALPERFORMANCE
+DESCRIPTOR.message_types_by_name['HypurrFunCabalAlert'] = _HYPURRFUNCABALALERT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 HypurrFunCabal = _reflection.GeneratedProtocolMessageType('HypurrFunCabal', (_message.Message,), dict(
@@ -618,6 +715,13 @@ HypurrFunCabalPerformance = _reflection.GeneratedProtocolMessageType('HypurrFunC
   # @@protoc_insertion_point(class_scope:hypurr.HypurrFunCabalPerformance)
   ))
 _sym_db.RegisterMessage(HypurrFunCabalPerformance)
+
+HypurrFunCabalAlert = _reflection.GeneratedProtocolMessageType('HypurrFunCabalAlert', (_message.Message,), dict(
+  DESCRIPTOR = _HYPURRFUNCABALALERT,
+  __module__ = 'hypurr.cabal_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.HypurrFunCabalAlert)
+  ))
+_sym_db.RegisterMessage(HypurrFunCabalAlert)
 
 
 DESCRIPTOR.has_options = True

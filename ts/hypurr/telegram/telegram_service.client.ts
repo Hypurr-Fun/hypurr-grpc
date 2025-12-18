@@ -4,6 +4,9 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Telegram } from "./telegram_service";
+import type { HfunCabalAlertsResponse } from "./telegram_service";
+import type { HfunCabalAlertsRequest } from "./telegram_service";
+import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { UpdateHyperliquidSpotSniperConfigResponse } from "./telegram_service";
 import type { UpdateHyperliquidSpotSniperConfigRequest } from "./telegram_service";
 import type { DeleteHyperliquidSpotSniperConfigResponse } from "./telegram_service";
@@ -102,6 +105,8 @@ export interface ITelegramClient {
      */
     hyperliquidCoreCancelOrders(input: HyperliquidCoreCancelOrdersRequest, options?: RpcOptions): UnaryCall<HyperliquidCoreCancelOrdersRequest, HyperliquidCoreCancelOrdersResponse>;
     /**
+     * Sessions
+     *
      * @generated from protobuf rpc: HyperliquidWalletSpotTwapSessions(hypurr.HyperliquidWalletSpotTwapSessionsRequest) returns (hypurr.HyperliquidWalletSpotTwapSessionsResponse);
      */
     hyperliquidWalletSpotTwapSessions(input: HyperliquidWalletSpotTwapSessionsRequest, options?: RpcOptions): UnaryCall<HyperliquidWalletSpotTwapSessionsRequest, HyperliquidWalletSpotTwapSessionsResponse>;
@@ -149,6 +154,12 @@ export interface ITelegramClient {
      * @generated from protobuf rpc: UpdateHyperliquidSpotSniperConfig(hypurr.UpdateHyperliquidSpotSniperConfigRequest) returns (hypurr.UpdateHyperliquidSpotSniperConfigResponse);
      */
     updateHyperliquidSpotSniperConfig(input: UpdateHyperliquidSpotSniperConfigRequest, options?: RpcOptions): UnaryCall<UpdateHyperliquidSpotSniperConfigRequest, UpdateHyperliquidSpotSniperConfigResponse>;
+    /**
+     * Cabal
+     *
+     * @generated from protobuf rpc: HfunCabalAlerts(hypurr.HfunCabalAlertsRequest) returns (stream hypurr.HfunCabalAlertsResponse);
+     */
+    hfunCabalAlerts(input: HfunCabalAlertsRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalAlertsRequest, HfunCabalAlertsResponse>;
 }
 /**
  * @generated from protobuf service hypurr.Telegram
@@ -236,6 +247,8 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
         return stackIntercept<HyperliquidCoreCancelOrdersRequest, HyperliquidCoreCancelOrdersResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * Sessions
+     *
      * @generated from protobuf rpc: HyperliquidWalletSpotTwapSessions(hypurr.HyperliquidWalletSpotTwapSessionsRequest) returns (hypurr.HyperliquidWalletSpotTwapSessionsResponse);
      */
     hyperliquidWalletSpotTwapSessions(input: HyperliquidWalletSpotTwapSessionsRequest, options?: RpcOptions): UnaryCall<HyperliquidWalletSpotTwapSessionsRequest, HyperliquidWalletSpotTwapSessionsResponse> {
@@ -318,5 +331,14 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
     updateHyperliquidSpotSniperConfig(input: UpdateHyperliquidSpotSniperConfigRequest, options?: RpcOptions): UnaryCall<UpdateHyperliquidSpotSniperConfigRequest, UpdateHyperliquidSpotSniperConfigResponse> {
         const method = this.methods[21], opt = this._transport.mergeOptions(options);
         return stackIntercept<UpdateHyperliquidSpotSniperConfigRequest, UpdateHyperliquidSpotSniperConfigResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * Cabal
+     *
+     * @generated from protobuf rpc: HfunCabalAlerts(hypurr.HfunCabalAlertsRequest) returns (stream hypurr.HfunCabalAlertsResponse);
+     */
+    hfunCabalAlerts(input: HfunCabalAlertsRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalAlertsRequest, HfunCabalAlertsResponse> {
+        const method = this.methods[22], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HfunCabalAlertsRequest, HfunCabalAlertsResponse>("serverStreaming", this._transport, method, opt, input);
     }
 }

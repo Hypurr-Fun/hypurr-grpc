@@ -11,7 +11,7 @@ import "hypurr/launch.proto";
 import "hypurr/common.proto";
 import "hypurr/hpumpv1.proto";
 import "hypurr/trade.proto";
-
+import "hypurr/cabal.proto";
 
 
 // Auth endpoints
@@ -282,6 +282,14 @@ message EditHyperliquidLaunchResponse {
   HyperliquidLaunch launch = 1;
 }
 
+message HfunCabalAlertsRequest {
+  map<string, string> auth_data = 1;
+}
+
+message HfunCabalAlertsResponse {
+  repeated HypurrFunCabalAlert alerts = 1;
+}
+
 service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
@@ -300,6 +308,7 @@ service Telegram {
   rpc HyperliquidCoreTrade (HyperliquidCoreTradeRequest) returns (HyperliquidCoreTradeResponse) {}
   rpc HyperliquidCoreCancelOrders (HyperliquidCoreCancelOrdersRequest) returns (HyperliquidCoreCancelOrdersResponse) {}
 
+  // Sessions
   rpc HyperliquidWalletSpotTwapSessions (HyperliquidWalletSpotTwapSessionsRequest) returns (HyperliquidWalletSpotTwapSessionsResponse) {}
   rpc HyperliquidWalletTwapSessions (HyperliquidWalletTwapSessionsRequest) returns (HyperliquidWalletTwapSessionsResponse) {}
   rpc HyperliquidWalletScaleSessions (HyperliquidWalletScaleSessionsRequest) returns (HyperliquidWalletScaleSessionsResponse) {}
@@ -314,4 +323,7 @@ service Telegram {
   rpc CreateHyperliquidSpotSniperConfig (CreateHyperliquidSpotSniperConfigRequest) returns (CreateHyperliquidSpotSniperConfigResponse) {}
   rpc DeleteHyperliquidSpotSniperConfig (DeleteHyperliquidSpotSniperConfigRequest) returns (DeleteHyperliquidSpotSniperConfigResponse) {}
   rpc UpdateHyperliquidSpotSniperConfig (UpdateHyperliquidSpotSniperConfigRequest) returns (UpdateHyperliquidSpotSniperConfigResponse) {}
+
+  // Cabal
+  rpc HfunCabalAlerts (HfunCabalAlertsRequest) returns (stream HfunCabalAlertsResponse) {}
 }

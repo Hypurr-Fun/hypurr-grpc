@@ -41,6 +41,7 @@ const (
 	Telegram_CreateHyperliquidSpotSniperConfig_FullMethodName = "/hypurr.Telegram/CreateHyperliquidSpotSniperConfig"
 	Telegram_DeleteHyperliquidSpotSniperConfig_FullMethodName = "/hypurr.Telegram/DeleteHyperliquidSpotSniperConfig"
 	Telegram_UpdateHyperliquidSpotSniperConfig_FullMethodName = "/hypurr.Telegram/UpdateHyperliquidSpotSniperConfig"
+	Telegram_HfunCabalAlerts_FullMethodName                   = "/hypurr.Telegram/HfunCabalAlerts"
 )
 
 // TelegramClient is the client API for Telegram service.
@@ -60,6 +61,7 @@ type TelegramClient interface {
 	HyperliquidSpotTrade(ctx context.Context, in *HyperliquidSpotTradeRequest, opts ...grpc.CallOption) (*HyperliquidSpotTradeResponse, error)
 	HyperliquidCoreTrade(ctx context.Context, in *HyperliquidCoreTradeRequest, opts ...grpc.CallOption) (*HyperliquidCoreTradeResponse, error)
 	HyperliquidCoreCancelOrders(ctx context.Context, in *HyperliquidCoreCancelOrdersRequest, opts ...grpc.CallOption) (*HyperliquidCoreCancelOrdersResponse, error)
+	// Sessions
 	HyperliquidWalletSpotTwapSessions(ctx context.Context, in *HyperliquidWalletSpotTwapSessionsRequest, opts ...grpc.CallOption) (*HyperliquidWalletSpotTwapSessionsResponse, error)
 	HyperliquidWalletTwapSessions(ctx context.Context, in *HyperliquidWalletTwapSessionsRequest, opts ...grpc.CallOption) (*HyperliquidWalletTwapSessionsResponse, error)
 	HyperliquidWalletScaleSessions(ctx context.Context, in *HyperliquidWalletScaleSessionsRequest, opts ...grpc.CallOption) (*HyperliquidWalletScaleSessionsResponse, error)
@@ -72,6 +74,8 @@ type TelegramClient interface {
 	CreateHyperliquidSpotSniperConfig(ctx context.Context, in *CreateHyperliquidSpotSniperConfigRequest, opts ...grpc.CallOption) (*CreateHyperliquidSpotSniperConfigResponse, error)
 	DeleteHyperliquidSpotSniperConfig(ctx context.Context, in *DeleteHyperliquidSpotSniperConfigRequest, opts ...grpc.CallOption) (*DeleteHyperliquidSpotSniperConfigResponse, error)
 	UpdateHyperliquidSpotSniperConfig(ctx context.Context, in *UpdateHyperliquidSpotSniperConfigRequest, opts ...grpc.CallOption) (*UpdateHyperliquidSpotSniperConfigResponse, error)
+	// Cabal
+	HfunCabalAlerts(ctx context.Context, in *HfunCabalAlertsRequest, opts ...grpc.CallOption) (Telegram_HfunCabalAlertsClient, error)
 }
 
 type telegramClient struct {
@@ -302,6 +306,39 @@ func (c *telegramClient) UpdateHyperliquidSpotSniperConfig(ctx context.Context, 
 	return out, nil
 }
 
+func (c *telegramClient) HfunCabalAlerts(ctx context.Context, in *HfunCabalAlertsRequest, opts ...grpc.CallOption) (Telegram_HfunCabalAlertsClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Telegram_ServiceDesc.Streams[0], Telegram_HfunCabalAlerts_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &telegramHfunCabalAlertsClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Telegram_HfunCabalAlertsClient interface {
+	Recv() (*HfunCabalAlertsResponse, error)
+	grpc.ClientStream
+}
+
+type telegramHfunCabalAlertsClient struct {
+	grpc.ClientStream
+}
+
+func (x *telegramHfunCabalAlertsClient) Recv() (*HfunCabalAlertsResponse, error) {
+	m := new(HfunCabalAlertsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // TelegramServer is the server API for Telegram service.
 // All implementations must embed UnimplementedTelegramServer
 // for forward compatibility
@@ -319,6 +356,7 @@ type TelegramServer interface {
 	HyperliquidSpotTrade(context.Context, *HyperliquidSpotTradeRequest) (*HyperliquidSpotTradeResponse, error)
 	HyperliquidCoreTrade(context.Context, *HyperliquidCoreTradeRequest) (*HyperliquidCoreTradeResponse, error)
 	HyperliquidCoreCancelOrders(context.Context, *HyperliquidCoreCancelOrdersRequest) (*HyperliquidCoreCancelOrdersResponse, error)
+	// Sessions
 	HyperliquidWalletSpotTwapSessions(context.Context, *HyperliquidWalletSpotTwapSessionsRequest) (*HyperliquidWalletSpotTwapSessionsResponse, error)
 	HyperliquidWalletTwapSessions(context.Context, *HyperliquidWalletTwapSessionsRequest) (*HyperliquidWalletTwapSessionsResponse, error)
 	HyperliquidWalletScaleSessions(context.Context, *HyperliquidWalletScaleSessionsRequest) (*HyperliquidWalletScaleSessionsResponse, error)
@@ -331,6 +369,8 @@ type TelegramServer interface {
 	CreateHyperliquidSpotSniperConfig(context.Context, *CreateHyperliquidSpotSniperConfigRequest) (*CreateHyperliquidSpotSniperConfigResponse, error)
 	DeleteHyperliquidSpotSniperConfig(context.Context, *DeleteHyperliquidSpotSniperConfigRequest) (*DeleteHyperliquidSpotSniperConfigResponse, error)
 	UpdateHyperliquidSpotSniperConfig(context.Context, *UpdateHyperliquidSpotSniperConfigRequest) (*UpdateHyperliquidSpotSniperConfigResponse, error)
+	// Cabal
+	HfunCabalAlerts(*HfunCabalAlertsRequest, Telegram_HfunCabalAlertsServer) error
 	mustEmbedUnimplementedTelegramServer()
 }
 
@@ -403,6 +443,9 @@ func (UnimplementedTelegramServer) DeleteHyperliquidSpotSniperConfig(context.Con
 }
 func (UnimplementedTelegramServer) UpdateHyperliquidSpotSniperConfig(context.Context, *UpdateHyperliquidSpotSniperConfigRequest) (*UpdateHyperliquidSpotSniperConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateHyperliquidSpotSniperConfig not implemented")
+}
+func (UnimplementedTelegramServer) HfunCabalAlerts(*HfunCabalAlertsRequest, Telegram_HfunCabalAlertsServer) error {
+	return status.Errorf(codes.Unimplemented, "method HfunCabalAlerts not implemented")
 }
 func (UnimplementedTelegramServer) mustEmbedUnimplementedTelegramServer() {}
 
@@ -813,6 +856,27 @@ func _Telegram_UpdateHyperliquidSpotSniperConfig_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Telegram_HfunCabalAlerts_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(HfunCabalAlertsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(TelegramServer).HfunCabalAlerts(m, &telegramHfunCabalAlertsServer{ServerStream: stream})
+}
+
+type Telegram_HfunCabalAlertsServer interface {
+	Send(*HfunCabalAlertsResponse) error
+	grpc.ServerStream
+}
+
+type telegramHfunCabalAlertsServer struct {
+	grpc.ServerStream
+}
+
+func (x *telegramHfunCabalAlertsServer) Send(m *HfunCabalAlertsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // Telegram_ServiceDesc is the grpc.ServiceDesc for Telegram service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -909,6 +973,12 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Telegram_UpdateHyperliquidSpotSniperConfig_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "HfunCabalAlerts",
+			Handler:       _Telegram_HfunCabalAlerts_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "hypurr/telegram/telegram_service.proto",
 }

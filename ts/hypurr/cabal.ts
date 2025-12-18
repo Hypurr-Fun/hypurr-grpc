@@ -254,6 +254,51 @@ export interface HypurrFunCabalPerformance {
      */
     seasonEndTime: number;
 }
+/**
+ * @generated from protobuf message hypurr.HypurrFunCabalAlert
+ */
+export interface HypurrFunCabalAlert {
+    /**
+     * @generated from protobuf field: int64 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: int64 created_at = 2;
+     */
+    createdAt: number;
+    /**
+     * @generated from protobuf field: int64 telegram_chat_id = 3;
+     */
+    telegramChatId: number;
+    /**
+     * @generated from protobuf field: int64 wallet_id = 4;
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: string wallet_address = 5;
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: string alert_type = 6;
+     */
+    alertType: string;
+    /**
+     * @generated from protobuf field: double size_delta = 7;
+     */
+    sizeDelta: number;
+    /**
+     * @generated from protobuf field: double cost_delta = 8;
+     */
+    costDelta: number;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value perp_pair_id = 9;
+     */
+    perpPairId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value spot_token_id = 10;
+     */
+    spotTokenId?: Int64Value;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class HypurrFunCabal$Type extends MessageType<HypurrFunCabal> {
     constructor() {
@@ -891,3 +936,113 @@ class HypurrFunCabalPerformance$Type extends MessageType<HypurrFunCabalPerforman
  * @generated MessageType for protobuf message hypurr.HypurrFunCabalPerformance
  */
 export const HypurrFunCabalPerformance = new HypurrFunCabalPerformance$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HypurrFunCabalAlert$Type extends MessageType<HypurrFunCabalAlert> {
+    constructor() {
+        super("hypurr.HypurrFunCabalAlert", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "telegram_chat_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "alert_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "size_delta", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "cost_delta", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "perp_pair_id", kind: "message", T: () => Int64Value },
+            { no: 10, name: "spot_token_id", kind: "message", T: () => Int64Value }
+        ]);
+    }
+    create(value?: PartialMessage<HypurrFunCabalAlert>): HypurrFunCabalAlert {
+        const message = { id: 0, createdAt: 0, telegramChatId: 0, walletId: 0, walletAddress: "", alertType: "", sizeDelta: 0, costDelta: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<HypurrFunCabalAlert>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HypurrFunCabalAlert): HypurrFunCabalAlert {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* int64 created_at */ 2:
+                    message.createdAt = reader.int64().toNumber();
+                    break;
+                case /* int64 telegram_chat_id */ 3:
+                    message.telegramChatId = reader.int64().toNumber();
+                    break;
+                case /* int64 wallet_id */ 4:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* string wallet_address */ 5:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* string alert_type */ 6:
+                    message.alertType = reader.string();
+                    break;
+                case /* double size_delta */ 7:
+                    message.sizeDelta = reader.double();
+                    break;
+                case /* double cost_delta */ 8:
+                    message.costDelta = reader.double();
+                    break;
+                case /* google.protobuf.Int64Value perp_pair_id */ 9:
+                    message.perpPairId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.perpPairId);
+                    break;
+                case /* google.protobuf.Int64Value spot_token_id */ 10:
+                    message.spotTokenId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.spotTokenId);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HypurrFunCabalAlert, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* int64 created_at = 2; */
+        if (message.createdAt !== 0)
+            writer.tag(2, WireType.Varint).int64(message.createdAt);
+        /* int64 telegram_chat_id = 3; */
+        if (message.telegramChatId !== 0)
+            writer.tag(3, WireType.Varint).int64(message.telegramChatId);
+        /* int64 wallet_id = 4; */
+        if (message.walletId !== 0)
+            writer.tag(4, WireType.Varint).int64(message.walletId);
+        /* string wallet_address = 5; */
+        if (message.walletAddress !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.walletAddress);
+        /* string alert_type = 6; */
+        if (message.alertType !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.alertType);
+        /* double size_delta = 7; */
+        if (message.sizeDelta !== 0)
+            writer.tag(7, WireType.Bit64).double(message.sizeDelta);
+        /* double cost_delta = 8; */
+        if (message.costDelta !== 0)
+            writer.tag(8, WireType.Bit64).double(message.costDelta);
+        /* google.protobuf.Int64Value perp_pair_id = 9; */
+        if (message.perpPairId)
+            Int64Value.internalBinaryWrite(message.perpPairId, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value spot_token_id = 10; */
+        if (message.spotTokenId)
+            Int64Value.internalBinaryWrite(message.spotTokenId, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HypurrFunCabalAlert
+ */
+export const HypurrFunCabalAlert = new HypurrFunCabalAlert$Type();

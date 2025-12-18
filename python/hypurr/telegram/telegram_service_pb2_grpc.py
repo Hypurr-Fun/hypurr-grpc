@@ -124,6 +124,11 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigResponse.FromString,
         )
+    self.HfunCabalAlerts = channel.unary_stream(
+        '/hypurr.Telegram/HfunCabalAlerts',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsResponse.FromString,
+        )
 
 
 class TelegramServicer(object):
@@ -201,8 +206,8 @@ class TelegramServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def HyperliquidWalletSpotTwapSessions(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
+    """Sessions
+    """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -280,6 +285,13 @@ class TelegramServicer(object):
   def UpdateHyperliquidSpotSniperConfig(self, request, context):
     # missing associated documentation comment in .proto file
     pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HfunCabalAlerts(self, request, context):
+    """Cabal
+    """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -396,6 +408,11 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.UpdateHyperliquidSpotSniperConfig,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigResponse.SerializeToString,
+      ),
+      'HfunCabalAlerts': grpc.unary_stream_rpc_method_handler(
+          servicer.HfunCabalAlerts,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
