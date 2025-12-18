@@ -352,7 +352,7 @@ service Telegram {
 
   // Cabal
   rpc HfunCabalAlerts (HfunCabalAlertsRequest) returns (stream HfunCabalAlertsResponse) {}
-  rpc HfunCabalWalletLabelAdd (HfunCabalWalletLabelAddRequest) returns (stream HfunCabalWalletLabelAddResponse) {}
-  rpc HfunCabalWalletLabelModify (HfunCabalWalletLabelModifyRequest) returns (stream HfunCabalWalletLabelModifyResponse) {}
-  rpc HfunCabalWalletLabelRemove (HfunCabalWalletLabelDeleteRequest) returns (stream HfunCabalWalletLabelDeleteResponse) {}
+  rpc HfunCabalWalletLabelAdd (HfunCabalWalletLabelAddRequest) returns (HfunCabalWalletLabelAddResponse) {}
+  rpc HfunCabalWalletLabelModify (HfunCabalWalletLabelModifyRequest) returns (HfunCabalWalletLabelModifyResponse) {}
+  rpc HfunCabalWalletLabelRemove (HfunCabalWalletLabelDeleteRequest) returns (HfunCabalWalletLabelDeleteResponse) {}
 }

@@ -4304,7 +4304,7 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "DeleteHyperliquidSpotSniperConfig", options: {}, I: DeleteHyperliquidSpotSniperConfigRequest, O: DeleteHyperliquidSpotSniperConfigResponse },
     { name: "UpdateHyperliquidSpotSniperConfig", options: {}, I: UpdateHyperliquidSpotSniperConfigRequest, O: UpdateHyperliquidSpotSniperConfigResponse },
     { name: "HfunCabalAlerts", serverStreaming: true, options: {}, I: HfunCabalAlertsRequest, O: HfunCabalAlertsResponse },
-    { name: "HfunCabalWalletLabelAdd", serverStreaming: true, options: {}, I: HfunCabalWalletLabelAddRequest, O: HfunCabalWalletLabelAddResponse },
-    { name: "HfunCabalWalletLabelModify", serverStreaming: true, options: {}, I: HfunCabalWalletLabelModifyRequest, O: HfunCabalWalletLabelModifyResponse },
-    { name: "HfunCabalWalletLabelRemove", serverStreaming: true, options: {}, I: HfunCabalWalletLabelDeleteRequest, O: HfunCabalWalletLabelDeleteResponse }
+    { name: "HfunCabalWalletLabelAdd", options: {}, I: HfunCabalWalletLabelAddRequest, O: HfunCabalWalletLabelAddResponse },
+    { name: "HfunCabalWalletLabelModify", options: {}, I: HfunCabalWalletLabelModifyRequest, O: HfunCabalWalletLabelModifyResponse },
+    { name: "HfunCabalWalletLabelRemove", options: {}, I: HfunCabalWalletLabelDeleteRequest, O: HfunCabalWalletLabelDeleteResponse }
 ]);
