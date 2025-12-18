@@ -860,11 +860,17 @@ export interface HfunCabalAlertsResponse {
  */
 export interface HfunCabalWalletLabelAddRequest {
     /**
-     * @generated from protobuf field: string wallet_address = 1;
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string wallet_address = 2;
      */
     walletAddress: string;
     /**
-     * @generated from protobuf field: string wallet_label = 2;
+     * @generated from protobuf field: string wallet_label = 3;
      */
     walletLabel: string;
 }
@@ -878,11 +884,17 @@ export interface HfunCabalWalletLabelAddResponse {
  */
 export interface HfunCabalWalletLabelModifyRequest {
     /**
-     * @generated from protobuf field: string wallet_label_old = 1;
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string wallet_label_old = 2;
      */
     walletLabelOld: string;
     /**
-     * @generated from protobuf field: string wallet_label_new = 2;
+     * @generated from protobuf field: string wallet_label_new = 3;
      */
     walletLabelNew: string;
 }
@@ -896,7 +908,13 @@ export interface HfunCabalWalletLabelModifyResponse {
  */
 export interface HfunCabalWalletLabelDeleteRequest {
     /**
-     * @generated from protobuf field: string wallet_label = 1;
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string wallet_label = 2;
      */
     walletLabel: string;
 }
@@ -4048,12 +4066,13 @@ export const HfunCabalAlertsResponse = new HfunCabalAlertsResponse$Type();
 class HfunCabalWalletLabelAddRequest$Type extends MessageType<HfunCabalWalletLabelAddRequest> {
     constructor() {
         super("hypurr.HfunCabalWalletLabelAddRequest", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "wallet_label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "wallet_label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<HfunCabalWalletLabelAddRequest>): HfunCabalWalletLabelAddRequest {
-        const message = { walletAddress: "", walletLabel: "" };
+        const message = { authData: {}, walletAddress: "", walletLabel: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HfunCabalWalletLabelAddRequest>(this, message, value);
@@ -4064,10 +4083,13 @@ class HfunCabalWalletLabelAddRequest$Type extends MessageType<HfunCabalWalletLab
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string wallet_address */ 1:
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string wallet_address */ 2:
                     message.walletAddress = reader.string();
                     break;
-                case /* string wallet_label */ 2:
+                case /* string wallet_label */ 3:
                     message.walletLabel = reader.string();
                     break;
                 default:
@@ -4081,13 +4103,32 @@ class HfunCabalWalletLabelAddRequest$Type extends MessageType<HfunCabalWalletLab
         }
         return message;
     }
+    private binaryReadMap1(map: HfunCabalWalletLabelAddRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HfunCabalWalletLabelAddRequest["authData"] | undefined, val: HfunCabalWalletLabelAddRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HfunCabalWalletLabelAddRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
     internalBinaryWrite(message: HfunCabalWalletLabelAddRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_address = 1; */
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string wallet_address = 2; */
         if (message.walletAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
-        /* string wallet_label = 2; */
+            writer.tag(2, WireType.LengthDelimited).string(message.walletAddress);
+        /* string wallet_label = 3; */
         if (message.walletLabel !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.walletLabel);
+            writer.tag(3, WireType.LengthDelimited).string(message.walletLabel);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4128,12 +4169,13 @@ export const HfunCabalWalletLabelAddResponse = new HfunCabalWalletLabelAddRespon
 class HfunCabalWalletLabelModifyRequest$Type extends MessageType<HfunCabalWalletLabelModifyRequest> {
     constructor() {
         super("hypurr.HfunCabalWalletLabelModifyRequest", [
-            { no: 1, name: "wallet_label_old", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "wallet_label_new", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "wallet_label_old", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "wallet_label_new", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<HfunCabalWalletLabelModifyRequest>): HfunCabalWalletLabelModifyRequest {
-        const message = { walletLabelOld: "", walletLabelNew: "" };
+        const message = { authData: {}, walletLabelOld: "", walletLabelNew: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HfunCabalWalletLabelModifyRequest>(this, message, value);
@@ -4144,10 +4186,13 @@ class HfunCabalWalletLabelModifyRequest$Type extends MessageType<HfunCabalWallet
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string wallet_label_old */ 1:
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string wallet_label_old */ 2:
                     message.walletLabelOld = reader.string();
                     break;
-                case /* string wallet_label_new */ 2:
+                case /* string wallet_label_new */ 3:
                     message.walletLabelNew = reader.string();
                     break;
                 default:
@@ -4161,13 +4206,32 @@ class HfunCabalWalletLabelModifyRequest$Type extends MessageType<HfunCabalWallet
         }
         return message;
     }
+    private binaryReadMap1(map: HfunCabalWalletLabelModifyRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HfunCabalWalletLabelModifyRequest["authData"] | undefined, val: HfunCabalWalletLabelModifyRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HfunCabalWalletLabelModifyRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
     internalBinaryWrite(message: HfunCabalWalletLabelModifyRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_label_old = 1; */
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string wallet_label_old = 2; */
         if (message.walletLabelOld !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletLabelOld);
-        /* string wallet_label_new = 2; */
+            writer.tag(2, WireType.LengthDelimited).string(message.walletLabelOld);
+        /* string wallet_label_new = 3; */
         if (message.walletLabelNew !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.walletLabelNew);
+            writer.tag(3, WireType.LengthDelimited).string(message.walletLabelNew);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4208,11 +4272,12 @@ export const HfunCabalWalletLabelModifyResponse = new HfunCabalWalletLabelModify
 class HfunCabalWalletLabelDeleteRequest$Type extends MessageType<HfunCabalWalletLabelDeleteRequest> {
     constructor() {
         super("hypurr.HfunCabalWalletLabelDeleteRequest", [
-            { no: 1, name: "wallet_label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "wallet_label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<HfunCabalWalletLabelDeleteRequest>): HfunCabalWalletLabelDeleteRequest {
-        const message = { walletLabel: "" };
+        const message = { authData: {}, walletLabel: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HfunCabalWalletLabelDeleteRequest>(this, message, value);
@@ -4223,7 +4288,10 @@ class HfunCabalWalletLabelDeleteRequest$Type extends MessageType<HfunCabalWallet
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string wallet_label */ 1:
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string wallet_label */ 2:
                     message.walletLabel = reader.string();
                     break;
                 default:
@@ -4237,10 +4305,29 @@ class HfunCabalWalletLabelDeleteRequest$Type extends MessageType<HfunCabalWallet
         }
         return message;
     }
+    private binaryReadMap1(map: HfunCabalWalletLabelDeleteRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HfunCabalWalletLabelDeleteRequest["authData"] | undefined, val: HfunCabalWalletLabelDeleteRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HfunCabalWalletLabelDeleteRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
     internalBinaryWrite(message: HfunCabalWalletLabelDeleteRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_label = 1; */
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string wallet_label = 2; */
         if (message.walletLabel !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletLabel);
+            writer.tag(2, WireType.LengthDelimited).string(message.walletLabel);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

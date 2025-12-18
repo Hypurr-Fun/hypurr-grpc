@@ -291,8 +291,9 @@ message HfunCabalAlertsResponse {
 }
 
 message HfunCabalWalletLabelAddRequest {
-  string wallet_address = 1;
-  string wallet_label = 2;
+  map<string, string> auth_data = 1;
+  string wallet_address = 2;
+  string wallet_label = 3;
 }
 
 message HfunCabalWalletLabelAddResponse {
@@ -300,8 +301,9 @@ message HfunCabalWalletLabelAddResponse {
 }
 
 message HfunCabalWalletLabelModifyRequest {
-  string wallet_label_old = 1;
-  string wallet_label_new = 2;
+  map<string, string> auth_data = 1;
+  string wallet_label_old = 2;
+  string wallet_label_new = 3;
 }
 
 message HfunCabalWalletLabelModifyResponse {
@@ -309,7 +311,8 @@ message HfunCabalWalletLabelModifyResponse {
 }
 
 message HfunCabalWalletLabelDeleteRequest {
-  string wallet_label = 1;
+  map<string, string> auth_data = 1;
+  string wallet_label = 2;
 }
 
 message HfunCabalWalletLabelDeleteResponse {
