@@ -15,6 +15,7 @@ import type { HfunCabalAlertsRequest } from "./telegram_service";
 import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { HyperliquidAgentWalletCreateResponse } from "./telegram_service";
 import type { HyperliquidAgentWalletCreateRequest } from "./telegram_service";
+import type { HyperliquidAgentSignatureCreateResponse } from "./telegram_service";
 import type { HyperliquidAgentSignatureCreateRequest } from "./telegram_service";
 import type { UpdateHyperliquidSpotSniperConfigResponse } from "./telegram_service";
 import type { UpdateHyperliquidSpotSniperConfigRequest } from "./telegram_service";
@@ -164,9 +165,9 @@ export interface ITelegramClient {
      */
     updateHyperliquidSpotSniperConfig(input: UpdateHyperliquidSpotSniperConfigRequest, options?: RpcOptions): UnaryCall<UpdateHyperliquidSpotSniperConfigRequest, UpdateHyperliquidSpotSniperConfigResponse>;
     /**
-     * @generated from protobuf rpc: HyperliquidAgentSignatureCreate(hypurr.HyperliquidAgentSignatureCreateRequest) returns (hypurr.HyperliquidAgentWalletCreateRequest);
+     * @generated from protobuf rpc: HyperliquidAgentSignatureCreate(hypurr.HyperliquidAgentSignatureCreateRequest) returns (hypurr.HyperliquidAgentSignatureCreateResponse);
      */
-    hyperliquidAgentSignatureCreate(input: HyperliquidAgentSignatureCreateRequest, options?: RpcOptions): UnaryCall<HyperliquidAgentSignatureCreateRequest, HyperliquidAgentWalletCreateRequest>;
+    hyperliquidAgentSignatureCreate(input: HyperliquidAgentSignatureCreateRequest, options?: RpcOptions): UnaryCall<HyperliquidAgentSignatureCreateRequest, HyperliquidAgentSignatureCreateResponse>;
     /**
      * @generated from protobuf rpc: HyperliquidAgentWalletCreate(hypurr.HyperliquidAgentWalletCreateRequest) returns (hypurr.HyperliquidAgentWalletCreateResponse);
      */
@@ -362,11 +363,11 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
         return stackIntercept<UpdateHyperliquidSpotSniperConfigRequest, UpdateHyperliquidSpotSniperConfigResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: HyperliquidAgentSignatureCreate(hypurr.HyperliquidAgentSignatureCreateRequest) returns (hypurr.HyperliquidAgentWalletCreateRequest);
+     * @generated from protobuf rpc: HyperliquidAgentSignatureCreate(hypurr.HyperliquidAgentSignatureCreateRequest) returns (hypurr.HyperliquidAgentSignatureCreateResponse);
      */
-    hyperliquidAgentSignatureCreate(input: HyperliquidAgentSignatureCreateRequest, options?: RpcOptions): UnaryCall<HyperliquidAgentSignatureCreateRequest, HyperliquidAgentWalletCreateRequest> {
+    hyperliquidAgentSignatureCreate(input: HyperliquidAgentSignatureCreateRequest, options?: RpcOptions): UnaryCall<HyperliquidAgentSignatureCreateRequest, HyperliquidAgentSignatureCreateResponse> {
         const method = this.methods[22], opt = this._transport.mergeOptions(options);
-        return stackIntercept<HyperliquidAgentSignatureCreateRequest, HyperliquidAgentWalletCreateRequest>("unary", this._transport, method, opt, input);
+        return stackIntercept<HyperliquidAgentSignatureCreateRequest, HyperliquidAgentSignatureCreateResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HyperliquidAgentWalletCreate(hypurr.HyperliquidAgentWalletCreateRequest) returns (hypurr.HyperliquidAgentWalletCreateResponse);
