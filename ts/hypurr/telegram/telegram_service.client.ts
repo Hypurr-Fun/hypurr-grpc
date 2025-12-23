@@ -13,6 +13,10 @@ import type { HfunCabalWalletLabelAddRequest } from "./telegram_service";
 import type { HfunCabalAlertsResponse } from "./telegram_service";
 import type { HfunCabalAlertsRequest } from "./telegram_service";
 import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
+import type { CreateHyperliquidAgentWalletResponse } from "./telegram_service";
+import type { CreateHyperliquidAgentWalletRequest } from "./telegram_service";
+import type { CreateHyperliquidAgentSignatureResponse } from "./telegram_service";
+import type { CreateHyperliquidAgentSignatureRequest } from "./telegram_service";
 import type { UpdateHyperliquidSpotSniperConfigResponse } from "./telegram_service";
 import type { UpdateHyperliquidSpotSniperConfigRequest } from "./telegram_service";
 import type { DeleteHyperliquidSpotSniperConfigResponse } from "./telegram_service";
@@ -160,6 +164,14 @@ export interface ITelegramClient {
      * @generated from protobuf rpc: UpdateHyperliquidSpotSniperConfig(hypurr.UpdateHyperliquidSpotSniperConfigRequest) returns (hypurr.UpdateHyperliquidSpotSniperConfigResponse);
      */
     updateHyperliquidSpotSniperConfig(input: UpdateHyperliquidSpotSniperConfigRequest, options?: RpcOptions): UnaryCall<UpdateHyperliquidSpotSniperConfigRequest, UpdateHyperliquidSpotSniperConfigResponse>;
+    /**
+     * @generated from protobuf rpc: CreateHyperliquidAgentSignature(hypurr.CreateHyperliquidAgentSignatureRequest) returns (hypurr.CreateHyperliquidAgentSignatureResponse);
+     */
+    createHyperliquidAgentSignature(input: CreateHyperliquidAgentSignatureRequest, options?: RpcOptions): UnaryCall<CreateHyperliquidAgentSignatureRequest, CreateHyperliquidAgentSignatureResponse>;
+    /**
+     * @generated from protobuf rpc: CreateHyperliquidWallet(hypurr.CreateHyperliquidAgentWalletRequest) returns (hypurr.CreateHyperliquidAgentWalletResponse);
+     */
+    createHyperliquidWallet(input: CreateHyperliquidAgentWalletRequest, options?: RpcOptions): UnaryCall<CreateHyperliquidAgentWalletRequest, CreateHyperliquidAgentWalletResponse>;
     /**
      * Cabal
      *
@@ -351,33 +363,47 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
         return stackIntercept<UpdateHyperliquidSpotSniperConfigRequest, UpdateHyperliquidSpotSniperConfigResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: CreateHyperliquidAgentSignature(hypurr.CreateHyperliquidAgentSignatureRequest) returns (hypurr.CreateHyperliquidAgentSignatureResponse);
+     */
+    createHyperliquidAgentSignature(input: CreateHyperliquidAgentSignatureRequest, options?: RpcOptions): UnaryCall<CreateHyperliquidAgentSignatureRequest, CreateHyperliquidAgentSignatureResponse> {
+        const method = this.methods[22], opt = this._transport.mergeOptions(options);
+        return stackIntercept<CreateHyperliquidAgentSignatureRequest, CreateHyperliquidAgentSignatureResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: CreateHyperliquidWallet(hypurr.CreateHyperliquidAgentWalletRequest) returns (hypurr.CreateHyperliquidAgentWalletResponse);
+     */
+    createHyperliquidWallet(input: CreateHyperliquidAgentWalletRequest, options?: RpcOptions): UnaryCall<CreateHyperliquidAgentWalletRequest, CreateHyperliquidAgentWalletResponse> {
+        const method = this.methods[23], opt = this._transport.mergeOptions(options);
+        return stackIntercept<CreateHyperliquidAgentWalletRequest, CreateHyperliquidAgentWalletResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * Cabal
      *
      * @generated from protobuf rpc: HfunCabalAlerts(hypurr.HfunCabalAlertsRequest) returns (stream hypurr.HfunCabalAlertsResponse);
      */
     hfunCabalAlerts(input: HfunCabalAlertsRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalAlertsRequest, HfunCabalAlertsResponse> {
-        const method = this.methods[22], opt = this._transport.mergeOptions(options);
+        const method = this.methods[24], opt = this._transport.mergeOptions(options);
         return stackIntercept<HfunCabalAlertsRequest, HfunCabalAlertsResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HfunCabalWalletLabelAdd(hypurr.HfunCabalWalletLabelAddRequest) returns (hypurr.HfunCabalWalletLabelAddResponse);
      */
     hfunCabalWalletLabelAdd(input: HfunCabalWalletLabelAddRequest, options?: RpcOptions): UnaryCall<HfunCabalWalletLabelAddRequest, HfunCabalWalletLabelAddResponse> {
-        const method = this.methods[23], opt = this._transport.mergeOptions(options);
+        const method = this.methods[25], opt = this._transport.mergeOptions(options);
         return stackIntercept<HfunCabalWalletLabelAddRequest, HfunCabalWalletLabelAddResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HfunCabalWalletLabelModify(hypurr.HfunCabalWalletLabelModifyRequest) returns (hypurr.HfunCabalWalletLabelModifyResponse);
      */
     hfunCabalWalletLabelModify(input: HfunCabalWalletLabelModifyRequest, options?: RpcOptions): UnaryCall<HfunCabalWalletLabelModifyRequest, HfunCabalWalletLabelModifyResponse> {
-        const method = this.methods[24], opt = this._transport.mergeOptions(options);
+        const method = this.methods[26], opt = this._transport.mergeOptions(options);
         return stackIntercept<HfunCabalWalletLabelModifyRequest, HfunCabalWalletLabelModifyResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HfunCabalWalletLabelRemove(hypurr.HfunCabalWalletLabelDeleteRequest) returns (hypurr.HfunCabalWalletLabelDeleteResponse);
      */
     hfunCabalWalletLabelRemove(input: HfunCabalWalletLabelDeleteRequest, options?: RpcOptions): UnaryCall<HfunCabalWalletLabelDeleteRequest, HfunCabalWalletLabelDeleteResponse> {
-        const method = this.methods[25], opt = this._transport.mergeOptions(options);
+        const method = this.methods[27], opt = this._transport.mergeOptions(options);
         return stackIntercept<HfunCabalWalletLabelDeleteRequest, HfunCabalWalletLabelDeleteResponse>("unary", this._transport, method, opt, input);
     }
 }

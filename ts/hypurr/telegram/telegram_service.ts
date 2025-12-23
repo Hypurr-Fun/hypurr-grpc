@@ -923,6 +923,73 @@ export interface HfunCabalWalletLabelDeleteRequest {
  */
 export interface HfunCabalWalletLabelDeleteResponse {
 }
+/**
+ * @generated from protobuf message hypurr.EIP712Signature
+ */
+export interface EIP712Signature {
+    /**
+     * @generated from protobuf field: string agentAddress = 1;
+     */
+    agentAddress: string;
+    /**
+     * @generated from protobuf field: string agentName = 2;
+     */
+    agentName: string;
+    /**
+     * @generated from protobuf field: int64 nonce = 3;
+     */
+    nonce: number;
+    /**
+     * @generated from protobuf field: string signature = 4;
+     */
+    signature: string;
+    /**
+     * @generated from protobuf field: int64 chain_id = 5;
+     */
+    chainId: number;
+}
+/**
+ * @generated from protobuf message hypurr.CreateHyperliquidAgentSignatureRequest
+ */
+export interface CreateHyperliquidAgentSignatureRequest {
+    /**
+     * @generated from protobuf field: string address = 1;
+     */
+    address: string;
+}
+/**
+ * @generated from protobuf message hypurr.CreateHyperliquidAgentSignatureResponse
+ */
+export interface CreateHyperliquidAgentSignatureResponse {
+    /**
+     * @generated from protobuf field: string agent = 1;
+     */
+    agent: string;
+}
+/**
+ * @generated from protobuf message hypurr.CreateHyperliquidAgentWalletRequest
+ */
+export interface CreateHyperliquidAgentWalletRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string name = 2;
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: hypurr.EIP712Signature signature = 3;
+     */
+    signature?: EIP712Signature;
+}
+/**
+ * @generated from protobuf message hypurr.CreateHyperliquidAgentWalletResponse
+ */
+export interface CreateHyperliquidAgentWalletResponse {
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserRequest$Type extends MessageType<TelegramUserRequest> {
     constructor() {
@@ -4364,6 +4431,278 @@ class HfunCabalWalletLabelDeleteResponse$Type extends MessageType<HfunCabalWalle
  * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelDeleteResponse
  */
 export const HfunCabalWalletLabelDeleteResponse = new HfunCabalWalletLabelDeleteResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EIP712Signature$Type extends MessageType<EIP712Signature> {
+    constructor() {
+        super("hypurr.EIP712Signature", [
+            { no: 1, name: "agentAddress", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "agentName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "nonce", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "signature", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "chain_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<EIP712Signature>): EIP712Signature {
+        const message = { agentAddress: "", agentName: "", nonce: 0, signature: "", chainId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<EIP712Signature>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EIP712Signature): EIP712Signature {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string agentAddress */ 1:
+                    message.agentAddress = reader.string();
+                    break;
+                case /* string agentName */ 2:
+                    message.agentName = reader.string();
+                    break;
+                case /* int64 nonce */ 3:
+                    message.nonce = reader.int64().toNumber();
+                    break;
+                case /* string signature */ 4:
+                    message.signature = reader.string();
+                    break;
+                case /* int64 chain_id */ 5:
+                    message.chainId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: EIP712Signature, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string agentAddress = 1; */
+        if (message.agentAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.agentAddress);
+        /* string agentName = 2; */
+        if (message.agentName !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.agentName);
+        /* int64 nonce = 3; */
+        if (message.nonce !== 0)
+            writer.tag(3, WireType.Varint).int64(message.nonce);
+        /* string signature = 4; */
+        if (message.signature !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.signature);
+        /* int64 chain_id = 5; */
+        if (message.chainId !== 0)
+            writer.tag(5, WireType.Varint).int64(message.chainId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.EIP712Signature
+ */
+export const EIP712Signature = new EIP712Signature$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreateHyperliquidAgentSignatureRequest$Type extends MessageType<CreateHyperliquidAgentSignatureRequest> {
+    constructor() {
+        super("hypurr.CreateHyperliquidAgentSignatureRequest", [
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CreateHyperliquidAgentSignatureRequest>): CreateHyperliquidAgentSignatureRequest {
+        const message = { address: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CreateHyperliquidAgentSignatureRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateHyperliquidAgentSignatureRequest): CreateHyperliquidAgentSignatureRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string address */ 1:
+                    message.address = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CreateHyperliquidAgentSignatureRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string address = 1; */
+        if (message.address !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.address);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.CreateHyperliquidAgentSignatureRequest
+ */
+export const CreateHyperliquidAgentSignatureRequest = new CreateHyperliquidAgentSignatureRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreateHyperliquidAgentSignatureResponse$Type extends MessageType<CreateHyperliquidAgentSignatureResponse> {
+    constructor() {
+        super("hypurr.CreateHyperliquidAgentSignatureResponse", [
+            { no: 1, name: "agent", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CreateHyperliquidAgentSignatureResponse>): CreateHyperliquidAgentSignatureResponse {
+        const message = { agent: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CreateHyperliquidAgentSignatureResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateHyperliquidAgentSignatureResponse): CreateHyperliquidAgentSignatureResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string agent */ 1:
+                    message.agent = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CreateHyperliquidAgentSignatureResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string agent = 1; */
+        if (message.agent !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.agent);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.CreateHyperliquidAgentSignatureResponse
+ */
+export const CreateHyperliquidAgentSignatureResponse = new CreateHyperliquidAgentSignatureResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreateHyperliquidAgentWalletRequest$Type extends MessageType<CreateHyperliquidAgentWalletRequest> {
+    constructor() {
+        super("hypurr.CreateHyperliquidAgentWalletRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "signature", kind: "message", T: () => EIP712Signature }
+        ]);
+    }
+    create(value?: PartialMessage<CreateHyperliquidAgentWalletRequest>): CreateHyperliquidAgentWalletRequest {
+        const message = { authData: {}, name: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CreateHyperliquidAgentWalletRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateHyperliquidAgentWalletRequest): CreateHyperliquidAgentWalletRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* hypurr.EIP712Signature signature */ 3:
+                    message.signature = EIP712Signature.internalBinaryRead(reader, reader.uint32(), options, message.signature);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: CreateHyperliquidAgentWalletRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof CreateHyperliquidAgentWalletRequest["authData"] | undefined, val: CreateHyperliquidAgentWalletRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.CreateHyperliquidAgentWalletRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: CreateHyperliquidAgentWalletRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* hypurr.EIP712Signature signature = 3; */
+        if (message.signature)
+            EIP712Signature.internalBinaryWrite(message.signature, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.CreateHyperliquidAgentWalletRequest
+ */
+export const CreateHyperliquidAgentWalletRequest = new CreateHyperliquidAgentWalletRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreateHyperliquidAgentWalletResponse$Type extends MessageType<CreateHyperliquidAgentWalletResponse> {
+    constructor() {
+        super("hypurr.CreateHyperliquidAgentWalletResponse", []);
+    }
+    create(value?: PartialMessage<CreateHyperliquidAgentWalletResponse>): CreateHyperliquidAgentWalletResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CreateHyperliquidAgentWalletResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateHyperliquidAgentWalletResponse): CreateHyperliquidAgentWalletResponse {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: CreateHyperliquidAgentWalletResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.CreateHyperliquidAgentWalletResponse
+ */
+export const CreateHyperliquidAgentWalletResponse = new CreateHyperliquidAgentWalletResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Telegram
  */
@@ -4390,6 +4729,8 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "CreateHyperliquidSpotSniperConfig", options: {}, I: CreateHyperliquidSpotSniperConfigRequest, O: CreateHyperliquidSpotSniperConfigResponse },
     { name: "DeleteHyperliquidSpotSniperConfig", options: {}, I: DeleteHyperliquidSpotSniperConfigRequest, O: DeleteHyperliquidSpotSniperConfigResponse },
     { name: "UpdateHyperliquidSpotSniperConfig", options: {}, I: UpdateHyperliquidSpotSniperConfigRequest, O: UpdateHyperliquidSpotSniperConfigResponse },
+    { name: "CreateHyperliquidAgentSignature", options: {}, I: CreateHyperliquidAgentSignatureRequest, O: CreateHyperliquidAgentSignatureResponse },
+    { name: "CreateHyperliquidWallet", options: {}, I: CreateHyperliquidAgentWalletRequest, O: CreateHyperliquidAgentWalletResponse },
     { name: "HfunCabalAlerts", serverStreaming: true, options: {}, I: HfunCabalAlertsRequest, O: HfunCabalAlertsResponse },
     { name: "HfunCabalWalletLabelAdd", options: {}, I: HfunCabalWalletLabelAddRequest, O: HfunCabalWalletLabelAddResponse },
     { name: "HfunCabalWalletLabelModify", options: {}, I: HfunCabalWalletLabelModifyRequest, O: HfunCabalWalletLabelModifyResponse },

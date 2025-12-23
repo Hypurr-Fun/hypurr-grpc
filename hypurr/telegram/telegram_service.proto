@@ -319,6 +319,32 @@ message HfunCabalWalletLabelDeleteResponse {
 
 }
 
+message EIP712Signature {
+  string agentAddress = 1;
+  string agentName = 2;
+  int64 nonce = 3;
+  string signature = 4;
+  int64 chain_id = 5;
+}
+
+message CreateHyperliquidAgentSignatureRequest {
+  string address = 1;
+}
+
+message CreateHyperliquidAgentSignatureResponse {
+  string agent = 1;
+}
+
+message CreateHyperliquidAgentWalletRequest {
+  map<string, string> auth_data = 1;
+  string name = 2;
+  EIP712Signature signature = 3;
+}
+
+message CreateHyperliquidAgentWalletResponse {
+
+}
+
 service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
@@ -352,6 +378,9 @@ service Telegram {
   rpc CreateHyperliquidSpotSniperConfig (CreateHyperliquidSpotSniperConfigRequest) returns (CreateHyperliquidSpotSniperConfigResponse) {}
   rpc DeleteHyperliquidSpotSniperConfig (DeleteHyperliquidSpotSniperConfigRequest) returns (DeleteHyperliquidSpotSniperConfigResponse) {}
   rpc UpdateHyperliquidSpotSniperConfig (UpdateHyperliquidSpotSniperConfigRequest) returns (UpdateHyperliquidSpotSniperConfigResponse) {}
+
+  rpc CreateHyperliquidAgentSignature (CreateHyperliquidAgentSignatureRequest) returns (CreateHyperliquidAgentSignatureResponse) {}
+  rpc CreateHyperliquidWallet (CreateHyperliquidAgentWalletRequest) returns (CreateHyperliquidAgentWalletResponse) {}
 
   // Cabal
   rpc HfunCabalAlerts (HfunCabalAlertsRequest) returns (stream HfunCabalAlertsResponse) {}

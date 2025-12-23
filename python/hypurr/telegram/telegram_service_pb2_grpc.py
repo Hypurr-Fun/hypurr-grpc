@@ -124,6 +124,16 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigResponse.FromString,
         )
+    self.CreateHyperliquidAgentSignature = channel.unary_unary(
+        '/hypurr.Telegram/CreateHyperliquidAgentSignature',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.CreateHyperliquidAgentSignatureRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.CreateHyperliquidAgentSignatureResponse.FromString,
+        )
+    self.CreateHyperliquidWallet = channel.unary_unary(
+        '/hypurr.Telegram/CreateHyperliquidWallet',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.CreateHyperliquidAgentWalletRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.CreateHyperliquidAgentWalletResponse.FromString,
+        )
     self.HfunCabalAlerts = channel.unary_stream(
         '/hypurr.Telegram/HfunCabalAlerts',
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsRequest.SerializeToString,
@@ -304,6 +314,20 @@ class TelegramServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def CreateHyperliquidAgentSignature(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def CreateHyperliquidWallet(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def HfunCabalAlerts(self, request, context):
     """Cabal
     """
@@ -444,6 +468,16 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.UpdateHyperliquidSpotSniperConfig,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigResponse.SerializeToString,
+      ),
+      'CreateHyperliquidAgentSignature': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateHyperliquidAgentSignature,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.CreateHyperliquidAgentSignatureRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.CreateHyperliquidAgentSignatureResponse.SerializeToString,
+      ),
+      'CreateHyperliquidWallet': grpc.unary_unary_rpc_method_handler(
+          servicer.CreateHyperliquidWallet,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.CreateHyperliquidAgentWalletRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.CreateHyperliquidAgentWalletResponse.SerializeToString,
       ),
       'HfunCabalAlerts': grpc.unary_stream_rpc_method_handler(
           servicer.HfunCabalAlerts,
