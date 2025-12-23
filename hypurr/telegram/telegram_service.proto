@@ -380,7 +380,7 @@ service Telegram {
   rpc DeleteHyperliquidSpotSniperConfig (DeleteHyperliquidSpotSniperConfigRequest) returns (DeleteHyperliquidSpotSniperConfigResponse) {}
   rpc UpdateHyperliquidSpotSniperConfig (UpdateHyperliquidSpotSniperConfigRequest) returns (UpdateHyperliquidSpotSniperConfigResponse) {}
 
-  rpc HyperliquidAgentSignatureCreate (HyperliquidAgentSignatureCreateRequest) returns (HyperliquidAgentWalletCreateRequest) {}
+  rpc HyperliquidAgentSignatureCreate (HyperliquidAgentSignatureCreateRequest) returns (HyperliquidAgentSignatureCreateResponse) {}
   rpc HyperliquidAgentWalletCreate (HyperliquidAgentWalletCreateRequest) returns (HyperliquidAgentWalletCreateResponse) {}
 
   // Cabal
