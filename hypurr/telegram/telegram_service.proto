@@ -328,7 +328,8 @@ message EIP712Signature {
 }
 
 message CreateHyperliquidAgentSignatureRequest {
-  string address = 1;
+  map<string, string> auth_data = 1;
+  string address = 2;
 }
 
 message CreateHyperliquidAgentSignatureResponse {

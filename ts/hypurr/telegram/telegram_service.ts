@@ -953,7 +953,13 @@ export interface EIP712Signature {
  */
 export interface CreateHyperliquidAgentSignatureRequest {
     /**
-     * @generated from protobuf field: string address = 1;
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string address = 2;
      */
     address: string;
 }
@@ -4510,11 +4516,12 @@ export const EIP712Signature = new EIP712Signature$Type();
 class CreateHyperliquidAgentSignatureRequest$Type extends MessageType<CreateHyperliquidAgentSignatureRequest> {
     constructor() {
         super("hypurr.CreateHyperliquidAgentSignatureRequest", [
-            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<CreateHyperliquidAgentSignatureRequest>): CreateHyperliquidAgentSignatureRequest {
-        const message = { address: "" };
+        const message = { authData: {}, address: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CreateHyperliquidAgentSignatureRequest>(this, message, value);
@@ -4525,7 +4532,10 @@ class CreateHyperliquidAgentSignatureRequest$Type extends MessageType<CreateHype
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string address */ 1:
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string address */ 2:
                     message.address = reader.string();
                     break;
                 default:
@@ -4539,10 +4549,29 @@ class CreateHyperliquidAgentSignatureRequest$Type extends MessageType<CreateHype
         }
         return message;
     }
+    private binaryReadMap1(map: CreateHyperliquidAgentSignatureRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof CreateHyperliquidAgentSignatureRequest["authData"] | undefined, val: CreateHyperliquidAgentSignatureRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.CreateHyperliquidAgentSignatureRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
     internalBinaryWrite(message: CreateHyperliquidAgentSignatureRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string address = 1; */
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string address = 2; */
         if (message.address !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.address);
+            writer.tag(2, WireType.LengthDelimited).string(message.address);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
