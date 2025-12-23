@@ -949,9 +949,9 @@ export interface EIP712Signature {
     chainId: number;
 }
 /**
- * @generated from protobuf message hypurr.CreateHyperliquidAgentSignatureRequest
+ * @generated from protobuf message hypurr.HyperliquidAgentSignatureCreateRequest
  */
-export interface CreateHyperliquidAgentSignatureRequest {
+export interface HyperliquidAgentSignatureCreateRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1;
      */
@@ -964,18 +964,18 @@ export interface CreateHyperliquidAgentSignatureRequest {
     address: string;
 }
 /**
- * @generated from protobuf message hypurr.CreateHyperliquidAgentSignatureResponse
+ * @generated from protobuf message hypurr.HyperliquidAgentSignatureCreateResponse
  */
-export interface CreateHyperliquidAgentSignatureResponse {
+export interface HyperliquidAgentSignatureCreateResponse {
     /**
      * @generated from protobuf field: string agent = 1;
      */
     agent: string;
 }
 /**
- * @generated from protobuf message hypurr.CreateHyperliquidAgentWalletRequest
+ * @generated from protobuf message hypurr.HyperliquidAgentWalletCreateRequest
  */
-export interface CreateHyperliquidAgentWalletRequest {
+export interface HyperliquidAgentWalletCreateRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1;
      */
@@ -992,9 +992,9 @@ export interface CreateHyperliquidAgentWalletRequest {
     signature?: EIP712Signature;
 }
 /**
- * @generated from protobuf message hypurr.CreateHyperliquidAgentWalletResponse
+ * @generated from protobuf message hypurr.HyperliquidAgentWalletCreateResponse
  */
-export interface CreateHyperliquidAgentWalletResponse {
+export interface HyperliquidAgentWalletCreateResponse {
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserRequest$Type extends MessageType<TelegramUserRequest> {
@@ -4513,21 +4513,21 @@ class EIP712Signature$Type extends MessageType<EIP712Signature> {
  */
 export const EIP712Signature = new EIP712Signature$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CreateHyperliquidAgentSignatureRequest$Type extends MessageType<CreateHyperliquidAgentSignatureRequest> {
+class HyperliquidAgentSignatureCreateRequest$Type extends MessageType<HyperliquidAgentSignatureCreateRequest> {
     constructor() {
-        super("hypurr.CreateHyperliquidAgentSignatureRequest", [
+        super("hypurr.HyperliquidAgentSignatureCreateRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<CreateHyperliquidAgentSignatureRequest>): CreateHyperliquidAgentSignatureRequest {
+    create(value?: PartialMessage<HyperliquidAgentSignatureCreateRequest>): HyperliquidAgentSignatureCreateRequest {
         const message = { authData: {}, address: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<CreateHyperliquidAgentSignatureRequest>(this, message, value);
+            reflectionMergePartial<HyperliquidAgentSignatureCreateRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateHyperliquidAgentSignatureRequest): CreateHyperliquidAgentSignatureRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidAgentSignatureCreateRequest): HyperliquidAgentSignatureCreateRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -4549,8 +4549,8 @@ class CreateHyperliquidAgentSignatureRequest$Type extends MessageType<CreateHype
         }
         return message;
     }
-    private binaryReadMap1(map: CreateHyperliquidAgentSignatureRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof CreateHyperliquidAgentSignatureRequest["authData"] | undefined, val: CreateHyperliquidAgentSignatureRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: HyperliquidAgentSignatureCreateRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HyperliquidAgentSignatureCreateRequest["authData"] | undefined, val: HyperliquidAgentSignatureCreateRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -4560,12 +4560,12 @@ class CreateHyperliquidAgentSignatureRequest$Type extends MessageType<CreateHype
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for field hypurr.CreateHyperliquidAgentSignatureRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HyperliquidAgentSignatureCreateRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: CreateHyperliquidAgentSignatureRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HyperliquidAgentSignatureCreateRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
@@ -4579,24 +4579,24 @@ class CreateHyperliquidAgentSignatureRequest$Type extends MessageType<CreateHype
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.CreateHyperliquidAgentSignatureRequest
+ * @generated MessageType for protobuf message hypurr.HyperliquidAgentSignatureCreateRequest
  */
-export const CreateHyperliquidAgentSignatureRequest = new CreateHyperliquidAgentSignatureRequest$Type();
+export const HyperliquidAgentSignatureCreateRequest = new HyperliquidAgentSignatureCreateRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CreateHyperliquidAgentSignatureResponse$Type extends MessageType<CreateHyperliquidAgentSignatureResponse> {
+class HyperliquidAgentSignatureCreateResponse$Type extends MessageType<HyperliquidAgentSignatureCreateResponse> {
     constructor() {
-        super("hypurr.CreateHyperliquidAgentSignatureResponse", [
+        super("hypurr.HyperliquidAgentSignatureCreateResponse", [
             { no: 1, name: "agent", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<CreateHyperliquidAgentSignatureResponse>): CreateHyperliquidAgentSignatureResponse {
+    create(value?: PartialMessage<HyperliquidAgentSignatureCreateResponse>): HyperliquidAgentSignatureCreateResponse {
         const message = { agent: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<CreateHyperliquidAgentSignatureResponse>(this, message, value);
+            reflectionMergePartial<HyperliquidAgentSignatureCreateResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateHyperliquidAgentSignatureResponse): CreateHyperliquidAgentSignatureResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidAgentSignatureCreateResponse): HyperliquidAgentSignatureCreateResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -4615,7 +4615,7 @@ class CreateHyperliquidAgentSignatureResponse$Type extends MessageType<CreateHyp
         }
         return message;
     }
-    internalBinaryWrite(message: CreateHyperliquidAgentSignatureResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HyperliquidAgentSignatureCreateResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string agent = 1; */
         if (message.agent !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.agent);
@@ -4626,26 +4626,26 @@ class CreateHyperliquidAgentSignatureResponse$Type extends MessageType<CreateHyp
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.CreateHyperliquidAgentSignatureResponse
+ * @generated MessageType for protobuf message hypurr.HyperliquidAgentSignatureCreateResponse
  */
-export const CreateHyperliquidAgentSignatureResponse = new CreateHyperliquidAgentSignatureResponse$Type();
+export const HyperliquidAgentSignatureCreateResponse = new HyperliquidAgentSignatureCreateResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CreateHyperliquidAgentWalletRequest$Type extends MessageType<CreateHyperliquidAgentWalletRequest> {
+class HyperliquidAgentWalletCreateRequest$Type extends MessageType<HyperliquidAgentWalletCreateRequest> {
     constructor() {
-        super("hypurr.CreateHyperliquidAgentWalletRequest", [
+        super("hypurr.HyperliquidAgentWalletCreateRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "signature", kind: "message", T: () => EIP712Signature }
         ]);
     }
-    create(value?: PartialMessage<CreateHyperliquidAgentWalletRequest>): CreateHyperliquidAgentWalletRequest {
+    create(value?: PartialMessage<HyperliquidAgentWalletCreateRequest>): HyperliquidAgentWalletCreateRequest {
         const message = { authData: {}, name: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<CreateHyperliquidAgentWalletRequest>(this, message, value);
+            reflectionMergePartial<HyperliquidAgentWalletCreateRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateHyperliquidAgentWalletRequest): CreateHyperliquidAgentWalletRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidAgentWalletCreateRequest): HyperliquidAgentWalletCreateRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -4670,8 +4670,8 @@ class CreateHyperliquidAgentWalletRequest$Type extends MessageType<CreateHyperli
         }
         return message;
     }
-    private binaryReadMap1(map: CreateHyperliquidAgentWalletRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof CreateHyperliquidAgentWalletRequest["authData"] | undefined, val: CreateHyperliquidAgentWalletRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: HyperliquidAgentWalletCreateRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HyperliquidAgentWalletCreateRequest["authData"] | undefined, val: HyperliquidAgentWalletCreateRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -4681,12 +4681,12 @@ class CreateHyperliquidAgentWalletRequest$Type extends MessageType<CreateHyperli
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for field hypurr.CreateHyperliquidAgentWalletRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HyperliquidAgentWalletCreateRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: CreateHyperliquidAgentWalletRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HyperliquidAgentWalletCreateRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
@@ -4703,25 +4703,25 @@ class CreateHyperliquidAgentWalletRequest$Type extends MessageType<CreateHyperli
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.CreateHyperliquidAgentWalletRequest
+ * @generated MessageType for protobuf message hypurr.HyperliquidAgentWalletCreateRequest
  */
-export const CreateHyperliquidAgentWalletRequest = new CreateHyperliquidAgentWalletRequest$Type();
+export const HyperliquidAgentWalletCreateRequest = new HyperliquidAgentWalletCreateRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CreateHyperliquidAgentWalletResponse$Type extends MessageType<CreateHyperliquidAgentWalletResponse> {
+class HyperliquidAgentWalletCreateResponse$Type extends MessageType<HyperliquidAgentWalletCreateResponse> {
     constructor() {
-        super("hypurr.CreateHyperliquidAgentWalletResponse", []);
+        super("hypurr.HyperliquidAgentWalletCreateResponse", []);
     }
-    create(value?: PartialMessage<CreateHyperliquidAgentWalletResponse>): CreateHyperliquidAgentWalletResponse {
+    create(value?: PartialMessage<HyperliquidAgentWalletCreateResponse>): HyperliquidAgentWalletCreateResponse {
         const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<CreateHyperliquidAgentWalletResponse>(this, message, value);
+            reflectionMergePartial<HyperliquidAgentWalletCreateResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateHyperliquidAgentWalletResponse): CreateHyperliquidAgentWalletResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidAgentWalletCreateResponse): HyperliquidAgentWalletCreateResponse {
         return target ?? this.create();
     }
-    internalBinaryWrite(message: CreateHyperliquidAgentWalletResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HyperliquidAgentWalletCreateResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4729,9 +4729,9 @@ class CreateHyperliquidAgentWalletResponse$Type extends MessageType<CreateHyperl
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.CreateHyperliquidAgentWalletResponse
+ * @generated MessageType for protobuf message hypurr.HyperliquidAgentWalletCreateResponse
  */
-export const CreateHyperliquidAgentWalletResponse = new CreateHyperliquidAgentWalletResponse$Type();
+export const HyperliquidAgentWalletCreateResponse = new HyperliquidAgentWalletCreateResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Telegram
  */
@@ -4758,8 +4758,8 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "CreateHyperliquidSpotSniperConfig", options: {}, I: CreateHyperliquidSpotSniperConfigRequest, O: CreateHyperliquidSpotSniperConfigResponse },
     { name: "DeleteHyperliquidSpotSniperConfig", options: {}, I: DeleteHyperliquidSpotSniperConfigRequest, O: DeleteHyperliquidSpotSniperConfigResponse },
     { name: "UpdateHyperliquidSpotSniperConfig", options: {}, I: UpdateHyperliquidSpotSniperConfigRequest, O: UpdateHyperliquidSpotSniperConfigResponse },
-    { name: "CreateHyperliquidAgentSignature", options: {}, I: CreateHyperliquidAgentSignatureRequest, O: CreateHyperliquidAgentSignatureResponse },
-    { name: "CreateHyperliquidWallet", options: {}, I: CreateHyperliquidAgentWalletRequest, O: CreateHyperliquidAgentWalletResponse },
+    { name: "HyperliquidAgentSignatureCreate", options: {}, I: HyperliquidAgentSignatureCreateRequest, O: HyperliquidAgentWalletCreateRequest },
+    { name: "HyperliquidAgentWalletCreate", options: {}, I: HyperliquidAgentWalletCreateRequest, O: HyperliquidAgentWalletCreateResponse },
     { name: "HfunCabalAlerts", serverStreaming: true, options: {}, I: HfunCabalAlertsRequest, O: HfunCabalAlertsResponse },
     { name: "HfunCabalWalletLabelAdd", options: {}, I: HfunCabalWalletLabelAddRequest, O: HfunCabalWalletLabelAddResponse },
     { name: "HfunCabalWalletLabelModify", options: {}, I: HfunCabalWalletLabelModifyRequest, O: HfunCabalWalletLabelModifyResponse },
