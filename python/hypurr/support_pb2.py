@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/support.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x14hypurr/support.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\"\xb5\x01\n\x0eSupportMessage\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x17\n\x0f\x63onversation_id\x18\x02 \x01(\x03\x12\x0f\n\x07\x66rom_id\x18\x03 \x01(\x03\x12\x13\n\x0bsender_type\x18\x04 \x01(\t\x12\x0f\n\x07message\x18\x05 \x01(\t\x12\x34\n\x0e\x61ttachment_url\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x11\n\ttimestamp\x18\x07 \x01(\x03\"\xc2\x01\n\x13SupportConversation\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x12\n\nproject_id\x18\x03 \x01(\t\x12\x0e\n\x06source\x18\x04 \x01(\t\x12\x0e\n\x06\x63losed\x18\x05 \x01(\x08\x12.\n\tclosed_at\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x12\n\ncreated_at\x18\x07 \x01(\x03\x12\x12\n\nupdated_at\x18\x08 \x01(\x03\"\xad\x01\n\rSupportTicket\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x17\n\x0f\x63onversation_id\x18\x02 \x01(\x03\x12\x0f\n\x07summary\x18\x03 \x01(\t\x12\x0e\n\x06\x63losed\x18\x04 \x01(\x08\x12.\n\tclosed_at\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x12\n\ncreated_at\x18\x06 \x01(\x03\x12\x12\n\nupdated_at\x18\x07 \x01(\x03\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x14hypurr/support.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\"\xb5\x01\n\x0eSupportMessage\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x17\n\x0f\x63onversation_id\x18\x02 \x01(\x03\x12\x0f\n\x07\x66rom_id\x18\x03 \x01(\x03\x12\x13\n\x0bsender_type\x18\x04 \x01(\t\x12\x0f\n\x07message\x18\x05 \x01(\t\x12\x34\n\x0e\x61ttachment_url\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x11\n\ttimestamp\x18\x07 \x01(\x03\"\xc2\x01\n\x13SupportConversation\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x12\n\nproject_id\x18\x03 \x01(\t\x12\x0e\n\x06source\x18\x04 \x01(\t\x12\x0e\n\x06\x63losed\x18\x05 \x01(\x08\x12.\n\tclosed_at\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x12\n\ncreated_at\x18\x07 \x01(\x03\x12\x12\n\nupdated_at\x18\x08 \x01(\x03\"\x85\x01\n\rSupportTicket\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x17\n\x0f\x63onversation_id\x18\x02 \x01(\x03\x12\x0f\n\x07summary\x18\x03 \x01(\t\x12\x0e\n\x06\x63losed\x18\x04 \x01(\x08\x12.\n\tclosed_at\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64ValueB)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -222,20 +222,6 @@ _SUPPORTTICKET = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='created_at', full_name='hypurr.SupportTicket.created_at', index=5,
-      number=6, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='updated_at', full_name='hypurr.SupportTicket.updated_at', index=6,
-      number=7, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -249,7 +235,7 @@ _SUPPORTTICKET = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=446,
-  serialized_end=619,
+  serialized_end=579,
 )
 
 _SUPPORTMESSAGE.fields_by_name['attachment_url'].message_type = google_dot_protobuf_dot_wrappers__pb2._STRINGVALUE
