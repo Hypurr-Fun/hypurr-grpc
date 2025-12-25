@@ -12,6 +12,7 @@ import "hypurr/common.proto";
 import "hypurr/hpumpv1.proto";
 import "hypurr/trade.proto";
 import "hypurr/cabal.proto";
+import "hypurr/support.proto";
 
 
 // Auth endpoints
@@ -346,6 +347,85 @@ message HyperliquidAgentWalletCreateResponse {
 
 }
 
+// SupportConversationStart - Start or resume a conversation
+
+message SupportConversationStartRequest {
+  map<string, string> auth_data = 1;
+  string project_id = 2; // optional, defaults to "hfun"
+}
+
+message SupportConversationStartResponse {
+  int64 conversation_id = 1;
+  string project_id = 2;
+  bool closed = 3;
+  repeated SupportMessage messages = 4;
+}
+
+// SupportMessageSend - Send a message in a conversation
+
+message SupportMessageSendRequest {
+  map<string, string> auth_data = 1;
+  int64 conversation_id = 2;
+  string message = 3;
+}
+
+message SupportMessageSendResponse {
+  SupportMessage user_message = 1;
+  SupportMessage ai_response = 2; // optional, populated if AI responds
+  bool ticket_opened = 3;
+  google.protobuf.Int64Value ticket_id = 4; // set if ticket was opened
+}
+
+// SupportConversationHistory - Get message history
+
+message SupportConversationHistoryRequest {
+  map<string, string> auth_data = 1;
+  int64 conversation_id = 2;
+  int32 limit = 3;  // default 50, max 100
+  int32 offset = 4; // default 0
+}
+
+message SupportConversationHistoryResponse {
+  repeated SupportMessage messages = 1;
+}
+
+// SupportConversationList - List user's conversations
+
+message SupportConversationListRequest {
+  map<string, string> auth_data = 1;
+  string project_id = 2; // optional, filter by project
+  int32 limit = 3;  // default 20, max 100
+  int32 offset = 4; // default 0
+}
+
+message SupportConversationListResponse {
+  repeated SupportConversation conversations = 1;
+}
+
+// SupportConversationClose - Close a conversation
+
+message SupportConversationCloseRequest {
+  map<string, string> auth_data = 1;
+  int64 conversation_id = 2;
+}
+
+message SupportConversationCloseResponse {}
+
+// SupportTicketStatus - Get ticket status for a conversation
+
+message SupportTicketStatusRequest {
+  map<string, string> auth_data = 1;
+  int64 conversation_id = 2;
+}
+
+message SupportTicketStatusResponse {
+  bool has_ticket = 1;
+  int64 ticket_id = 2;
+  bool closed = 3;
+  string summary = 4;
+}
+
+
 service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
@@ -388,4 +468,12 @@ service Telegram {
   rpc HfunCabalWalletLabelAdd (HfunCabalWalletLabelAddRequest) returns (HfunCabalWalletLabelAddResponse) {}
   rpc HfunCabalWalletLabelModify (HfunCabalWalletLabelModifyRequest) returns (HfunCabalWalletLabelModifyResponse) {}
   rpc HfunCabalWalletLabelRemove (HfunCabalWalletLabelDeleteRequest) returns (HfunCabalWalletLabelDeleteResponse) {}
+
+  // Support
+  rpc SupportConversationStart(SupportConversationStartRequest) returns (SupportConversationStartResponse);
+  rpc SupportMessageSend(SupportMessageSendRequest) returns (SupportMessageSendResponse);
+  rpc SupportConversationHistory(SupportConversationHistoryRequest) returns (SupportConversationHistoryResponse);
+  rpc SupportConversationList(SupportConversationListRequest) returns (SupportConversationListResponse);
+  rpc SupportConversationClose(SupportConversationCloseRequest) returns (SupportConversationCloseResponse);
+  rpc SupportTicketStatus(SupportTicketStatusRequest) returns (SupportTicketStatusResponse);
 }

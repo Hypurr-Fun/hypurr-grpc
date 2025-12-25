@@ -127,7 +127,7 @@ class TelegramStub(object):
     self.HyperliquidAgentSignatureCreate = channel.unary_unary(
         '/hypurr.Telegram/HyperliquidAgentSignatureCreate',
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidAgentSignatureCreateRequest.SerializeToString,
-        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidAgentWalletCreateRequest.FromString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidAgentSignatureCreateResponse.FromString,
         )
     self.HyperliquidAgentWalletCreate = channel.unary_unary(
         '/hypurr.Telegram/HyperliquidAgentWalletCreate',
@@ -153,6 +153,36 @@ class TelegramStub(object):
         '/hypurr.Telegram/HfunCabalWalletLabelRemove',
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelDeleteRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelDeleteResponse.FromString,
+        )
+    self.SupportConversationStart = channel.unary_unary(
+        '/hypurr.Telegram/SupportConversationStart',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationStartRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationStartResponse.FromString,
+        )
+    self.SupportMessageSend = channel.unary_unary(
+        '/hypurr.Telegram/SupportMessageSend',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportMessageSendRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportMessageSendResponse.FromString,
+        )
+    self.SupportConversationHistory = channel.unary_unary(
+        '/hypurr.Telegram/SupportConversationHistory',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationHistoryRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationHistoryResponse.FromString,
+        )
+    self.SupportConversationList = channel.unary_unary(
+        '/hypurr.Telegram/SupportConversationList',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationListRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationListResponse.FromString,
+        )
+    self.SupportConversationClose = channel.unary_unary(
+        '/hypurr.Telegram/SupportConversationClose',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationCloseRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationCloseResponse.FromString,
+        )
+    self.SupportTicketStatus = channel.unary_unary(
+        '/hypurr.Telegram/SupportTicketStatus',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusResponse.FromString,
         )
 
 
@@ -356,6 +386,48 @@ class TelegramServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def SupportConversationStart(self, request, context):
+    """Support
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def SupportMessageSend(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def SupportConversationHistory(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def SupportConversationList(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def SupportConversationClose(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def SupportTicketStatus(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_TelegramServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -472,7 +544,7 @@ def add_TelegramServicer_to_server(servicer, server):
       'HyperliquidAgentSignatureCreate': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidAgentSignatureCreate,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidAgentSignatureCreateRequest.FromString,
-          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidAgentWalletCreateRequest.SerializeToString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidAgentSignatureCreateResponse.SerializeToString,
       ),
       'HyperliquidAgentWalletCreate': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidAgentWalletCreate,
@@ -498,6 +570,36 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.HfunCabalWalletLabelRemove,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelDeleteRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelDeleteResponse.SerializeToString,
+      ),
+      'SupportConversationStart': grpc.unary_unary_rpc_method_handler(
+          servicer.SupportConversationStart,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationStartRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationStartResponse.SerializeToString,
+      ),
+      'SupportMessageSend': grpc.unary_unary_rpc_method_handler(
+          servicer.SupportMessageSend,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportMessageSendRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportMessageSendResponse.SerializeToString,
+      ),
+      'SupportConversationHistory': grpc.unary_unary_rpc_method_handler(
+          servicer.SupportConversationHistory,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationHistoryRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationHistoryResponse.SerializeToString,
+      ),
+      'SupportConversationList': grpc.unary_unary_rpc_method_handler(
+          servicer.SupportConversationList,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationListRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationListResponse.SerializeToString,
+      ),
+      'SupportConversationClose': grpc.unary_unary_rpc_method_handler(
+          servicer.SupportConversationClose,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationCloseRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportConversationCloseResponse.SerializeToString,
+      ),
+      'SupportTicketStatus': grpc.unary_unary_rpc_method_handler(
+          servicer.SupportTicketStatus,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

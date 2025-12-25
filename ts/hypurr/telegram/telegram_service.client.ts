@@ -4,6 +4,18 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Telegram } from "./telegram_service";
+import type { SupportTicketStatusResponse } from "./telegram_service";
+import type { SupportTicketStatusRequest } from "./telegram_service";
+import type { SupportConversationCloseResponse } from "./telegram_service";
+import type { SupportConversationCloseRequest } from "./telegram_service";
+import type { SupportConversationListResponse } from "./telegram_service";
+import type { SupportConversationListRequest } from "./telegram_service";
+import type { SupportConversationHistoryResponse } from "./telegram_service";
+import type { SupportConversationHistoryRequest } from "./telegram_service";
+import type { SupportMessageSendResponse } from "./telegram_service";
+import type { SupportMessageSendRequest } from "./telegram_service";
+import type { SupportConversationStartResponse } from "./telegram_service";
+import type { SupportConversationStartRequest } from "./telegram_service";
 import type { HfunCabalWalletLabelDeleteResponse } from "./telegram_service";
 import type { HfunCabalWalletLabelDeleteRequest } from "./telegram_service";
 import type { HfunCabalWalletLabelModifyResponse } from "./telegram_service";
@@ -190,6 +202,32 @@ export interface ITelegramClient {
      * @generated from protobuf rpc: HfunCabalWalletLabelRemove(hypurr.HfunCabalWalletLabelDeleteRequest) returns (hypurr.HfunCabalWalletLabelDeleteResponse);
      */
     hfunCabalWalletLabelRemove(input: HfunCabalWalletLabelDeleteRequest, options?: RpcOptions): UnaryCall<HfunCabalWalletLabelDeleteRequest, HfunCabalWalletLabelDeleteResponse>;
+    /**
+     * Support
+     *
+     * @generated from protobuf rpc: SupportConversationStart(hypurr.SupportConversationStartRequest) returns (hypurr.SupportConversationStartResponse);
+     */
+    supportConversationStart(input: SupportConversationStartRequest, options?: RpcOptions): UnaryCall<SupportConversationStartRequest, SupportConversationStartResponse>;
+    /**
+     * @generated from protobuf rpc: SupportMessageSend(hypurr.SupportMessageSendRequest) returns (hypurr.SupportMessageSendResponse);
+     */
+    supportMessageSend(input: SupportMessageSendRequest, options?: RpcOptions): UnaryCall<SupportMessageSendRequest, SupportMessageSendResponse>;
+    /**
+     * @generated from protobuf rpc: SupportConversationHistory(hypurr.SupportConversationHistoryRequest) returns (hypurr.SupportConversationHistoryResponse);
+     */
+    supportConversationHistory(input: SupportConversationHistoryRequest, options?: RpcOptions): UnaryCall<SupportConversationHistoryRequest, SupportConversationHistoryResponse>;
+    /**
+     * @generated from protobuf rpc: SupportConversationList(hypurr.SupportConversationListRequest) returns (hypurr.SupportConversationListResponse);
+     */
+    supportConversationList(input: SupportConversationListRequest, options?: RpcOptions): UnaryCall<SupportConversationListRequest, SupportConversationListResponse>;
+    /**
+     * @generated from protobuf rpc: SupportConversationClose(hypurr.SupportConversationCloseRequest) returns (hypurr.SupportConversationCloseResponse);
+     */
+    supportConversationClose(input: SupportConversationCloseRequest, options?: RpcOptions): UnaryCall<SupportConversationCloseRequest, SupportConversationCloseResponse>;
+    /**
+     * @generated from protobuf rpc: SupportTicketStatus(hypurr.SupportTicketStatusRequest) returns (hypurr.SupportTicketStatusResponse);
+     */
+    supportTicketStatus(input: SupportTicketStatusRequest, options?: RpcOptions): UnaryCall<SupportTicketStatusRequest, SupportTicketStatusResponse>;
 }
 /**
  * @generated from protobuf service hypurr.Telegram
@@ -405,5 +443,49 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
     hfunCabalWalletLabelRemove(input: HfunCabalWalletLabelDeleteRequest, options?: RpcOptions): UnaryCall<HfunCabalWalletLabelDeleteRequest, HfunCabalWalletLabelDeleteResponse> {
         const method = this.methods[27], opt = this._transport.mergeOptions(options);
         return stackIntercept<HfunCabalWalletLabelDeleteRequest, HfunCabalWalletLabelDeleteResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * Support
+     *
+     * @generated from protobuf rpc: SupportConversationStart(hypurr.SupportConversationStartRequest) returns (hypurr.SupportConversationStartResponse);
+     */
+    supportConversationStart(input: SupportConversationStartRequest, options?: RpcOptions): UnaryCall<SupportConversationStartRequest, SupportConversationStartResponse> {
+        const method = this.methods[28], opt = this._transport.mergeOptions(options);
+        return stackIntercept<SupportConversationStartRequest, SupportConversationStartResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: SupportMessageSend(hypurr.SupportMessageSendRequest) returns (hypurr.SupportMessageSendResponse);
+     */
+    supportMessageSend(input: SupportMessageSendRequest, options?: RpcOptions): UnaryCall<SupportMessageSendRequest, SupportMessageSendResponse> {
+        const method = this.methods[29], opt = this._transport.mergeOptions(options);
+        return stackIntercept<SupportMessageSendRequest, SupportMessageSendResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: SupportConversationHistory(hypurr.SupportConversationHistoryRequest) returns (hypurr.SupportConversationHistoryResponse);
+     */
+    supportConversationHistory(input: SupportConversationHistoryRequest, options?: RpcOptions): UnaryCall<SupportConversationHistoryRequest, SupportConversationHistoryResponse> {
+        const method = this.methods[30], opt = this._transport.mergeOptions(options);
+        return stackIntercept<SupportConversationHistoryRequest, SupportConversationHistoryResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: SupportConversationList(hypurr.SupportConversationListRequest) returns (hypurr.SupportConversationListResponse);
+     */
+    supportConversationList(input: SupportConversationListRequest, options?: RpcOptions): UnaryCall<SupportConversationListRequest, SupportConversationListResponse> {
+        const method = this.methods[31], opt = this._transport.mergeOptions(options);
+        return stackIntercept<SupportConversationListRequest, SupportConversationListResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: SupportConversationClose(hypurr.SupportConversationCloseRequest) returns (hypurr.SupportConversationCloseResponse);
+     */
+    supportConversationClose(input: SupportConversationCloseRequest, options?: RpcOptions): UnaryCall<SupportConversationCloseRequest, SupportConversationCloseResponse> {
+        const method = this.methods[32], opt = this._transport.mergeOptions(options);
+        return stackIntercept<SupportConversationCloseRequest, SupportConversationCloseResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: SupportTicketStatus(hypurr.SupportTicketStatusRequest) returns (hypurr.SupportTicketStatusResponse);
+     */
+    supportTicketStatus(input: SupportTicketStatusRequest, options?: RpcOptions): UnaryCall<SupportTicketStatusRequest, SupportTicketStatusResponse> {
+        const method = this.methods[33], opt = this._transport.mergeOptions(options);
+        return stackIntercept<SupportTicketStatusRequest, SupportTicketStatusResponse>("unary", this._transport, method, opt, input);
     }
 }

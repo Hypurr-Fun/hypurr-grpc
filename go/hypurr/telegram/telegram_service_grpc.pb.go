@@ -47,6 +47,12 @@ const (
 	Telegram_HfunCabalWalletLabelAdd_FullMethodName           = "/hypurr.Telegram/HfunCabalWalletLabelAdd"
 	Telegram_HfunCabalWalletLabelModify_FullMethodName        = "/hypurr.Telegram/HfunCabalWalletLabelModify"
 	Telegram_HfunCabalWalletLabelRemove_FullMethodName        = "/hypurr.Telegram/HfunCabalWalletLabelRemove"
+	Telegram_SupportConversationStart_FullMethodName          = "/hypurr.Telegram/SupportConversationStart"
+	Telegram_SupportMessageSend_FullMethodName                = "/hypurr.Telegram/SupportMessageSend"
+	Telegram_SupportConversationHistory_FullMethodName        = "/hypurr.Telegram/SupportConversationHistory"
+	Telegram_SupportConversationList_FullMethodName           = "/hypurr.Telegram/SupportConversationList"
+	Telegram_SupportConversationClose_FullMethodName          = "/hypurr.Telegram/SupportConversationClose"
+	Telegram_SupportTicketStatus_FullMethodName               = "/hypurr.Telegram/SupportTicketStatus"
 )
 
 // TelegramClient is the client API for Telegram service.
@@ -86,6 +92,13 @@ type TelegramClient interface {
 	HfunCabalWalletLabelAdd(ctx context.Context, in *HfunCabalWalletLabelAddRequest, opts ...grpc.CallOption) (*HfunCabalWalletLabelAddResponse, error)
 	HfunCabalWalletLabelModify(ctx context.Context, in *HfunCabalWalletLabelModifyRequest, opts ...grpc.CallOption) (*HfunCabalWalletLabelModifyResponse, error)
 	HfunCabalWalletLabelRemove(ctx context.Context, in *HfunCabalWalletLabelDeleteRequest, opts ...grpc.CallOption) (*HfunCabalWalletLabelDeleteResponse, error)
+	// Support
+	SupportConversationStart(ctx context.Context, in *SupportConversationStartRequest, opts ...grpc.CallOption) (*SupportConversationStartResponse, error)
+	SupportMessageSend(ctx context.Context, in *SupportMessageSendRequest, opts ...grpc.CallOption) (*SupportMessageSendResponse, error)
+	SupportConversationHistory(ctx context.Context, in *SupportConversationHistoryRequest, opts ...grpc.CallOption) (*SupportConversationHistoryResponse, error)
+	SupportConversationList(ctx context.Context, in *SupportConversationListRequest, opts ...grpc.CallOption) (*SupportConversationListResponse, error)
+	SupportConversationClose(ctx context.Context, in *SupportConversationCloseRequest, opts ...grpc.CallOption) (*SupportConversationCloseResponse, error)
+	SupportTicketStatus(ctx context.Context, in *SupportTicketStatusRequest, opts ...grpc.CallOption) (*SupportTicketStatusResponse, error)
 }
 
 type telegramClient struct {
@@ -399,6 +412,66 @@ func (c *telegramClient) HfunCabalWalletLabelRemove(ctx context.Context, in *Hfu
 	return out, nil
 }
 
+func (c *telegramClient) SupportConversationStart(ctx context.Context, in *SupportConversationStartRequest, opts ...grpc.CallOption) (*SupportConversationStartResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SupportConversationStartResponse)
+	err := c.cc.Invoke(ctx, Telegram_SupportConversationStart_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) SupportMessageSend(ctx context.Context, in *SupportMessageSendRequest, opts ...grpc.CallOption) (*SupportMessageSendResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SupportMessageSendResponse)
+	err := c.cc.Invoke(ctx, Telegram_SupportMessageSend_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) SupportConversationHistory(ctx context.Context, in *SupportConversationHistoryRequest, opts ...grpc.CallOption) (*SupportConversationHistoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SupportConversationHistoryResponse)
+	err := c.cc.Invoke(ctx, Telegram_SupportConversationHistory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) SupportConversationList(ctx context.Context, in *SupportConversationListRequest, opts ...grpc.CallOption) (*SupportConversationListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SupportConversationListResponse)
+	err := c.cc.Invoke(ctx, Telegram_SupportConversationList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) SupportConversationClose(ctx context.Context, in *SupportConversationCloseRequest, opts ...grpc.CallOption) (*SupportConversationCloseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SupportConversationCloseResponse)
+	err := c.cc.Invoke(ctx, Telegram_SupportConversationClose_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) SupportTicketStatus(ctx context.Context, in *SupportTicketStatusRequest, opts ...grpc.CallOption) (*SupportTicketStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SupportTicketStatusResponse)
+	err := c.cc.Invoke(ctx, Telegram_SupportTicketStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TelegramServer is the server API for Telegram service.
 // All implementations must embed UnimplementedTelegramServer
 // for forward compatibility
@@ -436,6 +509,13 @@ type TelegramServer interface {
 	HfunCabalWalletLabelAdd(context.Context, *HfunCabalWalletLabelAddRequest) (*HfunCabalWalletLabelAddResponse, error)
 	HfunCabalWalletLabelModify(context.Context, *HfunCabalWalletLabelModifyRequest) (*HfunCabalWalletLabelModifyResponse, error)
 	HfunCabalWalletLabelRemove(context.Context, *HfunCabalWalletLabelDeleteRequest) (*HfunCabalWalletLabelDeleteResponse, error)
+	// Support
+	SupportConversationStart(context.Context, *SupportConversationStartRequest) (*SupportConversationStartResponse, error)
+	SupportMessageSend(context.Context, *SupportMessageSendRequest) (*SupportMessageSendResponse, error)
+	SupportConversationHistory(context.Context, *SupportConversationHistoryRequest) (*SupportConversationHistoryResponse, error)
+	SupportConversationList(context.Context, *SupportConversationListRequest) (*SupportConversationListResponse, error)
+	SupportConversationClose(context.Context, *SupportConversationCloseRequest) (*SupportConversationCloseResponse, error)
+	SupportTicketStatus(context.Context, *SupportTicketStatusRequest) (*SupportTicketStatusResponse, error)
 	mustEmbedUnimplementedTelegramServer()
 }
 
@@ -526,6 +606,24 @@ func (UnimplementedTelegramServer) HfunCabalWalletLabelModify(context.Context, *
 }
 func (UnimplementedTelegramServer) HfunCabalWalletLabelRemove(context.Context, *HfunCabalWalletLabelDeleteRequest) (*HfunCabalWalletLabelDeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HfunCabalWalletLabelRemove not implemented")
+}
+func (UnimplementedTelegramServer) SupportConversationStart(context.Context, *SupportConversationStartRequest) (*SupportConversationStartResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SupportConversationStart not implemented")
+}
+func (UnimplementedTelegramServer) SupportMessageSend(context.Context, *SupportMessageSendRequest) (*SupportMessageSendResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SupportMessageSend not implemented")
+}
+func (UnimplementedTelegramServer) SupportConversationHistory(context.Context, *SupportConversationHistoryRequest) (*SupportConversationHistoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SupportConversationHistory not implemented")
+}
+func (UnimplementedTelegramServer) SupportConversationList(context.Context, *SupportConversationListRequest) (*SupportConversationListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SupportConversationList not implemented")
+}
+func (UnimplementedTelegramServer) SupportConversationClose(context.Context, *SupportConversationCloseRequest) (*SupportConversationCloseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SupportConversationClose not implemented")
+}
+func (UnimplementedTelegramServer) SupportTicketStatus(context.Context, *SupportTicketStatusRequest) (*SupportTicketStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SupportTicketStatus not implemented")
 }
 func (UnimplementedTelegramServer) mustEmbedUnimplementedTelegramServer() {}
 
@@ -1047,6 +1145,114 @@ func _Telegram_HfunCabalWalletLabelRemove_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Telegram_SupportConversationStart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SupportConversationStartRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).SupportConversationStart(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_SupportConversationStart_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).SupportConversationStart(ctx, req.(*SupportConversationStartRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_SupportMessageSend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SupportMessageSendRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).SupportMessageSend(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_SupportMessageSend_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).SupportMessageSend(ctx, req.(*SupportMessageSendRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_SupportConversationHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SupportConversationHistoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).SupportConversationHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_SupportConversationHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).SupportConversationHistory(ctx, req.(*SupportConversationHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_SupportConversationList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SupportConversationListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).SupportConversationList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_SupportConversationList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).SupportConversationList(ctx, req.(*SupportConversationListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_SupportConversationClose_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SupportConversationCloseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).SupportConversationClose(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_SupportConversationClose_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).SupportConversationClose(ctx, req.(*SupportConversationCloseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_SupportTicketStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SupportTicketStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).SupportTicketStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_SupportTicketStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).SupportTicketStatus(ctx, req.(*SupportTicketStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Telegram_ServiceDesc is the grpc.ServiceDesc for Telegram service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1161,6 +1367,30 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HfunCabalWalletLabelRemove",
 			Handler:    _Telegram_HfunCabalWalletLabelRemove_Handler,
+		},
+		{
+			MethodName: "SupportConversationStart",
+			Handler:    _Telegram_SupportConversationStart_Handler,
+		},
+		{
+			MethodName: "SupportMessageSend",
+			Handler:    _Telegram_SupportMessageSend_Handler,
+		},
+		{
+			MethodName: "SupportConversationHistory",
+			Handler:    _Telegram_SupportConversationHistory_Handler,
+		},
+		{
+			MethodName: "SupportConversationList",
+			Handler:    _Telegram_SupportConversationList_Handler,
+		},
+		{
+			MethodName: "SupportConversationClose",
+			Handler:    _Telegram_SupportConversationClose_Handler,
+		},
+		{
+			MethodName: "SupportTicketStatus",
+			Handler:    _Telegram_SupportTicketStatus_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

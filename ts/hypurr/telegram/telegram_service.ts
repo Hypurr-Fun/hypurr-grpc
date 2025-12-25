@@ -12,6 +12,8 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { SupportConversation } from "../support";
+import { SupportMessage } from "../support";
 import { HypurrFunCabalAlert } from "../cabal";
 import { BytesValue } from "../../google/protobuf/wrappers";
 import { HpumpV1Launch } from "../hpumpv1";
@@ -995,6 +997,214 @@ export interface HyperliquidAgentWalletCreateRequest {
  * @generated from protobuf message hypurr.HyperliquidAgentWalletCreateResponse
  */
 export interface HyperliquidAgentWalletCreateResponse {
+}
+// SupportConversationStart - Start or resume a conversation
+
+/**
+ * @generated from protobuf message hypurr.SupportConversationStartRequest
+ */
+export interface SupportConversationStartRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string project_id = 2;
+     */
+    projectId: string; // optional, defaults to "hfun"
+}
+/**
+ * @generated from protobuf message hypurr.SupportConversationStartResponse
+ */
+export interface SupportConversationStartResponse {
+    /**
+     * @generated from protobuf field: int64 conversation_id = 1;
+     */
+    conversationId: number;
+    /**
+     * @generated from protobuf field: string project_id = 2;
+     */
+    projectId: string;
+    /**
+     * @generated from protobuf field: bool closed = 3;
+     */
+    closed: boolean;
+    /**
+     * @generated from protobuf field: repeated hypurr.SupportMessage messages = 4;
+     */
+    messages: SupportMessage[];
+}
+// SupportMessageSend - Send a message in a conversation
+
+/**
+ * @generated from protobuf message hypurr.SupportMessageSendRequest
+ */
+export interface SupportMessageSendRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: int64 conversation_id = 2;
+     */
+    conversationId: number;
+    /**
+     * @generated from protobuf field: string message = 3;
+     */
+    message: string;
+}
+/**
+ * @generated from protobuf message hypurr.SupportMessageSendResponse
+ */
+export interface SupportMessageSendResponse {
+    /**
+     * @generated from protobuf field: hypurr.SupportMessage user_message = 1;
+     */
+    userMessage?: SupportMessage;
+    /**
+     * @generated from protobuf field: hypurr.SupportMessage ai_response = 2;
+     */
+    aiResponse?: SupportMessage; // optional, populated if AI responds
+    /**
+     * @generated from protobuf field: bool ticket_opened = 3;
+     */
+    ticketOpened: boolean;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value ticket_id = 4;
+     */
+    ticketId?: Int64Value; // set if ticket was opened
+}
+// SupportConversationHistory - Get message history
+
+/**
+ * @generated from protobuf message hypurr.SupportConversationHistoryRequest
+ */
+export interface SupportConversationHistoryRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: int64 conversation_id = 2;
+     */
+    conversationId: number;
+    /**
+     * @generated from protobuf field: int32 limit = 3;
+     */
+    limit: number; // default 50, max 100
+    /**
+     * @generated from protobuf field: int32 offset = 4;
+     */
+    offset: number; // default 0
+}
+/**
+ * @generated from protobuf message hypurr.SupportConversationHistoryResponse
+ */
+export interface SupportConversationHistoryResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.SupportMessage messages = 1;
+     */
+    messages: SupportMessage[];
+}
+// SupportConversationList - List user's conversations
+
+/**
+ * @generated from protobuf message hypurr.SupportConversationListRequest
+ */
+export interface SupportConversationListRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string project_id = 2;
+     */
+    projectId: string; // optional, filter by project
+    /**
+     * @generated from protobuf field: int32 limit = 3;
+     */
+    limit: number; // default 20, max 100
+    /**
+     * @generated from protobuf field: int32 offset = 4;
+     */
+    offset: number; // default 0
+}
+/**
+ * @generated from protobuf message hypurr.SupportConversationListResponse
+ */
+export interface SupportConversationListResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.SupportConversation conversations = 1;
+     */
+    conversations: SupportConversation[];
+}
+// SupportConversationClose - Close a conversation
+
+/**
+ * @generated from protobuf message hypurr.SupportConversationCloseRequest
+ */
+export interface SupportConversationCloseRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: int64 conversation_id = 2;
+     */
+    conversationId: number;
+}
+/**
+ * @generated from protobuf message hypurr.SupportConversationCloseResponse
+ */
+export interface SupportConversationCloseResponse {
+}
+// SupportTicketStatus - Get ticket status for a conversation
+
+/**
+ * @generated from protobuf message hypurr.SupportTicketStatusRequest
+ */
+export interface SupportTicketStatusRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: int64 conversation_id = 2;
+     */
+    conversationId: number;
+}
+/**
+ * @generated from protobuf message hypurr.SupportTicketStatusResponse
+ */
+export interface SupportTicketStatusResponse {
+    /**
+     * @generated from protobuf field: bool has_ticket = 1;
+     */
+    hasTicket: boolean;
+    /**
+     * @generated from protobuf field: int64 ticket_id = 2;
+     */
+    ticketId: number;
+    /**
+     * @generated from protobuf field: bool closed = 3;
+     */
+    closed: boolean;
+    /**
+     * @generated from protobuf field: string summary = 4;
+     */
+    summary: string;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserRequest$Type extends MessageType<TelegramUserRequest> {
@@ -4732,6 +4942,785 @@ class HyperliquidAgentWalletCreateResponse$Type extends MessageType<HyperliquidA
  * @generated MessageType for protobuf message hypurr.HyperliquidAgentWalletCreateResponse
  */
 export const HyperliquidAgentWalletCreateResponse = new HyperliquidAgentWalletCreateResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportConversationStartRequest$Type extends MessageType<SupportConversationStartRequest> {
+    constructor() {
+        super("hypurr.SupportConversationStartRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "project_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SupportConversationStartRequest>): SupportConversationStartRequest {
+        const message = { authData: {}, projectId: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportConversationStartRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportConversationStartRequest): SupportConversationStartRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string project_id */ 2:
+                    message.projectId = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: SupportConversationStartRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof SupportConversationStartRequest["authData"] | undefined, val: SupportConversationStartRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.SupportConversationStartRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: SupportConversationStartRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string project_id = 2; */
+        if (message.projectId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.projectId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportConversationStartRequest
+ */
+export const SupportConversationStartRequest = new SupportConversationStartRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportConversationStartResponse$Type extends MessageType<SupportConversationStartResponse> {
+    constructor() {
+        super("hypurr.SupportConversationStartResponse", [
+            { no: 1, name: "conversation_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "project_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "closed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SupportMessage }
+        ]);
+    }
+    create(value?: PartialMessage<SupportConversationStartResponse>): SupportConversationStartResponse {
+        const message = { conversationId: 0, projectId: "", closed: false, messages: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportConversationStartResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportConversationStartResponse): SupportConversationStartResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 conversation_id */ 1:
+                    message.conversationId = reader.int64().toNumber();
+                    break;
+                case /* string project_id */ 2:
+                    message.projectId = reader.string();
+                    break;
+                case /* bool closed */ 3:
+                    message.closed = reader.bool();
+                    break;
+                case /* repeated hypurr.SupportMessage messages */ 4:
+                    message.messages.push(SupportMessage.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SupportConversationStartResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 conversation_id = 1; */
+        if (message.conversationId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.conversationId);
+        /* string project_id = 2; */
+        if (message.projectId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.projectId);
+        /* bool closed = 3; */
+        if (message.closed !== false)
+            writer.tag(3, WireType.Varint).bool(message.closed);
+        /* repeated hypurr.SupportMessage messages = 4; */
+        for (let i = 0; i < message.messages.length; i++)
+            SupportMessage.internalBinaryWrite(message.messages[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportConversationStartResponse
+ */
+export const SupportConversationStartResponse = new SupportConversationStartResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportMessageSendRequest$Type extends MessageType<SupportMessageSendRequest> {
+    constructor() {
+        super("hypurr.SupportMessageSendRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "conversation_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SupportMessageSendRequest>): SupportMessageSendRequest {
+        const message = { authData: {}, conversationId: 0, message: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportMessageSendRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportMessageSendRequest): SupportMessageSendRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* int64 conversation_id */ 2:
+                    message.conversationId = reader.int64().toNumber();
+                    break;
+                case /* string message */ 3:
+                    message.message = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: SupportMessageSendRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof SupportMessageSendRequest["authData"] | undefined, val: SupportMessageSendRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.SupportMessageSendRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: SupportMessageSendRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* int64 conversation_id = 2; */
+        if (message.conversationId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.conversationId);
+        /* string message = 3; */
+        if (message.message !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.message);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportMessageSendRequest
+ */
+export const SupportMessageSendRequest = new SupportMessageSendRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportMessageSendResponse$Type extends MessageType<SupportMessageSendResponse> {
+    constructor() {
+        super("hypurr.SupportMessageSendResponse", [
+            { no: 1, name: "user_message", kind: "message", T: () => SupportMessage },
+            { no: 2, name: "ai_response", kind: "message", T: () => SupportMessage },
+            { no: 3, name: "ticket_opened", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "ticket_id", kind: "message", T: () => Int64Value }
+        ]);
+    }
+    create(value?: PartialMessage<SupportMessageSendResponse>): SupportMessageSendResponse {
+        const message = { ticketOpened: false };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportMessageSendResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportMessageSendResponse): SupportMessageSendResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.SupportMessage user_message */ 1:
+                    message.userMessage = SupportMessage.internalBinaryRead(reader, reader.uint32(), options, message.userMessage);
+                    break;
+                case /* hypurr.SupportMessage ai_response */ 2:
+                    message.aiResponse = SupportMessage.internalBinaryRead(reader, reader.uint32(), options, message.aiResponse);
+                    break;
+                case /* bool ticket_opened */ 3:
+                    message.ticketOpened = reader.bool();
+                    break;
+                case /* google.protobuf.Int64Value ticket_id */ 4:
+                    message.ticketId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.ticketId);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SupportMessageSendResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.SupportMessage user_message = 1; */
+        if (message.userMessage)
+            SupportMessage.internalBinaryWrite(message.userMessage, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.SupportMessage ai_response = 2; */
+        if (message.aiResponse)
+            SupportMessage.internalBinaryWrite(message.aiResponse, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* bool ticket_opened = 3; */
+        if (message.ticketOpened !== false)
+            writer.tag(3, WireType.Varint).bool(message.ticketOpened);
+        /* google.protobuf.Int64Value ticket_id = 4; */
+        if (message.ticketId)
+            Int64Value.internalBinaryWrite(message.ticketId, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportMessageSendResponse
+ */
+export const SupportMessageSendResponse = new SupportMessageSendResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportConversationHistoryRequest$Type extends MessageType<SupportConversationHistoryRequest> {
+    constructor() {
+        super("hypurr.SupportConversationHistoryRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "conversation_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "limit", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "offset", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SupportConversationHistoryRequest>): SupportConversationHistoryRequest {
+        const message = { authData: {}, conversationId: 0, limit: 0, offset: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportConversationHistoryRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportConversationHistoryRequest): SupportConversationHistoryRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* int64 conversation_id */ 2:
+                    message.conversationId = reader.int64().toNumber();
+                    break;
+                case /* int32 limit */ 3:
+                    message.limit = reader.int32();
+                    break;
+                case /* int32 offset */ 4:
+                    message.offset = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: SupportConversationHistoryRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof SupportConversationHistoryRequest["authData"] | undefined, val: SupportConversationHistoryRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.SupportConversationHistoryRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: SupportConversationHistoryRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* int64 conversation_id = 2; */
+        if (message.conversationId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.conversationId);
+        /* int32 limit = 3; */
+        if (message.limit !== 0)
+            writer.tag(3, WireType.Varint).int32(message.limit);
+        /* int32 offset = 4; */
+        if (message.offset !== 0)
+            writer.tag(4, WireType.Varint).int32(message.offset);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportConversationHistoryRequest
+ */
+export const SupportConversationHistoryRequest = new SupportConversationHistoryRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportConversationHistoryResponse$Type extends MessageType<SupportConversationHistoryResponse> {
+    constructor() {
+        super("hypurr.SupportConversationHistoryResponse", [
+            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SupportMessage }
+        ]);
+    }
+    create(value?: PartialMessage<SupportConversationHistoryResponse>): SupportConversationHistoryResponse {
+        const message = { messages: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportConversationHistoryResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportConversationHistoryResponse): SupportConversationHistoryResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.SupportMessage messages */ 1:
+                    message.messages.push(SupportMessage.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SupportConversationHistoryResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.SupportMessage messages = 1; */
+        for (let i = 0; i < message.messages.length; i++)
+            SupportMessage.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportConversationHistoryResponse
+ */
+export const SupportConversationHistoryResponse = new SupportConversationHistoryResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportConversationListRequest$Type extends MessageType<SupportConversationListRequest> {
+    constructor() {
+        super("hypurr.SupportConversationListRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "project_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "limit", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "offset", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SupportConversationListRequest>): SupportConversationListRequest {
+        const message = { authData: {}, projectId: "", limit: 0, offset: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportConversationListRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportConversationListRequest): SupportConversationListRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string project_id */ 2:
+                    message.projectId = reader.string();
+                    break;
+                case /* int32 limit */ 3:
+                    message.limit = reader.int32();
+                    break;
+                case /* int32 offset */ 4:
+                    message.offset = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: SupportConversationListRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof SupportConversationListRequest["authData"] | undefined, val: SupportConversationListRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.SupportConversationListRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: SupportConversationListRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string project_id = 2; */
+        if (message.projectId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.projectId);
+        /* int32 limit = 3; */
+        if (message.limit !== 0)
+            writer.tag(3, WireType.Varint).int32(message.limit);
+        /* int32 offset = 4; */
+        if (message.offset !== 0)
+            writer.tag(4, WireType.Varint).int32(message.offset);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportConversationListRequest
+ */
+export const SupportConversationListRequest = new SupportConversationListRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportConversationListResponse$Type extends MessageType<SupportConversationListResponse> {
+    constructor() {
+        super("hypurr.SupportConversationListResponse", [
+            { no: 1, name: "conversations", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SupportConversation }
+        ]);
+    }
+    create(value?: PartialMessage<SupportConversationListResponse>): SupportConversationListResponse {
+        const message = { conversations: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportConversationListResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportConversationListResponse): SupportConversationListResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.SupportConversation conversations */ 1:
+                    message.conversations.push(SupportConversation.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SupportConversationListResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.SupportConversation conversations = 1; */
+        for (let i = 0; i < message.conversations.length; i++)
+            SupportConversation.internalBinaryWrite(message.conversations[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportConversationListResponse
+ */
+export const SupportConversationListResponse = new SupportConversationListResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportConversationCloseRequest$Type extends MessageType<SupportConversationCloseRequest> {
+    constructor() {
+        super("hypurr.SupportConversationCloseRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "conversation_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SupportConversationCloseRequest>): SupportConversationCloseRequest {
+        const message = { authData: {}, conversationId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportConversationCloseRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportConversationCloseRequest): SupportConversationCloseRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* int64 conversation_id */ 2:
+                    message.conversationId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: SupportConversationCloseRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof SupportConversationCloseRequest["authData"] | undefined, val: SupportConversationCloseRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.SupportConversationCloseRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: SupportConversationCloseRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* int64 conversation_id = 2; */
+        if (message.conversationId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.conversationId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportConversationCloseRequest
+ */
+export const SupportConversationCloseRequest = new SupportConversationCloseRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportConversationCloseResponse$Type extends MessageType<SupportConversationCloseResponse> {
+    constructor() {
+        super("hypurr.SupportConversationCloseResponse", []);
+    }
+    create(value?: PartialMessage<SupportConversationCloseResponse>): SupportConversationCloseResponse {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportConversationCloseResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportConversationCloseResponse): SupportConversationCloseResponse {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: SupportConversationCloseResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportConversationCloseResponse
+ */
+export const SupportConversationCloseResponse = new SupportConversationCloseResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportTicketStatusRequest$Type extends MessageType<SupportTicketStatusRequest> {
+    constructor() {
+        super("hypurr.SupportTicketStatusRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "conversation_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SupportTicketStatusRequest>): SupportTicketStatusRequest {
+        const message = { authData: {}, conversationId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportTicketStatusRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportTicketStatusRequest): SupportTicketStatusRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* int64 conversation_id */ 2:
+                    message.conversationId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: SupportTicketStatusRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof SupportTicketStatusRequest["authData"] | undefined, val: SupportTicketStatusRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.SupportTicketStatusRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: SupportTicketStatusRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* int64 conversation_id = 2; */
+        if (message.conversationId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.conversationId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportTicketStatusRequest
+ */
+export const SupportTicketStatusRequest = new SupportTicketStatusRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportTicketStatusResponse$Type extends MessageType<SupportTicketStatusResponse> {
+    constructor() {
+        super("hypurr.SupportTicketStatusResponse", [
+            { no: 1, name: "has_ticket", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "ticket_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "closed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "summary", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SupportTicketStatusResponse>): SupportTicketStatusResponse {
+        const message = { hasTicket: false, ticketId: 0, closed: false, summary: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportTicketStatusResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportTicketStatusResponse): SupportTicketStatusResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bool has_ticket */ 1:
+                    message.hasTicket = reader.bool();
+                    break;
+                case /* int64 ticket_id */ 2:
+                    message.ticketId = reader.int64().toNumber();
+                    break;
+                case /* bool closed */ 3:
+                    message.closed = reader.bool();
+                    break;
+                case /* string summary */ 4:
+                    message.summary = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SupportTicketStatusResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bool has_ticket = 1; */
+        if (message.hasTicket !== false)
+            writer.tag(1, WireType.Varint).bool(message.hasTicket);
+        /* int64 ticket_id = 2; */
+        if (message.ticketId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.ticketId);
+        /* bool closed = 3; */
+        if (message.closed !== false)
+            writer.tag(3, WireType.Varint).bool(message.closed);
+        /* string summary = 4; */
+        if (message.summary !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.summary);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportTicketStatusResponse
+ */
+export const SupportTicketStatusResponse = new SupportTicketStatusResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Telegram
  */
@@ -4763,5 +5752,11 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "HfunCabalAlerts", serverStreaming: true, options: {}, I: HfunCabalAlertsRequest, O: HfunCabalAlertsResponse },
     { name: "HfunCabalWalletLabelAdd", options: {}, I: HfunCabalWalletLabelAddRequest, O: HfunCabalWalletLabelAddResponse },
     { name: "HfunCabalWalletLabelModify", options: {}, I: HfunCabalWalletLabelModifyRequest, O: HfunCabalWalletLabelModifyResponse },
-    { name: "HfunCabalWalletLabelRemove", options: {}, I: HfunCabalWalletLabelDeleteRequest, O: HfunCabalWalletLabelDeleteResponse }
+    { name: "HfunCabalWalletLabelRemove", options: {}, I: HfunCabalWalletLabelDeleteRequest, O: HfunCabalWalletLabelDeleteResponse },
+    { name: "SupportConversationStart", options: {}, I: SupportConversationStartRequest, O: SupportConversationStartResponse },
+    { name: "SupportMessageSend", options: {}, I: SupportMessageSendRequest, O: SupportMessageSendResponse },
+    { name: "SupportConversationHistory", options: {}, I: SupportConversationHistoryRequest, O: SupportConversationHistoryResponse },
+    { name: "SupportConversationList", options: {}, I: SupportConversationListRequest, O: SupportConversationListResponse },
+    { name: "SupportConversationClose", options: {}, I: SupportConversationCloseRequest, O: SupportConversationCloseResponse },
+    { name: "SupportTicketStatus", options: {}, I: SupportTicketStatusRequest, O: SupportTicketStatusResponse }
 ]);

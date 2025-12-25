@@ -22,15 +22,16 @@ from hypurr import common_pb2 as hypurr_dot_common__pb2
 from hypurr import hpumpv1_pb2 as hypurr_dot_hpumpv1__pb2
 from hypurr import trade_pb2 as hypurr_dot_trade__pb2
 from hypurr import cabal_pb2 as hypurr_dot_cabal__pb2
+from hypurr import support_pb2 as hypurr_dot_support__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/telegram/telegram_service.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n&hypurr/telegram/telegram_service.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x12hypurr/tools.proto\x1a\x13hypurr/wallet.proto\x1a\x11hypurr/user.proto\x1a\x13hypurr/launch.proto\x1a\x13hypurr/common.proto\x1a\x14hypurr/hpumpv1.proto\x1a\x12hypurr/trade.proto\x1a\x12hypurr/cabal.proto\"\x84\x01\n\x13TelegramUserRequest\x12<\n\tauth_data\x18\x01 \x03(\x0b\x32).hypurr.TelegramUserRequest.AuthDataEntry\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\":\n\x14TelegramUserResponse\x12\"\n\x04user\x18\x01 \x01(\x0b\x32\x14.hypurr.TelegramUser\"\x92\x01\n\x1aTelegramUserWalletsRequest\x12\x43\n\tauth_data\x18\x01 \x03(\x0b\x32\x30.hypurr.TelegramUserWalletsRequest.AuthDataEntry\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"I\n\x1bTelegramUserWalletsResponse\x12*\n\x07wallets\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidWallet\"\xd4\x01\n\x1bHyperliquidCoreTradeRequest\x12\x44\n\tauth_data\x18\x01 \x03(\x0b\x32\x31.hypurr.HyperliquidCoreTradeRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12+\n\x05order\x18\x03 \x01(\x0b\x32\x1c.hypurr.HyperliquidCoreOrder\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"k\n\x1cHyperliquidCoreTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"\xe5\x01\n\"HyperliquidCoreCancelOrdersRequest\x12K\n\tauth_data\x18\x01 \x03(\x0b\x32\x38.hypurr.HyperliquidCoreCancelOrdersRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12.\n\x07\x63\x61ncels\x18\x03 \x03(\x0b\x32\x1d.hypurr.HyperliquidCoreCancel\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"c\n#HyperliquidCoreCancelOrdersResponse\x12<\n\x08statuses\x18\x01 \x03(\x0b\x32*.hypurr.HyperliquidCoreOrderCanceledStatus\"\xdf\x04\n\x1cHyperliquidTwapCreateRequest\x12\x45\n\tauth_data\x18\x01 \x03(\x0b\x32\x32.hypurr.HyperliquidTwapCreateRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x10\n\x08\x64uration\x18\x03 \x01(\x03\x12\x0b\n\x03\x62uy\x18\x04 \x01(\x08\x12\x13\n\x0buse_chasing\x18\x05 \x01(\x08\x12\x13\n\x0breduce_only\x18\x06 \x01(\x08\x12\x31\n\x0cspot_pair_id\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x31\n\x0cperp_pair_id\x18\x08 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x35\n\x0ftarget_notional\x18\t \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_quantity\x18\n \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_leverage\x18\x0b \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmin_price\x18\x0c \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmax_price\x18\r \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"V\n\x1dHyperliquidTwapCreateResponse\x12\x35\n\x07session\x18\x01 \x01(\x0b\x32$.hypurr.HyperliquidWalletTwapSession\"\xc4\x03\n\x1cHyperliquidTwapModifyRequest\x12\x45\n\tauth_data\x18\x01 \x03(\x0b\x32\x32.hypurr.HyperliquidTwapModifyRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x12\n\nsession_id\x18\x03 \x01(\x03\x12\x35\n\x0ftarget_notional\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_quantity\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_leverage\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmin_price\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmax_price\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"V\n\x1dHyperliquidTwapModifyResponse\x12\x35\n\x07session\x18\x01 \x01(\x0b\x32$.hypurr.HyperliquidWalletTwapSession\"\xc2\x01\n\x1cHyperliquidTwapCancelRequest\x12\x45\n\tauth_data\x18\x01 \x03(\x0b\x32\x32.hypurr.HyperliquidTwapCancelRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x17\n\x0ftwap_session_id\x18\x03 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x1f\n\x1dHyperliquidTwapCancelResponse\"\xba\x04\n\x1dHyperliquidScaleCreateRequest\x12\x46\n\tauth_data\x18\x01 \x03(\x0b\x32\x33.hypurr.HyperliquidScaleCreateRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x13\n\x0border_count\x18\x03 \x01(\x03\x12\x0b\n\x03\x62uy\x18\x04 \x01(\x08\x12\x31\n\x0cspot_pair_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x31\n\x0cperp_pair_id\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x35\n\x0ftarget_notional\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_quantity\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_leverage\x18\t \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmin_price\x18\n \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmax_price\x18\x0b \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"X\n\x1eHyperliquidScaleCreateResponse\x12\x36\n\x07session\x18\x01 \x01(\x0b\x32%.hypurr.HyperliquidWalletScaleSession\"\xc5\x01\n\x1dHyperliquidScaleCancelRequest\x12\x46\n\tauth_data\x18\x01 \x03(\x0b\x32\x33.hypurr.HyperliquidScaleCancelRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x18\n\x10scale_session_id\x18\x03 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\" \n\x1eHyperliquidScaleCancelResponse\"\xf9\x01\n\x1dHyperliquidLaunchTradeRequest\x12\x46\n\tauth_data\x18\x01 \x03(\x0b\x32\x33.hypurr.HyperliquidLaunchTradeRequest.AuthDataEntry\x12\x11\n\tlaunch_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12)\n\tdirection\x18\x04 \x01(\x0e\x32\x16.hypurr.TradeDirection\x12\x0e\n\x06\x61mount\x18\x05 \x01(\x01\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"m\n\x1eHyperliquidLaunchTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"\xf3\x01\n\x1bHyperliquidSpotTradeRequest\x12\x44\n\tauth_data\x18\x01 \x03(\x0b\x32\x31.hypurr.HyperliquidSpotTradeRequest.AuthDataEntry\x12\x0f\n\x07pair_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12)\n\tdirection\x18\x04 \x01(\x0e\x32\x16.hypurr.TradeDirection\x12\x0e\n\x06\x61mount\x18\x05 \x01(\x01\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa1\x02\n\x19HpumpV1LaunchTradeRequest\x12\x42\n\tauth_data\x18\x01 \x03(\x0b\x32/.hypurr.HpumpV1LaunchTradeRequest.AuthDataEntry\x12\x11\n\tlaunch_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12)\n\tdirection\x18\x04 \x01(\x0e\x32\x16.hypurr.TradeDirection\x12\x0e\n\x06\x61mount\x18\x05 \x01(\t\x12\x14\n\x0cmax_slippage\x18\x06 \x01(\x01\x12\x18\n\x10max_gas_cost_usd\x18\x07 \x01(\x01\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"i\n\x1aHpumpV1LaunchTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\t\x12\x14\n\x0cquote_amount\x18\x02 \x01(\t\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"k\n\x1cHyperliquidSpotTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"\xa4\x01\n#HyperliquidSpotSniperConfigsRequest\x12L\n\tauth_data\x18\x01 \x03(\x0b\x32\x39.hypurr.HyperliquidSpotSniperConfigsRequest.AuthDataEntry\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\\\n$HyperliquidSpotSniperConfigsResponse\x12\x34\n\x07\x63onfigs\x18\x01 \x03(\x0b\x32#.hypurr.HyperliquidSpotSniperConfig\"\xc1\x01\n(DeleteHyperliquidSpotSniperConfigRequest\x12Q\n\tauth_data\x18\x01 \x03(\x0b\x32>.hypurr.DeleteHyperliquidSpotSniperConfigRequest.AuthDataEntry\x12\x11\n\tconfig_id\x18\x02 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"<\n)DeleteHyperliquidSpotSniperConfigResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"\xe3\x01\n(CreateHyperliquidSpotSniperConfigRequest\x12Q\n\tauth_data\x18\x01 \x03(\x0b\x32>.hypurr.CreateHyperliquidSpotSniperConfigRequest.AuthDataEntry\x12\x33\n\x06\x63onfig\x18\x02 \x01(\x0b\x32#.hypurr.HyperliquidSpotSniperConfig\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"q\n)CreateHyperliquidSpotSniperConfigResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x33\n\x06\x63onfig\x18\x02 \x01(\x0b\x32#.hypurr.HyperliquidSpotSniperConfig\"\xe3\x01\n(UpdateHyperliquidSpotSniperConfigRequest\x12Q\n\tauth_data\x18\x01 \x03(\x0b\x32>.hypurr.UpdateHyperliquidSpotSniperConfigRequest.AuthDataEntry\x12\x33\n\x06\x63onfig\x18\x02 \x01(\x0b\x32#.hypurr.HyperliquidSpotSniperConfig\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"<\n)UpdateHyperliquidSpotSniperConfigResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"\xc1\x01\n(HyperliquidWalletSpotTwapSessionsRequest\x12Q\n\tauth_data\x18\x01 \x03(\x0b\x32>.hypurr.HyperliquidWalletSpotTwapSessionsRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"g\n)HyperliquidWalletSpotTwapSessionsResponse\x12:\n\x08sessions\x18\x01 \x03(\x0b\x32(.hypurr.HyperliquidWalletSpotTwapSession\"\xb9\x01\n$HyperliquidWalletTwapSessionsRequest\x12M\n\tauth_data\x18\x01 \x03(\x0b\x32:.hypurr.HyperliquidWalletTwapSessionsRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"_\n%HyperliquidWalletTwapSessionsResponse\x12\x36\n\x08sessions\x18\x01 \x03(\x0b\x32$.hypurr.HyperliquidWalletTwapSession\"\xbb\x01\n%HyperliquidWalletScaleSessionsRequest\x12N\n\tauth_data\x18\x01 \x03(\x0b\x32;.hypurr.HyperliquidWalletScaleSessionsRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"a\n&HyperliquidWalletScaleSessionsResponse\x12\x37\n\x08sessions\x18\x01 \x03(\x0b\x32%.hypurr.HyperliquidWalletScaleSession\"\xde\x02\n\x1eLaunchHyperliquidLaunchRequest\x12G\n\tauth_data\x18\x01 \x03(\x0b\x32\x34.hypurr.LaunchHyperliquidLaunchRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x11\n\tfull_name\x18\x04 \x01(\t\x12\x12\n\ntoken_name\x18\x05 \x01(\t\x12\r\n\x05media\x18\x06 \x01(\x0c\x12%\n\nmedia_type\x18\x07 \x01(\x0e\x32\x11.hypurr.MediaType\x12\x1a\n\x12\x64\x65v_lockup_seconds\x18\x08 \x01(\x03\x12!\n\x19initial_purchase_notional\x18\t \x01(\x01\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"L\n\x1fLaunchHyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\xee\x02\n\x1aLaunchHpumpV1LaunchRequest\x12\x43\n\tauth_data\x18\x01 \x03(\x0b\x32\x30.hypurr.LaunchHpumpV1LaunchRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x11\n\tfull_name\x18\x04 \x01(\t\x12\x12\n\ntoken_name\x18\x05 \x01(\t\x12\r\n\x05media\x18\x06 \x01(\x0c\x12%\n\nmedia_type\x18\x07 \x01(\x0e\x32\x11.hypurr.MediaType\x12\x1a\n\x12\x64\x65v_lockup_seconds\x18\x08 \x01(\x03\x12!\n\x19initial_purchase_notional\x18\t \x01(\x01\x12\x16\n\x0elaunch_factory\x18\n \x01(\t\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"D\n\x1bLaunchHpumpV1LaunchResponse\x12%\n\x06launch\x18\x01 \x01(\x0b\x32\x15.hypurr.HpumpV1Launch\"\xc0\x02\n\x1c\x45\x64itHyperliquidLaunchRequest\x12\x45\n\tauth_data\x18\x01 \x03(\x0b\x32\x32.hypurr.EditHyperliquidLaunchRequest.AuthDataEntry\x12\x11\n\tlaunch_id\x18\x02 \x01(\x03\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x11\n\tfull_name\x18\x04 \x01(\t\x12*\n\x05media\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.BytesValue\x12%\n\nmedia_type\x18\x06 \x01(\x0e\x32\x11.hypurr.MediaType\x12\x1a\n\x12\x64\x65v_lockup_seconds\x18\x07 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"J\n\x1d\x45\x64itHyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\x8a\x01\n\x16HfunCabalAlertsRequest\x12?\n\tauth_data\x18\x01 \x03(\x0b\x32,.hypurr.HfunCabalAlertsRequest.AuthDataEntry\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"F\n\x17HfunCabalAlertsResponse\x12+\n\x06\x61lerts\x18\x01 \x03(\x0b\x32\x1b.hypurr.HypurrFunCabalAlert\"\xc8\x01\n\x1eHfunCabalWalletLabelAddRequest\x12G\n\tauth_data\x18\x01 \x03(\x0b\x32\x34.hypurr.HfunCabalWalletLabelAddRequest.AuthDataEntry\x12\x16\n\x0ewallet_address\x18\x02 \x01(\t\x12\x14\n\x0cwallet_label\x18\x03 \x01(\t\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"!\n\x1fHfunCabalWalletLabelAddResponse\"\xd4\x01\n!HfunCabalWalletLabelModifyRequest\x12J\n\tauth_data\x18\x01 \x03(\x0b\x32\x37.hypurr.HfunCabalWalletLabelModifyRequest.AuthDataEntry\x12\x18\n\x10wallet_label_old\x18\x02 \x01(\t\x12\x18\n\x10wallet_label_new\x18\x03 \x01(\t\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"$\n\"HfunCabalWalletLabelModifyResponse\"\xb6\x01\n!HfunCabalWalletLabelDeleteRequest\x12J\n\tauth_data\x18\x01 \x03(\x0b\x32\x37.hypurr.HfunCabalWalletLabelDeleteRequest.AuthDataEntry\x12\x14\n\x0cwallet_label\x18\x02 \x01(\t\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"$\n\"HfunCabalWalletLabelDeleteResponse\"n\n\x0f\x45IP712Signature\x12\x14\n\x0c\x61gentAddress\x18\x01 \x01(\t\x12\x11\n\tagentName\x18\x02 \x01(\t\x12\r\n\x05nonce\x18\x03 \x01(\x03\x12\x11\n\tsignature\x18\x04 \x01(\t\x12\x10\n\x08\x63hain_id\x18\x05 \x01(\x03\"\xbb\x01\n&HyperliquidAgentSignatureCreateRequest\x12O\n\tauth_data\x18\x01 \x03(\x0b\x32<.hypurr.HyperliquidAgentSignatureCreateRequest.AuthDataEntry\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"8\n\'HyperliquidAgentSignatureCreateResponse\x12\r\n\x05\x61gent\x18\x01 \x01(\t\"\xde\x01\n#HyperliquidAgentWalletCreateRequest\x12L\n\tauth_data\x18\x01 \x03(\x0b\x32\x39.hypurr.HyperliquidAgentWalletCreateRequest.AuthDataEntry\x12\x0c\n\x04name\x18\x02 \x01(\t\x12*\n\tsignature\x18\x03 \x01(\x0b\x32\x17.hypurr.EIP712Signature\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"&\n$HyperliquidAgentWalletCreateResponse2\xf6\x18\n\x08Telegram\x12K\n\x0cTelegramUser\x12\x1b.hypurr.TelegramUserRequest\x1a\x1c.hypurr.TelegramUserResponse\"\x00\x12`\n\x13TelegramUserWallets\x12\".hypurr.TelegramUserWalletsRequest\x1a#.hypurr.TelegramUserWalletsResponse\"\x00\x12i\n\x16HyperliquidLaunchTrade\x12%.hypurr.HyperliquidLaunchTradeRequest\x1a&.hypurr.HyperliquidLaunchTradeResponse\"\x00\x12l\n\x17LaunchHyperliquidLaunch\x12&.hypurr.LaunchHyperliquidLaunchRequest\x1a\'.hypurr.LaunchHyperliquidLaunchResponse\"\x00\x12\x66\n\x15\x45\x64itHyperliquidLaunch\x12$.hypurr.EditHyperliquidLaunchRequest\x1a%.hypurr.EditHyperliquidLaunchResponse\"\x00\x12]\n\x12HpumpV1LaunchTrade\x12!.hypurr.HpumpV1LaunchTradeRequest\x1a\".hypurr.HpumpV1LaunchTradeResponse\"\x00\x12`\n\x13LaunchHpumpV1Launch\x12\".hypurr.LaunchHpumpV1LaunchRequest\x1a#.hypurr.LaunchHpumpV1LaunchResponse\"\x00\x12\x63\n\x14HyperliquidSpotTrade\x12#.hypurr.HyperliquidSpotTradeRequest\x1a$.hypurr.HyperliquidSpotTradeResponse\"\x00\x12\x63\n\x14HyperliquidCoreTrade\x12#.hypurr.HyperliquidCoreTradeRequest\x1a$.hypurr.HyperliquidCoreTradeResponse\"\x00\x12x\n\x1bHyperliquidCoreCancelOrders\x12*.hypurr.HyperliquidCoreCancelOrdersRequest\x1a+.hypurr.HyperliquidCoreCancelOrdersResponse\"\x00\x12\x8a\x01\n!HyperliquidWalletSpotTwapSessions\x12\x30.hypurr.HyperliquidWalletSpotTwapSessionsRequest\x1a\x31.hypurr.HyperliquidWalletSpotTwapSessionsResponse\"\x00\x12~\n\x1dHyperliquidWalletTwapSessions\x12,.hypurr.HyperliquidWalletTwapSessionsRequest\x1a-.hypurr.HyperliquidWalletTwapSessionsResponse\"\x00\x12\x81\x01\n\x1eHyperliquidWalletScaleSessions\x12-.hypurr.HyperliquidWalletScaleSessionsRequest\x1a..hypurr.HyperliquidWalletScaleSessionsResponse\"\x00\x12\x66\n\x15HyperliquidTwapCreate\x12$.hypurr.HyperliquidTwapCreateRequest\x1a%.hypurr.HyperliquidTwapCreateResponse\"\x00\x12\x66\n\x15HyperliquidTwapModify\x12$.hypurr.HyperliquidTwapModifyRequest\x1a%.hypurr.HyperliquidTwapModifyResponse\"\x00\x12\x66\n\x15HyperliquidTwapCancel\x12$.hypurr.HyperliquidTwapCancelRequest\x1a%.hypurr.HyperliquidTwapCancelResponse\"\x00\x12i\n\x16HyperliquidScaleCreate\x12%.hypurr.HyperliquidScaleCreateRequest\x1a&.hypurr.HyperliquidScaleCreateResponse\"\x00\x12i\n\x16HyperliquidScaleCancel\x12%.hypurr.HyperliquidScaleCancelRequest\x1a&.hypurr.HyperliquidScaleCancelResponse\"\x00\x12{\n\x1cHyperliquidSpotSniperConfigs\x12+.hypurr.HyperliquidSpotSniperConfigsRequest\x1a,.hypurr.HyperliquidSpotSniperConfigsResponse\"\x00\x12\x8a\x01\n!CreateHyperliquidSpotSniperConfig\x12\x30.hypurr.CreateHyperliquidSpotSniperConfigRequest\x1a\x31.hypurr.CreateHyperliquidSpotSniperConfigResponse\"\x00\x12\x8a\x01\n!DeleteHyperliquidSpotSniperConfig\x12\x30.hypurr.DeleteHyperliquidSpotSniperConfigRequest\x1a\x31.hypurr.DeleteHyperliquidSpotSniperConfigResponse\"\x00\x12\x8a\x01\n!UpdateHyperliquidSpotSniperConfig\x12\x30.hypurr.UpdateHyperliquidSpotSniperConfigRequest\x1a\x31.hypurr.UpdateHyperliquidSpotSniperConfigResponse\"\x00\x12\x80\x01\n\x1fHyperliquidAgentSignatureCreate\x12..hypurr.HyperliquidAgentSignatureCreateRequest\x1a+.hypurr.HyperliquidAgentWalletCreateRequest\"\x00\x12{\n\x1cHyperliquidAgentWalletCreate\x12+.hypurr.HyperliquidAgentWalletCreateRequest\x1a,.hypurr.HyperliquidAgentWalletCreateResponse\"\x00\x12V\n\x0fHfunCabalAlerts\x12\x1e.hypurr.HfunCabalAlertsRequest\x1a\x1f.hypurr.HfunCabalAlertsResponse\"\x00\x30\x01\x12l\n\x17HfunCabalWalletLabelAdd\x12&.hypurr.HfunCabalWalletLabelAddRequest\x1a\'.hypurr.HfunCabalWalletLabelAddResponse\"\x00\x12u\n\x1aHfunCabalWalletLabelModify\x12).hypurr.HfunCabalWalletLabelModifyRequest\x1a*.hypurr.HfunCabalWalletLabelModifyResponse\"\x00\x12u\n\x1aHfunCabalWalletLabelRemove\x12).hypurr.HfunCabalWalletLabelDeleteRequest\x1a*.hypurr.HfunCabalWalletLabelDeleteResponse\"\x00\x42\x32Z0gitlab.com/hypurr/hypurr-grpc/go/hypurr/telegramb\x06proto3')
+  serialized_pb=_b('\n&hypurr/telegram/telegram_service.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x12hypurr/tools.proto\x1a\x13hypurr/wallet.proto\x1a\x11hypurr/user.proto\x1a\x13hypurr/launch.proto\x1a\x13hypurr/common.proto\x1a\x14hypurr/hpumpv1.proto\x1a\x12hypurr/trade.proto\x1a\x12hypurr/cabal.proto\x1a\x14hypurr/support.proto\"\x84\x01\n\x13TelegramUserRequest\x12<\n\tauth_data\x18\x01 \x03(\x0b\x32).hypurr.TelegramUserRequest.AuthDataEntry\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\":\n\x14TelegramUserResponse\x12\"\n\x04user\x18\x01 \x01(\x0b\x32\x14.hypurr.TelegramUser\"\x92\x01\n\x1aTelegramUserWalletsRequest\x12\x43\n\tauth_data\x18\x01 \x03(\x0b\x32\x30.hypurr.TelegramUserWalletsRequest.AuthDataEntry\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"I\n\x1bTelegramUserWalletsResponse\x12*\n\x07wallets\x18\x01 \x03(\x0b\x32\x19.hypurr.HyperliquidWallet\"\xd4\x01\n\x1bHyperliquidCoreTradeRequest\x12\x44\n\tauth_data\x18\x01 \x03(\x0b\x32\x31.hypurr.HyperliquidCoreTradeRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12+\n\x05order\x18\x03 \x01(\x0b\x32\x1c.hypurr.HyperliquidCoreOrder\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"k\n\x1cHyperliquidCoreTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"\xe5\x01\n\"HyperliquidCoreCancelOrdersRequest\x12K\n\tauth_data\x18\x01 \x03(\x0b\x32\x38.hypurr.HyperliquidCoreCancelOrdersRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12.\n\x07\x63\x61ncels\x18\x03 \x03(\x0b\x32\x1d.hypurr.HyperliquidCoreCancel\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"c\n#HyperliquidCoreCancelOrdersResponse\x12<\n\x08statuses\x18\x01 \x03(\x0b\x32*.hypurr.HyperliquidCoreOrderCanceledStatus\"\xdf\x04\n\x1cHyperliquidTwapCreateRequest\x12\x45\n\tauth_data\x18\x01 \x03(\x0b\x32\x32.hypurr.HyperliquidTwapCreateRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x10\n\x08\x64uration\x18\x03 \x01(\x03\x12\x0b\n\x03\x62uy\x18\x04 \x01(\x08\x12\x13\n\x0buse_chasing\x18\x05 \x01(\x08\x12\x13\n\x0breduce_only\x18\x06 \x01(\x08\x12\x31\n\x0cspot_pair_id\x18\x07 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x31\n\x0cperp_pair_id\x18\x08 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x35\n\x0ftarget_notional\x18\t \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_quantity\x18\n \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_leverage\x18\x0b \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmin_price\x18\x0c \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmax_price\x18\r \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"V\n\x1dHyperliquidTwapCreateResponse\x12\x35\n\x07session\x18\x01 \x01(\x0b\x32$.hypurr.HyperliquidWalletTwapSession\"\xc4\x03\n\x1cHyperliquidTwapModifyRequest\x12\x45\n\tauth_data\x18\x01 \x03(\x0b\x32\x32.hypurr.HyperliquidTwapModifyRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x12\n\nsession_id\x18\x03 \x01(\x03\x12\x35\n\x0ftarget_notional\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_quantity\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_leverage\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmin_price\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmax_price\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"V\n\x1dHyperliquidTwapModifyResponse\x12\x35\n\x07session\x18\x01 \x01(\x0b\x32$.hypurr.HyperliquidWalletTwapSession\"\xc2\x01\n\x1cHyperliquidTwapCancelRequest\x12\x45\n\tauth_data\x18\x01 \x03(\x0b\x32\x32.hypurr.HyperliquidTwapCancelRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x17\n\x0ftwap_session_id\x18\x03 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x1f\n\x1dHyperliquidTwapCancelResponse\"\xba\x04\n\x1dHyperliquidScaleCreateRequest\x12\x46\n\tauth_data\x18\x01 \x03(\x0b\x32\x33.hypurr.HyperliquidScaleCreateRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x13\n\x0border_count\x18\x03 \x01(\x03\x12\x0b\n\x03\x62uy\x18\x04 \x01(\x08\x12\x31\n\x0cspot_pair_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x31\n\x0cperp_pair_id\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x35\n\x0ftarget_notional\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_quantity\x18\x08 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12\x35\n\x0ftarget_leverage\x18\t \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmin_price\x18\n \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x12/\n\tmax_price\x18\x0b \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"X\n\x1eHyperliquidScaleCreateResponse\x12\x36\n\x07session\x18\x01 \x01(\x0b\x32%.hypurr.HyperliquidWalletScaleSession\"\xc5\x01\n\x1dHyperliquidScaleCancelRequest\x12\x46\n\tauth_data\x18\x01 \x03(\x0b\x32\x33.hypurr.HyperliquidScaleCancelRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x18\n\x10scale_session_id\x18\x03 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\" \n\x1eHyperliquidScaleCancelResponse\"\xf9\x01\n\x1dHyperliquidLaunchTradeRequest\x12\x46\n\tauth_data\x18\x01 \x03(\x0b\x32\x33.hypurr.HyperliquidLaunchTradeRequest.AuthDataEntry\x12\x11\n\tlaunch_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12)\n\tdirection\x18\x04 \x01(\x0e\x32\x16.hypurr.TradeDirection\x12\x0e\n\x06\x61mount\x18\x05 \x01(\x01\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"m\n\x1eHyperliquidLaunchTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"\xf3\x01\n\x1bHyperliquidSpotTradeRequest\x12\x44\n\tauth_data\x18\x01 \x03(\x0b\x32\x31.hypurr.HyperliquidSpotTradeRequest.AuthDataEntry\x12\x0f\n\x07pair_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12)\n\tdirection\x18\x04 \x01(\x0e\x32\x16.hypurr.TradeDirection\x12\x0e\n\x06\x61mount\x18\x05 \x01(\x01\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa1\x02\n\x19HpumpV1LaunchTradeRequest\x12\x42\n\tauth_data\x18\x01 \x03(\x0b\x32/.hypurr.HpumpV1LaunchTradeRequest.AuthDataEntry\x12\x11\n\tlaunch_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12)\n\tdirection\x18\x04 \x01(\x0e\x32\x16.hypurr.TradeDirection\x12\x0e\n\x06\x61mount\x18\x05 \x01(\t\x12\x14\n\x0cmax_slippage\x18\x06 \x01(\x01\x12\x18\n\x10max_gas_cost_usd\x18\x07 \x01(\x01\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"i\n\x1aHpumpV1LaunchTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\t\x12\x14\n\x0cquote_amount\x18\x02 \x01(\t\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"k\n\x1cHyperliquidSpotTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"\xa4\x01\n#HyperliquidSpotSniperConfigsRequest\x12L\n\tauth_data\x18\x01 \x03(\x0b\x32\x39.hypurr.HyperliquidSpotSniperConfigsRequest.AuthDataEntry\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\\\n$HyperliquidSpotSniperConfigsResponse\x12\x34\n\x07\x63onfigs\x18\x01 \x03(\x0b\x32#.hypurr.HyperliquidSpotSniperConfig\"\xc1\x01\n(DeleteHyperliquidSpotSniperConfigRequest\x12Q\n\tauth_data\x18\x01 \x03(\x0b\x32>.hypurr.DeleteHyperliquidSpotSniperConfigRequest.AuthDataEntry\x12\x11\n\tconfig_id\x18\x02 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"<\n)DeleteHyperliquidSpotSniperConfigResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"\xe3\x01\n(CreateHyperliquidSpotSniperConfigRequest\x12Q\n\tauth_data\x18\x01 \x03(\x0b\x32>.hypurr.CreateHyperliquidSpotSniperConfigRequest.AuthDataEntry\x12\x33\n\x06\x63onfig\x18\x02 \x01(\x0b\x32#.hypurr.HyperliquidSpotSniperConfig\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"q\n)CreateHyperliquidSpotSniperConfigResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x33\n\x06\x63onfig\x18\x02 \x01(\x0b\x32#.hypurr.HyperliquidSpotSniperConfig\"\xe3\x01\n(UpdateHyperliquidSpotSniperConfigRequest\x12Q\n\tauth_data\x18\x01 \x03(\x0b\x32>.hypurr.UpdateHyperliquidSpotSniperConfigRequest.AuthDataEntry\x12\x33\n\x06\x63onfig\x18\x02 \x01(\x0b\x32#.hypurr.HyperliquidSpotSniperConfig\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"<\n)UpdateHyperliquidSpotSniperConfigResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"\xc1\x01\n(HyperliquidWalletSpotTwapSessionsRequest\x12Q\n\tauth_data\x18\x01 \x03(\x0b\x32>.hypurr.HyperliquidWalletSpotTwapSessionsRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"g\n)HyperliquidWalletSpotTwapSessionsResponse\x12:\n\x08sessions\x18\x01 \x03(\x0b\x32(.hypurr.HyperliquidWalletSpotTwapSession\"\xb9\x01\n$HyperliquidWalletTwapSessionsRequest\x12M\n\tauth_data\x18\x01 \x03(\x0b\x32:.hypurr.HyperliquidWalletTwapSessionsRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"_\n%HyperliquidWalletTwapSessionsResponse\x12\x36\n\x08sessions\x18\x01 \x03(\x0b\x32$.hypurr.HyperliquidWalletTwapSession\"\xbb\x01\n%HyperliquidWalletScaleSessionsRequest\x12N\n\tauth_data\x18\x01 \x03(\x0b\x32;.hypurr.HyperliquidWalletScaleSessionsRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"a\n&HyperliquidWalletScaleSessionsResponse\x12\x37\n\x08sessions\x18\x01 \x03(\x0b\x32%.hypurr.HyperliquidWalletScaleSession\"\xde\x02\n\x1eLaunchHyperliquidLaunchRequest\x12G\n\tauth_data\x18\x01 \x03(\x0b\x32\x34.hypurr.LaunchHyperliquidLaunchRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x11\n\tfull_name\x18\x04 \x01(\t\x12\x12\n\ntoken_name\x18\x05 \x01(\t\x12\r\n\x05media\x18\x06 \x01(\x0c\x12%\n\nmedia_type\x18\x07 \x01(\x0e\x32\x11.hypurr.MediaType\x12\x1a\n\x12\x64\x65v_lockup_seconds\x18\x08 \x01(\x03\x12!\n\x19initial_purchase_notional\x18\t \x01(\x01\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"L\n\x1fLaunchHyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\xee\x02\n\x1aLaunchHpumpV1LaunchRequest\x12\x43\n\tauth_data\x18\x01 \x03(\x0b\x32\x30.hypurr.LaunchHpumpV1LaunchRequest.AuthDataEntry\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x11\n\tfull_name\x18\x04 \x01(\t\x12\x12\n\ntoken_name\x18\x05 \x01(\t\x12\r\n\x05media\x18\x06 \x01(\x0c\x12%\n\nmedia_type\x18\x07 \x01(\x0e\x32\x11.hypurr.MediaType\x12\x1a\n\x12\x64\x65v_lockup_seconds\x18\x08 \x01(\x03\x12!\n\x19initial_purchase_notional\x18\t \x01(\x01\x12\x16\n\x0elaunch_factory\x18\n \x01(\t\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"D\n\x1bLaunchHpumpV1LaunchResponse\x12%\n\x06launch\x18\x01 \x01(\x0b\x32\x15.hypurr.HpumpV1Launch\"\xc0\x02\n\x1c\x45\x64itHyperliquidLaunchRequest\x12\x45\n\tauth_data\x18\x01 \x03(\x0b\x32\x32.hypurr.EditHyperliquidLaunchRequest.AuthDataEntry\x12\x11\n\tlaunch_id\x18\x02 \x01(\x03\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x11\n\tfull_name\x18\x04 \x01(\t\x12*\n\x05media\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.BytesValue\x12%\n\nmedia_type\x18\x06 \x01(\x0e\x32\x11.hypurr.MediaType\x12\x1a\n\x12\x64\x65v_lockup_seconds\x18\x07 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"J\n\x1d\x45\x64itHyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\x8a\x01\n\x16HfunCabalAlertsRequest\x12?\n\tauth_data\x18\x01 \x03(\x0b\x32,.hypurr.HfunCabalAlertsRequest.AuthDataEntry\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"F\n\x17HfunCabalAlertsResponse\x12+\n\x06\x61lerts\x18\x01 \x03(\x0b\x32\x1b.hypurr.HypurrFunCabalAlert\"\xc8\x01\n\x1eHfunCabalWalletLabelAddRequest\x12G\n\tauth_data\x18\x01 \x03(\x0b\x32\x34.hypurr.HfunCabalWalletLabelAddRequest.AuthDataEntry\x12\x16\n\x0ewallet_address\x18\x02 \x01(\t\x12\x14\n\x0cwallet_label\x18\x03 \x01(\t\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"!\n\x1fHfunCabalWalletLabelAddResponse\"\xd4\x01\n!HfunCabalWalletLabelModifyRequest\x12J\n\tauth_data\x18\x01 \x03(\x0b\x32\x37.hypurr.HfunCabalWalletLabelModifyRequest.AuthDataEntry\x12\x18\n\x10wallet_label_old\x18\x02 \x01(\t\x12\x18\n\x10wallet_label_new\x18\x03 \x01(\t\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"$\n\"HfunCabalWalletLabelModifyResponse\"\xb6\x01\n!HfunCabalWalletLabelDeleteRequest\x12J\n\tauth_data\x18\x01 \x03(\x0b\x32\x37.hypurr.HfunCabalWalletLabelDeleteRequest.AuthDataEntry\x12\x14\n\x0cwallet_label\x18\x02 \x01(\t\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"$\n\"HfunCabalWalletLabelDeleteResponse\"n\n\x0f\x45IP712Signature\x12\x14\n\x0c\x61gentAddress\x18\x01 \x01(\t\x12\x11\n\tagentName\x18\x02 \x01(\t\x12\r\n\x05nonce\x18\x03 \x01(\x03\x12\x11\n\tsignature\x18\x04 \x01(\t\x12\x10\n\x08\x63hain_id\x18\x05 \x01(\x03\"\xbb\x01\n&HyperliquidAgentSignatureCreateRequest\x12O\n\tauth_data\x18\x01 \x03(\x0b\x32<.hypurr.HyperliquidAgentSignatureCreateRequest.AuthDataEntry\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"8\n\'HyperliquidAgentSignatureCreateResponse\x12\r\n\x05\x61gent\x18\x01 \x01(\t\"\xde\x01\n#HyperliquidAgentWalletCreateRequest\x12L\n\tauth_data\x18\x01 \x03(\x0b\x32\x39.hypurr.HyperliquidAgentWalletCreateRequest.AuthDataEntry\x12\x0c\n\x04name\x18\x02 \x01(\t\x12*\n\tsignature\x18\x03 \x01(\x0b\x32\x17.hypurr.EIP712Signature\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"&\n$HyperliquidAgentWalletCreateResponse\"\xb0\x01\n\x1fSupportConversationStartRequest\x12H\n\tauth_data\x18\x01 \x03(\x0b\x32\x35.hypurr.SupportConversationStartRequest.AuthDataEntry\x12\x12\n\nproject_id\x18\x02 \x01(\t\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x89\x01\n SupportConversationStartResponse\x12\x17\n\x0f\x63onversation_id\x18\x01 \x01(\x03\x12\x12\n\nproject_id\x18\x02 \x01(\t\x12\x0e\n\x06\x63losed\x18\x03 \x01(\x08\x12(\n\x08messages\x18\x04 \x03(\x0b\x32\x16.hypurr.SupportMessage\"\xba\x01\n\x19SupportMessageSendRequest\x12\x42\n\tauth_data\x18\x01 \x03(\x0b\x32/.hypurr.SupportMessageSendRequest.AuthDataEntry\x12\x17\n\x0f\x63onversation_id\x18\x02 \x01(\x03\x12\x0f\n\x07message\x18\x03 \x01(\t\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xbe\x01\n\x1aSupportMessageSendResponse\x12,\n\x0cuser_message\x18\x01 \x01(\x0b\x32\x16.hypurr.SupportMessage\x12+\n\x0b\x61i_response\x18\x02 \x01(\x0b\x32\x16.hypurr.SupportMessage\x12\x15\n\rticket_opened\x18\x03 \x01(\x08\x12.\n\tticket_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"\xd8\x01\n!SupportConversationHistoryRequest\x12J\n\tauth_data\x18\x01 \x03(\x0b\x32\x37.hypurr.SupportConversationHistoryRequest.AuthDataEntry\x12\x17\n\x0f\x63onversation_id\x18\x02 \x01(\x03\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"N\n\"SupportConversationHistoryResponse\x12(\n\x08messages\x18\x01 \x03(\x0b\x32\x16.hypurr.SupportMessage\"\xcd\x01\n\x1eSupportConversationListRequest\x12G\n\tauth_data\x18\x01 \x03(\x0b\x32\x34.hypurr.SupportConversationListRequest.AuthDataEntry\x12\x12\n\nproject_id\x18\x02 \x01(\t\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0e\n\x06offset\x18\x04 \x01(\x05\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"U\n\x1fSupportConversationListResponse\x12\x32\n\rconversations\x18\x01 \x03(\x0b\x32\x1b.hypurr.SupportConversation\"\xb5\x01\n\x1fSupportConversationCloseRequest\x12H\n\tauth_data\x18\x01 \x03(\x0b\x32\x35.hypurr.SupportConversationCloseRequest.AuthDataEntry\x12\x17\n\x0f\x63onversation_id\x18\x02 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\"\n SupportConversationCloseResponse\"\xab\x01\n\x1aSupportTicketStatusRequest\x12\x43\n\tauth_data\x18\x01 \x03(\x0b\x32\x30.hypurr.SupportTicketStatusRequest.AuthDataEntry\x12\x17\n\x0f\x63onversation_id\x18\x02 \x01(\x03\x1a/\n\rAuthDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"e\n\x1bSupportTicketStatusResponse\x12\x12\n\nhas_ticket\x18\x01 \x01(\x08\x12\x11\n\tticket_id\x18\x02 \x01(\x03\x12\x0e\n\x06\x63losed\x18\x03 \x01(\x08\x12\x0f\n\x07summary\x18\x04 \x01(\t2\xf6\x1d\n\x08Telegram\x12K\n\x0cTelegramUser\x12\x1b.hypurr.TelegramUserRequest\x1a\x1c.hypurr.TelegramUserResponse\"\x00\x12`\n\x13TelegramUserWallets\x12\".hypurr.TelegramUserWalletsRequest\x1a#.hypurr.TelegramUserWalletsResponse\"\x00\x12i\n\x16HyperliquidLaunchTrade\x12%.hypurr.HyperliquidLaunchTradeRequest\x1a&.hypurr.HyperliquidLaunchTradeResponse\"\x00\x12l\n\x17LaunchHyperliquidLaunch\x12&.hypurr.LaunchHyperliquidLaunchRequest\x1a\'.hypurr.LaunchHyperliquidLaunchResponse\"\x00\x12\x66\n\x15\x45\x64itHyperliquidLaunch\x12$.hypurr.EditHyperliquidLaunchRequest\x1a%.hypurr.EditHyperliquidLaunchResponse\"\x00\x12]\n\x12HpumpV1LaunchTrade\x12!.hypurr.HpumpV1LaunchTradeRequest\x1a\".hypurr.HpumpV1LaunchTradeResponse\"\x00\x12`\n\x13LaunchHpumpV1Launch\x12\".hypurr.LaunchHpumpV1LaunchRequest\x1a#.hypurr.LaunchHpumpV1LaunchResponse\"\x00\x12\x63\n\x14HyperliquidSpotTrade\x12#.hypurr.HyperliquidSpotTradeRequest\x1a$.hypurr.HyperliquidSpotTradeResponse\"\x00\x12\x63\n\x14HyperliquidCoreTrade\x12#.hypurr.HyperliquidCoreTradeRequest\x1a$.hypurr.HyperliquidCoreTradeResponse\"\x00\x12x\n\x1bHyperliquidCoreCancelOrders\x12*.hypurr.HyperliquidCoreCancelOrdersRequest\x1a+.hypurr.HyperliquidCoreCancelOrdersResponse\"\x00\x12\x8a\x01\n!HyperliquidWalletSpotTwapSessions\x12\x30.hypurr.HyperliquidWalletSpotTwapSessionsRequest\x1a\x31.hypurr.HyperliquidWalletSpotTwapSessionsResponse\"\x00\x12~\n\x1dHyperliquidWalletTwapSessions\x12,.hypurr.HyperliquidWalletTwapSessionsRequest\x1a-.hypurr.HyperliquidWalletTwapSessionsResponse\"\x00\x12\x81\x01\n\x1eHyperliquidWalletScaleSessions\x12-.hypurr.HyperliquidWalletScaleSessionsRequest\x1a..hypurr.HyperliquidWalletScaleSessionsResponse\"\x00\x12\x66\n\x15HyperliquidTwapCreate\x12$.hypurr.HyperliquidTwapCreateRequest\x1a%.hypurr.HyperliquidTwapCreateResponse\"\x00\x12\x66\n\x15HyperliquidTwapModify\x12$.hypurr.HyperliquidTwapModifyRequest\x1a%.hypurr.HyperliquidTwapModifyResponse\"\x00\x12\x66\n\x15HyperliquidTwapCancel\x12$.hypurr.HyperliquidTwapCancelRequest\x1a%.hypurr.HyperliquidTwapCancelResponse\"\x00\x12i\n\x16HyperliquidScaleCreate\x12%.hypurr.HyperliquidScaleCreateRequest\x1a&.hypurr.HyperliquidScaleCreateResponse\"\x00\x12i\n\x16HyperliquidScaleCancel\x12%.hypurr.HyperliquidScaleCancelRequest\x1a&.hypurr.HyperliquidScaleCancelResponse\"\x00\x12{\n\x1cHyperliquidSpotSniperConfigs\x12+.hypurr.HyperliquidSpotSniperConfigsRequest\x1a,.hypurr.HyperliquidSpotSniperConfigsResponse\"\x00\x12\x8a\x01\n!CreateHyperliquidSpotSniperConfig\x12\x30.hypurr.CreateHyperliquidSpotSniperConfigRequest\x1a\x31.hypurr.CreateHyperliquidSpotSniperConfigResponse\"\x00\x12\x8a\x01\n!DeleteHyperliquidSpotSniperConfig\x12\x30.hypurr.DeleteHyperliquidSpotSniperConfigRequest\x1a\x31.hypurr.DeleteHyperliquidSpotSniperConfigResponse\"\x00\x12\x8a\x01\n!UpdateHyperliquidSpotSniperConfig\x12\x30.hypurr.UpdateHyperliquidSpotSniperConfigRequest\x1a\x31.hypurr.UpdateHyperliquidSpotSniperConfigResponse\"\x00\x12\x84\x01\n\x1fHyperliquidAgentSignatureCreate\x12..hypurr.HyperliquidAgentSignatureCreateRequest\x1a/.hypurr.HyperliquidAgentSignatureCreateResponse\"\x00\x12{\n\x1cHyperliquidAgentWalletCreate\x12+.hypurr.HyperliquidAgentWalletCreateRequest\x1a,.hypurr.HyperliquidAgentWalletCreateResponse\"\x00\x12V\n\x0fHfunCabalAlerts\x12\x1e.hypurr.HfunCabalAlertsRequest\x1a\x1f.hypurr.HfunCabalAlertsResponse\"\x00\x30\x01\x12l\n\x17HfunCabalWalletLabelAdd\x12&.hypurr.HfunCabalWalletLabelAddRequest\x1a\'.hypurr.HfunCabalWalletLabelAddResponse\"\x00\x12u\n\x1aHfunCabalWalletLabelModify\x12).hypurr.HfunCabalWalletLabelModifyRequest\x1a*.hypurr.HfunCabalWalletLabelModifyResponse\"\x00\x12u\n\x1aHfunCabalWalletLabelRemove\x12).hypurr.HfunCabalWalletLabelDeleteRequest\x1a*.hypurr.HfunCabalWalletLabelDeleteResponse\"\x00\x12m\n\x18SupportConversationStart\x12\'.hypurr.SupportConversationStartRequest\x1a(.hypurr.SupportConversationStartResponse\x12[\n\x12SupportMessageSend\x12!.hypurr.SupportMessageSendRequest\x1a\".hypurr.SupportMessageSendResponse\x12s\n\x1aSupportConversationHistory\x12).hypurr.SupportConversationHistoryRequest\x1a*.hypurr.SupportConversationHistoryResponse\x12j\n\x17SupportConversationList\x12&.hypurr.SupportConversationListRequest\x1a\'.hypurr.SupportConversationListResponse\x12m\n\x18SupportConversationClose\x12\'.hypurr.SupportConversationCloseRequest\x1a(.hypurr.SupportConversationCloseResponse\x12^\n\x13SupportTicketStatus\x12\".hypurr.SupportTicketStatusRequest\x1a#.hypurr.SupportTicketStatusResponseB2Z0gitlab.com/hypurr/hypurr-grpc/go/hypurr/telegramb\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,hypurr_dot_tools__pb2.DESCRIPTOR,hypurr_dot_wallet__pb2.DESCRIPTOR,hypurr_dot_user__pb2.DESCRIPTOR,hypurr_dot_launch__pb2.DESCRIPTOR,hypurr_dot_common__pb2.DESCRIPTOR,hypurr_dot_hpumpv1__pb2.DESCRIPTOR,hypurr_dot_trade__pb2.DESCRIPTOR,hypurr_dot_cabal__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,hypurr_dot_tools__pb2.DESCRIPTOR,hypurr_dot_wallet__pb2.DESCRIPTOR,hypurr_dot_user__pb2.DESCRIPTOR,hypurr_dot_launch__pb2.DESCRIPTOR,hypurr_dot_common__pb2.DESCRIPTOR,hypurr_dot_hpumpv1__pb2.DESCRIPTOR,hypurr_dot_trade__pb2.DESCRIPTOR,hypurr_dot_cabal__pb2.DESCRIPTOR,hypurr_dot_support__pb2.DESCRIPTOR,])
 
 
 
@@ -68,8 +69,8 @@ _TELEGRAMUSERREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _TELEGRAMUSERREQUEST = _descriptor.Descriptor(
@@ -98,8 +99,8 @@ _TELEGRAMUSERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=247,
-  serialized_end=379,
+  serialized_start=269,
+  serialized_end=401,
 )
 
 
@@ -129,8 +130,8 @@ _TELEGRAMUSERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=381,
-  serialized_end=439,
+  serialized_start=403,
+  serialized_end=461,
 )
 
 
@@ -167,8 +168,8 @@ _TELEGRAMUSERWALLETSREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _TELEGRAMUSERWALLETSREQUEST = _descriptor.Descriptor(
@@ -197,8 +198,8 @@ _TELEGRAMUSERWALLETSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=442,
-  serialized_end=588,
+  serialized_start=464,
+  serialized_end=610,
 )
 
 
@@ -228,8 +229,8 @@ _TELEGRAMUSERWALLETSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=590,
-  serialized_end=663,
+  serialized_start=612,
+  serialized_end=685,
 )
 
 
@@ -266,8 +267,8 @@ _HYPERLIQUIDCORETRADEREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDCORETRADEREQUEST = _descriptor.Descriptor(
@@ -310,8 +311,8 @@ _HYPERLIQUIDCORETRADEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=666,
-  serialized_end=878,
+  serialized_start=688,
+  serialized_end=900,
 )
 
 
@@ -362,8 +363,8 @@ _HYPERLIQUIDCORETRADERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=880,
-  serialized_end=987,
+  serialized_start=902,
+  serialized_end=1009,
 )
 
 
@@ -400,8 +401,8 @@ _HYPERLIQUIDCORECANCELORDERSREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDCORECANCELORDERSREQUEST = _descriptor.Descriptor(
@@ -444,8 +445,8 @@ _HYPERLIQUIDCORECANCELORDERSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=990,
-  serialized_end=1219,
+  serialized_start=1012,
+  serialized_end=1241,
 )
 
 
@@ -475,8 +476,8 @@ _HYPERLIQUIDCORECANCELORDERSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1221,
-  serialized_end=1320,
+  serialized_start=1243,
+  serialized_end=1342,
 )
 
 
@@ -513,8 +514,8 @@ _HYPERLIQUIDTWAPCREATEREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDTWAPCREATEREQUEST = _descriptor.Descriptor(
@@ -627,8 +628,8 @@ _HYPERLIQUIDTWAPCREATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1323,
-  serialized_end=1930,
+  serialized_start=1345,
+  serialized_end=1952,
 )
 
 
@@ -658,8 +659,8 @@ _HYPERLIQUIDTWAPCREATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1932,
-  serialized_end=2018,
+  serialized_start=1954,
+  serialized_end=2040,
 )
 
 
@@ -696,8 +697,8 @@ _HYPERLIQUIDTWAPMODIFYREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDTWAPMODIFYREQUEST = _descriptor.Descriptor(
@@ -775,8 +776,8 @@ _HYPERLIQUIDTWAPMODIFYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2021,
-  serialized_end=2473,
+  serialized_start=2043,
+  serialized_end=2495,
 )
 
 
@@ -806,8 +807,8 @@ _HYPERLIQUIDTWAPMODIFYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2475,
-  serialized_end=2561,
+  serialized_start=2497,
+  serialized_end=2583,
 )
 
 
@@ -844,8 +845,8 @@ _HYPERLIQUIDTWAPCANCELREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDTWAPCANCELREQUEST = _descriptor.Descriptor(
@@ -888,8 +889,8 @@ _HYPERLIQUIDTWAPCANCELREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2564,
-  serialized_end=2758,
+  serialized_start=2586,
+  serialized_end=2780,
 )
 
 
@@ -912,8 +913,8 @@ _HYPERLIQUIDTWAPCANCELRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2760,
-  serialized_end=2791,
+  serialized_start=2782,
+  serialized_end=2813,
 )
 
 
@@ -950,8 +951,8 @@ _HYPERLIQUIDSCALECREATEREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDSCALECREATEREQUEST = _descriptor.Descriptor(
@@ -1050,8 +1051,8 @@ _HYPERLIQUIDSCALECREATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2794,
-  serialized_end=3364,
+  serialized_start=2816,
+  serialized_end=3386,
 )
 
 
@@ -1081,8 +1082,8 @@ _HYPERLIQUIDSCALECREATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3366,
-  serialized_end=3454,
+  serialized_start=3388,
+  serialized_end=3476,
 )
 
 
@@ -1119,8 +1120,8 @@ _HYPERLIQUIDSCALECANCELREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDSCALECANCELREQUEST = _descriptor.Descriptor(
@@ -1163,8 +1164,8 @@ _HYPERLIQUIDSCALECANCELREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3457,
-  serialized_end=3654,
+  serialized_start=3479,
+  serialized_end=3676,
 )
 
 
@@ -1187,8 +1188,8 @@ _HYPERLIQUIDSCALECANCELRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3656,
-  serialized_end=3688,
+  serialized_start=3678,
+  serialized_end=3710,
 )
 
 
@@ -1225,8 +1226,8 @@ _HYPERLIQUIDLAUNCHTRADEREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDLAUNCHTRADEREQUEST = _descriptor.Descriptor(
@@ -1283,8 +1284,8 @@ _HYPERLIQUIDLAUNCHTRADEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3691,
-  serialized_end=3940,
+  serialized_start=3713,
+  serialized_end=3962,
 )
 
 
@@ -1335,8 +1336,8 @@ _HYPERLIQUIDLAUNCHTRADERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3942,
-  serialized_end=4051,
+  serialized_start=3964,
+  serialized_end=4073,
 )
 
 
@@ -1373,8 +1374,8 @@ _HYPERLIQUIDSPOTTRADEREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDSPOTTRADEREQUEST = _descriptor.Descriptor(
@@ -1431,8 +1432,8 @@ _HYPERLIQUIDSPOTTRADEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4054,
-  serialized_end=4297,
+  serialized_start=4076,
+  serialized_end=4319,
 )
 
 
@@ -1469,8 +1470,8 @@ _HPUMPV1LAUNCHTRADEREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HPUMPV1LAUNCHTRADEREQUEST = _descriptor.Descriptor(
@@ -1541,8 +1542,8 @@ _HPUMPV1LAUNCHTRADEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4300,
-  serialized_end=4589,
+  serialized_start=4322,
+  serialized_end=4611,
 )
 
 
@@ -1593,8 +1594,8 @@ _HPUMPV1LAUNCHTRADERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4591,
-  serialized_end=4696,
+  serialized_start=4613,
+  serialized_end=4718,
 )
 
 
@@ -1645,8 +1646,8 @@ _HYPERLIQUIDSPOTTRADERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4698,
-  serialized_end=4805,
+  serialized_start=4720,
+  serialized_end=4827,
 )
 
 
@@ -1683,8 +1684,8 @@ _HYPERLIQUIDSPOTSNIPERCONFIGSREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDSPOTSNIPERCONFIGSREQUEST = _descriptor.Descriptor(
@@ -1713,8 +1714,8 @@ _HYPERLIQUIDSPOTSNIPERCONFIGSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4808,
-  serialized_end=4972,
+  serialized_start=4830,
+  serialized_end=4994,
 )
 
 
@@ -1744,8 +1745,8 @@ _HYPERLIQUIDSPOTSNIPERCONFIGSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=4974,
-  serialized_end=5066,
+  serialized_start=4996,
+  serialized_end=5088,
 )
 
 
@@ -1782,8 +1783,8 @@ _DELETEHYPERLIQUIDSPOTSNIPERCONFIGREQUEST_AUTHDATAENTRY = _descriptor.Descriptor
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _DELETEHYPERLIQUIDSPOTSNIPERCONFIGREQUEST = _descriptor.Descriptor(
@@ -1819,8 +1820,8 @@ _DELETEHYPERLIQUIDSPOTSNIPERCONFIGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5069,
-  serialized_end=5262,
+  serialized_start=5091,
+  serialized_end=5284,
 )
 
 
@@ -1850,8 +1851,8 @@ _DELETEHYPERLIQUIDSPOTSNIPERCONFIGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5264,
-  serialized_end=5324,
+  serialized_start=5286,
+  serialized_end=5346,
 )
 
 
@@ -1888,8 +1889,8 @@ _CREATEHYPERLIQUIDSPOTSNIPERCONFIGREQUEST_AUTHDATAENTRY = _descriptor.Descriptor
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _CREATEHYPERLIQUIDSPOTSNIPERCONFIGREQUEST = _descriptor.Descriptor(
@@ -1925,8 +1926,8 @@ _CREATEHYPERLIQUIDSPOTSNIPERCONFIGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5327,
-  serialized_end=5554,
+  serialized_start=5349,
+  serialized_end=5576,
 )
 
 
@@ -1963,8 +1964,8 @@ _CREATEHYPERLIQUIDSPOTSNIPERCONFIGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5556,
-  serialized_end=5669,
+  serialized_start=5578,
+  serialized_end=5691,
 )
 
 
@@ -2001,8 +2002,8 @@ _UPDATEHYPERLIQUIDSPOTSNIPERCONFIGREQUEST_AUTHDATAENTRY = _descriptor.Descriptor
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _UPDATEHYPERLIQUIDSPOTSNIPERCONFIGREQUEST = _descriptor.Descriptor(
@@ -2038,8 +2039,8 @@ _UPDATEHYPERLIQUIDSPOTSNIPERCONFIGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5672,
-  serialized_end=5899,
+  serialized_start=5694,
+  serialized_end=5921,
 )
 
 
@@ -2069,8 +2070,8 @@ _UPDATEHYPERLIQUIDSPOTSNIPERCONFIGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5901,
-  serialized_end=5961,
+  serialized_start=5923,
+  serialized_end=5983,
 )
 
 
@@ -2107,8 +2108,8 @@ _HYPERLIQUIDWALLETSPOTTWAPSESSIONSREQUEST_AUTHDATAENTRY = _descriptor.Descriptor
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDWALLETSPOTTWAPSESSIONSREQUEST = _descriptor.Descriptor(
@@ -2144,8 +2145,8 @@ _HYPERLIQUIDWALLETSPOTTWAPSESSIONSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=5964,
-  serialized_end=6157,
+  serialized_start=5986,
+  serialized_end=6179,
 )
 
 
@@ -2175,8 +2176,8 @@ _HYPERLIQUIDWALLETSPOTTWAPSESSIONSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6159,
-  serialized_end=6262,
+  serialized_start=6181,
+  serialized_end=6284,
 )
 
 
@@ -2213,8 +2214,8 @@ _HYPERLIQUIDWALLETTWAPSESSIONSREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDWALLETTWAPSESSIONSREQUEST = _descriptor.Descriptor(
@@ -2250,8 +2251,8 @@ _HYPERLIQUIDWALLETTWAPSESSIONSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6265,
-  serialized_end=6450,
+  serialized_start=6287,
+  serialized_end=6472,
 )
 
 
@@ -2281,8 +2282,8 @@ _HYPERLIQUIDWALLETTWAPSESSIONSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6452,
-  serialized_end=6547,
+  serialized_start=6474,
+  serialized_end=6569,
 )
 
 
@@ -2319,8 +2320,8 @@ _HYPERLIQUIDWALLETSCALESESSIONSREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDWALLETSCALESESSIONSREQUEST = _descriptor.Descriptor(
@@ -2356,8 +2357,8 @@ _HYPERLIQUIDWALLETSCALESESSIONSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6550,
-  serialized_end=6737,
+  serialized_start=6572,
+  serialized_end=6759,
 )
 
 
@@ -2387,8 +2388,8 @@ _HYPERLIQUIDWALLETSCALESESSIONSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6739,
-  serialized_end=6836,
+  serialized_start=6761,
+  serialized_end=6858,
 )
 
 
@@ -2425,8 +2426,8 @@ _LAUNCHHYPERLIQUIDLAUNCHREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _LAUNCHHYPERLIQUIDLAUNCHREQUEST = _descriptor.Descriptor(
@@ -2511,8 +2512,8 @@ _LAUNCHHYPERLIQUIDLAUNCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=6839,
-  serialized_end=7189,
+  serialized_start=6861,
+  serialized_end=7211,
 )
 
 
@@ -2542,8 +2543,8 @@ _LAUNCHHYPERLIQUIDLAUNCHRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7191,
-  serialized_end=7267,
+  serialized_start=7213,
+  serialized_end=7289,
 )
 
 
@@ -2580,8 +2581,8 @@ _LAUNCHHPUMPV1LAUNCHREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _LAUNCHHPUMPV1LAUNCHREQUEST = _descriptor.Descriptor(
@@ -2673,8 +2674,8 @@ _LAUNCHHPUMPV1LAUNCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7270,
-  serialized_end=7636,
+  serialized_start=7292,
+  serialized_end=7658,
 )
 
 
@@ -2704,8 +2705,8 @@ _LAUNCHHPUMPV1LAUNCHRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7638,
-  serialized_end=7706,
+  serialized_start=7660,
+  serialized_end=7728,
 )
 
 
@@ -2742,8 +2743,8 @@ _EDITHYPERLIQUIDLAUNCHREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _EDITHYPERLIQUIDLAUNCHREQUEST = _descriptor.Descriptor(
@@ -2814,8 +2815,8 @@ _EDITHYPERLIQUIDLAUNCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=7709,
-  serialized_end=8029,
+  serialized_start=7731,
+  serialized_end=8051,
 )
 
 
@@ -2845,8 +2846,8 @@ _EDITHYPERLIQUIDLAUNCHRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8031,
-  serialized_end=8105,
+  serialized_start=8053,
+  serialized_end=8127,
 )
 
 
@@ -2883,8 +2884,8 @@ _HFUNCABALALERTSREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HFUNCABALALERTSREQUEST = _descriptor.Descriptor(
@@ -2913,8 +2914,8 @@ _HFUNCABALALERTSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8108,
-  serialized_end=8246,
+  serialized_start=8130,
+  serialized_end=8268,
 )
 
 
@@ -2944,8 +2945,8 @@ _HFUNCABALALERTSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8248,
-  serialized_end=8318,
+  serialized_start=8270,
+  serialized_end=8340,
 )
 
 
@@ -2982,8 +2983,8 @@ _HFUNCABALWALLETLABELADDREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HFUNCABALWALLETLABELADDREQUEST = _descriptor.Descriptor(
@@ -3026,8 +3027,8 @@ _HFUNCABALWALLETLABELADDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8321,
-  serialized_end=8521,
+  serialized_start=8343,
+  serialized_end=8543,
 )
 
 
@@ -3050,8 +3051,8 @@ _HFUNCABALWALLETLABELADDRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8523,
-  serialized_end=8556,
+  serialized_start=8545,
+  serialized_end=8578,
 )
 
 
@@ -3088,8 +3089,8 @@ _HFUNCABALWALLETLABELMODIFYREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HFUNCABALWALLETLABELMODIFYREQUEST = _descriptor.Descriptor(
@@ -3132,8 +3133,8 @@ _HFUNCABALWALLETLABELMODIFYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8559,
-  serialized_end=8771,
+  serialized_start=8581,
+  serialized_end=8793,
 )
 
 
@@ -3156,8 +3157,8 @@ _HFUNCABALWALLETLABELMODIFYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8773,
-  serialized_end=8809,
+  serialized_start=8795,
+  serialized_end=8831,
 )
 
 
@@ -3194,8 +3195,8 @@ _HFUNCABALWALLETLABELDELETEREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HFUNCABALWALLETLABELDELETEREQUEST = _descriptor.Descriptor(
@@ -3231,8 +3232,8 @@ _HFUNCABALWALLETLABELDELETEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8812,
-  serialized_end=8994,
+  serialized_start=8834,
+  serialized_end=9016,
 )
 
 
@@ -3255,8 +3256,8 @@ _HFUNCABALWALLETLABELDELETERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=8996,
-  serialized_end=9032,
+  serialized_start=9018,
+  serialized_end=9054,
 )
 
 
@@ -3314,8 +3315,8 @@ _EIP712SIGNATURE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9034,
-  serialized_end=9144,
+  serialized_start=9056,
+  serialized_end=9166,
 )
 
 
@@ -3352,8 +3353,8 @@ _HYPERLIQUIDAGENTSIGNATURECREATEREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDAGENTSIGNATURECREATEREQUEST = _descriptor.Descriptor(
@@ -3389,8 +3390,8 @@ _HYPERLIQUIDAGENTSIGNATURECREATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9147,
-  serialized_end=9334,
+  serialized_start=9169,
+  serialized_end=9356,
 )
 
 
@@ -3420,8 +3421,8 @@ _HYPERLIQUIDAGENTSIGNATURECREATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9336,
-  serialized_end=9392,
+  serialized_start=9358,
+  serialized_end=9414,
 )
 
 
@@ -3458,8 +3459,8 @@ _HYPERLIQUIDAGENTWALLETCREATEREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=332,
-  serialized_end=379,
+  serialized_start=354,
+  serialized_end=401,
 )
 
 _HYPERLIQUIDAGENTWALLETCREATEREQUEST = _descriptor.Descriptor(
@@ -3502,8 +3503,8 @@ _HYPERLIQUIDAGENTWALLETCREATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9395,
-  serialized_end=9617,
+  serialized_start=9417,
+  serialized_end=9639,
 )
 
 
@@ -3526,8 +3527,735 @@ _HYPERLIQUIDAGENTWALLETCREATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=9619,
-  serialized_end=9657,
+  serialized_start=9641,
+  serialized_end=9679,
+)
+
+
+_SUPPORTCONVERSATIONSTARTREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
+  name='AuthDataEntry',
+  full_name='hypurr.SupportConversationStartRequest.AuthDataEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='hypurr.SupportConversationStartRequest.AuthDataEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='hypurr.SupportConversationStartRequest.AuthDataEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=354,
+  serialized_end=401,
+)
+
+_SUPPORTCONVERSATIONSTARTREQUEST = _descriptor.Descriptor(
+  name='SupportConversationStartRequest',
+  full_name='hypurr.SupportConversationStartRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='auth_data', full_name='hypurr.SupportConversationStartRequest.auth_data', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='project_id', full_name='hypurr.SupportConversationStartRequest.project_id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_SUPPORTCONVERSATIONSTARTREQUEST_AUTHDATAENTRY, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=9682,
+  serialized_end=9858,
+)
+
+
+_SUPPORTCONVERSATIONSTARTRESPONSE = _descriptor.Descriptor(
+  name='SupportConversationStartResponse',
+  full_name='hypurr.SupportConversationStartResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='conversation_id', full_name='hypurr.SupportConversationStartResponse.conversation_id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='project_id', full_name='hypurr.SupportConversationStartResponse.project_id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='closed', full_name='hypurr.SupportConversationStartResponse.closed', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='messages', full_name='hypurr.SupportConversationStartResponse.messages', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=9861,
+  serialized_end=9998,
+)
+
+
+_SUPPORTMESSAGESENDREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
+  name='AuthDataEntry',
+  full_name='hypurr.SupportMessageSendRequest.AuthDataEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='hypurr.SupportMessageSendRequest.AuthDataEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='hypurr.SupportMessageSendRequest.AuthDataEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=354,
+  serialized_end=401,
+)
+
+_SUPPORTMESSAGESENDREQUEST = _descriptor.Descriptor(
+  name='SupportMessageSendRequest',
+  full_name='hypurr.SupportMessageSendRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='auth_data', full_name='hypurr.SupportMessageSendRequest.auth_data', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='conversation_id', full_name='hypurr.SupportMessageSendRequest.conversation_id', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='hypurr.SupportMessageSendRequest.message', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_SUPPORTMESSAGESENDREQUEST_AUTHDATAENTRY, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=10001,
+  serialized_end=10187,
+)
+
+
+_SUPPORTMESSAGESENDRESPONSE = _descriptor.Descriptor(
+  name='SupportMessageSendResponse',
+  full_name='hypurr.SupportMessageSendResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='user_message', full_name='hypurr.SupportMessageSendResponse.user_message', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='ai_response', full_name='hypurr.SupportMessageSendResponse.ai_response', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='ticket_opened', full_name='hypurr.SupportMessageSendResponse.ticket_opened', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='ticket_id', full_name='hypurr.SupportMessageSendResponse.ticket_id', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=10190,
+  serialized_end=10380,
+)
+
+
+_SUPPORTCONVERSATIONHISTORYREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
+  name='AuthDataEntry',
+  full_name='hypurr.SupportConversationHistoryRequest.AuthDataEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='hypurr.SupportConversationHistoryRequest.AuthDataEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='hypurr.SupportConversationHistoryRequest.AuthDataEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=354,
+  serialized_end=401,
+)
+
+_SUPPORTCONVERSATIONHISTORYREQUEST = _descriptor.Descriptor(
+  name='SupportConversationHistoryRequest',
+  full_name='hypurr.SupportConversationHistoryRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='auth_data', full_name='hypurr.SupportConversationHistoryRequest.auth_data', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='conversation_id', full_name='hypurr.SupportConversationHistoryRequest.conversation_id', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='limit', full_name='hypurr.SupportConversationHistoryRequest.limit', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='offset', full_name='hypurr.SupportConversationHistoryRequest.offset', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_SUPPORTCONVERSATIONHISTORYREQUEST_AUTHDATAENTRY, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=10383,
+  serialized_end=10599,
+)
+
+
+_SUPPORTCONVERSATIONHISTORYRESPONSE = _descriptor.Descriptor(
+  name='SupportConversationHistoryResponse',
+  full_name='hypurr.SupportConversationHistoryResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='messages', full_name='hypurr.SupportConversationHistoryResponse.messages', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=10601,
+  serialized_end=10679,
+)
+
+
+_SUPPORTCONVERSATIONLISTREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
+  name='AuthDataEntry',
+  full_name='hypurr.SupportConversationListRequest.AuthDataEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='hypurr.SupportConversationListRequest.AuthDataEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='hypurr.SupportConversationListRequest.AuthDataEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=354,
+  serialized_end=401,
+)
+
+_SUPPORTCONVERSATIONLISTREQUEST = _descriptor.Descriptor(
+  name='SupportConversationListRequest',
+  full_name='hypurr.SupportConversationListRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='auth_data', full_name='hypurr.SupportConversationListRequest.auth_data', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='project_id', full_name='hypurr.SupportConversationListRequest.project_id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='limit', full_name='hypurr.SupportConversationListRequest.limit', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='offset', full_name='hypurr.SupportConversationListRequest.offset', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_SUPPORTCONVERSATIONLISTREQUEST_AUTHDATAENTRY, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=10682,
+  serialized_end=10887,
+)
+
+
+_SUPPORTCONVERSATIONLISTRESPONSE = _descriptor.Descriptor(
+  name='SupportConversationListResponse',
+  full_name='hypurr.SupportConversationListResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='conversations', full_name='hypurr.SupportConversationListResponse.conversations', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=10889,
+  serialized_end=10974,
+)
+
+
+_SUPPORTCONVERSATIONCLOSEREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
+  name='AuthDataEntry',
+  full_name='hypurr.SupportConversationCloseRequest.AuthDataEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='hypurr.SupportConversationCloseRequest.AuthDataEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='hypurr.SupportConversationCloseRequest.AuthDataEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=354,
+  serialized_end=401,
+)
+
+_SUPPORTCONVERSATIONCLOSEREQUEST = _descriptor.Descriptor(
+  name='SupportConversationCloseRequest',
+  full_name='hypurr.SupportConversationCloseRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='auth_data', full_name='hypurr.SupportConversationCloseRequest.auth_data', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='conversation_id', full_name='hypurr.SupportConversationCloseRequest.conversation_id', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_SUPPORTCONVERSATIONCLOSEREQUEST_AUTHDATAENTRY, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=10977,
+  serialized_end=11158,
+)
+
+
+_SUPPORTCONVERSATIONCLOSERESPONSE = _descriptor.Descriptor(
+  name='SupportConversationCloseResponse',
+  full_name='hypurr.SupportConversationCloseResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=11160,
+  serialized_end=11194,
+)
+
+
+_SUPPORTTICKETSTATUSREQUEST_AUTHDATAENTRY = _descriptor.Descriptor(
+  name='AuthDataEntry',
+  full_name='hypurr.SupportTicketStatusRequest.AuthDataEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='hypurr.SupportTicketStatusRequest.AuthDataEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='hypurr.SupportTicketStatusRequest.AuthDataEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=354,
+  serialized_end=401,
+)
+
+_SUPPORTTICKETSTATUSREQUEST = _descriptor.Descriptor(
+  name='SupportTicketStatusRequest',
+  full_name='hypurr.SupportTicketStatusRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='auth_data', full_name='hypurr.SupportTicketStatusRequest.auth_data', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='conversation_id', full_name='hypurr.SupportTicketStatusRequest.conversation_id', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_SUPPORTTICKETSTATUSREQUEST_AUTHDATAENTRY, ],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=11197,
+  serialized_end=11368,
+)
+
+
+_SUPPORTTICKETSTATUSRESPONSE = _descriptor.Descriptor(
+  name='SupportTicketStatusResponse',
+  full_name='hypurr.SupportTicketStatusResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='has_ticket', full_name='hypurr.SupportTicketStatusResponse.has_ticket', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='ticket_id', full_name='hypurr.SupportTicketStatusResponse.ticket_id', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='closed', full_name='hypurr.SupportTicketStatusResponse.closed', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='summary', full_name='hypurr.SupportTicketStatusResponse.summary', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=11370,
+  serialized_end=11471,
 )
 
 _TELEGRAMUSERREQUEST_AUTHDATAENTRY.containing_type = _TELEGRAMUSERREQUEST
@@ -3632,6 +4360,24 @@ _HYPERLIQUIDAGENTSIGNATURECREATEREQUEST.fields_by_name['auth_data'].message_type
 _HYPERLIQUIDAGENTWALLETCREATEREQUEST_AUTHDATAENTRY.containing_type = _HYPERLIQUIDAGENTWALLETCREATEREQUEST
 _HYPERLIQUIDAGENTWALLETCREATEREQUEST.fields_by_name['auth_data'].message_type = _HYPERLIQUIDAGENTWALLETCREATEREQUEST_AUTHDATAENTRY
 _HYPERLIQUIDAGENTWALLETCREATEREQUEST.fields_by_name['signature'].message_type = _EIP712SIGNATURE
+_SUPPORTCONVERSATIONSTARTREQUEST_AUTHDATAENTRY.containing_type = _SUPPORTCONVERSATIONSTARTREQUEST
+_SUPPORTCONVERSATIONSTARTREQUEST.fields_by_name['auth_data'].message_type = _SUPPORTCONVERSATIONSTARTREQUEST_AUTHDATAENTRY
+_SUPPORTCONVERSATIONSTARTRESPONSE.fields_by_name['messages'].message_type = hypurr_dot_support__pb2._SUPPORTMESSAGE
+_SUPPORTMESSAGESENDREQUEST_AUTHDATAENTRY.containing_type = _SUPPORTMESSAGESENDREQUEST
+_SUPPORTMESSAGESENDREQUEST.fields_by_name['auth_data'].message_type = _SUPPORTMESSAGESENDREQUEST_AUTHDATAENTRY
+_SUPPORTMESSAGESENDRESPONSE.fields_by_name['user_message'].message_type = hypurr_dot_support__pb2._SUPPORTMESSAGE
+_SUPPORTMESSAGESENDRESPONSE.fields_by_name['ai_response'].message_type = hypurr_dot_support__pb2._SUPPORTMESSAGE
+_SUPPORTMESSAGESENDRESPONSE.fields_by_name['ticket_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_SUPPORTCONVERSATIONHISTORYREQUEST_AUTHDATAENTRY.containing_type = _SUPPORTCONVERSATIONHISTORYREQUEST
+_SUPPORTCONVERSATIONHISTORYREQUEST.fields_by_name['auth_data'].message_type = _SUPPORTCONVERSATIONHISTORYREQUEST_AUTHDATAENTRY
+_SUPPORTCONVERSATIONHISTORYRESPONSE.fields_by_name['messages'].message_type = hypurr_dot_support__pb2._SUPPORTMESSAGE
+_SUPPORTCONVERSATIONLISTREQUEST_AUTHDATAENTRY.containing_type = _SUPPORTCONVERSATIONLISTREQUEST
+_SUPPORTCONVERSATIONLISTREQUEST.fields_by_name['auth_data'].message_type = _SUPPORTCONVERSATIONLISTREQUEST_AUTHDATAENTRY
+_SUPPORTCONVERSATIONLISTRESPONSE.fields_by_name['conversations'].message_type = hypurr_dot_support__pb2._SUPPORTCONVERSATION
+_SUPPORTCONVERSATIONCLOSEREQUEST_AUTHDATAENTRY.containing_type = _SUPPORTCONVERSATIONCLOSEREQUEST
+_SUPPORTCONVERSATIONCLOSEREQUEST.fields_by_name['auth_data'].message_type = _SUPPORTCONVERSATIONCLOSEREQUEST_AUTHDATAENTRY
+_SUPPORTTICKETSTATUSREQUEST_AUTHDATAENTRY.containing_type = _SUPPORTTICKETSTATUSREQUEST
+_SUPPORTTICKETSTATUSREQUEST.fields_by_name['auth_data'].message_type = _SUPPORTTICKETSTATUSREQUEST_AUTHDATAENTRY
 DESCRIPTOR.message_types_by_name['TelegramUserRequest'] = _TELEGRAMUSERREQUEST
 DESCRIPTOR.message_types_by_name['TelegramUserResponse'] = _TELEGRAMUSERRESPONSE
 DESCRIPTOR.message_types_by_name['TelegramUserWalletsRequest'] = _TELEGRAMUSERWALLETSREQUEST
@@ -3689,6 +4435,18 @@ DESCRIPTOR.message_types_by_name['HyperliquidAgentSignatureCreateRequest'] = _HY
 DESCRIPTOR.message_types_by_name['HyperliquidAgentSignatureCreateResponse'] = _HYPERLIQUIDAGENTSIGNATURECREATERESPONSE
 DESCRIPTOR.message_types_by_name['HyperliquidAgentWalletCreateRequest'] = _HYPERLIQUIDAGENTWALLETCREATEREQUEST
 DESCRIPTOR.message_types_by_name['HyperliquidAgentWalletCreateResponse'] = _HYPERLIQUIDAGENTWALLETCREATERESPONSE
+DESCRIPTOR.message_types_by_name['SupportConversationStartRequest'] = _SUPPORTCONVERSATIONSTARTREQUEST
+DESCRIPTOR.message_types_by_name['SupportConversationStartResponse'] = _SUPPORTCONVERSATIONSTARTRESPONSE
+DESCRIPTOR.message_types_by_name['SupportMessageSendRequest'] = _SUPPORTMESSAGESENDREQUEST
+DESCRIPTOR.message_types_by_name['SupportMessageSendResponse'] = _SUPPORTMESSAGESENDRESPONSE
+DESCRIPTOR.message_types_by_name['SupportConversationHistoryRequest'] = _SUPPORTCONVERSATIONHISTORYREQUEST
+DESCRIPTOR.message_types_by_name['SupportConversationHistoryResponse'] = _SUPPORTCONVERSATIONHISTORYRESPONSE
+DESCRIPTOR.message_types_by_name['SupportConversationListRequest'] = _SUPPORTCONVERSATIONLISTREQUEST
+DESCRIPTOR.message_types_by_name['SupportConversationListResponse'] = _SUPPORTCONVERSATIONLISTRESPONSE
+DESCRIPTOR.message_types_by_name['SupportConversationCloseRequest'] = _SUPPORTCONVERSATIONCLOSEREQUEST
+DESCRIPTOR.message_types_by_name['SupportConversationCloseResponse'] = _SUPPORTCONVERSATIONCLOSERESPONSE
+DESCRIPTOR.message_types_by_name['SupportTicketStatusRequest'] = _SUPPORTTICKETSTATUSREQUEST
+DESCRIPTOR.message_types_by_name['SupportTicketStatusResponse'] = _SUPPORTTICKETSTATUSRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TelegramUserRequest = _reflection.GeneratedProtocolMessageType('TelegramUserRequest', (_message.Message,), dict(
@@ -4314,6 +5072,138 @@ HyperliquidAgentWalletCreateResponse = _reflection.GeneratedProtocolMessageType(
   ))
 _sym_db.RegisterMessage(HyperliquidAgentWalletCreateResponse)
 
+SupportConversationStartRequest = _reflection.GeneratedProtocolMessageType('SupportConversationStartRequest', (_message.Message,), dict(
+
+  AuthDataEntry = _reflection.GeneratedProtocolMessageType('AuthDataEntry', (_message.Message,), dict(
+    DESCRIPTOR = _SUPPORTCONVERSATIONSTARTREQUEST_AUTHDATAENTRY,
+    __module__ = 'hypurr.telegram.telegram_service_pb2'
+    # @@protoc_insertion_point(class_scope:hypurr.SupportConversationStartRequest.AuthDataEntry)
+    ))
+  ,
+  DESCRIPTOR = _SUPPORTCONVERSATIONSTARTREQUEST,
+  __module__ = 'hypurr.telegram.telegram_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportConversationStartRequest)
+  ))
+_sym_db.RegisterMessage(SupportConversationStartRequest)
+_sym_db.RegisterMessage(SupportConversationStartRequest.AuthDataEntry)
+
+SupportConversationStartResponse = _reflection.GeneratedProtocolMessageType('SupportConversationStartResponse', (_message.Message,), dict(
+  DESCRIPTOR = _SUPPORTCONVERSATIONSTARTRESPONSE,
+  __module__ = 'hypurr.telegram.telegram_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportConversationStartResponse)
+  ))
+_sym_db.RegisterMessage(SupportConversationStartResponse)
+
+SupportMessageSendRequest = _reflection.GeneratedProtocolMessageType('SupportMessageSendRequest', (_message.Message,), dict(
+
+  AuthDataEntry = _reflection.GeneratedProtocolMessageType('AuthDataEntry', (_message.Message,), dict(
+    DESCRIPTOR = _SUPPORTMESSAGESENDREQUEST_AUTHDATAENTRY,
+    __module__ = 'hypurr.telegram.telegram_service_pb2'
+    # @@protoc_insertion_point(class_scope:hypurr.SupportMessageSendRequest.AuthDataEntry)
+    ))
+  ,
+  DESCRIPTOR = _SUPPORTMESSAGESENDREQUEST,
+  __module__ = 'hypurr.telegram.telegram_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportMessageSendRequest)
+  ))
+_sym_db.RegisterMessage(SupportMessageSendRequest)
+_sym_db.RegisterMessage(SupportMessageSendRequest.AuthDataEntry)
+
+SupportMessageSendResponse = _reflection.GeneratedProtocolMessageType('SupportMessageSendResponse', (_message.Message,), dict(
+  DESCRIPTOR = _SUPPORTMESSAGESENDRESPONSE,
+  __module__ = 'hypurr.telegram.telegram_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportMessageSendResponse)
+  ))
+_sym_db.RegisterMessage(SupportMessageSendResponse)
+
+SupportConversationHistoryRequest = _reflection.GeneratedProtocolMessageType('SupportConversationHistoryRequest', (_message.Message,), dict(
+
+  AuthDataEntry = _reflection.GeneratedProtocolMessageType('AuthDataEntry', (_message.Message,), dict(
+    DESCRIPTOR = _SUPPORTCONVERSATIONHISTORYREQUEST_AUTHDATAENTRY,
+    __module__ = 'hypurr.telegram.telegram_service_pb2'
+    # @@protoc_insertion_point(class_scope:hypurr.SupportConversationHistoryRequest.AuthDataEntry)
+    ))
+  ,
+  DESCRIPTOR = _SUPPORTCONVERSATIONHISTORYREQUEST,
+  __module__ = 'hypurr.telegram.telegram_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportConversationHistoryRequest)
+  ))
+_sym_db.RegisterMessage(SupportConversationHistoryRequest)
+_sym_db.RegisterMessage(SupportConversationHistoryRequest.AuthDataEntry)
+
+SupportConversationHistoryResponse = _reflection.GeneratedProtocolMessageType('SupportConversationHistoryResponse', (_message.Message,), dict(
+  DESCRIPTOR = _SUPPORTCONVERSATIONHISTORYRESPONSE,
+  __module__ = 'hypurr.telegram.telegram_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportConversationHistoryResponse)
+  ))
+_sym_db.RegisterMessage(SupportConversationHistoryResponse)
+
+SupportConversationListRequest = _reflection.GeneratedProtocolMessageType('SupportConversationListRequest', (_message.Message,), dict(
+
+  AuthDataEntry = _reflection.GeneratedProtocolMessageType('AuthDataEntry', (_message.Message,), dict(
+    DESCRIPTOR = _SUPPORTCONVERSATIONLISTREQUEST_AUTHDATAENTRY,
+    __module__ = 'hypurr.telegram.telegram_service_pb2'
+    # @@protoc_insertion_point(class_scope:hypurr.SupportConversationListRequest.AuthDataEntry)
+    ))
+  ,
+  DESCRIPTOR = _SUPPORTCONVERSATIONLISTREQUEST,
+  __module__ = 'hypurr.telegram.telegram_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportConversationListRequest)
+  ))
+_sym_db.RegisterMessage(SupportConversationListRequest)
+_sym_db.RegisterMessage(SupportConversationListRequest.AuthDataEntry)
+
+SupportConversationListResponse = _reflection.GeneratedProtocolMessageType('SupportConversationListResponse', (_message.Message,), dict(
+  DESCRIPTOR = _SUPPORTCONVERSATIONLISTRESPONSE,
+  __module__ = 'hypurr.telegram.telegram_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportConversationListResponse)
+  ))
+_sym_db.RegisterMessage(SupportConversationListResponse)
+
+SupportConversationCloseRequest = _reflection.GeneratedProtocolMessageType('SupportConversationCloseRequest', (_message.Message,), dict(
+
+  AuthDataEntry = _reflection.GeneratedProtocolMessageType('AuthDataEntry', (_message.Message,), dict(
+    DESCRIPTOR = _SUPPORTCONVERSATIONCLOSEREQUEST_AUTHDATAENTRY,
+    __module__ = 'hypurr.telegram.telegram_service_pb2'
+    # @@protoc_insertion_point(class_scope:hypurr.SupportConversationCloseRequest.AuthDataEntry)
+    ))
+  ,
+  DESCRIPTOR = _SUPPORTCONVERSATIONCLOSEREQUEST,
+  __module__ = 'hypurr.telegram.telegram_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportConversationCloseRequest)
+  ))
+_sym_db.RegisterMessage(SupportConversationCloseRequest)
+_sym_db.RegisterMessage(SupportConversationCloseRequest.AuthDataEntry)
+
+SupportConversationCloseResponse = _reflection.GeneratedProtocolMessageType('SupportConversationCloseResponse', (_message.Message,), dict(
+  DESCRIPTOR = _SUPPORTCONVERSATIONCLOSERESPONSE,
+  __module__ = 'hypurr.telegram.telegram_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportConversationCloseResponse)
+  ))
+_sym_db.RegisterMessage(SupportConversationCloseResponse)
+
+SupportTicketStatusRequest = _reflection.GeneratedProtocolMessageType('SupportTicketStatusRequest', (_message.Message,), dict(
+
+  AuthDataEntry = _reflection.GeneratedProtocolMessageType('AuthDataEntry', (_message.Message,), dict(
+    DESCRIPTOR = _SUPPORTTICKETSTATUSREQUEST_AUTHDATAENTRY,
+    __module__ = 'hypurr.telegram.telegram_service_pb2'
+    # @@protoc_insertion_point(class_scope:hypurr.SupportTicketStatusRequest.AuthDataEntry)
+    ))
+  ,
+  DESCRIPTOR = _SUPPORTTICKETSTATUSREQUEST,
+  __module__ = 'hypurr.telegram.telegram_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportTicketStatusRequest)
+  ))
+_sym_db.RegisterMessage(SupportTicketStatusRequest)
+_sym_db.RegisterMessage(SupportTicketStatusRequest.AuthDataEntry)
+
+SupportTicketStatusResponse = _reflection.GeneratedProtocolMessageType('SupportTicketStatusResponse', (_message.Message,), dict(
+  DESCRIPTOR = _SUPPORTTICKETSTATUSRESPONSE,
+  __module__ = 'hypurr.telegram.telegram_service_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportTicketStatusResponse)
+  ))
+_sym_db.RegisterMessage(SupportTicketStatusResponse)
+
 
 DESCRIPTOR.has_options = True
 DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('Z0gitlab.com/hypurr/hypurr-grpc/go/hypurr/telegram'))
@@ -4373,6 +5263,18 @@ _HYPERLIQUIDAGENTSIGNATURECREATEREQUEST_AUTHDATAENTRY.has_options = True
 _HYPERLIQUIDAGENTSIGNATURECREATEREQUEST_AUTHDATAENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
 _HYPERLIQUIDAGENTWALLETCREATEREQUEST_AUTHDATAENTRY.has_options = True
 _HYPERLIQUIDAGENTWALLETCREATEREQUEST_AUTHDATAENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_SUPPORTCONVERSATIONSTARTREQUEST_AUTHDATAENTRY.has_options = True
+_SUPPORTCONVERSATIONSTARTREQUEST_AUTHDATAENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_SUPPORTMESSAGESENDREQUEST_AUTHDATAENTRY.has_options = True
+_SUPPORTMESSAGESENDREQUEST_AUTHDATAENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_SUPPORTCONVERSATIONHISTORYREQUEST_AUTHDATAENTRY.has_options = True
+_SUPPORTCONVERSATIONHISTORYREQUEST_AUTHDATAENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_SUPPORTCONVERSATIONLISTREQUEST_AUTHDATAENTRY.has_options = True
+_SUPPORTCONVERSATIONLISTREQUEST_AUTHDATAENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_SUPPORTCONVERSATIONCLOSEREQUEST_AUTHDATAENTRY.has_options = True
+_SUPPORTCONVERSATIONCLOSEREQUEST_AUTHDATAENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_SUPPORTTICKETSTATUSREQUEST_AUTHDATAENTRY.has_options = True
+_SUPPORTTICKETSTATUSREQUEST_AUTHDATAENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
 
 _TELEGRAM = _descriptor.ServiceDescriptor(
   name='Telegram',
@@ -4380,8 +5282,8 @@ _TELEGRAM = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=9660,
-  serialized_end=12850,
+  serialized_start=11474,
+  serialized_end=15304,
   methods=[
   _descriptor.MethodDescriptor(
     name='TelegramUser',
@@ -4587,7 +5489,7 @@ _TELEGRAM = _descriptor.ServiceDescriptor(
     index=22,
     containing_service=None,
     input_type=_HYPERLIQUIDAGENTSIGNATURECREATEREQUEST,
-    output_type=_HYPERLIQUIDAGENTWALLETCREATEREQUEST,
+    output_type=_HYPERLIQUIDAGENTSIGNATURECREATERESPONSE,
     options=None,
   ),
   _descriptor.MethodDescriptor(
@@ -4633,6 +5535,60 @@ _TELEGRAM = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_HFUNCABALWALLETLABELDELETEREQUEST,
     output_type=_HFUNCABALWALLETLABELDELETERESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SupportConversationStart',
+    full_name='hypurr.Telegram.SupportConversationStart',
+    index=28,
+    containing_service=None,
+    input_type=_SUPPORTCONVERSATIONSTARTREQUEST,
+    output_type=_SUPPORTCONVERSATIONSTARTRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SupportMessageSend',
+    full_name='hypurr.Telegram.SupportMessageSend',
+    index=29,
+    containing_service=None,
+    input_type=_SUPPORTMESSAGESENDREQUEST,
+    output_type=_SUPPORTMESSAGESENDRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SupportConversationHistory',
+    full_name='hypurr.Telegram.SupportConversationHistory',
+    index=30,
+    containing_service=None,
+    input_type=_SUPPORTCONVERSATIONHISTORYREQUEST,
+    output_type=_SUPPORTCONVERSATIONHISTORYRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SupportConversationList',
+    full_name='hypurr.Telegram.SupportConversationList',
+    index=31,
+    containing_service=None,
+    input_type=_SUPPORTCONVERSATIONLISTREQUEST,
+    output_type=_SUPPORTCONVERSATIONLISTRESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SupportConversationClose',
+    full_name='hypurr.Telegram.SupportConversationClose',
+    index=32,
+    containing_service=None,
+    input_type=_SUPPORTCONVERSATIONCLOSEREQUEST,
+    output_type=_SUPPORTCONVERSATIONCLOSERESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SupportTicketStatus',
+    full_name='hypurr.Telegram.SupportTicketStatus',
+    index=33,
+    containing_service=None,
+    input_type=_SUPPORTTICKETSTATUSREQUEST,
+    output_type=_SUPPORTTICKETSTATUSRESPONSE,
     options=None,
   ),
 ])
