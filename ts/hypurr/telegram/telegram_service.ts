@@ -1036,6 +1036,10 @@ export interface SupportConversationStartResponse {
      * @generated from protobuf field: repeated hypurr.SupportMessage messages = 4;
      */
     messages: SupportMessage[];
+    /**
+     * @generated from protobuf field: hypurr.SupportTicket ticket = 5;
+     */
+    ticket?: SupportTicket; // optional, populated if ticket was opened
 }
 // SupportMessageSend - Send a message in a conversation
 
@@ -1108,10 +1112,6 @@ export interface SupportConversationHistoryResponse {
      * @generated from protobuf field: repeated hypurr.SupportMessage messages = 1;
      */
     messages: SupportMessage[];
-    /**
-     * @generated from protobuf field: hypurr.SupportTicket ticket = 2;
-     */
-    ticket?: SupportTicket; // optional, populated if ticket was opened
 }
 // SupportConversationList - List user's conversations
 
@@ -5008,7 +5008,8 @@ class SupportConversationStartResponse$Type extends MessageType<SupportConversat
             { no: 1, name: "conversation_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "project_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "closed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 4, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SupportMessage }
+            { no: 4, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SupportMessage },
+            { no: 5, name: "ticket", kind: "message", T: () => SupportTicket }
         ]);
     }
     create(value?: PartialMessage<SupportConversationStartResponse>): SupportConversationStartResponse {
@@ -5035,6 +5036,9 @@ class SupportConversationStartResponse$Type extends MessageType<SupportConversat
                 case /* repeated hypurr.SupportMessage messages */ 4:
                     message.messages.push(SupportMessage.internalBinaryRead(reader, reader.uint32(), options));
                     break;
+                case /* hypurr.SupportTicket ticket */ 5:
+                    message.ticket = SupportTicket.internalBinaryRead(reader, reader.uint32(), options, message.ticket);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5059,6 +5063,9 @@ class SupportConversationStartResponse$Type extends MessageType<SupportConversat
         /* repeated hypurr.SupportMessage messages = 4; */
         for (let i = 0; i < message.messages.length; i++)
             SupportMessage.internalBinaryWrite(message.messages[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.SupportTicket ticket = 5; */
+        if (message.ticket)
+            SupportTicket.internalBinaryWrite(message.ticket, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5295,8 +5302,7 @@ export const SupportConversationHistoryRequest = new SupportConversationHistoryR
 class SupportConversationHistoryResponse$Type extends MessageType<SupportConversationHistoryResponse> {
     constructor() {
         super("hypurr.SupportConversationHistoryResponse", [
-            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SupportMessage },
-            { no: 2, name: "ticket", kind: "message", T: () => SupportTicket }
+            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SupportMessage }
         ]);
     }
     create(value?: PartialMessage<SupportConversationHistoryResponse>): SupportConversationHistoryResponse {
@@ -5314,9 +5320,6 @@ class SupportConversationHistoryResponse$Type extends MessageType<SupportConvers
                 case /* repeated hypurr.SupportMessage messages */ 1:
                     message.messages.push(SupportMessage.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* hypurr.SupportTicket ticket */ 2:
-                    message.ticket = SupportTicket.internalBinaryRead(reader, reader.uint32(), options, message.ticket);
-                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5332,9 +5335,6 @@ class SupportConversationHistoryResponse$Type extends MessageType<SupportConvers
         /* repeated hypurr.SupportMessage messages = 1; */
         for (let i = 0; i < message.messages.length; i++)
             SupportMessage.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* hypurr.SupportTicket ticket = 2; */
-        if (message.ticket)
-            SupportTicket.internalBinaryWrite(message.ticket, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

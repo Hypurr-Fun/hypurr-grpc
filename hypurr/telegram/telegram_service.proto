@@ -359,6 +359,7 @@ message SupportConversationStartResponse {
   string project_id = 2;
   bool closed = 3;
   repeated SupportMessage messages = 4;
+  SupportTicket ticket = 5; // optional, populated if ticket was opened
 }
 
 // SupportMessageSend - Send a message in a conversation
@@ -386,7 +387,6 @@ message SupportConversationHistoryRequest {
 
 message SupportConversationHistoryResponse {
   repeated SupportMessage messages = 1;
-  SupportTicket ticket = 2; // optional, populated if ticket was opened
 }
 
 // SupportConversationList - List user's conversations
