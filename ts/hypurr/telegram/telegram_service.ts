@@ -13,6 +13,7 @@ import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { SupportConversation } from "../support";
+import { SupportTicket } from "../support";
 import { SupportMessage } from "../support";
 import { HypurrFunCabalAlert } from "../cabal";
 import { BytesValue } from "../../google/protobuf/wrappers";
@@ -1070,13 +1071,9 @@ export interface SupportMessageSendResponse {
      */
     aiResponse?: SupportMessage; // optional, populated if AI responds
     /**
-     * @generated from protobuf field: bool ticket_opened = 3;
+     * @generated from protobuf field: hypurr.SupportTicket ticket = 3;
      */
-    ticketOpened: boolean;
-    /**
-     * @generated from protobuf field: google.protobuf.Int64Value ticket_id = 4;
-     */
-    ticketId?: Int64Value; // set if ticket was opened
+    ticket?: SupportTicket; // optional, populated if ticket was opened
 }
 // SupportConversationHistory - Get message history
 
@@ -1190,21 +1187,9 @@ export interface SupportTicketStatusRequest {
  */
 export interface SupportTicketStatusResponse {
     /**
-     * @generated from protobuf field: bool has_ticket = 1;
+     * @generated from protobuf field: hypurr.SupportTicket ticket = 1;
      */
-    hasTicket: boolean;
-    /**
-     * @generated from protobuf field: int64 ticket_id = 2;
-     */
-    ticketId: number;
-    /**
-     * @generated from protobuf field: bool closed = 3;
-     */
-    closed: boolean;
-    /**
-     * @generated from protobuf field: string summary = 4;
-     */
-    summary: string;
+    ticket?: SupportTicket;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserRequest$Type extends MessageType<TelegramUserRequest> {
@@ -5163,12 +5148,11 @@ class SupportMessageSendResponse$Type extends MessageType<SupportMessageSendResp
         super("hypurr.SupportMessageSendResponse", [
             { no: 1, name: "user_message", kind: "message", T: () => SupportMessage },
             { no: 2, name: "ai_response", kind: "message", T: () => SupportMessage },
-            { no: 3, name: "ticket_opened", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 4, name: "ticket_id", kind: "message", T: () => Int64Value }
+            { no: 3, name: "ticket", kind: "message", T: () => SupportTicket }
         ]);
     }
     create(value?: PartialMessage<SupportMessageSendResponse>): SupportMessageSendResponse {
-        const message = { ticketOpened: false };
+        const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<SupportMessageSendResponse>(this, message, value);
@@ -5185,11 +5169,8 @@ class SupportMessageSendResponse$Type extends MessageType<SupportMessageSendResp
                 case /* hypurr.SupportMessage ai_response */ 2:
                     message.aiResponse = SupportMessage.internalBinaryRead(reader, reader.uint32(), options, message.aiResponse);
                     break;
-                case /* bool ticket_opened */ 3:
-                    message.ticketOpened = reader.bool();
-                    break;
-                case /* google.protobuf.Int64Value ticket_id */ 4:
-                    message.ticketId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.ticketId);
+                case /* hypurr.SupportTicket ticket */ 3:
+                    message.ticket = SupportTicket.internalBinaryRead(reader, reader.uint32(), options, message.ticket);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5209,12 +5190,9 @@ class SupportMessageSendResponse$Type extends MessageType<SupportMessageSendResp
         /* hypurr.SupportMessage ai_response = 2; */
         if (message.aiResponse)
             SupportMessage.internalBinaryWrite(message.aiResponse, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* bool ticket_opened = 3; */
-        if (message.ticketOpened !== false)
-            writer.tag(3, WireType.Varint).bool(message.ticketOpened);
-        /* google.protobuf.Int64Value ticket_id = 4; */
-        if (message.ticketId)
-            Int64Value.internalBinaryWrite(message.ticketId, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.SupportTicket ticket = 3; */
+        if (message.ticket)
+            SupportTicket.internalBinaryWrite(message.ticket, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5657,14 +5635,11 @@ export const SupportTicketStatusRequest = new SupportTicketStatusRequest$Type();
 class SupportTicketStatusResponse$Type extends MessageType<SupportTicketStatusResponse> {
     constructor() {
         super("hypurr.SupportTicketStatusResponse", [
-            { no: 1, name: "has_ticket", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "ticket_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "closed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 4, name: "summary", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "ticket", kind: "message", T: () => SupportTicket }
         ]);
     }
     create(value?: PartialMessage<SupportTicketStatusResponse>): SupportTicketStatusResponse {
-        const message = { hasTicket: false, ticketId: 0, closed: false, summary: "" };
+        const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<SupportTicketStatusResponse>(this, message, value);
@@ -5675,17 +5650,8 @@ class SupportTicketStatusResponse$Type extends MessageType<SupportTicketStatusRe
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* bool has_ticket */ 1:
-                    message.hasTicket = reader.bool();
-                    break;
-                case /* int64 ticket_id */ 2:
-                    message.ticketId = reader.int64().toNumber();
-                    break;
-                case /* bool closed */ 3:
-                    message.closed = reader.bool();
-                    break;
-                case /* string summary */ 4:
-                    message.summary = reader.string();
+                case /* hypurr.SupportTicket ticket */ 1:
+                    message.ticket = SupportTicket.internalBinaryRead(reader, reader.uint32(), options, message.ticket);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5699,18 +5665,9 @@ class SupportTicketStatusResponse$Type extends MessageType<SupportTicketStatusRe
         return message;
     }
     internalBinaryWrite(message: SupportTicketStatusResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool has_ticket = 1; */
-        if (message.hasTicket !== false)
-            writer.tag(1, WireType.Varint).bool(message.hasTicket);
-        /* int64 ticket_id = 2; */
-        if (message.ticketId !== 0)
-            writer.tag(2, WireType.Varint).int64(message.ticketId);
-        /* bool closed = 3; */
-        if (message.closed !== false)
-            writer.tag(3, WireType.Varint).bool(message.closed);
-        /* string summary = 4; */
-        if (message.summary !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.summary);
+        /* hypurr.SupportTicket ticket = 1; */
+        if (message.ticket)
+            SupportTicket.internalBinaryWrite(message.ticket, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/support.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x14hypurr/support.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\"\xb5\x01\n\x0eSupportMessage\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x17\n\x0f\x63onversation_id\x18\x02 \x01(\x03\x12\x0f\n\x07\x66rom_id\x18\x03 \x01(\x03\x12\x13\n\x0bsender_type\x18\x04 \x01(\t\x12\x0f\n\x07message\x18\x05 \x01(\t\x12\x34\n\x0e\x61ttachment_url\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x11\n\ttimestamp\x18\x07 \x01(\x03\"\xc2\x01\n\x13SupportConversation\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x12\n\nproject_id\x18\x03 \x01(\t\x12\x0e\n\x06source\x18\x04 \x01(\t\x12\x0e\n\x06\x63losed\x18\x05 \x01(\x08\x12.\n\tclosed_at\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x12\n\ncreated_at\x18\x07 \x01(\x03\x12\x12\n\nupdated_at\x18\x08 \x01(\x03\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x14hypurr/support.proto\x12\x06hypurr\x1a\x1egoogle/protobuf/wrappers.proto\"\xb5\x01\n\x0eSupportMessage\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x17\n\x0f\x63onversation_id\x18\x02 \x01(\x03\x12\x0f\n\x07\x66rom_id\x18\x03 \x01(\x03\x12\x13\n\x0bsender_type\x18\x04 \x01(\t\x12\x0f\n\x07message\x18\x05 \x01(\t\x12\x34\n\x0e\x61ttachment_url\x18\x06 \x01(\x0b\x32\x1c.google.protobuf.StringValue\x12\x11\n\ttimestamp\x18\x07 \x01(\x03\"\xc2\x01\n\x13SupportConversation\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x12\n\nproject_id\x18\x03 \x01(\t\x12\x0e\n\x06source\x18\x04 \x01(\t\x12\x0e\n\x06\x63losed\x18\x05 \x01(\x08\x12.\n\tclosed_at\x18\x06 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x12\n\ncreated_at\x18\x07 \x01(\x03\x12\x12\n\nupdated_at\x18\x08 \x01(\x03\"\xad\x01\n\rSupportTicket\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x17\n\x0f\x63onversation_id\x18\x02 \x01(\x03\x12\x0f\n\x07summary\x18\x03 \x01(\t\x12\x0e\n\x06\x63losed\x18\x04 \x01(\x08\x12.\n\tclosed_at\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x12\n\ncreated_at\x18\x06 \x01(\x03\x12\x12\n\nupdated_at\x18\x07 \x01(\x03\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -179,10 +179,85 @@ _SUPPORTCONVERSATION = _descriptor.Descriptor(
   serialized_end=443,
 )
 
+
+_SUPPORTTICKET = _descriptor.Descriptor(
+  name='SupportTicket',
+  full_name='hypurr.SupportTicket',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='hypurr.SupportTicket.id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='conversation_id', full_name='hypurr.SupportTicket.conversation_id', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='summary', full_name='hypurr.SupportTicket.summary', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='closed', full_name='hypurr.SupportTicket.closed', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='closed_at', full_name='hypurr.SupportTicket.closed_at', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='created_at', full_name='hypurr.SupportTicket.created_at', index=5,
+      number=6, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='updated_at', full_name='hypurr.SupportTicket.updated_at', index=6,
+      number=7, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=446,
+  serialized_end=619,
+)
+
 _SUPPORTMESSAGE.fields_by_name['attachment_url'].message_type = google_dot_protobuf_dot_wrappers__pb2._STRINGVALUE
 _SUPPORTCONVERSATION.fields_by_name['closed_at'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_SUPPORTTICKET.fields_by_name['closed_at'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
 DESCRIPTOR.message_types_by_name['SupportMessage'] = _SUPPORTMESSAGE
 DESCRIPTOR.message_types_by_name['SupportConversation'] = _SUPPORTCONVERSATION
+DESCRIPTOR.message_types_by_name['SupportTicket'] = _SUPPORTTICKET
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 SupportMessage = _reflection.GeneratedProtocolMessageType('SupportMessage', (_message.Message,), dict(
@@ -198,6 +273,13 @@ SupportConversation = _reflection.GeneratedProtocolMessageType('SupportConversat
   # @@protoc_insertion_point(class_scope:hypurr.SupportConversation)
   ))
 _sym_db.RegisterMessage(SupportConversation)
+
+SupportTicket = _reflection.GeneratedProtocolMessageType('SupportTicket', (_message.Message,), dict(
+  DESCRIPTOR = _SUPPORTTICKET,
+  __module__ = 'hypurr.support_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.SupportTicket)
+  ))
+_sym_db.RegisterMessage(SupportTicket)
 
 
 DESCRIPTOR.has_options = True

@@ -83,6 +83,39 @@ export interface SupportConversation {
      */
     updatedAt: number;
 }
+/**
+ * @generated from protobuf message hypurr.SupportTicket
+ */
+export interface SupportTicket {
+    /**
+     * @generated from protobuf field: int64 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: int64 conversation_id = 2;
+     */
+    conversationId: number;
+    /**
+     * @generated from protobuf field: string summary = 3;
+     */
+    summary: string;
+    /**
+     * @generated from protobuf field: bool closed = 4;
+     */
+    closed: boolean;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value closed_at = 5;
+     */
+    closedAt?: Int64Value;
+    /**
+     * @generated from protobuf field: int64 created_at = 6;
+     */
+    createdAt: number;
+    /**
+     * @generated from protobuf field: int64 updated_at = 7;
+     */
+    updatedAt: number;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class SupportMessage$Type extends MessageType<SupportMessage> {
     constructor() {
@@ -268,3 +301,92 @@ class SupportConversation$Type extends MessageType<SupportConversation> {
  * @generated MessageType for protobuf message hypurr.SupportConversation
  */
 export const SupportConversation = new SupportConversation$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SupportTicket$Type extends MessageType<SupportTicket> {
+    constructor() {
+        super("hypurr.SupportTicket", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "conversation_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "summary", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "closed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 5, name: "closed_at", kind: "message", T: () => Int64Value },
+            { no: 6, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "updated_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SupportTicket>): SupportTicket {
+        const message = { id: 0, conversationId: 0, summary: "", closed: false, createdAt: 0, updatedAt: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SupportTicket>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SupportTicket): SupportTicket {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* int64 conversation_id */ 2:
+                    message.conversationId = reader.int64().toNumber();
+                    break;
+                case /* string summary */ 3:
+                    message.summary = reader.string();
+                    break;
+                case /* bool closed */ 4:
+                    message.closed = reader.bool();
+                    break;
+                case /* google.protobuf.Int64Value closed_at */ 5:
+                    message.closedAt = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.closedAt);
+                    break;
+                case /* int64 created_at */ 6:
+                    message.createdAt = reader.int64().toNumber();
+                    break;
+                case /* int64 updated_at */ 7:
+                    message.updatedAt = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SupportTicket, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* int64 conversation_id = 2; */
+        if (message.conversationId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.conversationId);
+        /* string summary = 3; */
+        if (message.summary !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.summary);
+        /* bool closed = 4; */
+        if (message.closed !== false)
+            writer.tag(4, WireType.Varint).bool(message.closed);
+        /* google.protobuf.Int64Value closed_at = 5; */
+        if (message.closedAt)
+            Int64Value.internalBinaryWrite(message.closedAt, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* int64 created_at = 6; */
+        if (message.createdAt !== 0)
+            writer.tag(6, WireType.Varint).int64(message.createdAt);
+        /* int64 updated_at = 7; */
+        if (message.updatedAt !== 0)
+            writer.tag(7, WireType.Varint).int64(message.updatedAt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SupportTicket
+ */
+export const SupportTicket = new SupportTicket$Type();
