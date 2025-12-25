@@ -31,6 +31,4 @@ message SupportTicket {
   string summary = 3;
   bool closed = 4;
   google.protobuf.Int64Value closed_at = 5;
-  int64 created_at = 6;
-  int64 updated_at = 7;
 }
