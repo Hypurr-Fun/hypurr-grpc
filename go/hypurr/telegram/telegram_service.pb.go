@@ -3825,6 +3825,7 @@ type SupportConversationHistoryResponse struct {
 	unknownFields protoimpl.UnknownFields
 
 	Messages []*hypurr.SupportMessage `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
+	Ticket   *hypurr.SupportTicket    `protobuf:"bytes,2,opt,name=ticket,proto3" json:"ticket,omitempty"`
 }
 
 func (x *SupportConversationHistoryResponse) Reset() {
@@ -3862,6 +3863,13 @@ func (*SupportConversationHistoryResponse) Descriptor() ([]byte, []int) {
 func (x *SupportConversationHistoryResponse) GetMessages() []*hypurr.SupportMessage {
 	if x != nil {
 		return x.Messages
+	}
+	return nil
+}
+
+func (x *SupportConversationHistoryResponse) GetTicket() *hypurr.SupportTicket {
+	if x != nil {
+		return x.Ticket
 	}
 	return nil
 }
@@ -4986,12 +4994,15 @@ var file_hypurr_telegram_telegram_service_proto_rawDesc = []byte{
 	0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18,
 	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01,
-	0x22, 0x58, 0x0a, 0x22, 0x53, 0x75, 0x70, 0x70, 0x6f, 0x72, 0x74, 0x43, 0x6f, 0x6e, 0x76, 0x65,
-	0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x32, 0x0a, 0x08, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
-	0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72,
-	0x72, 0x2e, 0x53, 0x75, 0x70, 0x70, 0x6f, 0x72, 0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
-	0x52, 0x08, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x22, 0xfd, 0x01, 0x0a, 0x1e, 0x53,
+	0x22, 0x87, 0x01, 0x0a, 0x22, 0x53, 0x75, 0x70, 0x70, 0x6f, 0x72, 0x74, 0x43, 0x6f, 0x6e, 0x76,
+	0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x32, 0x0a, 0x08, 0x6d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x68, 0x79, 0x70, 0x75,
+	0x72, 0x72, 0x2e, 0x53, 0x75, 0x70, 0x70, 0x6f, 0x72, 0x74, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67,
+	0x65, 0x52, 0x08, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x12, 0x2d, 0x0a, 0x06, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x68, 0x79,
+	0x70, 0x75, 0x72, 0x72, 0x2e, 0x53, 0x75, 0x70, 0x70, 0x6f, 0x72, 0x74, 0x54, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x52, 0x06, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x22, 0xfd, 0x01, 0x0a, 0x1e, 0x53,
 	0x75, 0x70, 0x70, 0x6f, 0x72, 0x74, 0x43, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69,
 	0x6f, 0x6e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x51, 0x0a,
 	0x09, 0x61, 0x75, 0x74, 0x68, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
@@ -5516,84 +5527,85 @@ var file_hypurr_telegram_telegram_service_proto_depIdxs = []int32{
 	121, // 80: hypurr.SupportMessageSendResponse.ticket:type_name -> hypurr.SupportTicket
 	99,  // 81: hypurr.SupportConversationHistoryRequest.auth_data:type_name -> hypurr.SupportConversationHistoryRequest.AuthDataEntry
 	120, // 82: hypurr.SupportConversationHistoryResponse.messages:type_name -> hypurr.SupportMessage
-	100, // 83: hypurr.SupportConversationListRequest.auth_data:type_name -> hypurr.SupportConversationListRequest.AuthDataEntry
-	122, // 84: hypurr.SupportConversationListResponse.conversations:type_name -> hypurr.SupportConversation
-	101, // 85: hypurr.SupportConversationCloseRequest.auth_data:type_name -> hypurr.SupportConversationCloseRequest.AuthDataEntry
-	102, // 86: hypurr.SupportTicketStatusRequest.auth_data:type_name -> hypurr.SupportTicketStatusRequest.AuthDataEntry
-	121, // 87: hypurr.SupportTicketStatusResponse.ticket:type_name -> hypurr.SupportTicket
-	0,   // 88: hypurr.Telegram.TelegramUser:input_type -> hypurr.TelegramUserRequest
-	2,   // 89: hypurr.Telegram.TelegramUserWallets:input_type -> hypurr.TelegramUserWalletsRequest
-	18,  // 90: hypurr.Telegram.HyperliquidLaunchTrade:input_type -> hypurr.HyperliquidLaunchTradeRequest
-	38,  // 91: hypurr.Telegram.LaunchHyperliquidLaunch:input_type -> hypurr.LaunchHyperliquidLaunchRequest
-	42,  // 92: hypurr.Telegram.EditHyperliquidLaunch:input_type -> hypurr.EditHyperliquidLaunchRequest
-	21,  // 93: hypurr.Telegram.HpumpV1LaunchTrade:input_type -> hypurr.HpumpV1LaunchTradeRequest
-	40,  // 94: hypurr.Telegram.LaunchHpumpV1Launch:input_type -> hypurr.LaunchHpumpV1LaunchRequest
-	20,  // 95: hypurr.Telegram.HyperliquidSpotTrade:input_type -> hypurr.HyperliquidSpotTradeRequest
-	4,   // 96: hypurr.Telegram.HyperliquidCoreTrade:input_type -> hypurr.HyperliquidCoreTradeRequest
-	6,   // 97: hypurr.Telegram.HyperliquidCoreCancelOrders:input_type -> hypurr.HyperliquidCoreCancelOrdersRequest
-	32,  // 98: hypurr.Telegram.HyperliquidWalletSpotTwapSessions:input_type -> hypurr.HyperliquidWalletSpotTwapSessionsRequest
-	34,  // 99: hypurr.Telegram.HyperliquidWalletTwapSessions:input_type -> hypurr.HyperliquidWalletTwapSessionsRequest
-	36,  // 100: hypurr.Telegram.HyperliquidWalletScaleSessions:input_type -> hypurr.HyperliquidWalletScaleSessionsRequest
-	8,   // 101: hypurr.Telegram.HyperliquidTwapCreate:input_type -> hypurr.HyperliquidTwapCreateRequest
-	10,  // 102: hypurr.Telegram.HyperliquidTwapModify:input_type -> hypurr.HyperliquidTwapModifyRequest
-	12,  // 103: hypurr.Telegram.HyperliquidTwapCancel:input_type -> hypurr.HyperliquidTwapCancelRequest
-	14,  // 104: hypurr.Telegram.HyperliquidScaleCreate:input_type -> hypurr.HyperliquidScaleCreateRequest
-	16,  // 105: hypurr.Telegram.HyperliquidScaleCancel:input_type -> hypurr.HyperliquidScaleCancelRequest
-	24,  // 106: hypurr.Telegram.HyperliquidSpotSniperConfigs:input_type -> hypurr.HyperliquidSpotSniperConfigsRequest
-	28,  // 107: hypurr.Telegram.CreateHyperliquidSpotSniperConfig:input_type -> hypurr.CreateHyperliquidSpotSniperConfigRequest
-	26,  // 108: hypurr.Telegram.DeleteHyperliquidSpotSniperConfig:input_type -> hypurr.DeleteHyperliquidSpotSniperConfigRequest
-	30,  // 109: hypurr.Telegram.UpdateHyperliquidSpotSniperConfig:input_type -> hypurr.UpdateHyperliquidSpotSniperConfigRequest
-	53,  // 110: hypurr.Telegram.HyperliquidAgentSignatureCreate:input_type -> hypurr.HyperliquidAgentSignatureCreateRequest
-	55,  // 111: hypurr.Telegram.HyperliquidAgentWalletCreate:input_type -> hypurr.HyperliquidAgentWalletCreateRequest
-	44,  // 112: hypurr.Telegram.HfunCabalAlerts:input_type -> hypurr.HfunCabalAlertsRequest
-	46,  // 113: hypurr.Telegram.HfunCabalWalletLabelAdd:input_type -> hypurr.HfunCabalWalletLabelAddRequest
-	48,  // 114: hypurr.Telegram.HfunCabalWalletLabelModify:input_type -> hypurr.HfunCabalWalletLabelModifyRequest
-	50,  // 115: hypurr.Telegram.HfunCabalWalletLabelRemove:input_type -> hypurr.HfunCabalWalletLabelDeleteRequest
-	57,  // 116: hypurr.Telegram.SupportConversationStart:input_type -> hypurr.SupportConversationStartRequest
-	59,  // 117: hypurr.Telegram.SupportMessageSend:input_type -> hypurr.SupportMessageSendRequest
-	61,  // 118: hypurr.Telegram.SupportConversationHistory:input_type -> hypurr.SupportConversationHistoryRequest
-	63,  // 119: hypurr.Telegram.SupportConversationList:input_type -> hypurr.SupportConversationListRequest
-	65,  // 120: hypurr.Telegram.SupportConversationClose:input_type -> hypurr.SupportConversationCloseRequest
-	67,  // 121: hypurr.Telegram.SupportTicketStatus:input_type -> hypurr.SupportTicketStatusRequest
-	1,   // 122: hypurr.Telegram.TelegramUser:output_type -> hypurr.TelegramUserResponse
-	3,   // 123: hypurr.Telegram.TelegramUserWallets:output_type -> hypurr.TelegramUserWalletsResponse
-	19,  // 124: hypurr.Telegram.HyperliquidLaunchTrade:output_type -> hypurr.HyperliquidLaunchTradeResponse
-	39,  // 125: hypurr.Telegram.LaunchHyperliquidLaunch:output_type -> hypurr.LaunchHyperliquidLaunchResponse
-	43,  // 126: hypurr.Telegram.EditHyperliquidLaunch:output_type -> hypurr.EditHyperliquidLaunchResponse
-	22,  // 127: hypurr.Telegram.HpumpV1LaunchTrade:output_type -> hypurr.HpumpV1LaunchTradeResponse
-	41,  // 128: hypurr.Telegram.LaunchHpumpV1Launch:output_type -> hypurr.LaunchHpumpV1LaunchResponse
-	23,  // 129: hypurr.Telegram.HyperliquidSpotTrade:output_type -> hypurr.HyperliquidSpotTradeResponse
-	5,   // 130: hypurr.Telegram.HyperliquidCoreTrade:output_type -> hypurr.HyperliquidCoreTradeResponse
-	7,   // 131: hypurr.Telegram.HyperliquidCoreCancelOrders:output_type -> hypurr.HyperliquidCoreCancelOrdersResponse
-	33,  // 132: hypurr.Telegram.HyperliquidWalletSpotTwapSessions:output_type -> hypurr.HyperliquidWalletSpotTwapSessionsResponse
-	35,  // 133: hypurr.Telegram.HyperliquidWalletTwapSessions:output_type -> hypurr.HyperliquidWalletTwapSessionsResponse
-	37,  // 134: hypurr.Telegram.HyperliquidWalletScaleSessions:output_type -> hypurr.HyperliquidWalletScaleSessionsResponse
-	9,   // 135: hypurr.Telegram.HyperliquidTwapCreate:output_type -> hypurr.HyperliquidTwapCreateResponse
-	11,  // 136: hypurr.Telegram.HyperliquidTwapModify:output_type -> hypurr.HyperliquidTwapModifyResponse
-	13,  // 137: hypurr.Telegram.HyperliquidTwapCancel:output_type -> hypurr.HyperliquidTwapCancelResponse
-	15,  // 138: hypurr.Telegram.HyperliquidScaleCreate:output_type -> hypurr.HyperliquidScaleCreateResponse
-	17,  // 139: hypurr.Telegram.HyperliquidScaleCancel:output_type -> hypurr.HyperliquidScaleCancelResponse
-	25,  // 140: hypurr.Telegram.HyperliquidSpotSniperConfigs:output_type -> hypurr.HyperliquidSpotSniperConfigsResponse
-	29,  // 141: hypurr.Telegram.CreateHyperliquidSpotSniperConfig:output_type -> hypurr.CreateHyperliquidSpotSniperConfigResponse
-	27,  // 142: hypurr.Telegram.DeleteHyperliquidSpotSniperConfig:output_type -> hypurr.DeleteHyperliquidSpotSniperConfigResponse
-	31,  // 143: hypurr.Telegram.UpdateHyperliquidSpotSniperConfig:output_type -> hypurr.UpdateHyperliquidSpotSniperConfigResponse
-	54,  // 144: hypurr.Telegram.HyperliquidAgentSignatureCreate:output_type -> hypurr.HyperliquidAgentSignatureCreateResponse
-	56,  // 145: hypurr.Telegram.HyperliquidAgentWalletCreate:output_type -> hypurr.HyperliquidAgentWalletCreateResponse
-	45,  // 146: hypurr.Telegram.HfunCabalAlerts:output_type -> hypurr.HfunCabalAlertsResponse
-	47,  // 147: hypurr.Telegram.HfunCabalWalletLabelAdd:output_type -> hypurr.HfunCabalWalletLabelAddResponse
-	49,  // 148: hypurr.Telegram.HfunCabalWalletLabelModify:output_type -> hypurr.HfunCabalWalletLabelModifyResponse
-	51,  // 149: hypurr.Telegram.HfunCabalWalletLabelRemove:output_type -> hypurr.HfunCabalWalletLabelDeleteResponse
-	58,  // 150: hypurr.Telegram.SupportConversationStart:output_type -> hypurr.SupportConversationStartResponse
-	60,  // 151: hypurr.Telegram.SupportMessageSend:output_type -> hypurr.SupportMessageSendResponse
-	62,  // 152: hypurr.Telegram.SupportConversationHistory:output_type -> hypurr.SupportConversationHistoryResponse
-	64,  // 153: hypurr.Telegram.SupportConversationList:output_type -> hypurr.SupportConversationListResponse
-	66,  // 154: hypurr.Telegram.SupportConversationClose:output_type -> hypurr.SupportConversationCloseResponse
-	68,  // 155: hypurr.Telegram.SupportTicketStatus:output_type -> hypurr.SupportTicketStatusResponse
-	122, // [122:156] is the sub-list for method output_type
-	88,  // [88:122] is the sub-list for method input_type
-	88,  // [88:88] is the sub-list for extension type_name
-	88,  // [88:88] is the sub-list for extension extendee
-	0,   // [0:88] is the sub-list for field type_name
+	121, // 83: hypurr.SupportConversationHistoryResponse.ticket:type_name -> hypurr.SupportTicket
+	100, // 84: hypurr.SupportConversationListRequest.auth_data:type_name -> hypurr.SupportConversationListRequest.AuthDataEntry
+	122, // 85: hypurr.SupportConversationListResponse.conversations:type_name -> hypurr.SupportConversation
+	101, // 86: hypurr.SupportConversationCloseRequest.auth_data:type_name -> hypurr.SupportConversationCloseRequest.AuthDataEntry
+	102, // 87: hypurr.SupportTicketStatusRequest.auth_data:type_name -> hypurr.SupportTicketStatusRequest.AuthDataEntry
+	121, // 88: hypurr.SupportTicketStatusResponse.ticket:type_name -> hypurr.SupportTicket
+	0,   // 89: hypurr.Telegram.TelegramUser:input_type -> hypurr.TelegramUserRequest
+	2,   // 90: hypurr.Telegram.TelegramUserWallets:input_type -> hypurr.TelegramUserWalletsRequest
+	18,  // 91: hypurr.Telegram.HyperliquidLaunchTrade:input_type -> hypurr.HyperliquidLaunchTradeRequest
+	38,  // 92: hypurr.Telegram.LaunchHyperliquidLaunch:input_type -> hypurr.LaunchHyperliquidLaunchRequest
+	42,  // 93: hypurr.Telegram.EditHyperliquidLaunch:input_type -> hypurr.EditHyperliquidLaunchRequest
+	21,  // 94: hypurr.Telegram.HpumpV1LaunchTrade:input_type -> hypurr.HpumpV1LaunchTradeRequest
+	40,  // 95: hypurr.Telegram.LaunchHpumpV1Launch:input_type -> hypurr.LaunchHpumpV1LaunchRequest
+	20,  // 96: hypurr.Telegram.HyperliquidSpotTrade:input_type -> hypurr.HyperliquidSpotTradeRequest
+	4,   // 97: hypurr.Telegram.HyperliquidCoreTrade:input_type -> hypurr.HyperliquidCoreTradeRequest
+	6,   // 98: hypurr.Telegram.HyperliquidCoreCancelOrders:input_type -> hypurr.HyperliquidCoreCancelOrdersRequest
+	32,  // 99: hypurr.Telegram.HyperliquidWalletSpotTwapSessions:input_type -> hypurr.HyperliquidWalletSpotTwapSessionsRequest
+	34,  // 100: hypurr.Telegram.HyperliquidWalletTwapSessions:input_type -> hypurr.HyperliquidWalletTwapSessionsRequest
+	36,  // 101: hypurr.Telegram.HyperliquidWalletScaleSessions:input_type -> hypurr.HyperliquidWalletScaleSessionsRequest
+	8,   // 102: hypurr.Telegram.HyperliquidTwapCreate:input_type -> hypurr.HyperliquidTwapCreateRequest
+	10,  // 103: hypurr.Telegram.HyperliquidTwapModify:input_type -> hypurr.HyperliquidTwapModifyRequest
+	12,  // 104: hypurr.Telegram.HyperliquidTwapCancel:input_type -> hypurr.HyperliquidTwapCancelRequest
+	14,  // 105: hypurr.Telegram.HyperliquidScaleCreate:input_type -> hypurr.HyperliquidScaleCreateRequest
+	16,  // 106: hypurr.Telegram.HyperliquidScaleCancel:input_type -> hypurr.HyperliquidScaleCancelRequest
+	24,  // 107: hypurr.Telegram.HyperliquidSpotSniperConfigs:input_type -> hypurr.HyperliquidSpotSniperConfigsRequest
+	28,  // 108: hypurr.Telegram.CreateHyperliquidSpotSniperConfig:input_type -> hypurr.CreateHyperliquidSpotSniperConfigRequest
+	26,  // 109: hypurr.Telegram.DeleteHyperliquidSpotSniperConfig:input_type -> hypurr.DeleteHyperliquidSpotSniperConfigRequest
+	30,  // 110: hypurr.Telegram.UpdateHyperliquidSpotSniperConfig:input_type -> hypurr.UpdateHyperliquidSpotSniperConfigRequest
+	53,  // 111: hypurr.Telegram.HyperliquidAgentSignatureCreate:input_type -> hypurr.HyperliquidAgentSignatureCreateRequest
+	55,  // 112: hypurr.Telegram.HyperliquidAgentWalletCreate:input_type -> hypurr.HyperliquidAgentWalletCreateRequest
+	44,  // 113: hypurr.Telegram.HfunCabalAlerts:input_type -> hypurr.HfunCabalAlertsRequest
+	46,  // 114: hypurr.Telegram.HfunCabalWalletLabelAdd:input_type -> hypurr.HfunCabalWalletLabelAddRequest
+	48,  // 115: hypurr.Telegram.HfunCabalWalletLabelModify:input_type -> hypurr.HfunCabalWalletLabelModifyRequest
+	50,  // 116: hypurr.Telegram.HfunCabalWalletLabelRemove:input_type -> hypurr.HfunCabalWalletLabelDeleteRequest
+	57,  // 117: hypurr.Telegram.SupportConversationStart:input_type -> hypurr.SupportConversationStartRequest
+	59,  // 118: hypurr.Telegram.SupportMessageSend:input_type -> hypurr.SupportMessageSendRequest
+	61,  // 119: hypurr.Telegram.SupportConversationHistory:input_type -> hypurr.SupportConversationHistoryRequest
+	63,  // 120: hypurr.Telegram.SupportConversationList:input_type -> hypurr.SupportConversationListRequest
+	65,  // 121: hypurr.Telegram.SupportConversationClose:input_type -> hypurr.SupportConversationCloseRequest
+	67,  // 122: hypurr.Telegram.SupportTicketStatus:input_type -> hypurr.SupportTicketStatusRequest
+	1,   // 123: hypurr.Telegram.TelegramUser:output_type -> hypurr.TelegramUserResponse
+	3,   // 124: hypurr.Telegram.TelegramUserWallets:output_type -> hypurr.TelegramUserWalletsResponse
+	19,  // 125: hypurr.Telegram.HyperliquidLaunchTrade:output_type -> hypurr.HyperliquidLaunchTradeResponse
+	39,  // 126: hypurr.Telegram.LaunchHyperliquidLaunch:output_type -> hypurr.LaunchHyperliquidLaunchResponse
+	43,  // 127: hypurr.Telegram.EditHyperliquidLaunch:output_type -> hypurr.EditHyperliquidLaunchResponse
+	22,  // 128: hypurr.Telegram.HpumpV1LaunchTrade:output_type -> hypurr.HpumpV1LaunchTradeResponse
+	41,  // 129: hypurr.Telegram.LaunchHpumpV1Launch:output_type -> hypurr.LaunchHpumpV1LaunchResponse
+	23,  // 130: hypurr.Telegram.HyperliquidSpotTrade:output_type -> hypurr.HyperliquidSpotTradeResponse
+	5,   // 131: hypurr.Telegram.HyperliquidCoreTrade:output_type -> hypurr.HyperliquidCoreTradeResponse
+	7,   // 132: hypurr.Telegram.HyperliquidCoreCancelOrders:output_type -> hypurr.HyperliquidCoreCancelOrdersResponse
+	33,  // 133: hypurr.Telegram.HyperliquidWalletSpotTwapSessions:output_type -> hypurr.HyperliquidWalletSpotTwapSessionsResponse
+	35,  // 134: hypurr.Telegram.HyperliquidWalletTwapSessions:output_type -> hypurr.HyperliquidWalletTwapSessionsResponse
+	37,  // 135: hypurr.Telegram.HyperliquidWalletScaleSessions:output_type -> hypurr.HyperliquidWalletScaleSessionsResponse
+	9,   // 136: hypurr.Telegram.HyperliquidTwapCreate:output_type -> hypurr.HyperliquidTwapCreateResponse
+	11,  // 137: hypurr.Telegram.HyperliquidTwapModify:output_type -> hypurr.HyperliquidTwapModifyResponse
+	13,  // 138: hypurr.Telegram.HyperliquidTwapCancel:output_type -> hypurr.HyperliquidTwapCancelResponse
+	15,  // 139: hypurr.Telegram.HyperliquidScaleCreate:output_type -> hypurr.HyperliquidScaleCreateResponse
+	17,  // 140: hypurr.Telegram.HyperliquidScaleCancel:output_type -> hypurr.HyperliquidScaleCancelResponse
+	25,  // 141: hypurr.Telegram.HyperliquidSpotSniperConfigs:output_type -> hypurr.HyperliquidSpotSniperConfigsResponse
+	29,  // 142: hypurr.Telegram.CreateHyperliquidSpotSniperConfig:output_type -> hypurr.CreateHyperliquidSpotSniperConfigResponse
+	27,  // 143: hypurr.Telegram.DeleteHyperliquidSpotSniperConfig:output_type -> hypurr.DeleteHyperliquidSpotSniperConfigResponse
+	31,  // 144: hypurr.Telegram.UpdateHyperliquidSpotSniperConfig:output_type -> hypurr.UpdateHyperliquidSpotSniperConfigResponse
+	54,  // 145: hypurr.Telegram.HyperliquidAgentSignatureCreate:output_type -> hypurr.HyperliquidAgentSignatureCreateResponse
+	56,  // 146: hypurr.Telegram.HyperliquidAgentWalletCreate:output_type -> hypurr.HyperliquidAgentWalletCreateResponse
+	45,  // 147: hypurr.Telegram.HfunCabalAlerts:output_type -> hypurr.HfunCabalAlertsResponse
+	47,  // 148: hypurr.Telegram.HfunCabalWalletLabelAdd:output_type -> hypurr.HfunCabalWalletLabelAddResponse
+	49,  // 149: hypurr.Telegram.HfunCabalWalletLabelModify:output_type -> hypurr.HfunCabalWalletLabelModifyResponse
+	51,  // 150: hypurr.Telegram.HfunCabalWalletLabelRemove:output_type -> hypurr.HfunCabalWalletLabelDeleteResponse
+	58,  // 151: hypurr.Telegram.SupportConversationStart:output_type -> hypurr.SupportConversationStartResponse
+	60,  // 152: hypurr.Telegram.SupportMessageSend:output_type -> hypurr.SupportMessageSendResponse
+	62,  // 153: hypurr.Telegram.SupportConversationHistory:output_type -> hypurr.SupportConversationHistoryResponse
+	64,  // 154: hypurr.Telegram.SupportConversationList:output_type -> hypurr.SupportConversationListResponse
+	66,  // 155: hypurr.Telegram.SupportConversationClose:output_type -> hypurr.SupportConversationCloseResponse
+	68,  // 156: hypurr.Telegram.SupportTicketStatus:output_type -> hypurr.SupportTicketStatusResponse
+	123, // [123:157] is the sub-list for method output_type
+	89,  // [89:123] is the sub-list for method input_type
+	89,  // [89:89] is the sub-list for extension type_name
+	89,  // [89:89] is the sub-list for extension extendee
+	0,   // [0:89] is the sub-list for field type_name
 }
 
 func init() { file_hypurr_telegram_telegram_service_proto_init() }

@@ -387,6 +387,7 @@ message SupportConversationHistoryRequest {
 
 message SupportConversationHistoryResponse {
   repeated SupportMessage messages = 1;
+  SupportTicket ticket = 2;
 }
 
 // SupportConversationList - List user's conversations

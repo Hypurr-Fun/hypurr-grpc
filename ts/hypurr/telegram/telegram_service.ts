@@ -1112,6 +1112,10 @@ export interface SupportConversationHistoryResponse {
      * @generated from protobuf field: repeated hypurr.SupportMessage messages = 1;
      */
     messages: SupportMessage[];
+    /**
+     * @generated from protobuf field: hypurr.SupportTicket ticket = 2;
+     */
+    ticket?: SupportTicket;
 }
 // SupportConversationList - List user's conversations
 
@@ -5302,7 +5306,8 @@ export const SupportConversationHistoryRequest = new SupportConversationHistoryR
 class SupportConversationHistoryResponse$Type extends MessageType<SupportConversationHistoryResponse> {
     constructor() {
         super("hypurr.SupportConversationHistoryResponse", [
-            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SupportMessage }
+            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SupportMessage },
+            { no: 2, name: "ticket", kind: "message", T: () => SupportTicket }
         ]);
     }
     create(value?: PartialMessage<SupportConversationHistoryResponse>): SupportConversationHistoryResponse {
@@ -5320,6 +5325,9 @@ class SupportConversationHistoryResponse$Type extends MessageType<SupportConvers
                 case /* repeated hypurr.SupportMessage messages */ 1:
                     message.messages.push(SupportMessage.internalBinaryRead(reader, reader.uint32(), options));
                     break;
+                case /* hypurr.SupportTicket ticket */ 2:
+                    message.ticket = SupportTicket.internalBinaryRead(reader, reader.uint32(), options, message.ticket);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5335,6 +5343,9 @@ class SupportConversationHistoryResponse$Type extends MessageType<SupportConvers
         /* repeated hypurr.SupportMessage messages = 1; */
         for (let i = 0; i < message.messages.length; i++)
             SupportMessage.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.SupportTicket ticket = 2; */
+        if (message.ticket)
+            SupportTicket.internalBinaryWrite(message.ticket, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
