@@ -26,6 +26,7 @@ const (
 	HyperCore_WalletTradesStream_FullMethodName                = "/hypercore.HyperCore/WalletTradesStream"
 	HyperCore_ValidatorDelegators_FullMethodName               = "/hypercore.HyperCore/ValidatorDelegators"
 	HyperCore_ReferrerWallet_FullMethodName                    = "/hypercore.HyperCore/ReferrerWallet"
+	HyperCore_WalletTags_FullMethodName                        = "/hypercore.HyperCore/WalletTags"
 )
 
 // HyperCoreClient is the client API for HyperCore service.
@@ -39,6 +40,7 @@ type HyperCoreClient interface {
 	WalletTradesStream(ctx context.Context, in *WalletTradesStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletTradesStreamClient, error)
 	ValidatorDelegators(ctx context.Context, in *ValidatorDelegatorsRequest, opts ...grpc.CallOption) (*ValidatorDelegatorsResponse, error)
 	ReferrerWallet(ctx context.Context, in *ReferrerWalletRequest, opts ...grpc.CallOption) (*ReferrerWalletResponse, error)
+	WalletTags(ctx context.Context, in *WalletTagsRequest, opts ...grpc.CallOption) (*WalletTagsResponse, error)
 }
 
 type hyperCoreClient struct {
@@ -187,6 +189,16 @@ func (c *hyperCoreClient) ReferrerWallet(ctx context.Context, in *ReferrerWallet
 	return out, nil
 }
 
+func (c *hyperCoreClient) WalletTags(ctx context.Context, in *WalletTagsRequest, opts ...grpc.CallOption) (*WalletTagsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WalletTagsResponse)
+	err := c.cc.Invoke(ctx, HyperCore_WalletTags_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HyperCoreServer is the server API for HyperCore service.
 // All implementations must embed UnimplementedHyperCoreServer
 // for forward compatibility
@@ -198,6 +210,7 @@ type HyperCoreServer interface {
 	WalletTradesStream(*WalletTradesStreamRequest, HyperCore_WalletTradesStreamServer) error
 	ValidatorDelegators(context.Context, *ValidatorDelegatorsRequest) (*ValidatorDelegatorsResponse, error)
 	ReferrerWallet(context.Context, *ReferrerWalletRequest) (*ReferrerWalletResponse, error)
+	WalletTags(context.Context, *WalletTagsRequest) (*WalletTagsResponse, error)
 	mustEmbedUnimplementedHyperCoreServer()
 }
 
@@ -225,6 +238,9 @@ func (UnimplementedHyperCoreServer) ValidatorDelegators(context.Context, *Valida
 }
 func (UnimplementedHyperCoreServer) ReferrerWallet(context.Context, *ReferrerWalletRequest) (*ReferrerWalletResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReferrerWallet not implemented")
+}
+func (UnimplementedHyperCoreServer) WalletTags(context.Context, *WalletTagsRequest) (*WalletTagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WalletTags not implemented")
 }
 func (UnimplementedHyperCoreServer) mustEmbedUnimplementedHyperCoreServer() {}
 
@@ -379,6 +395,24 @@ func _HyperCore_ReferrerWallet_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_WalletTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WalletTagsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).WalletTags(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_WalletTags_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).WalletTags(ctx, req.(*WalletTagsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HyperCore_ServiceDesc is the grpc.ServiceDesc for HyperCore service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -401,6 +435,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReferrerWallet",
 			Handler:    _HyperCore_ReferrerWallet_Handler,
+		},
+		{
+			MethodName: "WalletTags",
+			Handler:    _HyperCore_WalletTags_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
+import type { WalletTagsResponse } from "./hypercore_service";
+import type { WalletTagsRequest } from "./hypercore_service";
 import type { ReferrerWalletResponse } from "./hypercore_service";
 import type { ReferrerWalletRequest } from "./hypercore_service";
 import type { ValidatorDelegatorsResponse } from "./hypercore_service";
@@ -55,6 +57,10 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: ReferrerWallet(hypercore.ReferrerWalletRequest) returns (hypercore.ReferrerWalletResponse);
      */
     referrerWallet(input: ReferrerWalletRequest, options?: RpcOptions): UnaryCall<ReferrerWalletRequest, ReferrerWalletResponse>;
+    /**
+     * @generated from protobuf rpc: WalletTags(hypercore.WalletTagsRequest) returns (hypercore.WalletTagsResponse);
+     */
+    walletTags(input: WalletTagsRequest, options?: RpcOptions): UnaryCall<WalletTagsRequest, WalletTagsResponse>;
 }
 /**
  * @generated from protobuf service hypercore.HyperCore
@@ -113,5 +119,12 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
     referrerWallet(input: ReferrerWalletRequest, options?: RpcOptions): UnaryCall<ReferrerWalletRequest, ReferrerWalletResponse> {
         const method = this.methods[6], opt = this._transport.mergeOptions(options);
         return stackIntercept<ReferrerWalletRequest, ReferrerWalletResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: WalletTags(hypercore.WalletTagsRequest) returns (hypercore.WalletTagsResponse);
+     */
+    walletTags(input: WalletTagsRequest, options?: RpcOptions): UnaryCall<WalletTagsRequest, WalletTagsResponse> {
+        const method = this.methods[7], opt = this._transport.mergeOptions(options);
+        return stackIntercept<WalletTagsRequest, WalletTagsResponse>("unary", this._transport, method, opt, input);
     }
 }

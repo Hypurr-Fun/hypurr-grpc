@@ -360,6 +360,24 @@ export interface ReferrerWalletResponse {
      */
     walletAddress: string;
 }
+/**
+ * @generated from protobuf message hypercore.WalletTagsRequest
+ */
+export interface WalletTagsRequest {
+    /**
+     * @generated from protobuf field: string wallet_address = 1;
+     */
+    walletAddress: string;
+}
+/**
+ * @generated from protobuf message hypercore.WalletTagsResponse
+ */
+export interface WalletTagsResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletTag tags = 1;
+     */
+    tags: WalletTag[];
+}
 // 
 // type Trade struct {
 // Coin             string           `json:"coin"`               // Perp symbol or @ notation
@@ -1713,6 +1731,108 @@ class ReferrerWalletResponse$Type extends MessageType<ReferrerWalletResponse> {
  * @generated MessageType for protobuf message hypercore.ReferrerWalletResponse
  */
 export const ReferrerWalletResponse = new ReferrerWalletResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletTagsRequest$Type extends MessageType<WalletTagsRequest> {
+    constructor() {
+        super("hypercore.WalletTagsRequest", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletTagsRequest>): WalletTagsRequest {
+        const message = { walletAddress: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<WalletTagsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletTagsRequest): WalletTagsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletTagsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletTagsRequest
+ */
+export const WalletTagsRequest = new WalletTagsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletTagsResponse$Type extends MessageType<WalletTagsResponse> {
+    constructor() {
+        super("hypercore.WalletTagsResponse", [
+            { no: 1, name: "tags", kind: "enum", repeat: 1 /*RepeatType.PACKED*/, T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] }
+        ]);
+    }
+    create(value?: PartialMessage<WalletTagsResponse>): WalletTagsResponse {
+        const message = { tags: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<WalletTagsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletTagsResponse): WalletTagsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.WalletTag tags */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.tags.push(reader.int32());
+                    else
+                        message.tags.push(reader.int32());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletTagsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.WalletTag tags = 1; */
+        if (message.tags.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.tags.length; i++)
+                writer.int32(message.tags[i]);
+            writer.join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletTagsResponse
+ */
+export const WalletTagsResponse = new WalletTagsResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypercore.HyperCore
  */
@@ -1723,5 +1843,6 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletBalancesStream", serverStreaming: true, clientStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
     { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },
     { name: "ValidatorDelegators", options: {}, I: ValidatorDelegatorsRequest, O: ValidatorDelegatorsResponse },
-    { name: "ReferrerWallet", options: {}, I: ReferrerWalletRequest, O: ReferrerWalletResponse }
+    { name: "ReferrerWallet", options: {}, I: ReferrerWalletRequest, O: ReferrerWalletResponse },
+    { name: "WalletTags", options: {}, I: WalletTagsRequest, O: WalletTagsResponse }
 ]);
