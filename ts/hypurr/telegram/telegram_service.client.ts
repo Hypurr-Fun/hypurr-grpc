@@ -4,6 +4,18 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Telegram } from "./telegram_service";
+import type { DeletePortfolioSourceResponse } from "./telegram_service";
+import type { DeletePortfolioSourceRequest } from "./telegram_service";
+import type { UpdatePortfolioSourceResponse } from "./telegram_service";
+import type { UpdatePortfolioSourceRequest } from "./telegram_service";
+import type { CreatePortfolioSourceResponse } from "./telegram_service";
+import type { CreatePortfolioSourceRequest } from "./telegram_service";
+import type { DeletePortfolioAllocatorResponse } from "./telegram_service";
+import type { DeletePortfolioAllocatorRequest } from "./telegram_service";
+import type { UpdatePortfolioAllocatorResponse } from "./telegram_service";
+import type { UpdatePortfolioAllocatorRequest } from "./telegram_service";
+import type { CreatePortfolioAllocatorResponse } from "./telegram_service";
+import type { CreatePortfolioAllocatorRequest } from "./telegram_service";
 import type { ListPortfolioSourcesResponse } from "./telegram_service";
 import type { ListPortfolioSourcesRequest } from "./telegram_service";
 import type { GetPortfolioSourceResponse } from "./telegram_service";
@@ -260,6 +272,30 @@ export interface ITelegramClient {
      * @generated from protobuf rpc: ListPortfolioSources(hypurr.ListPortfolioSourcesRequest) returns (hypurr.ListPortfolioSourcesResponse);
      */
     listPortfolioSources(input: ListPortfolioSourcesRequest, options?: RpcOptions): UnaryCall<ListPortfolioSourcesRequest, ListPortfolioSourcesResponse>;
+    /**
+     * @generated from protobuf rpc: CreatePortfolioAllocator(hypurr.CreatePortfolioAllocatorRequest) returns (hypurr.CreatePortfolioAllocatorResponse);
+     */
+    createPortfolioAllocator(input: CreatePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<CreatePortfolioAllocatorRequest, CreatePortfolioAllocatorResponse>;
+    /**
+     * @generated from protobuf rpc: UpdatePortfolioAllocator(hypurr.UpdatePortfolioAllocatorRequest) returns (hypurr.UpdatePortfolioAllocatorResponse);
+     */
+    updatePortfolioAllocator(input: UpdatePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<UpdatePortfolioAllocatorRequest, UpdatePortfolioAllocatorResponse>;
+    /**
+     * @generated from protobuf rpc: DeletePortfolioAllocator(hypurr.DeletePortfolioAllocatorRequest) returns (hypurr.DeletePortfolioAllocatorResponse);
+     */
+    deletePortfolioAllocator(input: DeletePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<DeletePortfolioAllocatorRequest, DeletePortfolioAllocatorResponse>;
+    /**
+     * @generated from protobuf rpc: CreatePortfolioSource(hypurr.CreatePortfolioSourceRequest) returns (hypurr.CreatePortfolioSourceResponse);
+     */
+    createPortfolioSource(input: CreatePortfolioSourceRequest, options?: RpcOptions): UnaryCall<CreatePortfolioSourceRequest, CreatePortfolioSourceResponse>;
+    /**
+     * @generated from protobuf rpc: UpdatePortfolioSource(hypurr.UpdatePortfolioSourceRequest) returns (hypurr.UpdatePortfolioSourceResponse);
+     */
+    updatePortfolioSource(input: UpdatePortfolioSourceRequest, options?: RpcOptions): UnaryCall<UpdatePortfolioSourceRequest, UpdatePortfolioSourceResponse>;
+    /**
+     * @generated from protobuf rpc: DeletePortfolioSource(hypurr.DeletePortfolioSourceRequest) returns (hypurr.DeletePortfolioSourceResponse);
+     */
+    deletePortfolioSource(input: DeletePortfolioSourceRequest, options?: RpcOptions): UnaryCall<DeletePortfolioSourceRequest, DeletePortfolioSourceResponse>;
 }
 /**
  * @generated from protobuf service hypurr.Telegram
@@ -556,5 +592,47 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
     listPortfolioSources(input: ListPortfolioSourcesRequest, options?: RpcOptions): UnaryCall<ListPortfolioSourcesRequest, ListPortfolioSourcesResponse> {
         const method = this.methods[38], opt = this._transport.mergeOptions(options);
         return stackIntercept<ListPortfolioSourcesRequest, ListPortfolioSourcesResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: CreatePortfolioAllocator(hypurr.CreatePortfolioAllocatorRequest) returns (hypurr.CreatePortfolioAllocatorResponse);
+     */
+    createPortfolioAllocator(input: CreatePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<CreatePortfolioAllocatorRequest, CreatePortfolioAllocatorResponse> {
+        const method = this.methods[39], opt = this._transport.mergeOptions(options);
+        return stackIntercept<CreatePortfolioAllocatorRequest, CreatePortfolioAllocatorResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: UpdatePortfolioAllocator(hypurr.UpdatePortfolioAllocatorRequest) returns (hypurr.UpdatePortfolioAllocatorResponse);
+     */
+    updatePortfolioAllocator(input: UpdatePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<UpdatePortfolioAllocatorRequest, UpdatePortfolioAllocatorResponse> {
+        const method = this.methods[40], opt = this._transport.mergeOptions(options);
+        return stackIntercept<UpdatePortfolioAllocatorRequest, UpdatePortfolioAllocatorResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: DeletePortfolioAllocator(hypurr.DeletePortfolioAllocatorRequest) returns (hypurr.DeletePortfolioAllocatorResponse);
+     */
+    deletePortfolioAllocator(input: DeletePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<DeletePortfolioAllocatorRequest, DeletePortfolioAllocatorResponse> {
+        const method = this.methods[41], opt = this._transport.mergeOptions(options);
+        return stackIntercept<DeletePortfolioAllocatorRequest, DeletePortfolioAllocatorResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: CreatePortfolioSource(hypurr.CreatePortfolioSourceRequest) returns (hypurr.CreatePortfolioSourceResponse);
+     */
+    createPortfolioSource(input: CreatePortfolioSourceRequest, options?: RpcOptions): UnaryCall<CreatePortfolioSourceRequest, CreatePortfolioSourceResponse> {
+        const method = this.methods[42], opt = this._transport.mergeOptions(options);
+        return stackIntercept<CreatePortfolioSourceRequest, CreatePortfolioSourceResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: UpdatePortfolioSource(hypurr.UpdatePortfolioSourceRequest) returns (hypurr.UpdatePortfolioSourceResponse);
+     */
+    updatePortfolioSource(input: UpdatePortfolioSourceRequest, options?: RpcOptions): UnaryCall<UpdatePortfolioSourceRequest, UpdatePortfolioSourceResponse> {
+        const method = this.methods[43], opt = this._transport.mergeOptions(options);
+        return stackIntercept<UpdatePortfolioSourceRequest, UpdatePortfolioSourceResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: DeletePortfolioSource(hypurr.DeletePortfolioSourceRequest) returns (hypurr.DeletePortfolioSourceResponse);
+     */
+    deletePortfolioSource(input: DeletePortfolioSourceRequest, options?: RpcOptions): UnaryCall<DeletePortfolioSourceRequest, DeletePortfolioSourceResponse> {
+        const method = this.methods[44], opt = this._transport.mergeOptions(options);
+        return stackIntercept<DeletePortfolioSourceRequest, DeletePortfolioSourceResponse>("unary", this._transport, method, opt, input);
     }
 }

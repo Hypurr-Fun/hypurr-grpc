@@ -14,6 +14,7 @@ import "hypurr/trade.proto";
 import "hypurr/cabal.proto";
 import "hypurr/support.proto";
 import "hypurr/portfolio.proto";
+import "google/protobuf/struct.proto";
 
 
 // Auth endpoints
@@ -469,6 +470,79 @@ message ListPortfolioSourcesResponse {
   repeated PortfolioSource sources = 1;
 }
 
+// CreatePortfolioAllocator - creates a new allocator for a wallet
+message CreatePortfolioAllocatorRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  int64 rebalance_interval = 3;     // seconds between rebalances (default 300)
+  double min_rebalance_pct = 4;     // minimum deviation to trigger rebalance (default 0.05)
+}
+
+message CreatePortfolioAllocatorResponse {
+  PortfolioAllocator allocator = 1;
+}
+
+// UpdatePortfolioAllocator - updates allocator settings (all fields optional)
+message UpdatePortfolioAllocatorRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  google.protobuf.BoolValue enabled = 3;
+  google.protobuf.Int64Value rebalance_interval = 4;
+  google.protobuf.DoubleValue min_rebalance_pct = 5;
+}
+
+message UpdatePortfolioAllocatorResponse {
+  PortfolioAllocator allocator = 1;
+}
+
+// DeletePortfolioAllocator - deletes an allocator and all its sources
+message DeletePortfolioAllocatorRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+}
+
+message DeletePortfolioAllocatorResponse {
+}
+
+// ============== Portfolio Source CRUD ==============
+
+// CreatePortfolioSource - adds a new source to an allocator
+message CreatePortfolioSourceRequest {
+  map<string, string> auth_data = 1;
+  int64 allocator_id = 2;
+  string name = 3;                    // unique name within allocator
+  string source_type = 4;             // "copy_trading" or "discretionary"
+  double weight = 5;                  // leverage contribution
+  google.protobuf.Struct config = 6;  // source-specific config
+}
+
+message CreatePortfolioSourceResponse {
+  PortfolioSource source = 1;
+}
+
+// UpdatePortfolioSource - updates source settings (all fields optional except identifiers)
+message UpdatePortfolioSourceRequest {
+  map<string, string> auth_data = 1;
+  int64 allocator_id = 2;
+  string name = 3;                              // identifies the source to update
+  google.protobuf.DoubleValue weight = 4;       // new weight
+  google.protobuf.Struct config = 5;            // new config (replaces existing)
+  google.protobuf.BoolValue enabled = 6;        // enable/disable source
+}
+
+message UpdatePortfolioSourceResponse {
+  PortfolioSource source = 1;
+}
+
+// DeletePortfolioSource - removes a source from an allocator
+message DeletePortfolioSourceRequest {
+  map<string, string> auth_data = 1;
+  int64 allocator_id = 2;
+  string name = 3;                    // identifies the source to delete
+}
+
+message DeletePortfolioSourceResponse {
+}
 
 
 service Telegram {
@@ -528,4 +602,10 @@ service Telegram {
   rpc ListEnabledPortfolioAllocators(ListEnabledPortfolioAllocatorsRequest) returns (ListEnabledPortfolioAllocatorsResponse) {}
   rpc GetPortfolioSource(GetPortfolioSourceRequest) returns (GetPortfolioSourceResponse) {}
   rpc ListPortfolioSources(ListPortfolioSourcesRequest) returns (ListPortfolioSourcesResponse) {}
+  rpc CreatePortfolioAllocator(CreatePortfolioAllocatorRequest) returns (CreatePortfolioAllocatorResponse) {}
+  rpc UpdatePortfolioAllocator(UpdatePortfolioAllocatorRequest) returns (UpdatePortfolioAllocatorResponse) {}
+  rpc DeletePortfolioAllocator(DeletePortfolioAllocatorRequest) returns (DeletePortfolioAllocatorResponse) {}
+  rpc CreatePortfolioSource(CreatePortfolioSourceRequest) returns (CreatePortfolioSourceResponse) {}
+  rpc UpdatePortfolioSource(UpdatePortfolioSourceRequest) returns (UpdatePortfolioSourceResponse) {}
+  rpc DeletePortfolioSource(DeletePortfolioSourceRequest) returns (DeletePortfolioSourceResponse) {}
 }
