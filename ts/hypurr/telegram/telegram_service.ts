@@ -53,6 +53,10 @@ export interface TelegramUserResponse {
      * @generated from protobuf field: hypurr.TelegramUser user = 1;
      */
     user?: TelegramUser;
+    /**
+     * @generated from protobuf field: string auth_token = 2;
+     */
+    authToken: string;
 }
 /**
  * @generated from protobuf message hypurr.TelegramUserWalletsRequest
@@ -1266,11 +1270,12 @@ export const TelegramUserRequest = new TelegramUserRequest$Type();
 class TelegramUserResponse$Type extends MessageType<TelegramUserResponse> {
     constructor() {
         super("hypurr.TelegramUserResponse", [
-            { no: 1, name: "user", kind: "message", T: () => TelegramUser }
+            { no: 1, name: "user", kind: "message", T: () => TelegramUser },
+            { no: 2, name: "auth_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<TelegramUserResponse>): TelegramUserResponse {
-        const message = {};
+        const message = { authToken: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<TelegramUserResponse>(this, message, value);
@@ -1283,6 +1288,9 @@ class TelegramUserResponse$Type extends MessageType<TelegramUserResponse> {
             switch (fieldNo) {
                 case /* hypurr.TelegramUser user */ 1:
                     message.user = TelegramUser.internalBinaryRead(reader, reader.uint32(), options, message.user);
+                    break;
+                case /* string auth_token */ 2:
+                    message.authToken = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1299,6 +1307,9 @@ class TelegramUserResponse$Type extends MessageType<TelegramUserResponse> {
         /* hypurr.TelegramUser user = 1; */
         if (message.user)
             TelegramUser.internalBinaryWrite(message.user, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string auth_token = 2; */
+        if (message.authToken !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.authToken);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
