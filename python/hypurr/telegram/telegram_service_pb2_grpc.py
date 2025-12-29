@@ -184,6 +184,31 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusResponse.FromString,
         )
+    self.GetPortfolioAllocator = channel.unary_unary(
+        '/hypurr.Telegram/GetPortfolioAllocator',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.GetPortfolioAllocatorRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.GetPortfolioAllocatorResponse.FromString,
+        )
+    self.ListPortfolioAllocators = channel.unary_unary(
+        '/hypurr.Telegram/ListPortfolioAllocators',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.ListPortfolioAllocatorsRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.ListPortfolioAllocatorsResponse.FromString,
+        )
+    self.ListEnabledPortfolioAllocators = channel.unary_unary(
+        '/hypurr.Telegram/ListEnabledPortfolioAllocators',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.ListEnabledPortfolioAllocatorsRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.ListEnabledPortfolioAllocatorsResponse.FromString,
+        )
+    self.GetPortfolioSource = channel.unary_unary(
+        '/hypurr.Telegram/GetPortfolioSource',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.GetPortfolioSourceRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.GetPortfolioSourceResponse.FromString,
+        )
+    self.ListPortfolioSources = channel.unary_unary(
+        '/hypurr.Telegram/ListPortfolioSources',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.ListPortfolioSourcesRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.ListPortfolioSourcesResponse.FromString,
+        )
 
 
 class TelegramServicer(object):
@@ -428,6 +453,41 @@ class TelegramServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def GetPortfolioAllocator(self, request, context):
+    """Portfolio
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListPortfolioAllocators(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListEnabledPortfolioAllocators(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def GetPortfolioSource(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def ListPortfolioSources(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_TelegramServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -600,6 +660,31 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.SupportTicketStatus,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusResponse.SerializeToString,
+      ),
+      'GetPortfolioAllocator': grpc.unary_unary_rpc_method_handler(
+          servicer.GetPortfolioAllocator,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.GetPortfolioAllocatorRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.GetPortfolioAllocatorResponse.SerializeToString,
+      ),
+      'ListPortfolioAllocators': grpc.unary_unary_rpc_method_handler(
+          servicer.ListPortfolioAllocators,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.ListPortfolioAllocatorsRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.ListPortfolioAllocatorsResponse.SerializeToString,
+      ),
+      'ListEnabledPortfolioAllocators': grpc.unary_unary_rpc_method_handler(
+          servicer.ListEnabledPortfolioAllocators,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.ListEnabledPortfolioAllocatorsRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.ListEnabledPortfolioAllocatorsResponse.SerializeToString,
+      ),
+      'GetPortfolioSource': grpc.unary_unary_rpc_method_handler(
+          servicer.GetPortfolioSource,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.GetPortfolioSourceRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.GetPortfolioSourceResponse.SerializeToString,
+      ),
+      'ListPortfolioSources': grpc.unary_unary_rpc_method_handler(
+          servicer.ListPortfolioSources,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.ListPortfolioSourcesRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.ListPortfolioSourcesResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

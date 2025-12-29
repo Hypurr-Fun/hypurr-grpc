@@ -13,6 +13,7 @@ import "hypurr/hpumpv1.proto";
 import "hypurr/trade.proto";
 import "hypurr/cabal.proto";
 import "hypurr/support.proto";
+import "hypurr/portfolio.proto";
 
 
 // Auth endpoints
@@ -424,6 +425,51 @@ message SupportTicketStatusResponse {
   SupportTicket ticket = 1;
 }
 
+message GetPortfolioAllocatorRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+}
+
+message GetPortfolioAllocatorResponse {
+  PortfolioAllocator allocator = 1;
+}
+
+message ListPortfolioAllocatorsRequest {
+  map<string, string> auth_data = 1;
+}
+
+message ListPortfolioAllocatorsResponse {
+  repeated PortfolioAllocator allocators = 1;
+}
+
+message ListEnabledPortfolioAllocatorsRequest {
+  map<string, string> auth_data = 1;
+}
+
+message ListEnabledPortfolioAllocatorsResponse {
+  repeated PortfolioAllocator allocators = 1;
+}
+
+message GetPortfolioSourceRequest {
+  map<string, string> auth_data = 1;
+  int64 allocator_id = 2;
+  string name = 3;
+}
+
+message GetPortfolioSourceResponse {
+  PortfolioSource source = 1;
+}
+
+message ListPortfolioSourcesRequest {
+  map<string, string> auth_data = 1;
+  int64 allocator_id = 2;
+}
+
+message ListPortfolioSourcesResponse {
+  repeated PortfolioSource sources = 1;
+}
+
+
 
 service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
@@ -475,4 +521,11 @@ service Telegram {
   rpc SupportConversationList(SupportConversationListRequest) returns (SupportConversationListResponse);
   rpc SupportConversationClose(SupportConversationCloseRequest) returns (SupportConversationCloseResponse);
   rpc SupportTicketStatus(SupportTicketStatusRequest) returns (SupportTicketStatusResponse);
+
+  // Portfolio
+  rpc GetPortfolioAllocator(GetPortfolioAllocatorRequest) returns (GetPortfolioAllocatorResponse) {}
+  rpc ListPortfolioAllocators(ListPortfolioAllocatorsRequest) returns (ListPortfolioAllocatorsResponse) {}
+  rpc ListEnabledPortfolioAllocators(ListEnabledPortfolioAllocatorsRequest) returns (ListEnabledPortfolioAllocatorsResponse) {}
+  rpc GetPortfolioSource(GetPortfolioSourceRequest) returns (GetPortfolioSourceResponse) {}
+  rpc ListPortfolioSources(ListPortfolioSourcesRequest) returns (ListPortfolioSourcesResponse) {}
 }

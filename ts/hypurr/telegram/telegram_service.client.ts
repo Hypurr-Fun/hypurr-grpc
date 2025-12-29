@@ -4,6 +4,16 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Telegram } from "./telegram_service";
+import type { ListPortfolioSourcesResponse } from "./telegram_service";
+import type { ListPortfolioSourcesRequest } from "./telegram_service";
+import type { GetPortfolioSourceResponse } from "./telegram_service";
+import type { GetPortfolioSourceRequest } from "./telegram_service";
+import type { ListEnabledPortfolioAllocatorsResponse } from "./telegram_service";
+import type { ListEnabledPortfolioAllocatorsRequest } from "./telegram_service";
+import type { ListPortfolioAllocatorsResponse } from "./telegram_service";
+import type { ListPortfolioAllocatorsRequest } from "./telegram_service";
+import type { GetPortfolioAllocatorResponse } from "./telegram_service";
+import type { GetPortfolioAllocatorRequest } from "./telegram_service";
 import type { SupportTicketStatusResponse } from "./telegram_service";
 import type { SupportTicketStatusRequest } from "./telegram_service";
 import type { SupportConversationCloseResponse } from "./telegram_service";
@@ -228,6 +238,28 @@ export interface ITelegramClient {
      * @generated from protobuf rpc: SupportTicketStatus(hypurr.SupportTicketStatusRequest) returns (hypurr.SupportTicketStatusResponse);
      */
     supportTicketStatus(input: SupportTicketStatusRequest, options?: RpcOptions): UnaryCall<SupportTicketStatusRequest, SupportTicketStatusResponse>;
+    /**
+     * Portfolio
+     *
+     * @generated from protobuf rpc: GetPortfolioAllocator(hypurr.GetPortfolioAllocatorRequest) returns (hypurr.GetPortfolioAllocatorResponse);
+     */
+    getPortfolioAllocator(input: GetPortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<GetPortfolioAllocatorRequest, GetPortfolioAllocatorResponse>;
+    /**
+     * @generated from protobuf rpc: ListPortfolioAllocators(hypurr.ListPortfolioAllocatorsRequest) returns (hypurr.ListPortfolioAllocatorsResponse);
+     */
+    listPortfolioAllocators(input: ListPortfolioAllocatorsRequest, options?: RpcOptions): UnaryCall<ListPortfolioAllocatorsRequest, ListPortfolioAllocatorsResponse>;
+    /**
+     * @generated from protobuf rpc: ListEnabledPortfolioAllocators(hypurr.ListEnabledPortfolioAllocatorsRequest) returns (hypurr.ListEnabledPortfolioAllocatorsResponse);
+     */
+    listEnabledPortfolioAllocators(input: ListEnabledPortfolioAllocatorsRequest, options?: RpcOptions): UnaryCall<ListEnabledPortfolioAllocatorsRequest, ListEnabledPortfolioAllocatorsResponse>;
+    /**
+     * @generated from protobuf rpc: GetPortfolioSource(hypurr.GetPortfolioSourceRequest) returns (hypurr.GetPortfolioSourceResponse);
+     */
+    getPortfolioSource(input: GetPortfolioSourceRequest, options?: RpcOptions): UnaryCall<GetPortfolioSourceRequest, GetPortfolioSourceResponse>;
+    /**
+     * @generated from protobuf rpc: ListPortfolioSources(hypurr.ListPortfolioSourcesRequest) returns (hypurr.ListPortfolioSourcesResponse);
+     */
+    listPortfolioSources(input: ListPortfolioSourcesRequest, options?: RpcOptions): UnaryCall<ListPortfolioSourcesRequest, ListPortfolioSourcesResponse>;
 }
 /**
  * @generated from protobuf service hypurr.Telegram
@@ -487,5 +519,42 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
     supportTicketStatus(input: SupportTicketStatusRequest, options?: RpcOptions): UnaryCall<SupportTicketStatusRequest, SupportTicketStatusResponse> {
         const method = this.methods[33], opt = this._transport.mergeOptions(options);
         return stackIntercept<SupportTicketStatusRequest, SupportTicketStatusResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * Portfolio
+     *
+     * @generated from protobuf rpc: GetPortfolioAllocator(hypurr.GetPortfolioAllocatorRequest) returns (hypurr.GetPortfolioAllocatorResponse);
+     */
+    getPortfolioAllocator(input: GetPortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<GetPortfolioAllocatorRequest, GetPortfolioAllocatorResponse> {
+        const method = this.methods[34], opt = this._transport.mergeOptions(options);
+        return stackIntercept<GetPortfolioAllocatorRequest, GetPortfolioAllocatorResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: ListPortfolioAllocators(hypurr.ListPortfolioAllocatorsRequest) returns (hypurr.ListPortfolioAllocatorsResponse);
+     */
+    listPortfolioAllocators(input: ListPortfolioAllocatorsRequest, options?: RpcOptions): UnaryCall<ListPortfolioAllocatorsRequest, ListPortfolioAllocatorsResponse> {
+        const method = this.methods[35], opt = this._transport.mergeOptions(options);
+        return stackIntercept<ListPortfolioAllocatorsRequest, ListPortfolioAllocatorsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: ListEnabledPortfolioAllocators(hypurr.ListEnabledPortfolioAllocatorsRequest) returns (hypurr.ListEnabledPortfolioAllocatorsResponse);
+     */
+    listEnabledPortfolioAllocators(input: ListEnabledPortfolioAllocatorsRequest, options?: RpcOptions): UnaryCall<ListEnabledPortfolioAllocatorsRequest, ListEnabledPortfolioAllocatorsResponse> {
+        const method = this.methods[36], opt = this._transport.mergeOptions(options);
+        return stackIntercept<ListEnabledPortfolioAllocatorsRequest, ListEnabledPortfolioAllocatorsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: GetPortfolioSource(hypurr.GetPortfolioSourceRequest) returns (hypurr.GetPortfolioSourceResponse);
+     */
+    getPortfolioSource(input: GetPortfolioSourceRequest, options?: RpcOptions): UnaryCall<GetPortfolioSourceRequest, GetPortfolioSourceResponse> {
+        const method = this.methods[37], opt = this._transport.mergeOptions(options);
+        return stackIntercept<GetPortfolioSourceRequest, GetPortfolioSourceResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: ListPortfolioSources(hypurr.ListPortfolioSourcesRequest) returns (hypurr.ListPortfolioSourcesResponse);
+     */
+    listPortfolioSources(input: ListPortfolioSourcesRequest, options?: RpcOptions): UnaryCall<ListPortfolioSourcesRequest, ListPortfolioSourcesResponse> {
+        const method = this.methods[38], opt = this._transport.mergeOptions(options);
+        return stackIntercept<ListPortfolioSourcesRequest, ListPortfolioSourcesResponse>("unary", this._transport, method, opt, input);
     }
 }
