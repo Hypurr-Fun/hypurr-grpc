@@ -636,6 +636,10 @@ export interface HyperliquidWalletSpotTwapSessionsRequest {
      * @generated from protobuf field: int64 wallet_id = 2;
      */
     walletId: number;
+    /**
+     * @generated from protobuf field: bool enabled = 3;
+     */
+    enabled: boolean;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletSpotTwapSessionsResponse
@@ -3728,11 +3732,12 @@ class HyperliquidWalletSpotTwapSessionsRequest$Type extends MessageType<Hyperliq
     constructor() {
         super("hypurr.HyperliquidWalletSpotTwapSessionsRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWalletSpotTwapSessionsRequest>): HyperliquidWalletSpotTwapSessionsRequest {
-        const message = { authData: {}, walletId: 0 };
+        const message = { authData: {}, walletId: 0, enabled: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWalletSpotTwapSessionsRequest>(this, message, value);
@@ -3748,6 +3753,9 @@ class HyperliquidWalletSpotTwapSessionsRequest$Type extends MessageType<Hyperliq
                     break;
                 case /* int64 wallet_id */ 2:
                     message.walletId = reader.int64().toNumber();
+                    break;
+                case /* bool enabled */ 3:
+                    message.enabled = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3783,6 +3791,9 @@ class HyperliquidWalletSpotTwapSessionsRequest$Type extends MessageType<Hyperliq
         /* int64 wallet_id = 2; */
         if (message.walletId !== 0)
             writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* bool enabled = 3; */
+        if (message.enabled !== false)
+            writer.tag(3, WireType.Varint).bool(message.enabled);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
