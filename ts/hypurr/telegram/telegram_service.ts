@@ -93,13 +93,13 @@ export interface HyperliquidCoreActionRequest {
         [key: string]: string;
     };
     /**
-     * @generated from protobuf field: string type = 2;
+     * @generated from protobuf field: int64 wallet_id = 2;
      */
-    type: string;
+    walletId: number;
     /**
-     * @generated from protobuf field: bytes params = 3;
+     * @generated from protobuf field: bytes action = 3;
      */
-    params: Uint8Array; // JSON-encoded action-specific params
+    action: Uint8Array; // JSON-encoded action-specific params
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidCoreActionResponse
@@ -1805,12 +1805,12 @@ class HyperliquidCoreActionRequest$Type extends MessageType<HyperliquidCoreActio
     constructor() {
         super("hypurr.HyperliquidCoreActionRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "params", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "action", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidCoreActionRequest>): HyperliquidCoreActionRequest {
-        const message = { authData: {}, type: "", params: new Uint8Array(0) };
+        const message = { authData: {}, walletId: 0, action: new Uint8Array(0) };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidCoreActionRequest>(this, message, value);
@@ -1824,11 +1824,11 @@ class HyperliquidCoreActionRequest$Type extends MessageType<HyperliquidCoreActio
                 case /* map<string, string> auth_data */ 1:
                     this.binaryReadMap1(message.authData, reader, options);
                     break;
-                case /* string type */ 2:
-                    message.type = reader.string();
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
                     break;
-                case /* bytes params */ 3:
-                    message.params = reader.bytes();
+                case /* bytes action */ 3:
+                    message.action = reader.bytes();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1861,12 +1861,12 @@ class HyperliquidCoreActionRequest$Type extends MessageType<HyperliquidCoreActio
         /* map<string, string> auth_data = 1; */
         for (let k of Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
-        /* string type = 2; */
-        if (message.type !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.type);
-        /* bytes params = 3; */
-        if (message.params.length)
-            writer.tag(3, WireType.LengthDelimited).bytes(message.params);
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* bytes action = 3; */
+        if (message.action.length)
+            writer.tag(3, WireType.LengthDelimited).bytes(message.action);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
