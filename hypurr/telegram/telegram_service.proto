@@ -36,8 +36,9 @@ message TelegramUserWalletsResponse {
 }
 
 message HyperliquidCoreActionRequest {
-  string type = 1;
-  bytes params = 2;  // JSON-encoded action-specific params
+  map<string, string> auth_data = 1;
+  string type = 2;
+  bytes params = 3;  // JSON-encoded action-specific params
 }
 
 message HyperliquidCoreActionResponse {

@@ -87,11 +87,17 @@ export interface TelegramUserWalletsResponse {
  */
 export interface HyperliquidCoreActionRequest {
     /**
-     * @generated from protobuf field: string type = 1;
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string type = 2;
      */
     type: string;
     /**
-     * @generated from protobuf field: bytes params = 2;
+     * @generated from protobuf field: bytes params = 3;
      */
     params: Uint8Array; // JSON-encoded action-specific params
 }
@@ -1798,12 +1804,13 @@ export const TelegramUserWalletsResponse = new TelegramUserWalletsResponse$Type(
 class HyperliquidCoreActionRequest$Type extends MessageType<HyperliquidCoreActionRequest> {
     constructor() {
         super("hypurr.HyperliquidCoreActionRequest", [
-            { no: 1, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "params", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "params", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidCoreActionRequest>): HyperliquidCoreActionRequest {
-        const message = { type: "", params: new Uint8Array(0) };
+        const message = { authData: {}, type: "", params: new Uint8Array(0) };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidCoreActionRequest>(this, message, value);
@@ -1814,10 +1821,13 @@ class HyperliquidCoreActionRequest$Type extends MessageType<HyperliquidCoreActio
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string type */ 1:
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string type */ 2:
                     message.type = reader.string();
                     break;
-                case /* bytes params */ 2:
+                case /* bytes params */ 3:
                     message.params = reader.bytes();
                     break;
                 default:
@@ -1831,13 +1841,32 @@ class HyperliquidCoreActionRequest$Type extends MessageType<HyperliquidCoreActio
         }
         return message;
     }
+    private binaryReadMap1(map: HyperliquidCoreActionRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HyperliquidCoreActionRequest["authData"] | undefined, val: HyperliquidCoreActionRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.HyperliquidCoreActionRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
     internalBinaryWrite(message: HyperliquidCoreActionRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string type = 1; */
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string type = 2; */
         if (message.type !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.type);
-        /* bytes params = 2; */
+            writer.tag(2, WireType.LengthDelimited).string(message.type);
+        /* bytes params = 3; */
         if (message.params.length)
-            writer.tag(2, WireType.LengthDelimited).bytes(message.params);
+            writer.tag(3, WireType.LengthDelimited).bytes(message.params);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
