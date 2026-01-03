@@ -49,6 +49,11 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.LaunchHpumpV1LaunchRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.LaunchHpumpV1LaunchResponse.FromString,
         )
+    self.HyperliquidCoreAction = channel.unary_unary(
+        '/hypurr.Telegram/HyperliquidCoreAction',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidCoreActionRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidCoreActionResponse.FromString,
+        )
     self.HyperliquidSpotTrade = channel.unary_unary(
         '/hypurr.Telegram/HyperliquidSpotTrade',
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidSpotTradeRequest.SerializeToString,
@@ -290,6 +295,13 @@ class TelegramServicer(object):
   def LaunchHpumpV1Launch(self, request, context):
     # missing associated documentation comment in .proto file
     pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HyperliquidCoreAction(self, request, context):
+    """Core
+    """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
@@ -597,6 +609,11 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.LaunchHpumpV1Launch,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.LaunchHpumpV1LaunchRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.LaunchHpumpV1LaunchResponse.SerializeToString,
+      ),
+      'HyperliquidCoreAction': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidCoreAction,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidCoreActionRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidCoreActionResponse.SerializeToString,
       ),
       'HyperliquidSpotTrade': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidSpotTrade,

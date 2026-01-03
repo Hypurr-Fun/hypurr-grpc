@@ -35,6 +35,17 @@ message TelegramUserWalletsResponse {
   repeated HyperliquidWallet wallets = 1;
 }
 
+message HyperliquidCoreActionRequest {
+  string type = 1;
+  bytes params = 2;  // JSON-encoded action-specific params
+}
+
+message HyperliquidCoreActionResponse {
+  string status = 1;
+  string error = 2;
+  bytes result = 3;  // JSON-encoded result
+}
+
 message HyperliquidCoreTradeRequest {
   map<string, string> auth_data = 1;
   int64 wallet_id = 2;
@@ -559,6 +570,9 @@ service Telegram {
   // HpumpV1
   rpc HpumpV1LaunchTrade (HpumpV1LaunchTradeRequest) returns (HpumpV1LaunchTradeResponse) {}
   rpc LaunchHpumpV1Launch (LaunchHpumpV1LaunchRequest) returns (LaunchHpumpV1LaunchResponse) {}
+
+  // Core
+  rpc HyperliquidCoreAction (HyperliquidCoreActionRequest) returns (HyperliquidCoreActionResponse) {}
 
   // Spot
   rpc HyperliquidSpotTrade (HyperliquidSpotTradeRequest) returns (HyperliquidSpotTradeResponse) {}
