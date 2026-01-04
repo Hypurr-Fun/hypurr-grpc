@@ -224,6 +224,7 @@ message UpdateHyperliquidSpotSniperConfigResponse {
   bool success = 1;
 }
 
+// TODO Deprecated
 message HyperliquidWalletSpotTwapSessionsRequest {
   map<string, string> auth_data = 1;
   int64 wallet_id = 2;
@@ -247,6 +248,8 @@ message HyperliquidWalletTwapSessionsResponse {
 message HyperliquidWalletScaleSessionsRequest {
   map<string, string> auth_data = 1;
   int64 wallet_id = 2;
+  google.protobuf.BoolValue enabled = 3;
+
 }
 
 message HyperliquidWalletScaleSessionsResponse {

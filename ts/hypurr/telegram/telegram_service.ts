@@ -659,6 +659,8 @@ export interface UpdateHyperliquidSpotSniperConfigResponse {
     success: boolean;
 }
 /**
+ * TODO Deprecated
+ *
  * @generated from protobuf message hypurr.HyperliquidWalletSpotTwapSessionsRequest
  */
 export interface HyperliquidWalletSpotTwapSessionsRequest {
@@ -728,6 +730,10 @@ export interface HyperliquidWalletScaleSessionsRequest {
      * @generated from protobuf field: int64 wallet_id = 2;
      */
     walletId: number;
+    /**
+     * @generated from protobuf field: google.protobuf.BoolValue enabled = 3;
+     */
+    enabled?: BoolValue;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletScaleSessionsResponse
@@ -4158,7 +4164,8 @@ class HyperliquidWalletScaleSessionsRequest$Type extends MessageType<Hyperliquid
     constructor() {
         super("hypurr.HyperliquidWalletScaleSessionsRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "enabled", kind: "message", T: () => BoolValue }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWalletScaleSessionsRequest>): HyperliquidWalletScaleSessionsRequest {
@@ -4178,6 +4185,9 @@ class HyperliquidWalletScaleSessionsRequest$Type extends MessageType<Hyperliquid
                     break;
                 case /* int64 wallet_id */ 2:
                     message.walletId = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.BoolValue enabled */ 3:
+                    message.enabled = BoolValue.internalBinaryRead(reader, reader.uint32(), options, message.enabled);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4213,6 +4223,9 @@ class HyperliquidWalletScaleSessionsRequest$Type extends MessageType<Hyperliquid
         /* int64 wallet_id = 2; */
         if (message.walletId !== 0)
             writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* google.protobuf.BoolValue enabled = 3; */
+        if (message.enabled)
+            BoolValue.internalBinaryWrite(message.enabled, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
