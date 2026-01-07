@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/user.proto',
   package='hypurr',
   syntax='proto3',
-  serialized_pb=_b('\n\x11hypurr/user.proto\x12\x06hypurr\x1a\x13hypurr/wallet.proto\x1a\x13hypurr/launch.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xab\x06\n\x0cTelegramUser\x12\x13\n\x0btelegram_id\x18\x01 \x01(\x03\x12\x19\n\x11telegram_username\x18\x02 \x01(\t\x12\x14\n\x0cpending_fees\x18\x03 \x01(\x01\x12\x18\n\x10referral_rewards\x18\x04 \x01(\x01\x12\x15\n\rreferral_code\x18\x05 \x01(\t\x12\x16\n\x0ereferral_score\x18\x06 \x01(\x03\x12\x13\n\x0breferrer_id\x18\x07 \x01(\x03\x12.\n\x08settings\x18\x08 \x01(\x0b\x32\x1c.hypurr.TelegramUserSettings\x12)\n\x06wallet\x18\t \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12*\n\x07wallets\x18\n \x03(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x11\n\twallet_id\x18\x0b \x01(\x03\x12\x30\n\rsniper_wallet\x18\x0c \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x18\n\x10sniper_wallet_id\x18\r \x01(\x03\x12\x30\n\rdumper_wallet\x18\x0e \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x18\n\x10\x64umper_wallet_id\x18\x0f \x01(\x03\x12\x15\n\rreputation_id\x18\x10 \x01(\x03\x12\x32\n\nreputation\x18\x11 \x01(\x0b\x32\x1e.hypurr.TelegramUserReputation\x12+\n\x08launches\x18\x12 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\x12\x32\n\x08\x62\x61lances\x18\x13 \x03(\x0b\x32 .hypurr.HyperliquidWalletBalance\x12\x34\n\tmovements\x18\x14 \x03(\x0b\x32!.hypurr.HyperliquidWalletMovement\x12\x33\n\x0claunch_fills\x18\x15 \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\x12.\n\x06labels\x18\x16 \x03(\x0b\x32\x1e.hypurr.HyperliquidWalletLabel\"\x80\x02\n\x14TelegramUserSettings\x12\x10\n\x08left_buy\x18\x01 \x01(\x05\x12\x0f\n\x07mid_buy\x18\x02 \x01(\x05\x12\x11\n\tright_buy\x18\x03 \x01(\x05\x12\x11\n\tleft_sell\x18\x04 \x01(\x05\x12\x10\n\x08mid_sell\x18\x05 \x01(\x05\x12\x12\n\nright_sell\x18\x06 \x01(\x05\x12\x12\n\nlog_trades\x18\x07 \x01(\x08\x12\x12\n\nhide_small\x18\x08 \x01(\x08\x12\x14\n\x0cmax_slippage\x18\t \x01(\x05\x12\x12\n\ntip_amount\x18\n \x01(\x02\x12\x12\n\nno_tipping\x18\x0b \x01(\x08\x12\x13\n\x0b\x61uto_bridge\x18\x0c \x01(\x08\"F\n\x16TelegramUserReputation\x12\x12\n\nhfun_score\x18\x01 \x01(\x01\x12\x18\n\x10reputation_score\x18\x02 \x01(\x01\"\x83\x01\n\x16HyperliquidWalletLabel\x12\x18\n\x10\x65thereum_address\x18\x01 \x01(\t\x12\r\n\x05label\x18\x02 \x01(\t\x12\x0e\n\x06source\x18\x03 \x01(\t\x12\x30\n\x0btelegram_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64ValueB)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+  serialized_pb=_b('\n\x11hypurr/user.proto\x12\x06hypurr\x1a\x13hypurr/wallet.proto\x1a\x13hypurr/launch.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xda\x06\n\x0cTelegramUser\x12\x13\n\x0btelegram_id\x18\x01 \x01(\x03\x12\x19\n\x11telegram_username\x18\x02 \x01(\t\x12\x14\n\x0cpending_fees\x18\x03 \x01(\x01\x12\x18\n\x10referral_rewards\x18\x04 \x01(\x01\x12\x15\n\rreferral_code\x18\x05 \x01(\t\x12\x16\n\x0ereferral_score\x18\x06 \x01(\x03\x12\x13\n\x0breferrer_id\x18\x07 \x01(\x03\x12.\n\x08settings\x18\x08 \x01(\x0b\x32\x1c.hypurr.TelegramUserSettings\x12)\n\x06wallet\x18\t \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12*\n\x07wallets\x18\n \x03(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x11\n\twallet_id\x18\x0b \x01(\x03\x12\x30\n\rsniper_wallet\x18\x0c \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x18\n\x10sniper_wallet_id\x18\r \x01(\x03\x12\x30\n\rdumper_wallet\x18\x0e \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\x12\x18\n\x10\x64umper_wallet_id\x18\x0f \x01(\x03\x12\x15\n\rreputation_id\x18\x10 \x01(\x03\x12\x32\n\nreputation\x18\x11 \x01(\x0b\x32\x1e.hypurr.TelegramUserReputation\x12+\n\x08launches\x18\x12 \x03(\x0b\x32\x19.hypurr.HyperliquidLaunch\x12\x32\n\x08\x62\x61lances\x18\x13 \x03(\x0b\x32 .hypurr.HyperliquidWalletBalance\x12\x34\n\tmovements\x18\x14 \x03(\x0b\x32!.hypurr.HyperliquidWalletMovement\x12\x33\n\x0claunch_fills\x18\x15 \x03(\x0b\x32\x1d.hypurr.HyperliquidLaunchFill\x12.\n\x06labels\x18\x16 \x03(\x0b\x32\x1e.hypurr.HyperliquidWalletLabel\x12-\n\x05packs\x18\x17 \x03(\x0b\x32\x1e.hypurr.TelegramChatWalletPack\"\x80\x02\n\x14TelegramUserSettings\x12\x10\n\x08left_buy\x18\x01 \x01(\x05\x12\x0f\n\x07mid_buy\x18\x02 \x01(\x05\x12\x11\n\tright_buy\x18\x03 \x01(\x05\x12\x11\n\tleft_sell\x18\x04 \x01(\x05\x12\x10\n\x08mid_sell\x18\x05 \x01(\x05\x12\x12\n\nright_sell\x18\x06 \x01(\x05\x12\x12\n\nlog_trades\x18\x07 \x01(\x08\x12\x12\n\nhide_small\x18\x08 \x01(\x08\x12\x14\n\x0cmax_slippage\x18\t \x01(\x05\x12\x12\n\ntip_amount\x18\n \x01(\x02\x12\x12\n\nno_tipping\x18\x0b \x01(\x08\x12\x13\n\x0b\x61uto_bridge\x18\x0c \x01(\x08\"F\n\x16TelegramUserReputation\x12\x12\n\nhfun_score\x18\x01 \x01(\x01\x12\x18\n\x10reputation_score\x18\x02 \x01(\x01\"\xb1\x01\n\x16HyperliquidWalletLabel\x12\x18\n\x10\x65thereum_address\x18\x01 \x01(\t\x12\r\n\x05label\x18\x02 \x01(\t\x12\x0e\n\x06source\x18\x03 \x01(\t\x12\x30\n\x0btelegram_id\x18\x04 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12,\n\x07pack_id\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\"L\n\x16TelegramChatWalletPack\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x18\n\x10telegram_chat_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\tB)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
   ,
   dependencies=[hypurr_dot_wallet__pb2.DESCRIPTOR,hypurr_dot_launch__pb2.DESCRIPTOR,google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -190,6 +190,13 @@ _TELEGRAMUSER = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='packs', full_name='hypurr.TelegramUser.packs', index=22,
+      number=23, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -203,7 +210,7 @@ _TELEGRAMUSER = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=104,
-  serialized_end=915,
+  serialized_end=962,
 )
 
 
@@ -310,8 +317,8 @@ _TELEGRAMUSERSETTINGS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=918,
-  serialized_end=1174,
+  serialized_start=965,
+  serialized_end=1221,
 )
 
 
@@ -348,8 +355,8 @@ _TELEGRAMUSERREPUTATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1176,
-  serialized_end=1246,
+  serialized_start=1223,
+  serialized_end=1293,
 )
 
 
@@ -388,6 +395,13 @@ _HYPERLIQUIDWALLETLABEL = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='pack_id', full_name='hypurr.HyperliquidWalletLabel.pack_id', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -400,8 +414,53 @@ _HYPERLIQUIDWALLETLABEL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1249,
-  serialized_end=1380,
+  serialized_start=1296,
+  serialized_end=1473,
+)
+
+
+_TELEGRAMCHATWALLETPACK = _descriptor.Descriptor(
+  name='TelegramChatWalletPack',
+  full_name='hypurr.TelegramChatWalletPack',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='hypurr.TelegramChatWalletPack.id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='telegram_chat_id', full_name='hypurr.TelegramChatWalletPack.telegram_chat_id', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='hypurr.TelegramChatWalletPack.name', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1475,
+  serialized_end=1551,
 )
 
 _TELEGRAMUSER.fields_by_name['settings'].message_type = _TELEGRAMUSERSETTINGS
@@ -415,11 +474,14 @@ _TELEGRAMUSER.fields_by_name['balances'].message_type = hypurr_dot_wallet__pb2._
 _TELEGRAMUSER.fields_by_name['movements'].message_type = hypurr_dot_wallet__pb2._HYPERLIQUIDWALLETMOVEMENT
 _TELEGRAMUSER.fields_by_name['launch_fills'].message_type = hypurr_dot_launch__pb2._HYPERLIQUIDLAUNCHFILL
 _TELEGRAMUSER.fields_by_name['labels'].message_type = _HYPERLIQUIDWALLETLABEL
+_TELEGRAMUSER.fields_by_name['packs'].message_type = _TELEGRAMCHATWALLETPACK
 _HYPERLIQUIDWALLETLABEL.fields_by_name['telegram_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
+_HYPERLIQUIDWALLETLABEL.fields_by_name['pack_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._INT64VALUE
 DESCRIPTOR.message_types_by_name['TelegramUser'] = _TELEGRAMUSER
 DESCRIPTOR.message_types_by_name['TelegramUserSettings'] = _TELEGRAMUSERSETTINGS
 DESCRIPTOR.message_types_by_name['TelegramUserReputation'] = _TELEGRAMUSERREPUTATION
 DESCRIPTOR.message_types_by_name['HyperliquidWalletLabel'] = _HYPERLIQUIDWALLETLABEL
+DESCRIPTOR.message_types_by_name['TelegramChatWalletPack'] = _TELEGRAMCHATWALLETPACK
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TelegramUser = _reflection.GeneratedProtocolMessageType('TelegramUser', (_message.Message,), dict(
@@ -449,6 +511,13 @@ HyperliquidWalletLabel = _reflection.GeneratedProtocolMessageType('HyperliquidWa
   # @@protoc_insertion_point(class_scope:hypurr.HyperliquidWalletLabel)
   ))
 _sym_db.RegisterMessage(HyperliquidWalletLabel)
+
+TelegramChatWalletPack = _reflection.GeneratedProtocolMessageType('TelegramChatWalletPack', (_message.Message,), dict(
+  DESCRIPTOR = _TELEGRAMCHATWALLETPACK,
+  __module__ = 'hypurr.user_pb2'
+  # @@protoc_insertion_point(class_scope:hypurr.TelegramChatWalletPack)
+  ))
+_sym_db.RegisterMessage(TelegramChatWalletPack)
 
 
 DESCRIPTOR.has_options = True

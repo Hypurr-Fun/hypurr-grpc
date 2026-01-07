@@ -29,6 +29,7 @@ message TelegramUser {
   repeated HyperliquidWalletMovement movements = 20;
   repeated HyperliquidLaunchFill launch_fills = 21;
   repeated HyperliquidWalletLabel labels = 22;
+  repeated TelegramChatWalletPack packs = 23;
 }
 
 message TelegramUserSettings {
@@ -56,4 +57,11 @@ message HyperliquidWalletLabel {
   string label = 2;
   string source = 3;
   google.protobuf.Int64Value telegram_id = 4;
+  google.protobuf.Int64Value pack_id = 5;
+}
+
+message TelegramChatWalletPack {
+  int64 id = 1;
+  int64 telegram_chat_id = 2;
+  string name = 3;
 }
