@@ -38,12 +38,12 @@ import type { SupportMessageSendResponse } from "./telegram_service";
 import type { SupportMessageSendRequest } from "./telegram_service";
 import type { SupportConversationStartResponse } from "./telegram_service";
 import type { SupportConversationStartRequest } from "./telegram_service";
-import type { HfunCabalWalletLabelDeleteResponse } from "./telegram_service";
-import type { HfunCabalWalletLabelDeleteRequest } from "./telegram_service";
-import type { HfunCabalWalletLabelModifyResponse } from "./telegram_service";
-import type { HfunCabalWalletLabelModifyRequest } from "./telegram_service";
-import type { HfunCabalWalletLabelAddResponse } from "./telegram_service";
-import type { HfunCabalWalletLabelAddRequest } from "./telegram_service";
+import type { TelegramChatWalletPackLabelDeleteResponse } from "./telegram_service";
+import type { TelegramChatWalletPackLabelDeleteRequest } from "./telegram_service";
+import type { TelegramChatWalletPackLabelModifyResponse } from "./telegram_service";
+import type { TelegramChatWalletPackLabelModifyRequest } from "./telegram_service";
+import type { TelegramChatWalletPackLabelAddResponse } from "./telegram_service";
+import type { TelegramChatWalletPackLabelAddRequest } from "./telegram_service";
 import type { HfunCabalAlertsResponse } from "./telegram_service";
 import type { HfunCabalAlertsRequest } from "./telegram_service";
 import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
@@ -221,17 +221,17 @@ export interface ITelegramClient {
      */
     hfunCabalAlerts(input: HfunCabalAlertsRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalAlertsRequest, HfunCabalAlertsResponse>;
     /**
-     * @generated from protobuf rpc: HfunCabalWalletLabelAdd(hypurr.HfunCabalWalletLabelAddRequest) returns (hypurr.HfunCabalWalletLabelAddResponse);
+     * @generated from protobuf rpc: TelegramChatWalletPackLabelAdd(hypurr.TelegramChatWalletPackLabelAddRequest) returns (hypurr.TelegramChatWalletPackLabelAddResponse);
      */
-    hfunCabalWalletLabelAdd(input: HfunCabalWalletLabelAddRequest, options?: RpcOptions): UnaryCall<HfunCabalWalletLabelAddRequest, HfunCabalWalletLabelAddResponse>;
+    telegramChatWalletPackLabelAdd(input: TelegramChatWalletPackLabelAddRequest, options?: RpcOptions): UnaryCall<TelegramChatWalletPackLabelAddRequest, TelegramChatWalletPackLabelAddResponse>;
     /**
-     * @generated from protobuf rpc: HfunCabalWalletLabelModify(hypurr.HfunCabalWalletLabelModifyRequest) returns (hypurr.HfunCabalWalletLabelModifyResponse);
+     * @generated from protobuf rpc: TelegramChatWalletPackLabelModify(hypurr.TelegramChatWalletPackLabelModifyRequest) returns (hypurr.TelegramChatWalletPackLabelModifyResponse);
      */
-    hfunCabalWalletLabelModify(input: HfunCabalWalletLabelModifyRequest, options?: RpcOptions): UnaryCall<HfunCabalWalletLabelModifyRequest, HfunCabalWalletLabelModifyResponse>;
+    telegramChatWalletPackLabelModify(input: TelegramChatWalletPackLabelModifyRequest, options?: RpcOptions): UnaryCall<TelegramChatWalletPackLabelModifyRequest, TelegramChatWalletPackLabelModifyResponse>;
     /**
-     * @generated from protobuf rpc: HfunCabalWalletLabelRemove(hypurr.HfunCabalWalletLabelDeleteRequest) returns (hypurr.HfunCabalWalletLabelDeleteResponse);
+     * @generated from protobuf rpc: TelegramChatWalletPackLabelRemove(hypurr.TelegramChatWalletPackLabelDeleteRequest) returns (hypurr.TelegramChatWalletPackLabelDeleteResponse);
      */
-    hfunCabalWalletLabelRemove(input: HfunCabalWalletLabelDeleteRequest, options?: RpcOptions): UnaryCall<HfunCabalWalletLabelDeleteRequest, HfunCabalWalletLabelDeleteResponse>;
+    telegramChatWalletPackLabelRemove(input: TelegramChatWalletPackLabelDeleteRequest, options?: RpcOptions): UnaryCall<TelegramChatWalletPackLabelDeleteRequest, TelegramChatWalletPackLabelDeleteResponse>;
     /**
      * Support
      *
@@ -509,25 +509,25 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
         return stackIntercept<HfunCabalAlertsRequest, HfunCabalAlertsResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: HfunCabalWalletLabelAdd(hypurr.HfunCabalWalletLabelAddRequest) returns (hypurr.HfunCabalWalletLabelAddResponse);
+     * @generated from protobuf rpc: TelegramChatWalletPackLabelAdd(hypurr.TelegramChatWalletPackLabelAddRequest) returns (hypurr.TelegramChatWalletPackLabelAddResponse);
      */
-    hfunCabalWalletLabelAdd(input: HfunCabalWalletLabelAddRequest, options?: RpcOptions): UnaryCall<HfunCabalWalletLabelAddRequest, HfunCabalWalletLabelAddResponse> {
+    telegramChatWalletPackLabelAdd(input: TelegramChatWalletPackLabelAddRequest, options?: RpcOptions): UnaryCall<TelegramChatWalletPackLabelAddRequest, TelegramChatWalletPackLabelAddResponse> {
         const method = this.methods[26], opt = this._transport.mergeOptions(options);
-        return stackIntercept<HfunCabalWalletLabelAddRequest, HfunCabalWalletLabelAddResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<TelegramChatWalletPackLabelAddRequest, TelegramChatWalletPackLabelAddResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: HfunCabalWalletLabelModify(hypurr.HfunCabalWalletLabelModifyRequest) returns (hypurr.HfunCabalWalletLabelModifyResponse);
+     * @generated from protobuf rpc: TelegramChatWalletPackLabelModify(hypurr.TelegramChatWalletPackLabelModifyRequest) returns (hypurr.TelegramChatWalletPackLabelModifyResponse);
      */
-    hfunCabalWalletLabelModify(input: HfunCabalWalletLabelModifyRequest, options?: RpcOptions): UnaryCall<HfunCabalWalletLabelModifyRequest, HfunCabalWalletLabelModifyResponse> {
+    telegramChatWalletPackLabelModify(input: TelegramChatWalletPackLabelModifyRequest, options?: RpcOptions): UnaryCall<TelegramChatWalletPackLabelModifyRequest, TelegramChatWalletPackLabelModifyResponse> {
         const method = this.methods[27], opt = this._transport.mergeOptions(options);
-        return stackIntercept<HfunCabalWalletLabelModifyRequest, HfunCabalWalletLabelModifyResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<TelegramChatWalletPackLabelModifyRequest, TelegramChatWalletPackLabelModifyResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: HfunCabalWalletLabelRemove(hypurr.HfunCabalWalletLabelDeleteRequest) returns (hypurr.HfunCabalWalletLabelDeleteResponse);
+     * @generated from protobuf rpc: TelegramChatWalletPackLabelRemove(hypurr.TelegramChatWalletPackLabelDeleteRequest) returns (hypurr.TelegramChatWalletPackLabelDeleteResponse);
      */
-    hfunCabalWalletLabelRemove(input: HfunCabalWalletLabelDeleteRequest, options?: RpcOptions): UnaryCall<HfunCabalWalletLabelDeleteRequest, HfunCabalWalletLabelDeleteResponse> {
+    telegramChatWalletPackLabelRemove(input: TelegramChatWalletPackLabelDeleteRequest, options?: RpcOptions): UnaryCall<TelegramChatWalletPackLabelDeleteRequest, TelegramChatWalletPackLabelDeleteResponse> {
         const method = this.methods[28], opt = this._transport.mergeOptions(options);
-        return stackIntercept<HfunCabalWalletLabelDeleteRequest, HfunCabalWalletLabelDeleteResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<TelegramChatWalletPackLabelDeleteRequest, TelegramChatWalletPackLabelDeleteResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * Support

@@ -144,20 +144,20 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsResponse.FromString,
         )
-    self.HfunCabalWalletLabelAdd = channel.unary_unary(
-        '/hypurr.Telegram/HfunCabalWalletLabelAdd',
-        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelAddRequest.SerializeToString,
-        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelAddResponse.FromString,
+    self.TelegramChatWalletPackLabelAdd = channel.unary_unary(
+        '/hypurr.Telegram/TelegramChatWalletPackLabelAdd',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelAddRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelAddResponse.FromString,
         )
-    self.HfunCabalWalletLabelModify = channel.unary_unary(
-        '/hypurr.Telegram/HfunCabalWalletLabelModify',
-        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelModifyRequest.SerializeToString,
-        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelModifyResponse.FromString,
+    self.TelegramChatWalletPackLabelModify = channel.unary_unary(
+        '/hypurr.Telegram/TelegramChatWalletPackLabelModify',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelModifyRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelModifyResponse.FromString,
         )
-    self.HfunCabalWalletLabelRemove = channel.unary_unary(
-        '/hypurr.Telegram/HfunCabalWalletLabelRemove',
-        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelDeleteRequest.SerializeToString,
-        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelDeleteResponse.FromString,
+    self.TelegramChatWalletPackLabelRemove = channel.unary_unary(
+        '/hypurr.Telegram/TelegramChatWalletPackLabelRemove',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelDeleteRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelDeleteResponse.FromString,
         )
     self.SupportConversationStart = channel.unary_unary(
         '/hypurr.Telegram/SupportConversationStart',
@@ -432,21 +432,21 @@ class TelegramServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def HfunCabalWalletLabelAdd(self, request, context):
+  def TelegramChatWalletPackLabelAdd(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def HfunCabalWalletLabelModify(self, request, context):
+  def TelegramChatWalletPackLabelModify(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def HfunCabalWalletLabelRemove(self, request, context):
+  def TelegramChatWalletPackLabelRemove(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -705,20 +705,20 @@ def add_TelegramServicer_to_server(servicer, server):
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalAlertsResponse.SerializeToString,
       ),
-      'HfunCabalWalletLabelAdd': grpc.unary_unary_rpc_method_handler(
-          servicer.HfunCabalWalletLabelAdd,
-          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelAddRequest.FromString,
-          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelAddResponse.SerializeToString,
+      'TelegramChatWalletPackLabelAdd': grpc.unary_unary_rpc_method_handler(
+          servicer.TelegramChatWalletPackLabelAdd,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelAddRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelAddResponse.SerializeToString,
       ),
-      'HfunCabalWalletLabelModify': grpc.unary_unary_rpc_method_handler(
-          servicer.HfunCabalWalletLabelModify,
-          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelModifyRequest.FromString,
-          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelModifyResponse.SerializeToString,
+      'TelegramChatWalletPackLabelModify': grpc.unary_unary_rpc_method_handler(
+          servicer.TelegramChatWalletPackLabelModify,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelModifyRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelModifyResponse.SerializeToString,
       ),
-      'HfunCabalWalletLabelRemove': grpc.unary_unary_rpc_method_handler(
-          servicer.HfunCabalWalletLabelRemove,
-          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelDeleteRequest.FromString,
-          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HfunCabalWalletLabelDeleteResponse.SerializeToString,
+      'TelegramChatWalletPackLabelRemove': grpc.unary_unary_rpc_method_handler(
+          servicer.TelegramChatWalletPackLabelRemove,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelDeleteRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelDeleteResponse.SerializeToString,
       ),
       'SupportConversationStart': grpc.unary_unary_rpc_method_handler(
           servicer.SupportConversationStart,

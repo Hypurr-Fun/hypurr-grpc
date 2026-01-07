@@ -917,9 +917,9 @@ export interface HfunCabalAlertsResponse {
     alerts: HypurrFunCabalAlert[];
 }
 /**
- * @generated from protobuf message hypurr.HfunCabalWalletLabelAddRequest
+ * @generated from protobuf message hypurr.TelegramChatWalletPackLabelAddRequest
  */
-export interface HfunCabalWalletLabelAddRequest {
+export interface TelegramChatWalletPackLabelAddRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1;
      */
@@ -934,16 +934,20 @@ export interface HfunCabalWalletLabelAddRequest {
      * @generated from protobuf field: string wallet_label = 3;
      */
     walletLabel: string;
+    /**
+     * @generated from protobuf field: int64 pack_id = 4;
+     */
+    packId: number;
 }
 /**
- * @generated from protobuf message hypurr.HfunCabalWalletLabelAddResponse
+ * @generated from protobuf message hypurr.TelegramChatWalletPackLabelAddResponse
  */
-export interface HfunCabalWalletLabelAddResponse {
+export interface TelegramChatWalletPackLabelAddResponse {
 }
 /**
- * @generated from protobuf message hypurr.HfunCabalWalletLabelModifyRequest
+ * @generated from protobuf message hypurr.TelegramChatWalletPackLabelModifyRequest
  */
-export interface HfunCabalWalletLabelModifyRequest {
+export interface TelegramChatWalletPackLabelModifyRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1;
      */
@@ -958,16 +962,20 @@ export interface HfunCabalWalletLabelModifyRequest {
      * @generated from protobuf field: string wallet_label_new = 3;
      */
     walletLabelNew: string;
+    /**
+     * @generated from protobuf field: int64 pack_id = 4;
+     */
+    packId: number;
 }
 /**
- * @generated from protobuf message hypurr.HfunCabalWalletLabelModifyResponse
+ * @generated from protobuf message hypurr.TelegramChatWalletPackLabelModifyResponse
  */
-export interface HfunCabalWalletLabelModifyResponse {
+export interface TelegramChatWalletPackLabelModifyResponse {
 }
 /**
- * @generated from protobuf message hypurr.HfunCabalWalletLabelDeleteRequest
+ * @generated from protobuf message hypurr.TelegramChatWalletPackLabelDeleteRequest
  */
-export interface HfunCabalWalletLabelDeleteRequest {
+export interface TelegramChatWalletPackLabelDeleteRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1;
      */
@@ -978,11 +986,15 @@ export interface HfunCabalWalletLabelDeleteRequest {
      * @generated from protobuf field: string wallet_label = 2;
      */
     walletLabel: string;
+    /**
+     * @generated from protobuf field: int64 pack_id = 3;
+     */
+    packId: number;
 }
 /**
- * @generated from protobuf message hypurr.HfunCabalWalletLabelDeleteResponse
+ * @generated from protobuf message hypurr.TelegramChatWalletPackLabelDeleteResponse
  */
-export interface HfunCabalWalletLabelDeleteResponse {
+export interface TelegramChatWalletPackLabelDeleteResponse {
 }
 /**
  * @generated from protobuf message hypurr.EIP712Signature
@@ -4885,22 +4897,23 @@ class HfunCabalAlertsResponse$Type extends MessageType<HfunCabalAlertsResponse> 
  */
 export const HfunCabalAlertsResponse = new HfunCabalAlertsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HfunCabalWalletLabelAddRequest$Type extends MessageType<HfunCabalWalletLabelAddRequest> {
+class TelegramChatWalletPackLabelAddRequest$Type extends MessageType<TelegramChatWalletPackLabelAddRequest> {
     constructor() {
-        super("hypurr.HfunCabalWalletLabelAddRequest", [
+        super("hypurr.TelegramChatWalletPackLabelAddRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "wallet_label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "wallet_label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "pack_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
-    create(value?: PartialMessage<HfunCabalWalletLabelAddRequest>): HfunCabalWalletLabelAddRequest {
-        const message = { authData: {}, walletAddress: "", walletLabel: "" };
+    create(value?: PartialMessage<TelegramChatWalletPackLabelAddRequest>): TelegramChatWalletPackLabelAddRequest {
+        const message = { authData: {}, walletAddress: "", walletLabel: "", packId: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HfunCabalWalletLabelAddRequest>(this, message, value);
+            reflectionMergePartial<TelegramChatWalletPackLabelAddRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalWalletLabelAddRequest): HfunCabalWalletLabelAddRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramChatWalletPackLabelAddRequest): TelegramChatWalletPackLabelAddRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -4914,6 +4927,9 @@ class HfunCabalWalletLabelAddRequest$Type extends MessageType<HfunCabalWalletLab
                 case /* string wallet_label */ 3:
                     message.walletLabel = reader.string();
                     break;
+                case /* int64 pack_id */ 4:
+                    message.packId = reader.int64().toNumber();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -4925,8 +4941,8 @@ class HfunCabalWalletLabelAddRequest$Type extends MessageType<HfunCabalWalletLab
         }
         return message;
     }
-    private binaryReadMap1(map: HfunCabalWalletLabelAddRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof HfunCabalWalletLabelAddRequest["authData"] | undefined, val: HfunCabalWalletLabelAddRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: TelegramChatWalletPackLabelAddRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof TelegramChatWalletPackLabelAddRequest["authData"] | undefined, val: TelegramChatWalletPackLabelAddRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -4936,12 +4952,12 @@ class HfunCabalWalletLabelAddRequest$Type extends MessageType<HfunCabalWalletLab
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for field hypurr.HfunCabalWalletLabelAddRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.TelegramChatWalletPackLabelAddRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: HfunCabalWalletLabelAddRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: TelegramChatWalletPackLabelAddRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
@@ -4951,6 +4967,9 @@ class HfunCabalWalletLabelAddRequest$Type extends MessageType<HfunCabalWalletLab
         /* string wallet_label = 3; */
         if (message.walletLabel !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.walletLabel);
+        /* int64 pack_id = 4; */
+        if (message.packId !== 0)
+            writer.tag(4, WireType.Varint).int64(message.packId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4958,25 +4977,25 @@ class HfunCabalWalletLabelAddRequest$Type extends MessageType<HfunCabalWalletLab
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelAddRequest
+ * @generated MessageType for protobuf message hypurr.TelegramChatWalletPackLabelAddRequest
  */
-export const HfunCabalWalletLabelAddRequest = new HfunCabalWalletLabelAddRequest$Type();
+export const TelegramChatWalletPackLabelAddRequest = new TelegramChatWalletPackLabelAddRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HfunCabalWalletLabelAddResponse$Type extends MessageType<HfunCabalWalletLabelAddResponse> {
+class TelegramChatWalletPackLabelAddResponse$Type extends MessageType<TelegramChatWalletPackLabelAddResponse> {
     constructor() {
-        super("hypurr.HfunCabalWalletLabelAddResponse", []);
+        super("hypurr.TelegramChatWalletPackLabelAddResponse", []);
     }
-    create(value?: PartialMessage<HfunCabalWalletLabelAddResponse>): HfunCabalWalletLabelAddResponse {
+    create(value?: PartialMessage<TelegramChatWalletPackLabelAddResponse>): TelegramChatWalletPackLabelAddResponse {
         const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HfunCabalWalletLabelAddResponse>(this, message, value);
+            reflectionMergePartial<TelegramChatWalletPackLabelAddResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalWalletLabelAddResponse): HfunCabalWalletLabelAddResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramChatWalletPackLabelAddResponse): TelegramChatWalletPackLabelAddResponse {
         return target ?? this.create();
     }
-    internalBinaryWrite(message: HfunCabalWalletLabelAddResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: TelegramChatWalletPackLabelAddResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4984,26 +5003,27 @@ class HfunCabalWalletLabelAddResponse$Type extends MessageType<HfunCabalWalletLa
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelAddResponse
+ * @generated MessageType for protobuf message hypurr.TelegramChatWalletPackLabelAddResponse
  */
-export const HfunCabalWalletLabelAddResponse = new HfunCabalWalletLabelAddResponse$Type();
+export const TelegramChatWalletPackLabelAddResponse = new TelegramChatWalletPackLabelAddResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HfunCabalWalletLabelModifyRequest$Type extends MessageType<HfunCabalWalletLabelModifyRequest> {
+class TelegramChatWalletPackLabelModifyRequest$Type extends MessageType<TelegramChatWalletPackLabelModifyRequest> {
     constructor() {
-        super("hypurr.HfunCabalWalletLabelModifyRequest", [
+        super("hypurr.TelegramChatWalletPackLabelModifyRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "wallet_label_old", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "wallet_label_new", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "wallet_label_new", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "pack_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
-    create(value?: PartialMessage<HfunCabalWalletLabelModifyRequest>): HfunCabalWalletLabelModifyRequest {
-        const message = { authData: {}, walletLabelOld: "", walletLabelNew: "" };
+    create(value?: PartialMessage<TelegramChatWalletPackLabelModifyRequest>): TelegramChatWalletPackLabelModifyRequest {
+        const message = { authData: {}, walletLabelOld: "", walletLabelNew: "", packId: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HfunCabalWalletLabelModifyRequest>(this, message, value);
+            reflectionMergePartial<TelegramChatWalletPackLabelModifyRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalWalletLabelModifyRequest): HfunCabalWalletLabelModifyRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramChatWalletPackLabelModifyRequest): TelegramChatWalletPackLabelModifyRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -5017,6 +5037,9 @@ class HfunCabalWalletLabelModifyRequest$Type extends MessageType<HfunCabalWallet
                 case /* string wallet_label_new */ 3:
                     message.walletLabelNew = reader.string();
                     break;
+                case /* int64 pack_id */ 4:
+                    message.packId = reader.int64().toNumber();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5028,8 +5051,8 @@ class HfunCabalWalletLabelModifyRequest$Type extends MessageType<HfunCabalWallet
         }
         return message;
     }
-    private binaryReadMap1(map: HfunCabalWalletLabelModifyRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof HfunCabalWalletLabelModifyRequest["authData"] | undefined, val: HfunCabalWalletLabelModifyRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: TelegramChatWalletPackLabelModifyRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof TelegramChatWalletPackLabelModifyRequest["authData"] | undefined, val: TelegramChatWalletPackLabelModifyRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -5039,12 +5062,12 @@ class HfunCabalWalletLabelModifyRequest$Type extends MessageType<HfunCabalWallet
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for field hypurr.HfunCabalWalletLabelModifyRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.TelegramChatWalletPackLabelModifyRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: HfunCabalWalletLabelModifyRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: TelegramChatWalletPackLabelModifyRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
@@ -5054,6 +5077,9 @@ class HfunCabalWalletLabelModifyRequest$Type extends MessageType<HfunCabalWallet
         /* string wallet_label_new = 3; */
         if (message.walletLabelNew !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.walletLabelNew);
+        /* int64 pack_id = 4; */
+        if (message.packId !== 0)
+            writer.tag(4, WireType.Varint).int64(message.packId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5061,25 +5087,25 @@ class HfunCabalWalletLabelModifyRequest$Type extends MessageType<HfunCabalWallet
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelModifyRequest
+ * @generated MessageType for protobuf message hypurr.TelegramChatWalletPackLabelModifyRequest
  */
-export const HfunCabalWalletLabelModifyRequest = new HfunCabalWalletLabelModifyRequest$Type();
+export const TelegramChatWalletPackLabelModifyRequest = new TelegramChatWalletPackLabelModifyRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HfunCabalWalletLabelModifyResponse$Type extends MessageType<HfunCabalWalletLabelModifyResponse> {
+class TelegramChatWalletPackLabelModifyResponse$Type extends MessageType<TelegramChatWalletPackLabelModifyResponse> {
     constructor() {
-        super("hypurr.HfunCabalWalletLabelModifyResponse", []);
+        super("hypurr.TelegramChatWalletPackLabelModifyResponse", []);
     }
-    create(value?: PartialMessage<HfunCabalWalletLabelModifyResponse>): HfunCabalWalletLabelModifyResponse {
+    create(value?: PartialMessage<TelegramChatWalletPackLabelModifyResponse>): TelegramChatWalletPackLabelModifyResponse {
         const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HfunCabalWalletLabelModifyResponse>(this, message, value);
+            reflectionMergePartial<TelegramChatWalletPackLabelModifyResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalWalletLabelModifyResponse): HfunCabalWalletLabelModifyResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramChatWalletPackLabelModifyResponse): TelegramChatWalletPackLabelModifyResponse {
         return target ?? this.create();
     }
-    internalBinaryWrite(message: HfunCabalWalletLabelModifyResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: TelegramChatWalletPackLabelModifyResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5087,25 +5113,26 @@ class HfunCabalWalletLabelModifyResponse$Type extends MessageType<HfunCabalWalle
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelModifyResponse
+ * @generated MessageType for protobuf message hypurr.TelegramChatWalletPackLabelModifyResponse
  */
-export const HfunCabalWalletLabelModifyResponse = new HfunCabalWalletLabelModifyResponse$Type();
+export const TelegramChatWalletPackLabelModifyResponse = new TelegramChatWalletPackLabelModifyResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HfunCabalWalletLabelDeleteRequest$Type extends MessageType<HfunCabalWalletLabelDeleteRequest> {
+class TelegramChatWalletPackLabelDeleteRequest$Type extends MessageType<TelegramChatWalletPackLabelDeleteRequest> {
     constructor() {
-        super("hypurr.HfunCabalWalletLabelDeleteRequest", [
+        super("hypurr.TelegramChatWalletPackLabelDeleteRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "wallet_label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "wallet_label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "pack_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
-    create(value?: PartialMessage<HfunCabalWalletLabelDeleteRequest>): HfunCabalWalletLabelDeleteRequest {
-        const message = { authData: {}, walletLabel: "" };
+    create(value?: PartialMessage<TelegramChatWalletPackLabelDeleteRequest>): TelegramChatWalletPackLabelDeleteRequest {
+        const message = { authData: {}, walletLabel: "", packId: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HfunCabalWalletLabelDeleteRequest>(this, message, value);
+            reflectionMergePartial<TelegramChatWalletPackLabelDeleteRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalWalletLabelDeleteRequest): HfunCabalWalletLabelDeleteRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramChatWalletPackLabelDeleteRequest): TelegramChatWalletPackLabelDeleteRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -5116,6 +5143,9 @@ class HfunCabalWalletLabelDeleteRequest$Type extends MessageType<HfunCabalWallet
                 case /* string wallet_label */ 2:
                     message.walletLabel = reader.string();
                     break;
+                case /* int64 pack_id */ 3:
+                    message.packId = reader.int64().toNumber();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5127,8 +5157,8 @@ class HfunCabalWalletLabelDeleteRequest$Type extends MessageType<HfunCabalWallet
         }
         return message;
     }
-    private binaryReadMap1(map: HfunCabalWalletLabelDeleteRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof HfunCabalWalletLabelDeleteRequest["authData"] | undefined, val: HfunCabalWalletLabelDeleteRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: TelegramChatWalletPackLabelDeleteRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof TelegramChatWalletPackLabelDeleteRequest["authData"] | undefined, val: TelegramChatWalletPackLabelDeleteRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -5138,18 +5168,21 @@ class HfunCabalWalletLabelDeleteRequest$Type extends MessageType<HfunCabalWallet
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for field hypurr.HfunCabalWalletLabelDeleteRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.TelegramChatWalletPackLabelDeleteRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: HfunCabalWalletLabelDeleteRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: TelegramChatWalletPackLabelDeleteRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
         /* string wallet_label = 2; */
         if (message.walletLabel !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.walletLabel);
+        /* int64 pack_id = 3; */
+        if (message.packId !== 0)
+            writer.tag(3, WireType.Varint).int64(message.packId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5157,25 +5190,25 @@ class HfunCabalWalletLabelDeleteRequest$Type extends MessageType<HfunCabalWallet
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelDeleteRequest
+ * @generated MessageType for protobuf message hypurr.TelegramChatWalletPackLabelDeleteRequest
  */
-export const HfunCabalWalletLabelDeleteRequest = new HfunCabalWalletLabelDeleteRequest$Type();
+export const TelegramChatWalletPackLabelDeleteRequest = new TelegramChatWalletPackLabelDeleteRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HfunCabalWalletLabelDeleteResponse$Type extends MessageType<HfunCabalWalletLabelDeleteResponse> {
+class TelegramChatWalletPackLabelDeleteResponse$Type extends MessageType<TelegramChatWalletPackLabelDeleteResponse> {
     constructor() {
-        super("hypurr.HfunCabalWalletLabelDeleteResponse", []);
+        super("hypurr.TelegramChatWalletPackLabelDeleteResponse", []);
     }
-    create(value?: PartialMessage<HfunCabalWalletLabelDeleteResponse>): HfunCabalWalletLabelDeleteResponse {
+    create(value?: PartialMessage<TelegramChatWalletPackLabelDeleteResponse>): TelegramChatWalletPackLabelDeleteResponse {
         const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HfunCabalWalletLabelDeleteResponse>(this, message, value);
+            reflectionMergePartial<TelegramChatWalletPackLabelDeleteResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalWalletLabelDeleteResponse): HfunCabalWalletLabelDeleteResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramChatWalletPackLabelDeleteResponse): TelegramChatWalletPackLabelDeleteResponse {
         return target ?? this.create();
     }
-    internalBinaryWrite(message: HfunCabalWalletLabelDeleteResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: TelegramChatWalletPackLabelDeleteResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5183,9 +5216,9 @@ class HfunCabalWalletLabelDeleteResponse$Type extends MessageType<HfunCabalWalle
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HfunCabalWalletLabelDeleteResponse
+ * @generated MessageType for protobuf message hypurr.TelegramChatWalletPackLabelDeleteResponse
  */
-export const HfunCabalWalletLabelDeleteResponse = new HfunCabalWalletLabelDeleteResponse$Type();
+export const TelegramChatWalletPackLabelDeleteResponse = new TelegramChatWalletPackLabelDeleteResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class EIP712Signature$Type extends MessageType<EIP712Signature> {
     constructor() {
@@ -7612,9 +7645,9 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "HyperliquidAgentSignatureCreate", options: {}, I: HyperliquidAgentSignatureCreateRequest, O: HyperliquidAgentSignatureCreateResponse },
     { name: "HyperliquidAgentWalletCreate", options: {}, I: HyperliquidAgentWalletCreateRequest, O: HyperliquidAgentWalletCreateResponse },
     { name: "HfunCabalAlerts", serverStreaming: true, options: {}, I: HfunCabalAlertsRequest, O: HfunCabalAlertsResponse },
-    { name: "HfunCabalWalletLabelAdd", options: {}, I: HfunCabalWalletLabelAddRequest, O: HfunCabalWalletLabelAddResponse },
-    { name: "HfunCabalWalletLabelModify", options: {}, I: HfunCabalWalletLabelModifyRequest, O: HfunCabalWalletLabelModifyResponse },
-    { name: "HfunCabalWalletLabelRemove", options: {}, I: HfunCabalWalletLabelDeleteRequest, O: HfunCabalWalletLabelDeleteResponse },
+    { name: "TelegramChatWalletPackLabelAdd", options: {}, I: TelegramChatWalletPackLabelAddRequest, O: TelegramChatWalletPackLabelAddResponse },
+    { name: "TelegramChatWalletPackLabelModify", options: {}, I: TelegramChatWalletPackLabelModifyRequest, O: TelegramChatWalletPackLabelModifyResponse },
+    { name: "TelegramChatWalletPackLabelRemove", options: {}, I: TelegramChatWalletPackLabelDeleteRequest, O: TelegramChatWalletPackLabelDeleteResponse },
     { name: "SupportConversationStart", options: {}, I: SupportConversationStartRequest, O: SupportConversationStartResponse },
     { name: "SupportMessageSend", options: {}, I: SupportMessageSendRequest, O: SupportMessageSendResponse },
     { name: "SupportConversationHistory", options: {}, I: SupportConversationHistoryRequest, O: SupportConversationHistoryResponse },

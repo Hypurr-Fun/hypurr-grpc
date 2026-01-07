@@ -311,32 +311,35 @@ message HfunCabalAlertsResponse {
   repeated HypurrFunCabalAlert alerts = 1;
 }
 
-message HfunCabalWalletLabelAddRequest {
+message TelegramChatWalletPackLabelAddRequest {
   map<string, string> auth_data = 1;
   string wallet_address = 2;
   string wallet_label = 3;
+  int64 pack_id = 4;
 }
 
-message HfunCabalWalletLabelAddResponse {
+message TelegramChatWalletPackLabelAddResponse {
 
 }
 
-message HfunCabalWalletLabelModifyRequest {
+message TelegramChatWalletPackLabelModifyRequest {
   map<string, string> auth_data = 1;
   string wallet_label_old = 2;
   string wallet_label_new = 3;
+  int64 pack_id = 4;
 }
 
-message HfunCabalWalletLabelModifyResponse {
+message TelegramChatWalletPackLabelModifyResponse {
 
 }
 
-message HfunCabalWalletLabelDeleteRequest {
+message TelegramChatWalletPackLabelDeleteRequest {
   map<string, string> auth_data = 1;
   string wallet_label = 2;
+  int64 pack_id = 3;
 }
 
-message HfunCabalWalletLabelDeleteResponse {
+message TelegramChatWalletPackLabelDeleteResponse {
 
 }
 
@@ -604,9 +607,9 @@ service Telegram {
 
   // Cabal
   rpc HfunCabalAlerts (HfunCabalAlertsRequest) returns (stream HfunCabalAlertsResponse) {}
-  rpc HfunCabalWalletLabelAdd (HfunCabalWalletLabelAddRequest) returns (HfunCabalWalletLabelAddResponse) {}
-  rpc HfunCabalWalletLabelModify (HfunCabalWalletLabelModifyRequest) returns (HfunCabalWalletLabelModifyResponse) {}
-  rpc HfunCabalWalletLabelRemove (HfunCabalWalletLabelDeleteRequest) returns (HfunCabalWalletLabelDeleteResponse) {}
+  rpc TelegramChatWalletPackLabelAdd (TelegramChatWalletPackLabelAddRequest) returns (TelegramChatWalletPackLabelAddResponse) {}
+  rpc TelegramChatWalletPackLabelModify (TelegramChatWalletPackLabelModifyRequest) returns (TelegramChatWalletPackLabelModifyResponse) {}
+  rpc TelegramChatWalletPackLabelRemove (TelegramChatWalletPackLabelDeleteRequest) returns (TelegramChatWalletPackLabelDeleteResponse) {}
 
   // Support
   rpc SupportConversationStart(SupportConversationStartRequest) returns (SupportConversationStartResponse);
