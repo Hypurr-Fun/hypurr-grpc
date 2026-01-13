@@ -85,6 +85,7 @@ message WalletPerpBalance {
   double balance = 2;
   double cost = 3;
   double funding = 4;
+  double liquidation_price = 5;
 }
 
 message WalletBalancesRequest {
