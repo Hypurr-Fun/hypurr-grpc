@@ -383,6 +383,23 @@ export interface WalletTagsResponse {
     tags: WalletTag[];
 }
 /**
+ * @generated from protobuf message hypercore.WalletInfo
+ */
+export interface WalletInfo {
+    /**
+     * @generated from protobuf field: string address = 1;
+     */
+    address: string;
+    /**
+     * @generated from protobuf field: double perp_equity = 2;
+     */
+    perpEquity: number;
+    /**
+     * @generated from protobuf field: double spot_equity = 3;
+     */
+    spotEquity: number;
+}
+/**
  * @generated from protobuf message hypercore.WalletsByTagRequest
  */
 export interface WalletsByTagRequest {
@@ -396,9 +413,9 @@ export interface WalletsByTagRequest {
  */
 export interface WalletsByTagResponse {
     /**
-     * @generated from protobuf field: repeated string wallet_addresses = 1;
+     * @generated from protobuf field: repeated hypercore.WalletInfo wallet_infos = 1;
      */
-    walletAddresses: string[];
+    walletInfos: WalletInfo[];
 }
 // 
 // type Trade struct {
@@ -1863,6 +1880,67 @@ class WalletTagsResponse$Type extends MessageType<WalletTagsResponse> {
  */
 export const WalletTagsResponse = new WalletTagsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class WalletInfo$Type extends MessageType<WalletInfo> {
+    constructor() {
+        super("hypercore.WalletInfo", [
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "perp_equity", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "spot_equity", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletInfo>): WalletInfo {
+        const message = { address: "", perpEquity: 0, spotEquity: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<WalletInfo>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletInfo): WalletInfo {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string address */ 1:
+                    message.address = reader.string();
+                    break;
+                case /* double perp_equity */ 2:
+                    message.perpEquity = reader.double();
+                    break;
+                case /* double spot_equity */ 3:
+                    message.spotEquity = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletInfo, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string address = 1; */
+        if (message.address !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.address);
+        /* double perp_equity = 2; */
+        if (message.perpEquity !== 0)
+            writer.tag(2, WireType.Bit64).double(message.perpEquity);
+        /* double spot_equity = 3; */
+        if (message.spotEquity !== 0)
+            writer.tag(3, WireType.Bit64).double(message.spotEquity);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletInfo
+ */
+export const WalletInfo = new WalletInfo$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class WalletsByTagRequest$Type extends MessageType<WalletsByTagRequest> {
     constructor() {
         super("hypercore.WalletsByTagRequest", [
@@ -1913,11 +1991,11 @@ export const WalletsByTagRequest = new WalletsByTagRequest$Type();
 class WalletsByTagResponse$Type extends MessageType<WalletsByTagResponse> {
     constructor() {
         super("hypercore.WalletsByTagResponse", [
-            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "wallet_infos", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletInfo }
         ]);
     }
     create(value?: PartialMessage<WalletsByTagResponse>): WalletsByTagResponse {
-        const message = { walletAddresses: [] };
+        const message = { walletInfos: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<WalletsByTagResponse>(this, message, value);
@@ -1928,8 +2006,8 @@ class WalletsByTagResponse$Type extends MessageType<WalletsByTagResponse> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated string wallet_addresses */ 1:
-                    message.walletAddresses.push(reader.string());
+                case /* repeated hypercore.WalletInfo wallet_infos */ 1:
+                    message.walletInfos.push(WalletInfo.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1943,9 +2021,9 @@ class WalletsByTagResponse$Type extends MessageType<WalletsByTagResponse> {
         return message;
     }
     internalBinaryWrite(message: WalletsByTagResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated string wallet_addresses = 1; */
-        for (let i = 0; i < message.walletAddresses.length; i++)
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
+        /* repeated hypercore.WalletInfo wallet_infos = 1; */
+        for (let i = 0; i < message.walletInfos.length; i++)
+            WalletInfo.internalBinaryWrite(message.walletInfos[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

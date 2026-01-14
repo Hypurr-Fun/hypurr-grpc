@@ -176,12 +176,18 @@ message WalletTagsResponse {
   repeated WalletTag tags = 1;
 }
 
+message WalletInfo {
+  string address = 1;
+  double perp_equity = 2;
+  double spot_equity = 3;
+}
+
 message WalletsByTagRequest {
   WalletTag tag = 1;
 }
 
 message WalletsByTagResponse {
-  repeated string wallet_addresses = 1;
+  repeated WalletInfo wallet_infos = 1;
 }
 
 service HyperCore {
