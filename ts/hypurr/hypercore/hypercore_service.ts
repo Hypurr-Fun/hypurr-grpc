@@ -382,6 +382,24 @@ export interface WalletTagsResponse {
      */
     tags: WalletTag[];
 }
+/**
+ * @generated from protobuf message hypercore.WalletsByTagRequest
+ */
+export interface WalletsByTagRequest {
+    /**
+     * @generated from protobuf field: hypercore.WalletTag tag = 1;
+     */
+    tag: WalletTag;
+}
+/**
+ * @generated from protobuf message hypercore.WalletsByTagResponse
+ */
+export interface WalletsByTagResponse {
+    /**
+     * @generated from protobuf field: repeated string wallet_addresses = 1;
+     */
+    walletAddresses: string[];
+}
 // 
 // type Trade struct {
 // Coin             string           `json:"coin"`               // Perp symbol or @ notation
@@ -1844,6 +1862,100 @@ class WalletTagsResponse$Type extends MessageType<WalletTagsResponse> {
  * @generated MessageType for protobuf message hypercore.WalletTagsResponse
  */
 export const WalletTagsResponse = new WalletTagsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletsByTagRequest$Type extends MessageType<WalletsByTagRequest> {
+    constructor() {
+        super("hypercore.WalletsByTagRequest", [
+            { no: 1, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] }
+        ]);
+    }
+    create(value?: PartialMessage<WalletsByTagRequest>): WalletsByTagRequest {
+        const message = { tag: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<WalletsByTagRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletsByTagRequest): WalletsByTagRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypercore.WalletTag tag */ 1:
+                    message.tag = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletsByTagRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypercore.WalletTag tag = 1; */
+        if (message.tag !== 0)
+            writer.tag(1, WireType.Varint).int32(message.tag);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletsByTagRequest
+ */
+export const WalletsByTagRequest = new WalletsByTagRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletsByTagResponse$Type extends MessageType<WalletsByTagResponse> {
+    constructor() {
+        super("hypercore.WalletsByTagResponse", [
+            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletsByTagResponse>): WalletsByTagResponse {
+        const message = { walletAddresses: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<WalletsByTagResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletsByTagResponse): WalletsByTagResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string wallet_addresses */ 1:
+                    message.walletAddresses.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletsByTagResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string wallet_addresses = 1; */
+        for (let i = 0; i < message.walletAddresses.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletsByTagResponse
+ */
+export const WalletsByTagResponse = new WalletsByTagResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypercore.HyperCore
  */
@@ -1855,5 +1967,6 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },
     { name: "ValidatorDelegators", options: {}, I: ValidatorDelegatorsRequest, O: ValidatorDelegatorsResponse },
     { name: "ReferrerWallet", options: {}, I: ReferrerWalletRequest, O: ReferrerWalletResponse },
-    { name: "WalletTags", options: {}, I: WalletTagsRequest, O: WalletTagsResponse }
+    { name: "WalletTags", options: {}, I: WalletTagsRequest, O: WalletTagsResponse },
+    { name: "WalletsByTag", options: {}, I: WalletsByTagRequest, O: WalletsByTagResponse }
 ]);

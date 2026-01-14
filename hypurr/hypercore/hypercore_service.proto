@@ -176,6 +176,14 @@ message WalletTagsResponse {
   repeated WalletTag tags = 1;
 }
 
+message WalletsByTagRequest {
+  WalletTag tag = 1;
+}
+
+message WalletsByTagResponse {
+  repeated string wallet_addresses = 1;
+}
+
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
@@ -185,6 +193,7 @@ service HyperCore {
   rpc ValidatorDelegators(ValidatorDelegatorsRequest) returns (ValidatorDelegatorsResponse) {}
   rpc ReferrerWallet(ReferrerWalletRequest) returns (ReferrerWalletResponse) {}
   rpc WalletTags(WalletTagsRequest) returns (WalletTagsResponse) {}
+  rpc WalletsByTag(WalletsByTagRequest) returns (WalletsByTagResponse) {}
 }
 
 /*

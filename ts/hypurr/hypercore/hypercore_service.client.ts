@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
+import type { WalletsByTagResponse } from "./hypercore_service";
+import type { WalletsByTagRequest } from "./hypercore_service";
 import type { WalletTagsResponse } from "./hypercore_service";
 import type { WalletTagsRequest } from "./hypercore_service";
 import type { ReferrerWalletResponse } from "./hypercore_service";
@@ -61,6 +63,10 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: WalletTags(hypercore.WalletTagsRequest) returns (hypercore.WalletTagsResponse);
      */
     walletTags(input: WalletTagsRequest, options?: RpcOptions): UnaryCall<WalletTagsRequest, WalletTagsResponse>;
+    /**
+     * @generated from protobuf rpc: WalletsByTag(hypercore.WalletsByTagRequest) returns (hypercore.WalletsByTagResponse);
+     */
+    walletsByTag(input: WalletsByTagRequest, options?: RpcOptions): UnaryCall<WalletsByTagRequest, WalletsByTagResponse>;
 }
 /**
  * @generated from protobuf service hypercore.HyperCore
@@ -126,5 +132,12 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
     walletTags(input: WalletTagsRequest, options?: RpcOptions): UnaryCall<WalletTagsRequest, WalletTagsResponse> {
         const method = this.methods[7], opt = this._transport.mergeOptions(options);
         return stackIntercept<WalletTagsRequest, WalletTagsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: WalletsByTag(hypercore.WalletsByTagRequest) returns (hypercore.WalletsByTagResponse);
+     */
+    walletsByTag(input: WalletsByTagRequest, options?: RpcOptions): UnaryCall<WalletsByTagRequest, WalletsByTagResponse> {
+        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        return stackIntercept<WalletsByTagRequest, WalletsByTagResponse>("unary", this._transport, method, opt, input);
     }
 }

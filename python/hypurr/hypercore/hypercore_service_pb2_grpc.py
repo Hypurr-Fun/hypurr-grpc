@@ -54,6 +54,11 @@ class HyperCoreStub(object):
         request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTagsRequest.SerializeToString,
         response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTagsResponse.FromString,
         )
+    self.WalletsByTag = channel.unary_unary(
+        '/hypercore.HyperCore/WalletsByTag',
+        request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagRequest.SerializeToString,
+        response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagResponse.FromString,
+        )
 
 
 class HyperCoreServicer(object):
@@ -116,6 +121,13 @@ class HyperCoreServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def WalletsByTag(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_HyperCoreServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -158,6 +170,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
           servicer.WalletTags,
           request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTagsRequest.FromString,
           response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTagsResponse.SerializeToString,
+      ),
+      'WalletsByTag': grpc.unary_unary_rpc_method_handler(
+          servicer.WalletsByTag,
+          request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagRequest.FromString,
+          response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

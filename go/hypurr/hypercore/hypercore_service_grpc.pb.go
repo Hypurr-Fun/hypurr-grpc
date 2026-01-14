@@ -27,6 +27,7 @@ const (
 	HyperCore_ValidatorDelegators_FullMethodName               = "/hypercore.HyperCore/ValidatorDelegators"
 	HyperCore_ReferrerWallet_FullMethodName                    = "/hypercore.HyperCore/ReferrerWallet"
 	HyperCore_WalletTags_FullMethodName                        = "/hypercore.HyperCore/WalletTags"
+	HyperCore_WalletsByTag_FullMethodName                      = "/hypercore.HyperCore/WalletsByTag"
 )
 
 // HyperCoreClient is the client API for HyperCore service.
@@ -41,6 +42,7 @@ type HyperCoreClient interface {
 	ValidatorDelegators(ctx context.Context, in *ValidatorDelegatorsRequest, opts ...grpc.CallOption) (*ValidatorDelegatorsResponse, error)
 	ReferrerWallet(ctx context.Context, in *ReferrerWalletRequest, opts ...grpc.CallOption) (*ReferrerWalletResponse, error)
 	WalletTags(ctx context.Context, in *WalletTagsRequest, opts ...grpc.CallOption) (*WalletTagsResponse, error)
+	WalletsByTag(ctx context.Context, in *WalletsByTagRequest, opts ...grpc.CallOption) (*WalletsByTagResponse, error)
 }
 
 type hyperCoreClient struct {
@@ -199,6 +201,16 @@ func (c *hyperCoreClient) WalletTags(ctx context.Context, in *WalletTagsRequest,
 	return out, nil
 }
 
+func (c *hyperCoreClient) WalletsByTag(ctx context.Context, in *WalletsByTagRequest, opts ...grpc.CallOption) (*WalletsByTagResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WalletsByTagResponse)
+	err := c.cc.Invoke(ctx, HyperCore_WalletsByTag_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HyperCoreServer is the server API for HyperCore service.
 // All implementations must embed UnimplementedHyperCoreServer
 // for forward compatibility
@@ -211,6 +223,7 @@ type HyperCoreServer interface {
 	ValidatorDelegators(context.Context, *ValidatorDelegatorsRequest) (*ValidatorDelegatorsResponse, error)
 	ReferrerWallet(context.Context, *ReferrerWalletRequest) (*ReferrerWalletResponse, error)
 	WalletTags(context.Context, *WalletTagsRequest) (*WalletTagsResponse, error)
+	WalletsByTag(context.Context, *WalletsByTagRequest) (*WalletsByTagResponse, error)
 	mustEmbedUnimplementedHyperCoreServer()
 }
 
@@ -241,6 +254,9 @@ func (UnimplementedHyperCoreServer) ReferrerWallet(context.Context, *ReferrerWal
 }
 func (UnimplementedHyperCoreServer) WalletTags(context.Context, *WalletTagsRequest) (*WalletTagsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletTags not implemented")
+}
+func (UnimplementedHyperCoreServer) WalletsByTag(context.Context, *WalletsByTagRequest) (*WalletsByTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WalletsByTag not implemented")
 }
 func (UnimplementedHyperCoreServer) mustEmbedUnimplementedHyperCoreServer() {}
 
@@ -413,6 +429,24 @@ func _HyperCore_WalletTags_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_WalletsByTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WalletsByTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).WalletsByTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_WalletsByTag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).WalletsByTag(ctx, req.(*WalletsByTagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HyperCore_ServiceDesc is the grpc.ServiceDesc for HyperCore service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -439,6 +473,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WalletTags",
 			Handler:    _HyperCore_WalletTags_Handler,
+		},
+		{
+			MethodName: "WalletsByTag",
+			Handler:    _HyperCore_WalletsByTag_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
