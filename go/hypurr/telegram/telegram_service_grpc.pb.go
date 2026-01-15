@@ -45,6 +45,7 @@ const (
 	Telegram_HyperliquidAgentSignatureCreate_FullMethodName   = "/hypurr.Telegram/HyperliquidAgentSignatureCreate"
 	Telegram_HyperliquidAgentWalletCreate_FullMethodName      = "/hypurr.Telegram/HyperliquidAgentWalletCreate"
 	Telegram_HfunCabalAlerts_FullMethodName                   = "/hypurr.Telegram/HfunCabalAlerts"
+	Telegram_TelegramChatWalletPackCreate_FullMethodName      = "/hypurr.Telegram/TelegramChatWalletPackCreate"
 	Telegram_TelegramChatWalletPackLabelAdd_FullMethodName    = "/hypurr.Telegram/TelegramChatWalletPackLabelAdd"
 	Telegram_TelegramChatWalletPackLabelModify_FullMethodName = "/hypurr.Telegram/TelegramChatWalletPackLabelModify"
 	Telegram_TelegramChatWalletPackLabelRemove_FullMethodName = "/hypurr.Telegram/TelegramChatWalletPackLabelRemove"
@@ -103,6 +104,7 @@ type TelegramClient interface {
 	HyperliquidAgentWalletCreate(ctx context.Context, in *HyperliquidAgentWalletCreateRequest, opts ...grpc.CallOption) (*HyperliquidAgentWalletCreateResponse, error)
 	// Cabal
 	HfunCabalAlerts(ctx context.Context, in *HfunCabalAlertsRequest, opts ...grpc.CallOption) (Telegram_HfunCabalAlertsClient, error)
+	TelegramChatWalletPackCreate(ctx context.Context, in *TelegramChatWalletPackCreateRequest, opts ...grpc.CallOption) (*TelegramChatWalletPackCreateResponse, error)
 	TelegramChatWalletPackLabelAdd(ctx context.Context, in *TelegramChatWalletPackLabelAddRequest, opts ...grpc.CallOption) (*TelegramChatWalletPackLabelAddResponse, error)
 	TelegramChatWalletPackLabelModify(ctx context.Context, in *TelegramChatWalletPackLabelModifyRequest, opts ...grpc.CallOption) (*TelegramChatWalletPackLabelModifyResponse, error)
 	TelegramChatWalletPackLabelRemove(ctx context.Context, in *TelegramChatWalletPackLabelDeleteRequest, opts ...grpc.CallOption) (*TelegramChatWalletPackLabelDeleteResponse, error)
@@ -418,6 +420,16 @@ func (x *telegramHfunCabalAlertsClient) Recv() (*HfunCabalAlertsResponse, error)
 	return m, nil
 }
 
+func (c *telegramClient) TelegramChatWalletPackCreate(ctx context.Context, in *TelegramChatWalletPackCreateRequest, opts ...grpc.CallOption) (*TelegramChatWalletPackCreateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TelegramChatWalletPackCreateResponse)
+	err := c.cc.Invoke(ctx, Telegram_TelegramChatWalletPackCreate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *telegramClient) TelegramChatWalletPackLabelAdd(ctx context.Context, in *TelegramChatWalletPackLabelAddRequest, opts ...grpc.CallOption) (*TelegramChatWalletPackLabelAddResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(TelegramChatWalletPackLabelAddResponse)
@@ -654,6 +666,7 @@ type TelegramServer interface {
 	HyperliquidAgentWalletCreate(context.Context, *HyperliquidAgentWalletCreateRequest) (*HyperliquidAgentWalletCreateResponse, error)
 	// Cabal
 	HfunCabalAlerts(*HfunCabalAlertsRequest, Telegram_HfunCabalAlertsServer) error
+	TelegramChatWalletPackCreate(context.Context, *TelegramChatWalletPackCreateRequest) (*TelegramChatWalletPackCreateResponse, error)
 	TelegramChatWalletPackLabelAdd(context.Context, *TelegramChatWalletPackLabelAddRequest) (*TelegramChatWalletPackLabelAddResponse, error)
 	TelegramChatWalletPackLabelModify(context.Context, *TelegramChatWalletPackLabelModifyRequest) (*TelegramChatWalletPackLabelModifyResponse, error)
 	TelegramChatWalletPackLabelRemove(context.Context, *TelegramChatWalletPackLabelDeleteRequest) (*TelegramChatWalletPackLabelDeleteResponse, error)
@@ -760,6 +773,9 @@ func (UnimplementedTelegramServer) HyperliquidAgentWalletCreate(context.Context,
 }
 func (UnimplementedTelegramServer) HfunCabalAlerts(*HfunCabalAlertsRequest, Telegram_HfunCabalAlertsServer) error {
 	return status.Errorf(codes.Unimplemented, "method HfunCabalAlerts not implemented")
+}
+func (UnimplementedTelegramServer) TelegramChatWalletPackCreate(context.Context, *TelegramChatWalletPackCreateRequest) (*TelegramChatWalletPackCreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TelegramChatWalletPackCreate not implemented")
 }
 func (UnimplementedTelegramServer) TelegramChatWalletPackLabelAdd(context.Context, *TelegramChatWalletPackLabelAddRequest) (*TelegramChatWalletPackLabelAddResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TelegramChatWalletPackLabelAdd not implemented")
@@ -1305,6 +1321,24 @@ func (x *telegramHfunCabalAlertsServer) Send(m *HfunCabalAlertsResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _Telegram_TelegramChatWalletPackCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TelegramChatWalletPackCreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).TelegramChatWalletPackCreate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_TelegramChatWalletPackCreate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).TelegramChatWalletPackCreate(ctx, req.(*TelegramChatWalletPackCreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Telegram_TelegramChatWalletPackLabelAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TelegramChatWalletPackLabelAddRequest)
 	if err := dec(in); err != nil {
@@ -1771,6 +1805,10 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HyperliquidAgentWalletCreate",
 			Handler:    _Telegram_HyperliquidAgentWalletCreate_Handler,
+		},
+		{
+			MethodName: "TelegramChatWalletPackCreate",
+			Handler:    _Telegram_TelegramChatWalletPackCreate_Handler,
 		},
 		{
 			MethodName: "TelegramChatWalletPackLabelAdd",

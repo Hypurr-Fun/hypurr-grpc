@@ -311,6 +311,15 @@ message HfunCabalAlertsResponse {
   repeated HypurrFunCabalAlert alerts = 1;
 }
 
+message TelegramChatWalletPackCreateRequest {
+  map<string, string> auth_data = 1;
+  string name = 2;
+}
+
+message TelegramChatWalletPackCreateResponse {
+  int64 pack_id = 1;
+}
+
 message TelegramChatWalletPackLabelAddRequest {
   map<string, string> auth_data = 1;
   string wallet_address = 2;
@@ -607,6 +616,7 @@ service Telegram {
 
   // Cabal
   rpc HfunCabalAlerts (HfunCabalAlertsRequest) returns (stream HfunCabalAlertsResponse) {}
+  rpc TelegramChatWalletPackCreate (TelegramChatWalletPackCreateRequest) returns (TelegramChatWalletPackCreateResponse) {}
   rpc TelegramChatWalletPackLabelAdd (TelegramChatWalletPackLabelAddRequest) returns (TelegramChatWalletPackLabelAddResponse) {}
   rpc TelegramChatWalletPackLabelModify (TelegramChatWalletPackLabelModifyRequest) returns (TelegramChatWalletPackLabelModifyResponse) {}
   rpc TelegramChatWalletPackLabelRemove (TelegramChatWalletPackLabelDeleteRequest) returns (TelegramChatWalletPackLabelDeleteResponse) {}

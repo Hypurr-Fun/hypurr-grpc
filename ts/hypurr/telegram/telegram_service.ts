@@ -917,6 +917,30 @@ export interface HfunCabalAlertsResponse {
     alerts: HypurrFunCabalAlert[];
 }
 /**
+ * @generated from protobuf message hypurr.TelegramChatWalletPackCreateRequest
+ */
+export interface TelegramChatWalletPackCreateRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string name = 2;
+     */
+    name: string;
+}
+/**
+ * @generated from protobuf message hypurr.TelegramChatWalletPackCreateResponse
+ */
+export interface TelegramChatWalletPackCreateResponse {
+    /**
+     * @generated from protobuf field: int64 pack_id = 1;
+     */
+    packId: number;
+}
+/**
  * @generated from protobuf message hypurr.TelegramChatWalletPackLabelAddRequest
  */
 export interface TelegramChatWalletPackLabelAddRequest {
@@ -4897,6 +4921,123 @@ class HfunCabalAlertsResponse$Type extends MessageType<HfunCabalAlertsResponse> 
  */
 export const HfunCabalAlertsResponse = new HfunCabalAlertsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class TelegramChatWalletPackCreateRequest$Type extends MessageType<TelegramChatWalletPackCreateRequest> {
+    constructor() {
+        super("hypurr.TelegramChatWalletPackCreateRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TelegramChatWalletPackCreateRequest>): TelegramChatWalletPackCreateRequest {
+        const message = { authData: {}, name: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<TelegramChatWalletPackCreateRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramChatWalletPackCreateRequest): TelegramChatWalletPackCreateRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: TelegramChatWalletPackCreateRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof TelegramChatWalletPackCreateRequest["authData"] | undefined, val: TelegramChatWalletPackCreateRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.TelegramChatWalletPackCreateRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: TelegramChatWalletPackCreateRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.TelegramChatWalletPackCreateRequest
+ */
+export const TelegramChatWalletPackCreateRequest = new TelegramChatWalletPackCreateRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TelegramChatWalletPackCreateResponse$Type extends MessageType<TelegramChatWalletPackCreateResponse> {
+    constructor() {
+        super("hypurr.TelegramChatWalletPackCreateResponse", [
+            { no: 1, name: "pack_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TelegramChatWalletPackCreateResponse>): TelegramChatWalletPackCreateResponse {
+        const message = { packId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<TelegramChatWalletPackCreateResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramChatWalletPackCreateResponse): TelegramChatWalletPackCreateResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 pack_id */ 1:
+                    message.packId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TelegramChatWalletPackCreateResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 pack_id = 1; */
+        if (message.packId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.packId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.TelegramChatWalletPackCreateResponse
+ */
+export const TelegramChatWalletPackCreateResponse = new TelegramChatWalletPackCreateResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class TelegramChatWalletPackLabelAddRequest$Type extends MessageType<TelegramChatWalletPackLabelAddRequest> {
     constructor() {
         super("hypurr.TelegramChatWalletPackLabelAddRequest", [
@@ -7645,6 +7786,7 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "HyperliquidAgentSignatureCreate", options: {}, I: HyperliquidAgentSignatureCreateRequest, O: HyperliquidAgentSignatureCreateResponse },
     { name: "HyperliquidAgentWalletCreate", options: {}, I: HyperliquidAgentWalletCreateRequest, O: HyperliquidAgentWalletCreateResponse },
     { name: "HfunCabalAlerts", serverStreaming: true, options: {}, I: HfunCabalAlertsRequest, O: HfunCabalAlertsResponse },
+    { name: "TelegramChatWalletPackCreate", options: {}, I: TelegramChatWalletPackCreateRequest, O: TelegramChatWalletPackCreateResponse },
     { name: "TelegramChatWalletPackLabelAdd", options: {}, I: TelegramChatWalletPackLabelAddRequest, O: TelegramChatWalletPackLabelAddResponse },
     { name: "TelegramChatWalletPackLabelModify", options: {}, I: TelegramChatWalletPackLabelModifyRequest, O: TelegramChatWalletPackLabelModifyResponse },
     { name: "TelegramChatWalletPackLabelRemove", options: {}, I: TelegramChatWalletPackLabelDeleteRequest, O: TelegramChatWalletPackLabelDeleteResponse },
