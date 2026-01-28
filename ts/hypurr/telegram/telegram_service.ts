@@ -34,6 +34,7 @@ import { Int64Value } from "../../google/protobuf/wrappers";
 import { HyperliquidCoreOrderCanceledStatus } from "../trade";
 import { HyperliquidCoreCancel } from "../trade";
 import { HyperliquidCoreOrder } from "../trade";
+import { StringValue } from "../../google/protobuf/wrappers";
 import { HyperliquidWallet } from "../wallet";
 import { TelegramUser } from "../user";
 /**
@@ -100,6 +101,14 @@ export interface HyperliquidCoreActionRequest {
      * @generated from protobuf field: bytes action = 3;
      */
     action: Uint8Array; // JSON-encoded action-specific params
+    /**
+     * @generated from protobuf field: int64 nonce = 4;
+     */
+    nonce: number;
+    /**
+     * @generated from protobuf field: google.protobuf.StringValue vault_address = 5;
+     */
+    vaultAddress?: StringValue;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidCoreActionResponse
@@ -1848,11 +1857,13 @@ class HyperliquidCoreActionRequest$Type extends MessageType<HyperliquidCoreActio
         super("hypurr.HyperliquidCoreActionRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "action", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+            { no: 3, name: "action", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 4, name: "nonce", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "vault_address", kind: "message", T: () => StringValue }
         ]);
     }
     create(value?: PartialMessage<HyperliquidCoreActionRequest>): HyperliquidCoreActionRequest {
-        const message = { authData: {}, walletId: 0, action: new Uint8Array(0) };
+        const message = { authData: {}, walletId: 0, action: new Uint8Array(0), nonce: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidCoreActionRequest>(this, message, value);
@@ -1871,6 +1882,12 @@ class HyperliquidCoreActionRequest$Type extends MessageType<HyperliquidCoreActio
                     break;
                 case /* bytes action */ 3:
                     message.action = reader.bytes();
+                    break;
+                case /* int64 nonce */ 4:
+                    message.nonce = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.StringValue vault_address */ 5:
+                    message.vaultAddress = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.vaultAddress);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1909,6 +1926,12 @@ class HyperliquidCoreActionRequest$Type extends MessageType<HyperliquidCoreActio
         /* bytes action = 3; */
         if (message.action.length)
             writer.tag(3, WireType.LengthDelimited).bytes(message.action);
+        /* int64 nonce = 4; */
+        if (message.nonce !== 0)
+            writer.tag(4, WireType.Varint).int64(message.nonce);
+        /* google.protobuf.StringValue vault_address = 5; */
+        if (message.vaultAddress)
+            StringValue.internalBinaryWrite(message.vaultAddress, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
