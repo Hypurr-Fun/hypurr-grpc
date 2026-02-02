@@ -53,6 +53,8 @@ import type { HyperliquidAgentWalletCreateResponse } from "./telegram_service";
 import type { HyperliquidAgentWalletCreateRequest } from "./telegram_service";
 import type { HyperliquidAgentSignatureCreateResponse } from "./telegram_service";
 import type { HyperliquidAgentSignatureCreateRequest } from "./telegram_service";
+import type { HyperliquidWalletDeleteResponse } from "./telegram_service";
+import type { HyperliquidWalletDeleteRequest } from "./telegram_service";
 import type { UpdateHyperliquidSpotSniperConfigResponse } from "./telegram_service";
 import type { UpdateHyperliquidSpotSniperConfigRequest } from "./telegram_service";
 import type { DeleteHyperliquidSpotSniperConfigResponse } from "./telegram_service";
@@ -208,6 +210,10 @@ export interface ITelegramClient {
      * @generated from protobuf rpc: UpdateHyperliquidSpotSniperConfig(hypurr.UpdateHyperliquidSpotSniperConfigRequest) returns (hypurr.UpdateHyperliquidSpotSniperConfigResponse);
      */
     updateHyperliquidSpotSniperConfig(input: UpdateHyperliquidSpotSniperConfigRequest, options?: RpcOptions): UnaryCall<UpdateHyperliquidSpotSniperConfigRequest, UpdateHyperliquidSpotSniperConfigResponse>;
+    /**
+     * @generated from protobuf rpc: HyperliquidWalletDelete(hypurr.HyperliquidWalletDeleteRequest) returns (hypurr.HyperliquidWalletDeleteResponse);
+     */
+    hyperliquidWalletDelete(input: HyperliquidWalletDeleteRequest, options?: RpcOptions): UnaryCall<HyperliquidWalletDeleteRequest, HyperliquidWalletDeleteResponse>;
     /**
      * @generated from protobuf rpc: HyperliquidAgentSignatureCreate(hypurr.HyperliquidAgentSignatureCreateRequest) returns (hypurr.HyperliquidAgentSignatureCreateResponse);
      */
@@ -492,17 +498,24 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
         return stackIntercept<UpdateHyperliquidSpotSniperConfigRequest, UpdateHyperliquidSpotSniperConfigResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: HyperliquidWalletDelete(hypurr.HyperliquidWalletDeleteRequest) returns (hypurr.HyperliquidWalletDeleteResponse);
+     */
+    hyperliquidWalletDelete(input: HyperliquidWalletDeleteRequest, options?: RpcOptions): UnaryCall<HyperliquidWalletDeleteRequest, HyperliquidWalletDeleteResponse> {
+        const method = this.methods[23], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HyperliquidWalletDeleteRequest, HyperliquidWalletDeleteResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: HyperliquidAgentSignatureCreate(hypurr.HyperliquidAgentSignatureCreateRequest) returns (hypurr.HyperliquidAgentSignatureCreateResponse);
      */
     hyperliquidAgentSignatureCreate(input: HyperliquidAgentSignatureCreateRequest, options?: RpcOptions): UnaryCall<HyperliquidAgentSignatureCreateRequest, HyperliquidAgentSignatureCreateResponse> {
-        const method = this.methods[23], opt = this._transport.mergeOptions(options);
+        const method = this.methods[24], opt = this._transport.mergeOptions(options);
         return stackIntercept<HyperliquidAgentSignatureCreateRequest, HyperliquidAgentSignatureCreateResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HyperliquidAgentWalletCreate(hypurr.HyperliquidAgentWalletCreateRequest) returns (hypurr.HyperliquidAgentWalletCreateResponse);
      */
     hyperliquidAgentWalletCreate(input: HyperliquidAgentWalletCreateRequest, options?: RpcOptions): UnaryCall<HyperliquidAgentWalletCreateRequest, HyperliquidAgentWalletCreateResponse> {
-        const method = this.methods[24], opt = this._transport.mergeOptions(options);
+        const method = this.methods[25], opt = this._transport.mergeOptions(options);
         return stackIntercept<HyperliquidAgentWalletCreateRequest, HyperliquidAgentWalletCreateResponse>("unary", this._transport, method, opt, input);
     }
     /**
@@ -511,35 +524,35 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
      * @generated from protobuf rpc: HfunCabalAlerts(hypurr.HfunCabalAlertsRequest) returns (stream hypurr.HfunCabalAlertsResponse);
      */
     hfunCabalAlerts(input: HfunCabalAlertsRequest, options?: RpcOptions): ServerStreamingCall<HfunCabalAlertsRequest, HfunCabalAlertsResponse> {
-        const method = this.methods[25], opt = this._transport.mergeOptions(options);
+        const method = this.methods[26], opt = this._transport.mergeOptions(options);
         return stackIntercept<HfunCabalAlertsRequest, HfunCabalAlertsResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: TelegramChatWalletPackCreate(hypurr.TelegramChatWalletPackCreateRequest) returns (hypurr.TelegramChatWalletPackCreateResponse);
      */
     telegramChatWalletPackCreate(input: TelegramChatWalletPackCreateRequest, options?: RpcOptions): UnaryCall<TelegramChatWalletPackCreateRequest, TelegramChatWalletPackCreateResponse> {
-        const method = this.methods[26], opt = this._transport.mergeOptions(options);
+        const method = this.methods[27], opt = this._transport.mergeOptions(options);
         return stackIntercept<TelegramChatWalletPackCreateRequest, TelegramChatWalletPackCreateResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: TelegramChatWalletPackLabelAdd(hypurr.TelegramChatWalletPackLabelAddRequest) returns (hypurr.TelegramChatWalletPackLabelAddResponse);
      */
     telegramChatWalletPackLabelAdd(input: TelegramChatWalletPackLabelAddRequest, options?: RpcOptions): UnaryCall<TelegramChatWalletPackLabelAddRequest, TelegramChatWalletPackLabelAddResponse> {
-        const method = this.methods[27], opt = this._transport.mergeOptions(options);
+        const method = this.methods[28], opt = this._transport.mergeOptions(options);
         return stackIntercept<TelegramChatWalletPackLabelAddRequest, TelegramChatWalletPackLabelAddResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: TelegramChatWalletPackLabelModify(hypurr.TelegramChatWalletPackLabelModifyRequest) returns (hypurr.TelegramChatWalletPackLabelModifyResponse);
      */
     telegramChatWalletPackLabelModify(input: TelegramChatWalletPackLabelModifyRequest, options?: RpcOptions): UnaryCall<TelegramChatWalletPackLabelModifyRequest, TelegramChatWalletPackLabelModifyResponse> {
-        const method = this.methods[28], opt = this._transport.mergeOptions(options);
+        const method = this.methods[29], opt = this._transport.mergeOptions(options);
         return stackIntercept<TelegramChatWalletPackLabelModifyRequest, TelegramChatWalletPackLabelModifyResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: TelegramChatWalletPackLabelRemove(hypurr.TelegramChatWalletPackLabelDeleteRequest) returns (hypurr.TelegramChatWalletPackLabelDeleteResponse);
      */
     telegramChatWalletPackLabelRemove(input: TelegramChatWalletPackLabelDeleteRequest, options?: RpcOptions): UnaryCall<TelegramChatWalletPackLabelDeleteRequest, TelegramChatWalletPackLabelDeleteResponse> {
-        const method = this.methods[29], opt = this._transport.mergeOptions(options);
+        const method = this.methods[30], opt = this._transport.mergeOptions(options);
         return stackIntercept<TelegramChatWalletPackLabelDeleteRequest, TelegramChatWalletPackLabelDeleteResponse>("unary", this._transport, method, opt, input);
     }
     /**
@@ -548,42 +561,42 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
      * @generated from protobuf rpc: SupportConversationStart(hypurr.SupportConversationStartRequest) returns (hypurr.SupportConversationStartResponse);
      */
     supportConversationStart(input: SupportConversationStartRequest, options?: RpcOptions): UnaryCall<SupportConversationStartRequest, SupportConversationStartResponse> {
-        const method = this.methods[30], opt = this._transport.mergeOptions(options);
+        const method = this.methods[31], opt = this._transport.mergeOptions(options);
         return stackIntercept<SupportConversationStartRequest, SupportConversationStartResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: SupportMessageSend(hypurr.SupportMessageSendRequest) returns (hypurr.SupportMessageSendResponse);
      */
     supportMessageSend(input: SupportMessageSendRequest, options?: RpcOptions): UnaryCall<SupportMessageSendRequest, SupportMessageSendResponse> {
-        const method = this.methods[31], opt = this._transport.mergeOptions(options);
+        const method = this.methods[32], opt = this._transport.mergeOptions(options);
         return stackIntercept<SupportMessageSendRequest, SupportMessageSendResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: SupportConversationHistory(hypurr.SupportConversationHistoryRequest) returns (hypurr.SupportConversationHistoryResponse);
      */
     supportConversationHistory(input: SupportConversationHistoryRequest, options?: RpcOptions): UnaryCall<SupportConversationHistoryRequest, SupportConversationHistoryResponse> {
-        const method = this.methods[32], opt = this._transport.mergeOptions(options);
+        const method = this.methods[33], opt = this._transport.mergeOptions(options);
         return stackIntercept<SupportConversationHistoryRequest, SupportConversationHistoryResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: SupportConversationList(hypurr.SupportConversationListRequest) returns (hypurr.SupportConversationListResponse);
      */
     supportConversationList(input: SupportConversationListRequest, options?: RpcOptions): UnaryCall<SupportConversationListRequest, SupportConversationListResponse> {
-        const method = this.methods[33], opt = this._transport.mergeOptions(options);
+        const method = this.methods[34], opt = this._transport.mergeOptions(options);
         return stackIntercept<SupportConversationListRequest, SupportConversationListResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: SupportConversationClose(hypurr.SupportConversationCloseRequest) returns (hypurr.SupportConversationCloseResponse);
      */
     supportConversationClose(input: SupportConversationCloseRequest, options?: RpcOptions): UnaryCall<SupportConversationCloseRequest, SupportConversationCloseResponse> {
-        const method = this.methods[34], opt = this._transport.mergeOptions(options);
+        const method = this.methods[35], opt = this._transport.mergeOptions(options);
         return stackIntercept<SupportConversationCloseRequest, SupportConversationCloseResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: SupportTicketStatus(hypurr.SupportTicketStatusRequest) returns (hypurr.SupportTicketStatusResponse);
      */
     supportTicketStatus(input: SupportTicketStatusRequest, options?: RpcOptions): UnaryCall<SupportTicketStatusRequest, SupportTicketStatusResponse> {
-        const method = this.methods[35], opt = this._transport.mergeOptions(options);
+        const method = this.methods[36], opt = this._transport.mergeOptions(options);
         return stackIntercept<SupportTicketStatusRequest, SupportTicketStatusResponse>("unary", this._transport, method, opt, input);
     }
     /**
@@ -592,77 +605,77 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
      * @generated from protobuf rpc: GetPortfolioAllocator(hypurr.GetPortfolioAllocatorRequest) returns (hypurr.GetPortfolioAllocatorResponse);
      */
     getPortfolioAllocator(input: GetPortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<GetPortfolioAllocatorRequest, GetPortfolioAllocatorResponse> {
-        const method = this.methods[36], opt = this._transport.mergeOptions(options);
+        const method = this.methods[37], opt = this._transport.mergeOptions(options);
         return stackIntercept<GetPortfolioAllocatorRequest, GetPortfolioAllocatorResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: ListPortfolioAllocators(hypurr.ListPortfolioAllocatorsRequest) returns (hypurr.ListPortfolioAllocatorsResponse);
      */
     listPortfolioAllocators(input: ListPortfolioAllocatorsRequest, options?: RpcOptions): UnaryCall<ListPortfolioAllocatorsRequest, ListPortfolioAllocatorsResponse> {
-        const method = this.methods[37], opt = this._transport.mergeOptions(options);
+        const method = this.methods[38], opt = this._transport.mergeOptions(options);
         return stackIntercept<ListPortfolioAllocatorsRequest, ListPortfolioAllocatorsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: ListEnabledPortfolioAllocators(hypurr.ListEnabledPortfolioAllocatorsRequest) returns (hypurr.ListEnabledPortfolioAllocatorsResponse);
      */
     listEnabledPortfolioAllocators(input: ListEnabledPortfolioAllocatorsRequest, options?: RpcOptions): UnaryCall<ListEnabledPortfolioAllocatorsRequest, ListEnabledPortfolioAllocatorsResponse> {
-        const method = this.methods[38], opt = this._transport.mergeOptions(options);
+        const method = this.methods[39], opt = this._transport.mergeOptions(options);
         return stackIntercept<ListEnabledPortfolioAllocatorsRequest, ListEnabledPortfolioAllocatorsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: GetPortfolioSource(hypurr.GetPortfolioSourceRequest) returns (hypurr.GetPortfolioSourceResponse);
      */
     getPortfolioSource(input: GetPortfolioSourceRequest, options?: RpcOptions): UnaryCall<GetPortfolioSourceRequest, GetPortfolioSourceResponse> {
-        const method = this.methods[39], opt = this._transport.mergeOptions(options);
+        const method = this.methods[40], opt = this._transport.mergeOptions(options);
         return stackIntercept<GetPortfolioSourceRequest, GetPortfolioSourceResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: ListPortfolioSources(hypurr.ListPortfolioSourcesRequest) returns (hypurr.ListPortfolioSourcesResponse);
      */
     listPortfolioSources(input: ListPortfolioSourcesRequest, options?: RpcOptions): UnaryCall<ListPortfolioSourcesRequest, ListPortfolioSourcesResponse> {
-        const method = this.methods[40], opt = this._transport.mergeOptions(options);
+        const method = this.methods[41], opt = this._transport.mergeOptions(options);
         return stackIntercept<ListPortfolioSourcesRequest, ListPortfolioSourcesResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: CreatePortfolioAllocator(hypurr.CreatePortfolioAllocatorRequest) returns (hypurr.CreatePortfolioAllocatorResponse);
      */
     createPortfolioAllocator(input: CreatePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<CreatePortfolioAllocatorRequest, CreatePortfolioAllocatorResponse> {
-        const method = this.methods[41], opt = this._transport.mergeOptions(options);
+        const method = this.methods[42], opt = this._transport.mergeOptions(options);
         return stackIntercept<CreatePortfolioAllocatorRequest, CreatePortfolioAllocatorResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: UpdatePortfolioAllocator(hypurr.UpdatePortfolioAllocatorRequest) returns (hypurr.UpdatePortfolioAllocatorResponse);
      */
     updatePortfolioAllocator(input: UpdatePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<UpdatePortfolioAllocatorRequest, UpdatePortfolioAllocatorResponse> {
-        const method = this.methods[42], opt = this._transport.mergeOptions(options);
+        const method = this.methods[43], opt = this._transport.mergeOptions(options);
         return stackIntercept<UpdatePortfolioAllocatorRequest, UpdatePortfolioAllocatorResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: DeletePortfolioAllocator(hypurr.DeletePortfolioAllocatorRequest) returns (hypurr.DeletePortfolioAllocatorResponse);
      */
     deletePortfolioAllocator(input: DeletePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<DeletePortfolioAllocatorRequest, DeletePortfolioAllocatorResponse> {
-        const method = this.methods[43], opt = this._transport.mergeOptions(options);
+        const method = this.methods[44], opt = this._transport.mergeOptions(options);
         return stackIntercept<DeletePortfolioAllocatorRequest, DeletePortfolioAllocatorResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: CreatePortfolioSource(hypurr.CreatePortfolioSourceRequest) returns (hypurr.CreatePortfolioSourceResponse);
      */
     createPortfolioSource(input: CreatePortfolioSourceRequest, options?: RpcOptions): UnaryCall<CreatePortfolioSourceRequest, CreatePortfolioSourceResponse> {
-        const method = this.methods[44], opt = this._transport.mergeOptions(options);
+        const method = this.methods[45], opt = this._transport.mergeOptions(options);
         return stackIntercept<CreatePortfolioSourceRequest, CreatePortfolioSourceResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: UpdatePortfolioSource(hypurr.UpdatePortfolioSourceRequest) returns (hypurr.UpdatePortfolioSourceResponse);
      */
     updatePortfolioSource(input: UpdatePortfolioSourceRequest, options?: RpcOptions): UnaryCall<UpdatePortfolioSourceRequest, UpdatePortfolioSourceResponse> {
-        const method = this.methods[45], opt = this._transport.mergeOptions(options);
+        const method = this.methods[46], opt = this._transport.mergeOptions(options);
         return stackIntercept<UpdatePortfolioSourceRequest, UpdatePortfolioSourceResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: DeletePortfolioSource(hypurr.DeletePortfolioSourceRequest) returns (hypurr.DeletePortfolioSourceResponse);
      */
     deletePortfolioSource(input: DeletePortfolioSourceRequest, options?: RpcOptions): UnaryCall<DeletePortfolioSourceRequest, DeletePortfolioSourceResponse> {
-        const method = this.methods[46], opt = this._transport.mergeOptions(options);
+        const method = this.methods[47], opt = this._transport.mergeOptions(options);
         return stackIntercept<DeletePortfolioSourceRequest, DeletePortfolioSourceResponse>("unary", this._transport, method, opt, input);
     }
 }
