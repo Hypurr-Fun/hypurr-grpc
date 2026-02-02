@@ -129,6 +129,11 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigResponse.FromString,
         )
+    self.HyperliquidWalletCreate = channel.unary_unary(
+        '/hypurr.Telegram/HyperliquidWalletCreate',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletCreateRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletCreateResponse.FromString,
+        )
     self.HyperliquidWalletDelete = channel.unary_unary(
         '/hypurr.Telegram/HyperliquidWalletDelete',
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletDeleteRequest.SerializeToString,
@@ -415,6 +420,13 @@ class TelegramServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def UpdateHyperliquidSpotSniperConfig(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def HyperliquidWalletCreate(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -713,6 +725,11 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.UpdateHyperliquidSpotSniperConfig,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigResponse.SerializeToString,
+      ),
+      'HyperliquidWalletCreate': grpc.unary_unary_rpc_method_handler(
+          servicer.HyperliquidWalletCreate,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletCreateRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletCreateResponse.SerializeToString,
       ),
       'HyperliquidWalletDelete': grpc.unary_unary_rpc_method_handler(
           servicer.HyperliquidWalletDelete,
