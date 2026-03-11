@@ -86,6 +86,8 @@ message WalletPerpBalance {
   double cost = 3;
   double funding = 4;
   double liquidation_price = 5;
+  double leverage = 6;
+  google.protobuf.DoubleValue isolated_margin = 7;
 }
 
 message WalletBalancesRequest {

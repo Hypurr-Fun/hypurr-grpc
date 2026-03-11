@@ -12,6 +12,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { DoubleValue } from "../../google/protobuf/wrappers";
 import { StringValue } from "../../google/protobuf/wrappers";
 import { UInt64Value } from "../../google/protobuf/wrappers";
 /**
@@ -148,6 +149,14 @@ export interface WalletPerpBalance {
      * @generated from protobuf field: double liquidation_price = 5;
      */
     liquidationPrice: number;
+    /**
+     * @generated from protobuf field: double leverage = 6;
+     */
+    leverage: number;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue isolated_margin = 7;
+     */
+    isolatedMargin?: DoubleValue;
 }
 /**
  * @generated from protobuf message hypercore.WalletBalancesRequest
@@ -945,11 +954,13 @@ class WalletPerpBalance$Type extends MessageType<WalletPerpBalance> {
             { no: 2, name: "balance", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 3, name: "cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 4, name: "funding", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 5, name: "liquidation_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 5, name: "liquidation_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "leverage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "isolated_margin", kind: "message", T: () => DoubleValue }
         ]);
     }
     create(value?: PartialMessage<WalletPerpBalance>): WalletPerpBalance {
-        const message = { instrument: 0, balance: 0, cost: 0, funding: 0, liquidationPrice: 0 };
+        const message = { instrument: 0, balance: 0, cost: 0, funding: 0, liquidationPrice: 0, leverage: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<WalletPerpBalance>(this, message, value);
@@ -974,6 +985,12 @@ class WalletPerpBalance$Type extends MessageType<WalletPerpBalance> {
                     break;
                 case /* double liquidation_price */ 5:
                     message.liquidationPrice = reader.double();
+                    break;
+                case /* double leverage */ 6:
+                    message.leverage = reader.double();
+                    break;
+                case /* google.protobuf.DoubleValue isolated_margin */ 7:
+                    message.isolatedMargin = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.isolatedMargin);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1002,6 +1019,12 @@ class WalletPerpBalance$Type extends MessageType<WalletPerpBalance> {
         /* double liquidation_price = 5; */
         if (message.liquidationPrice !== 0)
             writer.tag(5, WireType.Bit64).double(message.liquidationPrice);
+        /* double leverage = 6; */
+        if (message.leverage !== 0)
+            writer.tag(6, WireType.Bit64).double(message.leverage);
+        /* google.protobuf.DoubleValue isolated_margin = 7; */
+        if (message.isolatedMargin)
+            DoubleValue.internalBinaryWrite(message.isolatedMargin, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

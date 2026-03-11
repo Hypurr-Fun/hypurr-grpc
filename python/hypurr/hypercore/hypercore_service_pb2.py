@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='hypurr/hypercore/hypercore_service.proto',
   package='hypercore',
   syntax='proto3',
-  serialized_pb=_b('\n(hypurr/hypercore/hypercore_service.proto\x12\thypercore\x1a\x1egoogle/protobuf/wrappers.proto\"\x99\x01\n\rTradeSideInfo\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x11\n\tstart_pos\x18\x02 \x01(\t\x12\x0b\n\x03oid\x18\x03 \x01(\x03\x12-\n\x07twap_id\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt64Value\x12+\n\x05\x63loid\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"\xc3\x01\n\x0bWalletTrade\x12\x0c\n\x04\x63oin\x18\x01 \x01(\t\x12\x0c\n\x04side\x18\x02 \x01(\t\x12\x0c\n\x04time\x18\x03 \x01(\t\x12\n\n\x02px\x18\x04 \x01(\t\x12\n\n\x02sz\x18\x05 \x01(\t\x12\x0c\n\x04hash\x18\x06 \x01(\t\x12\x37\n\x12trade_dir_override\x18\x07 \x01(\x0e\x32\x1b.hypercore.TradeDirOverride\x12+\n\tside_info\x18\x08 \x03(\x0b\x32\x18.hypercore.TradeSideInfo\"\x10\n\x0eWalletMovement\"0\n\x16WalletMovementsRequest\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\"f\n\x17WalletMovementsResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x33\n\x10wallet_movements\x18\x02 \x03(\x0b\x32\x19.hypercore.WalletMovement\"P\n\x11WalletSpotBalance\x12\r\n\x05token\x18\x01 \x01(\x03\x12\x0f\n\x07\x62\x61lance\x18\x02 \x01(\x01\x12\x0c\n\x04\x63ost\x18\x03 \x01(\x01\x12\r\n\x05\x64\x65lta\x18\x04 \x01(\x01\"r\n\x11WalletPerpBalance\x12\x12\n\ninstrument\x18\x01 \x01(\x03\x12\x0f\n\x07\x62\x61lance\x18\x02 \x01(\x01\x12\x0c\n\x04\x63ost\x18\x03 \x01(\x01\x12\x0f\n\x07\x66unding\x18\x04 \x01(\x01\x12\x19\n\x11liquidation_price\x18\x05 \x01(\x01\"/\n\x15WalletBalancesRequest\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\"\x9a\x01\n\x16WalletBalancesResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x33\n\rspot_balances\x18\x02 \x03(\x0b\x32\x1c.hypercore.WalletSpotBalance\x12\x33\n\rperp_balances\x18\x03 \x03(\x0b\x32\x1c.hypercore.WalletPerpBalance\"K\n\x19WalletTradesStreamRequest\x12\x18\n\x10wallet_addresses\x18\x01 \x03(\t\x12\x14\n\x0c\x62loom_filter\x18\x02 \x01(\x0c\"\\\n\x1aWalletTradesStreamResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12&\n\x06trades\x18\x02 \x03(\x0b\x32\x16.hypercore.WalletTrade\"\xa6\x01\n(AggregatedWalletPositioningStreamRequest\x12\x18\n\x10wallet_addresses\x18\x01 \x03(\t\x12\x14\n\x0c\x62loom_filter\x18\x02 \x01(\x0c\x12!\n\x03tag\x18\x03 \x01(\x0e\x32\x14.hypercore.WalletTag\x12\x15\n\rinstrument_id\x18\x04 \x01(\x04\x12\x10\n\x08\x64\x65tailed\x18\x05 \x01(\x08\"\xa3\x01\n)AggregatedWalletPositioningStreamResponse\x12>\n\x07summary\x18\x01 \x01(\x0b\x32-.hypercore.AggregatedWalletPositioningSummary\x12\x36\n\x10wallet_positions\x18\x02 \x03(\x0b\x32\x1c.hypercore.WalletPositioning\"\x93\x01\n\x11WalletPositioning\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x32\n\x0cperp_balance\x18\x02 \x01(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x32\n\x0cspot_balance\x18\x03 \x01(\x0b\x32\x1c.hypercore.WalletSpotBalance\"\xb4\x02\n\"AggregatedWalletPositioningSummary\x12\x1a\n\x12wallet_short_count\x18\x01 \x01(\x04\x12>\n\x18\x61ggregated_short_balance\x18\x02 \x01(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x19\n\x11wallet_long_count\x18\x03 \x01(\x04\x12=\n\x17\x61ggregated_long_balance\x18\x04 \x01(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x19\n\x11wallet_hold_count\x18\x05 \x01(\x04\x12=\n\x17\x61ggregated_hold_balance\x18\x06 \x01(\x0b\x32\x1c.hypercore.WalletSpotBalance\"3\n\x1bWalletBalancesStreamRequest\x12\x14\n\x0c\x62loom_filter\x18\x01 \x01(\x0c\"\xb0\x01\n\x1cWalletBalancesStreamResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x33\n\rspot_balances\x18\x02 \x03(\x0b\x32\x1c.hypercore.WalletSpotBalance\x12\x33\n\rperp_balances\x18\x03 \x03(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x0e\n\x06reason\x18\x04 \x01(\t\"7\n\x1aValidatorDelegatorsRequest\x12\x19\n\x11validator_address\x18\x01 \x01(\t\"P\n\x1bValidatorDelegatorsResponse\x12\x31\n\ndelegators\x18\x01 \x03(\x0b\x32\x1d.hypercore.ValidatorDelegator\";\n\x12ValidatorDelegator\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\r\n\x05stake\x18\x02 \x01(\x01\".\n\x15ReferrerWalletRequest\x12\x15\n\rreferrer_code\x18\x01 \x01(\t\"0\n\x16ReferrerWalletResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\"+\n\x11WalletTagsRequest\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\"8\n\x12WalletTagsResponse\x12\"\n\x04tags\x18\x01 \x03(\x0e\x32\x14.hypercore.WalletTag\"G\n\nWalletInfo\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x13\n\x0bperp_equity\x18\x02 \x01(\x01\x12\x13\n\x0bspot_equity\x18\x03 \x01(\x01\"8\n\x13WalletsByTagRequest\x12!\n\x03tag\x18\x01 \x01(\x0e\x32\x14.hypercore.WalletTag\"C\n\x14WalletsByTagResponse\x12+\n\x0cwallet_infos\x18\x01 \x03(\x0b\x32\x15.hypercore.WalletInfo\"\xa1\x01\n#AggregatedWalletLiquidationsRequest\x12\x18\n\x10wallet_addresses\x18\x01 \x03(\t\x12\x14\n\x0c\x62loom_filter\x18\x02 \x01(\x0c\x12!\n\x03tag\x18\x03 \x01(\x0e\x32\x14.hypercore.WalletTag\x12\x15\n\rinstrument_id\x18\x04 \x01(\x04\x12\x10\n\x08\x64\x65tailed\x18\x05 \x01(\x08\"l\n$AggregatedWalletLiquidationsResponse\x12\x44\n\x19wallet_liquidation_groups\x18\x01 \x03(\x0b\x32!.hypercore.WalletLiquidationGroup\"\xb8\x01\n\x16WalletLiquidationGroup\x12\x1f\n\x17total_liquidation_count\x18\x01 \x01(\x04\x12\x1c\n\x14total_position_value\x18\x02 \x01(\x01\x12\x12\n\nfrom_price\x18\x03 \x01(\x01\x12\x10\n\x08to_price\x18\x04 \x01(\x01\x12\x39\n\x13wallet_liquidations\x18\x05 \x03(\x0b\x32\x1c.hypercore.WalletLiquidation\"s\n\x11WalletLiquidation\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x16\n\x0eposition_value\x18\x02 \x01(\x01\x12\x13\n\x0b\x65ntry_price\x18\x03 \x01(\x01\x12\x19\n\x11liquidation_price\x18\x04 \x01(\x01*\xdb\x01\n\tWalletTag\x12\x1a\n\x16WALLET_TAG_UNSPECIFIED\x10\x00\x12\x12\n\x0eWALLET_TAG_ALL\x10\x01\x12\x1b\n\x17WALLET_TAG_MARKET_MAKER\x10\x02\x12\x14\n\x10WALLET_TAG_WHALE\x10\x03\x12\x1b\n\x17WALLET_TAG_SMART_TRADER\x10\x04\x12\x1a\n\x16WALLET_TAG_LEADERBOARD\x10\x05\x12\x15\n\x11WALLET_TAG_RETAIL\x10\x06\x12\x1b\n\x17WALLET_TAG_PRO_TERMINAL\x10\x07*j\n\x10TradeDirOverride\x12\"\n\x1eTRADE_DIR_OVERRIDE_UNSPECIFIED\x10\x00\x12\x18\n\x14TRADE_DIR_OVERRIDE_A\x10\x01\x12\x18\n\x14TRADE_DIR_OVERRIDE_B\x10\x02\x32\x90\x08\n\tHyperCore\x12Z\n\x0fWalletMovements\x12!.hypercore.WalletMovementsRequest\x1a\".hypercore.WalletMovementsResponse\"\x00\x12W\n\x0eWalletBalances\x12 .hypercore.WalletBalancesRequest\x1a!.hypercore.WalletBalancesResponse\"\x00\x12\x92\x01\n!AggregatedWalletPositioningStream\x12\x33.hypercore.AggregatedWalletPositioningStreamRequest\x1a\x34.hypercore.AggregatedWalletPositioningStreamResponse\"\x00\x30\x01\x12\x81\x01\n\x1c\x41ggregatedWalletLiquidations\x12..hypercore.AggregatedWalletLiquidationsRequest\x1a/.hypercore.AggregatedWalletLiquidationsResponse\"\x00\x12m\n\x14WalletBalancesStream\x12&.hypercore.WalletBalancesStreamRequest\x1a\'.hypercore.WalletBalancesStreamResponse\"\x00(\x01\x30\x01\x12\x65\n\x12WalletTradesStream\x12$.hypercore.WalletTradesStreamRequest\x1a%.hypercore.WalletTradesStreamResponse\"\x00\x30\x01\x12\x66\n\x13ValidatorDelegators\x12%.hypercore.ValidatorDelegatorsRequest\x1a&.hypercore.ValidatorDelegatorsResponse\"\x00\x12W\n\x0eReferrerWallet\x12 .hypercore.ReferrerWalletRequest\x1a!.hypercore.ReferrerWalletResponse\"\x00\x12K\n\nWalletTags\x12\x1c.hypercore.WalletTagsRequest\x1a\x1d.hypercore.WalletTagsResponse\"\x00\x12Q\n\x0cWalletsByTag\x12\x1e.hypercore.WalletsByTagRequest\x1a\x1f.hypercore.WalletsByTagResponse\"\x00\x42\x33Z1gitlab.com/hypurr/hypurr-grpc/go/hypurr/hypercoreb\x06proto3')
+  serialized_pb=_b('\n(hypurr/hypercore/hypercore_service.proto\x12\thypercore\x1a\x1egoogle/protobuf/wrappers.proto\"\x99\x01\n\rTradeSideInfo\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x11\n\tstart_pos\x18\x02 \x01(\t\x12\x0b\n\x03oid\x18\x03 \x01(\x03\x12-\n\x07twap_id\x18\x04 \x01(\x0b\x32\x1c.google.protobuf.UInt64Value\x12+\n\x05\x63loid\x18\x05 \x01(\x0b\x32\x1c.google.protobuf.StringValue\"\xc3\x01\n\x0bWalletTrade\x12\x0c\n\x04\x63oin\x18\x01 \x01(\t\x12\x0c\n\x04side\x18\x02 \x01(\t\x12\x0c\n\x04time\x18\x03 \x01(\t\x12\n\n\x02px\x18\x04 \x01(\t\x12\n\n\x02sz\x18\x05 \x01(\t\x12\x0c\n\x04hash\x18\x06 \x01(\t\x12\x37\n\x12trade_dir_override\x18\x07 \x01(\x0e\x32\x1b.hypercore.TradeDirOverride\x12+\n\tside_info\x18\x08 \x03(\x0b\x32\x18.hypercore.TradeSideInfo\"\x10\n\x0eWalletMovement\"0\n\x16WalletMovementsRequest\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\"f\n\x17WalletMovementsResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x33\n\x10wallet_movements\x18\x02 \x03(\x0b\x32\x19.hypercore.WalletMovement\"P\n\x11WalletSpotBalance\x12\r\n\x05token\x18\x01 \x01(\x03\x12\x0f\n\x07\x62\x61lance\x18\x02 \x01(\x01\x12\x0c\n\x04\x63ost\x18\x03 \x01(\x01\x12\r\n\x05\x64\x65lta\x18\x04 \x01(\x01\"\xbb\x01\n\x11WalletPerpBalance\x12\x12\n\ninstrument\x18\x01 \x01(\x03\x12\x0f\n\x07\x62\x61lance\x18\x02 \x01(\x01\x12\x0c\n\x04\x63ost\x18\x03 \x01(\x01\x12\x0f\n\x07\x66unding\x18\x04 \x01(\x01\x12\x19\n\x11liquidation_price\x18\x05 \x01(\x01\x12\x10\n\x08leverage\x18\x06 \x01(\x01\x12\x35\n\x0fisolated_margin\x18\x07 \x01(\x0b\x32\x1c.google.protobuf.DoubleValue\"/\n\x15WalletBalancesRequest\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\"\x9a\x01\n\x16WalletBalancesResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x33\n\rspot_balances\x18\x02 \x03(\x0b\x32\x1c.hypercore.WalletSpotBalance\x12\x33\n\rperp_balances\x18\x03 \x03(\x0b\x32\x1c.hypercore.WalletPerpBalance\"K\n\x19WalletTradesStreamRequest\x12\x18\n\x10wallet_addresses\x18\x01 \x03(\t\x12\x14\n\x0c\x62loom_filter\x18\x02 \x01(\x0c\"\\\n\x1aWalletTradesStreamResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12&\n\x06trades\x18\x02 \x03(\x0b\x32\x16.hypercore.WalletTrade\"\xa6\x01\n(AggregatedWalletPositioningStreamRequest\x12\x18\n\x10wallet_addresses\x18\x01 \x03(\t\x12\x14\n\x0c\x62loom_filter\x18\x02 \x01(\x0c\x12!\n\x03tag\x18\x03 \x01(\x0e\x32\x14.hypercore.WalletTag\x12\x15\n\rinstrument_id\x18\x04 \x01(\x04\x12\x10\n\x08\x64\x65tailed\x18\x05 \x01(\x08\"\xa3\x01\n)AggregatedWalletPositioningStreamResponse\x12>\n\x07summary\x18\x01 \x01(\x0b\x32-.hypercore.AggregatedWalletPositioningSummary\x12\x36\n\x10wallet_positions\x18\x02 \x03(\x0b\x32\x1c.hypercore.WalletPositioning\"\x93\x01\n\x11WalletPositioning\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x32\n\x0cperp_balance\x18\x02 \x01(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x32\n\x0cspot_balance\x18\x03 \x01(\x0b\x32\x1c.hypercore.WalletSpotBalance\"\xb4\x02\n\"AggregatedWalletPositioningSummary\x12\x1a\n\x12wallet_short_count\x18\x01 \x01(\x04\x12>\n\x18\x61ggregated_short_balance\x18\x02 \x01(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x19\n\x11wallet_long_count\x18\x03 \x01(\x04\x12=\n\x17\x61ggregated_long_balance\x18\x04 \x01(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x19\n\x11wallet_hold_count\x18\x05 \x01(\x04\x12=\n\x17\x61ggregated_hold_balance\x18\x06 \x01(\x0b\x32\x1c.hypercore.WalletSpotBalance\"3\n\x1bWalletBalancesStreamRequest\x12\x14\n\x0c\x62loom_filter\x18\x01 \x01(\x0c\"\xb0\x01\n\x1cWalletBalancesStreamResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x33\n\rspot_balances\x18\x02 \x03(\x0b\x32\x1c.hypercore.WalletSpotBalance\x12\x33\n\rperp_balances\x18\x03 \x03(\x0b\x32\x1c.hypercore.WalletPerpBalance\x12\x0e\n\x06reason\x18\x04 \x01(\t\"7\n\x1aValidatorDelegatorsRequest\x12\x19\n\x11validator_address\x18\x01 \x01(\t\"P\n\x1bValidatorDelegatorsResponse\x12\x31\n\ndelegators\x18\x01 \x03(\x0b\x32\x1d.hypercore.ValidatorDelegator\";\n\x12ValidatorDelegator\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\r\n\x05stake\x18\x02 \x01(\x01\".\n\x15ReferrerWalletRequest\x12\x15\n\rreferrer_code\x18\x01 \x01(\t\"0\n\x16ReferrerWalletResponse\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\"+\n\x11WalletTagsRequest\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\"8\n\x12WalletTagsResponse\x12\"\n\x04tags\x18\x01 \x03(\x0e\x32\x14.hypercore.WalletTag\"G\n\nWalletInfo\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x13\n\x0bperp_equity\x18\x02 \x01(\x01\x12\x13\n\x0bspot_equity\x18\x03 \x01(\x01\"8\n\x13WalletsByTagRequest\x12!\n\x03tag\x18\x01 \x01(\x0e\x32\x14.hypercore.WalletTag\"C\n\x14WalletsByTagResponse\x12+\n\x0cwallet_infos\x18\x01 \x03(\x0b\x32\x15.hypercore.WalletInfo\"\xa1\x01\n#AggregatedWalletLiquidationsRequest\x12\x18\n\x10wallet_addresses\x18\x01 \x03(\t\x12\x14\n\x0c\x62loom_filter\x18\x02 \x01(\x0c\x12!\n\x03tag\x18\x03 \x01(\x0e\x32\x14.hypercore.WalletTag\x12\x15\n\rinstrument_id\x18\x04 \x01(\x04\x12\x10\n\x08\x64\x65tailed\x18\x05 \x01(\x08\"l\n$AggregatedWalletLiquidationsResponse\x12\x44\n\x19wallet_liquidation_groups\x18\x01 \x03(\x0b\x32!.hypercore.WalletLiquidationGroup\"\xb8\x01\n\x16WalletLiquidationGroup\x12\x1f\n\x17total_liquidation_count\x18\x01 \x01(\x04\x12\x1c\n\x14total_position_value\x18\x02 \x01(\x01\x12\x12\n\nfrom_price\x18\x03 \x01(\x01\x12\x10\n\x08to_price\x18\x04 \x01(\x01\x12\x39\n\x13wallet_liquidations\x18\x05 \x03(\x0b\x32\x1c.hypercore.WalletLiquidation\"s\n\x11WalletLiquidation\x12\x16\n\x0ewallet_address\x18\x01 \x01(\t\x12\x16\n\x0eposition_value\x18\x02 \x01(\x01\x12\x13\n\x0b\x65ntry_price\x18\x03 \x01(\x01\x12\x19\n\x11liquidation_price\x18\x04 \x01(\x01*\xdb\x01\n\tWalletTag\x12\x1a\n\x16WALLET_TAG_UNSPECIFIED\x10\x00\x12\x12\n\x0eWALLET_TAG_ALL\x10\x01\x12\x1b\n\x17WALLET_TAG_MARKET_MAKER\x10\x02\x12\x14\n\x10WALLET_TAG_WHALE\x10\x03\x12\x1b\n\x17WALLET_TAG_SMART_TRADER\x10\x04\x12\x1a\n\x16WALLET_TAG_LEADERBOARD\x10\x05\x12\x15\n\x11WALLET_TAG_RETAIL\x10\x06\x12\x1b\n\x17WALLET_TAG_PRO_TERMINAL\x10\x07*j\n\x10TradeDirOverride\x12\"\n\x1eTRADE_DIR_OVERRIDE_UNSPECIFIED\x10\x00\x12\x18\n\x14TRADE_DIR_OVERRIDE_A\x10\x01\x12\x18\n\x14TRADE_DIR_OVERRIDE_B\x10\x02\x32\x90\x08\n\tHyperCore\x12Z\n\x0fWalletMovements\x12!.hypercore.WalletMovementsRequest\x1a\".hypercore.WalletMovementsResponse\"\x00\x12W\n\x0eWalletBalances\x12 .hypercore.WalletBalancesRequest\x1a!.hypercore.WalletBalancesResponse\"\x00\x12\x92\x01\n!AggregatedWalletPositioningStream\x12\x33.hypercore.AggregatedWalletPositioningStreamRequest\x1a\x34.hypercore.AggregatedWalletPositioningStreamResponse\"\x00\x30\x01\x12\x81\x01\n\x1c\x41ggregatedWalletLiquidations\x12..hypercore.AggregatedWalletLiquidationsRequest\x1a/.hypercore.AggregatedWalletLiquidationsResponse\"\x00\x12m\n\x14WalletBalancesStream\x12&.hypercore.WalletBalancesStreamRequest\x1a\'.hypercore.WalletBalancesStreamResponse\"\x00(\x01\x30\x01\x12\x65\n\x12WalletTradesStream\x12$.hypercore.WalletTradesStreamRequest\x1a%.hypercore.WalletTradesStreamResponse\"\x00\x30\x01\x12\x66\n\x13ValidatorDelegators\x12%.hypercore.ValidatorDelegatorsRequest\x1a&.hypercore.ValidatorDelegatorsResponse\"\x00\x12W\n\x0eReferrerWallet\x12 .hypercore.ReferrerWalletRequest\x1a!.hypercore.ReferrerWalletResponse\"\x00\x12K\n\nWalletTags\x12\x1c.hypercore.WalletTagsRequest\x1a\x1d.hypercore.WalletTagsResponse\"\x00\x12Q\n\x0cWalletsByTag\x12\x1e.hypercore.WalletsByTagRequest\x1a\x1f.hypercore.WalletsByTagResponse\"\x00\x42\x33Z1gitlab.com/hypurr/hypurr-grpc/go/hypurr/hypercoreb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_wrappers__pb2.DESCRIPTOR,])
 
@@ -66,8 +66,8 @@ _WALLETTAG = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=3396,
-  serialized_end=3615,
+  serialized_start=3470,
+  serialized_end=3689,
 )
 _sym_db.RegisterEnumDescriptor(_WALLETTAG)
 
@@ -93,8 +93,8 @@ _TRADEDIROVERRIDE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=3617,
-  serialized_end=3723,
+  serialized_start=3691,
+  serialized_end=3797,
 )
 _sym_db.RegisterEnumDescriptor(_TRADEDIROVERRIDE)
 
@@ -439,6 +439,20 @@ _WALLETPERPBALANCE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='leverage', full_name='hypercore.WalletPerpBalance.leverage', index=5,
+      number=6, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='isolated_margin', full_name='hypercore.WalletPerpBalance.isolated_margin', index=6,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -451,8 +465,8 @@ _WALLETPERPBALANCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=695,
-  serialized_end=809,
+  serialized_start=696,
+  serialized_end=883,
 )
 
 
@@ -482,8 +496,8 @@ _WALLETBALANCESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=811,
-  serialized_end=858,
+  serialized_start=885,
+  serialized_end=932,
 )
 
 
@@ -527,8 +541,8 @@ _WALLETBALANCESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=861,
-  serialized_end=1015,
+  serialized_start=935,
+  serialized_end=1089,
 )
 
 
@@ -565,8 +579,8 @@ _WALLETTRADESSTREAMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1017,
-  serialized_end=1092,
+  serialized_start=1091,
+  serialized_end=1166,
 )
 
 
@@ -603,8 +617,8 @@ _WALLETTRADESSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1094,
-  serialized_end=1186,
+  serialized_start=1168,
+  serialized_end=1260,
 )
 
 
@@ -662,8 +676,8 @@ _AGGREGATEDWALLETPOSITIONINGSTREAMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1189,
-  serialized_end=1355,
+  serialized_start=1263,
+  serialized_end=1429,
 )
 
 
@@ -700,8 +714,8 @@ _AGGREGATEDWALLETPOSITIONINGSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1358,
-  serialized_end=1521,
+  serialized_start=1432,
+  serialized_end=1595,
 )
 
 
@@ -745,8 +759,8 @@ _WALLETPOSITIONING = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1524,
-  serialized_end=1671,
+  serialized_start=1598,
+  serialized_end=1745,
 )
 
 
@@ -811,8 +825,8 @@ _AGGREGATEDWALLETPOSITIONINGSUMMARY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1674,
-  serialized_end=1982,
+  serialized_start=1748,
+  serialized_end=2056,
 )
 
 
@@ -842,8 +856,8 @@ _WALLETBALANCESSTREAMREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1984,
-  serialized_end=2035,
+  serialized_start=2058,
+  serialized_end=2109,
 )
 
 
@@ -894,8 +908,8 @@ _WALLETBALANCESSTREAMRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2038,
-  serialized_end=2214,
+  serialized_start=2112,
+  serialized_end=2288,
 )
 
 
@@ -925,8 +939,8 @@ _VALIDATORDELEGATORSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2216,
-  serialized_end=2271,
+  serialized_start=2290,
+  serialized_end=2345,
 )
 
 
@@ -956,8 +970,8 @@ _VALIDATORDELEGATORSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2273,
-  serialized_end=2353,
+  serialized_start=2347,
+  serialized_end=2427,
 )
 
 
@@ -994,8 +1008,8 @@ _VALIDATORDELEGATOR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2355,
-  serialized_end=2414,
+  serialized_start=2429,
+  serialized_end=2488,
 )
 
 
@@ -1025,8 +1039,8 @@ _REFERRERWALLETREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2416,
-  serialized_end=2462,
+  serialized_start=2490,
+  serialized_end=2536,
 )
 
 
@@ -1056,8 +1070,8 @@ _REFERRERWALLETRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2464,
-  serialized_end=2512,
+  serialized_start=2538,
+  serialized_end=2586,
 )
 
 
@@ -1087,8 +1101,8 @@ _WALLETTAGSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2514,
-  serialized_end=2557,
+  serialized_start=2588,
+  serialized_end=2631,
 )
 
 
@@ -1118,8 +1132,8 @@ _WALLETTAGSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2559,
-  serialized_end=2615,
+  serialized_start=2633,
+  serialized_end=2689,
 )
 
 
@@ -1163,8 +1177,8 @@ _WALLETINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2617,
-  serialized_end=2688,
+  serialized_start=2691,
+  serialized_end=2762,
 )
 
 
@@ -1194,8 +1208,8 @@ _WALLETSBYTAGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2690,
-  serialized_end=2746,
+  serialized_start=2764,
+  serialized_end=2820,
 )
 
 
@@ -1225,8 +1239,8 @@ _WALLETSBYTAGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2748,
-  serialized_end=2815,
+  serialized_start=2822,
+  serialized_end=2889,
 )
 
 
@@ -1284,8 +1298,8 @@ _AGGREGATEDWALLETLIQUIDATIONSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2818,
-  serialized_end=2979,
+  serialized_start=2892,
+  serialized_end=3053,
 )
 
 
@@ -1315,8 +1329,8 @@ _AGGREGATEDWALLETLIQUIDATIONSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2981,
-  serialized_end=3089,
+  serialized_start=3055,
+  serialized_end=3163,
 )
 
 
@@ -1374,8 +1388,8 @@ _WALLETLIQUIDATIONGROUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3092,
-  serialized_end=3276,
+  serialized_start=3166,
+  serialized_end=3350,
 )
 
 
@@ -1426,8 +1440,8 @@ _WALLETLIQUIDATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3278,
-  serialized_end=3393,
+  serialized_start=3352,
+  serialized_end=3467,
 )
 
 _TRADESIDEINFO.fields_by_name['twap_id'].message_type = google_dot_protobuf_dot_wrappers__pb2._UINT64VALUE
@@ -1435,6 +1449,7 @@ _TRADESIDEINFO.fields_by_name['cloid'].message_type = google_dot_protobuf_dot_wr
 _WALLETTRADE.fields_by_name['trade_dir_override'].enum_type = _TRADEDIROVERRIDE
 _WALLETTRADE.fields_by_name['side_info'].message_type = _TRADESIDEINFO
 _WALLETMOVEMENTSRESPONSE.fields_by_name['wallet_movements'].message_type = _WALLETMOVEMENT
+_WALLETPERPBALANCE.fields_by_name['isolated_margin'].message_type = google_dot_protobuf_dot_wrappers__pb2._DOUBLEVALUE
 _WALLETBALANCESRESPONSE.fields_by_name['spot_balances'].message_type = _WALLETSPOTBALANCE
 _WALLETBALANCESRESPONSE.fields_by_name['perp_balances'].message_type = _WALLETPERPBALANCE
 _WALLETTRADESSTREAMRESPONSE.fields_by_name['trades'].message_type = _WALLETTRADE
@@ -1717,8 +1732,8 @@ _HYPERCORE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=3726,
-  serialized_end=4766,
+  serialized_start=3800,
+  serialized_end=4840,
   methods=[
   _descriptor.MethodDescriptor(
     name='WalletMovements',
