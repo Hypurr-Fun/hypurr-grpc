@@ -464,7 +464,15 @@ export interface WalletLiquidationGroup {
      */
     totalPositionValue: number;
     /**
-     * @generated from protobuf field: repeated hypercore.WalletLiquidation wallet_liquidations = 3;
+     * @generated from protobuf field: double from_price = 3;
+     */
+    fromPrice: number;
+    /**
+     * @generated from protobuf field: double to_price = 4;
+     */
+    toPrice: number;
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletLiquidation wallet_liquidations = 5;
      */
     walletLiquidations: WalletLiquidation[];
 }
@@ -484,6 +492,10 @@ export interface WalletLiquidation {
      * @generated from protobuf field: double entry_price = 3;
      */
     entryPrice: number;
+    /**
+     * @generated from protobuf field: double liquidation_price = 4;
+     */
+    liquidationPrice: number;
 }
 // 
 // type Trade struct {
@@ -2230,11 +2242,13 @@ class WalletLiquidationGroup$Type extends MessageType<WalletLiquidationGroup> {
         super("hypercore.WalletLiquidationGroup", [
             { no: 1, name: "total_liquidation_count", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "total_position_value", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 3, name: "wallet_liquidations", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletLiquidation }
+            { no: 3, name: "from_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "to_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "wallet_liquidations", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletLiquidation }
         ]);
     }
     create(value?: PartialMessage<WalletLiquidationGroup>): WalletLiquidationGroup {
-        const message = { totalLiquidationCount: 0, totalPositionValue: 0, walletLiquidations: [] };
+        const message = { totalLiquidationCount: 0, totalPositionValue: 0, fromPrice: 0, toPrice: 0, walletLiquidations: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<WalletLiquidationGroup>(this, message, value);
@@ -2251,7 +2265,13 @@ class WalletLiquidationGroup$Type extends MessageType<WalletLiquidationGroup> {
                 case /* double total_position_value */ 2:
                     message.totalPositionValue = reader.double();
                     break;
-                case /* repeated hypercore.WalletLiquidation wallet_liquidations */ 3:
+                case /* double from_price */ 3:
+                    message.fromPrice = reader.double();
+                    break;
+                case /* double to_price */ 4:
+                    message.toPrice = reader.double();
+                    break;
+                case /* repeated hypercore.WalletLiquidation wallet_liquidations */ 5:
                     message.walletLiquidations.push(WalletLiquidation.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -2272,9 +2292,15 @@ class WalletLiquidationGroup$Type extends MessageType<WalletLiquidationGroup> {
         /* double total_position_value = 2; */
         if (message.totalPositionValue !== 0)
             writer.tag(2, WireType.Bit64).double(message.totalPositionValue);
-        /* repeated hypercore.WalletLiquidation wallet_liquidations = 3; */
+        /* double from_price = 3; */
+        if (message.fromPrice !== 0)
+            writer.tag(3, WireType.Bit64).double(message.fromPrice);
+        /* double to_price = 4; */
+        if (message.toPrice !== 0)
+            writer.tag(4, WireType.Bit64).double(message.toPrice);
+        /* repeated hypercore.WalletLiquidation wallet_liquidations = 5; */
         for (let i = 0; i < message.walletLiquidations.length; i++)
-            WalletLiquidation.internalBinaryWrite(message.walletLiquidations[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            WalletLiquidation.internalBinaryWrite(message.walletLiquidations[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2291,11 +2317,12 @@ class WalletLiquidation$Type extends MessageType<WalletLiquidation> {
         super("hypercore.WalletLiquidation", [
             { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "position_value", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 3, name: "entry_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 3, name: "entry_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "liquidation_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<WalletLiquidation>): WalletLiquidation {
-        const message = { walletAddress: "", positionValue: 0, entryPrice: 0 };
+        const message = { walletAddress: "", positionValue: 0, entryPrice: 0, liquidationPrice: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<WalletLiquidation>(this, message, value);
@@ -2314,6 +2341,9 @@ class WalletLiquidation$Type extends MessageType<WalletLiquidation> {
                     break;
                 case /* double entry_price */ 3:
                     message.entryPrice = reader.double();
+                    break;
+                case /* double liquidation_price */ 4:
+                    message.liquidationPrice = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2336,6 +2366,9 @@ class WalletLiquidation$Type extends MessageType<WalletLiquidation> {
         /* double entry_price = 3; */
         if (message.entryPrice !== 0)
             writer.tag(3, WireType.Bit64).double(message.entryPrice);
+        /* double liquidation_price = 4; */
+        if (message.liquidationPrice !== 0)
+            writer.tag(4, WireType.Bit64).double(message.liquidationPrice);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

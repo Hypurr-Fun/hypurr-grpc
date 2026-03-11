@@ -205,13 +205,16 @@ message AggregatedWalletLiquidationsResponse {
 message WalletLiquidationGroup {
   uint64 total_liquidation_count = 1;
   double total_position_value = 2;
-  repeated WalletLiquidation wallet_liquidations = 3;
+  double from_price = 3;
+  double to_price = 4;
+  repeated WalletLiquidation wallet_liquidations = 5;
 }
 
 message WalletLiquidation {
   string wallet_address = 1;
   double position_value = 2;
   double entry_price = 3;
+  double liquidation_price = 4;
 }
 
 service HyperCore {
