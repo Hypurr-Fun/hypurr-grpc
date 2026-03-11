@@ -417,6 +417,74 @@ export interface WalletsByTagResponse {
      */
     walletInfos: WalletInfo[];
 }
+/**
+ * @generated from protobuf message hypercore.AggregatedWalletLiquidationsRequest
+ */
+export interface AggregatedWalletLiquidationsRequest {
+    /**
+     * @generated from protobuf field: repeated string wallet_addresses = 1;
+     */
+    walletAddresses: string[];
+    /**
+     * @generated from protobuf field: bytes bloom_filter = 2;
+     */
+    bloomFilter: Uint8Array;
+    /**
+     * @generated from protobuf field: hypercore.WalletTag tag = 3;
+     */
+    tag: WalletTag;
+    /**
+     * @generated from protobuf field: uint64 instrument_id = 4;
+     */
+    instrumentId: number;
+    /**
+     * @generated from protobuf field: bool detailed = 5;
+     */
+    detailed: boolean;
+}
+/**
+ * @generated from protobuf message hypercore.AggregatedWalletLiquidationsResponse
+ */
+export interface AggregatedWalletLiquidationsResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletLiquidationGroup wallet_liquidation_groups = 1;
+     */
+    walletLiquidationGroups: WalletLiquidationGroup[];
+}
+/**
+ * @generated from protobuf message hypercore.WalletLiquidationGroup
+ */
+export interface WalletLiquidationGroup {
+    /**
+     * @generated from protobuf field: uint64 total_liquidation_count = 1;
+     */
+    totalLiquidationCount: number;
+    /**
+     * @generated from protobuf field: double total_position_value = 2;
+     */
+    totalPositionValue: number;
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletLiquidation wallet_liquidations = 3;
+     */
+    walletLiquidations: WalletLiquidation[];
+}
+/**
+ * @generated from protobuf message hypercore.WalletLiquidation
+ */
+export interface WalletLiquidation {
+    /**
+     * @generated from protobuf field: string wallet_address = 1;
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: double position_value = 2;
+     */
+    positionValue: number;
+    /**
+     * @generated from protobuf field: double entry_price = 3;
+     */
+    entryPrice: number;
+}
 // 
 // type Trade struct {
 // Coin             string           `json:"coin"`               // Perp symbol or @ notation
@@ -2034,6 +2102,250 @@ class WalletsByTagResponse$Type extends MessageType<WalletsByTagResponse> {
  * @generated MessageType for protobuf message hypercore.WalletsByTagResponse
  */
 export const WalletsByTagResponse = new WalletsByTagResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AggregatedWalletLiquidationsRequest$Type extends MessageType<AggregatedWalletLiquidationsRequest> {
+    constructor() {
+        super("hypercore.AggregatedWalletLiquidationsRequest", [
+            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "bloom_filter", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 3, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] },
+            { no: 4, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "detailed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AggregatedWalletLiquidationsRequest>): AggregatedWalletLiquidationsRequest {
+        const message = { walletAddresses: [], bloomFilter: new Uint8Array(0), tag: 0, instrumentId: 0, detailed: false };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<AggregatedWalletLiquidationsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AggregatedWalletLiquidationsRequest): AggregatedWalletLiquidationsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string wallet_addresses */ 1:
+                    message.walletAddresses.push(reader.string());
+                    break;
+                case /* bytes bloom_filter */ 2:
+                    message.bloomFilter = reader.bytes();
+                    break;
+                case /* hypercore.WalletTag tag */ 3:
+                    message.tag = reader.int32();
+                    break;
+                case /* uint64 instrument_id */ 4:
+                    message.instrumentId = reader.uint64().toNumber();
+                    break;
+                case /* bool detailed */ 5:
+                    message.detailed = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AggregatedWalletLiquidationsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string wallet_addresses = 1; */
+        for (let i = 0; i < message.walletAddresses.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
+        /* bytes bloom_filter = 2; */
+        if (message.bloomFilter.length)
+            writer.tag(2, WireType.LengthDelimited).bytes(message.bloomFilter);
+        /* hypercore.WalletTag tag = 3; */
+        if (message.tag !== 0)
+            writer.tag(3, WireType.Varint).int32(message.tag);
+        /* uint64 instrument_id = 4; */
+        if (message.instrumentId !== 0)
+            writer.tag(4, WireType.Varint).uint64(message.instrumentId);
+        /* bool detailed = 5; */
+        if (message.detailed !== false)
+            writer.tag(5, WireType.Varint).bool(message.detailed);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.AggregatedWalletLiquidationsRequest
+ */
+export const AggregatedWalletLiquidationsRequest = new AggregatedWalletLiquidationsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AggregatedWalletLiquidationsResponse$Type extends MessageType<AggregatedWalletLiquidationsResponse> {
+    constructor() {
+        super("hypercore.AggregatedWalletLiquidationsResponse", [
+            { no: 1, name: "wallet_liquidation_groups", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletLiquidationGroup }
+        ]);
+    }
+    create(value?: PartialMessage<AggregatedWalletLiquidationsResponse>): AggregatedWalletLiquidationsResponse {
+        const message = { walletLiquidationGroups: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<AggregatedWalletLiquidationsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AggregatedWalletLiquidationsResponse): AggregatedWalletLiquidationsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.WalletLiquidationGroup wallet_liquidation_groups */ 1:
+                    message.walletLiquidationGroups.push(WalletLiquidationGroup.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AggregatedWalletLiquidationsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.WalletLiquidationGroup wallet_liquidation_groups = 1; */
+        for (let i = 0; i < message.walletLiquidationGroups.length; i++)
+            WalletLiquidationGroup.internalBinaryWrite(message.walletLiquidationGroups[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.AggregatedWalletLiquidationsResponse
+ */
+export const AggregatedWalletLiquidationsResponse = new AggregatedWalletLiquidationsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletLiquidationGroup$Type extends MessageType<WalletLiquidationGroup> {
+    constructor() {
+        super("hypercore.WalletLiquidationGroup", [
+            { no: 1, name: "total_liquidation_count", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "total_position_value", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "wallet_liquidations", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WalletLiquidation }
+        ]);
+    }
+    create(value?: PartialMessage<WalletLiquidationGroup>): WalletLiquidationGroup {
+        const message = { totalLiquidationCount: 0, totalPositionValue: 0, walletLiquidations: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<WalletLiquidationGroup>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletLiquidationGroup): WalletLiquidationGroup {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 total_liquidation_count */ 1:
+                    message.totalLiquidationCount = reader.uint64().toNumber();
+                    break;
+                case /* double total_position_value */ 2:
+                    message.totalPositionValue = reader.double();
+                    break;
+                case /* repeated hypercore.WalletLiquidation wallet_liquidations */ 3:
+                    message.walletLiquidations.push(WalletLiquidation.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletLiquidationGroup, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 total_liquidation_count = 1; */
+        if (message.totalLiquidationCount !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.totalLiquidationCount);
+        /* double total_position_value = 2; */
+        if (message.totalPositionValue !== 0)
+            writer.tag(2, WireType.Bit64).double(message.totalPositionValue);
+        /* repeated hypercore.WalletLiquidation wallet_liquidations = 3; */
+        for (let i = 0; i < message.walletLiquidations.length; i++)
+            WalletLiquidation.internalBinaryWrite(message.walletLiquidations[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletLiquidationGroup
+ */
+export const WalletLiquidationGroup = new WalletLiquidationGroup$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletLiquidation$Type extends MessageType<WalletLiquidation> {
+    constructor() {
+        super("hypercore.WalletLiquidation", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "position_value", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "entry_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletLiquidation>): WalletLiquidation {
+        const message = { walletAddress: "", positionValue: 0, entryPrice: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<WalletLiquidation>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletLiquidation): WalletLiquidation {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* double position_value */ 2:
+                    message.positionValue = reader.double();
+                    break;
+                case /* double entry_price */ 3:
+                    message.entryPrice = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletLiquidation, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* double position_value = 2; */
+        if (message.positionValue !== 0)
+            writer.tag(2, WireType.Bit64).double(message.positionValue);
+        /* double entry_price = 3; */
+        if (message.entryPrice !== 0)
+            writer.tag(3, WireType.Bit64).double(message.entryPrice);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletLiquidation
+ */
+export const WalletLiquidation = new WalletLiquidation$Type();
 /**
  * @generated ServiceType for protobuf service hypercore.HyperCore
  */
@@ -2041,6 +2353,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletMovements", options: {}, I: WalletMovementsRequest, O: WalletMovementsResponse },
     { name: "WalletBalances", options: {}, I: WalletBalancesRequest, O: WalletBalancesResponse },
     { name: "AggregatedWalletPositioningStream", serverStreaming: true, options: {}, I: AggregatedWalletPositioningStreamRequest, O: AggregatedWalletPositioningStreamResponse },
+    { name: "AggregatedWalletLiquidations", serverStreaming: true, options: {}, I: AggregatedWalletLiquidationsRequest, O: AggregatedWalletLiquidationsResponse },
     { name: "WalletBalancesStream", serverStreaming: true, clientStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
     { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },
     { name: "ValidatorDelegators", options: {}, I: ValidatorDelegatorsRequest, O: ValidatorDelegatorsResponse },
