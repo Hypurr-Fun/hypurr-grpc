@@ -190,10 +190,35 @@ message WalletsByTagResponse {
   repeated WalletInfo wallet_infos = 1;
 }
 
+message AggregatedWalletLiquidationsRequest {
+  repeated string wallet_addresses = 1;
+  bytes bloom_filter = 2;
+  WalletTag tag = 3;
+  uint64 instrument_id = 4;
+  bool detailed = 5;
+}
+
+message AggregatedWalletLiquidationsResponse {
+  repeated WalletLiquidationGroup wallet_liquidation_groups = 1;
+}
+
+message WalletLiquidationGroup {
+  uint64 total_liquidation_count = 1;
+  double total_position_value = 2;
+  repeated WalletLiquidation wallet_liquidations = 3;
+}
+
+message WalletLiquidation {
+  string wallet_address = 1;
+  double position_value = 2;
+  double entry_price = 3;
+}
+
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
   rpc AggregatedWalletPositioningStream(AggregatedWalletPositioningStreamRequest) returns (stream AggregatedWalletPositioningStreamResponse) {}
+  rpc AggregatedWalletLiquidations(AggregatedWalletLiquidationsRequest) returns (stream AggregatedWalletLiquidationsResponse) {}
   rpc WalletBalancesStream(stream WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
   rpc WalletTradesStream(WalletTradesStreamRequest) returns (stream WalletTradesStreamResponse) {}
   rpc ValidatorDelegators(ValidatorDelegatorsRequest) returns (ValidatorDelegatorsResponse) {}
