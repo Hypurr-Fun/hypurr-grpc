@@ -29,7 +29,7 @@ class HyperCoreStub(object):
         request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletPositioningStreamRequest.SerializeToString,
         response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletPositioningStreamResponse.FromString,
         )
-    self.AggregatedWalletLiquidations = channel.unary_stream(
+    self.AggregatedWalletLiquidations = channel.unary_unary(
         '/hypercore.HyperCore/AggregatedWalletLiquidations',
         request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsRequest.SerializeToString,
         response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsResponse.FromString,
@@ -158,7 +158,7 @@ def add_HyperCoreServicer_to_server(servicer, server):
           request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletPositioningStreamRequest.FromString,
           response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletPositioningStreamResponse.SerializeToString,
       ),
-      'AggregatedWalletLiquidations': grpc.unary_stream_rpc_method_handler(
+      'AggregatedWalletLiquidations': grpc.unary_unary_rpc_method_handler(
           servicer.AggregatedWalletLiquidations,
           request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsRequest.FromString,
           response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsResponse.SerializeToString,

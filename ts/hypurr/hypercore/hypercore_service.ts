@@ -2353,7 +2353,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletMovements", options: {}, I: WalletMovementsRequest, O: WalletMovementsResponse },
     { name: "WalletBalances", options: {}, I: WalletBalancesRequest, O: WalletBalancesResponse },
     { name: "AggregatedWalletPositioningStream", serverStreaming: true, options: {}, I: AggregatedWalletPositioningStreamRequest, O: AggregatedWalletPositioningStreamResponse },
-    { name: "AggregatedWalletLiquidations", serverStreaming: true, options: {}, I: AggregatedWalletLiquidationsRequest, O: AggregatedWalletLiquidationsResponse },
+    { name: "AggregatedWalletLiquidations", options: {}, I: AggregatedWalletLiquidationsRequest, O: AggregatedWalletLiquidationsResponse },
     { name: "WalletBalancesStream", serverStreaming: true, clientStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
     { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },
     { name: "ValidatorDelegators", options: {}, I: ValidatorDelegatorsRequest, O: ValidatorDelegatorsResponse },

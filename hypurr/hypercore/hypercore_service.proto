@@ -218,7 +218,7 @@ service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
   rpc AggregatedWalletPositioningStream(AggregatedWalletPositioningStreamRequest) returns (stream AggregatedWalletPositioningStreamResponse) {}
-  rpc AggregatedWalletLiquidations(AggregatedWalletLiquidationsRequest) returns (stream AggregatedWalletLiquidationsResponse) {}
+  rpc AggregatedWalletLiquidations(AggregatedWalletLiquidationsRequest) returns (AggregatedWalletLiquidationsResponse) {}
   rpc WalletBalancesStream(stream WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
   rpc WalletTradesStream(WalletTradesStreamRequest) returns (stream WalletTradesStreamResponse) {}
   rpc ValidatorDelegators(ValidatorDelegatorsRequest) returns (ValidatorDelegatorsResponse) {}

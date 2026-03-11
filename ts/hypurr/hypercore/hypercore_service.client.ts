@@ -46,9 +46,9 @@ export interface IHyperCoreClient {
      */
     aggregatedWalletPositioningStream(input: AggregatedWalletPositioningStreamRequest, options?: RpcOptions): ServerStreamingCall<AggregatedWalletPositioningStreamRequest, AggregatedWalletPositioningStreamResponse>;
     /**
-     * @generated from protobuf rpc: AggregatedWalletLiquidations(hypercore.AggregatedWalletLiquidationsRequest) returns (stream hypercore.AggregatedWalletLiquidationsResponse);
+     * @generated from protobuf rpc: AggregatedWalletLiquidations(hypercore.AggregatedWalletLiquidationsRequest) returns (hypercore.AggregatedWalletLiquidationsResponse);
      */
-    aggregatedWalletLiquidations(input: AggregatedWalletLiquidationsRequest, options?: RpcOptions): ServerStreamingCall<AggregatedWalletLiquidationsRequest, AggregatedWalletLiquidationsResponse>;
+    aggregatedWalletLiquidations(input: AggregatedWalletLiquidationsRequest, options?: RpcOptions): UnaryCall<AggregatedWalletLiquidationsRequest, AggregatedWalletLiquidationsResponse>;
     /**
      * @generated from protobuf rpc: WalletBalancesStream(stream hypercore.WalletBalancesStreamRequest) returns (stream hypercore.WalletBalancesStreamResponse);
      */
@@ -105,11 +105,11 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
         return stackIntercept<AggregatedWalletPositioningStreamRequest, AggregatedWalletPositioningStreamResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: AggregatedWalletLiquidations(hypercore.AggregatedWalletLiquidationsRequest) returns (stream hypercore.AggregatedWalletLiquidationsResponse);
+     * @generated from protobuf rpc: AggregatedWalletLiquidations(hypercore.AggregatedWalletLiquidationsRequest) returns (hypercore.AggregatedWalletLiquidationsResponse);
      */
-    aggregatedWalletLiquidations(input: AggregatedWalletLiquidationsRequest, options?: RpcOptions): ServerStreamingCall<AggregatedWalletLiquidationsRequest, AggregatedWalletLiquidationsResponse> {
+    aggregatedWalletLiquidations(input: AggregatedWalletLiquidationsRequest, options?: RpcOptions): UnaryCall<AggregatedWalletLiquidationsRequest, AggregatedWalletLiquidationsResponse> {
         const method = this.methods[3], opt = this._transport.mergeOptions(options);
-        return stackIntercept<AggregatedWalletLiquidationsRequest, AggregatedWalletLiquidationsResponse>("serverStreaming", this._transport, method, opt, input);
+        return stackIntercept<AggregatedWalletLiquidationsRequest, AggregatedWalletLiquidationsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: WalletBalancesStream(stream hypercore.WalletBalancesStreamRequest) returns (stream hypercore.WalletBalancesStreamResponse);
