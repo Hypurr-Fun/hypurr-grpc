@@ -298,6 +298,18 @@ export interface HypurrFunCabalAlert {
      * @generated from protobuf field: google.protobuf.Int64Value spot_token_id = 10;
      */
     spotTokenId?: Int64Value;
+    /**
+     * @generated from protobuf field: double position_size = 11;
+     */
+    positionSize: number;
+    /**
+     * @generated from protobuf field: double position_entry_price = 12;
+     */
+    positionEntryPrice: number;
+    /**
+     * @generated from protobuf field: double position_pnl = 13;
+     */
+    positionPnl: number;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class HypurrFunCabal$Type extends MessageType<HypurrFunCabal> {
@@ -949,11 +961,14 @@ class HypurrFunCabalAlert$Type extends MessageType<HypurrFunCabalAlert> {
             { no: 7, name: "size_delta", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 8, name: "cost_delta", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 9, name: "perp_pair_id", kind: "message", T: () => Int64Value },
-            { no: 10, name: "spot_token_id", kind: "message", T: () => Int64Value }
+            { no: 10, name: "spot_token_id", kind: "message", T: () => Int64Value },
+            { no: 11, name: "position_size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 12, name: "position_entry_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 13, name: "position_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<HypurrFunCabalAlert>): HypurrFunCabalAlert {
-        const message = { id: 0, createdAt: 0, telegramChatId: 0, walletId: 0, walletAddress: "", alertType: "", sizeDelta: 0, costDelta: 0 };
+        const message = { id: 0, createdAt: 0, telegramChatId: 0, walletId: 0, walletAddress: "", alertType: "", sizeDelta: 0, costDelta: 0, positionSize: 0, positionEntryPrice: 0, positionPnl: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HypurrFunCabalAlert>(this, message, value);
@@ -993,6 +1008,15 @@ class HypurrFunCabalAlert$Type extends MessageType<HypurrFunCabalAlert> {
                     break;
                 case /* google.protobuf.Int64Value spot_token_id */ 10:
                     message.spotTokenId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.spotTokenId);
+                    break;
+                case /* double position_size */ 11:
+                    message.positionSize = reader.double();
+                    break;
+                case /* double position_entry_price */ 12:
+                    message.positionEntryPrice = reader.double();
+                    break;
+                case /* double position_pnl */ 13:
+                    message.positionPnl = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1036,6 +1060,15 @@ class HypurrFunCabalAlert$Type extends MessageType<HypurrFunCabalAlert> {
         /* google.protobuf.Int64Value spot_token_id = 10; */
         if (message.spotTokenId)
             Int64Value.internalBinaryWrite(message.spotTokenId, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* double position_size = 11; */
+        if (message.positionSize !== 0)
+            writer.tag(11, WireType.Bit64).double(message.positionSize);
+        /* double position_entry_price = 12; */
+        if (message.positionEntryPrice !== 0)
+            writer.tag(12, WireType.Bit64).double(message.positionEntryPrice);
+        /* double position_pnl = 13; */
+        if (message.positionPnl !== 0)
+            writer.tag(13, WireType.Bit64).double(message.positionPnl);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

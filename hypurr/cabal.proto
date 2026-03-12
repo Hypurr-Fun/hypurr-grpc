@@ -89,4 +89,7 @@ message HypurrFunCabalAlert {
   double cost_delta = 8;
   google.protobuf.Int64Value perp_pair_id = 9;
   google.protobuf.Int64Value spot_token_id = 10;
+  double position_size = 11;
+  double position_entry_price = 12;
+  double position_pnl = 13;
 }
