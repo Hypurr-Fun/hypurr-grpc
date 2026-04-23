@@ -354,6 +354,16 @@ message TelegramChatWalletPackLabelDeleteResponse {
 
 }
 
+message TelegramChatWalletPackRenameRequest {
+  map<string, string> auth_data = 1;
+  int64 pack_id = 2;
+  string name = 3;
+}
+
+message TelegramChatWalletPackRenameResponse {
+
+}
+
 message EIP712Signature {
   string agentAddress = 1;
   string agentName = 2;
@@ -639,6 +649,7 @@ service Telegram {
   // Cabal
   rpc HfunCabalAlerts (HfunCabalAlertsRequest) returns (stream HfunCabalAlertsResponse) {}
   rpc TelegramChatWalletPackCreate (TelegramChatWalletPackCreateRequest) returns (TelegramChatWalletPackCreateResponse) {}
+  rpc TelegramChatWalletPackRename (TelegramChatWalletPackRenameRequest) returns (TelegramChatWalletPackRenameResponse) {}
   rpc TelegramChatWalletPackLabelAdd (TelegramChatWalletPackLabelAddRequest) returns (TelegramChatWalletPackLabelAddResponse) {}
   rpc TelegramChatWalletPackLabelModify (TelegramChatWalletPackLabelModifyRequest) returns (TelegramChatWalletPackLabelModifyResponse) {}
   rpc TelegramChatWalletPackLabelRemove (TelegramChatWalletPackLabelDeleteRequest) returns (TelegramChatWalletPackLabelDeleteResponse) {}

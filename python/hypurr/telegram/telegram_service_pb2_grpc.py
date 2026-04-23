@@ -159,6 +159,11 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackCreateRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackCreateResponse.FromString,
         )
+    self.TelegramChatWalletPackRename = channel.unary_unary(
+        '/hypurr.Telegram/TelegramChatWalletPackRename',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackRenameRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackRenameResponse.FromString,
+        )
     self.TelegramChatWalletPackLabelAdd = channel.unary_unary(
         '/hypurr.Telegram/TelegramChatWalletPackLabelAdd',
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackLabelAddRequest.SerializeToString,
@@ -468,6 +473,13 @@ class TelegramServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def TelegramChatWalletPackRename(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def TelegramChatWalletPackLabelAdd(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -755,6 +767,11 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.TelegramChatWalletPackCreate,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackCreateRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackCreateResponse.SerializeToString,
+      ),
+      'TelegramChatWalletPackRename': grpc.unary_unary_rpc_method_handler(
+          servicer.TelegramChatWalletPackRename,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackRenameRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramChatWalletPackRenameResponse.SerializeToString,
       ),
       'TelegramChatWalletPackLabelAdd': grpc.unary_unary_rpc_method_handler(
           servicer.TelegramChatWalletPackLabelAdd,
