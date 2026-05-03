@@ -19,6 +19,7 @@ message HyperliquidWallet {
   bool is_read_only = 10;
   repeated HyperliquidWalletScaleSession scale_sessions = 11;
   repeated HyperliquidWalletTwapSession twap_sessions = 12;
+  bool public = 13;
 }
 
 message HyperliquidWalletMovement {
@@ -105,4 +106,4 @@ message Performance {
 }
 
 
-// ... (continue with other wallet-related messages) 
+// ... (continue with other wallet-related messages)

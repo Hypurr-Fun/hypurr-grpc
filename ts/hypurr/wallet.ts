@@ -67,6 +67,10 @@ export interface HyperliquidWallet {
      * @generated from protobuf field: repeated hypurr.HyperliquidWalletTwapSession twap_sessions = 12;
      */
     twapSessions: HyperliquidWalletTwapSession[];
+    /**
+     * @generated from protobuf field: bool public = 13;
+     */
+    public: boolean;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletMovement
@@ -350,11 +354,12 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
             { no: 9, name: "is_agent", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 10, name: "is_read_only", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 11, name: "scale_sessions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidWalletScaleSession },
-            { no: 12, name: "twap_sessions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidWalletTwapSession }
+            { no: 12, name: "twap_sessions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HyperliquidWalletTwapSession },
+            { no: 13, name: "public", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWallet>): HyperliquidWallet {
-        const message = { id: 0, name: "", ethereumAddress: "", points: 0, movements: [], spotBalances: [], launchBalances: [], isAgent: false, isReadOnly: false, scaleSessions: [], twapSessions: [] };
+        const message = { id: 0, name: "", ethereumAddress: "", points: 0, movements: [], spotBalances: [], launchBalances: [], isAgent: false, isReadOnly: false, scaleSessions: [], twapSessions: [], public: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWallet>(this, message, value);
@@ -400,6 +405,9 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
                     break;
                 case /* repeated hypurr.HyperliquidWalletTwapSession twap_sessions */ 12:
                     message.twapSessions.push(HyperliquidWalletTwapSession.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* bool public */ 13:
+                    message.public = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -449,6 +457,9 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
         /* repeated hypurr.HyperliquidWalletTwapSession twap_sessions = 12; */
         for (let i = 0; i < message.twapSessions.length; i++)
             HyperliquidWalletTwapSession.internalBinaryWrite(message.twapSessions[i], writer.tag(12, WireType.LengthDelimited).fork(), options).join();
+        /* bool public = 13; */
+        if (message.public !== false)
+            writer.tag(13, WireType.Varint).bool(message.public);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

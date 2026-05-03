@@ -35,6 +35,19 @@ message TelegramUserWalletsResponse {
   repeated HyperliquidWallet wallets = 1;
 }
 
+message HyperliquidMostTrackedWallet {
+  HyperliquidPublicWallet wallet = 1;
+  int64 tracked_count = 2;
+}
+
+message HyperliquidMostTrackedWalletsRequest {
+  int32 limit = 1;
+}
+
+message HyperliquidMostTrackedWalletsResponse {
+  repeated HyperliquidMostTrackedWallet wallets = 1;
+}
+
 message HyperliquidCoreActionRequest {
   map<string, string> auth_data = 1;
   int64 wallet_id = 2;
@@ -390,6 +403,16 @@ message HyperliquidWalletCreateResponse {
   HyperliquidWallet wallet = 1;
 }
 
+message HyperliquidWalletSetPublicRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  bool public = 3;
+}
+
+message HyperliquidWalletSetPublicResponse {
+  HyperliquidWallet wallet = 1;
+}
+
 message HyperliquidAgentSignatureCreateRequest {
   map<string, string> auth_data = 1;
   string address = 2;
@@ -607,6 +630,7 @@ message DeletePortfolioSourceResponse {
 service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
+  rpc HyperliquidMostTrackedWallets (HyperliquidMostTrackedWalletsRequest) returns (HyperliquidMostTrackedWalletsResponse) {}
 
   // Launch
   rpc HyperliquidLaunchTrade (HyperliquidLaunchTradeRequest) returns (HyperliquidLaunchTradeResponse) {}
@@ -643,6 +667,7 @@ service Telegram {
 
   rpc HyperliquidWalletCreate (HyperliquidWalletCreateRequest) returns (HyperliquidWalletCreateResponse) {}
   rpc HyperliquidWalletDelete (HyperliquidWalletDeleteRequest) returns (HyperliquidWalletDeleteResponse) {}
+  rpc HyperliquidWalletSetPublic (HyperliquidWalletSetPublicRequest) returns (HyperliquidWalletSetPublicResponse) {}
   rpc HyperliquidAgentSignatureCreate (HyperliquidAgentSignatureCreateRequest) returns (HyperliquidAgentSignatureCreateResponse) {}
   rpc HyperliquidAgentWalletCreate (HyperliquidAgentWalletCreateRequest) returns (HyperliquidAgentWalletCreateResponse) {}
 
