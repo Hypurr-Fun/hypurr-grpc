@@ -65,6 +65,46 @@ export interface TelegramUserResponse {
     authToken: string;
 }
 /**
+ * @generated from protobuf message hypurr.TelegramAuthExchangeRequest
+ */
+export interface TelegramAuthExchangeRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1;
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string return_to = 2;
+     */
+    returnTo: string;
+    /**
+     * @generated from protobuf field: string state = 3;
+     */
+    state: string;
+    /**
+     * @generated from protobuf field: string scope = 4;
+     */
+    scope: string;
+}
+/**
+ * @generated from protobuf message hypurr.TelegramAuthExchangeResponse
+ */
+export interface TelegramAuthExchangeResponse {
+    /**
+     * @generated from protobuf field: hypurr.TelegramUser user = 1;
+     */
+    user?: TelegramUser;
+    /**
+     * @generated from protobuf field: string auth_token = 2;
+     */
+    authToken: string;
+    /**
+     * @generated from protobuf field: string redirect_url = 3;
+     */
+    redirectUrl: string;
+}
+/**
  * @generated from protobuf message hypurr.TelegramUserWalletsRequest
  */
 export interface TelegramUserWalletsRequest {
@@ -1869,6 +1909,151 @@ class TelegramUserResponse$Type extends MessageType<TelegramUserResponse> {
  * @generated MessageType for protobuf message hypurr.TelegramUserResponse
  */
 export const TelegramUserResponse = new TelegramUserResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TelegramAuthExchangeRequest$Type extends MessageType<TelegramAuthExchangeRequest> {
+    constructor() {
+        super("hypurr.TelegramAuthExchangeRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "return_to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "state", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "scope", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TelegramAuthExchangeRequest>): TelegramAuthExchangeRequest {
+        const message = { authData: {}, returnTo: "", state: "", scope: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<TelegramAuthExchangeRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramAuthExchangeRequest): TelegramAuthExchangeRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string return_to */ 2:
+                    message.returnTo = reader.string();
+                    break;
+                case /* string state */ 3:
+                    message.state = reader.string();
+                    break;
+                case /* string scope */ 4:
+                    message.scope = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: TelegramAuthExchangeRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof TelegramAuthExchangeRequest["authData"] | undefined, val: TelegramAuthExchangeRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field hypurr.TelegramAuthExchangeRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: TelegramAuthExchangeRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string return_to = 2; */
+        if (message.returnTo !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.returnTo);
+        /* string state = 3; */
+        if (message.state !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.state);
+        /* string scope = 4; */
+        if (message.scope !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.scope);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.TelegramAuthExchangeRequest
+ */
+export const TelegramAuthExchangeRequest = new TelegramAuthExchangeRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TelegramAuthExchangeResponse$Type extends MessageType<TelegramAuthExchangeResponse> {
+    constructor() {
+        super("hypurr.TelegramAuthExchangeResponse", [
+            { no: 1, name: "user", kind: "message", T: () => TelegramUser },
+            { no: 2, name: "auth_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "redirect_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TelegramAuthExchangeResponse>): TelegramAuthExchangeResponse {
+        const message = { authToken: "", redirectUrl: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<TelegramAuthExchangeResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramAuthExchangeResponse): TelegramAuthExchangeResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.TelegramUser user */ 1:
+                    message.user = TelegramUser.internalBinaryRead(reader, reader.uint32(), options, message.user);
+                    break;
+                case /* string auth_token */ 2:
+                    message.authToken = reader.string();
+                    break;
+                case /* string redirect_url */ 3:
+                    message.redirectUrl = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TelegramAuthExchangeResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.TelegramUser user = 1; */
+        if (message.user)
+            TelegramUser.internalBinaryWrite(message.user, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string auth_token = 2; */
+        if (message.authToken !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.authToken);
+        /* string redirect_url = 3; */
+        if (message.redirectUrl !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.redirectUrl);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.TelegramAuthExchangeResponse
+ */
+export const TelegramAuthExchangeResponse = new TelegramAuthExchangeResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserWalletsRequest$Type extends MessageType<TelegramUserWalletsRequest> {
     constructor() {
@@ -8500,6 +8685,7 @@ export const DeletePortfolioSourceResponse = new DeletePortfolioSourceResponse$T
  */
 export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "TelegramUser", options: {}, I: TelegramUserRequest, O: TelegramUserResponse },
+    { name: "TelegramAuthExchange", options: {}, I: TelegramAuthExchangeRequest, O: TelegramAuthExchangeResponse },
     { name: "TelegramUserWallets", options: {}, I: TelegramUserWalletsRequest, O: TelegramUserWalletsResponse },
     { name: "HyperliquidMostTrackedWallets", options: {}, I: HyperliquidMostTrackedWalletsRequest, O: HyperliquidMostTrackedWalletsResponse },
     { name: "HyperliquidLaunchTrade", options: {}, I: HyperliquidLaunchTradeRequest, O: HyperliquidLaunchTradeResponse },

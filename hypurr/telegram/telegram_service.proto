@@ -27,6 +27,19 @@ message TelegramUserResponse {
   string auth_token = 2;
 }
 
+message TelegramAuthExchangeRequest {
+  map<string, string> auth_data = 1;
+  string return_to = 2;
+  string state = 3;
+  string scope = 4;
+}
+
+message TelegramAuthExchangeResponse {
+  TelegramUser user = 1;
+  string auth_token = 2;
+  string redirect_url = 3;
+}
+
 message TelegramUserWalletsRequest {
   map<string, string> auth_data = 1;
 }
@@ -629,6 +642,7 @@ message DeletePortfolioSourceResponse {
 
 service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
+  rpc TelegramAuthExchange (TelegramAuthExchangeRequest) returns (TelegramAuthExchangeResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
   rpc HyperliquidMostTrackedWallets (HyperliquidMostTrackedWalletsRequest) returns (HyperliquidMostTrackedWalletsResponse) {}
 

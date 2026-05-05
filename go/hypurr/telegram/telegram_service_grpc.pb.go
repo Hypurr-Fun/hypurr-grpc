@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion8
 
 const (
 	Telegram_TelegramUser_FullMethodName                      = "/hypurr.Telegram/TelegramUser"
+	Telegram_TelegramAuthExchange_FullMethodName              = "/hypurr.Telegram/TelegramAuthExchange"
 	Telegram_TelegramUserWallets_FullMethodName               = "/hypurr.Telegram/TelegramUserWallets"
 	Telegram_HyperliquidMostTrackedWallets_FullMethodName     = "/hypurr.Telegram/HyperliquidMostTrackedWallets"
 	Telegram_HyperliquidLaunchTrade_FullMethodName            = "/hypurr.Telegram/HyperliquidLaunchTrade"
@@ -78,6 +79,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TelegramClient interface {
 	TelegramUser(ctx context.Context, in *TelegramUserRequest, opts ...grpc.CallOption) (*TelegramUserResponse, error)
+	TelegramAuthExchange(ctx context.Context, in *TelegramAuthExchangeRequest, opts ...grpc.CallOption) (*TelegramAuthExchangeResponse, error)
 	TelegramUserWallets(ctx context.Context, in *TelegramUserWalletsRequest, opts ...grpc.CallOption) (*TelegramUserWalletsResponse, error)
 	HyperliquidMostTrackedWallets(ctx context.Context, in *HyperliquidMostTrackedWalletsRequest, opts ...grpc.CallOption) (*HyperliquidMostTrackedWalletsResponse, error)
 	// Launch
@@ -151,6 +153,16 @@ func (c *telegramClient) TelegramUser(ctx context.Context, in *TelegramUserReque
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(TelegramUserResponse)
 	err := c.cc.Invoke(ctx, Telegram_TelegramUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) TelegramAuthExchange(ctx context.Context, in *TelegramAuthExchangeRequest, opts ...grpc.CallOption) (*TelegramAuthExchangeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TelegramAuthExchangeResponse)
+	err := c.cc.Invoke(ctx, Telegram_TelegramAuthExchange_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -695,6 +707,7 @@ func (c *telegramClient) DeletePortfolioSource(ctx context.Context, in *DeletePo
 // for forward compatibility
 type TelegramServer interface {
 	TelegramUser(context.Context, *TelegramUserRequest) (*TelegramUserResponse, error)
+	TelegramAuthExchange(context.Context, *TelegramAuthExchangeRequest) (*TelegramAuthExchangeResponse, error)
 	TelegramUserWallets(context.Context, *TelegramUserWalletsRequest) (*TelegramUserWalletsResponse, error)
 	HyperliquidMostTrackedWallets(context.Context, *HyperliquidMostTrackedWalletsRequest) (*HyperliquidMostTrackedWalletsResponse, error)
 	// Launch
@@ -763,6 +776,9 @@ type UnimplementedTelegramServer struct {
 
 func (UnimplementedTelegramServer) TelegramUser(context.Context, *TelegramUserRequest) (*TelegramUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TelegramUser not implemented")
+}
+func (UnimplementedTelegramServer) TelegramAuthExchange(context.Context, *TelegramAuthExchangeRequest) (*TelegramAuthExchangeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TelegramAuthExchange not implemented")
 }
 func (UnimplementedTelegramServer) TelegramUserWallets(context.Context, *TelegramUserWalletsRequest) (*TelegramUserWalletsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TelegramUserWallets not implemented")
@@ -944,6 +960,24 @@ func _Telegram_TelegramUser_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TelegramServer).TelegramUser(ctx, req.(*TelegramUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_TelegramAuthExchange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TelegramAuthExchangeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).TelegramAuthExchange(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_TelegramAuthExchange_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).TelegramAuthExchange(ctx, req.(*TelegramAuthExchangeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1879,6 +1913,10 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TelegramUser",
 			Handler:    _Telegram_TelegramUser_Handler,
+		},
+		{
+			MethodName: "TelegramAuthExchange",
+			Handler:    _Telegram_TelegramAuthExchange_Handler,
 		},
 		{
 			MethodName: "TelegramUserWallets",

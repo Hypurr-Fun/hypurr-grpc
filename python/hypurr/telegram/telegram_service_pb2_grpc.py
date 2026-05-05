@@ -19,6 +19,11 @@ class TelegramStub(object):
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserRequest.SerializeToString,
         response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserResponse.FromString,
         )
+    self.TelegramAuthExchange = channel.unary_unary(
+        '/hypurr.Telegram/TelegramAuthExchange',
+        request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramAuthExchangeRequest.SerializeToString,
+        response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramAuthExchangeResponse.FromString,
+        )
     self.TelegramUserWallets = channel.unary_unary(
         '/hypurr.Telegram/TelegramUserWallets',
         request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserWalletsRequest.SerializeToString,
@@ -281,6 +286,13 @@ class TelegramServicer(object):
   pass
 
   def TelegramUser(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def TelegramAuthExchange(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -651,6 +663,11 @@ def add_TelegramServicer_to_server(servicer, server):
           servicer.TelegramUser,
           request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserRequest.FromString,
           response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserResponse.SerializeToString,
+      ),
+      'TelegramAuthExchange': grpc.unary_unary_rpc_method_handler(
+          servicer.TelegramAuthExchange,
+          request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramAuthExchangeRequest.FromString,
+          response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramAuthExchangeResponse.SerializeToString,
       ),
       'TelegramUserWallets': grpc.unary_unary_rpc_method_handler(
           servicer.TelegramUserWallets,
