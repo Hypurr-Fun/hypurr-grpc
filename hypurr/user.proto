@@ -30,6 +30,7 @@ message TelegramUser {
   repeated HyperliquidLaunchFill launch_fills = 21;
   repeated HyperliquidWalletLabel labels = 22;
   repeated TelegramChatWalletPack packs = 23;
+  string picture_file_id = 24;
 }
 
 message TelegramUserSettings {
