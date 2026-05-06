@@ -78,4 +78,5 @@ message HyperliquidWalletScaleSession {
   google.protobuf.DoubleValue end_price = 16;
   int64 max_placed_index = 17;
   google.protobuf.DoubleValue max_placed_price = 18;
+  double mid_distance = 19;
 }

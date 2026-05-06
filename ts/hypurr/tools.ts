@@ -285,6 +285,10 @@ export interface HyperliquidWalletScaleSession {
      * @generated from protobuf field: google.protobuf.DoubleValue max_placed_price = 18
      */
     maxPlacedPrice?: DoubleValue;
+    /**
+     * @generated from protobuf field: double mid_distance = 19
+     */
+    midDistance: number;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidSpotSniperConfig$Type extends MessageType<HyperliquidSpotSniperConfig> {
@@ -773,7 +777,8 @@ class HyperliquidWalletScaleSession$Type extends MessageType<HyperliquidWalletSc
             { no: 15, name: "start_price", kind: "message", T: () => DoubleValue },
             { no: 16, name: "end_price", kind: "message", T: () => DoubleValue },
             { no: 17, name: "max_placed_index", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 18, name: "max_placed_price", kind: "message", T: () => DoubleValue }
+            { no: 18, name: "max_placed_price", kind: "message", T: () => DoubleValue },
+            { no: 19, name: "mid_distance", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWalletScaleSession>): HyperliquidWalletScaleSession {
@@ -787,6 +792,7 @@ class HyperliquidWalletScaleSession$Type extends MessageType<HyperliquidWalletSc
         message.buy = false;
         message.ended = false;
         message.maxPlacedIndex = 0;
+        message.midDistance = 0;
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWalletScaleSession>(this, message, value);
         return message;
@@ -849,6 +855,9 @@ class HyperliquidWalletScaleSession$Type extends MessageType<HyperliquidWalletSc
                     break;
                 case /* google.protobuf.DoubleValue max_placed_price */ 18:
                     message.maxPlacedPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.maxPlacedPrice);
+                    break;
+                case /* double mid_distance */ 19:
+                    message.midDistance = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -916,6 +925,9 @@ class HyperliquidWalletScaleSession$Type extends MessageType<HyperliquidWalletSc
         /* google.protobuf.DoubleValue max_placed_price = 18; */
         if (message.maxPlacedPrice)
             DoubleValue.internalBinaryWrite(message.maxPlacedPrice, writer.tag(18, WireType.LengthDelimited).fork(), options).join();
+        /* double mid_distance = 19; */
+        if (message.midDistance !== 0)
+            writer.tag(19, WireType.Bit64).double(message.midDistance);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
