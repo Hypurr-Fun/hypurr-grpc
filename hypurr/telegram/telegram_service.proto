@@ -154,6 +154,7 @@ message HyperliquidScaleCreateRequest {
   google.protobuf.DoubleValue target_leverage = 9;
   google.protobuf.DoubleValue min_price = 10;
   google.protobuf.DoubleValue max_price = 11;
+  google.protobuf.DoubleValue mid_distance = 12;
 }
 
 message HyperliquidScaleCreateResponse {

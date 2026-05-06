@@ -456,6 +456,10 @@ export interface HyperliquidScaleCreateRequest {
      * @generated from protobuf field: google.protobuf.DoubleValue max_price = 11
      */
     maxPrice?: DoubleValue;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue mid_distance = 12
+     */
+    midDistance?: DoubleValue;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidScaleCreateResponse
@@ -3236,7 +3240,8 @@ class HyperliquidScaleCreateRequest$Type extends MessageType<HyperliquidScaleCre
             { no: 8, name: "target_quantity", kind: "message", T: () => DoubleValue },
             { no: 9, name: "target_leverage", kind: "message", T: () => DoubleValue },
             { no: 10, name: "min_price", kind: "message", T: () => DoubleValue },
-            { no: 11, name: "max_price", kind: "message", T: () => DoubleValue }
+            { no: 11, name: "max_price", kind: "message", T: () => DoubleValue },
+            { no: 12, name: "mid_distance", kind: "message", T: () => DoubleValue }
         ]);
     }
     create(value?: PartialMessage<HyperliquidScaleCreateRequest>): HyperliquidScaleCreateRequest {
@@ -3286,6 +3291,9 @@ class HyperliquidScaleCreateRequest$Type extends MessageType<HyperliquidScaleCre
                     break;
                 case /* google.protobuf.DoubleValue max_price */ 11:
                     message.maxPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.maxPrice);
+                    break;
+                case /* google.protobuf.DoubleValue mid_distance */ 12:
+                    message.midDistance = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.midDistance);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3348,6 +3356,9 @@ class HyperliquidScaleCreateRequest$Type extends MessageType<HyperliquidScaleCre
         /* google.protobuf.DoubleValue max_price = 11; */
         if (message.maxPrice)
             DoubleValue.internalBinaryWrite(message.maxPrice, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue mid_distance = 12; */
+        if (message.midDistance)
+            DoubleValue.internalBinaryWrite(message.midDistance, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
