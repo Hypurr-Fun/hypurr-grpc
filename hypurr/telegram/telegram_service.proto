@@ -448,7 +448,8 @@ message HyperliquidAgentWalletCreateResponse {
 
 message HyperliquidWalletUpdateRequest {
   map<string, string> auth_data = 1;
-  string name = 2;
+  int64 wallet_id = 2;
+  string name = 3;
 }
 
 message HyperliquidWalletUpdateResponse {
