@@ -49,6 +49,7 @@ const (
 	Telegram_HyperliquidWalletSetPublic_FullMethodName        = "/hypurr.Telegram/HyperliquidWalletSetPublic"
 	Telegram_HyperliquidAgentSignatureCreate_FullMethodName   = "/hypurr.Telegram/HyperliquidAgentSignatureCreate"
 	Telegram_HyperliquidAgentWalletCreate_FullMethodName      = "/hypurr.Telegram/HyperliquidAgentWalletCreate"
+	Telegram_HyperliquidWalletUpdate_FullMethodName           = "/hypurr.Telegram/HyperliquidWalletUpdate"
 	Telegram_HfunCabalAlerts_FullMethodName                   = "/hypurr.Telegram/HfunCabalAlerts"
 	Telegram_TelegramChatWalletPackCreate_FullMethodName      = "/hypurr.Telegram/TelegramChatWalletPackCreate"
 	Telegram_TelegramChatWalletPackRename_FullMethodName      = "/hypurr.Telegram/TelegramChatWalletPackRename"
@@ -113,6 +114,7 @@ type TelegramClient interface {
 	HyperliquidWalletSetPublic(ctx context.Context, in *HyperliquidWalletSetPublicRequest, opts ...grpc.CallOption) (*HyperliquidWalletSetPublicResponse, error)
 	HyperliquidAgentSignatureCreate(ctx context.Context, in *HyperliquidAgentSignatureCreateRequest, opts ...grpc.CallOption) (*HyperliquidAgentSignatureCreateResponse, error)
 	HyperliquidAgentWalletCreate(ctx context.Context, in *HyperliquidAgentWalletCreateRequest, opts ...grpc.CallOption) (*HyperliquidAgentWalletCreateResponse, error)
+	HyperliquidWalletUpdate(ctx context.Context, in *HyperliquidWalletUpdateRequest, opts ...grpc.CallOption) (*HyperliquidWalletUpdateResponse, error)
 	// Cabal
 	HfunCabalAlerts(ctx context.Context, in *HfunCabalAlertsRequest, opts ...grpc.CallOption) (Telegram_HfunCabalAlertsClient, error)
 	TelegramChatWalletPackCreate(ctx context.Context, in *TelegramChatWalletPackCreateRequest, opts ...grpc.CallOption) (*TelegramChatWalletPackCreateResponse, error)
@@ -449,6 +451,16 @@ func (c *telegramClient) HyperliquidAgentWalletCreate(ctx context.Context, in *H
 	return out, nil
 }
 
+func (c *telegramClient) HyperliquidWalletUpdate(ctx context.Context, in *HyperliquidWalletUpdateRequest, opts ...grpc.CallOption) (*HyperliquidWalletUpdateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HyperliquidWalletUpdateResponse)
+	err := c.cc.Invoke(ctx, Telegram_HyperliquidWalletUpdate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *telegramClient) HfunCabalAlerts(ctx context.Context, in *HfunCabalAlertsRequest, opts ...grpc.CallOption) (Telegram_HfunCabalAlertsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Telegram_ServiceDesc.Streams[0], Telegram_HfunCabalAlerts_FullMethodName, cOpts...)
@@ -741,6 +753,7 @@ type TelegramServer interface {
 	HyperliquidWalletSetPublic(context.Context, *HyperliquidWalletSetPublicRequest) (*HyperliquidWalletSetPublicResponse, error)
 	HyperliquidAgentSignatureCreate(context.Context, *HyperliquidAgentSignatureCreateRequest) (*HyperliquidAgentSignatureCreateResponse, error)
 	HyperliquidAgentWalletCreate(context.Context, *HyperliquidAgentWalletCreateRequest) (*HyperliquidAgentWalletCreateResponse, error)
+	HyperliquidWalletUpdate(context.Context, *HyperliquidWalletUpdateRequest) (*HyperliquidWalletUpdateResponse, error)
 	// Cabal
 	HfunCabalAlerts(*HfunCabalAlertsRequest, Telegram_HfunCabalAlertsServer) error
 	TelegramChatWalletPackCreate(context.Context, *TelegramChatWalletPackCreateRequest) (*TelegramChatWalletPackCreateResponse, error)
@@ -863,6 +876,9 @@ func (UnimplementedTelegramServer) HyperliquidAgentSignatureCreate(context.Conte
 }
 func (UnimplementedTelegramServer) HyperliquidAgentWalletCreate(context.Context, *HyperliquidAgentWalletCreateRequest) (*HyperliquidAgentWalletCreateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidAgentWalletCreate not implemented")
+}
+func (UnimplementedTelegramServer) HyperliquidWalletUpdate(context.Context, *HyperliquidWalletUpdateRequest) (*HyperliquidWalletUpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidWalletUpdate not implemented")
 }
 func (UnimplementedTelegramServer) HfunCabalAlerts(*HfunCabalAlertsRequest, Telegram_HfunCabalAlertsServer) error {
 	return status.Errorf(codes.Unimplemented, "method HfunCabalAlerts not implemented")
@@ -1486,6 +1502,24 @@ func _Telegram_HyperliquidAgentWalletCreate_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Telegram_HyperliquidWalletUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HyperliquidWalletUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).HyperliquidWalletUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_HyperliquidWalletUpdate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).HyperliquidWalletUpdate(ctx, req.(*HyperliquidWalletUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Telegram_HfunCabalAlerts_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(HfunCabalAlertsRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -2029,6 +2063,10 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HyperliquidAgentWalletCreate",
 			Handler:    _Telegram_HyperliquidAgentWalletCreate_Handler,
+		},
+		{
+			MethodName: "HyperliquidWalletUpdate",
+			Handler:    _Telegram_HyperliquidWalletUpdate_Handler,
 		},
 		{
 			MethodName: "TelegramChatWalletPackCreate",

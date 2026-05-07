@@ -446,6 +446,16 @@ message HyperliquidAgentWalletCreateResponse {
 
 }
 
+message HyperliquidWalletUpdateRequest {
+  map<string, string> auth_data = 1;
+  string name = 2;
+}
+
+message HyperliquidWalletUpdateResponse {
+
+}
+
+
 // SupportConversationStart - Start or resume a conversation
 
 message SupportConversationStartRequest {
@@ -685,6 +695,7 @@ service Telegram {
   rpc HyperliquidWalletSetPublic (HyperliquidWalletSetPublicRequest) returns (HyperliquidWalletSetPublicResponse) {}
   rpc HyperliquidAgentSignatureCreate (HyperliquidAgentSignatureCreateRequest) returns (HyperliquidAgentSignatureCreateResponse) {}
   rpc HyperliquidAgentWalletCreate (HyperliquidAgentWalletCreateRequest) returns (HyperliquidAgentWalletCreateResponse) {}
+  rpc HyperliquidWalletUpdate (HyperliquidWalletUpdateRequest) returns (HyperliquidWalletUpdateResponse) {}
 
   // Cabal
   rpc HfunCabalAlerts (HfunCabalAlertsRequest) returns (stream HfunCabalAlertsResponse) {}
