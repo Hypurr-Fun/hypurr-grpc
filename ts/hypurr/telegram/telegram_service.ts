@@ -990,6 +990,23 @@ export interface HfunCabalAlertsRequest {
     authData: {
         [key: string]: string;
     };
+    /**
+     * @generated from protobuf field: hypurr.HfunCabalAlertsFilter filter = 2
+     */
+    filter?: HfunCabalAlertsFilter;
+}
+/**
+ * @generated from protobuf message hypurr.HfunCabalAlertsFilter
+ */
+export interface HfunCabalAlertsFilter {
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value perp_pair_id = 1
+     */
+    perpPairId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value spot_token_id = 2
+     */
+    spotTokenId?: Int64Value;
 }
 /**
  * @generated from protobuf message hypurr.HfunCabalAlertsResponse
@@ -5429,7 +5446,8 @@ export const EditHyperliquidLaunchResponse = new EditHyperliquidLaunchResponse$T
 class HfunCabalAlertsRequest$Type extends MessageType<HfunCabalAlertsRequest> {
     constructor() {
         super("hypurr.HfunCabalAlertsRequest", [
-            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "filter", kind: "message", T: () => HfunCabalAlertsFilter }
         ]);
     }
     create(value?: PartialMessage<HfunCabalAlertsRequest>): HfunCabalAlertsRequest {
@@ -5446,6 +5464,9 @@ class HfunCabalAlertsRequest$Type extends MessageType<HfunCabalAlertsRequest> {
             switch (fieldNo) {
                 case /* map<string, string> auth_data */ 1:
                     this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* hypurr.HfunCabalAlertsFilter filter */ 2:
+                    message.filter = HfunCabalAlertsFilter.internalBinaryRead(reader, reader.uint32(), options, message.filter);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5478,6 +5499,9 @@ class HfunCabalAlertsRequest$Type extends MessageType<HfunCabalAlertsRequest> {
         /* map<string, string> auth_data = 1; */
         for (let k of globalThis.Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* hypurr.HfunCabalAlertsFilter filter = 2; */
+        if (message.filter)
+            HfunCabalAlertsFilter.internalBinaryWrite(message.filter, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5488,6 +5512,59 @@ class HfunCabalAlertsRequest$Type extends MessageType<HfunCabalAlertsRequest> {
  * @generated MessageType for protobuf message hypurr.HfunCabalAlertsRequest
  */
 export const HfunCabalAlertsRequest = new HfunCabalAlertsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HfunCabalAlertsFilter$Type extends MessageType<HfunCabalAlertsFilter> {
+    constructor() {
+        super("hypurr.HfunCabalAlertsFilter", [
+            { no: 1, name: "perp_pair_id", kind: "message", T: () => Int64Value },
+            { no: 2, name: "spot_token_id", kind: "message", T: () => Int64Value }
+        ]);
+    }
+    create(value?: PartialMessage<HfunCabalAlertsFilter>): HfunCabalAlertsFilter {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<HfunCabalAlertsFilter>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HfunCabalAlertsFilter): HfunCabalAlertsFilter {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* google.protobuf.Int64Value perp_pair_id */ 1:
+                    message.perpPairId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.perpPairId);
+                    break;
+                case /* google.protobuf.Int64Value spot_token_id */ 2:
+                    message.spotTokenId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.spotTokenId);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HfunCabalAlertsFilter, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* google.protobuf.Int64Value perp_pair_id = 1; */
+        if (message.perpPairId)
+            Int64Value.internalBinaryWrite(message.perpPairId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value spot_token_id = 2; */
+        if (message.spotTokenId)
+            Int64Value.internalBinaryWrite(message.spotTokenId, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HfunCabalAlertsFilter
+ */
+export const HfunCabalAlertsFilter = new HfunCabalAlertsFilter$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HfunCabalAlertsResponse$Type extends MessageType<HfunCabalAlertsResponse> {
     constructor() {

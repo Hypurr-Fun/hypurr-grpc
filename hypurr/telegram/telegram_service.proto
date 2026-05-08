@@ -334,6 +334,12 @@ message EditHyperliquidLaunchResponse {
 
 message HfunCabalAlertsRequest {
   map<string, string> auth_data = 1;
+  HfunCabalAlertsFilter filter = 2;
+}
+
+message HfunCabalAlertsFilter {
+  google.protobuf.Int64Value perp_pair_id = 1;
+  google.protobuf.Int64Value spot_token_id = 2;
 }
 
 message HfunCabalAlertsResponse {
