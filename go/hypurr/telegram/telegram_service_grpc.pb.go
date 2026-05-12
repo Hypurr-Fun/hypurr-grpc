@@ -29,6 +29,7 @@ const (
 	Telegram_HpumpV1LaunchTrade_FullMethodName                = "/hypurr.Telegram/HpumpV1LaunchTrade"
 	Telegram_LaunchHpumpV1Launch_FullMethodName               = "/hypurr.Telegram/LaunchHpumpV1Launch"
 	Telegram_HyperliquidCoreAction_FullMethodName             = "/hypurr.Telegram/HyperliquidCoreAction"
+	Telegram_EVMSignTransaction_FullMethodName                = "/hypurr.Telegram/EVMSignTransaction"
 	Telegram_HyperliquidSpotTrade_FullMethodName              = "/hypurr.Telegram/HyperliquidSpotTrade"
 	Telegram_HyperliquidCoreTrade_FullMethodName              = "/hypurr.Telegram/HyperliquidCoreTrade"
 	Telegram_HyperliquidCoreCancelOrders_FullMethodName       = "/hypurr.Telegram/HyperliquidCoreCancelOrders"
@@ -92,6 +93,7 @@ type TelegramClient interface {
 	LaunchHpumpV1Launch(ctx context.Context, in *LaunchHpumpV1LaunchRequest, opts ...grpc.CallOption) (*LaunchHpumpV1LaunchResponse, error)
 	// Core
 	HyperliquidCoreAction(ctx context.Context, in *HyperliquidCoreActionRequest, opts ...grpc.CallOption) (*HyperliquidCoreActionResponse, error)
+	EVMSignTransaction(ctx context.Context, in *EVMSignTransactionRequest, opts ...grpc.CallOption) (*EVMSignTransactionResponse, error)
 	// Spot
 	HyperliquidSpotTrade(ctx context.Context, in *HyperliquidSpotTradeRequest, opts ...grpc.CallOption) (*HyperliquidSpotTradeResponse, error)
 	HyperliquidCoreTrade(ctx context.Context, in *HyperliquidCoreTradeRequest, opts ...grpc.CallOption) (*HyperliquidCoreTradeResponse, error)
@@ -245,6 +247,16 @@ func (c *telegramClient) HyperliquidCoreAction(ctx context.Context, in *Hyperliq
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HyperliquidCoreActionResponse)
 	err := c.cc.Invoke(ctx, Telegram_HyperliquidCoreAction_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) EVMSignTransaction(ctx context.Context, in *EVMSignTransactionRequest, opts ...grpc.CallOption) (*EVMSignTransactionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EVMSignTransactionResponse)
+	err := c.cc.Invoke(ctx, Telegram_EVMSignTransaction_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -731,6 +743,7 @@ type TelegramServer interface {
 	LaunchHpumpV1Launch(context.Context, *LaunchHpumpV1LaunchRequest) (*LaunchHpumpV1LaunchResponse, error)
 	// Core
 	HyperliquidCoreAction(context.Context, *HyperliquidCoreActionRequest) (*HyperliquidCoreActionResponse, error)
+	EVMSignTransaction(context.Context, *EVMSignTransactionRequest) (*EVMSignTransactionResponse, error)
 	// Spot
 	HyperliquidSpotTrade(context.Context, *HyperliquidSpotTradeRequest) (*HyperliquidSpotTradeResponse, error)
 	HyperliquidCoreTrade(context.Context, *HyperliquidCoreTradeRequest) (*HyperliquidCoreTradeResponse, error)
@@ -816,6 +829,9 @@ func (UnimplementedTelegramServer) LaunchHpumpV1Launch(context.Context, *LaunchH
 }
 func (UnimplementedTelegramServer) HyperliquidCoreAction(context.Context, *HyperliquidCoreActionRequest) (*HyperliquidCoreActionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidCoreAction not implemented")
+}
+func (UnimplementedTelegramServer) EVMSignTransaction(context.Context, *EVMSignTransactionRequest) (*EVMSignTransactionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EVMSignTransaction not implemented")
 }
 func (UnimplementedTelegramServer) HyperliquidSpotTrade(context.Context, *HyperliquidSpotTradeRequest) (*HyperliquidSpotTradeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidSpotTrade not implemented")
@@ -1138,6 +1154,24 @@ func _Telegram_HyperliquidCoreAction_Handler(srv interface{}, ctx context.Contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TelegramServer).HyperliquidCoreAction(ctx, req.(*HyperliquidCoreActionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_EVMSignTransaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EVMSignTransactionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).EVMSignTransaction(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_EVMSignTransaction_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).EVMSignTransaction(ctx, req.(*EVMSignTransactionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1983,6 +2017,10 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HyperliquidCoreAction",
 			Handler:    _Telegram_HyperliquidCoreAction_Handler,
+		},
+		{
+			MethodName: "EVMSignTransaction",
+			Handler:    _Telegram_EVMSignTransaction_Handler,
 		},
 		{
 			MethodName: "HyperliquidSpotTrade",

@@ -199,6 +199,43 @@ export interface HyperliquidCoreActionResponse {
     result: Uint8Array; // JSON-encoded result
 }
 /**
+ * @generated from protobuf message hypurr.EVMSignTransactionRequest
+ */
+export interface EVMSignTransactionRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: int64 wallet_id = 2
+     */
+    walletId: number;
+    /**
+     * JSON-RPC params for eth_signTransaction.
+     * Accept either:
+     *   {"to":"0x...","value":"0x0","gas":"0x5208"}
+     * or:
+     *   [{"to":"0x...","value":"0x0"}, "0xa9059cbb"]
+     *
+     * @generated from protobuf field: bytes params = 3
+     */
+    params: Uint8Array;
+}
+/**
+ * @generated from protobuf message hypurr.EVMSignTransactionResponse
+ */
+export interface EVMSignTransactionResponse {
+    /**
+     * JSON-encoded eth_signTransaction result from the signer RPC.
+     * Currently this is the signer result object, e.g. {"raw":"0x...","tx":{...}}.
+     *
+     * @generated from protobuf field: bytes result = 1
+     */
+    result: Uint8Array;
+}
+/**
  * @generated from protobuf message hypurr.HyperliquidCoreTradeRequest
  */
 export interface HyperliquidCoreTradeRequest {
@@ -2517,6 +2554,132 @@ class HyperliquidCoreActionResponse$Type extends MessageType<HyperliquidCoreActi
  * @generated MessageType for protobuf message hypurr.HyperliquidCoreActionResponse
  */
 export const HyperliquidCoreActionResponse = new HyperliquidCoreActionResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EVMSignTransactionRequest$Type extends MessageType<EVMSignTransactionRequest> {
+    constructor() {
+        super("hypurr.EVMSignTransactionRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "params", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+        ]);
+    }
+    create(value?: PartialMessage<EVMSignTransactionRequest>): EVMSignTransactionRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.authData = {};
+        message.walletId = 0;
+        message.params = new Uint8Array(0);
+        if (value !== undefined)
+            reflectionMergePartial<EVMSignTransactionRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EVMSignTransactionRequest): EVMSignTransactionRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* bytes params */ 3:
+                    message.params = reader.bytes();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: EVMSignTransactionRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof EVMSignTransactionRequest["authData"] | undefined, val: EVMSignTransactionRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for hypurr.EVMSignTransactionRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: EVMSignTransactionRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of globalThis.Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* bytes params = 3; */
+        if (message.params.length)
+            writer.tag(3, WireType.LengthDelimited).bytes(message.params);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.EVMSignTransactionRequest
+ */
+export const EVMSignTransactionRequest = new EVMSignTransactionRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EVMSignTransactionResponse$Type extends MessageType<EVMSignTransactionResponse> {
+    constructor() {
+        super("hypurr.EVMSignTransactionResponse", [
+            { no: 1, name: "result", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+        ]);
+    }
+    create(value?: PartialMessage<EVMSignTransactionResponse>): EVMSignTransactionResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.result = new Uint8Array(0);
+        if (value !== undefined)
+            reflectionMergePartial<EVMSignTransactionResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EVMSignTransactionResponse): EVMSignTransactionResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bytes result */ 1:
+                    message.result = reader.bytes();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: EVMSignTransactionResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bytes result = 1; */
+        if (message.result.length)
+            writer.tag(1, WireType.LengthDelimited).bytes(message.result);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.EVMSignTransactionResponse
+ */
+export const EVMSignTransactionResponse = new EVMSignTransactionResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidCoreTradeRequest$Type extends MessageType<HyperliquidCoreTradeRequest> {
     constructor() {
@@ -9169,6 +9332,7 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "HpumpV1LaunchTrade", options: {}, I: HpumpV1LaunchTradeRequest, O: HpumpV1LaunchTradeResponse },
     { name: "LaunchHpumpV1Launch", options: {}, I: LaunchHpumpV1LaunchRequest, O: LaunchHpumpV1LaunchResponse },
     { name: "HyperliquidCoreAction", options: {}, I: HyperliquidCoreActionRequest, O: HyperliquidCoreActionResponse },
+    { name: "EVMSignTransaction", options: {}, I: EVMSignTransactionRequest, O: EVMSignTransactionResponse },
     { name: "HyperliquidSpotTrade", options: {}, I: HyperliquidSpotTradeRequest, O: HyperliquidSpotTradeResponse },
     { name: "HyperliquidCoreTrade", options: {}, I: HyperliquidCoreTradeRequest, O: HyperliquidCoreTradeResponse },
     { name: "HyperliquidCoreCancelOrders", options: {}, I: HyperliquidCoreCancelOrdersRequest, O: HyperliquidCoreCancelOrdersResponse },

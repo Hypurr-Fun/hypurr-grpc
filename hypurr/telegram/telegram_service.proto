@@ -75,6 +75,24 @@ message HyperliquidCoreActionResponse {
   bytes result = 3;  // JSON-encoded result
 }
 
+message EVMSignTransactionRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+
+  // JSON-RPC params for eth_signTransaction.
+  // Accept either:
+  //   {"to":"0x...","value":"0x0","gas":"0x5208"}
+  // or:
+  //   [{"to":"0x...","value":"0x0"}, "0xa9059cbb"]
+  bytes params = 3;
+}
+
+message EVMSignTransactionResponse {
+  // JSON-encoded eth_signTransaction result from the signer RPC.
+  // Currently this is the signer result object, e.g. {"raw":"0x...","tx":{...}}.
+  bytes result = 1;
+}
+
 message HyperliquidCoreTradeRequest {
   map<string, string> auth_data = 1;
   int64 wallet_id = 2;
@@ -675,6 +693,7 @@ service Telegram {
 
   // Core
   rpc HyperliquidCoreAction (HyperliquidCoreActionRequest) returns (HyperliquidCoreActionResponse) {}
+  rpc EVMSignTransaction (EVMSignTransactionRequest) returns (EVMSignTransactionResponse) {}
 
   // Spot
   rpc HyperliquidSpotTrade (HyperliquidSpotTradeRequest) returns (HyperliquidSpotTradeResponse) {}
