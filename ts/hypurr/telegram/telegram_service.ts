@@ -1350,9 +1350,9 @@ export interface HyperliquidAgentWalletCreateRequest {
      */
     signature?: EIP712Signature;
     /**
-     * @generated from protobuf field: google.protobuf.StringValue signer = 4
+     * @generated from protobuf field: google.protobuf.StringValue address = 4
      */
-    signer?: StringValue;
+    address?: StringValue;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidAgentWalletCreateResponse
@@ -7089,7 +7089,7 @@ class HyperliquidAgentWalletCreateRequest$Type extends MessageType<HyperliquidAg
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "signature", kind: "message", T: () => EIP712Signature },
-            { no: 4, name: "signer", kind: "message", T: () => StringValue }
+            { no: 4, name: "address", kind: "message", T: () => StringValue }
         ]);
     }
     create(value?: PartialMessage<HyperliquidAgentWalletCreateRequest>): HyperliquidAgentWalletCreateRequest {
@@ -7114,8 +7114,8 @@ class HyperliquidAgentWalletCreateRequest$Type extends MessageType<HyperliquidAg
                 case /* hypurr.EIP712Signature signature */ 3:
                     message.signature = EIP712Signature.internalBinaryRead(reader, reader.uint32(), options, message.signature);
                     break;
-                case /* google.protobuf.StringValue signer */ 4:
-                    message.signer = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.signer);
+                case /* google.protobuf.StringValue address */ 4:
+                    message.address = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.address);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -7154,9 +7154,9 @@ class HyperliquidAgentWalletCreateRequest$Type extends MessageType<HyperliquidAg
         /* hypurr.EIP712Signature signature = 3; */
         if (message.signature)
             EIP712Signature.internalBinaryWrite(message.signature, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.StringValue signer = 4; */
-        if (message.signer)
-            StringValue.internalBinaryWrite(message.signer, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.StringValue address = 4; */
+        if (message.address)
+            StringValue.internalBinaryWrite(message.address, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
