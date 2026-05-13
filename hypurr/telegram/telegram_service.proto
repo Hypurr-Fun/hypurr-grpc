@@ -474,6 +474,7 @@ message HyperliquidAgentWalletCreateRequest {
   map<string, string> auth_data = 1;
   string name = 2;
   EIP712Signature signature = 3;
+  google.protobuf.StringValue signer = 4;
 }
 
 message HyperliquidAgentWalletCreateResponse {
