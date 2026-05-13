@@ -46,6 +46,7 @@ const (
 	Telegram_DeleteHyperliquidSpotSniperConfig_FullMethodName = "/hypurr.Telegram/DeleteHyperliquidSpotSniperConfig"
 	Telegram_UpdateHyperliquidSpotSniperConfig_FullMethodName = "/hypurr.Telegram/UpdateHyperliquidSpotSniperConfig"
 	Telegram_HyperliquidWalletCreate_FullMethodName           = "/hypurr.Telegram/HyperliquidWalletCreate"
+	Telegram_HyperliquidWalletImport_FullMethodName           = "/hypurr.Telegram/HyperliquidWalletImport"
 	Telegram_HyperliquidWalletDelete_FullMethodName           = "/hypurr.Telegram/HyperliquidWalletDelete"
 	Telegram_HyperliquidWalletSetPublic_FullMethodName        = "/hypurr.Telegram/HyperliquidWalletSetPublic"
 	Telegram_HyperliquidAgentSignatureCreate_FullMethodName   = "/hypurr.Telegram/HyperliquidAgentSignatureCreate"
@@ -112,6 +113,7 @@ type TelegramClient interface {
 	DeleteHyperliquidSpotSniperConfig(ctx context.Context, in *DeleteHyperliquidSpotSniperConfigRequest, opts ...grpc.CallOption) (*DeleteHyperliquidSpotSniperConfigResponse, error)
 	UpdateHyperliquidSpotSniperConfig(ctx context.Context, in *UpdateHyperliquidSpotSniperConfigRequest, opts ...grpc.CallOption) (*UpdateHyperliquidSpotSniperConfigResponse, error)
 	HyperliquidWalletCreate(ctx context.Context, in *HyperliquidWalletCreateRequest, opts ...grpc.CallOption) (*HyperliquidWalletCreateResponse, error)
+	HyperliquidWalletImport(ctx context.Context, in *HyperliquidWalletImportRequest, opts ...grpc.CallOption) (*HyperliquidWalletImportResponse, error)
 	HyperliquidWalletDelete(ctx context.Context, in *HyperliquidWalletDeleteRequest, opts ...grpc.CallOption) (*HyperliquidWalletDeleteResponse, error)
 	HyperliquidWalletSetPublic(ctx context.Context, in *HyperliquidWalletSetPublicRequest, opts ...grpc.CallOption) (*HyperliquidWalletSetPublicResponse, error)
 	HyperliquidAgentSignatureCreate(ctx context.Context, in *HyperliquidAgentSignatureCreateRequest, opts ...grpc.CallOption) (*HyperliquidAgentSignatureCreateResponse, error)
@@ -417,6 +419,16 @@ func (c *telegramClient) HyperliquidWalletCreate(ctx context.Context, in *Hyperl
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HyperliquidWalletCreateResponse)
 	err := c.cc.Invoke(ctx, Telegram_HyperliquidWalletCreate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) HyperliquidWalletImport(ctx context.Context, in *HyperliquidWalletImportRequest, opts ...grpc.CallOption) (*HyperliquidWalletImportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HyperliquidWalletImportResponse)
+	err := c.cc.Invoke(ctx, Telegram_HyperliquidWalletImport_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -762,6 +774,7 @@ type TelegramServer interface {
 	DeleteHyperliquidSpotSniperConfig(context.Context, *DeleteHyperliquidSpotSniperConfigRequest) (*DeleteHyperliquidSpotSniperConfigResponse, error)
 	UpdateHyperliquidSpotSniperConfig(context.Context, *UpdateHyperliquidSpotSniperConfigRequest) (*UpdateHyperliquidSpotSniperConfigResponse, error)
 	HyperliquidWalletCreate(context.Context, *HyperliquidWalletCreateRequest) (*HyperliquidWalletCreateResponse, error)
+	HyperliquidWalletImport(context.Context, *HyperliquidWalletImportRequest) (*HyperliquidWalletImportResponse, error)
 	HyperliquidWalletDelete(context.Context, *HyperliquidWalletDeleteRequest) (*HyperliquidWalletDeleteResponse, error)
 	HyperliquidWalletSetPublic(context.Context, *HyperliquidWalletSetPublicRequest) (*HyperliquidWalletSetPublicResponse, error)
 	HyperliquidAgentSignatureCreate(context.Context, *HyperliquidAgentSignatureCreateRequest) (*HyperliquidAgentSignatureCreateResponse, error)
@@ -880,6 +893,9 @@ func (UnimplementedTelegramServer) UpdateHyperliquidSpotSniperConfig(context.Con
 }
 func (UnimplementedTelegramServer) HyperliquidWalletCreate(context.Context, *HyperliquidWalletCreateRequest) (*HyperliquidWalletCreateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidWalletCreate not implemented")
+}
+func (UnimplementedTelegramServer) HyperliquidWalletImport(context.Context, *HyperliquidWalletImportRequest) (*HyperliquidWalletImportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidWalletImport not implemented")
 }
 func (UnimplementedTelegramServer) HyperliquidWalletDelete(context.Context, *HyperliquidWalletDeleteRequest) (*HyperliquidWalletDeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidWalletDelete not implemented")
@@ -1460,6 +1476,24 @@ func _Telegram_HyperliquidWalletCreate_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TelegramServer).HyperliquidWalletCreate(ctx, req.(*HyperliquidWalletCreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_HyperliquidWalletImport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HyperliquidWalletImportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).HyperliquidWalletImport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_HyperliquidWalletImport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).HyperliquidWalletImport(ctx, req.(*HyperliquidWalletImportRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2085,6 +2119,10 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HyperliquidWalletCreate",
 			Handler:    _Telegram_HyperliquidWalletCreate_Handler,
+		},
+		{
+			MethodName: "HyperliquidWalletImport",
+			Handler:    _Telegram_HyperliquidWalletImport_Handler,
 		},
 		{
 			MethodName: "HyperliquidWalletDelete",
