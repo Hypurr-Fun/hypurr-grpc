@@ -481,6 +481,16 @@ message HyperliquidAgentWalletCreateResponse {
 
 }
 
+message HyperliquidAgentWalletRenewRequest {
+  map<string, string> auth_data = 1;
+  EIP712Signature signature = 2;
+  google.protobuf.StringValue address = 3;
+}
+
+message HyperliquidAgentWalletRenewResponse {
+
+}
+
 message HyperliquidWalletUpdateRequest {
   map<string, string> auth_data = 1;
   int64 wallet_id = 2;

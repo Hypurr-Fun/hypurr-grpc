@@ -11,6 +11,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { HyperliquidToken } from "./token";
+import { StringValue } from "../google/protobuf/wrappers";
 import { Timestamp } from "../google/protobuf/timestamp";
 import { HyperliquidWalletTwapSession } from "./tools";
 import { HyperliquidWalletScaleSession } from "./tools";
@@ -75,6 +76,10 @@ export interface HyperliquidWallet {
      * @generated from protobuf field: google.protobuf.Timestamp agent_expires_at = 14
      */
     agentExpiresAt?: Timestamp;
+    /**
+     * @generated from protobuf field: google.protobuf.StringValue agent_ethereum_address = 15
+     */
+    agentEthereumAddress?: StringValue;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletMovement
@@ -360,7 +365,8 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
             { no: 11, name: "scale_sessions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HyperliquidWalletScaleSession },
             { no: 12, name: "twap_sessions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HyperliquidWalletTwapSession },
             { no: 13, name: "public", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 14, name: "agent_expires_at", kind: "message", T: () => Timestamp }
+            { no: 14, name: "agent_expires_at", kind: "message", T: () => Timestamp },
+            { no: 15, name: "agent_ethereum_address", kind: "message", T: () => StringValue }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWallet>): HyperliquidWallet {
@@ -428,6 +434,9 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
                 case /* google.protobuf.Timestamp agent_expires_at */ 14:
                     message.agentExpiresAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.agentExpiresAt);
                     break;
+                case /* google.protobuf.StringValue agent_ethereum_address */ 15:
+                    message.agentEthereumAddress = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.agentEthereumAddress);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -482,6 +491,9 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
         /* google.protobuf.Timestamp agent_expires_at = 14; */
         if (message.agentExpiresAt)
             Timestamp.internalBinaryWrite(message.agentExpiresAt, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.StringValue agent_ethereum_address = 15; */
+        if (message.agentEthereumAddress)
+            StringValue.internalBinaryWrite(message.agentEthereumAddress, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
