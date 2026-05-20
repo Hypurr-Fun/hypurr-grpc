@@ -11,6 +11,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { HyperliquidToken } from "./token";
+import { Timestamp } from "../google/protobuf/timestamp";
 import { HyperliquidWalletTwapSession } from "./tools";
 import { HyperliquidWalletScaleSession } from "./tools";
 import { Int64Value } from "../google/protobuf/wrappers";
@@ -70,6 +71,10 @@ export interface HyperliquidWallet {
      * @generated from protobuf field: bool public = 13
      */
     public: boolean;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp agent_expires_at = 14
+     */
+    agentExpiresAt?: Timestamp;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletMovement
@@ -354,7 +359,8 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
             { no: 10, name: "is_read_only", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 11, name: "scale_sessions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HyperliquidWalletScaleSession },
             { no: 12, name: "twap_sessions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HyperliquidWalletTwapSession },
-            { no: 13, name: "public", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 13, name: "public", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 14, name: "agent_expires_at", kind: "message", T: () => Timestamp }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWallet>): HyperliquidWallet {
@@ -419,6 +425,9 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
                 case /* bool public */ 13:
                     message.public = reader.bool();
                     break;
+                case /* google.protobuf.Timestamp agent_expires_at */ 14:
+                    message.agentExpiresAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.agentExpiresAt);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -470,6 +479,9 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
         /* bool public = 13; */
         if (message.public !== false)
             writer.tag(13, WireType.Varint).bool(message.public);
+        /* google.protobuf.Timestamp agent_expires_at = 14; */
+        if (message.agentExpiresAt)
+            Timestamp.internalBinaryWrite(message.agentExpiresAt, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

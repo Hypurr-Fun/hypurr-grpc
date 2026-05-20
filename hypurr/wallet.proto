@@ -3,6 +3,7 @@ package hypurr;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
 import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
 import "hypurr/token.proto";
 import "hypurr/tools.proto";
 
@@ -20,6 +21,7 @@ message HyperliquidWallet {
   repeated HyperliquidWalletScaleSession scale_sessions = 11;
   repeated HyperliquidWalletTwapSession twap_sessions = 12;
   bool public = 13;
+  google.protobuf.Timestamp agent_expires_at = 14;
 }
 
 message HyperliquidWalletMovement {
