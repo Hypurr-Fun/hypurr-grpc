@@ -743,6 +743,7 @@ service Telegram {
   rpc HyperliquidWalletSetPublic (HyperliquidWalletSetPublicRequest) returns (HyperliquidWalletSetPublicResponse) {}
   rpc HyperliquidAgentSignatureCreate (HyperliquidAgentSignatureCreateRequest) returns (HyperliquidAgentSignatureCreateResponse) {}
   rpc HyperliquidAgentWalletCreate (HyperliquidAgentWalletCreateRequest) returns (HyperliquidAgentWalletCreateResponse) {}
+  rpc HyperliquidAgentWalletRenew (HyperliquidAgentWalletRenewRequest) returns (HyperliquidAgentWalletRenewResponse) {}
   rpc HyperliquidWalletUpdate (HyperliquidWalletUpdateRequest) returns (HyperliquidWalletUpdateResponse) {}
 
   // Cabal

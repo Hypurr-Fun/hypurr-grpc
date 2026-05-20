@@ -9657,6 +9657,7 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "HyperliquidWalletSetPublic", options: {}, I: HyperliquidWalletSetPublicRequest, O: HyperliquidWalletSetPublicResponse },
     { name: "HyperliquidAgentSignatureCreate", options: {}, I: HyperliquidAgentSignatureCreateRequest, O: HyperliquidAgentSignatureCreateResponse },
     { name: "HyperliquidAgentWalletCreate", options: {}, I: HyperliquidAgentWalletCreateRequest, O: HyperliquidAgentWalletCreateResponse },
+    { name: "HyperliquidAgentWalletRenew", options: {}, I: HyperliquidAgentWalletRenewRequest, O: HyperliquidAgentWalletRenewResponse },
     { name: "HyperliquidWalletUpdate", options: {}, I: HyperliquidWalletUpdateRequest, O: HyperliquidWalletUpdateResponse },
     { name: "HfunCabalAlerts", serverStreaming: true, options: {}, I: HfunCabalAlertsRequest, O: HfunCabalAlertsResponse },
     { name: "TelegramChatWalletPackCreate", options: {}, I: TelegramChatWalletPackCreateRequest, O: TelegramChatWalletPackCreateResponse },
