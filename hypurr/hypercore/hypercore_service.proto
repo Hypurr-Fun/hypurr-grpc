@@ -219,6 +219,47 @@ message WalletLiquidation {
   double liquidation_price = 4;
 }
 
+message WalletMetricsRequest {
+  string wallet_address = 1;
+  int64 from_ts = 2;  // inclusive, unix seconds
+  int64 to_ts = 3;    // inclusive, unix seconds
+}
+
+message WalletMetricsResponse {
+  string wallet_address = 1;
+  repeated WalletDailyMetric daily = 2;
+  repeated WalletHourlyMetric hourly = 3;
+  repeated WalletInstrumentHourlyMetric instrument_hourly = 4;
+}
+
+// WalletDailyMetric mirrors one wallet_daily_metrics row (fixed-point ints).
+message WalletDailyMetric {
+  int64 day_ts = 1;
+  int64 daily_pnl = 2;
+  int64 cum_pnl = 3;
+  int64 peak_cum_pnl = 4;
+  int64 max_drawdown = 5;
+}
+
+// WalletHourlyMetric mirrors one wallet_hourly_metrics row (fixed-point ints).
+message WalletHourlyMetric {
+  int64 hour_ts = 1;
+  int64 realized_pnl = 2;
+  int64 unrealized_delta = 3;
+  int64 net_exposure = 4;
+  int64 intra_low_pnl = 5;
+}
+
+// WalletInstrumentHourlyMetric mirrors one wallet_instrument_hourly_pnl row.
+message WalletInstrumentHourlyMetric {
+  uint64 instrument_id = 1;
+  int64 hour_ts = 2;
+  int64 realized_pnl = 3;
+  int64 unrealized_delta = 4;
+  int64 end_size = 5;
+  int64 end_cost = 6;
+}
+
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
@@ -230,6 +271,7 @@ service HyperCore {
   rpc ReferrerWallet(ReferrerWalletRequest) returns (ReferrerWalletResponse) {}
   rpc WalletTags(WalletTagsRequest) returns (WalletTagsResponse) {}
   rpc WalletsByTag(WalletsByTagRequest) returns (WalletsByTagResponse) {}
+  rpc WalletMetrics(WalletMetricsRequest) returns (WalletMetricsResponse) {}
 }
 
 /*
