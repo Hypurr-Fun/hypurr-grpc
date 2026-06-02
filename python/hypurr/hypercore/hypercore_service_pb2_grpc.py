@@ -64,6 +64,16 @@ class HyperCoreStub(object):
         request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagRequest.SerializeToString,
         response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagResponse.FromString,
         )
+    self.WalletMetrics = channel.unary_unary(
+        '/hypercore.HyperCore/WalletMetrics',
+        request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletMetricsRequest.SerializeToString,
+        response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletMetricsResponse.FromString,
+        )
+    self.WalletInstrumentMetrics = channel.unary_unary(
+        '/hypercore.HyperCore/WalletInstrumentMetrics',
+        request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletInstrumentMetricsRequest.SerializeToString,
+        response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletInstrumentMetricsResponse.FromString,
+        )
 
 
 class HyperCoreServicer(object):
@@ -140,6 +150,20 @@ class HyperCoreServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def WalletMetrics(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def WalletInstrumentMetrics(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_HyperCoreServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -192,6 +216,16 @@ def add_HyperCoreServicer_to_server(servicer, server):
           servicer.WalletsByTag,
           request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagRequest.FromString,
           response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagResponse.SerializeToString,
+      ),
+      'WalletMetrics': grpc.unary_unary_rpc_method_handler(
+          servicer.WalletMetrics,
+          request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletMetricsRequest.FromString,
+          response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletMetricsResponse.SerializeToString,
+      ),
+      'WalletInstrumentMetrics': grpc.unary_unary_rpc_method_handler(
+          servicer.WalletInstrumentMetrics,
+          request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletInstrumentMetricsRequest.FromString,
+          response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletInstrumentMetricsResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

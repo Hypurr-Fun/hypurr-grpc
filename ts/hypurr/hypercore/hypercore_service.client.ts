@@ -4,6 +4,10 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
+import type { WalletInstrumentMetricsResponse } from "./hypercore_service";
+import type { WalletInstrumentMetricsRequest } from "./hypercore_service";
+import type { WalletMetricsResponse } from "./hypercore_service";
+import type { WalletMetricsRequest } from "./hypercore_service";
 import type { WalletsByTagResponse } from "./hypercore_service";
 import type { WalletsByTagRequest } from "./hypercore_service";
 import type { WalletTagsResponse } from "./hypercore_service";
@@ -73,6 +77,14 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: WalletsByTag
      */
     walletsByTag(input: WalletsByTagRequest, options?: RpcOptions): UnaryCall<WalletsByTagRequest, WalletsByTagResponse>;
+    /**
+     * @generated from protobuf rpc: WalletMetrics
+     */
+    walletMetrics(input: WalletMetricsRequest, options?: RpcOptions): UnaryCall<WalletMetricsRequest, WalletMetricsResponse>;
+    /**
+     * @generated from protobuf rpc: WalletInstrumentMetrics
+     */
+    walletInstrumentMetrics(input: WalletInstrumentMetricsRequest, options?: RpcOptions): UnaryCall<WalletInstrumentMetricsRequest, WalletInstrumentMetricsResponse>;
 }
 /**
  * @generated from protobuf service hypercore.HyperCore
@@ -152,5 +164,19 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
     walletsByTag(input: WalletsByTagRequest, options?: RpcOptions): UnaryCall<WalletsByTagRequest, WalletsByTagResponse> {
         const method = this.methods[9], opt = this._transport.mergeOptions(options);
         return stackIntercept<WalletsByTagRequest, WalletsByTagResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: WalletMetrics
+     */
+    walletMetrics(input: WalletMetricsRequest, options?: RpcOptions): UnaryCall<WalletMetricsRequest, WalletMetricsResponse> {
+        const method = this.methods[10], opt = this._transport.mergeOptions(options);
+        return stackIntercept<WalletMetricsRequest, WalletMetricsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: WalletInstrumentMetrics
+     */
+    walletInstrumentMetrics(input: WalletInstrumentMetricsRequest, options?: RpcOptions): UnaryCall<WalletInstrumentMetricsRequest, WalletInstrumentMetricsResponse> {
+        const method = this.methods[11], opt = this._transport.mergeOptions(options);
+        return stackIntercept<WalletInstrumentMetricsRequest, WalletInstrumentMetricsResponse>("unary", this._transport, method, opt, input);
     }
 }
