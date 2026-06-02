@@ -243,32 +243,32 @@ message WalletInstrumentMetricsResponse {
   repeated WalletInstrumentHourlyMetric instrument_hourly = 2;
 }
 
-// WalletDailyMetric mirrors one wallet_daily_metrics row (fixed-point ints).
+// WalletDailyMetric mirrors one wallet_daily_metrics row.
 message WalletDailyMetric {
   int64 day_ts = 1;
-  int64 daily_pnl = 2;
-  int64 cum_pnl = 3;
-  int64 peak_cum_pnl = 4;
-  int64 max_drawdown = 5;
+  double daily_pnl = 2;
+  double cum_pnl = 3;
+  double peak_cum_pnl = 4;
+  double max_drawdown = 5;
 }
 
-// WalletHourlyMetric mirrors one wallet_hourly_metrics row (fixed-point ints).
+// WalletHourlyMetric mirrors one wallet_hourly_metrics row.
 message WalletHourlyMetric {
   int64 hour_ts = 1;
-  int64 realized_pnl = 2;
-  int64 unrealized_delta = 3;
-  int64 net_exposure = 4;
-  int64 intra_low_pnl = 5;
+  double realized_pnl = 2;
+  double unrealized_delta = 3;
+  double net_exposure = 4;
+  double intra_low_pnl = 5;
 }
 
 // WalletInstrumentHourlyMetric mirrors one wallet_instrument_hourly_pnl row.
 message WalletInstrumentHourlyMetric {
   uint64 instrument_id = 1;
   int64 hour_ts = 2;
-  int64 realized_pnl = 3;
-  int64 unrealized_delta = 4;
-  int64 end_size = 5;
-  int64 end_cost = 6;
+  double realized_pnl = 3;
+  double unrealized_delta = 4;
+  double end_size = 5;
+  double end_cost = 6;
 }
 
 service HyperCore {
