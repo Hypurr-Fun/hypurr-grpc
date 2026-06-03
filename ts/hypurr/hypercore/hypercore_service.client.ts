@@ -4,10 +4,10 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
-import type { WalletInstrumentMetricsResponse } from "./hypercore_service";
-import type { WalletInstrumentMetricsRequest } from "./hypercore_service";
-import type { WalletMetricsResponse } from "./hypercore_service";
-import type { WalletMetricsRequest } from "./hypercore_service";
+import type { WalletPerformanceSeriesResponse } from "./hypercore_service";
+import type { WalletPerformanceSeriesRequest } from "./hypercore_service";
+import type { WalletPerformanceResponse } from "./hypercore_service";
+import type { WalletPerformanceRequest } from "./hypercore_service";
 import type { WalletsByTagResponse } from "./hypercore_service";
 import type { WalletsByTagRequest } from "./hypercore_service";
 import type { WalletTagsResponse } from "./hypercore_service";
@@ -78,13 +78,13 @@ export interface IHyperCoreClient {
      */
     walletsByTag(input: WalletsByTagRequest, options?: RpcOptions): UnaryCall<WalletsByTagRequest, WalletsByTagResponse>;
     /**
-     * @generated from protobuf rpc: WalletMetrics
+     * @generated from protobuf rpc: WalletPerformance
      */
-    walletMetrics(input: WalletMetricsRequest, options?: RpcOptions): UnaryCall<WalletMetricsRequest, WalletMetricsResponse>;
+    walletPerformance(input: WalletPerformanceRequest, options?: RpcOptions): UnaryCall<WalletPerformanceRequest, WalletPerformanceResponse>;
     /**
-     * @generated from protobuf rpc: WalletInstrumentMetrics
+     * @generated from protobuf rpc: WalletPerformanceSeries
      */
-    walletInstrumentMetrics(input: WalletInstrumentMetricsRequest, options?: RpcOptions): UnaryCall<WalletInstrumentMetricsRequest, WalletInstrumentMetricsResponse>;
+    walletPerformanceSeries(input: WalletPerformanceSeriesRequest, options?: RpcOptions): UnaryCall<WalletPerformanceSeriesRequest, WalletPerformanceSeriesResponse>;
 }
 /**
  * @generated from protobuf service hypercore.HyperCore
@@ -166,17 +166,17 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
         return stackIntercept<WalletsByTagRequest, WalletsByTagResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: WalletMetrics
+     * @generated from protobuf rpc: WalletPerformance
      */
-    walletMetrics(input: WalletMetricsRequest, options?: RpcOptions): UnaryCall<WalletMetricsRequest, WalletMetricsResponse> {
+    walletPerformance(input: WalletPerformanceRequest, options?: RpcOptions): UnaryCall<WalletPerformanceRequest, WalletPerformanceResponse> {
         const method = this.methods[10], opt = this._transport.mergeOptions(options);
-        return stackIntercept<WalletMetricsRequest, WalletMetricsResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<WalletPerformanceRequest, WalletPerformanceResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: WalletInstrumentMetrics
+     * @generated from protobuf rpc: WalletPerformanceSeries
      */
-    walletInstrumentMetrics(input: WalletInstrumentMetricsRequest, options?: RpcOptions): UnaryCall<WalletInstrumentMetricsRequest, WalletInstrumentMetricsResponse> {
+    walletPerformanceSeries(input: WalletPerformanceSeriesRequest, options?: RpcOptions): UnaryCall<WalletPerformanceSeriesRequest, WalletPerformanceSeriesResponse> {
         const method = this.methods[11], opt = this._transport.mergeOptions(options);
-        return stackIntercept<WalletInstrumentMetricsRequest, WalletInstrumentMetricsResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<WalletPerformanceSeriesRequest, WalletPerformanceSeriesResponse>("unary", this._transport, method, opt, input);
     }
 }

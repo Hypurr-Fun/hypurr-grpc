@@ -506,157 +506,196 @@ export interface WalletLiquidation {
     liquidationPrice: number;
 }
 /**
- * @generated from protobuf message hypercore.WalletMetricsRequest
- */
-export interface WalletMetricsRequest {
-    /**
-     * @generated from protobuf field: string wallet_address = 1
-     */
-    walletAddress: string;
-    /**
-     * @generated from protobuf field: int64 from_ts = 2
-     */
-    fromTs: number; // inclusive, unix seconds
-    /**
-     * @generated from protobuf field: int64 to_ts = 3
-     */
-    toTs: number; // inclusive, unix seconds
-}
-/**
- * @generated from protobuf message hypercore.WalletMetricsResponse
- */
-export interface WalletMetricsResponse {
-    /**
-     * @generated from protobuf field: string wallet_address = 1
-     */
-    walletAddress: string;
-    /**
-     * @generated from protobuf field: repeated hypercore.WalletDailyMetric daily = 2
-     */
-    daily: WalletDailyMetric[];
-    /**
-     * @generated from protobuf field: repeated hypercore.WalletHourlyMetric hourly = 3
-     */
-    hourly: WalletHourlyMetric[];
-}
-/**
- * @generated from protobuf message hypercore.WalletInstrumentMetricsRequest
- */
-export interface WalletInstrumentMetricsRequest {
-    /**
-     * @generated from protobuf field: string wallet_address = 1
-     */
-    walletAddress: string;
-    /**
-     * @generated from protobuf field: int64 from_ts = 2
-     */
-    fromTs: number; // inclusive, unix seconds
-    /**
-     * @generated from protobuf field: int64 to_ts = 3
-     */
-    toTs: number; // inclusive, unix seconds
-    /**
-     * @generated from protobuf field: uint64 instrument_id = 4
-     */
-    instrumentId: number;
-}
-/**
- * @generated from protobuf message hypercore.WalletInstrumentMetricsResponse
- */
-export interface WalletInstrumentMetricsResponse {
-    /**
-     * @generated from protobuf field: string wallet_address = 1
-     */
-    walletAddress: string;
-    /**
-     * @generated from protobuf field: repeated hypercore.WalletInstrumentHourlyMetric instrument_hourly = 2
-     */
-    instrumentHourly: WalletInstrumentHourlyMetric[];
-}
-/**
- * WalletDailyMetric mirrors one wallet_daily_metrics row.
+ * One time bucket of performance, for the whole account OR one instrument.
+ * Identical fields regardless of interval or scope.
  *
- * @generated from protobuf message hypercore.WalletDailyMetric
+ * @generated from protobuf message hypercore.PerformanceBucket
  */
-export interface WalletDailyMetric {
+export interface PerformanceBucket {
     /**
-     * @generated from protobuf field: int64 day_ts = 1
+     * @generated from protobuf field: int64 ts = 1
      */
-    dayTs: number;
+    ts: number; // bucket start, unix seconds (UTC day/hour/week boundary)
     /**
-     * @generated from protobuf field: double daily_pnl = 2
+     * --- PnL ---
+     *
+     * @generated from protobuf field: double realized_pnl = 2
      */
-    dailyPnl: number;
+    realizedPnl: number; // realized within this bucket (closed trades)
     /**
-     * @generated from protobuf field: double cum_pnl = 3
+     * @generated from protobuf field: double unrealized_pnl = 3
      */
-    cumPnl: number;
+    unrealizedPnl: number; // absolute MTM unrealized of open positions at bucket close
     /**
-     * @generated from protobuf field: double peak_cum_pnl = 4
+     * @generated from protobuf field: double period_pnl = 4
      */
-    peakCumPnl: number;
+    periodPnl: number; // this bucket's total contribution = realized_pnl + Δunrealized
     /**
-     * @generated from protobuf field: double max_drawdown = 5
+     * @generated from protobuf field: double cum_pnl = 5
      */
-    maxDrawdown: number;
+    cumPnl: number; // cumulative total PnL (realized+unrealized) through bucket close
+    /**
+     * --- Win rate ---
+     *
+     * @generated from protobuf field: int32 wins = 6
+     */
+    wins: number; // closed trades resolved in bucket with pnl > 0
+    /**
+     * @generated from protobuf field: int32 losses = 7
+     */
+    losses: number; // closed trades resolved in bucket with pnl <= 0
+    /**
+     * @generated from protobuf field: double cum_win_rate = 8
+     */
+    cumWinRate: number; // cumulative win rate through this bucket, [0,1]
 }
 /**
- * WalletHourlyMetric mirrors one wallet_hourly_metrics row.
+ * Aggregate over the requested window (from_ts..to_ts; 0/0 = all-time).
  *
- * @generated from protobuf message hypercore.WalletHourlyMetric
+ * @generated from protobuf message hypercore.PerformanceSummary
  */
-export interface WalletHourlyMetric {
+export interface PerformanceSummary {
     /**
-     * @generated from protobuf field: int64 hour_ts = 1
+     * @generated from protobuf field: double realized_pnl = 1
      */
-    hourTs: number;
+    realizedPnl: number;
+    /**
+     * @generated from protobuf field: double unrealized_pnl = 2
+     */
+    unrealizedPnl: number;
+    /**
+     * @generated from protobuf field: double total_pnl = 3
+     */
+    totalPnl: number; // realized + unrealized
+    /**
+     * @generated from protobuf field: int32 wins = 4
+     */
+    wins: number;
+    /**
+     * @generated from protobuf field: int32 losses = 5
+     */
+    losses: number;
+    /**
+     * @generated from protobuf field: double win_rate = 6
+     */
+    winRate: number; // wins / (wins + losses), [0,1]
+}
+/**
+ * @generated from protobuf message hypercore.InstrumentPerformance
+ */
+export interface InstrumentPerformance {
+    /**
+     * @generated from protobuf field: uint64 instrument_id = 1
+     */
+    instrumentId: number; // app convention: perp = index, spot = index + 10000
     /**
      * @generated from protobuf field: double realized_pnl = 2
      */
     realizedPnl: number;
     /**
-     * @generated from protobuf field: double unrealized_delta = 3
-     */
-    unrealizedDelta: number;
-    /**
-     * @generated from protobuf field: double net_exposure = 4
-     */
-    netExposure: number;
-    /**
-     * @generated from protobuf field: double intra_low_pnl = 5
-     */
-    intraLowPnl: number;
-}
-/**
- * WalletInstrumentHourlyMetric mirrors one wallet_instrument_hourly_pnl row.
- *
- * @generated from protobuf message hypercore.WalletInstrumentHourlyMetric
- */
-export interface WalletInstrumentHourlyMetric {
-    /**
-     * @generated from protobuf field: uint64 instrument_id = 1
-     */
-    instrumentId: number;
-    /**
-     * @generated from protobuf field: int64 hour_ts = 2
-     */
-    hourTs: number;
-    /**
-     * @generated from protobuf field: double realized_pnl = 3
-     */
-    realizedPnl: number;
-    /**
-     * @generated from protobuf field: double unrealized_pnl = 4
+     * @generated from protobuf field: double unrealized_pnl = 3
      */
     unrealizedPnl: number;
     /**
-     * @generated from protobuf field: double end_size = 5
+     * @generated from protobuf field: double total_pnl = 4
      */
-    endSize: number;
+    totalPnl: number;
     /**
-     * @generated from protobuf field: double end_cost = 6
+     * @generated from protobuf field: int32 wins = 5
      */
-    endCost: number;
+    wins: number;
+    /**
+     * @generated from protobuf field: int32 losses = 6
+     */
+    losses: number;
+    /**
+     * @generated from protobuf field: double win_rate = 7
+     */
+    winRate: number; // [0,1]
+}
+/**
+ * ----- RPC 1: aggregates (totals + per-instrument list) -----
+ *
+ * @generated from protobuf message hypercore.WalletPerformanceRequest
+ */
+export interface WalletPerformanceRequest {
+    /**
+     * @generated from protobuf field: string wallet_address = 1
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: int64 from_ts = 2
+     */
+    fromTs: number; // inclusive, unix seconds; 0 = all-time
+    /**
+     * @generated from protobuf field: int64 to_ts = 3
+     */
+    toTs: number; // inclusive, unix seconds; 0 = now
+}
+/**
+ * @generated from protobuf message hypercore.WalletPerformanceResponse
+ */
+export interface WalletPerformanceResponse {
+    /**
+     * @generated from protobuf field: string wallet_address = 1
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: hypercore.PerformanceSummary account = 2
+     */
+    account?: PerformanceSummary; // total PnL + total win rate
+    /**
+     * @generated from protobuf field: repeated hypercore.InstrumentPerformance instruments = 3
+     */
+    instruments: InstrumentPerformance[]; // per-instrument win rate + all-time PnL
+}
+/**
+ * ----- RPC 2: time series (calendar + graphs) -----
+ *
+ * @generated from protobuf message hypercore.WalletPerformanceSeriesRequest
+ */
+export interface WalletPerformanceSeriesRequest {
+    /**
+     * @generated from protobuf field: string wallet_address = 1
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: int64 from_ts = 2
+     */
+    fromTs: number;
+    /**
+     * @generated from protobuf field: int64 to_ts = 3
+     */
+    toTs: number;
+    /**
+     * @generated from protobuf field: hypercore.MetricInterval interval = 4
+     */
+    interval: MetricInterval; // default DAY
+    /**
+     * @generated from protobuf field: optional uint64 instrument_id = 5
+     */
+    instrumentId?: number; // unset = whole account; set = filter to instrument
+}
+/**
+ * @generated from protobuf message hypercore.WalletPerformanceSeriesResponse
+ */
+export interface WalletPerformanceSeriesResponse {
+    /**
+     * @generated from protobuf field: string wallet_address = 1
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: hypercore.MetricInterval interval = 2
+     */
+    interval: MetricInterval;
+    /**
+     * @generated from protobuf field: optional uint64 instrument_id = 3
+     */
+    instrumentId?: number; // echoes the filter
+    /**
+     * @generated from protobuf field: repeated hypercore.PerformanceBucket buckets = 4
+     */
+    buckets: PerformanceBucket[]; // ascending by ts
 }
 // 
 // type Trade struct {
@@ -731,6 +770,29 @@ export enum TradeDirOverride {
      * @generated from protobuf enum value: TRADE_DIR_OVERRIDE_B = 2;
      */
     TRADE_DIR_OVERRIDE_B = 2
+}
+/**
+ * @generated from protobuf enum hypercore.MetricInterval
+ */
+export enum MetricInterval {
+    /**
+     * server treats as DAY
+     *
+     * @generated from protobuf enum value: METRIC_INTERVAL_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: METRIC_INTERVAL_HOUR = 1;
+     */
+    HOUR = 1,
+    /**
+     * @generated from protobuf enum value: METRIC_INTERVAL_DAY = 2;
+     */
+    DAY = 2,
+    /**
+     * @generated from protobuf enum value: METRIC_INTERVAL_WEEK = 3;
+     */
+    WEEK = 3
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TradeSideInfo$Type extends MessageType<TradeSideInfo> {
@@ -2612,377 +2674,61 @@ class WalletLiquidation$Type extends MessageType<WalletLiquidation> {
  */
 export const WalletLiquidation = new WalletLiquidation$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class WalletMetricsRequest$Type extends MessageType<WalletMetricsRequest> {
+class PerformanceBucket$Type extends MessageType<PerformanceBucket> {
     constructor() {
-        super("hypercore.WalletMetricsRequest", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
-        ]);
-    }
-    create(value?: PartialMessage<WalletMetricsRequest>): WalletMetricsRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.walletAddress = "";
-        message.fromTs = 0;
-        message.toTs = 0;
-        if (value !== undefined)
-            reflectionMergePartial<WalletMetricsRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletMetricsRequest): WalletMetricsRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string wallet_address */ 1:
-                    message.walletAddress = reader.string();
-                    break;
-                case /* int64 from_ts */ 2:
-                    message.fromTs = reader.int64().toNumber();
-                    break;
-                case /* int64 to_ts */ 3:
-                    message.toTs = reader.int64().toNumber();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: WalletMetricsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_address = 1; */
-        if (message.walletAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
-        /* int64 from_ts = 2; */
-        if (message.fromTs !== 0)
-            writer.tag(2, WireType.Varint).int64(message.fromTs);
-        /* int64 to_ts = 3; */
-        if (message.toTs !== 0)
-            writer.tag(3, WireType.Varint).int64(message.toTs);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypercore.WalletMetricsRequest
- */
-export const WalletMetricsRequest = new WalletMetricsRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class WalletMetricsResponse$Type extends MessageType<WalletMetricsResponse> {
-    constructor() {
-        super("hypercore.WalletMetricsResponse", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "daily", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletDailyMetric },
-            { no: 3, name: "hourly", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletHourlyMetric }
-        ]);
-    }
-    create(value?: PartialMessage<WalletMetricsResponse>): WalletMetricsResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.walletAddress = "";
-        message.daily = [];
-        message.hourly = [];
-        if (value !== undefined)
-            reflectionMergePartial<WalletMetricsResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletMetricsResponse): WalletMetricsResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string wallet_address */ 1:
-                    message.walletAddress = reader.string();
-                    break;
-                case /* repeated hypercore.WalletDailyMetric daily */ 2:
-                    message.daily.push(WalletDailyMetric.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* repeated hypercore.WalletHourlyMetric hourly */ 3:
-                    message.hourly.push(WalletHourlyMetric.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: WalletMetricsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_address = 1; */
-        if (message.walletAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
-        /* repeated hypercore.WalletDailyMetric daily = 2; */
-        for (let i = 0; i < message.daily.length; i++)
-            WalletDailyMetric.internalBinaryWrite(message.daily[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* repeated hypercore.WalletHourlyMetric hourly = 3; */
-        for (let i = 0; i < message.hourly.length; i++)
-            WalletHourlyMetric.internalBinaryWrite(message.hourly[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypercore.WalletMetricsResponse
- */
-export const WalletMetricsResponse = new WalletMetricsResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class WalletInstrumentMetricsRequest$Type extends MessageType<WalletInstrumentMetricsRequest> {
-    constructor() {
-        super("hypercore.WalletInstrumentMetricsRequest", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
-        ]);
-    }
-    create(value?: PartialMessage<WalletInstrumentMetricsRequest>): WalletInstrumentMetricsRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.walletAddress = "";
-        message.fromTs = 0;
-        message.toTs = 0;
-        message.instrumentId = 0;
-        if (value !== undefined)
-            reflectionMergePartial<WalletInstrumentMetricsRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletInstrumentMetricsRequest): WalletInstrumentMetricsRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string wallet_address */ 1:
-                    message.walletAddress = reader.string();
-                    break;
-                case /* int64 from_ts */ 2:
-                    message.fromTs = reader.int64().toNumber();
-                    break;
-                case /* int64 to_ts */ 3:
-                    message.toTs = reader.int64().toNumber();
-                    break;
-                case /* uint64 instrument_id */ 4:
-                    message.instrumentId = reader.uint64().toNumber();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: WalletInstrumentMetricsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_address = 1; */
-        if (message.walletAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
-        /* int64 from_ts = 2; */
-        if (message.fromTs !== 0)
-            writer.tag(2, WireType.Varint).int64(message.fromTs);
-        /* int64 to_ts = 3; */
-        if (message.toTs !== 0)
-            writer.tag(3, WireType.Varint).int64(message.toTs);
-        /* uint64 instrument_id = 4; */
-        if (message.instrumentId !== 0)
-            writer.tag(4, WireType.Varint).uint64(message.instrumentId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypercore.WalletInstrumentMetricsRequest
- */
-export const WalletInstrumentMetricsRequest = new WalletInstrumentMetricsRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class WalletInstrumentMetricsResponse$Type extends MessageType<WalletInstrumentMetricsResponse> {
-    constructor() {
-        super("hypercore.WalletInstrumentMetricsResponse", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "instrument_hourly", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletInstrumentHourlyMetric }
-        ]);
-    }
-    create(value?: PartialMessage<WalletInstrumentMetricsResponse>): WalletInstrumentMetricsResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.walletAddress = "";
-        message.instrumentHourly = [];
-        if (value !== undefined)
-            reflectionMergePartial<WalletInstrumentMetricsResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletInstrumentMetricsResponse): WalletInstrumentMetricsResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string wallet_address */ 1:
-                    message.walletAddress = reader.string();
-                    break;
-                case /* repeated hypercore.WalletInstrumentHourlyMetric instrument_hourly */ 2:
-                    message.instrumentHourly.push(WalletInstrumentHourlyMetric.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: WalletInstrumentMetricsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_address = 1; */
-        if (message.walletAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
-        /* repeated hypercore.WalletInstrumentHourlyMetric instrument_hourly = 2; */
-        for (let i = 0; i < message.instrumentHourly.length; i++)
-            WalletInstrumentHourlyMetric.internalBinaryWrite(message.instrumentHourly[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypercore.WalletInstrumentMetricsResponse
- */
-export const WalletInstrumentMetricsResponse = new WalletInstrumentMetricsResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class WalletDailyMetric$Type extends MessageType<WalletDailyMetric> {
-    constructor() {
-        super("hypercore.WalletDailyMetric", [
-            { no: 1, name: "day_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "daily_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 3, name: "cum_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 4, name: "peak_cum_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 5, name: "max_drawdown", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
-        ]);
-    }
-    create(value?: PartialMessage<WalletDailyMetric>): WalletDailyMetric {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.dayTs = 0;
-        message.dailyPnl = 0;
-        message.cumPnl = 0;
-        message.peakCumPnl = 0;
-        message.maxDrawdown = 0;
-        if (value !== undefined)
-            reflectionMergePartial<WalletDailyMetric>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletDailyMetric): WalletDailyMetric {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 day_ts */ 1:
-                    message.dayTs = reader.int64().toNumber();
-                    break;
-                case /* double daily_pnl */ 2:
-                    message.dailyPnl = reader.double();
-                    break;
-                case /* double cum_pnl */ 3:
-                    message.cumPnl = reader.double();
-                    break;
-                case /* double peak_cum_pnl */ 4:
-                    message.peakCumPnl = reader.double();
-                    break;
-                case /* double max_drawdown */ 5:
-                    message.maxDrawdown = reader.double();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: WalletDailyMetric, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 day_ts = 1; */
-        if (message.dayTs !== 0)
-            writer.tag(1, WireType.Varint).int64(message.dayTs);
-        /* double daily_pnl = 2; */
-        if (message.dailyPnl !== 0)
-            writer.tag(2, WireType.Bit64).double(message.dailyPnl);
-        /* double cum_pnl = 3; */
-        if (message.cumPnl !== 0)
-            writer.tag(3, WireType.Bit64).double(message.cumPnl);
-        /* double peak_cum_pnl = 4; */
-        if (message.peakCumPnl !== 0)
-            writer.tag(4, WireType.Bit64).double(message.peakCumPnl);
-        /* double max_drawdown = 5; */
-        if (message.maxDrawdown !== 0)
-            writer.tag(5, WireType.Bit64).double(message.maxDrawdown);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypercore.WalletDailyMetric
- */
-export const WalletDailyMetric = new WalletDailyMetric$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class WalletHourlyMetric$Type extends MessageType<WalletHourlyMetric> {
-    constructor() {
-        super("hypercore.WalletHourlyMetric", [
-            { no: 1, name: "hour_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+        super("hypercore.PerformanceBucket", [
+            { no: 1, name: "ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "realized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 3, name: "unrealized_delta", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 4, name: "net_exposure", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 5, name: "intra_low_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 3, name: "unrealized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "period_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "cum_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "wins", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "losses", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 8, name: "cum_win_rate", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
-    create(value?: PartialMessage<WalletHourlyMetric>): WalletHourlyMetric {
+    create(value?: PartialMessage<PerformanceBucket>): PerformanceBucket {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.hourTs = 0;
+        message.ts = 0;
         message.realizedPnl = 0;
-        message.unrealizedDelta = 0;
-        message.netExposure = 0;
-        message.intraLowPnl = 0;
+        message.unrealizedPnl = 0;
+        message.periodPnl = 0;
+        message.cumPnl = 0;
+        message.wins = 0;
+        message.losses = 0;
+        message.cumWinRate = 0;
         if (value !== undefined)
-            reflectionMergePartial<WalletHourlyMetric>(this, message, value);
+            reflectionMergePartial<PerformanceBucket>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletHourlyMetric): WalletHourlyMetric {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerformanceBucket): PerformanceBucket {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* int64 hour_ts */ 1:
-                    message.hourTs = reader.int64().toNumber();
+                case /* int64 ts */ 1:
+                    message.ts = reader.int64().toNumber();
                     break;
                 case /* double realized_pnl */ 2:
                     message.realizedPnl = reader.double();
                     break;
-                case /* double unrealized_delta */ 3:
-                    message.unrealizedDelta = reader.double();
+                case /* double unrealized_pnl */ 3:
+                    message.unrealizedPnl = reader.double();
                     break;
-                case /* double net_exposure */ 4:
-                    message.netExposure = reader.double();
+                case /* double period_pnl */ 4:
+                    message.periodPnl = reader.double();
                     break;
-                case /* double intra_low_pnl */ 5:
-                    message.intraLowPnl = reader.double();
+                case /* double cum_pnl */ 5:
+                    message.cumPnl = reader.double();
+                    break;
+                case /* int32 wins */ 6:
+                    message.wins = reader.int32();
+                    break;
+                case /* int32 losses */ 7:
+                    message.losses = reader.int32();
+                    break;
+                case /* double cum_win_rate */ 8:
+                    message.cumWinRate = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2995,22 +2741,31 @@ class WalletHourlyMetric$Type extends MessageType<WalletHourlyMetric> {
         }
         return message;
     }
-    internalBinaryWrite(message: WalletHourlyMetric, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 hour_ts = 1; */
-        if (message.hourTs !== 0)
-            writer.tag(1, WireType.Varint).int64(message.hourTs);
+    internalBinaryWrite(message: PerformanceBucket, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 ts = 1; */
+        if (message.ts !== 0)
+            writer.tag(1, WireType.Varint).int64(message.ts);
         /* double realized_pnl = 2; */
         if (message.realizedPnl !== 0)
             writer.tag(2, WireType.Bit64).double(message.realizedPnl);
-        /* double unrealized_delta = 3; */
-        if (message.unrealizedDelta !== 0)
-            writer.tag(3, WireType.Bit64).double(message.unrealizedDelta);
-        /* double net_exposure = 4; */
-        if (message.netExposure !== 0)
-            writer.tag(4, WireType.Bit64).double(message.netExposure);
-        /* double intra_low_pnl = 5; */
-        if (message.intraLowPnl !== 0)
-            writer.tag(5, WireType.Bit64).double(message.intraLowPnl);
+        /* double unrealized_pnl = 3; */
+        if (message.unrealizedPnl !== 0)
+            writer.tag(3, WireType.Bit64).double(message.unrealizedPnl);
+        /* double period_pnl = 4; */
+        if (message.periodPnl !== 0)
+            writer.tag(4, WireType.Bit64).double(message.periodPnl);
+        /* double cum_pnl = 5; */
+        if (message.cumPnl !== 0)
+            writer.tag(5, WireType.Bit64).double(message.cumPnl);
+        /* int32 wins = 6; */
+        if (message.wins !== 0)
+            writer.tag(6, WireType.Varint).int32(message.wins);
+        /* int32 losses = 7; */
+        if (message.losses !== 0)
+            writer.tag(7, WireType.Varint).int32(message.losses);
+        /* double cum_win_rate = 8; */
+        if (message.cumWinRate !== 0)
+            writer.tag(8, WireType.Bit64).double(message.cumWinRate);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3018,34 +2773,123 @@ class WalletHourlyMetric$Type extends MessageType<WalletHourlyMetric> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypercore.WalletHourlyMetric
+ * @generated MessageType for protobuf message hypercore.PerformanceBucket
  */
-export const WalletHourlyMetric = new WalletHourlyMetric$Type();
+export const PerformanceBucket = new PerformanceBucket$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class WalletInstrumentHourlyMetric$Type extends MessageType<WalletInstrumentHourlyMetric> {
+class PerformanceSummary$Type extends MessageType<PerformanceSummary> {
     constructor() {
-        super("hypercore.WalletInstrumentHourlyMetric", [
-            { no: 1, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "hour_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "realized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 4, name: "unrealized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 5, name: "end_size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 6, name: "end_cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        super("hypercore.PerformanceSummary", [
+            { no: 1, name: "realized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 2, name: "unrealized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "total_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "wins", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 5, name: "losses", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "win_rate", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
-    create(value?: PartialMessage<WalletInstrumentHourlyMetric>): WalletInstrumentHourlyMetric {
+    create(value?: PartialMessage<PerformanceSummary>): PerformanceSummary {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.instrumentId = 0;
-        message.hourTs = 0;
         message.realizedPnl = 0;
         message.unrealizedPnl = 0;
-        message.endSize = 0;
-        message.endCost = 0;
+        message.totalPnl = 0;
+        message.wins = 0;
+        message.losses = 0;
+        message.winRate = 0;
         if (value !== undefined)
-            reflectionMergePartial<WalletInstrumentHourlyMetric>(this, message, value);
+            reflectionMergePartial<PerformanceSummary>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletInstrumentHourlyMetric): WalletInstrumentHourlyMetric {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerformanceSummary): PerformanceSummary {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* double realized_pnl */ 1:
+                    message.realizedPnl = reader.double();
+                    break;
+                case /* double unrealized_pnl */ 2:
+                    message.unrealizedPnl = reader.double();
+                    break;
+                case /* double total_pnl */ 3:
+                    message.totalPnl = reader.double();
+                    break;
+                case /* int32 wins */ 4:
+                    message.wins = reader.int32();
+                    break;
+                case /* int32 losses */ 5:
+                    message.losses = reader.int32();
+                    break;
+                case /* double win_rate */ 6:
+                    message.winRate = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PerformanceSummary, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* double realized_pnl = 1; */
+        if (message.realizedPnl !== 0)
+            writer.tag(1, WireType.Bit64).double(message.realizedPnl);
+        /* double unrealized_pnl = 2; */
+        if (message.unrealizedPnl !== 0)
+            writer.tag(2, WireType.Bit64).double(message.unrealizedPnl);
+        /* double total_pnl = 3; */
+        if (message.totalPnl !== 0)
+            writer.tag(3, WireType.Bit64).double(message.totalPnl);
+        /* int32 wins = 4; */
+        if (message.wins !== 0)
+            writer.tag(4, WireType.Varint).int32(message.wins);
+        /* int32 losses = 5; */
+        if (message.losses !== 0)
+            writer.tag(5, WireType.Varint).int32(message.losses);
+        /* double win_rate = 6; */
+        if (message.winRate !== 0)
+            writer.tag(6, WireType.Bit64).double(message.winRate);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PerformanceSummary
+ */
+export const PerformanceSummary = new PerformanceSummary$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstrumentPerformance$Type extends MessageType<InstrumentPerformance> {
+    constructor() {
+        super("hypercore.InstrumentPerformance", [
+            { no: 1, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "realized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "unrealized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "total_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "wins", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "losses", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "win_rate", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<InstrumentPerformance>): InstrumentPerformance {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrumentId = 0;
+        message.realizedPnl = 0;
+        message.unrealizedPnl = 0;
+        message.totalPnl = 0;
+        message.wins = 0;
+        message.losses = 0;
+        message.winRate = 0;
+        if (value !== undefined)
+            reflectionMergePartial<InstrumentPerformance>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: InstrumentPerformance): InstrumentPerformance {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -3053,20 +2897,23 @@ class WalletInstrumentHourlyMetric$Type extends MessageType<WalletInstrumentHour
                 case /* uint64 instrument_id */ 1:
                     message.instrumentId = reader.uint64().toNumber();
                     break;
-                case /* int64 hour_ts */ 2:
-                    message.hourTs = reader.int64().toNumber();
-                    break;
-                case /* double realized_pnl */ 3:
+                case /* double realized_pnl */ 2:
                     message.realizedPnl = reader.double();
                     break;
-                case /* double unrealized_pnl */ 4:
+                case /* double unrealized_pnl */ 3:
                     message.unrealizedPnl = reader.double();
                     break;
-                case /* double end_size */ 5:
-                    message.endSize = reader.double();
+                case /* double total_pnl */ 4:
+                    message.totalPnl = reader.double();
                     break;
-                case /* double end_cost */ 6:
-                    message.endCost = reader.double();
+                case /* int32 wins */ 5:
+                    message.wins = reader.int32();
+                    break;
+                case /* int32 losses */ 6:
+                    message.losses = reader.int32();
+                    break;
+                case /* double win_rate */ 7:
+                    message.winRate = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3079,25 +2926,28 @@ class WalletInstrumentHourlyMetric$Type extends MessageType<WalletInstrumentHour
         }
         return message;
     }
-    internalBinaryWrite(message: WalletInstrumentHourlyMetric, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: InstrumentPerformance, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* uint64 instrument_id = 1; */
         if (message.instrumentId !== 0)
             writer.tag(1, WireType.Varint).uint64(message.instrumentId);
-        /* int64 hour_ts = 2; */
-        if (message.hourTs !== 0)
-            writer.tag(2, WireType.Varint).int64(message.hourTs);
-        /* double realized_pnl = 3; */
+        /* double realized_pnl = 2; */
         if (message.realizedPnl !== 0)
-            writer.tag(3, WireType.Bit64).double(message.realizedPnl);
-        /* double unrealized_pnl = 4; */
+            writer.tag(2, WireType.Bit64).double(message.realizedPnl);
+        /* double unrealized_pnl = 3; */
         if (message.unrealizedPnl !== 0)
-            writer.tag(4, WireType.Bit64).double(message.unrealizedPnl);
-        /* double end_size = 5; */
-        if (message.endSize !== 0)
-            writer.tag(5, WireType.Bit64).double(message.endSize);
-        /* double end_cost = 6; */
-        if (message.endCost !== 0)
-            writer.tag(6, WireType.Bit64).double(message.endCost);
+            writer.tag(3, WireType.Bit64).double(message.unrealizedPnl);
+        /* double total_pnl = 4; */
+        if (message.totalPnl !== 0)
+            writer.tag(4, WireType.Bit64).double(message.totalPnl);
+        /* int32 wins = 5; */
+        if (message.wins !== 0)
+            writer.tag(5, WireType.Varint).int32(message.wins);
+        /* int32 losses = 6; */
+        if (message.losses !== 0)
+            writer.tag(6, WireType.Varint).int32(message.losses);
+        /* double win_rate = 7; */
+        if (message.winRate !== 0)
+            writer.tag(7, WireType.Bit64).double(message.winRate);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3105,9 +2955,282 @@ class WalletInstrumentHourlyMetric$Type extends MessageType<WalletInstrumentHour
     }
 }
 /**
- * @generated MessageType for protobuf message hypercore.WalletInstrumentHourlyMetric
+ * @generated MessageType for protobuf message hypercore.InstrumentPerformance
  */
-export const WalletInstrumentHourlyMetric = new WalletInstrumentHourlyMetric$Type();
+export const InstrumentPerformance = new InstrumentPerformance$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletPerformanceRequest$Type extends MessageType<WalletPerformanceRequest> {
+    constructor() {
+        super("hypercore.WalletPerformanceRequest", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPerformanceRequest>): WalletPerformanceRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        message.fromTs = 0;
+        message.toTs = 0;
+        if (value !== undefined)
+            reflectionMergePartial<WalletPerformanceRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPerformanceRequest): WalletPerformanceRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* int64 from_ts */ 2:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 3:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPerformanceRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* int64 from_ts = 2; */
+        if (message.fromTs !== 0)
+            writer.tag(2, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 3; */
+        if (message.toTs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.toTs);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletPerformanceRequest
+ */
+export const WalletPerformanceRequest = new WalletPerformanceRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletPerformanceResponse$Type extends MessageType<WalletPerformanceResponse> {
+    constructor() {
+        super("hypercore.WalletPerformanceResponse", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "account", kind: "message", T: () => PerformanceSummary },
+            { no: 3, name: "instruments", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => InstrumentPerformance }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPerformanceResponse>): WalletPerformanceResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        message.instruments = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletPerformanceResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPerformanceResponse): WalletPerformanceResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* hypercore.PerformanceSummary account */ 2:
+                    message.account = PerformanceSummary.internalBinaryRead(reader, reader.uint32(), options, message.account);
+                    break;
+                case /* repeated hypercore.InstrumentPerformance instruments */ 3:
+                    message.instruments.push(InstrumentPerformance.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPerformanceResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* hypercore.PerformanceSummary account = 2; */
+        if (message.account)
+            PerformanceSummary.internalBinaryWrite(message.account, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypercore.InstrumentPerformance instruments = 3; */
+        for (let i = 0; i < message.instruments.length; i++)
+            InstrumentPerformance.internalBinaryWrite(message.instruments[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletPerformanceResponse
+ */
+export const WalletPerformanceResponse = new WalletPerformanceResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletPerformanceSeriesRequest$Type extends MessageType<WalletPerformanceSeriesRequest> {
+    constructor() {
+        super("hypercore.WalletPerformanceSeriesRequest", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "interval", kind: "enum", T: () => ["hypercore.MetricInterval", MetricInterval, "METRIC_INTERVAL_"] },
+            { no: 5, name: "instrument_id", kind: "scalar", opt: true, T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPerformanceSeriesRequest>): WalletPerformanceSeriesRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        message.fromTs = 0;
+        message.toTs = 0;
+        message.interval = 0;
+        if (value !== undefined)
+            reflectionMergePartial<WalletPerformanceSeriesRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPerformanceSeriesRequest): WalletPerformanceSeriesRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* int64 from_ts */ 2:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 3:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                case /* hypercore.MetricInterval interval */ 4:
+                    message.interval = reader.int32();
+                    break;
+                case /* optional uint64 instrument_id */ 5:
+                    message.instrumentId = reader.uint64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPerformanceSeriesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* int64 from_ts = 2; */
+        if (message.fromTs !== 0)
+            writer.tag(2, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 3; */
+        if (message.toTs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.toTs);
+        /* hypercore.MetricInterval interval = 4; */
+        if (message.interval !== 0)
+            writer.tag(4, WireType.Varint).int32(message.interval);
+        /* optional uint64 instrument_id = 5; */
+        if (message.instrumentId !== undefined)
+            writer.tag(5, WireType.Varint).uint64(message.instrumentId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletPerformanceSeriesRequest
+ */
+export const WalletPerformanceSeriesRequest = new WalletPerformanceSeriesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletPerformanceSeriesResponse$Type extends MessageType<WalletPerformanceSeriesResponse> {
+    constructor() {
+        super("hypercore.WalletPerformanceSeriesResponse", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "interval", kind: "enum", T: () => ["hypercore.MetricInterval", MetricInterval, "METRIC_INTERVAL_"] },
+            { no: 3, name: "instrument_id", kind: "scalar", opt: true, T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "buckets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PerformanceBucket }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPerformanceSeriesResponse>): WalletPerformanceSeriesResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        message.interval = 0;
+        message.buckets = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletPerformanceSeriesResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPerformanceSeriesResponse): WalletPerformanceSeriesResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* hypercore.MetricInterval interval */ 2:
+                    message.interval = reader.int32();
+                    break;
+                case /* optional uint64 instrument_id */ 3:
+                    message.instrumentId = reader.uint64().toNumber();
+                    break;
+                case /* repeated hypercore.PerformanceBucket buckets */ 4:
+                    message.buckets.push(PerformanceBucket.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPerformanceSeriesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* hypercore.MetricInterval interval = 2; */
+        if (message.interval !== 0)
+            writer.tag(2, WireType.Varint).int32(message.interval);
+        /* optional uint64 instrument_id = 3; */
+        if (message.instrumentId !== undefined)
+            writer.tag(3, WireType.Varint).uint64(message.instrumentId);
+        /* repeated hypercore.PerformanceBucket buckets = 4; */
+        for (let i = 0; i < message.buckets.length; i++)
+            PerformanceBucket.internalBinaryWrite(message.buckets[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletPerformanceSeriesResponse
+ */
+export const WalletPerformanceSeriesResponse = new WalletPerformanceSeriesResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypercore.HyperCore
  */
@@ -3122,6 +3245,6 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "ReferrerWallet", options: {}, I: ReferrerWalletRequest, O: ReferrerWalletResponse },
     { name: "WalletTags", options: {}, I: WalletTagsRequest, O: WalletTagsResponse },
     { name: "WalletsByTag", options: {}, I: WalletsByTagRequest, O: WalletsByTagResponse },
-    { name: "WalletMetrics", options: {}, I: WalletMetricsRequest, O: WalletMetricsResponse },
-    { name: "WalletInstrumentMetrics", options: {}, I: WalletInstrumentMetricsRequest, O: WalletInstrumentMetricsResponse }
+    { name: "WalletPerformance", options: {}, I: WalletPerformanceRequest, O: WalletPerformanceResponse },
+    { name: "WalletPerformanceSeries", options: {}, I: WalletPerformanceSeriesRequest, O: WalletPerformanceSeriesResponse }
 ]);

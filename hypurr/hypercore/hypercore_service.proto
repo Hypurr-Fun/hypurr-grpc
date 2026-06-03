@@ -219,57 +219,77 @@ message WalletLiquidation {
   double liquidation_price = 4;
 }
 
-message WalletMetricsRequest {
+enum MetricInterval {
+  METRIC_INTERVAL_UNSPECIFIED = 0; // server treats as DAY
+  METRIC_INTERVAL_HOUR        = 1;
+  METRIC_INTERVAL_DAY         = 2;
+  METRIC_INTERVAL_WEEK        = 3;
+}
+
+// One time bucket of performance, for the whole account OR one instrument.
+// Identical fields regardless of interval or scope.
+message PerformanceBucket {
+  int64  ts             = 1; // bucket start, unix seconds (UTC day/hour/week boundary)
+
+  // --- PnL ---
+  double realized_pnl   = 2; // realized within this bucket (closed trades)
+  double unrealized_pnl = 3; // absolute MTM unrealized of open positions at bucket close
+  double period_pnl     = 4; // this bucket's total contribution = realized_pnl + Δunrealized
+  double cum_pnl        = 5; // cumulative total PnL (realized+unrealized) through bucket close
+
+  // --- Win rate ---
+  int32  wins           = 6; // closed trades resolved in bucket with pnl > 0
+  int32  losses         = 7; // closed trades resolved in bucket with pnl <= 0
+  double cum_win_rate   = 8; // cumulative win rate through this bucket, [0,1]
+}
+
+// Aggregate over the requested window (from_ts..to_ts; 0/0 = all-time).
+message PerformanceSummary {
+  double realized_pnl   = 1;
+  double unrealized_pnl = 2;
+  double total_pnl      = 3; // realized + unrealized
+  int32  wins           = 4;
+  int32  losses         = 5;
+  double win_rate       = 6; // wins / (wins + losses), [0,1]
+}
+
+message InstrumentPerformance {
+  uint64 instrument_id  = 1; // app convention: perp = index, spot = index + 10000
+  double realized_pnl   = 2;
+  double unrealized_pnl = 3;
+  double total_pnl      = 4;
+  int32  wins           = 5;
+  int32  losses         = 6;
+  double win_rate       = 7; // [0,1]
+}
+
+// ----- RPC 1: aggregates (totals + per-instrument list) -----
+message WalletPerformanceRequest {
   string wallet_address = 1;
-  int64 from_ts = 2;  // inclusive, unix seconds
-  int64 to_ts = 3;    // inclusive, unix seconds
+  int64  from_ts        = 2; // inclusive, unix seconds; 0 = all-time
+  int64  to_ts          = 3; // inclusive, unix seconds; 0 = now
+}
+message WalletPerformanceResponse {
+  string wallet_address                        = 1;
+  PerformanceSummary account                   = 2; // total PnL + total win rate
+  repeated InstrumentPerformance instruments   = 3; // per-instrument win rate + all-time PnL
 }
 
-message WalletMetricsResponse {
-  string wallet_address = 1;
-  repeated WalletDailyMetric daily = 2;
-  repeated WalletHourlyMetric hourly = 3;
+// ----- RPC 2: time series (calendar + graphs) -----
+message WalletPerformanceSeriesRequest {
+  string wallet_address     = 1;
+  int64  from_ts            = 2;
+  int64  to_ts              = 3;
+  MetricInterval interval   = 4;            // default DAY
+  optional uint64 instrument_id = 5;        // unset = whole account; set = filter to instrument
+}
+message WalletPerformanceSeriesResponse {
+  string wallet_address              = 1;
+  MetricInterval interval            = 2;
+  optional uint64 instrument_id      = 3;   // echoes the filter
+  repeated PerformanceBucket buckets = 4;   // ascending by ts
 }
 
-message WalletInstrumentMetricsRequest {
-  string wallet_address = 1;
-  int64 from_ts = 2;  // inclusive, unix seconds
-  int64 to_ts = 3;    // inclusive, unix seconds
-  uint64 instrument_id = 4;
-}
-
-message WalletInstrumentMetricsResponse {
-  string wallet_address = 1;
-  repeated WalletInstrumentHourlyMetric instrument_hourly = 2;
-}
-
-// WalletDailyMetric mirrors one wallet_daily_metrics row.
-message WalletDailyMetric {
-  int64 day_ts = 1;
-  double daily_pnl = 2;
-  double cum_pnl = 3;
-  double peak_cum_pnl = 4;
-  double max_drawdown = 5;
-}
-
-// WalletHourlyMetric mirrors one wallet_hourly_metrics row.
-message WalletHourlyMetric {
-  int64 hour_ts = 1;
-  double realized_pnl = 2;
-  double unrealized_delta = 3;
-  double net_exposure = 4;
-  double intra_low_pnl = 5;
-}
-
-// WalletInstrumentHourlyMetric mirrors one wallet_instrument_hourly_pnl row.
-message WalletInstrumentHourlyMetric {
-  uint64 instrument_id = 1;
-  int64 hour_ts = 2;
-  double realized_pnl = 3;
-  double unrealized_pnl = 4;
-  double end_size = 5;
-  double end_cost = 6;
-}
 
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
@@ -282,8 +302,8 @@ service HyperCore {
   rpc ReferrerWallet(ReferrerWalletRequest) returns (ReferrerWalletResponse) {}
   rpc WalletTags(WalletTagsRequest) returns (WalletTagsResponse) {}
   rpc WalletsByTag(WalletsByTagRequest) returns (WalletsByTagResponse) {}
-  rpc WalletMetrics(WalletMetricsRequest) returns (WalletMetricsResponse) {}
-  rpc WalletInstrumentMetrics(WalletInstrumentMetricsRequest) returns (WalletInstrumentMetricsResponse) {}
+  rpc WalletPerformance(WalletPerformanceRequest) returns (WalletPerformanceResponse) {}
+  rpc WalletPerformanceSeries(WalletPerformanceSeriesRequest) returns (WalletPerformanceSeriesResponse) {}
 }
 
 /*
