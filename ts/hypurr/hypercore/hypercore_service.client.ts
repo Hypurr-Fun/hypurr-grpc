@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
+import type { WalletPositioningSeriesResponse } from "./hypercore_service";
+import type { WalletPositioningSeriesRequest } from "./hypercore_service";
 import type { WalletPerformanceSeriesResponse } from "./hypercore_service";
 import type { WalletPerformanceSeriesRequest } from "./hypercore_service";
 import type { WalletPerformanceResponse } from "./hypercore_service";
@@ -85,6 +87,10 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: WalletPerformanceSeries
      */
     walletPerformanceSeries(input: WalletPerformanceSeriesRequest, options?: RpcOptions): UnaryCall<WalletPerformanceSeriesRequest, WalletPerformanceSeriesResponse>;
+    /**
+     * @generated from protobuf rpc: WalletPositioningSeries
+     */
+    walletPositioningSeries(input: WalletPositioningSeriesRequest, options?: RpcOptions): UnaryCall<WalletPositioningSeriesRequest, WalletPositioningSeriesResponse>;
 }
 /**
  * @generated from protobuf service hypercore.HyperCore
@@ -178,5 +184,12 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
     walletPerformanceSeries(input: WalletPerformanceSeriesRequest, options?: RpcOptions): UnaryCall<WalletPerformanceSeriesRequest, WalletPerformanceSeriesResponse> {
         const method = this.methods[11], opt = this._transport.mergeOptions(options);
         return stackIntercept<WalletPerformanceSeriesRequest, WalletPerformanceSeriesResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: WalletPositioningSeries
+     */
+    walletPositioningSeries(input: WalletPositioningSeriesRequest, options?: RpcOptions): UnaryCall<WalletPositioningSeriesRequest, WalletPositioningSeriesResponse> {
+        const method = this.methods[12], opt = this._transport.mergeOptions(options);
+        return stackIntercept<WalletPositioningSeriesRequest, WalletPositioningSeriesResponse>("unary", this._transport, method, opt, input);
     }
 }

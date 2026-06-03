@@ -31,6 +31,7 @@ const (
 	HyperCore_WalletsByTag_FullMethodName                      = "/hypercore.HyperCore/WalletsByTag"
 	HyperCore_WalletPerformance_FullMethodName                 = "/hypercore.HyperCore/WalletPerformance"
 	HyperCore_WalletPerformanceSeries_FullMethodName           = "/hypercore.HyperCore/WalletPerformanceSeries"
+	HyperCore_WalletPositioningSeries_FullMethodName           = "/hypercore.HyperCore/WalletPositioningSeries"
 )
 
 // HyperCoreClient is the client API for HyperCore service.
@@ -49,6 +50,7 @@ type HyperCoreClient interface {
 	WalletsByTag(ctx context.Context, in *WalletsByTagRequest, opts ...grpc.CallOption) (*WalletsByTagResponse, error)
 	WalletPerformance(ctx context.Context, in *WalletPerformanceRequest, opts ...grpc.CallOption) (*WalletPerformanceResponse, error)
 	WalletPerformanceSeries(ctx context.Context, in *WalletPerformanceSeriesRequest, opts ...grpc.CallOption) (*WalletPerformanceSeriesResponse, error)
+	WalletPositioningSeries(ctx context.Context, in *WalletPositioningSeriesRequest, opts ...grpc.CallOption) (*WalletPositioningSeriesResponse, error)
 }
 
 type hyperCoreClient struct {
@@ -247,6 +249,16 @@ func (c *hyperCoreClient) WalletPerformanceSeries(ctx context.Context, in *Walle
 	return out, nil
 }
 
+func (c *hyperCoreClient) WalletPositioningSeries(ctx context.Context, in *WalletPositioningSeriesRequest, opts ...grpc.CallOption) (*WalletPositioningSeriesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WalletPositioningSeriesResponse)
+	err := c.cc.Invoke(ctx, HyperCore_WalletPositioningSeries_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HyperCoreServer is the server API for HyperCore service.
 // All implementations must embed UnimplementedHyperCoreServer
 // for forward compatibility
@@ -263,6 +275,7 @@ type HyperCoreServer interface {
 	WalletsByTag(context.Context, *WalletsByTagRequest) (*WalletsByTagResponse, error)
 	WalletPerformance(context.Context, *WalletPerformanceRequest) (*WalletPerformanceResponse, error)
 	WalletPerformanceSeries(context.Context, *WalletPerformanceSeriesRequest) (*WalletPerformanceSeriesResponse, error)
+	WalletPositioningSeries(context.Context, *WalletPositioningSeriesRequest) (*WalletPositioningSeriesResponse, error)
 	mustEmbedUnimplementedHyperCoreServer()
 }
 
@@ -305,6 +318,9 @@ func (UnimplementedHyperCoreServer) WalletPerformance(context.Context, *WalletPe
 }
 func (UnimplementedHyperCoreServer) WalletPerformanceSeries(context.Context, *WalletPerformanceSeriesRequest) (*WalletPerformanceSeriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletPerformanceSeries not implemented")
+}
+func (UnimplementedHyperCoreServer) WalletPositioningSeries(context.Context, *WalletPositioningSeriesRequest) (*WalletPositioningSeriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WalletPositioningSeries not implemented")
 }
 func (UnimplementedHyperCoreServer) mustEmbedUnimplementedHyperCoreServer() {}
 
@@ -549,6 +565,24 @@ func _HyperCore_WalletPerformanceSeries_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_WalletPositioningSeries_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WalletPositioningSeriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).WalletPositioningSeries(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_WalletPositioningSeries_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).WalletPositioningSeries(ctx, req.(*WalletPositioningSeriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HyperCore_ServiceDesc is the grpc.ServiceDesc for HyperCore service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -591,6 +625,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WalletPerformanceSeries",
 			Handler:    _HyperCore_WalletPerformanceSeries_Handler,
+		},
+		{
+			MethodName: "WalletPositioningSeries",
+			Handler:    _HyperCore_WalletPositioningSeries_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

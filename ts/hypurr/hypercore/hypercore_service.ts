@@ -15,6 +15,23 @@ import { DoubleValue } from "../../google/protobuf/wrappers";
 import { StringValue } from "../../google/protobuf/wrappers";
 import { UInt64Value } from "../../google/protobuf/wrappers";
 /**
+ * @generated from protobuf message hypercore.WalletFilter
+ */
+export interface WalletFilter {
+    /**
+     * @generated from protobuf field: repeated string wallet_addresses = 1
+     */
+    walletAddresses: string[];
+    /**
+     * @generated from protobuf field: bytes bloom_filter = 2
+     */
+    bloomFilter: Uint8Array;
+    /**
+     * @generated from protobuf field: hypercore.WalletTag tag = 3
+     */
+    tag: WalletTag;
+}
+/**
  * @generated from protobuf message hypercore.TradeSideInfo
  */
 export interface TradeSideInfo {
@@ -697,6 +714,103 @@ export interface WalletPerformanceSeriesResponse {
      */
     buckets: PerformanceBucket[]; // ascending by ts
 }
+/**
+ * One time bucket of aggregated positioning for wallets carrying a given tag,
+ * on a single instrument. Same "bucket" shape philosophy as PerformanceBucket.
+ *
+ * @generated from protobuf message hypercore.PositioningBucket
+ */
+export interface PositioningBucket {
+    /**
+     * @generated from protobuf field: int64 ts = 1
+     */
+    ts: number; // bucket start, unix seconds (UTC interval boundary)
+    /**
+     * --- Net / gross position in BASE units (coin), at bucket close ---
+     * net = Σ long sizes − Σ short sizes across the tagged wallets.
+     *
+     * @generated from protobuf field: double net_position = 2
+     */
+    netPosition: number; // signed: > 0 net long, < 0 net short
+    /**
+     * @generated from protobuf field: double long_position = 3
+     */
+    longPosition: number; // gross long size (≥ 0)
+    /**
+     * @generated from protobuf field: double short_position = 4
+     */
+    shortPosition: number; // gross short size (≥ 0, magnitude)
+    /**
+     * --- Same, in USD NOTIONAL (size × mark at bucket close) ---
+     *
+     * @generated from protobuf field: double net_notional = 5
+     */
+    netNotional: number;
+    /**
+     * @generated from protobuf field: double long_notional = 6
+     */
+    longNotional: number;
+    /**
+     * @generated from protobuf field: double short_notional = 7
+     */
+    shortNotional: number;
+    /**
+     * --- Crowding context: distinct wallets on each side at bucket close ---
+     *
+     * @generated from protobuf field: uint32 long_wallets = 8
+     */
+    longWallets: number;
+    /**
+     * @generated from protobuf field: uint32 short_wallets = 9
+     */
+    shortWallets: number;
+}
+/**
+ * @generated from protobuf message hypercore.WalletPositioningSeriesRequest
+ */
+export interface WalletPositioningSeriesRequest {
+    /**
+     * @generated from protobuf field: uint64 instrument_id = 1
+     */
+    instrumentId: number; // perp = index, spot = index + 10000
+    /**
+     * @generated from protobuf field: hypercore.WalletTag tag = 2
+     */
+    tag: WalletTag; // e.g. WHALE; ALL for everyone
+    /**
+     * @generated from protobuf field: int64 from_ts = 3
+     */
+    fromTs: number; // inclusive, unix seconds; 0 = all-time
+    /**
+     * @generated from protobuf field: int64 to_ts = 4
+     */
+    toTs: number; // inclusive, unix seconds; 0 = now
+    /**
+     * @generated from protobuf field: hypercore.MetricInterval interval = 5
+     */
+    interval: MetricInterval; // default HOUR (for charting overlays)
+}
+/**
+ * @generated from protobuf message hypercore.WalletPositioningSeriesResponse
+ */
+export interface WalletPositioningSeriesResponse {
+    /**
+     * @generated from protobuf field: uint64 instrument_id = 1
+     */
+    instrumentId: number;
+    /**
+     * @generated from protobuf field: hypercore.WalletTag tag = 2
+     */
+    tag: WalletTag;
+    /**
+     * @generated from protobuf field: hypercore.MetricInterval interval = 3
+     */
+    interval: MetricInterval;
+    /**
+     * @generated from protobuf field: repeated hypercore.PositioningBucket buckets = 4
+     */
+    buckets: PositioningBucket[]; // ascending by ts
+}
 // 
 // type Trade struct {
 // Coin             string           `json:"coin"`               // Perp symbol or @ notation
@@ -794,6 +908,69 @@ export enum MetricInterval {
      */
     WEEK = 3
 }
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletFilter$Type extends MessageType<WalletFilter> {
+    constructor() {
+        super("hypercore.WalletFilter", [
+            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "bloom_filter", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 3, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] }
+        ]);
+    }
+    create(value?: PartialMessage<WalletFilter>): WalletFilter {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddresses = [];
+        message.bloomFilter = new Uint8Array(0);
+        message.tag = 0;
+        if (value !== undefined)
+            reflectionMergePartial<WalletFilter>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletFilter): WalletFilter {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string wallet_addresses */ 1:
+                    message.walletAddresses.push(reader.string());
+                    break;
+                case /* bytes bloom_filter */ 2:
+                    message.bloomFilter = reader.bytes();
+                    break;
+                case /* hypercore.WalletTag tag */ 3:
+                    message.tag = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletFilter, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string wallet_addresses = 1; */
+        for (let i = 0; i < message.walletAddresses.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
+        /* bytes bloom_filter = 2; */
+        if (message.bloomFilter.length)
+            writer.tag(2, WireType.LengthDelimited).bytes(message.bloomFilter);
+        /* hypercore.WalletTag tag = 3; */
+        if (message.tag !== 0)
+            writer.tag(3, WireType.Varint).int32(message.tag);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletFilter
+ */
+export const WalletFilter = new WalletFilter$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class TradeSideInfo$Type extends MessageType<TradeSideInfo> {
     constructor() {
@@ -3231,6 +3408,267 @@ class WalletPerformanceSeriesResponse$Type extends MessageType<WalletPerformance
  * @generated MessageType for protobuf message hypercore.WalletPerformanceSeriesResponse
  */
 export const WalletPerformanceSeriesResponse = new WalletPerformanceSeriesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PositioningBucket$Type extends MessageType<PositioningBucket> {
+    constructor() {
+        super("hypercore.PositioningBucket", [
+            { no: 1, name: "ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "net_position", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "long_position", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "short_position", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "net_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "long_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "short_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "long_wallets", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 9, name: "short_wallets", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PositioningBucket>): PositioningBucket {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.ts = 0;
+        message.netPosition = 0;
+        message.longPosition = 0;
+        message.shortPosition = 0;
+        message.netNotional = 0;
+        message.longNotional = 0;
+        message.shortNotional = 0;
+        message.longWallets = 0;
+        message.shortWallets = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PositioningBucket>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PositioningBucket): PositioningBucket {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 ts */ 1:
+                    message.ts = reader.int64().toNumber();
+                    break;
+                case /* double net_position */ 2:
+                    message.netPosition = reader.double();
+                    break;
+                case /* double long_position */ 3:
+                    message.longPosition = reader.double();
+                    break;
+                case /* double short_position */ 4:
+                    message.shortPosition = reader.double();
+                    break;
+                case /* double net_notional */ 5:
+                    message.netNotional = reader.double();
+                    break;
+                case /* double long_notional */ 6:
+                    message.longNotional = reader.double();
+                    break;
+                case /* double short_notional */ 7:
+                    message.shortNotional = reader.double();
+                    break;
+                case /* uint32 long_wallets */ 8:
+                    message.longWallets = reader.uint32();
+                    break;
+                case /* uint32 short_wallets */ 9:
+                    message.shortWallets = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PositioningBucket, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 ts = 1; */
+        if (message.ts !== 0)
+            writer.tag(1, WireType.Varint).int64(message.ts);
+        /* double net_position = 2; */
+        if (message.netPosition !== 0)
+            writer.tag(2, WireType.Bit64).double(message.netPosition);
+        /* double long_position = 3; */
+        if (message.longPosition !== 0)
+            writer.tag(3, WireType.Bit64).double(message.longPosition);
+        /* double short_position = 4; */
+        if (message.shortPosition !== 0)
+            writer.tag(4, WireType.Bit64).double(message.shortPosition);
+        /* double net_notional = 5; */
+        if (message.netNotional !== 0)
+            writer.tag(5, WireType.Bit64).double(message.netNotional);
+        /* double long_notional = 6; */
+        if (message.longNotional !== 0)
+            writer.tag(6, WireType.Bit64).double(message.longNotional);
+        /* double short_notional = 7; */
+        if (message.shortNotional !== 0)
+            writer.tag(7, WireType.Bit64).double(message.shortNotional);
+        /* uint32 long_wallets = 8; */
+        if (message.longWallets !== 0)
+            writer.tag(8, WireType.Varint).uint32(message.longWallets);
+        /* uint32 short_wallets = 9; */
+        if (message.shortWallets !== 0)
+            writer.tag(9, WireType.Varint).uint32(message.shortWallets);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PositioningBucket
+ */
+export const PositioningBucket = new PositioningBucket$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletPositioningSeriesRequest$Type extends MessageType<WalletPositioningSeriesRequest> {
+    constructor() {
+        super("hypercore.WalletPositioningSeriesRequest", [
+            { no: 1, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] },
+            { no: 3, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "interval", kind: "enum", T: () => ["hypercore.MetricInterval", MetricInterval, "METRIC_INTERVAL_"] }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPositioningSeriesRequest>): WalletPositioningSeriesRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrumentId = 0;
+        message.tag = 0;
+        message.fromTs = 0;
+        message.toTs = 0;
+        message.interval = 0;
+        if (value !== undefined)
+            reflectionMergePartial<WalletPositioningSeriesRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPositioningSeriesRequest): WalletPositioningSeriesRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 instrument_id */ 1:
+                    message.instrumentId = reader.uint64().toNumber();
+                    break;
+                case /* hypercore.WalletTag tag */ 2:
+                    message.tag = reader.int32();
+                    break;
+                case /* int64 from_ts */ 3:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 4:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                case /* hypercore.MetricInterval interval */ 5:
+                    message.interval = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPositioningSeriesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 instrument_id = 1; */
+        if (message.instrumentId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.instrumentId);
+        /* hypercore.WalletTag tag = 2; */
+        if (message.tag !== 0)
+            writer.tag(2, WireType.Varint).int32(message.tag);
+        /* int64 from_ts = 3; */
+        if (message.fromTs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 4; */
+        if (message.toTs !== 0)
+            writer.tag(4, WireType.Varint).int64(message.toTs);
+        /* hypercore.MetricInterval interval = 5; */
+        if (message.interval !== 0)
+            writer.tag(5, WireType.Varint).int32(message.interval);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletPositioningSeriesRequest
+ */
+export const WalletPositioningSeriesRequest = new WalletPositioningSeriesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletPositioningSeriesResponse$Type extends MessageType<WalletPositioningSeriesResponse> {
+    constructor() {
+        super("hypercore.WalletPositioningSeriesResponse", [
+            { no: 1, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] },
+            { no: 3, name: "interval", kind: "enum", T: () => ["hypercore.MetricInterval", MetricInterval, "METRIC_INTERVAL_"] },
+            { no: 4, name: "buckets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PositioningBucket }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPositioningSeriesResponse>): WalletPositioningSeriesResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrumentId = 0;
+        message.tag = 0;
+        message.interval = 0;
+        message.buckets = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletPositioningSeriesResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPositioningSeriesResponse): WalletPositioningSeriesResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 instrument_id */ 1:
+                    message.instrumentId = reader.uint64().toNumber();
+                    break;
+                case /* hypercore.WalletTag tag */ 2:
+                    message.tag = reader.int32();
+                    break;
+                case /* hypercore.MetricInterval interval */ 3:
+                    message.interval = reader.int32();
+                    break;
+                case /* repeated hypercore.PositioningBucket buckets */ 4:
+                    message.buckets.push(PositioningBucket.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPositioningSeriesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 instrument_id = 1; */
+        if (message.instrumentId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.instrumentId);
+        /* hypercore.WalletTag tag = 2; */
+        if (message.tag !== 0)
+            writer.tag(2, WireType.Varint).int32(message.tag);
+        /* hypercore.MetricInterval interval = 3; */
+        if (message.interval !== 0)
+            writer.tag(3, WireType.Varint).int32(message.interval);
+        /* repeated hypercore.PositioningBucket buckets = 4; */
+        for (let i = 0; i < message.buckets.length; i++)
+            PositioningBucket.internalBinaryWrite(message.buckets[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletPositioningSeriesResponse
+ */
+export const WalletPositioningSeriesResponse = new WalletPositioningSeriesResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypercore.HyperCore
  */
@@ -3246,5 +3684,6 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletTags", options: {}, I: WalletTagsRequest, O: WalletTagsResponse },
     { name: "WalletsByTag", options: {}, I: WalletsByTagRequest, O: WalletsByTagResponse },
     { name: "WalletPerformance", options: {}, I: WalletPerformanceRequest, O: WalletPerformanceResponse },
-    { name: "WalletPerformanceSeries", options: {}, I: WalletPerformanceSeriesRequest, O: WalletPerformanceSeriesResponse }
+    { name: "WalletPerformanceSeries", options: {}, I: WalletPerformanceSeriesRequest, O: WalletPerformanceSeriesResponse },
+    { name: "WalletPositioningSeries", options: {}, I: WalletPositioningSeriesRequest, O: WalletPositioningSeriesResponse }
 ]);
