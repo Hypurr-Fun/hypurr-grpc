@@ -646,9 +646,9 @@ export interface WalletInstrumentHourlyMetric {
      */
     realizedPnl: number;
     /**
-     * @generated from protobuf field: double unrealized_delta = 4
+     * @generated from protobuf field: double unrealized_pnl = 4
      */
-    unrealizedDelta: number;
+    unrealizedPnl: number;
     /**
      * @generated from protobuf field: double end_size = 5
      */
@@ -3028,7 +3028,7 @@ class WalletInstrumentHourlyMetric$Type extends MessageType<WalletInstrumentHour
             { no: 1, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "hour_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "realized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 4, name: "unrealized_delta", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "unrealized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 5, name: "end_size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 6, name: "end_cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
@@ -3038,7 +3038,7 @@ class WalletInstrumentHourlyMetric$Type extends MessageType<WalletInstrumentHour
         message.instrumentId = 0;
         message.hourTs = 0;
         message.realizedPnl = 0;
-        message.unrealizedDelta = 0;
+        message.unrealizedPnl = 0;
         message.endSize = 0;
         message.endCost = 0;
         if (value !== undefined)
@@ -3059,8 +3059,8 @@ class WalletInstrumentHourlyMetric$Type extends MessageType<WalletInstrumentHour
                 case /* double realized_pnl */ 3:
                     message.realizedPnl = reader.double();
                     break;
-                case /* double unrealized_delta */ 4:
-                    message.unrealizedDelta = reader.double();
+                case /* double unrealized_pnl */ 4:
+                    message.unrealizedPnl = reader.double();
                     break;
                 case /* double end_size */ 5:
                     message.endSize = reader.double();
@@ -3089,9 +3089,9 @@ class WalletInstrumentHourlyMetric$Type extends MessageType<WalletInstrumentHour
         /* double realized_pnl = 3; */
         if (message.realizedPnl !== 0)
             writer.tag(3, WireType.Bit64).double(message.realizedPnl);
-        /* double unrealized_delta = 4; */
-        if (message.unrealizedDelta !== 0)
-            writer.tag(4, WireType.Bit64).double(message.unrealizedDelta);
+        /* double unrealized_pnl = 4; */
+        if (message.unrealizedPnl !== 0)
+            writer.tag(4, WireType.Bit64).double(message.unrealizedPnl);
         /* double end_size = 5; */
         if (message.endSize !== 0)
             writer.tag(5, WireType.Bit64).double(message.endSize);
