@@ -574,7 +574,7 @@ export interface WalletInstrumentMetricsResponse {
     instrumentHourly: WalletInstrumentHourlyMetric[];
 }
 /**
- * WalletDailyMetric mirrors one wallet_daily_metrics row (fixed-point ints).
+ * WalletDailyMetric mirrors one wallet_daily_metrics row.
  *
  * @generated from protobuf message hypercore.WalletDailyMetric
  */
@@ -584,24 +584,24 @@ export interface WalletDailyMetric {
      */
     dayTs: number;
     /**
-     * @generated from protobuf field: int64 daily_pnl = 2
+     * @generated from protobuf field: double daily_pnl = 2
      */
     dailyPnl: number;
     /**
-     * @generated from protobuf field: int64 cum_pnl = 3
+     * @generated from protobuf field: double cum_pnl = 3
      */
     cumPnl: number;
     /**
-     * @generated from protobuf field: int64 peak_cum_pnl = 4
+     * @generated from protobuf field: double peak_cum_pnl = 4
      */
     peakCumPnl: number;
     /**
-     * @generated from protobuf field: int64 max_drawdown = 5
+     * @generated from protobuf field: double max_drawdown = 5
      */
     maxDrawdown: number;
 }
 /**
- * WalletHourlyMetric mirrors one wallet_hourly_metrics row (fixed-point ints).
+ * WalletHourlyMetric mirrors one wallet_hourly_metrics row.
  *
  * @generated from protobuf message hypercore.WalletHourlyMetric
  */
@@ -611,19 +611,19 @@ export interface WalletHourlyMetric {
      */
     hourTs: number;
     /**
-     * @generated from protobuf field: int64 realized_pnl = 2
+     * @generated from protobuf field: double realized_pnl = 2
      */
     realizedPnl: number;
     /**
-     * @generated from protobuf field: int64 unrealized_delta = 3
+     * @generated from protobuf field: double unrealized_delta = 3
      */
     unrealizedDelta: number;
     /**
-     * @generated from protobuf field: int64 net_exposure = 4
+     * @generated from protobuf field: double net_exposure = 4
      */
     netExposure: number;
     /**
-     * @generated from protobuf field: int64 intra_low_pnl = 5
+     * @generated from protobuf field: double intra_low_pnl = 5
      */
     intraLowPnl: number;
 }
@@ -642,19 +642,19 @@ export interface WalletInstrumentHourlyMetric {
      */
     hourTs: number;
     /**
-     * @generated from protobuf field: int64 realized_pnl = 3
+     * @generated from protobuf field: double realized_pnl = 3
      */
     realizedPnl: number;
     /**
-     * @generated from protobuf field: int64 unrealized_delta = 4
+     * @generated from protobuf field: double unrealized_delta = 4
      */
     unrealizedDelta: number;
     /**
-     * @generated from protobuf field: int64 end_size = 5
+     * @generated from protobuf field: double end_size = 5
      */
     endSize: number;
     /**
-     * @generated from protobuf field: int64 end_cost = 6
+     * @generated from protobuf field: double end_cost = 6
      */
     endCost: number;
 }
@@ -2868,10 +2868,10 @@ class WalletDailyMetric$Type extends MessageType<WalletDailyMetric> {
     constructor() {
         super("hypercore.WalletDailyMetric", [
             { no: 1, name: "day_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "daily_pnl", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "cum_pnl", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "peak_cum_pnl", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 5, name: "max_drawdown", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 2, name: "daily_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "cum_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "peak_cum_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "max_drawdown", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<WalletDailyMetric>): WalletDailyMetric {
@@ -2893,17 +2893,17 @@ class WalletDailyMetric$Type extends MessageType<WalletDailyMetric> {
                 case /* int64 day_ts */ 1:
                     message.dayTs = reader.int64().toNumber();
                     break;
-                case /* int64 daily_pnl */ 2:
-                    message.dailyPnl = reader.int64().toNumber();
+                case /* double daily_pnl */ 2:
+                    message.dailyPnl = reader.double();
                     break;
-                case /* int64 cum_pnl */ 3:
-                    message.cumPnl = reader.int64().toNumber();
+                case /* double cum_pnl */ 3:
+                    message.cumPnl = reader.double();
                     break;
-                case /* int64 peak_cum_pnl */ 4:
-                    message.peakCumPnl = reader.int64().toNumber();
+                case /* double peak_cum_pnl */ 4:
+                    message.peakCumPnl = reader.double();
                     break;
-                case /* int64 max_drawdown */ 5:
-                    message.maxDrawdown = reader.int64().toNumber();
+                case /* double max_drawdown */ 5:
+                    message.maxDrawdown = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2920,18 +2920,18 @@ class WalletDailyMetric$Type extends MessageType<WalletDailyMetric> {
         /* int64 day_ts = 1; */
         if (message.dayTs !== 0)
             writer.tag(1, WireType.Varint).int64(message.dayTs);
-        /* int64 daily_pnl = 2; */
+        /* double daily_pnl = 2; */
         if (message.dailyPnl !== 0)
-            writer.tag(2, WireType.Varint).int64(message.dailyPnl);
-        /* int64 cum_pnl = 3; */
+            writer.tag(2, WireType.Bit64).double(message.dailyPnl);
+        /* double cum_pnl = 3; */
         if (message.cumPnl !== 0)
-            writer.tag(3, WireType.Varint).int64(message.cumPnl);
-        /* int64 peak_cum_pnl = 4; */
+            writer.tag(3, WireType.Bit64).double(message.cumPnl);
+        /* double peak_cum_pnl = 4; */
         if (message.peakCumPnl !== 0)
-            writer.tag(4, WireType.Varint).int64(message.peakCumPnl);
-        /* int64 max_drawdown = 5; */
+            writer.tag(4, WireType.Bit64).double(message.peakCumPnl);
+        /* double max_drawdown = 5; */
         if (message.maxDrawdown !== 0)
-            writer.tag(5, WireType.Varint).int64(message.maxDrawdown);
+            writer.tag(5, WireType.Bit64).double(message.maxDrawdown);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2947,10 +2947,10 @@ class WalletHourlyMetric$Type extends MessageType<WalletHourlyMetric> {
     constructor() {
         super("hypercore.WalletHourlyMetric", [
             { no: 1, name: "hour_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "realized_pnl", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "unrealized_delta", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "net_exposure", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 5, name: "intra_low_pnl", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 2, name: "realized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "unrealized_delta", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "net_exposure", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "intra_low_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<WalletHourlyMetric>): WalletHourlyMetric {
@@ -2972,17 +2972,17 @@ class WalletHourlyMetric$Type extends MessageType<WalletHourlyMetric> {
                 case /* int64 hour_ts */ 1:
                     message.hourTs = reader.int64().toNumber();
                     break;
-                case /* int64 realized_pnl */ 2:
-                    message.realizedPnl = reader.int64().toNumber();
+                case /* double realized_pnl */ 2:
+                    message.realizedPnl = reader.double();
                     break;
-                case /* int64 unrealized_delta */ 3:
-                    message.unrealizedDelta = reader.int64().toNumber();
+                case /* double unrealized_delta */ 3:
+                    message.unrealizedDelta = reader.double();
                     break;
-                case /* int64 net_exposure */ 4:
-                    message.netExposure = reader.int64().toNumber();
+                case /* double net_exposure */ 4:
+                    message.netExposure = reader.double();
                     break;
-                case /* int64 intra_low_pnl */ 5:
-                    message.intraLowPnl = reader.int64().toNumber();
+                case /* double intra_low_pnl */ 5:
+                    message.intraLowPnl = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2999,18 +2999,18 @@ class WalletHourlyMetric$Type extends MessageType<WalletHourlyMetric> {
         /* int64 hour_ts = 1; */
         if (message.hourTs !== 0)
             writer.tag(1, WireType.Varint).int64(message.hourTs);
-        /* int64 realized_pnl = 2; */
+        /* double realized_pnl = 2; */
         if (message.realizedPnl !== 0)
-            writer.tag(2, WireType.Varint).int64(message.realizedPnl);
-        /* int64 unrealized_delta = 3; */
+            writer.tag(2, WireType.Bit64).double(message.realizedPnl);
+        /* double unrealized_delta = 3; */
         if (message.unrealizedDelta !== 0)
-            writer.tag(3, WireType.Varint).int64(message.unrealizedDelta);
-        /* int64 net_exposure = 4; */
+            writer.tag(3, WireType.Bit64).double(message.unrealizedDelta);
+        /* double net_exposure = 4; */
         if (message.netExposure !== 0)
-            writer.tag(4, WireType.Varint).int64(message.netExposure);
-        /* int64 intra_low_pnl = 5; */
+            writer.tag(4, WireType.Bit64).double(message.netExposure);
+        /* double intra_low_pnl = 5; */
         if (message.intraLowPnl !== 0)
-            writer.tag(5, WireType.Varint).int64(message.intraLowPnl);
+            writer.tag(5, WireType.Bit64).double(message.intraLowPnl);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3027,10 +3027,10 @@ class WalletInstrumentHourlyMetric$Type extends MessageType<WalletInstrumentHour
         super("hypercore.WalletInstrumentHourlyMetric", [
             { no: 1, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "hour_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "realized_pnl", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "unrealized_delta", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 5, name: "end_size", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 6, name: "end_cost", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 3, name: "realized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "unrealized_delta", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "end_size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "end_cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<WalletInstrumentHourlyMetric>): WalletInstrumentHourlyMetric {
@@ -3056,17 +3056,17 @@ class WalletInstrumentHourlyMetric$Type extends MessageType<WalletInstrumentHour
                 case /* int64 hour_ts */ 2:
                     message.hourTs = reader.int64().toNumber();
                     break;
-                case /* int64 realized_pnl */ 3:
-                    message.realizedPnl = reader.int64().toNumber();
+                case /* double realized_pnl */ 3:
+                    message.realizedPnl = reader.double();
                     break;
-                case /* int64 unrealized_delta */ 4:
-                    message.unrealizedDelta = reader.int64().toNumber();
+                case /* double unrealized_delta */ 4:
+                    message.unrealizedDelta = reader.double();
                     break;
-                case /* int64 end_size */ 5:
-                    message.endSize = reader.int64().toNumber();
+                case /* double end_size */ 5:
+                    message.endSize = reader.double();
                     break;
-                case /* int64 end_cost */ 6:
-                    message.endCost = reader.int64().toNumber();
+                case /* double end_cost */ 6:
+                    message.endCost = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3086,18 +3086,18 @@ class WalletInstrumentHourlyMetric$Type extends MessageType<WalletInstrumentHour
         /* int64 hour_ts = 2; */
         if (message.hourTs !== 0)
             writer.tag(2, WireType.Varint).int64(message.hourTs);
-        /* int64 realized_pnl = 3; */
+        /* double realized_pnl = 3; */
         if (message.realizedPnl !== 0)
-            writer.tag(3, WireType.Varint).int64(message.realizedPnl);
-        /* int64 unrealized_delta = 4; */
+            writer.tag(3, WireType.Bit64).double(message.realizedPnl);
+        /* double unrealized_delta = 4; */
         if (message.unrealizedDelta !== 0)
-            writer.tag(4, WireType.Varint).int64(message.unrealizedDelta);
-        /* int64 end_size = 5; */
+            writer.tag(4, WireType.Bit64).double(message.unrealizedDelta);
+        /* double end_size = 5; */
         if (message.endSize !== 0)
-            writer.tag(5, WireType.Varint).int64(message.endSize);
-        /* int64 end_cost = 6; */
+            writer.tag(5, WireType.Bit64).double(message.endSize);
+        /* double end_cost = 6; */
         if (message.endCost !== 0)
-            writer.tag(6, WireType.Varint).int64(message.endCost);
+            writer.tag(6, WireType.Bit64).double(message.endCost);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
