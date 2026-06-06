@@ -774,9 +774,9 @@ export interface WalletPositioningSeriesRequest {
      */
     instrumentId: number; // perp = index, spot = index + 10000
     /**
-     * @generated from protobuf field: hypercore.WalletTag tag = 2
+     * @generated from protobuf field: hypercore.WalletFilter filter = 2
      */
-    tag: WalletTag; // e.g. WHALE; ALL for everyone
+    filter?: WalletFilter; // e.g. WHALE; ALL for everyone
     /**
      * @generated from protobuf field: int64 from_ts = 3
      */
@@ -3532,7 +3532,7 @@ class WalletPositioningSeriesRequest$Type extends MessageType<WalletPositioningS
     constructor() {
         super("hypercore.WalletPositioningSeriesRequest", [
             { no: 1, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] },
+            { no: 2, name: "filter", kind: "message", T: () => WalletFilter },
             { no: 3, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 5, name: "interval", kind: "enum", T: () => ["hypercore.MetricInterval", MetricInterval, "METRIC_INTERVAL_"] }
@@ -3541,7 +3541,6 @@ class WalletPositioningSeriesRequest$Type extends MessageType<WalletPositioningS
     create(value?: PartialMessage<WalletPositioningSeriesRequest>): WalletPositioningSeriesRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.instrumentId = 0;
-        message.tag = 0;
         message.fromTs = 0;
         message.toTs = 0;
         message.interval = 0;
@@ -3557,8 +3556,8 @@ class WalletPositioningSeriesRequest$Type extends MessageType<WalletPositioningS
                 case /* uint64 instrument_id */ 1:
                     message.instrumentId = reader.uint64().toNumber();
                     break;
-                case /* hypercore.WalletTag tag */ 2:
-                    message.tag = reader.int32();
+                case /* hypercore.WalletFilter filter */ 2:
+                    message.filter = WalletFilter.internalBinaryRead(reader, reader.uint32(), options, message.filter);
                     break;
                 case /* int64 from_ts */ 3:
                     message.fromTs = reader.int64().toNumber();
@@ -3584,9 +3583,9 @@ class WalletPositioningSeriesRequest$Type extends MessageType<WalletPositioningS
         /* uint64 instrument_id = 1; */
         if (message.instrumentId !== 0)
             writer.tag(1, WireType.Varint).uint64(message.instrumentId);
-        /* hypercore.WalletTag tag = 2; */
-        if (message.tag !== 0)
-            writer.tag(2, WireType.Varint).int32(message.tag);
+        /* hypercore.WalletFilter filter = 2; */
+        if (message.filter)
+            WalletFilter.internalBinaryWrite(message.filter, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* int64 from_ts = 3; */
         if (message.fromTs !== 0)
             writer.tag(3, WireType.Varint).int64(message.fromTs);

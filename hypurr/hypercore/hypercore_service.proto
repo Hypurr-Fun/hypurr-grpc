@@ -229,72 +229,72 @@ message WalletLiquidation {
 
 enum MetricInterval {
   METRIC_INTERVAL_UNSPECIFIED = 0; // server treats as DAY
-  METRIC_INTERVAL_HOUR        = 1;
-  METRIC_INTERVAL_DAY         = 2;
-  METRIC_INTERVAL_WEEK        = 3;
+  METRIC_INTERVAL_HOUR = 1;
+  METRIC_INTERVAL_DAY = 2;
+  METRIC_INTERVAL_WEEK = 3;
 }
 
 // One time bucket of performance, for the whole account OR one instrument.
 // Identical fields regardless of interval or scope.
 message PerformanceBucket {
-  int64  ts             = 1; // bucket start, unix seconds (UTC day/hour/week boundary)
+  int64  ts = 1; // bucket start, unix seconds (UTC day/hour/week boundary)
 
   // --- PnL ---
-  double realized_pnl   = 2; // realized within this bucket (closed trades)
+  double realized_pnl = 2; // realized within this bucket (closed trades)
   double unrealized_pnl = 3; // absolute MTM unrealized of open positions at bucket close
-  double period_pnl     = 4; // this bucket's total contribution = realized_pnl + Δunrealized
-  double cum_pnl        = 5; // cumulative total PnL (realized+unrealized) through bucket close
+  double period_pnl = 4; // this bucket's total contribution = realized_pnl + Δunrealized
+  double cum_pnl = 5; // cumulative total PnL (realized+unrealized) through bucket close
 
   // --- Win rate ---
-  int32  wins           = 6; // closed trades resolved in bucket with pnl > 0
-  int32  losses         = 7; // closed trades resolved in bucket with pnl <= 0
-  double cum_win_rate   = 8; // cumulative win rate through this bucket, [0,1]
+  int32  wins = 6; // closed trades resolved in bucket with pnl > 0
+  int32  losses = 7; // closed trades resolved in bucket with pnl <= 0
+  double cum_win_rate = 8; // cumulative win rate through this bucket, [0,1]
 }
 
 // Aggregate over the requested window (from_ts..to_ts; 0/0 = all-time).
 message PerformanceSummary {
-  double realized_pnl   = 1;
+  double realized_pnl = 1;
   double unrealized_pnl = 2;
-  double total_pnl      = 3; // realized + unrealized
-  int32  wins           = 4;
-  int32  losses         = 5;
-  double win_rate       = 6; // wins / (wins + losses), [0,1]
+  double total_pnl = 3; // realized + unrealized
+  int32  wins = 4;
+  int32  losses = 5;
+  double win_rate = 6; // wins / (wins + losses), [0,1]
 }
 
 message InstrumentPerformance {
-  uint64 instrument_id  = 1; // app convention: perp = index, spot = index + 10000
-  double realized_pnl   = 2;
+  uint64 instrument_id = 1; // app convention: perp = index, spot = index + 10000
+  double realized_pnl = 2;
   double unrealized_pnl = 3;
-  double total_pnl      = 4;
-  int32  wins           = 5;
-  int32  losses         = 6;
-  double win_rate       = 7; // [0,1]
+  double total_pnl = 4;
+  int32  wins = 5;
+  int32  losses = 6;
+  double win_rate = 7; // [0,1]
 }
 
 // ----- RPC 1: aggregates (totals + per-instrument list) -----
 message WalletPerformanceRequest {
   string wallet_address = 1;
-  int64  from_ts        = 2; // inclusive, unix seconds; 0 = all-time
-  int64  to_ts          = 3; // inclusive, unix seconds; 0 = now
+  int64  from_ts = 2; // inclusive, unix seconds; 0 = all-time
+  int64  to_ts = 3; // inclusive, unix seconds; 0 = now
 }
 message WalletPerformanceResponse {
-  string wallet_address                        = 1;
-  PerformanceSummary account                   = 2; // total PnL + total win rate
-  repeated InstrumentPerformance instruments   = 3; // per-instrument win rate + all-time PnL
+  string wallet_address = 1;
+  PerformanceSummary account = 2; // total PnL + total win rate
+  repeated InstrumentPerformance instruments = 3; // per-instrument win rate + all-time PnL
 }
 
 // ----- RPC 2: time series (calendar + graphs) -----
 message WalletPerformanceSeriesRequest {
-  string wallet_address     = 1;
-  int64  from_ts            = 2;
-  int64  to_ts              = 3;
-  MetricInterval interval   = 4;            // default DAY
+  string wallet_address = 1;
+  int64  from_ts = 2;
+  int64  to_ts = 3;
+  MetricInterval interval = 4;            // default DAY
   optional uint64 instrument_id = 5;        // unset = whole account; set = filter to instrument
 }
 message WalletPerformanceSeriesResponse {
-  string wallet_address              = 1;
-  MetricInterval interval            = 2;
-  optional uint64 instrument_id      = 3;   // echoes the filter
+  string wallet_address = 1;
+  MetricInterval interval = 2;
+  optional uint64 instrument_id = 3;   // echoes the filter
   repeated PerformanceBucket buckets = 4;   // ascending by ts
 }
 
@@ -305,31 +305,31 @@ message PositioningBucket {
 
   // --- Net / gross position in BASE units (coin), at bucket close ---
   // net = Σ long sizes − Σ short sizes across the tagged wallets.
-  double net_position   = 2; // signed: > 0 net long, < 0 net short
-  double long_position  = 3; // gross long size (≥ 0)
+  double net_position = 2; // signed: > 0 net long, < 0 net short
+  double long_position = 3; // gross long size (≥ 0)
   double short_position = 4; // gross short size (≥ 0, magnitude)
 
   // --- Same, in USD NOTIONAL (size × mark at bucket close) ---
-  double net_notional   = 5;
-  double long_notional  = 6;
+  double net_notional = 5;
+  double long_notional = 6;
   double short_notional = 7;
 
   // --- Crowding context: distinct wallets on each side at bucket close ---
-  uint32 long_wallets   = 8;
-  uint32 short_wallets  = 9;
+  uint32 long_wallets = 8;
+  uint32 short_wallets = 9;
 }
 
 message WalletPositioningSeriesRequest {
-  uint64 instrument_id        = 1; // perp = index, spot = index + 10000
-  hypercore.WalletTag tag     = 2; // e.g. WHALE; ALL for everyone
-  int64 from_ts               = 3; // inclusive, unix seconds; 0 = all-time
-  int64 to_ts                 = 4; // inclusive, unix seconds; 0 = now
+  uint64 instrument_id = 1; // perp = index, spot = index + 10000
+  WalletFilter filter = 2; // e.g. WHALE; ALL for everyone
+  int64 from_ts = 3; // inclusive, unix seconds; 0 = all-time
+  int64 to_ts = 4; // inclusive, unix seconds; 0 = now
   hypercore.MetricInterval interval = 5; // default HOUR (for charting overlays)
 }
 
 message WalletPositioningSeriesResponse {
-  uint64 instrument_id              = 1;
-  hypercore.WalletTag tag           = 2;
+  uint64 instrument_id = 1;
+  hypercore.WalletTag tag = 2;
   hypercore.MetricInterval interval = 3;
   repeated PositioningBucket buckets = 4; // ascending by ts
 }
