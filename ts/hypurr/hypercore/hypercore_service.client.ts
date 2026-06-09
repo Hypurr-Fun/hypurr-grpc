@@ -4,6 +4,10 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
+import type { PerpInstrumentsResponse } from "./hypercore_service";
+import type { PerpInstrumentsRequest } from "./hypercore_service";
+import type { SpotInstrumentsResponse } from "./hypercore_service";
+import type { SpotInstrumentsRequest } from "./hypercore_service";
 import type { WalletPositioningSeriesResponse } from "./hypercore_service";
 import type { WalletPositioningSeriesRequest } from "./hypercore_service";
 import type { WalletPerformanceSeriesResponse } from "./hypercore_service";
@@ -91,6 +95,14 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: WalletPositioningSeries
      */
     walletPositioningSeries(input: WalletPositioningSeriesRequest, options?: RpcOptions): UnaryCall<WalletPositioningSeriesRequest, WalletPositioningSeriesResponse>;
+    /**
+     * @generated from protobuf rpc: SpotInstruments
+     */
+    spotInstruments(input: SpotInstrumentsRequest, options?: RpcOptions): UnaryCall<SpotInstrumentsRequest, SpotInstrumentsResponse>;
+    /**
+     * @generated from protobuf rpc: PerpInstruments
+     */
+    perpInstruments(input: PerpInstrumentsRequest, options?: RpcOptions): UnaryCall<PerpInstrumentsRequest, PerpInstrumentsResponse>;
 }
 /**
  * @generated from protobuf service hypercore.HyperCore
@@ -191,5 +203,19 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
     walletPositioningSeries(input: WalletPositioningSeriesRequest, options?: RpcOptions): UnaryCall<WalletPositioningSeriesRequest, WalletPositioningSeriesResponse> {
         const method = this.methods[12], opt = this._transport.mergeOptions(options);
         return stackIntercept<WalletPositioningSeriesRequest, WalletPositioningSeriesResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: SpotInstruments
+     */
+    spotInstruments(input: SpotInstrumentsRequest, options?: RpcOptions): UnaryCall<SpotInstrumentsRequest, SpotInstrumentsResponse> {
+        const method = this.methods[13], opt = this._transport.mergeOptions(options);
+        return stackIntercept<SpotInstrumentsRequest, SpotInstrumentsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: PerpInstruments
+     */
+    perpInstruments(input: PerpInstrumentsRequest, options?: RpcOptions): UnaryCall<PerpInstrumentsRequest, PerpInstrumentsResponse> {
+        const method = this.methods[14], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PerpInstrumentsRequest, PerpInstrumentsResponse>("unary", this._transport, method, opt, input);
     }
 }

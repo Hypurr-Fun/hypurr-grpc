@@ -5,7 +5,7 @@ import warnings
 
 from hypurr.hypercore import hypercore_service_pb2 as hypurr_dot_hypercore_dot_hypercore__service__pb2
 
-GRPC_GENERATED_VERSION = '1.80.0'
+GRPC_GENERATED_VERSION = '1.81.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -25,7 +25,7 @@ if _version_not_supported:
     )
 
 
-class HyperCoreStub(object):
+class HyperCoreStub:
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -94,9 +94,24 @@ class HyperCoreStub(object):
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSeriesRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSeriesResponse.FromString,
                 _registered_method=True)
+        self.WalletPositioningSeries = channel.unary_unary(
+                '/hypercore.HyperCore/WalletPositioningSeries',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPositioningSeriesRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPositioningSeriesResponse.FromString,
+                _registered_method=True)
+        self.SpotInstruments = channel.unary_unary(
+                '/hypercore.HyperCore/SpotInstruments',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.SpotInstrumentsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.SpotInstrumentsResponse.FromString,
+                _registered_method=True)
+        self.PerpInstruments = channel.unary_unary(
+                '/hypercore.HyperCore/PerpInstruments',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PerpInstrumentsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PerpInstrumentsResponse.FromString,
+                _registered_method=True)
 
 
-class HyperCoreServicer(object):
+class HyperCoreServicer:
     """Missing associated documentation comment in .proto file."""
 
     def WalletMovements(self, request, context):
@@ -171,6 +186,24 @@ class HyperCoreServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def WalletPositioningSeries(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SpotInstruments(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PerpInstruments(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_HyperCoreServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -234,6 +267,21 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSeriesRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSeriesResponse.SerializeToString,
             ),
+            'WalletPositioningSeries': grpc.unary_unary_rpc_method_handler(
+                    servicer.WalletPositioningSeries,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPositioningSeriesRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPositioningSeriesResponse.SerializeToString,
+            ),
+            'SpotInstruments': grpc.unary_unary_rpc_method_handler(
+                    servicer.SpotInstruments,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.SpotInstrumentsRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.SpotInstrumentsResponse.SerializeToString,
+            ),
+            'PerpInstruments': grpc.unary_unary_rpc_method_handler(
+                    servicer.PerpInstruments,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PerpInstrumentsRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PerpInstrumentsResponse.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'hypercore.HyperCore', rpc_method_handlers)
@@ -242,7 +290,7 @@ def add_HyperCoreServicer_to_server(servicer, server):
 
 
  # This class is part of an EXPERIMENTAL API.
-class HyperCore(object):
+class HyperCore:
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -559,6 +607,87 @@ class HyperCore(object):
             '/hypercore.HyperCore/WalletPerformanceSeries',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSeriesRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSeriesResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def WalletPositioningSeries(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/WalletPositioningSeries',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPositioningSeriesRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPositioningSeriesResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def SpotInstruments(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/SpotInstruments',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.SpotInstrumentsRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.SpotInstrumentsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PerpInstruments(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/PerpInstruments',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.PerpInstrumentsRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.PerpInstrumentsResponse.FromString,
             options,
             channel_credentials,
             insecure,

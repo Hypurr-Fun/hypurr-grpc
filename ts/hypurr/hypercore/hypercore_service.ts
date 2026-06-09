@@ -811,6 +811,145 @@ export interface WalletPositioningSeriesResponse {
      */
     buckets: PositioningBucket[]; // ascending by ts
 }
+/**
+ * @generated from protobuf message hypercore.SpotInstrumentsRequest
+ */
+export interface SpotInstrumentsRequest {
+}
+/**
+ * @generated from protobuf message hypercore.SpotToken
+ */
+export interface SpotToken {
+    /**
+     * @generated from protobuf field: int32 index = 1
+     */
+    index: number; // spot asset index
+    /**
+     * @generated from protobuf field: string name = 2
+     */
+    name: string; // token symbol, e.g. "PURR"
+    /**
+     * @generated from protobuf field: int32 sz_decimals = 3
+     */
+    szDecimals: number;
+    /**
+     * @generated from protobuf field: int32 wei_decimals = 4
+     */
+    weiDecimals: number;
+    /**
+     * @generated from protobuf field: string full_name = 5
+     */
+    fullName: string; // empty when unset
+    /**
+     * @generated from protobuf field: string deployer = 6
+     */
+    deployer: string;
+    /**
+     * @generated from protobuf field: string deploy_time = 7
+     */
+    deployTime: string;
+}
+/**
+ * @generated from protobuf message hypercore.SpotInstrument
+ */
+export interface SpotInstrument {
+    /**
+     * @generated from protobuf field: int64 id = 1
+     */
+    id: number; // spot pair id
+    /**
+     * @generated from protobuf field: string name = 2
+     */
+    name: string; // e.g. "PURR/USDC" or "@1"
+    /**
+     * @generated from protobuf field: hypercore.SpotToken base = 3
+     */
+    base?: SpotToken;
+    /**
+     * @generated from protobuf field: hypercore.SpotToken quote = 4
+     */
+    quote?: SpotToken;
+    /**
+     * @generated from protobuf field: double last_price = 5
+     */
+    lastPrice: number;
+    /**
+     * @generated from protobuf field: int64 last_trade_time = 6
+     */
+    lastTradeTime: number; // nanoseconds
+}
+/**
+ * @generated from protobuf message hypercore.SpotInstrumentsResponse
+ */
+export interface SpotInstrumentsResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.SpotInstrument instruments = 1
+     */
+    instruments: SpotInstrument[];
+}
+/**
+ * @generated from protobuf message hypercore.PerpInstrumentsRequest
+ */
+export interface PerpInstrumentsRequest {
+}
+/**
+ * @generated from protobuf message hypercore.PerpInstrument
+ */
+export interface PerpInstrument {
+    /**
+     * @generated from protobuf field: int64 id = 1
+     */
+    id: number; // instrument id (encodes dex + asset index)
+    /**
+     * @generated from protobuf field: string name = 2
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: string dex = 3
+     */
+    dex: string; // dex symbol; empty for the main perp dex
+    /**
+     * @generated from protobuf field: int32 sz_decimals = 4
+     */
+    szDecimals: number;
+    /**
+     * @generated from protobuf field: bool only_isolated = 5
+     */
+    onlyIsolated: boolean;
+    /**
+     * @generated from protobuf field: string margin_mode = 6
+     */
+    marginMode: string;
+    /**
+     * @generated from protobuf field: int32 margin_table_id = 7
+     */
+    marginTableId: number;
+    /**
+     * @generated from protobuf field: int32 max_leverage = 8
+     */
+    maxLeverage: number;
+    /**
+     * @generated from protobuf field: double last_price = 9
+     */
+    lastPrice: number;
+    /**
+     * @generated from protobuf field: double mark_price = 10
+     */
+    markPrice: number;
+    /**
+     * @generated from protobuf field: int64 last_trade_time = 11
+     */
+    lastTradeTime: number; // nanoseconds
+}
+/**
+ * @generated from protobuf message hypercore.PerpInstrumentsResponse
+ */
+export interface PerpInstrumentsResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.PerpInstrument instruments = 1
+     */
+    instruments: PerpInstrument[];
+}
 // 
 // type Trade struct {
 // Coin             string           `json:"coin"`               // Perp symbol or @ notation
@@ -3676,6 +3815,483 @@ class WalletPositioningSeriesResponse$Type extends MessageType<WalletPositioning
  * @generated MessageType for protobuf message hypercore.WalletPositioningSeriesResponse
  */
 export const WalletPositioningSeriesResponse = new WalletPositioningSeriesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SpotInstrumentsRequest$Type extends MessageType<SpotInstrumentsRequest> {
+    constructor() {
+        super("hypercore.SpotInstrumentsRequest", []);
+    }
+    create(value?: PartialMessage<SpotInstrumentsRequest>): SpotInstrumentsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<SpotInstrumentsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SpotInstrumentsRequest): SpotInstrumentsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SpotInstrumentsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.SpotInstrumentsRequest
+ */
+export const SpotInstrumentsRequest = new SpotInstrumentsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SpotToken$Type extends MessageType<SpotToken> {
+    constructor() {
+        super("hypercore.SpotToken", [
+            { no: 1, name: "index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "sz_decimals", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "wei_decimals", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 5, name: "full_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "deployer", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "deploy_time", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SpotToken>): SpotToken {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.index = 0;
+        message.name = "";
+        message.szDecimals = 0;
+        message.weiDecimals = 0;
+        message.fullName = "";
+        message.deployer = "";
+        message.deployTime = "";
+        if (value !== undefined)
+            reflectionMergePartial<SpotToken>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SpotToken): SpotToken {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 index */ 1:
+                    message.index = reader.int32();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* int32 sz_decimals */ 3:
+                    message.szDecimals = reader.int32();
+                    break;
+                case /* int32 wei_decimals */ 4:
+                    message.weiDecimals = reader.int32();
+                    break;
+                case /* string full_name */ 5:
+                    message.fullName = reader.string();
+                    break;
+                case /* string deployer */ 6:
+                    message.deployer = reader.string();
+                    break;
+                case /* string deploy_time */ 7:
+                    message.deployTime = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SpotToken, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 index = 1; */
+        if (message.index !== 0)
+            writer.tag(1, WireType.Varint).int32(message.index);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* int32 sz_decimals = 3; */
+        if (message.szDecimals !== 0)
+            writer.tag(3, WireType.Varint).int32(message.szDecimals);
+        /* int32 wei_decimals = 4; */
+        if (message.weiDecimals !== 0)
+            writer.tag(4, WireType.Varint).int32(message.weiDecimals);
+        /* string full_name = 5; */
+        if (message.fullName !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.fullName);
+        /* string deployer = 6; */
+        if (message.deployer !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.deployer);
+        /* string deploy_time = 7; */
+        if (message.deployTime !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.deployTime);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.SpotToken
+ */
+export const SpotToken = new SpotToken$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SpotInstrument$Type extends MessageType<SpotInstrument> {
+    constructor() {
+        super("hypercore.SpotInstrument", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "base", kind: "message", T: () => SpotToken },
+            { no: 4, name: "quote", kind: "message", T: () => SpotToken },
+            { no: 5, name: "last_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "last_trade_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SpotInstrument>): SpotInstrument {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = 0;
+        message.name = "";
+        message.lastPrice = 0;
+        message.lastTradeTime = 0;
+        if (value !== undefined)
+            reflectionMergePartial<SpotInstrument>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SpotInstrument): SpotInstrument {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* hypercore.SpotToken base */ 3:
+                    message.base = SpotToken.internalBinaryRead(reader, reader.uint32(), options, message.base);
+                    break;
+                case /* hypercore.SpotToken quote */ 4:
+                    message.quote = SpotToken.internalBinaryRead(reader, reader.uint32(), options, message.quote);
+                    break;
+                case /* double last_price */ 5:
+                    message.lastPrice = reader.double();
+                    break;
+                case /* int64 last_trade_time */ 6:
+                    message.lastTradeTime = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SpotInstrument, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* hypercore.SpotToken base = 3; */
+        if (message.base)
+            SpotToken.internalBinaryWrite(message.base, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* hypercore.SpotToken quote = 4; */
+        if (message.quote)
+            SpotToken.internalBinaryWrite(message.quote, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* double last_price = 5; */
+        if (message.lastPrice !== 0)
+            writer.tag(5, WireType.Bit64).double(message.lastPrice);
+        /* int64 last_trade_time = 6; */
+        if (message.lastTradeTime !== 0)
+            writer.tag(6, WireType.Varint).int64(message.lastTradeTime);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.SpotInstrument
+ */
+export const SpotInstrument = new SpotInstrument$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SpotInstrumentsResponse$Type extends MessageType<SpotInstrumentsResponse> {
+    constructor() {
+        super("hypercore.SpotInstrumentsResponse", [
+            { no: 1, name: "instruments", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => SpotInstrument }
+        ]);
+    }
+    create(value?: PartialMessage<SpotInstrumentsResponse>): SpotInstrumentsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instruments = [];
+        if (value !== undefined)
+            reflectionMergePartial<SpotInstrumentsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SpotInstrumentsResponse): SpotInstrumentsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.SpotInstrument instruments */ 1:
+                    message.instruments.push(SpotInstrument.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SpotInstrumentsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.SpotInstrument instruments = 1; */
+        for (let i = 0; i < message.instruments.length; i++)
+            SpotInstrument.internalBinaryWrite(message.instruments[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.SpotInstrumentsResponse
+ */
+export const SpotInstrumentsResponse = new SpotInstrumentsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PerpInstrumentsRequest$Type extends MessageType<PerpInstrumentsRequest> {
+    constructor() {
+        super("hypercore.PerpInstrumentsRequest", []);
+    }
+    create(value?: PartialMessage<PerpInstrumentsRequest>): PerpInstrumentsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<PerpInstrumentsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerpInstrumentsRequest): PerpInstrumentsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PerpInstrumentsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PerpInstrumentsRequest
+ */
+export const PerpInstrumentsRequest = new PerpInstrumentsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PerpInstrument$Type extends MessageType<PerpInstrument> {
+    constructor() {
+        super("hypercore.PerpInstrument", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "dex", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "sz_decimals", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 5, name: "only_isolated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 6, name: "margin_mode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "margin_table_id", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 8, name: "max_leverage", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 9, name: "last_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "mark_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "last_trade_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PerpInstrument>): PerpInstrument {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = 0;
+        message.name = "";
+        message.dex = "";
+        message.szDecimals = 0;
+        message.onlyIsolated = false;
+        message.marginMode = "";
+        message.marginTableId = 0;
+        message.maxLeverage = 0;
+        message.lastPrice = 0;
+        message.markPrice = 0;
+        message.lastTradeTime = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PerpInstrument>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerpInstrument): PerpInstrument {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* string dex */ 3:
+                    message.dex = reader.string();
+                    break;
+                case /* int32 sz_decimals */ 4:
+                    message.szDecimals = reader.int32();
+                    break;
+                case /* bool only_isolated */ 5:
+                    message.onlyIsolated = reader.bool();
+                    break;
+                case /* string margin_mode */ 6:
+                    message.marginMode = reader.string();
+                    break;
+                case /* int32 margin_table_id */ 7:
+                    message.marginTableId = reader.int32();
+                    break;
+                case /* int32 max_leverage */ 8:
+                    message.maxLeverage = reader.int32();
+                    break;
+                case /* double last_price */ 9:
+                    message.lastPrice = reader.double();
+                    break;
+                case /* double mark_price */ 10:
+                    message.markPrice = reader.double();
+                    break;
+                case /* int64 last_trade_time */ 11:
+                    message.lastTradeTime = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PerpInstrument, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* string dex = 3; */
+        if (message.dex !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.dex);
+        /* int32 sz_decimals = 4; */
+        if (message.szDecimals !== 0)
+            writer.tag(4, WireType.Varint).int32(message.szDecimals);
+        /* bool only_isolated = 5; */
+        if (message.onlyIsolated !== false)
+            writer.tag(5, WireType.Varint).bool(message.onlyIsolated);
+        /* string margin_mode = 6; */
+        if (message.marginMode !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.marginMode);
+        /* int32 margin_table_id = 7; */
+        if (message.marginTableId !== 0)
+            writer.tag(7, WireType.Varint).int32(message.marginTableId);
+        /* int32 max_leverage = 8; */
+        if (message.maxLeverage !== 0)
+            writer.tag(8, WireType.Varint).int32(message.maxLeverage);
+        /* double last_price = 9; */
+        if (message.lastPrice !== 0)
+            writer.tag(9, WireType.Bit64).double(message.lastPrice);
+        /* double mark_price = 10; */
+        if (message.markPrice !== 0)
+            writer.tag(10, WireType.Bit64).double(message.markPrice);
+        /* int64 last_trade_time = 11; */
+        if (message.lastTradeTime !== 0)
+            writer.tag(11, WireType.Varint).int64(message.lastTradeTime);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PerpInstrument
+ */
+export const PerpInstrument = new PerpInstrument$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PerpInstrumentsResponse$Type extends MessageType<PerpInstrumentsResponse> {
+    constructor() {
+        super("hypercore.PerpInstrumentsResponse", [
+            { no: 1, name: "instruments", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PerpInstrument }
+        ]);
+    }
+    create(value?: PartialMessage<PerpInstrumentsResponse>): PerpInstrumentsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instruments = [];
+        if (value !== undefined)
+            reflectionMergePartial<PerpInstrumentsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerpInstrumentsResponse): PerpInstrumentsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.PerpInstrument instruments */ 1:
+                    message.instruments.push(PerpInstrument.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PerpInstrumentsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.PerpInstrument instruments = 1; */
+        for (let i = 0; i < message.instruments.length; i++)
+            PerpInstrument.internalBinaryWrite(message.instruments[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PerpInstrumentsResponse
+ */
+export const PerpInstrumentsResponse = new PerpInstrumentsResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypercore.HyperCore
  */
@@ -3692,5 +4308,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletsByTag", options: {}, I: WalletsByTagRequest, O: WalletsByTagResponse },
     { name: "WalletPerformance", options: {}, I: WalletPerformanceRequest, O: WalletPerformanceResponse },
     { name: "WalletPerformanceSeries", options: {}, I: WalletPerformanceSeriesRequest, O: WalletPerformanceSeriesResponse },
-    { name: "WalletPositioningSeries", options: {}, I: WalletPositioningSeriesRequest, O: WalletPositioningSeriesResponse }
+    { name: "WalletPositioningSeries", options: {}, I: WalletPositioningSeriesRequest, O: WalletPositioningSeriesResponse },
+    { name: "SpotInstruments", options: {}, I: SpotInstrumentsRequest, O: SpotInstrumentsResponse },
+    { name: "PerpInstruments", options: {}, I: PerpInstrumentsRequest, O: PerpInstrumentsResponse }
 ]);

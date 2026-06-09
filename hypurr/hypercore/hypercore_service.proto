@@ -334,6 +334,50 @@ message WalletPositioningSeriesResponse {
   repeated PositioningBucket buckets = 4; // ascending by ts
 }
 
+message SpotInstrumentsRequest {}
+
+message SpotToken {
+  int32  index        = 1;  // spot asset index
+  string name         = 2;  // token symbol, e.g. "PURR"
+  int32  sz_decimals  = 3;
+  int32  wei_decimals = 4;
+  string full_name    = 5;  // empty when unset
+  string deployer     = 6;
+  string deploy_time  = 7;
+}
+
+message SpotInstrument {
+  int64     id              = 1;  // spot pair id
+  string    name            = 2;  // e.g. "PURR/USDC" or "@1"
+  SpotToken base            = 3;
+  SpotToken quote           = 4;
+  double    last_price      = 5;
+  int64     last_trade_time = 6;  // nanoseconds
+}
+
+message SpotInstrumentsResponse {
+  repeated SpotInstrument instruments = 1;
+}
+
+message PerpInstrumentsRequest {}
+
+message PerpInstrument {
+  int64  id              = 1;   // instrument id (encodes dex + asset index)
+  string name            = 2;
+  string dex             = 3;   // dex symbol; empty for the main perp dex
+  int32  sz_decimals     = 4;
+  bool   only_isolated   = 5;
+  string margin_mode     = 6;
+  int32  margin_table_id = 7;
+  int32  max_leverage    = 8;
+  double last_price      = 9;
+  double mark_price      = 10;
+  int64  last_trade_time = 11;  // nanoseconds
+}
+
+message PerpInstrumentsResponse {
+  repeated PerpInstrument instruments = 1;
+}
 
 
 service HyperCore {
@@ -350,6 +394,8 @@ service HyperCore {
   rpc WalletPerformance(WalletPerformanceRequest) returns (WalletPerformanceResponse) {}
   rpc WalletPerformanceSeries(WalletPerformanceSeriesRequest) returns (WalletPerformanceSeriesResponse) {}
   rpc WalletPositioningSeries(WalletPositioningSeriesRequest) returns (WalletPositioningSeriesResponse) {}
+  rpc SpotInstruments(SpotInstrumentsRequest) returns (SpotInstrumentsResponse);
+  rpc PerpInstruments(PerpInstrumentsRequest) returns (PerpInstrumentsResponse);
 }
 
 /*
