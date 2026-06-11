@@ -11,6 +11,7 @@ import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { Int64Value } from "../../google/protobuf/wrappers";
 import { DoubleValue } from "../../google/protobuf/wrappers";
 import { StringValue } from "../../google/protobuf/wrappers";
 import { UInt64Value } from "../../google/protobuf/wrappers";
@@ -432,6 +433,10 @@ export interface WalletsByTagRequest {
      * @generated from protobuf field: hypercore.WalletTag tag = 1
      */
     tag: WalletTag;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value limit = 2
+     */
+    limit?: Int64Value;
 }
 /**
  * @generated from protobuf message hypercore.WalletsByTagResponse
@@ -2631,7 +2636,8 @@ export const WalletInfo = new WalletInfo$Type();
 class WalletsByTagRequest$Type extends MessageType<WalletsByTagRequest> {
     constructor() {
         super("hypercore.WalletsByTagRequest", [
-            { no: 1, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] }
+            { no: 1, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] },
+            { no: 2, name: "limit", kind: "message", T: () => Int64Value }
         ]);
     }
     create(value?: PartialMessage<WalletsByTagRequest>): WalletsByTagRequest {
@@ -2649,6 +2655,9 @@ class WalletsByTagRequest$Type extends MessageType<WalletsByTagRequest> {
                 case /* hypercore.WalletTag tag */ 1:
                     message.tag = reader.int32();
                     break;
+                case /* google.protobuf.Int64Value limit */ 2:
+                    message.limit = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.limit);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2664,6 +2673,9 @@ class WalletsByTagRequest$Type extends MessageType<WalletsByTagRequest> {
         /* hypercore.WalletTag tag = 1; */
         if (message.tag !== 0)
             writer.tag(1, WireType.Varint).int32(message.tag);
+        /* google.protobuf.Int64Value limit = 2; */
+        if (message.limit)
+            Int64Value.internalBinaryWrite(message.limit, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

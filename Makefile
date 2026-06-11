@@ -16,13 +16,16 @@ PROTO_GO_MAKER := protoc --proto_path=. --proto_path=/usr/local/include
 PROTO_TS_MAKER := npx protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts
 
 # Protobuf Python generator
-PROTO_PY_MAKER := python3 -m grpc_tools.protoc --proto_path=.
+# Use a local venv: the system grpcio-tools may bundle a protoc too old to
+# parse proto3 explicit `optional` fields. `make py-deps` provisions it.
+PY := .venv/bin/python
+PROTO_PY_MAKER := $(PY) -m grpc_tools.protoc --proto_path=.
 
 GOCMD=go
 GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 
-.PHONY: all build clean golang javascript python
+.PHONY: all build clean golang javascript python py-deps
 
 # Default target
 all: build
@@ -37,7 +40,13 @@ golang: $(PROTO_GEN_GO_FILES)
 javascript: $(PROTO_GEN_TS_FILES)
 
 # Compile Protobuf for Python
-python: $(PROTO_GEN_PY_FILES)
+python: py-deps $(PROTO_GEN_PY_FILES)
+
+# Provision the Python toolchain (modern grpcio-tools) in a local venv
+py-deps: $(PY)
+$(PY):
+	python3 -m venv .venv
+	$(PY) -m pip install --quiet --upgrade pip 'grpcio-tools>=1.62'
 
 # Generate Go protobuf files
 go/%.pb.go go/%_grpc.pb.go: %.proto

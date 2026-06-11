@@ -194,6 +194,7 @@ message WalletInfo {
 
 message WalletsByTagRequest {
   WalletTag tag = 1;
+  google.protobuf.Int64Value limit = 2;
 }
 
 message WalletsByTagResponse {
