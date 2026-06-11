@@ -5,7 +5,7 @@ import warnings
 
 from hypurr.hypercore import hypercore_service_pb2 as hypurr_dot_hypercore_dot_hypercore__service__pb2
 
-GRPC_GENERATED_VERSION = '1.81.0'
+GRPC_GENERATED_VERSION = '1.80.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -25,7 +25,7 @@ if _version_not_supported:
     )
 
 
-class HyperCoreStub:
+class HyperCoreStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -109,9 +109,19 @@ class HyperCoreStub:
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PerpInstrumentsRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PerpInstrumentsResponse.FromString,
                 _registered_method=True)
+        self.WalletsByMetricPercentile = channel.unary_unary(
+                '/hypercore.HyperCore/WalletsByMetricPercentile',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileResponse.FromString,
+                _registered_method=True)
+        self.WalletTrades = channel.unary_unary(
+                '/hypercore.HyperCore/WalletTrades',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.FromString,
+                _registered_method=True)
 
 
-class HyperCoreServicer:
+class HyperCoreServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def WalletMovements(self, request, context):
@@ -204,6 +214,18 @@ class HyperCoreServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def WalletsByMetricPercentile(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def WalletTrades(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_HyperCoreServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -282,6 +304,16 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PerpInstrumentsRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PerpInstrumentsResponse.SerializeToString,
             ),
+            'WalletsByMetricPercentile': grpc.unary_unary_rpc_method_handler(
+                    servicer.WalletsByMetricPercentile,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileResponse.SerializeToString,
+            ),
+            'WalletTrades': grpc.unary_unary_rpc_method_handler(
+                    servicer.WalletTrades,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'hypercore.HyperCore', rpc_method_handlers)
@@ -290,7 +322,7 @@ def add_HyperCoreServicer_to_server(servicer, server):
 
 
  # This class is part of an EXPERIMENTAL API.
-class HyperCore:
+class HyperCore(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -688,6 +720,60 @@ class HyperCore:
             '/hypercore.HyperCore/PerpInstruments',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.PerpInstrumentsRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.PerpInstrumentsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def WalletsByMetricPercentile(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/WalletsByMetricPercentile',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def WalletTrades(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/WalletTrades',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.FromString,
             options,
             channel_credentials,
             insecure,

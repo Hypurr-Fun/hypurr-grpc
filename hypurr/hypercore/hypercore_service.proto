@@ -380,6 +380,82 @@ message PerpInstrumentsResponse {
   repeated PerpInstrument instruments = 1;
 }
 
+// ----- Wallets classified on a metric percentile band -----
+enum ClassificationMetric {
+  CLASSIFICATION_METRIC_UNSPECIFIED  = 0;
+  CLASSIFICATION_METRIC_TOTAL_PNL    = 1; // sum of daily PnL (realized + Δunrealized) over the frame
+  CLASSIFICATION_METRIC_WIN_RATE     = 2; // wins / closed trades within the frame, [0,1]
+  CLASSIFICATION_METRIC_MAX_DRAWDOWN = 3; // largest drawdown within the frame
+}
+
+message WalletsByMetricPercentileRequest {
+  ClassificationMetric metric = 1;
+  int64  from_ts           = 2; // inclusive, unix seconds, UTC day-aligned
+  int64  to_ts             = 3; // exclusive, unix seconds, UTC day-aligned
+  double from_percentile   = 4; // 0-100, band inclusive both ends, ranked ascending by value:
+  double to_percentile     = 5; //   worst 1% = [0,1], top 1% = [99,100]
+  int32  min_closed_trades = 6; // WIN_RATE only: exclude wallets with fewer closed trades in frame (0 = server default)
+  int32  limit             = 7; // max wallets returned (0 = server default; server-capped)
+}
+
+message WalletMetricRank {
+  string wallet_address = 1;
+  double value          = 2; // aggregated metric value over the frame
+  double percent_rank   = 3; // [0,100], ascending by value
+}
+
+message WalletsByMetricPercentileResponse {
+  repeated WalletMetricRank wallets = 1; // ascending by percent_rank
+}
+
+// ----- Historical wallet trades over a time frame (paged) -----
+enum WalletTradeType {
+  WALLET_TRADE_TYPE_ALL  = 0; // request only: perp + spot merged
+  WALLET_TRADE_TYPE_PERP = 1;
+  WALLET_TRADE_TYPE_SPOT = 2;
+}
+
+// One side of a persisted trade. Like TradeSideInfo but with the stored
+// integer start position (wei) instead of the raw string.
+message HistoricalTradeSide {
+  string user      = 1;
+  int64  start_pos = 2;                     // wei
+  int64  oid       = 3;
+  google.protobuf.UInt64Value twap_id = 4;
+  google.protobuf.StringValue cloid   = 5;
+}
+
+// Mirrors the indexer's persisted trade row (sizes/fee in raw wei).
+message HistoricalWalletTrade {
+  WalletTradeType type   = 1;               // PERP or SPOT
+  uint64 timestamp       = 2;               // unix nanoseconds
+  string hash            = 3;
+  string custom_hash     = 4;               // deterministic row id, unique per wallet
+  uint64 instrument_id   = 5;               // app convention: perp = index, spot = index + 10000
+  uint64 from_id         = 6;
+  int64  from_size       = 7;               // wei
+  uint64 to_id           = 8;
+  int64  to_size         = 9;               // wei
+  int64  fee             = 10;              // quote wei
+  TradeDirOverride trade_dir_override = 11;
+  HistoricalTradeSide ask_side = 12;
+  HistoricalTradeSide bid_side = 13;
+}
+
+message WalletTradesRequest {
+  string wallet_address = 1;
+  int64  from_ts        = 2; // inclusive, unix seconds; 0 = earliest
+  int64  to_ts          = 3; // inclusive, unix seconds; 0 = now
+  WalletTradeType type  = 4; // ALL = perp + spot merged
+  int32  page_size      = 5; // max 1000; 0 = 1000
+  string page_token     = 6; // from previous response; empty = first page
+}
+
+message WalletTradesResponse {
+  string wallet_address                 = 1;
+  repeated HistoricalWalletTrade trades = 2; // timestamp descending
+  string next_page_token                = 3; // empty when exhausted or the 10000-trade query cap is reached
+}
 
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
@@ -397,6 +473,8 @@ service HyperCore {
   rpc WalletPositioningSeries(WalletPositioningSeriesRequest) returns (WalletPositioningSeriesResponse) {}
   rpc SpotInstruments(SpotInstrumentsRequest) returns (SpotInstrumentsResponse);
   rpc PerpInstruments(PerpInstrumentsRequest) returns (PerpInstrumentsResponse);
+  rpc WalletsByMetricPercentile(WalletsByMetricPercentileRequest) returns (WalletsByMetricPercentileResponse) {}
+  rpc WalletTrades(WalletTradesRequest) returns (WalletTradesResponse) {}
 }
 
 /*
