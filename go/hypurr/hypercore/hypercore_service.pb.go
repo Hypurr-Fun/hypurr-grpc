@@ -3999,7 +3999,7 @@ type WalletTradesRequest struct {
 	FromTs        int64           `protobuf:"varint,2,opt,name=from_ts,json=fromTs,proto3" json:"from_ts,omitempty"`              // inclusive, unix seconds; 0 = earliest
 	ToTs          int64           `protobuf:"varint,3,opt,name=to_ts,json=toTs,proto3" json:"to_ts,omitempty"`                    // inclusive, unix seconds; 0 = now
 	Type          WalletTradeType `protobuf:"varint,4,opt,name=type,proto3,enum=hypercore.WalletTradeType" json:"type,omitempty"` // ALL = perp + spot merged
-	PageSize      int32           `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`        // max 1000; 0 = 1000
+	PageSize      int32           `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`        // max 2000; 0 = 2000
 	PageToken     string          `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`      // from previous response; empty = first page
 }
 
@@ -4084,7 +4084,7 @@ type WalletTradesResponse struct {
 
 	WalletAddress string                   `protobuf:"bytes,1,opt,name=wallet_address,json=walletAddress,proto3" json:"wallet_address,omitempty"`
 	Trades        []*HistoricalWalletTrade `protobuf:"bytes,2,rep,name=trades,proto3" json:"trades,omitempty"`                                      // timestamp descending
-	NextPageToken string                   `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"` // empty when exhausted or the 10000-trade query cap is reached
+	NextPageToken string                   `protobuf:"bytes,3,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"` // empty when exhausted
 }
 
 func (x *WalletTradesResponse) Reset() {

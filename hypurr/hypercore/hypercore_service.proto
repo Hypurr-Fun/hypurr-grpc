@@ -447,14 +447,14 @@ message WalletTradesRequest {
   int64  from_ts        = 2; // inclusive, unix seconds; 0 = earliest
   int64  to_ts          = 3; // inclusive, unix seconds; 0 = now
   WalletTradeType type  = 4; // ALL = perp + spot merged
-  int32  page_size      = 5; // max 1000; 0 = 1000
+  int32  page_size      = 5; // max 2000; 0 = 2000
   string page_token     = 6; // from previous response; empty = first page
 }
 
 message WalletTradesResponse {
   string wallet_address                 = 1;
   repeated HistoricalWalletTrade trades = 2; // timestamp descending
-  string next_page_token                = 3; // empty when exhausted or the 10000-trade query cap is reached
+  string next_page_token                = 3; // empty when exhausted
 }
 
 service HyperCore {

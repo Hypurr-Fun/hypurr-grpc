@@ -1125,7 +1125,7 @@ export interface WalletTradesRequest {
     /**
      * @generated from protobuf field: int32 page_size = 5;
      */
-    pageSize: number; // max 1000; 0 = 1000
+    pageSize: number; // max 2000; 0 = 2000
     /**
      * @generated from protobuf field: string page_token = 6;
      */
@@ -1146,7 +1146,7 @@ export interface WalletTradesResponse {
     /**
      * @generated from protobuf field: string next_page_token = 3;
      */
-    nextPageToken: string; // empty when exhausted or the 10000-trade query cap is reached
+    nextPageToken: string; // empty when exhausted
 }
 // 
 // type Trade struct {
