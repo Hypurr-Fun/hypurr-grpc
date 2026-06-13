@@ -1608,9 +1608,9 @@ export interface SupportTicketStatusResponse {
     ticket?: SupportTicket;
 }
 /**
- * @generated from protobuf message hypurr.GetPortfolioAllocatorRequest
+ * @generated from protobuf message hypurr.PortfolioAllocatorGetRequest
  */
-export interface GetPortfolioAllocatorRequest {
+export interface PortfolioAllocatorGetRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1
      */
@@ -1623,58 +1623,42 @@ export interface GetPortfolioAllocatorRequest {
     walletId: number;
 }
 /**
- * @generated from protobuf message hypurr.GetPortfolioAllocatorResponse
+ * @generated from protobuf message hypurr.PortfolioAllocatorGetResponse
  */
-export interface GetPortfolioAllocatorResponse {
+export interface PortfolioAllocatorGetResponse {
     /**
      * @generated from protobuf field: hypurr.PortfolioAllocator allocator = 1
      */
     allocator?: PortfolioAllocator;
 }
 /**
- * @generated from protobuf message hypurr.ListPortfolioAllocatorsRequest
+ * @generated from protobuf message hypurr.PortfolioAllocatorListRequest
  */
-export interface ListPortfolioAllocatorsRequest {
+export interface PortfolioAllocatorListRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1
      */
     authData: {
         [key: string]: string;
     };
+    /**
+     * @generated from protobuf field: bool enabled = 2
+     */
+    enabled: boolean;
 }
 /**
- * @generated from protobuf message hypurr.ListPortfolioAllocatorsResponse
+ * @generated from protobuf message hypurr.PortfolioAllocatorListResponse
  */
-export interface ListPortfolioAllocatorsResponse {
+export interface PortfolioAllocatorListResponse {
     /**
      * @generated from protobuf field: repeated hypurr.PortfolioAllocator allocators = 1
      */
     allocators: PortfolioAllocator[];
 }
 /**
- * @generated from protobuf message hypurr.ListEnabledPortfolioAllocatorsRequest
+ * @generated from protobuf message hypurr.PortfolioAllocatorSourceGetRequest
  */
-export interface ListEnabledPortfolioAllocatorsRequest {
-    /**
-     * @generated from protobuf field: map<string, string> auth_data = 1
-     */
-    authData: {
-        [key: string]: string;
-    };
-}
-/**
- * @generated from protobuf message hypurr.ListEnabledPortfolioAllocatorsResponse
- */
-export interface ListEnabledPortfolioAllocatorsResponse {
-    /**
-     * @generated from protobuf field: repeated hypurr.PortfolioAllocator allocators = 1
-     */
-    allocators: PortfolioAllocator[];
-}
-/**
- * @generated from protobuf message hypurr.GetPortfolioSourceRequest
- */
-export interface GetPortfolioSourceRequest {
+export interface PortfolioAllocatorSourceGetRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1
      */
@@ -1682,27 +1666,27 @@ export interface GetPortfolioSourceRequest {
         [key: string]: string;
     };
     /**
-     * @generated from protobuf field: int64 allocator_id = 2
+     * @generated from protobuf field: int64 wallet_id = 2
      */
-    allocatorId: number;
+    walletId: number;
     /**
      * @generated from protobuf field: string name = 3
      */
     name: string;
 }
 /**
- * @generated from protobuf message hypurr.GetPortfolioSourceResponse
+ * @generated from protobuf message hypurr.PortfolioAllocatorSourceGetResponse
  */
-export interface GetPortfolioSourceResponse {
+export interface PortfolioAllocatorSourceGetResponse {
     /**
      * @generated from protobuf field: hypurr.PortfolioSource source = 1
      */
     source?: PortfolioSource;
 }
 /**
- * @generated from protobuf message hypurr.ListPortfolioSourcesRequest
+ * @generated from protobuf message hypurr.PortfolioAllocatorSourceListRequest
  */
-export interface ListPortfolioSourcesRequest {
+export interface PortfolioAllocatorSourceListRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1
      */
@@ -1710,25 +1694,25 @@ export interface ListPortfolioSourcesRequest {
         [key: string]: string;
     };
     /**
-     * @generated from protobuf field: int64 allocator_id = 2
+     * @generated from protobuf field: int64 wallet_id = 2
      */
-    allocatorId: number;
+    walletId: number;
 }
 /**
- * @generated from protobuf message hypurr.ListPortfolioSourcesResponse
+ * @generated from protobuf message hypurr.PortfolioAllocatorSourceListResponse
  */
-export interface ListPortfolioSourcesResponse {
+export interface PortfolioAllocatorSourceListResponse {
     /**
      * @generated from protobuf field: repeated hypurr.PortfolioSource sources = 1
      */
     sources: PortfolioSource[];
 }
 /**
- * CreatePortfolioAllocator - creates a new allocator for a wallet
+ * PortfolioAllocatorCreateRequest - creates a new allocator for a wallet
  *
- * @generated from protobuf message hypurr.CreatePortfolioAllocatorRequest
+ * @generated from protobuf message hypurr.PortfolioAllocatorCreateRequest
  */
-export interface CreatePortfolioAllocatorRequest {
+export interface PortfolioAllocatorCreateRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1
      */
@@ -1749,20 +1733,20 @@ export interface CreatePortfolioAllocatorRequest {
     minRebalancePct: number; // minimum deviation to trigger rebalance (default 0.05)
 }
 /**
- * @generated from protobuf message hypurr.CreatePortfolioAllocatorResponse
+ * @generated from protobuf message hypurr.PortfolioAllocatorCreateResponse
  */
-export interface CreatePortfolioAllocatorResponse {
+export interface PortfolioAllocatorCreateResponse {
     /**
      * @generated from protobuf field: hypurr.PortfolioAllocator allocator = 1
      */
     allocator?: PortfolioAllocator;
 }
 /**
- * UpdatePortfolioAllocator - updates allocator settings (all fields optional)
+ * PortfolioAllocatorUpdate - updates allocator settings (all fields optional)
  *
- * @generated from protobuf message hypurr.UpdatePortfolioAllocatorRequest
+ * @generated from protobuf message hypurr.PortfolioAllocatorUpdateRequest
  */
-export interface UpdatePortfolioAllocatorRequest {
+export interface PortfolioAllocatorUpdateRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1
      */
@@ -1787,9 +1771,9 @@ export interface UpdatePortfolioAllocatorRequest {
     minRebalancePct?: DoubleValue;
 }
 /**
- * @generated from protobuf message hypurr.UpdatePortfolioAllocatorResponse
+ * @generated from protobuf message hypurr.PortfolioAllocatorUpdateResponse
  */
-export interface UpdatePortfolioAllocatorResponse {
+export interface PortfolioAllocatorUpdateResponse {
     /**
      * @generated from protobuf field: hypurr.PortfolioAllocator allocator = 1
      */
@@ -1798,9 +1782,9 @@ export interface UpdatePortfolioAllocatorResponse {
 /**
  * DeletePortfolioAllocator - deletes an allocator and all its sources
  *
- * @generated from protobuf message hypurr.DeletePortfolioAllocatorRequest
+ * @generated from protobuf message hypurr.PortfolioAllocatorDeleteRequest
  */
-export interface DeletePortfolioAllocatorRequest {
+export interface PortfolioAllocatorDeleteRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1
      */
@@ -1813,18 +1797,18 @@ export interface DeletePortfolioAllocatorRequest {
     walletId: number;
 }
 /**
- * @generated from protobuf message hypurr.DeletePortfolioAllocatorResponse
+ * @generated from protobuf message hypurr.PortfolioAllocatorDeleteResponse
  */
-export interface DeletePortfolioAllocatorResponse {
+export interface PortfolioAllocatorDeleteResponse {
 }
 // ============== Portfolio Source CRUD ==============
 
 /**
- * CreatePortfolioSource - adds a new source to an allocator
+ * PortfolioAllocatorSourceCreateRequest - adds a new source to an allocator
  *
- * @generated from protobuf message hypurr.CreatePortfolioSourceRequest
+ * @generated from protobuf message hypurr.PortfolioAllocatorSourceCreateRequest
  */
-export interface CreatePortfolioSourceRequest {
+export interface PortfolioAllocatorSourceCreateRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1
      */
@@ -1832,9 +1816,9 @@ export interface CreatePortfolioSourceRequest {
         [key: string]: string;
     };
     /**
-     * @generated from protobuf field: int64 allocator_id = 2
+     * @generated from protobuf field: int64 wallet_id = 2
      */
-    allocatorId: number;
+    walletId: number;
     /**
      * @generated from protobuf field: string name = 3
      */
@@ -1853,20 +1837,20 @@ export interface CreatePortfolioSourceRequest {
     config?: Struct; // source-specific config
 }
 /**
- * @generated from protobuf message hypurr.CreatePortfolioSourceResponse
+ * @generated from protobuf message hypurr.PortfolioAllocatorSourceCreateResponse
  */
-export interface CreatePortfolioSourceResponse {
+export interface PortfolioAllocatorSourceCreateResponse {
     /**
      * @generated from protobuf field: hypurr.PortfolioSource source = 1
      */
     source?: PortfolioSource;
 }
 /**
- * UpdatePortfolioSource - updates source settings (all fields optional except identifiers)
+ * PortfolioAllocatorSourceUpdateRequest - updates source settings (all fields optional except identifiers)
  *
- * @generated from protobuf message hypurr.UpdatePortfolioSourceRequest
+ * @generated from protobuf message hypurr.PortfolioAllocatorSourceUpdateRequest
  */
-export interface UpdatePortfolioSourceRequest {
+export interface PortfolioAllocatorSourceUpdateRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1
      */
@@ -1874,9 +1858,9 @@ export interface UpdatePortfolioSourceRequest {
         [key: string]: string;
     };
     /**
-     * @generated from protobuf field: int64 allocator_id = 2
+     * @generated from protobuf field: int64 wallet_id = 2
      */
-    allocatorId: number;
+    walletId: number;
     /**
      * @generated from protobuf field: string name = 3
      */
@@ -1895,9 +1879,9 @@ export interface UpdatePortfolioSourceRequest {
     enabled?: BoolValue; // enable/disable source
 }
 /**
- * @generated from protobuf message hypurr.UpdatePortfolioSourceResponse
+ * @generated from protobuf message hypurr.PortfolioAllocatorSourceUpdateResponse
  */
-export interface UpdatePortfolioSourceResponse {
+export interface PortfolioAllocatorSourceUpdateResponse {
     /**
      * @generated from protobuf field: hypurr.PortfolioSource source = 1
      */
@@ -1906,9 +1890,9 @@ export interface UpdatePortfolioSourceResponse {
 /**
  * DeletePortfolioSource - removes a source from an allocator
  *
- * @generated from protobuf message hypurr.DeletePortfolioSourceRequest
+ * @generated from protobuf message hypurr.PortfolioAllocatorSourceDeleteRequest
  */
-export interface DeletePortfolioSourceRequest {
+export interface PortfolioAllocatorSourceDeleteRequest {
     /**
      * @generated from protobuf field: map<string, string> auth_data = 1
      */
@@ -1925,9 +1909,9 @@ export interface DeletePortfolioSourceRequest {
     name: string; // identifies the source to delete
 }
 /**
- * @generated from protobuf message hypurr.DeletePortfolioSourceResponse
+ * @generated from protobuf message hypurr.PortfolioAllocatorSourceDeleteResponse
  */
-export interface DeletePortfolioSourceResponse {
+export interface PortfolioAllocatorSourceDeleteResponse {
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserRequest$Type extends MessageType<TelegramUserRequest> {
@@ -8251,22 +8235,22 @@ class SupportTicketStatusResponse$Type extends MessageType<SupportTicketStatusRe
  */
 export const SupportTicketStatusResponse = new SupportTicketStatusResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class GetPortfolioAllocatorRequest$Type extends MessageType<GetPortfolioAllocatorRequest> {
+class PortfolioAllocatorGetRequest$Type extends MessageType<PortfolioAllocatorGetRequest> {
     constructor() {
-        super("hypurr.GetPortfolioAllocatorRequest", [
+        super("hypurr.PortfolioAllocatorGetRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
-    create(value?: PartialMessage<GetPortfolioAllocatorRequest>): GetPortfolioAllocatorRequest {
+    create(value?: PartialMessage<PortfolioAllocatorGetRequest>): PortfolioAllocatorGetRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.authData = {};
         message.walletId = 0;
         if (value !== undefined)
-            reflectionMergePartial<GetPortfolioAllocatorRequest>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorGetRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetPortfolioAllocatorRequest): GetPortfolioAllocatorRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorGetRequest): PortfolioAllocatorGetRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -8288,8 +8272,8 @@ class GetPortfolioAllocatorRequest$Type extends MessageType<GetPortfolioAllocato
         }
         return message;
     }
-    private binaryReadMap1(map: GetPortfolioAllocatorRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof GetPortfolioAllocatorRequest["authData"] | undefined, val: GetPortfolioAllocatorRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: PortfolioAllocatorGetRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PortfolioAllocatorGetRequest["authData"] | undefined, val: PortfolioAllocatorGetRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -8299,12 +8283,12 @@ class GetPortfolioAllocatorRequest$Type extends MessageType<GetPortfolioAllocato
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for hypurr.GetPortfolioAllocatorRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for hypurr.PortfolioAllocatorGetRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: GetPortfolioAllocatorRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorGetRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of globalThis.Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
@@ -8318,23 +8302,23 @@ class GetPortfolioAllocatorRequest$Type extends MessageType<GetPortfolioAllocato
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.GetPortfolioAllocatorRequest
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorGetRequest
  */
-export const GetPortfolioAllocatorRequest = new GetPortfolioAllocatorRequest$Type();
+export const PortfolioAllocatorGetRequest = new PortfolioAllocatorGetRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class GetPortfolioAllocatorResponse$Type extends MessageType<GetPortfolioAllocatorResponse> {
+class PortfolioAllocatorGetResponse$Type extends MessageType<PortfolioAllocatorGetResponse> {
     constructor() {
-        super("hypurr.GetPortfolioAllocatorResponse", [
+        super("hypurr.PortfolioAllocatorGetResponse", [
             { no: 1, name: "allocator", kind: "message", T: () => PortfolioAllocator }
         ]);
     }
-    create(value?: PartialMessage<GetPortfolioAllocatorResponse>): GetPortfolioAllocatorResponse {
+    create(value?: PartialMessage<PortfolioAllocatorGetResponse>): PortfolioAllocatorGetResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         if (value !== undefined)
-            reflectionMergePartial<GetPortfolioAllocatorResponse>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorGetResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetPortfolioAllocatorResponse): GetPortfolioAllocatorResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorGetResponse): PortfolioAllocatorGetResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -8353,7 +8337,7 @@ class GetPortfolioAllocatorResponse$Type extends MessageType<GetPortfolioAllocat
         }
         return message;
     }
-    internalBinaryWrite(message: GetPortfolioAllocatorResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorGetResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* hypurr.PortfolioAllocator allocator = 1; */
         if (message.allocator)
             PortfolioAllocator.internalBinaryWrite(message.allocator, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -8364,248 +8348,146 @@ class GetPortfolioAllocatorResponse$Type extends MessageType<GetPortfolioAllocat
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.GetPortfolioAllocatorResponse
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorGetResponse
  */
-export const GetPortfolioAllocatorResponse = new GetPortfolioAllocatorResponse$Type();
+export const PortfolioAllocatorGetResponse = new PortfolioAllocatorGetResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ListPortfolioAllocatorsRequest$Type extends MessageType<ListPortfolioAllocatorsRequest> {
+class PortfolioAllocatorListRequest$Type extends MessageType<PortfolioAllocatorListRequest> {
     constructor() {
-        super("hypurr.ListPortfolioAllocatorsRequest", [
-            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
-        ]);
-    }
-    create(value?: PartialMessage<ListPortfolioAllocatorsRequest>): ListPortfolioAllocatorsRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.authData = {};
-        if (value !== undefined)
-            reflectionMergePartial<ListPortfolioAllocatorsRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListPortfolioAllocatorsRequest): ListPortfolioAllocatorsRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* map<string, string> auth_data */ 1:
-                    this.binaryReadMap1(message.authData, reader, options);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    private binaryReadMap1(map: ListPortfolioAllocatorsRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof ListPortfolioAllocatorsRequest["authData"] | undefined, val: ListPortfolioAllocatorsRequest["authData"][any] | undefined;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case 1:
-                    key = reader.string();
-                    break;
-                case 2:
-                    val = reader.string();
-                    break;
-                default: throw new globalThis.Error("unknown map entry field for hypurr.ListPortfolioAllocatorsRequest.auth_data");
-            }
-        }
-        map[key ?? ""] = val ?? "";
-    }
-    internalBinaryWrite(message: ListPortfolioAllocatorsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* map<string, string> auth_data = 1; */
-        for (let k of globalThis.Object.keys(message.authData))
-            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.ListPortfolioAllocatorsRequest
- */
-export const ListPortfolioAllocatorsRequest = new ListPortfolioAllocatorsRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ListPortfolioAllocatorsResponse$Type extends MessageType<ListPortfolioAllocatorsResponse> {
-    constructor() {
-        super("hypurr.ListPortfolioAllocatorsResponse", [
-            { no: 1, name: "allocators", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioAllocator }
-        ]);
-    }
-    create(value?: PartialMessage<ListPortfolioAllocatorsResponse>): ListPortfolioAllocatorsResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.allocators = [];
-        if (value !== undefined)
-            reflectionMergePartial<ListPortfolioAllocatorsResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListPortfolioAllocatorsResponse): ListPortfolioAllocatorsResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated hypurr.PortfolioAllocator allocators */ 1:
-                    message.allocators.push(PortfolioAllocator.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ListPortfolioAllocatorsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.PortfolioAllocator allocators = 1; */
-        for (let i = 0; i < message.allocators.length; i++)
-            PortfolioAllocator.internalBinaryWrite(message.allocators[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.ListPortfolioAllocatorsResponse
- */
-export const ListPortfolioAllocatorsResponse = new ListPortfolioAllocatorsResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ListEnabledPortfolioAllocatorsRequest$Type extends MessageType<ListEnabledPortfolioAllocatorsRequest> {
-    constructor() {
-        super("hypurr.ListEnabledPortfolioAllocatorsRequest", [
-            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
-        ]);
-    }
-    create(value?: PartialMessage<ListEnabledPortfolioAllocatorsRequest>): ListEnabledPortfolioAllocatorsRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.authData = {};
-        if (value !== undefined)
-            reflectionMergePartial<ListEnabledPortfolioAllocatorsRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListEnabledPortfolioAllocatorsRequest): ListEnabledPortfolioAllocatorsRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* map<string, string> auth_data */ 1:
-                    this.binaryReadMap1(message.authData, reader, options);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    private binaryReadMap1(map: ListEnabledPortfolioAllocatorsRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof ListEnabledPortfolioAllocatorsRequest["authData"] | undefined, val: ListEnabledPortfolioAllocatorsRequest["authData"][any] | undefined;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case 1:
-                    key = reader.string();
-                    break;
-                case 2:
-                    val = reader.string();
-                    break;
-                default: throw new globalThis.Error("unknown map entry field for hypurr.ListEnabledPortfolioAllocatorsRequest.auth_data");
-            }
-        }
-        map[key ?? ""] = val ?? "";
-    }
-    internalBinaryWrite(message: ListEnabledPortfolioAllocatorsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* map<string, string> auth_data = 1; */
-        for (let k of globalThis.Object.keys(message.authData))
-            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.ListEnabledPortfolioAllocatorsRequest
- */
-export const ListEnabledPortfolioAllocatorsRequest = new ListEnabledPortfolioAllocatorsRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ListEnabledPortfolioAllocatorsResponse$Type extends MessageType<ListEnabledPortfolioAllocatorsResponse> {
-    constructor() {
-        super("hypurr.ListEnabledPortfolioAllocatorsResponse", [
-            { no: 1, name: "allocators", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioAllocator }
-        ]);
-    }
-    create(value?: PartialMessage<ListEnabledPortfolioAllocatorsResponse>): ListEnabledPortfolioAllocatorsResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.allocators = [];
-        if (value !== undefined)
-            reflectionMergePartial<ListEnabledPortfolioAllocatorsResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListEnabledPortfolioAllocatorsResponse): ListEnabledPortfolioAllocatorsResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated hypurr.PortfolioAllocator allocators */ 1:
-                    message.allocators.push(PortfolioAllocator.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ListEnabledPortfolioAllocatorsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.PortfolioAllocator allocators = 1; */
-        for (let i = 0; i < message.allocators.length; i++)
-            PortfolioAllocator.internalBinaryWrite(message.allocators[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.ListEnabledPortfolioAllocatorsResponse
- */
-export const ListEnabledPortfolioAllocatorsResponse = new ListEnabledPortfolioAllocatorsResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class GetPortfolioSourceRequest$Type extends MessageType<GetPortfolioSourceRequest> {
-    constructor() {
-        super("hypurr.GetPortfolioSourceRequest", [
+        super("hypurr.PortfolioAllocatorListRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "allocator_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioAllocatorListRequest>): PortfolioAllocatorListRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.authData = {};
+        message.enabled = false;
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioAllocatorListRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorListRequest): PortfolioAllocatorListRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* bool enabled */ 2:
+                    message.enabled = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: PortfolioAllocatorListRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PortfolioAllocatorListRequest["authData"] | undefined, val: PortfolioAllocatorListRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for hypurr.PortfolioAllocatorListRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: PortfolioAllocatorListRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of globalThis.Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* bool enabled = 2; */
+        if (message.enabled !== false)
+            writer.tag(2, WireType.Varint).bool(message.enabled);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorListRequest
+ */
+export const PortfolioAllocatorListRequest = new PortfolioAllocatorListRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioAllocatorListResponse$Type extends MessageType<PortfolioAllocatorListResponse> {
+    constructor() {
+        super("hypurr.PortfolioAllocatorListResponse", [
+            { no: 1, name: "allocators", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioAllocator }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioAllocatorListResponse>): PortfolioAllocatorListResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.allocators = [];
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioAllocatorListResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorListResponse): PortfolioAllocatorListResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.PortfolioAllocator allocators */ 1:
+                    message.allocators.push(PortfolioAllocator.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PortfolioAllocatorListResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.PortfolioAllocator allocators = 1; */
+        for (let i = 0; i < message.allocators.length; i++)
+            PortfolioAllocator.internalBinaryWrite(message.allocators[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorListResponse
+ */
+export const PortfolioAllocatorListResponse = new PortfolioAllocatorListResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioAllocatorSourceGetRequest$Type extends MessageType<PortfolioAllocatorSourceGetRequest> {
+    constructor() {
+        super("hypurr.PortfolioAllocatorSourceGetRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<GetPortfolioSourceRequest>): GetPortfolioSourceRequest {
+    create(value?: PartialMessage<PortfolioAllocatorSourceGetRequest>): PortfolioAllocatorSourceGetRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.authData = {};
-        message.allocatorId = 0;
+        message.walletId = 0;
         message.name = "";
         if (value !== undefined)
-            reflectionMergePartial<GetPortfolioSourceRequest>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorSourceGetRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetPortfolioSourceRequest): GetPortfolioSourceRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorSourceGetRequest): PortfolioAllocatorSourceGetRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -8613,8 +8495,8 @@ class GetPortfolioSourceRequest$Type extends MessageType<GetPortfolioSourceReque
                 case /* map<string, string> auth_data */ 1:
                     this.binaryReadMap1(message.authData, reader, options);
                     break;
-                case /* int64 allocator_id */ 2:
-                    message.allocatorId = reader.int64().toNumber();
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
                     break;
                 case /* string name */ 3:
                     message.name = reader.string();
@@ -8630,8 +8512,8 @@ class GetPortfolioSourceRequest$Type extends MessageType<GetPortfolioSourceReque
         }
         return message;
     }
-    private binaryReadMap1(map: GetPortfolioSourceRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof GetPortfolioSourceRequest["authData"] | undefined, val: GetPortfolioSourceRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: PortfolioAllocatorSourceGetRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PortfolioAllocatorSourceGetRequest["authData"] | undefined, val: PortfolioAllocatorSourceGetRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -8641,18 +8523,18 @@ class GetPortfolioSourceRequest$Type extends MessageType<GetPortfolioSourceReque
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for hypurr.GetPortfolioSourceRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for hypurr.PortfolioAllocatorSourceGetRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: GetPortfolioSourceRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorSourceGetRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of globalThis.Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
-        /* int64 allocator_id = 2; */
-        if (message.allocatorId !== 0)
-            writer.tag(2, WireType.Varint).int64(message.allocatorId);
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
         /* string name = 3; */
         if (message.name !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.name);
@@ -8663,23 +8545,23 @@ class GetPortfolioSourceRequest$Type extends MessageType<GetPortfolioSourceReque
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.GetPortfolioSourceRequest
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorSourceGetRequest
  */
-export const GetPortfolioSourceRequest = new GetPortfolioSourceRequest$Type();
+export const PortfolioAllocatorSourceGetRequest = new PortfolioAllocatorSourceGetRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class GetPortfolioSourceResponse$Type extends MessageType<GetPortfolioSourceResponse> {
+class PortfolioAllocatorSourceGetResponse$Type extends MessageType<PortfolioAllocatorSourceGetResponse> {
     constructor() {
-        super("hypurr.GetPortfolioSourceResponse", [
+        super("hypurr.PortfolioAllocatorSourceGetResponse", [
             { no: 1, name: "source", kind: "message", T: () => PortfolioSource }
         ]);
     }
-    create(value?: PartialMessage<GetPortfolioSourceResponse>): GetPortfolioSourceResponse {
+    create(value?: PartialMessage<PortfolioAllocatorSourceGetResponse>): PortfolioAllocatorSourceGetResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         if (value !== undefined)
-            reflectionMergePartial<GetPortfolioSourceResponse>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorSourceGetResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetPortfolioSourceResponse): GetPortfolioSourceResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorSourceGetResponse): PortfolioAllocatorSourceGetResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -8698,7 +8580,7 @@ class GetPortfolioSourceResponse$Type extends MessageType<GetPortfolioSourceResp
         }
         return message;
     }
-    internalBinaryWrite(message: GetPortfolioSourceResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorSourceGetResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* hypurr.PortfolioSource source = 1; */
         if (message.source)
             PortfolioSource.internalBinaryWrite(message.source, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -8709,26 +8591,26 @@ class GetPortfolioSourceResponse$Type extends MessageType<GetPortfolioSourceResp
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.GetPortfolioSourceResponse
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorSourceGetResponse
  */
-export const GetPortfolioSourceResponse = new GetPortfolioSourceResponse$Type();
+export const PortfolioAllocatorSourceGetResponse = new PortfolioAllocatorSourceGetResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ListPortfolioSourcesRequest$Type extends MessageType<ListPortfolioSourcesRequest> {
+class PortfolioAllocatorSourceListRequest$Type extends MessageType<PortfolioAllocatorSourceListRequest> {
     constructor() {
-        super("hypurr.ListPortfolioSourcesRequest", [
+        super("hypurr.PortfolioAllocatorSourceListRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "allocator_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
-    create(value?: PartialMessage<ListPortfolioSourcesRequest>): ListPortfolioSourcesRequest {
+    create(value?: PartialMessage<PortfolioAllocatorSourceListRequest>): PortfolioAllocatorSourceListRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.authData = {};
-        message.allocatorId = 0;
+        message.walletId = 0;
         if (value !== undefined)
-            reflectionMergePartial<ListPortfolioSourcesRequest>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorSourceListRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListPortfolioSourcesRequest): ListPortfolioSourcesRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorSourceListRequest): PortfolioAllocatorSourceListRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -8736,8 +8618,8 @@ class ListPortfolioSourcesRequest$Type extends MessageType<ListPortfolioSourcesR
                 case /* map<string, string> auth_data */ 1:
                     this.binaryReadMap1(message.authData, reader, options);
                     break;
-                case /* int64 allocator_id */ 2:
-                    message.allocatorId = reader.int64().toNumber();
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -8750,8 +8632,8 @@ class ListPortfolioSourcesRequest$Type extends MessageType<ListPortfolioSourcesR
         }
         return message;
     }
-    private binaryReadMap1(map: ListPortfolioSourcesRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof ListPortfolioSourcesRequest["authData"] | undefined, val: ListPortfolioSourcesRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: PortfolioAllocatorSourceListRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PortfolioAllocatorSourceListRequest["authData"] | undefined, val: PortfolioAllocatorSourceListRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -8761,18 +8643,18 @@ class ListPortfolioSourcesRequest$Type extends MessageType<ListPortfolioSourcesR
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for hypurr.ListPortfolioSourcesRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for hypurr.PortfolioAllocatorSourceListRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: ListPortfolioSourcesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorSourceListRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of globalThis.Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
-        /* int64 allocator_id = 2; */
-        if (message.allocatorId !== 0)
-            writer.tag(2, WireType.Varint).int64(message.allocatorId);
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -8780,24 +8662,24 @@ class ListPortfolioSourcesRequest$Type extends MessageType<ListPortfolioSourcesR
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.ListPortfolioSourcesRequest
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorSourceListRequest
  */
-export const ListPortfolioSourcesRequest = new ListPortfolioSourcesRequest$Type();
+export const PortfolioAllocatorSourceListRequest = new PortfolioAllocatorSourceListRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ListPortfolioSourcesResponse$Type extends MessageType<ListPortfolioSourcesResponse> {
+class PortfolioAllocatorSourceListResponse$Type extends MessageType<PortfolioAllocatorSourceListResponse> {
     constructor() {
-        super("hypurr.ListPortfolioSourcesResponse", [
+        super("hypurr.PortfolioAllocatorSourceListResponse", [
             { no: 1, name: "sources", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioSource }
         ]);
     }
-    create(value?: PartialMessage<ListPortfolioSourcesResponse>): ListPortfolioSourcesResponse {
+    create(value?: PartialMessage<PortfolioAllocatorSourceListResponse>): PortfolioAllocatorSourceListResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.sources = [];
         if (value !== undefined)
-            reflectionMergePartial<ListPortfolioSourcesResponse>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorSourceListResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListPortfolioSourcesResponse): ListPortfolioSourcesResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorSourceListResponse): PortfolioAllocatorSourceListResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -8816,7 +8698,7 @@ class ListPortfolioSourcesResponse$Type extends MessageType<ListPortfolioSources
         }
         return message;
     }
-    internalBinaryWrite(message: ListPortfolioSourcesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorSourceListResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* repeated hypurr.PortfolioSource sources = 1; */
         for (let i = 0; i < message.sources.length; i++)
             PortfolioSource.internalBinaryWrite(message.sources[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -8827,30 +8709,30 @@ class ListPortfolioSourcesResponse$Type extends MessageType<ListPortfolioSources
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.ListPortfolioSourcesResponse
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorSourceListResponse
  */
-export const ListPortfolioSourcesResponse = new ListPortfolioSourcesResponse$Type();
+export const PortfolioAllocatorSourceListResponse = new PortfolioAllocatorSourceListResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CreatePortfolioAllocatorRequest$Type extends MessageType<CreatePortfolioAllocatorRequest> {
+class PortfolioAllocatorCreateRequest$Type extends MessageType<PortfolioAllocatorCreateRequest> {
     constructor() {
-        super("hypurr.CreatePortfolioAllocatorRequest", [
+        super("hypurr.PortfolioAllocatorCreateRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "rebalance_interval", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "min_rebalance_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
-    create(value?: PartialMessage<CreatePortfolioAllocatorRequest>): CreatePortfolioAllocatorRequest {
+    create(value?: PartialMessage<PortfolioAllocatorCreateRequest>): PortfolioAllocatorCreateRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.authData = {};
         message.walletId = 0;
         message.rebalanceInterval = 0;
         message.minRebalancePct = 0;
         if (value !== undefined)
-            reflectionMergePartial<CreatePortfolioAllocatorRequest>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorCreateRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePortfolioAllocatorRequest): CreatePortfolioAllocatorRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorCreateRequest): PortfolioAllocatorCreateRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -8878,8 +8760,8 @@ class CreatePortfolioAllocatorRequest$Type extends MessageType<CreatePortfolioAl
         }
         return message;
     }
-    private binaryReadMap1(map: CreatePortfolioAllocatorRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof CreatePortfolioAllocatorRequest["authData"] | undefined, val: CreatePortfolioAllocatorRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: PortfolioAllocatorCreateRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PortfolioAllocatorCreateRequest["authData"] | undefined, val: PortfolioAllocatorCreateRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -8889,12 +8771,12 @@ class CreatePortfolioAllocatorRequest$Type extends MessageType<CreatePortfolioAl
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for hypurr.CreatePortfolioAllocatorRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for hypurr.PortfolioAllocatorCreateRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: CreatePortfolioAllocatorRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorCreateRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of globalThis.Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
@@ -8914,23 +8796,23 @@ class CreatePortfolioAllocatorRequest$Type extends MessageType<CreatePortfolioAl
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.CreatePortfolioAllocatorRequest
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorCreateRequest
  */
-export const CreatePortfolioAllocatorRequest = new CreatePortfolioAllocatorRequest$Type();
+export const PortfolioAllocatorCreateRequest = new PortfolioAllocatorCreateRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CreatePortfolioAllocatorResponse$Type extends MessageType<CreatePortfolioAllocatorResponse> {
+class PortfolioAllocatorCreateResponse$Type extends MessageType<PortfolioAllocatorCreateResponse> {
     constructor() {
-        super("hypurr.CreatePortfolioAllocatorResponse", [
+        super("hypurr.PortfolioAllocatorCreateResponse", [
             { no: 1, name: "allocator", kind: "message", T: () => PortfolioAllocator }
         ]);
     }
-    create(value?: PartialMessage<CreatePortfolioAllocatorResponse>): CreatePortfolioAllocatorResponse {
+    create(value?: PartialMessage<PortfolioAllocatorCreateResponse>): PortfolioAllocatorCreateResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         if (value !== undefined)
-            reflectionMergePartial<CreatePortfolioAllocatorResponse>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorCreateResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePortfolioAllocatorResponse): CreatePortfolioAllocatorResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorCreateResponse): PortfolioAllocatorCreateResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -8949,7 +8831,7 @@ class CreatePortfolioAllocatorResponse$Type extends MessageType<CreatePortfolioA
         }
         return message;
     }
-    internalBinaryWrite(message: CreatePortfolioAllocatorResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorCreateResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* hypurr.PortfolioAllocator allocator = 1; */
         if (message.allocator)
             PortfolioAllocator.internalBinaryWrite(message.allocator, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -8960,13 +8842,13 @@ class CreatePortfolioAllocatorResponse$Type extends MessageType<CreatePortfolioA
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.CreatePortfolioAllocatorResponse
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorCreateResponse
  */
-export const CreatePortfolioAllocatorResponse = new CreatePortfolioAllocatorResponse$Type();
+export const PortfolioAllocatorCreateResponse = new PortfolioAllocatorCreateResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class UpdatePortfolioAllocatorRequest$Type extends MessageType<UpdatePortfolioAllocatorRequest> {
+class PortfolioAllocatorUpdateRequest$Type extends MessageType<PortfolioAllocatorUpdateRequest> {
     constructor() {
-        super("hypurr.UpdatePortfolioAllocatorRequest", [
+        super("hypurr.PortfolioAllocatorUpdateRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "enabled", kind: "message", T: () => BoolValue },
@@ -8974,15 +8856,15 @@ class UpdatePortfolioAllocatorRequest$Type extends MessageType<UpdatePortfolioAl
             { no: 5, name: "min_rebalance_pct", kind: "message", T: () => DoubleValue }
         ]);
     }
-    create(value?: PartialMessage<UpdatePortfolioAllocatorRequest>): UpdatePortfolioAllocatorRequest {
+    create(value?: PartialMessage<PortfolioAllocatorUpdateRequest>): PortfolioAllocatorUpdateRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.authData = {};
         message.walletId = 0;
         if (value !== undefined)
-            reflectionMergePartial<UpdatePortfolioAllocatorRequest>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorUpdateRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UpdatePortfolioAllocatorRequest): UpdatePortfolioAllocatorRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorUpdateRequest): PortfolioAllocatorUpdateRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -9013,8 +8895,8 @@ class UpdatePortfolioAllocatorRequest$Type extends MessageType<UpdatePortfolioAl
         }
         return message;
     }
-    private binaryReadMap1(map: UpdatePortfolioAllocatorRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof UpdatePortfolioAllocatorRequest["authData"] | undefined, val: UpdatePortfolioAllocatorRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: PortfolioAllocatorUpdateRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PortfolioAllocatorUpdateRequest["authData"] | undefined, val: PortfolioAllocatorUpdateRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -9024,12 +8906,12 @@ class UpdatePortfolioAllocatorRequest$Type extends MessageType<UpdatePortfolioAl
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for hypurr.UpdatePortfolioAllocatorRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for hypurr.PortfolioAllocatorUpdateRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: UpdatePortfolioAllocatorRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorUpdateRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of globalThis.Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
@@ -9052,23 +8934,23 @@ class UpdatePortfolioAllocatorRequest$Type extends MessageType<UpdatePortfolioAl
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.UpdatePortfolioAllocatorRequest
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorUpdateRequest
  */
-export const UpdatePortfolioAllocatorRequest = new UpdatePortfolioAllocatorRequest$Type();
+export const PortfolioAllocatorUpdateRequest = new PortfolioAllocatorUpdateRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class UpdatePortfolioAllocatorResponse$Type extends MessageType<UpdatePortfolioAllocatorResponse> {
+class PortfolioAllocatorUpdateResponse$Type extends MessageType<PortfolioAllocatorUpdateResponse> {
     constructor() {
-        super("hypurr.UpdatePortfolioAllocatorResponse", [
+        super("hypurr.PortfolioAllocatorUpdateResponse", [
             { no: 1, name: "allocator", kind: "message", T: () => PortfolioAllocator }
         ]);
     }
-    create(value?: PartialMessage<UpdatePortfolioAllocatorResponse>): UpdatePortfolioAllocatorResponse {
+    create(value?: PartialMessage<PortfolioAllocatorUpdateResponse>): PortfolioAllocatorUpdateResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         if (value !== undefined)
-            reflectionMergePartial<UpdatePortfolioAllocatorResponse>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorUpdateResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UpdatePortfolioAllocatorResponse): UpdatePortfolioAllocatorResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorUpdateResponse): PortfolioAllocatorUpdateResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -9087,7 +8969,7 @@ class UpdatePortfolioAllocatorResponse$Type extends MessageType<UpdatePortfolioA
         }
         return message;
     }
-    internalBinaryWrite(message: UpdatePortfolioAllocatorResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorUpdateResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* hypurr.PortfolioAllocator allocator = 1; */
         if (message.allocator)
             PortfolioAllocator.internalBinaryWrite(message.allocator, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -9098,26 +8980,26 @@ class UpdatePortfolioAllocatorResponse$Type extends MessageType<UpdatePortfolioA
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.UpdatePortfolioAllocatorResponse
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorUpdateResponse
  */
-export const UpdatePortfolioAllocatorResponse = new UpdatePortfolioAllocatorResponse$Type();
+export const PortfolioAllocatorUpdateResponse = new PortfolioAllocatorUpdateResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class DeletePortfolioAllocatorRequest$Type extends MessageType<DeletePortfolioAllocatorRequest> {
+class PortfolioAllocatorDeleteRequest$Type extends MessageType<PortfolioAllocatorDeleteRequest> {
     constructor() {
-        super("hypurr.DeletePortfolioAllocatorRequest", [
+        super("hypurr.PortfolioAllocatorDeleteRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
-    create(value?: PartialMessage<DeletePortfolioAllocatorRequest>): DeletePortfolioAllocatorRequest {
+    create(value?: PartialMessage<PortfolioAllocatorDeleteRequest>): PortfolioAllocatorDeleteRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.authData = {};
         message.walletId = 0;
         if (value !== undefined)
-            reflectionMergePartial<DeletePortfolioAllocatorRequest>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorDeleteRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeletePortfolioAllocatorRequest): DeletePortfolioAllocatorRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorDeleteRequest): PortfolioAllocatorDeleteRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -9139,8 +9021,8 @@ class DeletePortfolioAllocatorRequest$Type extends MessageType<DeletePortfolioAl
         }
         return message;
     }
-    private binaryReadMap1(map: DeletePortfolioAllocatorRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof DeletePortfolioAllocatorRequest["authData"] | undefined, val: DeletePortfolioAllocatorRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: PortfolioAllocatorDeleteRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PortfolioAllocatorDeleteRequest["authData"] | undefined, val: PortfolioAllocatorDeleteRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -9150,12 +9032,12 @@ class DeletePortfolioAllocatorRequest$Type extends MessageType<DeletePortfolioAl
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for hypurr.DeletePortfolioAllocatorRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for hypurr.PortfolioAllocatorDeleteRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: DeletePortfolioAllocatorRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorDeleteRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of globalThis.Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
@@ -9169,21 +9051,21 @@ class DeletePortfolioAllocatorRequest$Type extends MessageType<DeletePortfolioAl
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.DeletePortfolioAllocatorRequest
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorDeleteRequest
  */
-export const DeletePortfolioAllocatorRequest = new DeletePortfolioAllocatorRequest$Type();
+export const PortfolioAllocatorDeleteRequest = new PortfolioAllocatorDeleteRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class DeletePortfolioAllocatorResponse$Type extends MessageType<DeletePortfolioAllocatorResponse> {
+class PortfolioAllocatorDeleteResponse$Type extends MessageType<PortfolioAllocatorDeleteResponse> {
     constructor() {
-        super("hypurr.DeletePortfolioAllocatorResponse", []);
+        super("hypurr.PortfolioAllocatorDeleteResponse", []);
     }
-    create(value?: PartialMessage<DeletePortfolioAllocatorResponse>): DeletePortfolioAllocatorResponse {
+    create(value?: PartialMessage<PortfolioAllocatorDeleteResponse>): PortfolioAllocatorDeleteResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         if (value !== undefined)
-            reflectionMergePartial<DeletePortfolioAllocatorResponse>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorDeleteResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeletePortfolioAllocatorResponse): DeletePortfolioAllocatorResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorDeleteResponse): PortfolioAllocatorDeleteResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -9199,7 +9081,7 @@ class DeletePortfolioAllocatorResponse$Type extends MessageType<DeletePortfolioA
         }
         return message;
     }
-    internalBinaryWrite(message: DeletePortfolioAllocatorResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorDeleteResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -9207,33 +9089,33 @@ class DeletePortfolioAllocatorResponse$Type extends MessageType<DeletePortfolioA
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.DeletePortfolioAllocatorResponse
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorDeleteResponse
  */
-export const DeletePortfolioAllocatorResponse = new DeletePortfolioAllocatorResponse$Type();
+export const PortfolioAllocatorDeleteResponse = new PortfolioAllocatorDeleteResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CreatePortfolioSourceRequest$Type extends MessageType<CreatePortfolioSourceRequest> {
+class PortfolioAllocatorSourceCreateRequest$Type extends MessageType<PortfolioAllocatorSourceCreateRequest> {
     constructor() {
-        super("hypurr.CreatePortfolioSourceRequest", [
+        super("hypurr.PortfolioAllocatorSourceCreateRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "allocator_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "source_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 6, name: "config", kind: "message", T: () => Struct }
         ]);
     }
-    create(value?: PartialMessage<CreatePortfolioSourceRequest>): CreatePortfolioSourceRequest {
+    create(value?: PartialMessage<PortfolioAllocatorSourceCreateRequest>): PortfolioAllocatorSourceCreateRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.authData = {};
-        message.allocatorId = 0;
+        message.walletId = 0;
         message.name = "";
         message.sourceType = "";
         message.weight = 0;
         if (value !== undefined)
-            reflectionMergePartial<CreatePortfolioSourceRequest>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorSourceCreateRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePortfolioSourceRequest): CreatePortfolioSourceRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorSourceCreateRequest): PortfolioAllocatorSourceCreateRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -9241,8 +9123,8 @@ class CreatePortfolioSourceRequest$Type extends MessageType<CreatePortfolioSourc
                 case /* map<string, string> auth_data */ 1:
                     this.binaryReadMap1(message.authData, reader, options);
                     break;
-                case /* int64 allocator_id */ 2:
-                    message.allocatorId = reader.int64().toNumber();
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
                     break;
                 case /* string name */ 3:
                     message.name = reader.string();
@@ -9267,8 +9149,8 @@ class CreatePortfolioSourceRequest$Type extends MessageType<CreatePortfolioSourc
         }
         return message;
     }
-    private binaryReadMap1(map: CreatePortfolioSourceRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof CreatePortfolioSourceRequest["authData"] | undefined, val: CreatePortfolioSourceRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: PortfolioAllocatorSourceCreateRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PortfolioAllocatorSourceCreateRequest["authData"] | undefined, val: PortfolioAllocatorSourceCreateRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -9278,18 +9160,18 @@ class CreatePortfolioSourceRequest$Type extends MessageType<CreatePortfolioSourc
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for hypurr.CreatePortfolioSourceRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for hypurr.PortfolioAllocatorSourceCreateRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: CreatePortfolioSourceRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorSourceCreateRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of globalThis.Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
-        /* int64 allocator_id = 2; */
-        if (message.allocatorId !== 0)
-            writer.tag(2, WireType.Varint).int64(message.allocatorId);
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
         /* string name = 3; */
         if (message.name !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.name);
@@ -9309,23 +9191,23 @@ class CreatePortfolioSourceRequest$Type extends MessageType<CreatePortfolioSourc
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.CreatePortfolioSourceRequest
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorSourceCreateRequest
  */
-export const CreatePortfolioSourceRequest = new CreatePortfolioSourceRequest$Type();
+export const PortfolioAllocatorSourceCreateRequest = new PortfolioAllocatorSourceCreateRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CreatePortfolioSourceResponse$Type extends MessageType<CreatePortfolioSourceResponse> {
+class PortfolioAllocatorSourceCreateResponse$Type extends MessageType<PortfolioAllocatorSourceCreateResponse> {
     constructor() {
-        super("hypurr.CreatePortfolioSourceResponse", [
+        super("hypurr.PortfolioAllocatorSourceCreateResponse", [
             { no: 1, name: "source", kind: "message", T: () => PortfolioSource }
         ]);
     }
-    create(value?: PartialMessage<CreatePortfolioSourceResponse>): CreatePortfolioSourceResponse {
+    create(value?: PartialMessage<PortfolioAllocatorSourceCreateResponse>): PortfolioAllocatorSourceCreateResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         if (value !== undefined)
-            reflectionMergePartial<CreatePortfolioSourceResponse>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorSourceCreateResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePortfolioSourceResponse): CreatePortfolioSourceResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorSourceCreateResponse): PortfolioAllocatorSourceCreateResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -9344,7 +9226,7 @@ class CreatePortfolioSourceResponse$Type extends MessageType<CreatePortfolioSour
         }
         return message;
     }
-    internalBinaryWrite(message: CreatePortfolioSourceResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorSourceCreateResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* hypurr.PortfolioSource source = 1; */
         if (message.source)
             PortfolioSource.internalBinaryWrite(message.source, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -9355,31 +9237,31 @@ class CreatePortfolioSourceResponse$Type extends MessageType<CreatePortfolioSour
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.CreatePortfolioSourceResponse
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorSourceCreateResponse
  */
-export const CreatePortfolioSourceResponse = new CreatePortfolioSourceResponse$Type();
+export const PortfolioAllocatorSourceCreateResponse = new PortfolioAllocatorSourceCreateResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class UpdatePortfolioSourceRequest$Type extends MessageType<UpdatePortfolioSourceRequest> {
+class PortfolioAllocatorSourceUpdateRequest$Type extends MessageType<PortfolioAllocatorSourceUpdateRequest> {
     constructor() {
-        super("hypurr.UpdatePortfolioSourceRequest", [
+        super("hypurr.PortfolioAllocatorSourceUpdateRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "allocator_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "weight", kind: "message", T: () => DoubleValue },
             { no: 5, name: "config", kind: "message", T: () => Struct },
             { no: 6, name: "enabled", kind: "message", T: () => BoolValue }
         ]);
     }
-    create(value?: PartialMessage<UpdatePortfolioSourceRequest>): UpdatePortfolioSourceRequest {
+    create(value?: PartialMessage<PortfolioAllocatorSourceUpdateRequest>): PortfolioAllocatorSourceUpdateRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.authData = {};
-        message.allocatorId = 0;
+        message.walletId = 0;
         message.name = "";
         if (value !== undefined)
-            reflectionMergePartial<UpdatePortfolioSourceRequest>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorSourceUpdateRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UpdatePortfolioSourceRequest): UpdatePortfolioSourceRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorSourceUpdateRequest): PortfolioAllocatorSourceUpdateRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -9387,8 +9269,8 @@ class UpdatePortfolioSourceRequest$Type extends MessageType<UpdatePortfolioSourc
                 case /* map<string, string> auth_data */ 1:
                     this.binaryReadMap1(message.authData, reader, options);
                     break;
-                case /* int64 allocator_id */ 2:
-                    message.allocatorId = reader.int64().toNumber();
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
                     break;
                 case /* string name */ 3:
                     message.name = reader.string();
@@ -9413,8 +9295,8 @@ class UpdatePortfolioSourceRequest$Type extends MessageType<UpdatePortfolioSourc
         }
         return message;
     }
-    private binaryReadMap1(map: UpdatePortfolioSourceRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof UpdatePortfolioSourceRequest["authData"] | undefined, val: UpdatePortfolioSourceRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: PortfolioAllocatorSourceUpdateRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PortfolioAllocatorSourceUpdateRequest["authData"] | undefined, val: PortfolioAllocatorSourceUpdateRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -9424,18 +9306,18 @@ class UpdatePortfolioSourceRequest$Type extends MessageType<UpdatePortfolioSourc
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for hypurr.UpdatePortfolioSourceRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for hypurr.PortfolioAllocatorSourceUpdateRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: UpdatePortfolioSourceRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorSourceUpdateRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of globalThis.Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
-        /* int64 allocator_id = 2; */
-        if (message.allocatorId !== 0)
-            writer.tag(2, WireType.Varint).int64(message.allocatorId);
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
         /* string name = 3; */
         if (message.name !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.name);
@@ -9455,23 +9337,23 @@ class UpdatePortfolioSourceRequest$Type extends MessageType<UpdatePortfolioSourc
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.UpdatePortfolioSourceRequest
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorSourceUpdateRequest
  */
-export const UpdatePortfolioSourceRequest = new UpdatePortfolioSourceRequest$Type();
+export const PortfolioAllocatorSourceUpdateRequest = new PortfolioAllocatorSourceUpdateRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class UpdatePortfolioSourceResponse$Type extends MessageType<UpdatePortfolioSourceResponse> {
+class PortfolioAllocatorSourceUpdateResponse$Type extends MessageType<PortfolioAllocatorSourceUpdateResponse> {
     constructor() {
-        super("hypurr.UpdatePortfolioSourceResponse", [
+        super("hypurr.PortfolioAllocatorSourceUpdateResponse", [
             { no: 1, name: "source", kind: "message", T: () => PortfolioSource }
         ]);
     }
-    create(value?: PartialMessage<UpdatePortfolioSourceResponse>): UpdatePortfolioSourceResponse {
+    create(value?: PartialMessage<PortfolioAllocatorSourceUpdateResponse>): PortfolioAllocatorSourceUpdateResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         if (value !== undefined)
-            reflectionMergePartial<UpdatePortfolioSourceResponse>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorSourceUpdateResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UpdatePortfolioSourceResponse): UpdatePortfolioSourceResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorSourceUpdateResponse): PortfolioAllocatorSourceUpdateResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -9490,7 +9372,7 @@ class UpdatePortfolioSourceResponse$Type extends MessageType<UpdatePortfolioSour
         }
         return message;
     }
-    internalBinaryWrite(message: UpdatePortfolioSourceResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorSourceUpdateResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* hypurr.PortfolioSource source = 1; */
         if (message.source)
             PortfolioSource.internalBinaryWrite(message.source, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -9501,28 +9383,28 @@ class UpdatePortfolioSourceResponse$Type extends MessageType<UpdatePortfolioSour
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.UpdatePortfolioSourceResponse
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorSourceUpdateResponse
  */
-export const UpdatePortfolioSourceResponse = new UpdatePortfolioSourceResponse$Type();
+export const PortfolioAllocatorSourceUpdateResponse = new PortfolioAllocatorSourceUpdateResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class DeletePortfolioSourceRequest$Type extends MessageType<DeletePortfolioSourceRequest> {
+class PortfolioAllocatorSourceDeleteRequest$Type extends MessageType<PortfolioAllocatorSourceDeleteRequest> {
     constructor() {
-        super("hypurr.DeletePortfolioSourceRequest", [
+        super("hypurr.PortfolioAllocatorSourceDeleteRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "allocator_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<DeletePortfolioSourceRequest>): DeletePortfolioSourceRequest {
+    create(value?: PartialMessage<PortfolioAllocatorSourceDeleteRequest>): PortfolioAllocatorSourceDeleteRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.authData = {};
         message.allocatorId = 0;
         message.name = "";
         if (value !== undefined)
-            reflectionMergePartial<DeletePortfolioSourceRequest>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorSourceDeleteRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeletePortfolioSourceRequest): DeletePortfolioSourceRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorSourceDeleteRequest): PortfolioAllocatorSourceDeleteRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -9547,8 +9429,8 @@ class DeletePortfolioSourceRequest$Type extends MessageType<DeletePortfolioSourc
         }
         return message;
     }
-    private binaryReadMap1(map: DeletePortfolioSourceRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof DeletePortfolioSourceRequest["authData"] | undefined, val: DeletePortfolioSourceRequest["authData"][any] | undefined;
+    private binaryReadMap1(map: PortfolioAllocatorSourceDeleteRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PortfolioAllocatorSourceDeleteRequest["authData"] | undefined, val: PortfolioAllocatorSourceDeleteRequest["authData"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -9558,12 +9440,12 @@ class DeletePortfolioSourceRequest$Type extends MessageType<DeletePortfolioSourc
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for hypurr.DeletePortfolioSourceRequest.auth_data");
+                default: throw new globalThis.Error("unknown map entry field for hypurr.PortfolioAllocatorSourceDeleteRequest.auth_data");
             }
         }
         map[key ?? ""] = val ?? "";
     }
-    internalBinaryWrite(message: DeletePortfolioSourceRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorSourceDeleteRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, string> auth_data = 1; */
         for (let k of globalThis.Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
@@ -9580,21 +9462,21 @@ class DeletePortfolioSourceRequest$Type extends MessageType<DeletePortfolioSourc
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.DeletePortfolioSourceRequest
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorSourceDeleteRequest
  */
-export const DeletePortfolioSourceRequest = new DeletePortfolioSourceRequest$Type();
+export const PortfolioAllocatorSourceDeleteRequest = new PortfolioAllocatorSourceDeleteRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class DeletePortfolioSourceResponse$Type extends MessageType<DeletePortfolioSourceResponse> {
+class PortfolioAllocatorSourceDeleteResponse$Type extends MessageType<PortfolioAllocatorSourceDeleteResponse> {
     constructor() {
-        super("hypurr.DeletePortfolioSourceResponse", []);
+        super("hypurr.PortfolioAllocatorSourceDeleteResponse", []);
     }
-    create(value?: PartialMessage<DeletePortfolioSourceResponse>): DeletePortfolioSourceResponse {
+    create(value?: PartialMessage<PortfolioAllocatorSourceDeleteResponse>): PortfolioAllocatorSourceDeleteResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         if (value !== undefined)
-            reflectionMergePartial<DeletePortfolioSourceResponse>(this, message, value);
+            reflectionMergePartial<PortfolioAllocatorSourceDeleteResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeletePortfolioSourceResponse): DeletePortfolioSourceResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioAllocatorSourceDeleteResponse): PortfolioAllocatorSourceDeleteResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -9610,7 +9492,7 @@ class DeletePortfolioSourceResponse$Type extends MessageType<DeletePortfolioSour
         }
         return message;
     }
-    internalBinaryWrite(message: DeletePortfolioSourceResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioAllocatorSourceDeleteResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -9618,9 +9500,9 @@ class DeletePortfolioSourceResponse$Type extends MessageType<DeletePortfolioSour
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.DeletePortfolioSourceResponse
+ * @generated MessageType for protobuf message hypurr.PortfolioAllocatorSourceDeleteResponse
  */
-export const DeletePortfolioSourceResponse = new DeletePortfolioSourceResponse$Type();
+export const PortfolioAllocatorSourceDeleteResponse = new PortfolioAllocatorSourceDeleteResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Telegram
  */
@@ -9671,15 +9553,14 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "SupportConversationList", options: {}, I: SupportConversationListRequest, O: SupportConversationListResponse },
     { name: "SupportConversationClose", options: {}, I: SupportConversationCloseRequest, O: SupportConversationCloseResponse },
     { name: "SupportTicketStatus", options: {}, I: SupportTicketStatusRequest, O: SupportTicketStatusResponse },
-    { name: "GetPortfolioAllocator", options: {}, I: GetPortfolioAllocatorRequest, O: GetPortfolioAllocatorResponse },
-    { name: "ListPortfolioAllocators", options: {}, I: ListPortfolioAllocatorsRequest, O: ListPortfolioAllocatorsResponse },
-    { name: "ListEnabledPortfolioAllocators", options: {}, I: ListEnabledPortfolioAllocatorsRequest, O: ListEnabledPortfolioAllocatorsResponse },
-    { name: "GetPortfolioSource", options: {}, I: GetPortfolioSourceRequest, O: GetPortfolioSourceResponse },
-    { name: "ListPortfolioSources", options: {}, I: ListPortfolioSourcesRequest, O: ListPortfolioSourcesResponse },
-    { name: "CreatePortfolioAllocator", options: {}, I: CreatePortfolioAllocatorRequest, O: CreatePortfolioAllocatorResponse },
-    { name: "UpdatePortfolioAllocator", options: {}, I: UpdatePortfolioAllocatorRequest, O: UpdatePortfolioAllocatorResponse },
-    { name: "DeletePortfolioAllocator", options: {}, I: DeletePortfolioAllocatorRequest, O: DeletePortfolioAllocatorResponse },
-    { name: "CreatePortfolioSource", options: {}, I: CreatePortfolioSourceRequest, O: CreatePortfolioSourceResponse },
-    { name: "UpdatePortfolioSource", options: {}, I: UpdatePortfolioSourceRequest, O: UpdatePortfolioSourceResponse },
-    { name: "DeletePortfolioSource", options: {}, I: DeletePortfolioSourceRequest, O: DeletePortfolioSourceResponse }
+    { name: "PortfolioAllocatorGet", options: {}, I: PortfolioAllocatorGetRequest, O: PortfolioAllocatorGetResponse },
+    { name: "PortfolioAllocatorList", options: {}, I: PortfolioAllocatorListRequest, O: PortfolioAllocatorListResponse },
+    { name: "PortfolioAllocatorSourceGet", options: {}, I: PortfolioAllocatorSourceGetRequest, O: PortfolioAllocatorSourceGetResponse },
+    { name: "PortfolioAllocatorSourceList", options: {}, I: PortfolioAllocatorSourceListRequest, O: PortfolioAllocatorSourceListResponse },
+    { name: "PortfolioAllocatorCreate", options: {}, I: PortfolioAllocatorCreateRequest, O: PortfolioAllocatorCreateResponse },
+    { name: "PortfolioAllocatorUpdate", options: {}, I: PortfolioAllocatorUpdateRequest, O: PortfolioAllocatorUpdateResponse },
+    { name: "PortfolioAllocatorDelete", options: {}, I: PortfolioAllocatorDeleteRequest, O: PortfolioAllocatorDeleteResponse },
+    { name: "PortfolioAllocatorSourceCreate", options: {}, I: PortfolioAllocatorSourceCreateRequest, O: PortfolioAllocatorSourceCreateResponse },
+    { name: "PortfolioAllocatorSourceUpdate", options: {}, I: PortfolioAllocatorSourceUpdateRequest, O: PortfolioAllocatorSourceUpdateResponse },
+    { name: "PortfolioAllocatorSourceDelete", options: {}, I: PortfolioAllocatorSourceDeleteRequest, O: PortfolioAllocatorSourceDeleteResponse }
 ]);

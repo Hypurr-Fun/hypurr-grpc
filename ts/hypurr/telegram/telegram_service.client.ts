@@ -4,28 +4,26 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Telegram } from "./telegram_service";
-import type { DeletePortfolioSourceResponse } from "./telegram_service";
-import type { DeletePortfolioSourceRequest } from "./telegram_service";
-import type { UpdatePortfolioSourceResponse } from "./telegram_service";
-import type { UpdatePortfolioSourceRequest } from "./telegram_service";
-import type { CreatePortfolioSourceResponse } from "./telegram_service";
-import type { CreatePortfolioSourceRequest } from "./telegram_service";
-import type { DeletePortfolioAllocatorResponse } from "./telegram_service";
-import type { DeletePortfolioAllocatorRequest } from "./telegram_service";
-import type { UpdatePortfolioAllocatorResponse } from "./telegram_service";
-import type { UpdatePortfolioAllocatorRequest } from "./telegram_service";
-import type { CreatePortfolioAllocatorResponse } from "./telegram_service";
-import type { CreatePortfolioAllocatorRequest } from "./telegram_service";
-import type { ListPortfolioSourcesResponse } from "./telegram_service";
-import type { ListPortfolioSourcesRequest } from "./telegram_service";
-import type { GetPortfolioSourceResponse } from "./telegram_service";
-import type { GetPortfolioSourceRequest } from "./telegram_service";
-import type { ListEnabledPortfolioAllocatorsResponse } from "./telegram_service";
-import type { ListEnabledPortfolioAllocatorsRequest } from "./telegram_service";
-import type { ListPortfolioAllocatorsResponse } from "./telegram_service";
-import type { ListPortfolioAllocatorsRequest } from "./telegram_service";
-import type { GetPortfolioAllocatorResponse } from "./telegram_service";
-import type { GetPortfolioAllocatorRequest } from "./telegram_service";
+import type { PortfolioAllocatorSourceDeleteResponse } from "./telegram_service";
+import type { PortfolioAllocatorSourceDeleteRequest } from "./telegram_service";
+import type { PortfolioAllocatorSourceUpdateResponse } from "./telegram_service";
+import type { PortfolioAllocatorSourceUpdateRequest } from "./telegram_service";
+import type { PortfolioAllocatorSourceCreateResponse } from "./telegram_service";
+import type { PortfolioAllocatorSourceCreateRequest } from "./telegram_service";
+import type { PortfolioAllocatorDeleteResponse } from "./telegram_service";
+import type { PortfolioAllocatorDeleteRequest } from "./telegram_service";
+import type { PortfolioAllocatorUpdateResponse } from "./telegram_service";
+import type { PortfolioAllocatorUpdateRequest } from "./telegram_service";
+import type { PortfolioAllocatorCreateResponse } from "./telegram_service";
+import type { PortfolioAllocatorCreateRequest } from "./telegram_service";
+import type { PortfolioAllocatorSourceListResponse } from "./telegram_service";
+import type { PortfolioAllocatorSourceListRequest } from "./telegram_service";
+import type { PortfolioAllocatorSourceGetResponse } from "./telegram_service";
+import type { PortfolioAllocatorSourceGetRequest } from "./telegram_service";
+import type { PortfolioAllocatorListResponse } from "./telegram_service";
+import type { PortfolioAllocatorListRequest } from "./telegram_service";
+import type { PortfolioAllocatorGetResponse } from "./telegram_service";
+import type { PortfolioAllocatorGetRequest } from "./telegram_service";
 import type { SupportTicketStatusResponse } from "./telegram_service";
 import type { SupportTicketStatusRequest } from "./telegram_service";
 import type { SupportConversationCloseResponse } from "./telegram_service";
@@ -327,49 +325,45 @@ export interface ITelegramClient {
     /**
      * Portfolio
      *
-     * @generated from protobuf rpc: GetPortfolioAllocator
+     * @generated from protobuf rpc: PortfolioAllocatorGet
      */
-    getPortfolioAllocator(input: GetPortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<GetPortfolioAllocatorRequest, GetPortfolioAllocatorResponse>;
+    portfolioAllocatorGet(input: PortfolioAllocatorGetRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorGetRequest, PortfolioAllocatorGetResponse>;
     /**
-     * @generated from protobuf rpc: ListPortfolioAllocators
+     * @generated from protobuf rpc: PortfolioAllocatorList
      */
-    listPortfolioAllocators(input: ListPortfolioAllocatorsRequest, options?: RpcOptions): UnaryCall<ListPortfolioAllocatorsRequest, ListPortfolioAllocatorsResponse>;
+    portfolioAllocatorList(input: PortfolioAllocatorListRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorListRequest, PortfolioAllocatorListResponse>;
     /**
-     * @generated from protobuf rpc: ListEnabledPortfolioAllocators
+     * @generated from protobuf rpc: PortfolioAllocatorSourceGet
      */
-    listEnabledPortfolioAllocators(input: ListEnabledPortfolioAllocatorsRequest, options?: RpcOptions): UnaryCall<ListEnabledPortfolioAllocatorsRequest, ListEnabledPortfolioAllocatorsResponse>;
+    portfolioAllocatorSourceGet(input: PortfolioAllocatorSourceGetRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceGetRequest, PortfolioAllocatorSourceGetResponse>;
     /**
-     * @generated from protobuf rpc: GetPortfolioSource
+     * @generated from protobuf rpc: PortfolioAllocatorSourceList
      */
-    getPortfolioSource(input: GetPortfolioSourceRequest, options?: RpcOptions): UnaryCall<GetPortfolioSourceRequest, GetPortfolioSourceResponse>;
+    portfolioAllocatorSourceList(input: PortfolioAllocatorSourceListRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceListRequest, PortfolioAllocatorSourceListResponse>;
     /**
-     * @generated from protobuf rpc: ListPortfolioSources
+     * @generated from protobuf rpc: PortfolioAllocatorCreate
      */
-    listPortfolioSources(input: ListPortfolioSourcesRequest, options?: RpcOptions): UnaryCall<ListPortfolioSourcesRequest, ListPortfolioSourcesResponse>;
+    portfolioAllocatorCreate(input: PortfolioAllocatorCreateRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorCreateRequest, PortfolioAllocatorCreateResponse>;
     /**
-     * @generated from protobuf rpc: CreatePortfolioAllocator
+     * @generated from protobuf rpc: PortfolioAllocatorUpdate
      */
-    createPortfolioAllocator(input: CreatePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<CreatePortfolioAllocatorRequest, CreatePortfolioAllocatorResponse>;
+    portfolioAllocatorUpdate(input: PortfolioAllocatorUpdateRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorUpdateRequest, PortfolioAllocatorUpdateResponse>;
     /**
-     * @generated from protobuf rpc: UpdatePortfolioAllocator
+     * @generated from protobuf rpc: PortfolioAllocatorDelete
      */
-    updatePortfolioAllocator(input: UpdatePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<UpdatePortfolioAllocatorRequest, UpdatePortfolioAllocatorResponse>;
+    portfolioAllocatorDelete(input: PortfolioAllocatorDeleteRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorDeleteRequest, PortfolioAllocatorDeleteResponse>;
     /**
-     * @generated from protobuf rpc: DeletePortfolioAllocator
+     * @generated from protobuf rpc: PortfolioAllocatorSourceCreate
      */
-    deletePortfolioAllocator(input: DeletePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<DeletePortfolioAllocatorRequest, DeletePortfolioAllocatorResponse>;
+    portfolioAllocatorSourceCreate(input: PortfolioAllocatorSourceCreateRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceCreateRequest, PortfolioAllocatorSourceCreateResponse>;
     /**
-     * @generated from protobuf rpc: CreatePortfolioSource
+     * @generated from protobuf rpc: PortfolioAllocatorSourceUpdate
      */
-    createPortfolioSource(input: CreatePortfolioSourceRequest, options?: RpcOptions): UnaryCall<CreatePortfolioSourceRequest, CreatePortfolioSourceResponse>;
+    portfolioAllocatorSourceUpdate(input: PortfolioAllocatorSourceUpdateRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceUpdateRequest, PortfolioAllocatorSourceUpdateResponse>;
     /**
-     * @generated from protobuf rpc: UpdatePortfolioSource
+     * @generated from protobuf rpc: PortfolioAllocatorSourceDelete
      */
-    updatePortfolioSource(input: UpdatePortfolioSourceRequest, options?: RpcOptions): UnaryCall<UpdatePortfolioSourceRequest, UpdatePortfolioSourceResponse>;
-    /**
-     * @generated from protobuf rpc: DeletePortfolioSource
-     */
-    deletePortfolioSource(input: DeletePortfolioSourceRequest, options?: RpcOptions): UnaryCall<DeletePortfolioSourceRequest, DeletePortfolioSourceResponse>;
+    portfolioAllocatorSourceDelete(input: PortfolioAllocatorSourceDeleteRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceDeleteRequest, PortfolioAllocatorSourceDeleteResponse>;
 }
 /**
  * @generated from protobuf service hypurr.Telegram
@@ -719,80 +713,73 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
     /**
      * Portfolio
      *
-     * @generated from protobuf rpc: GetPortfolioAllocator
+     * @generated from protobuf rpc: PortfolioAllocatorGet
      */
-    getPortfolioAllocator(input: GetPortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<GetPortfolioAllocatorRequest, GetPortfolioAllocatorResponse> {
+    portfolioAllocatorGet(input: PortfolioAllocatorGetRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorGetRequest, PortfolioAllocatorGetResponse> {
         const method = this.methods[46], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GetPortfolioAllocatorRequest, GetPortfolioAllocatorResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<PortfolioAllocatorGetRequest, PortfolioAllocatorGetResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: ListPortfolioAllocators
+     * @generated from protobuf rpc: PortfolioAllocatorList
      */
-    listPortfolioAllocators(input: ListPortfolioAllocatorsRequest, options?: RpcOptions): UnaryCall<ListPortfolioAllocatorsRequest, ListPortfolioAllocatorsResponse> {
+    portfolioAllocatorList(input: PortfolioAllocatorListRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorListRequest, PortfolioAllocatorListResponse> {
         const method = this.methods[47], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ListPortfolioAllocatorsRequest, ListPortfolioAllocatorsResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<PortfolioAllocatorListRequest, PortfolioAllocatorListResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: ListEnabledPortfolioAllocators
+     * @generated from protobuf rpc: PortfolioAllocatorSourceGet
      */
-    listEnabledPortfolioAllocators(input: ListEnabledPortfolioAllocatorsRequest, options?: RpcOptions): UnaryCall<ListEnabledPortfolioAllocatorsRequest, ListEnabledPortfolioAllocatorsResponse> {
+    portfolioAllocatorSourceGet(input: PortfolioAllocatorSourceGetRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceGetRequest, PortfolioAllocatorSourceGetResponse> {
         const method = this.methods[48], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ListEnabledPortfolioAllocatorsRequest, ListEnabledPortfolioAllocatorsResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<PortfolioAllocatorSourceGetRequest, PortfolioAllocatorSourceGetResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: GetPortfolioSource
+     * @generated from protobuf rpc: PortfolioAllocatorSourceList
      */
-    getPortfolioSource(input: GetPortfolioSourceRequest, options?: RpcOptions): UnaryCall<GetPortfolioSourceRequest, GetPortfolioSourceResponse> {
+    portfolioAllocatorSourceList(input: PortfolioAllocatorSourceListRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceListRequest, PortfolioAllocatorSourceListResponse> {
         const method = this.methods[49], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GetPortfolioSourceRequest, GetPortfolioSourceResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<PortfolioAllocatorSourceListRequest, PortfolioAllocatorSourceListResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: ListPortfolioSources
+     * @generated from protobuf rpc: PortfolioAllocatorCreate
      */
-    listPortfolioSources(input: ListPortfolioSourcesRequest, options?: RpcOptions): UnaryCall<ListPortfolioSourcesRequest, ListPortfolioSourcesResponse> {
+    portfolioAllocatorCreate(input: PortfolioAllocatorCreateRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorCreateRequest, PortfolioAllocatorCreateResponse> {
         const method = this.methods[50], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ListPortfolioSourcesRequest, ListPortfolioSourcesResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<PortfolioAllocatorCreateRequest, PortfolioAllocatorCreateResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: CreatePortfolioAllocator
+     * @generated from protobuf rpc: PortfolioAllocatorUpdate
      */
-    createPortfolioAllocator(input: CreatePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<CreatePortfolioAllocatorRequest, CreatePortfolioAllocatorResponse> {
+    portfolioAllocatorUpdate(input: PortfolioAllocatorUpdateRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorUpdateRequest, PortfolioAllocatorUpdateResponse> {
         const method = this.methods[51], opt = this._transport.mergeOptions(options);
-        return stackIntercept<CreatePortfolioAllocatorRequest, CreatePortfolioAllocatorResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<PortfolioAllocatorUpdateRequest, PortfolioAllocatorUpdateResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: UpdatePortfolioAllocator
+     * @generated from protobuf rpc: PortfolioAllocatorDelete
      */
-    updatePortfolioAllocator(input: UpdatePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<UpdatePortfolioAllocatorRequest, UpdatePortfolioAllocatorResponse> {
+    portfolioAllocatorDelete(input: PortfolioAllocatorDeleteRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorDeleteRequest, PortfolioAllocatorDeleteResponse> {
         const method = this.methods[52], opt = this._transport.mergeOptions(options);
-        return stackIntercept<UpdatePortfolioAllocatorRequest, UpdatePortfolioAllocatorResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<PortfolioAllocatorDeleteRequest, PortfolioAllocatorDeleteResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: DeletePortfolioAllocator
+     * @generated from protobuf rpc: PortfolioAllocatorSourceCreate
      */
-    deletePortfolioAllocator(input: DeletePortfolioAllocatorRequest, options?: RpcOptions): UnaryCall<DeletePortfolioAllocatorRequest, DeletePortfolioAllocatorResponse> {
+    portfolioAllocatorSourceCreate(input: PortfolioAllocatorSourceCreateRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceCreateRequest, PortfolioAllocatorSourceCreateResponse> {
         const method = this.methods[53], opt = this._transport.mergeOptions(options);
-        return stackIntercept<DeletePortfolioAllocatorRequest, DeletePortfolioAllocatorResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<PortfolioAllocatorSourceCreateRequest, PortfolioAllocatorSourceCreateResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: CreatePortfolioSource
+     * @generated from protobuf rpc: PortfolioAllocatorSourceUpdate
      */
-    createPortfolioSource(input: CreatePortfolioSourceRequest, options?: RpcOptions): UnaryCall<CreatePortfolioSourceRequest, CreatePortfolioSourceResponse> {
+    portfolioAllocatorSourceUpdate(input: PortfolioAllocatorSourceUpdateRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceUpdateRequest, PortfolioAllocatorSourceUpdateResponse> {
         const method = this.methods[54], opt = this._transport.mergeOptions(options);
-        return stackIntercept<CreatePortfolioSourceRequest, CreatePortfolioSourceResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<PortfolioAllocatorSourceUpdateRequest, PortfolioAllocatorSourceUpdateResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: UpdatePortfolioSource
+     * @generated from protobuf rpc: PortfolioAllocatorSourceDelete
      */
-    updatePortfolioSource(input: UpdatePortfolioSourceRequest, options?: RpcOptions): UnaryCall<UpdatePortfolioSourceRequest, UpdatePortfolioSourceResponse> {
+    portfolioAllocatorSourceDelete(input: PortfolioAllocatorSourceDeleteRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceDeleteRequest, PortfolioAllocatorSourceDeleteResponse> {
         const method = this.methods[55], opt = this._transport.mergeOptions(options);
-        return stackIntercept<UpdatePortfolioSourceRequest, UpdatePortfolioSourceResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: DeletePortfolioSource
-     */
-    deletePortfolioSource(input: DeletePortfolioSourceRequest, options?: RpcOptions): UnaryCall<DeletePortfolioSourceRequest, DeletePortfolioSourceResponse> {
-        const method = this.methods[56], opt = this._transport.mergeOptions(options);
-        return stackIntercept<DeletePortfolioSourceRequest, DeletePortfolioSourceResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<PortfolioAllocatorSourceDeleteRequest, PortfolioAllocatorSourceDeleteResponse>("unary", this._transport, method, opt, input);
     }
 }
