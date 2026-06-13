@@ -682,7 +682,7 @@ message PortfolioAllocatorSourceUpdateResponse {
 // PortfolioAllocatorSourceDelete - removes a source from an allocator
 message PortfolioAllocatorSourceDeleteRequest {
   map<string, string> auth_data = 1;
-  int64 allocator_id = 2;
+  int64 wallet_id = 2;
   string name = 3;                    // identifies the source to delete
 }
 

@@ -1900,9 +1900,9 @@ export interface PortfolioAllocatorSourceDeleteRequest {
         [key: string]: string;
     };
     /**
-     * @generated from protobuf field: int64 allocator_id = 2
+     * @generated from protobuf field: int64 wallet_id = 2
      */
-    allocatorId: number;
+    walletId: number;
     /**
      * @generated from protobuf field: string name = 3
      */
@@ -9391,14 +9391,14 @@ class PortfolioAllocatorSourceDeleteRequest$Type extends MessageType<PortfolioAl
     constructor() {
         super("hypurr.PortfolioAllocatorSourceDeleteRequest", [
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 2, name: "allocator_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioAllocatorSourceDeleteRequest>): PortfolioAllocatorSourceDeleteRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.authData = {};
-        message.allocatorId = 0;
+        message.walletId = 0;
         message.name = "";
         if (value !== undefined)
             reflectionMergePartial<PortfolioAllocatorSourceDeleteRequest>(this, message, value);
@@ -9412,8 +9412,8 @@ class PortfolioAllocatorSourceDeleteRequest$Type extends MessageType<PortfolioAl
                 case /* map<string, string> auth_data */ 1:
                     this.binaryReadMap1(message.authData, reader, options);
                     break;
-                case /* int64 allocator_id */ 2:
-                    message.allocatorId = reader.int64().toNumber();
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
                     break;
                 case /* string name */ 3:
                     message.name = reader.string();
@@ -9449,9 +9449,9 @@ class PortfolioAllocatorSourceDeleteRequest$Type extends MessageType<PortfolioAl
         /* map<string, string> auth_data = 1; */
         for (let k of globalThis.Object.keys(message.authData))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
-        /* int64 allocator_id = 2; */
-        if (message.allocatorId !== 0)
-            writer.tag(2, WireType.Varint).int64(message.allocatorId);
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
         /* string name = 3; */
         if (message.name !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.name);
