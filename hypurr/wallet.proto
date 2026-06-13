@@ -23,6 +23,7 @@ message HyperliquidWallet {
   bool public = 13;
   google.protobuf.Timestamp agent_expires_at = 14;
   google.protobuf.StringValue agent_ethereum_address = 15;
+  bool is_subaccount = 16;
 }
 
 message HyperliquidWalletMovement {

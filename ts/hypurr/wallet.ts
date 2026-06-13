@@ -80,6 +80,10 @@ export interface HyperliquidWallet {
      * @generated from protobuf field: google.protobuf.StringValue agent_ethereum_address = 15
      */
     agentEthereumAddress?: StringValue;
+    /**
+     * @generated from protobuf field: bool is_subaccount = 16
+     */
+    isSubaccount: boolean;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletMovement
@@ -366,7 +370,8 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
             { no: 12, name: "twap_sessions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HyperliquidWalletTwapSession },
             { no: 13, name: "public", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 14, name: "agent_expires_at", kind: "message", T: () => Timestamp },
-            { no: 15, name: "agent_ethereum_address", kind: "message", T: () => StringValue }
+            { no: 15, name: "agent_ethereum_address", kind: "message", T: () => StringValue },
+            { no: 16, name: "is_subaccount", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWallet>): HyperliquidWallet {
@@ -383,6 +388,7 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
         message.scaleSessions = [];
         message.twapSessions = [];
         message.public = false;
+        message.isSubaccount = false;
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWallet>(this, message, value);
         return message;
@@ -436,6 +442,9 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
                     break;
                 case /* google.protobuf.StringValue agent_ethereum_address */ 15:
                     message.agentEthereumAddress = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.agentEthereumAddress);
+                    break;
+                case /* bool is_subaccount */ 16:
+                    message.isSubaccount = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -494,6 +503,9 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
         /* google.protobuf.StringValue agent_ethereum_address = 15; */
         if (message.agentEthereumAddress)
             StringValue.internalBinaryWrite(message.agentEthereumAddress, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
+        /* bool is_subaccount = 16; */
+        if (message.isSubaccount !== false)
+            writer.tag(16, WireType.Varint).bool(message.isSubaccount);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
