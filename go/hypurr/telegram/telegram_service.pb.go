@@ -6351,7 +6351,7 @@ func (x *PortfolioAllocatorUpdateResponse) GetAllocator() *hypurr.PortfolioAlloc
 	return nil
 }
 
-// DeletePortfolioAllocator - deletes an allocator and all its sources
+// PortfolioAllocatorDelete - deletes an allocator and all its sources
 type PortfolioAllocatorDeleteRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -6715,7 +6715,7 @@ func (x *PortfolioAllocatorSourceUpdateResponse) GetSource() *hypurr.PortfolioSo
 	return nil
 }
 
-// DeletePortfolioSource - removes a source from an allocator
+// PortfolioAllocatorSourceDelete - removes a source from an allocator
 type PortfolioAllocatorSourceDeleteRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

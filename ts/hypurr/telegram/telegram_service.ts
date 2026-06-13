@@ -1780,7 +1780,7 @@ export interface PortfolioAllocatorUpdateResponse {
     allocator?: PortfolioAllocator;
 }
 /**
- * DeletePortfolioAllocator - deletes an allocator and all its sources
+ * PortfolioAllocatorDelete - deletes an allocator and all its sources
  *
  * @generated from protobuf message hypurr.PortfolioAllocatorDeleteRequest
  */
@@ -1888,7 +1888,7 @@ export interface PortfolioAllocatorSourceUpdateResponse {
     source?: PortfolioSource;
 }
 /**
- * DeletePortfolioSource - removes a source from an allocator
+ * PortfolioAllocatorSourceDelete - removes a source from an allocator
  *
  * @generated from protobuf message hypurr.PortfolioAllocatorSourceDeleteRequest
  */
