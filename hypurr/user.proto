@@ -31,6 +31,7 @@ message TelegramUser {
   repeated HyperliquidWalletLabel labels = 22;
   repeated TelegramChatWalletPack packs = 23;
   string picture_file_id = 24;
+  repeated TelegramUserAddressBookEntry address_book = 25;
 }
 
 message TelegramUserSettings {
@@ -59,6 +60,12 @@ message HyperliquidWalletLabel {
   string source = 3;
   google.protobuf.Int64Value telegram_id = 4;
   google.protobuf.Int64Value pack_id = 5;
+}
+
+message TelegramUserAddressBookEntry {
+  string address = 1;
+  string label = 2;
+  bool can_send = 3;
 }
 
 message TelegramChatWalletPack {
