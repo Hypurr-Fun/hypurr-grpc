@@ -12,7 +12,7 @@ importers:
         specifier: ^1.7.3
         version: 1.14.3
       '@protobuf-ts/plugin':
-        specifier: ^2.8.2
+        specifier: ^2.11.1
         version: 2.11.1
       google-protobuf:
         specifier: ^3.21.2

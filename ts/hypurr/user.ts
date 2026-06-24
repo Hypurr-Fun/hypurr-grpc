@@ -116,6 +116,10 @@ export interface TelegramUser {
      * @generated from protobuf field: string picture_file_id = 24
      */
     pictureFileId: string;
+    /**
+     * @generated from protobuf field: repeated hypurr.TelegramUserAddressBookEntry address_book = 25
+     */
+    addressBook: TelegramUserAddressBookEntry[];
 }
 /**
  * @generated from protobuf message hypurr.TelegramUserSettings
@@ -209,6 +213,23 @@ export interface HyperliquidWalletLabel {
     packId?: Int64Value;
 }
 /**
+ * @generated from protobuf message hypurr.TelegramUserAddressBookEntry
+ */
+export interface TelegramUserAddressBookEntry {
+    /**
+     * @generated from protobuf field: string address = 1
+     */
+    address: string;
+    /**
+     * @generated from protobuf field: string label = 2
+     */
+    label: string;
+    /**
+     * @generated from protobuf field: bool can_send = 3
+     */
+    canSend: boolean;
+}
+/**
  * @generated from protobuf message hypurr.TelegramChatWalletPack
  */
 export interface TelegramChatWalletPack {
@@ -252,7 +273,8 @@ class TelegramUser$Type extends MessageType<TelegramUser> {
             { no: 21, name: "launch_fills", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HyperliquidLaunchFill },
             { no: 22, name: "labels", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HyperliquidWalletLabel },
             { no: 23, name: "packs", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => TelegramChatWalletPack },
-            { no: 24, name: "picture_file_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 24, name: "picture_file_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 25, name: "address_book", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => TelegramUserAddressBookEntry }
         ]);
     }
     create(value?: PartialMessage<TelegramUser>): TelegramUser {
@@ -276,6 +298,7 @@ class TelegramUser$Type extends MessageType<TelegramUser> {
         message.labels = [];
         message.packs = [];
         message.pictureFileId = "";
+        message.addressBook = [];
         if (value !== undefined)
             reflectionMergePartial<TelegramUser>(this, message, value);
         return message;
@@ -356,6 +379,9 @@ class TelegramUser$Type extends MessageType<TelegramUser> {
                     break;
                 case /* string picture_file_id */ 24:
                     message.pictureFileId = reader.string();
+                    break;
+                case /* repeated hypurr.TelegramUserAddressBookEntry address_book */ 25:
+                    message.addressBook.push(TelegramUserAddressBookEntry.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -441,6 +467,9 @@ class TelegramUser$Type extends MessageType<TelegramUser> {
         /* string picture_file_id = 24; */
         if (message.pictureFileId !== "")
             writer.tag(24, WireType.LengthDelimited).string(message.pictureFileId);
+        /* repeated hypurr.TelegramUserAddressBookEntry address_book = 25; */
+        for (let i = 0; i < message.addressBook.length; i++)
+            TelegramUserAddressBookEntry.internalBinaryWrite(message.addressBook[i], writer.tag(25, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -718,6 +747,69 @@ class HyperliquidWalletLabel$Type extends MessageType<HyperliquidWalletLabel> {
  * @generated MessageType for protobuf message hypurr.HyperliquidWalletLabel
  */
 export const HyperliquidWalletLabel = new HyperliquidWalletLabel$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TelegramUserAddressBookEntry$Type extends MessageType<TelegramUserAddressBookEntry> {
+    constructor() {
+        super("hypurr.TelegramUserAddressBookEntry", [
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "can_send", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TelegramUserAddressBookEntry>): TelegramUserAddressBookEntry {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.address = "";
+        message.label = "";
+        message.canSend = false;
+        if (value !== undefined)
+            reflectionMergePartial<TelegramUserAddressBookEntry>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TelegramUserAddressBookEntry): TelegramUserAddressBookEntry {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string address */ 1:
+                    message.address = reader.string();
+                    break;
+                case /* string label */ 2:
+                    message.label = reader.string();
+                    break;
+                case /* bool can_send */ 3:
+                    message.canSend = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TelegramUserAddressBookEntry, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string address = 1; */
+        if (message.address !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.address);
+        /* string label = 2; */
+        if (message.label !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.label);
+        /* bool can_send = 3; */
+        if (message.canSend !== false)
+            writer.tag(3, WireType.Varint).bool(message.canSend);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.TelegramUserAddressBookEntry
+ */
+export const TelegramUserAddressBookEntry = new TelegramUserAddressBookEntry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramChatWalletPack$Type extends MessageType<TelegramChatWalletPack> {
     constructor() {
