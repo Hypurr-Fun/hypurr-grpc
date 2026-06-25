@@ -4,10 +4,10 @@
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
 import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
 import type { BinaryReadOptions } from "@protobuf-ts/runtime";
 import type { IBinaryReader } from "@protobuf-ts/runtime";
 import { UnknownFieldHandler } from "@protobuf-ts/runtime";
+import { WireType } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
@@ -31,6 +31,14 @@ export interface WalletFilter {
      * @generated from protobuf field: hypercore.WalletTag tag = 3
      */
     tag: WalletTag;
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletTag included_tags = 4
+     */
+    includedTags: WalletTag[];
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletTag excluded_tags = 5
+     */
+    excludedTags: WalletTag[];
 }
 /**
  * @generated from protobuf message hypercore.TradeSideInfo
@@ -1210,7 +1218,11 @@ export enum WalletTag {
     /**
      * @generated from protobuf enum value: WALLET_TAG_LOW_WIN_RATE = 9;
      */
-    LOW_WIN_RATE = 9
+    LOW_WIN_RATE = 9,
+    /**
+     * @generated from protobuf enum value: WALLET_TAG_LONG_TERM_HOLDER = 10;
+     */
+    LONG_TERM_HOLDER = 10
 }
 /**
  * @generated from protobuf enum hypercore.TradeDirOverride
@@ -1308,7 +1320,9 @@ class WalletFilter$Type extends MessageType<WalletFilter> {
         super("hypercore.WalletFilter", [
             { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "bloom_filter", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 3, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] }
+            { no: 3, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] },
+            { no: 4, name: "included_tags", kind: "enum", repeat: 1 /*RepeatType.PACKED*/, T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] },
+            { no: 5, name: "excluded_tags", kind: "enum", repeat: 1 /*RepeatType.PACKED*/, T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] }
         ]);
     }
     create(value?: PartialMessage<WalletFilter>): WalletFilter {
@@ -1316,6 +1330,8 @@ class WalletFilter$Type extends MessageType<WalletFilter> {
         message.walletAddresses = [];
         message.bloomFilter = new Uint8Array(0);
         message.tag = 0;
+        message.includedTags = [];
+        message.excludedTags = [];
         if (value !== undefined)
             reflectionMergePartial<WalletFilter>(this, message, value);
         return message;
@@ -1333,6 +1349,20 @@ class WalletFilter$Type extends MessageType<WalletFilter> {
                     break;
                 case /* hypercore.WalletTag tag */ 3:
                     message.tag = reader.int32();
+                    break;
+                case /* repeated hypercore.WalletTag included_tags */ 4:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.includedTags.push(reader.int32());
+                    else
+                        message.includedTags.push(reader.int32());
+                    break;
+                case /* repeated hypercore.WalletTag excluded_tags */ 5:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.excludedTags.push(reader.int32());
+                    else
+                        message.excludedTags.push(reader.int32());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1355,6 +1385,20 @@ class WalletFilter$Type extends MessageType<WalletFilter> {
         /* hypercore.WalletTag tag = 3; */
         if (message.tag !== 0)
             writer.tag(3, WireType.Varint).int32(message.tag);
+        /* repeated hypercore.WalletTag included_tags = 4; */
+        if (message.includedTags.length) {
+            writer.tag(4, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.includedTags.length; i++)
+                writer.int32(message.includedTags[i]);
+            writer.join();
+        }
+        /* repeated hypercore.WalletTag excluded_tags = 5; */
+        if (message.excludedTags.length) {
+            writer.tag(5, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.excludedTags.length; i++)
+                writer.int32(message.excludedTags[i]);
+            writer.join();
+        }
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -36,6 +36,7 @@ enum WalletTag {
   WALLET_TAG_PRO_TERMINAL = 7;
   WALLET_TAG_HIGH_WIN_RATE = 8;
   WALLET_TAG_LOW_WIN_RATE = 9;
+  WALLET_TAG_LONG_TERM_HOLDER = 10;
 }
 
 enum TradeDirOverride {
@@ -48,6 +49,8 @@ message WalletFilter {
   repeated string wallet_addresses = 1;
   bytes bloom_filter = 2;
   WalletTag tag = 3;
+  repeated WalletTag included_tags = 4;
+  repeated WalletTag excluded_tags = 5;
 }
 
 message TradeSideInfo {
