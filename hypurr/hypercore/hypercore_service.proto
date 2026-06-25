@@ -204,6 +204,15 @@ message WalletsByTagResponse {
   repeated WalletInfo wallet_infos = 1;
 }
 
+message WalletsByFilterRequest {
+  WalletFilter filter = 1;
+  google.protobuf.Int64Value limit = 2;
+}
+
+message WalletsByFilterResponse {
+  repeated WalletInfo wallet_infos = 1;
+}
+
 message AggregatedWalletLiquidationsRequest {
   repeated string wallet_addresses = 1;
   bytes bloom_filter = 2;
@@ -471,6 +480,7 @@ service HyperCore {
   rpc ReferrerWallet(ReferrerWalletRequest) returns (ReferrerWalletResponse) {}
   rpc WalletTags(WalletTagsRequest) returns (WalletTagsResponse) {}
   rpc WalletsByTag(WalletsByTagRequest) returns (WalletsByTagResponse) {}
+  rpc WalletsByFilter(WalletsByFilterRequest) returns (WalletsByFilterResponse) {}
   rpc WalletPerformance(WalletPerformanceRequest) returns (WalletPerformanceResponse) {}
   rpc WalletPerformanceSeries(WalletPerformanceSeriesRequest) returns (WalletPerformanceSeriesResponse) {}
   rpc WalletPositioningSeries(WalletPositioningSeriesRequest) returns (WalletPositioningSeriesResponse) {}

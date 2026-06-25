@@ -456,6 +456,28 @@ export interface WalletsByTagResponse {
     walletInfos: WalletInfo[];
 }
 /**
+ * @generated from protobuf message hypercore.WalletsByFilterRequest
+ */
+export interface WalletsByFilterRequest {
+    /**
+     * @generated from protobuf field: hypercore.WalletFilter filter = 1
+     */
+    filter?: WalletFilter;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value limit = 2
+     */
+    limit?: Int64Value;
+}
+/**
+ * @generated from protobuf message hypercore.WalletsByFilterResponse
+ */
+export interface WalletsByFilterResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletInfo wallet_infos = 1
+     */
+    walletInfos: WalletInfo[];
+}
+/**
  * @generated from protobuf message hypercore.AggregatedWalletLiquidationsRequest
  */
 export interface AggregatedWalletLiquidationsRequest {
@@ -3020,6 +3042,106 @@ class WalletsByTagResponse$Type extends MessageType<WalletsByTagResponse> {
  */
 export const WalletsByTagResponse = new WalletsByTagResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class WalletsByFilterRequest$Type extends MessageType<WalletsByFilterRequest> {
+    constructor() {
+        super("hypercore.WalletsByFilterRequest", [
+            { no: 1, name: "filter", kind: "message", T: () => WalletFilter },
+            { no: 2, name: "limit", kind: "message", T: () => Int64Value }
+        ]);
+    }
+    create(value?: PartialMessage<WalletsByFilterRequest>): WalletsByFilterRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<WalletsByFilterRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletsByFilterRequest): WalletsByFilterRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypercore.WalletFilter filter */ 1:
+                    message.filter = WalletFilter.internalBinaryRead(reader, reader.uint32(), options, message.filter);
+                    break;
+                case /* google.protobuf.Int64Value limit */ 2:
+                    message.limit = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.limit);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletsByFilterRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypercore.WalletFilter filter = 1; */
+        if (message.filter)
+            WalletFilter.internalBinaryWrite(message.filter, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value limit = 2; */
+        if (message.limit)
+            Int64Value.internalBinaryWrite(message.limit, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletsByFilterRequest
+ */
+export const WalletsByFilterRequest = new WalletsByFilterRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletsByFilterResponse$Type extends MessageType<WalletsByFilterResponse> {
+    constructor() {
+        super("hypercore.WalletsByFilterResponse", [
+            { no: 1, name: "wallet_infos", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletInfo }
+        ]);
+    }
+    create(value?: PartialMessage<WalletsByFilterResponse>): WalletsByFilterResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletInfos = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletsByFilterResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletsByFilterResponse): WalletsByFilterResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.WalletInfo wallet_infos */ 1:
+                    message.walletInfos.push(WalletInfo.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletsByFilterResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.WalletInfo wallet_infos = 1; */
+        for (let i = 0; i < message.walletInfos.length; i++)
+            WalletInfo.internalBinaryWrite(message.walletInfos[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletsByFilterResponse
+ */
+export const WalletsByFilterResponse = new WalletsByFilterResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class AggregatedWalletLiquidationsRequest$Type extends MessageType<AggregatedWalletLiquidationsRequest> {
     constructor() {
         super("hypercore.AggregatedWalletLiquidationsRequest", [
@@ -5177,6 +5299,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "ReferrerWallet", options: {}, I: ReferrerWalletRequest, O: ReferrerWalletResponse },
     { name: "WalletTags", options: {}, I: WalletTagsRequest, O: WalletTagsResponse },
     { name: "WalletsByTag", options: {}, I: WalletsByTagRequest, O: WalletsByTagResponse },
+    { name: "WalletsByFilter", options: {}, I: WalletsByFilterRequest, O: WalletsByFilterResponse },
     { name: "WalletPerformance", options: {}, I: WalletPerformanceRequest, O: WalletPerformanceResponse },
     { name: "WalletPerformanceSeries", options: {}, I: WalletPerformanceSeriesRequest, O: WalletPerformanceSeriesResponse },
     { name: "WalletPositioningSeries", options: {}, I: WalletPositioningSeriesRequest, O: WalletPositioningSeriesResponse },

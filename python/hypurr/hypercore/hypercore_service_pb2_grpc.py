@@ -84,6 +84,11 @@ class HyperCoreStub:
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagResponse.FromString,
                 _registered_method=True)
+        self.WalletsByFilter = channel.unary_unary(
+                '/hypercore.HyperCore/WalletsByFilter',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByFilterRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByFilterResponse.FromString,
+                _registered_method=True)
         self.WalletPerformance = channel.unary_unary(
                 '/hypercore.HyperCore/WalletPerformance',
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceRequest.SerializeToString,
@@ -184,6 +189,12 @@ class HyperCoreServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def WalletsByFilter(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def WalletPerformance(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -278,6 +289,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     servicer.WalletsByTag,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagResponse.SerializeToString,
+            ),
+            'WalletsByFilter': grpc.unary_unary_rpc_method_handler(
+                    servicer.WalletsByFilter,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByFilterRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByFilterResponse.SerializeToString,
             ),
             'WalletPerformance': grpc.unary_unary_rpc_method_handler(
                     servicer.WalletPerformance,
@@ -585,6 +601,33 @@ class HyperCore:
             '/hypercore.HyperCore/WalletsByTag',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByTagResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def WalletsByFilter(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/WalletsByFilter',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByFilterRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByFilterResponse.FromString,
             options,
             channel_credentials,
             insecure,

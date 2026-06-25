@@ -29,6 +29,7 @@ const (
 	HyperCore_ReferrerWallet_FullMethodName                    = "/hypercore.HyperCore/ReferrerWallet"
 	HyperCore_WalletTags_FullMethodName                        = "/hypercore.HyperCore/WalletTags"
 	HyperCore_WalletsByTag_FullMethodName                      = "/hypercore.HyperCore/WalletsByTag"
+	HyperCore_WalletsByFilter_FullMethodName                   = "/hypercore.HyperCore/WalletsByFilter"
 	HyperCore_WalletPerformance_FullMethodName                 = "/hypercore.HyperCore/WalletPerformance"
 	HyperCore_WalletPerformanceSeries_FullMethodName           = "/hypercore.HyperCore/WalletPerformanceSeries"
 	HyperCore_WalletPositioningSeries_FullMethodName           = "/hypercore.HyperCore/WalletPositioningSeries"
@@ -52,6 +53,7 @@ type HyperCoreClient interface {
 	ReferrerWallet(ctx context.Context, in *ReferrerWalletRequest, opts ...grpc.CallOption) (*ReferrerWalletResponse, error)
 	WalletTags(ctx context.Context, in *WalletTagsRequest, opts ...grpc.CallOption) (*WalletTagsResponse, error)
 	WalletsByTag(ctx context.Context, in *WalletsByTagRequest, opts ...grpc.CallOption) (*WalletsByTagResponse, error)
+	WalletsByFilter(ctx context.Context, in *WalletsByFilterRequest, opts ...grpc.CallOption) (*WalletsByFilterResponse, error)
 	WalletPerformance(ctx context.Context, in *WalletPerformanceRequest, opts ...grpc.CallOption) (*WalletPerformanceResponse, error)
 	WalletPerformanceSeries(ctx context.Context, in *WalletPerformanceSeriesRequest, opts ...grpc.CallOption) (*WalletPerformanceSeriesResponse, error)
 	WalletPositioningSeries(ctx context.Context, in *WalletPositioningSeriesRequest, opts ...grpc.CallOption) (*WalletPositioningSeriesResponse, error)
@@ -237,6 +239,16 @@ func (c *hyperCoreClient) WalletsByTag(ctx context.Context, in *WalletsByTagRequ
 	return out, nil
 }
 
+func (c *hyperCoreClient) WalletsByFilter(ctx context.Context, in *WalletsByFilterRequest, opts ...grpc.CallOption) (*WalletsByFilterResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WalletsByFilterResponse)
+	err := c.cc.Invoke(ctx, HyperCore_WalletsByFilter_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *hyperCoreClient) WalletPerformance(ctx context.Context, in *WalletPerformanceRequest, opts ...grpc.CallOption) (*WalletPerformanceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(WalletPerformanceResponse)
@@ -321,6 +333,7 @@ type HyperCoreServer interface {
 	ReferrerWallet(context.Context, *ReferrerWalletRequest) (*ReferrerWalletResponse, error)
 	WalletTags(context.Context, *WalletTagsRequest) (*WalletTagsResponse, error)
 	WalletsByTag(context.Context, *WalletsByTagRequest) (*WalletsByTagResponse, error)
+	WalletsByFilter(context.Context, *WalletsByFilterRequest) (*WalletsByFilterResponse, error)
 	WalletPerformance(context.Context, *WalletPerformanceRequest) (*WalletPerformanceResponse, error)
 	WalletPerformanceSeries(context.Context, *WalletPerformanceSeriesRequest) (*WalletPerformanceSeriesResponse, error)
 	WalletPositioningSeries(context.Context, *WalletPositioningSeriesRequest) (*WalletPositioningSeriesResponse, error)
@@ -364,6 +377,9 @@ func (UnimplementedHyperCoreServer) WalletTags(context.Context, *WalletTagsReque
 }
 func (UnimplementedHyperCoreServer) WalletsByTag(context.Context, *WalletsByTagRequest) (*WalletsByTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletsByTag not implemented")
+}
+func (UnimplementedHyperCoreServer) WalletsByFilter(context.Context, *WalletsByFilterRequest) (*WalletsByFilterResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WalletsByFilter not implemented")
 }
 func (UnimplementedHyperCoreServer) WalletPerformance(context.Context, *WalletPerformanceRequest) (*WalletPerformanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletPerformance not implemented")
@@ -593,6 +609,24 @@ func _HyperCore_WalletsByTag_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_WalletsByFilter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WalletsByFilterRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).WalletsByFilter(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_WalletsByFilter_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).WalletsByFilter(ctx, req.(*WalletsByFilterRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _HyperCore_WalletPerformance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(WalletPerformanceRequest)
 	if err := dec(in); err != nil {
@@ -753,6 +787,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WalletsByTag",
 			Handler:    _HyperCore_WalletsByTag_Handler,
+		},
+		{
+			MethodName: "WalletsByFilter",
+			Handler:    _HyperCore_WalletsByFilter_Handler,
 		},
 		{
 			MethodName: "WalletPerformance",
