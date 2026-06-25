@@ -25,7 +25,7 @@ if _version_not_supported:
     )
 
 
-class HomePortfolioServiceStub:
+class IosServiceStub:
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -35,13 +35,13 @@ class HomePortfolioServiceStub:
             channel: A grpc.Channel.
         """
         self.PortfolioSummary = channel.unary_unary(
-                '/hypurr.HomePortfolioService/PortfolioSummary',
+                '/hypurr.IosService/PortfolioSummary',
                 request_serializer=hypurr_dot_ios__pb2.PortfolioSummaryRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios__pb2.PortfolioSummaryResponse.FromString,
                 _registered_method=True)
 
 
-class HomePortfolioServiceServicer:
+class IosServiceServicer:
     """Missing associated documentation comment in .proto file."""
 
     def PortfolioSummary(self, request, context):
@@ -51,7 +51,7 @@ class HomePortfolioServiceServicer:
         raise NotImplementedError('Method not implemented!')
 
 
-def add_HomePortfolioServiceServicer_to_server(servicer, server):
+def add_IosServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'PortfolioSummary': grpc.unary_unary_rpc_method_handler(
                     servicer.PortfolioSummary,
@@ -60,13 +60,13 @@ def add_HomePortfolioServiceServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'hypurr.HomePortfolioService', rpc_method_handlers)
+            'hypurr.IosService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('hypurr.HomePortfolioService', rpc_method_handlers)
+    server.add_registered_method_handlers('hypurr.IosService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class HomePortfolioService:
+class IosService:
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -83,7 +83,7 @@ class HomePortfolioService:
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/hypurr.HomePortfolioService/PortfolioSummary',
+            '/hypurr.IosService/PortfolioSummary',
             hypurr_dot_ios__pb2.PortfolioSummaryRequest.SerializeToString,
             hypurr_dot_ios__pb2.PortfolioSummaryResponse.FromString,
             options,
