@@ -2,7 +2,7 @@ syntax = "proto3";
 package hypurr;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
-service HomePortfolioService {
+service IosService {
   rpc PortfolioSummary(PortfolioSummaryRequest) returns (PortfolioSummaryResponse);
 }
 

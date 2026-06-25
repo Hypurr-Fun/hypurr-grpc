@@ -344,8 +344,8 @@ class PortfolioAllocation$Type extends MessageType<PortfolioAllocation> {
  */
 export const PortfolioAllocation = new PortfolioAllocation$Type();
 /**
- * @generated ServiceType for protobuf service hypurr.HomePortfolioService
+ * @generated ServiceType for protobuf service hypurr.IosService
  */
-export const HomePortfolioService = new ServiceType("hypurr.HomePortfolioService", [
+export const IosService = new ServiceType("hypurr.IosService", [
     { name: "PortfolioSummary", options: {}, I: PortfolioSummaryRequest, O: PortfolioSummaryResponse }
 ]);

@@ -3,28 +3,28 @@
 // tslint:disable
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
-import { HomePortfolioService } from "./ios";
+import { IosService } from "./ios";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { PortfolioSummaryResponse } from "./ios";
 import type { PortfolioSummaryRequest } from "./ios";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
- * @generated from protobuf service hypurr.HomePortfolioService
+ * @generated from protobuf service hypurr.IosService
  */
-export interface IHomePortfolioServiceClient {
+export interface IIosServiceClient {
     /**
      * @generated from protobuf rpc: PortfolioSummary
      */
     portfolioSummary(input: PortfolioSummaryRequest, options?: RpcOptions): UnaryCall<PortfolioSummaryRequest, PortfolioSummaryResponse>;
 }
 /**
- * @generated from protobuf service hypurr.HomePortfolioService
+ * @generated from protobuf service hypurr.IosService
  */
-export class HomePortfolioServiceClient implements IHomePortfolioServiceClient, ServiceInfo {
-    typeName = HomePortfolioService.typeName;
-    methods = HomePortfolioService.methods;
-    options = HomePortfolioService.options;
+export class IosServiceClient implements IIosServiceClient, ServiceInfo {
+    typeName = IosService.typeName;
+    methods = IosService.methods;
+    options = IosService.options;
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
