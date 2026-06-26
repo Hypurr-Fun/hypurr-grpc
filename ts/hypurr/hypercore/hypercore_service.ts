@@ -240,23 +240,15 @@ export interface WalletTradesStreamResponse {
  */
 export interface AggregatedWalletPositioningStreamRequest {
     /**
-     * @generated from protobuf field: repeated string wallet_addresses = 1
+     * @generated from protobuf field: hypercore.WalletFilter filter = 1
      */
-    walletAddresses: string[];
+    filter?: WalletFilter;
     /**
-     * @generated from protobuf field: bytes bloom_filter = 2
-     */
-    bloomFilter: Uint8Array;
-    /**
-     * @generated from protobuf field: hypercore.WalletTag tag = 3
-     */
-    tag: WalletTag;
-    /**
-     * @generated from protobuf field: uint64 instrument_id = 4
+     * @generated from protobuf field: uint64 instrument_id = 2
      */
     instrumentId: number;
     /**
-     * @generated from protobuf field: bool detailed = 5
+     * @generated from protobuf field: bool detailed = 3
      */
     detailed: boolean;
 }
@@ -2140,18 +2132,13 @@ export const WalletTradesStreamResponse = new WalletTradesStreamResponse$Type();
 class AggregatedWalletPositioningStreamRequest$Type extends MessageType<AggregatedWalletPositioningStreamRequest> {
     constructor() {
         super("hypercore.AggregatedWalletPositioningStreamRequest", [
-            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "bloom_filter", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 3, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] },
-            { no: 4, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 5, name: "detailed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 1, name: "filter", kind: "message", T: () => WalletFilter },
+            { no: 2, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "detailed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<AggregatedWalletPositioningStreamRequest>): AggregatedWalletPositioningStreamRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.walletAddresses = [];
-        message.bloomFilter = new Uint8Array(0);
-        message.tag = 0;
         message.instrumentId = 0;
         message.detailed = false;
         if (value !== undefined)
@@ -2163,19 +2150,13 @@ class AggregatedWalletPositioningStreamRequest$Type extends MessageType<Aggregat
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated string wallet_addresses */ 1:
-                    message.walletAddresses.push(reader.string());
+                case /* hypercore.WalletFilter filter */ 1:
+                    message.filter = WalletFilter.internalBinaryRead(reader, reader.uint32(), options, message.filter);
                     break;
-                case /* bytes bloom_filter */ 2:
-                    message.bloomFilter = reader.bytes();
-                    break;
-                case /* hypercore.WalletTag tag */ 3:
-                    message.tag = reader.int32();
-                    break;
-                case /* uint64 instrument_id */ 4:
+                case /* uint64 instrument_id */ 2:
                     message.instrumentId = reader.uint64().toNumber();
                     break;
-                case /* bool detailed */ 5:
+                case /* bool detailed */ 3:
                     message.detailed = reader.bool();
                     break;
                 default:
@@ -2190,21 +2171,15 @@ class AggregatedWalletPositioningStreamRequest$Type extends MessageType<Aggregat
         return message;
     }
     internalBinaryWrite(message: AggregatedWalletPositioningStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated string wallet_addresses = 1; */
-        for (let i = 0; i < message.walletAddresses.length; i++)
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
-        /* bytes bloom_filter = 2; */
-        if (message.bloomFilter.length)
-            writer.tag(2, WireType.LengthDelimited).bytes(message.bloomFilter);
-        /* hypercore.WalletTag tag = 3; */
-        if (message.tag !== 0)
-            writer.tag(3, WireType.Varint).int32(message.tag);
-        /* uint64 instrument_id = 4; */
+        /* hypercore.WalletFilter filter = 1; */
+        if (message.filter)
+            WalletFilter.internalBinaryWrite(message.filter, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* uint64 instrument_id = 2; */
         if (message.instrumentId !== 0)
-            writer.tag(4, WireType.Varint).uint64(message.instrumentId);
-        /* bool detailed = 5; */
+            writer.tag(2, WireType.Varint).uint64(message.instrumentId);
+        /* bool detailed = 3; */
         if (message.detailed !== false)
-            writer.tag(5, WireType.Varint).bool(message.detailed);
+            writer.tag(3, WireType.Varint).bool(message.detailed);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -122,11 +122,9 @@ message WalletTradesStreamResponse {
 }
 
 message AggregatedWalletPositioningStreamRequest {
-  repeated string wallet_addresses = 1;
-  bytes bloom_filter = 2;
-  WalletTag tag = 3;
-  uint64 instrument_id = 4;
-  bool detailed = 5;
+  WalletFilter filter = 1;
+  uint64 instrument_id = 2;
+  bool detailed = 3;
 }
 
 message AggregatedWalletPositioningStreamResponse {
