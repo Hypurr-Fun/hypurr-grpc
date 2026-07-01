@@ -689,10 +689,53 @@ message PortfolioAllocatorSourceDeleteRequest {
 message PortfolioAllocatorSourceDeleteResponse {
 }
 
+message AuthorizationCodeTelegramAuthData {
+  map<string, string> auth_data = 1;
+}
+
+message AuthorizationCodeProviderJwt {
+  // Selects the trusted verifier configuration, e.g. "google", "apple", or a
+  // configured issuer for a first-party integration.
+  string provider = 1;
+
+  // Third-party identity assertion. This is verified by the authorization
+  // server and is never returned to clients as the OAuth authorization code.
+  string jwt = 2;
+}
+
+message AuthorizationCodeCreateRequest {
+  // OAuth authorization request fields. The issued code must be short-lived,
+  // single-use, and bound to client_id, redirect_uri, scope, and PKCE fields.
+  string client_id = 1;
+  string redirect_uri = 2;
+  string scope = 3;
+  string state = 4;
+  string code_challenge = 5;
+  string code_challenge_method = 6; // Usually "S256".
+
+  oneof identity_assertion {
+    AuthorizationCodeTelegramAuthData telegram = 7;
+    AuthorizationCodeProviderJwt provider_jwt = 8;
+  }
+}
+
+message AuthorizationCodeCreateResponse {
+  // Hypurr-issued opaque authorization code for the token endpoint.
+  string code = 1;
+
+  // Code lifetime in seconds.
+  int64 expires_in = 2;
+
+  // redirect_uri with code and state appended, for the /authorize handler.
+  string redirect_url = 3;
+}
+
 
 service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramAuthExchange (TelegramAuthExchangeRequest) returns (TelegramAuthExchangeResponse) {}
+  // Issues a Hypurr OAuth authorization code after verifying provider identity evidence.
+  rpc CreateAuthorizationCode (AuthorizationCodeCreateRequest) returns (AuthorizationCodeCreateResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
   rpc HyperliquidMostTrackedWallets (HyperliquidMostTrackedWalletsRequest) returns (HyperliquidMostTrackedWalletsResponse) {}
 

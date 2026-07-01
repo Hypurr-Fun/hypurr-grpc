@@ -44,6 +44,11 @@ class TelegramStub:
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramAuthExchangeRequest.SerializeToString,
                 response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramAuthExchangeResponse.FromString,
                 _registered_method=True)
+        self.CreateAuthorizationCode = channel.unary_unary(
+                '/hypurr.Telegram/CreateAuthorizationCode',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.AuthorizationCodeCreateRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.AuthorizationCodeCreateResponse.FromString,
+                _registered_method=True)
         self.TelegramUserWallets = channel.unary_unary(
                 '/hypurr.Telegram/TelegramUserWallets',
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserWalletsRequest.SerializeToString,
@@ -327,6 +332,13 @@ class TelegramServicer:
 
     def TelegramAuthExchange(self, request, context):
         """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CreateAuthorizationCode(self, request, context):
+        """Issues a Hypurr OAuth authorization code after verifying provider identity evidence.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -676,6 +688,11 @@ def add_TelegramServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramAuthExchangeRequest.FromString,
                     response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramAuthExchangeResponse.SerializeToString,
             ),
+            'CreateAuthorizationCode': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateAuthorizationCode,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.AuthorizationCodeCreateRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.AuthorizationCodeCreateResponse.SerializeToString,
+            ),
             'TelegramUserWallets': grpc.unary_unary_rpc_method_handler(
                     servicer.TelegramUserWallets,
                     request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserWalletsRequest.FromString,
@@ -1001,6 +1018,33 @@ class Telegram:
             '/hypurr.Telegram/TelegramAuthExchange',
             hypurr_dot_telegram_dot_telegram__service__pb2.TelegramAuthExchangeRequest.SerializeToString,
             hypurr_dot_telegram_dot_telegram__service__pb2.TelegramAuthExchangeResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CreateAuthorizationCode(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/CreateAuthorizationCode',
+            hypurr_dot_telegram_dot_telegram__service__pb2.AuthorizationCodeCreateRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.AuthorizationCodeCreateResponse.FromString,
             options,
             channel_credentials,
             insecure,

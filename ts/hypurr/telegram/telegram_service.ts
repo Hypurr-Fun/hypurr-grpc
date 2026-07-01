@@ -1913,6 +1913,109 @@ export interface PortfolioAllocatorSourceDeleteRequest {
  */
 export interface PortfolioAllocatorSourceDeleteResponse {
 }
+/**
+ * @generated from protobuf message hypurr.AuthorizationCodeTelegramAuthData
+ */
+export interface AuthorizationCodeTelegramAuthData {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1
+     */
+    authData: {
+        [key: string]: string;
+    };
+}
+/**
+ * @generated from protobuf message hypurr.AuthorizationCodeProviderJwt
+ */
+export interface AuthorizationCodeProviderJwt {
+    /**
+     * Selects the trusted verifier configuration, e.g. "google", "apple", or a
+     * configured issuer for a first-party integration.
+     *
+     * @generated from protobuf field: string provider = 1
+     */
+    provider: string;
+    /**
+     * Third-party identity assertion. This is verified by the authorization
+     * server and is never returned to clients as the OAuth authorization code.
+     *
+     * @generated from protobuf field: string jwt = 2
+     */
+    jwt: string;
+}
+/**
+ * @generated from protobuf message hypurr.AuthorizationCodeCreateRequest
+ */
+export interface AuthorizationCodeCreateRequest {
+    /**
+     * OAuth authorization request fields. The issued code must be short-lived,
+     * single-use, and bound to client_id, redirect_uri, scope, and PKCE fields.
+     *
+     * @generated from protobuf field: string client_id = 1
+     */
+    clientId: string;
+    /**
+     * @generated from protobuf field: string redirect_uri = 2
+     */
+    redirectUri: string;
+    /**
+     * @generated from protobuf field: string scope = 3
+     */
+    scope: string;
+    /**
+     * @generated from protobuf field: string state = 4
+     */
+    state: string;
+    /**
+     * @generated from protobuf field: string code_challenge = 5
+     */
+    codeChallenge: string;
+    /**
+     * @generated from protobuf field: string code_challenge_method = 6
+     */
+    codeChallengeMethod: string; // Usually "S256".
+    /**
+     * @generated from protobuf oneof: identity_assertion
+     */
+    identityAssertion: {
+        oneofKind: "telegram";
+        /**
+         * @generated from protobuf field: hypurr.AuthorizationCodeTelegramAuthData telegram = 7
+         */
+        telegram: AuthorizationCodeTelegramAuthData;
+    } | {
+        oneofKind: "providerJwt";
+        /**
+         * @generated from protobuf field: hypurr.AuthorizationCodeProviderJwt provider_jwt = 8
+         */
+        providerJwt: AuthorizationCodeProviderJwt;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message hypurr.AuthorizationCodeCreateResponse
+ */
+export interface AuthorizationCodeCreateResponse {
+    /**
+     * Hypurr-issued opaque authorization code for the token endpoint.
+     *
+     * @generated from protobuf field: string code = 1
+     */
+    code: string;
+    /**
+     * Code lifetime in seconds.
+     *
+     * @generated from protobuf field: int64 expires_in = 2
+     */
+    expiresIn: number;
+    /**
+     * redirect_uri with code and state appended, for the /authorize handler.
+     *
+     * @generated from protobuf field: string redirect_url = 3
+     */
+    redirectUrl: string;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserRequest$Type extends MessageType<TelegramUserRequest> {
     constructor() {
@@ -9503,12 +9606,302 @@ class PortfolioAllocatorSourceDeleteResponse$Type extends MessageType<PortfolioA
  * @generated MessageType for protobuf message hypurr.PortfolioAllocatorSourceDeleteResponse
  */
 export const PortfolioAllocatorSourceDeleteResponse = new PortfolioAllocatorSourceDeleteResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AuthorizationCodeTelegramAuthData$Type extends MessageType<AuthorizationCodeTelegramAuthData> {
+    constructor() {
+        super("hypurr.AuthorizationCodeTelegramAuthData", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+        ]);
+    }
+    create(value?: PartialMessage<AuthorizationCodeTelegramAuthData>): AuthorizationCodeTelegramAuthData {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.authData = {};
+        if (value !== undefined)
+            reflectionMergePartial<AuthorizationCodeTelegramAuthData>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AuthorizationCodeTelegramAuthData): AuthorizationCodeTelegramAuthData {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: AuthorizationCodeTelegramAuthData["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof AuthorizationCodeTelegramAuthData["authData"] | undefined, val: AuthorizationCodeTelegramAuthData["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for hypurr.AuthorizationCodeTelegramAuthData.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: AuthorizationCodeTelegramAuthData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of globalThis.Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AuthorizationCodeTelegramAuthData
+ */
+export const AuthorizationCodeTelegramAuthData = new AuthorizationCodeTelegramAuthData$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AuthorizationCodeProviderJwt$Type extends MessageType<AuthorizationCodeProviderJwt> {
+    constructor() {
+        super("hypurr.AuthorizationCodeProviderJwt", [
+            { no: 1, name: "provider", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AuthorizationCodeProviderJwt>): AuthorizationCodeProviderJwt {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.provider = "";
+        message.jwt = "";
+        if (value !== undefined)
+            reflectionMergePartial<AuthorizationCodeProviderJwt>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AuthorizationCodeProviderJwt): AuthorizationCodeProviderJwt {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string provider */ 1:
+                    message.provider = reader.string();
+                    break;
+                case /* string jwt */ 2:
+                    message.jwt = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AuthorizationCodeProviderJwt, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string provider = 1; */
+        if (message.provider !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.provider);
+        /* string jwt = 2; */
+        if (message.jwt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.jwt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AuthorizationCodeProviderJwt
+ */
+export const AuthorizationCodeProviderJwt = new AuthorizationCodeProviderJwt$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AuthorizationCodeCreateRequest$Type extends MessageType<AuthorizationCodeCreateRequest> {
+    constructor() {
+        super("hypurr.AuthorizationCodeCreateRequest", [
+            { no: 1, name: "client_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "redirect_uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "scope", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "state", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "code_challenge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "code_challenge_method", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "telegram", kind: "message", oneof: "identityAssertion", T: () => AuthorizationCodeTelegramAuthData },
+            { no: 8, name: "provider_jwt", kind: "message", oneof: "identityAssertion", T: () => AuthorizationCodeProviderJwt }
+        ]);
+    }
+    create(value?: PartialMessage<AuthorizationCodeCreateRequest>): AuthorizationCodeCreateRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.clientId = "";
+        message.redirectUri = "";
+        message.scope = "";
+        message.state = "";
+        message.codeChallenge = "";
+        message.codeChallengeMethod = "";
+        message.identityAssertion = { oneofKind: undefined };
+        if (value !== undefined)
+            reflectionMergePartial<AuthorizationCodeCreateRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AuthorizationCodeCreateRequest): AuthorizationCodeCreateRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string client_id */ 1:
+                    message.clientId = reader.string();
+                    break;
+                case /* string redirect_uri */ 2:
+                    message.redirectUri = reader.string();
+                    break;
+                case /* string scope */ 3:
+                    message.scope = reader.string();
+                    break;
+                case /* string state */ 4:
+                    message.state = reader.string();
+                    break;
+                case /* string code_challenge */ 5:
+                    message.codeChallenge = reader.string();
+                    break;
+                case /* string code_challenge_method */ 6:
+                    message.codeChallengeMethod = reader.string();
+                    break;
+                case /* hypurr.AuthorizationCodeTelegramAuthData telegram */ 7:
+                    message.identityAssertion = {
+                        oneofKind: "telegram",
+                        telegram: AuthorizationCodeTelegramAuthData.internalBinaryRead(reader, reader.uint32(), options, (message.identityAssertion as any).telegram)
+                    };
+                    break;
+                case /* hypurr.AuthorizationCodeProviderJwt provider_jwt */ 8:
+                    message.identityAssertion = {
+                        oneofKind: "providerJwt",
+                        providerJwt: AuthorizationCodeProviderJwt.internalBinaryRead(reader, reader.uint32(), options, (message.identityAssertion as any).providerJwt)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AuthorizationCodeCreateRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string client_id = 1; */
+        if (message.clientId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.clientId);
+        /* string redirect_uri = 2; */
+        if (message.redirectUri !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.redirectUri);
+        /* string scope = 3; */
+        if (message.scope !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.scope);
+        /* string state = 4; */
+        if (message.state !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.state);
+        /* string code_challenge = 5; */
+        if (message.codeChallenge !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.codeChallenge);
+        /* string code_challenge_method = 6; */
+        if (message.codeChallengeMethod !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.codeChallengeMethod);
+        /* hypurr.AuthorizationCodeTelegramAuthData telegram = 7; */
+        if (message.identityAssertion.oneofKind === "telegram")
+            AuthorizationCodeTelegramAuthData.internalBinaryWrite(message.identityAssertion.telegram, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.AuthorizationCodeProviderJwt provider_jwt = 8; */
+        if (message.identityAssertion.oneofKind === "providerJwt")
+            AuthorizationCodeProviderJwt.internalBinaryWrite(message.identityAssertion.providerJwt, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AuthorizationCodeCreateRequest
+ */
+export const AuthorizationCodeCreateRequest = new AuthorizationCodeCreateRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AuthorizationCodeCreateResponse$Type extends MessageType<AuthorizationCodeCreateResponse> {
+    constructor() {
+        super("hypurr.AuthorizationCodeCreateResponse", [
+            { no: 1, name: "code", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "expires_in", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "redirect_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AuthorizationCodeCreateResponse>): AuthorizationCodeCreateResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.code = "";
+        message.expiresIn = 0;
+        message.redirectUrl = "";
+        if (value !== undefined)
+            reflectionMergePartial<AuthorizationCodeCreateResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AuthorizationCodeCreateResponse): AuthorizationCodeCreateResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string code */ 1:
+                    message.code = reader.string();
+                    break;
+                case /* int64 expires_in */ 2:
+                    message.expiresIn = reader.int64().toNumber();
+                    break;
+                case /* string redirect_url */ 3:
+                    message.redirectUrl = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AuthorizationCodeCreateResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string code = 1; */
+        if (message.code !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.code);
+        /* int64 expires_in = 2; */
+        if (message.expiresIn !== 0)
+            writer.tag(2, WireType.Varint).int64(message.expiresIn);
+        /* string redirect_url = 3; */
+        if (message.redirectUrl !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.redirectUrl);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AuthorizationCodeCreateResponse
+ */
+export const AuthorizationCodeCreateResponse = new AuthorizationCodeCreateResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Telegram
  */
 export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "TelegramUser", options: {}, I: TelegramUserRequest, O: TelegramUserResponse },
     { name: "TelegramAuthExchange", options: {}, I: TelegramAuthExchangeRequest, O: TelegramAuthExchangeResponse },
+    { name: "CreateAuthorizationCode", options: {}, I: AuthorizationCodeCreateRequest, O: AuthorizationCodeCreateResponse },
     { name: "TelegramUserWallets", options: {}, I: TelegramUserWalletsRequest, O: TelegramUserWalletsResponse },
     { name: "HyperliquidMostTrackedWallets", options: {}, I: HyperliquidMostTrackedWalletsRequest, O: HyperliquidMostTrackedWalletsResponse },
     { name: "HyperliquidLaunchTrade", options: {}, I: HyperliquidLaunchTradeRequest, O: HyperliquidLaunchTradeResponse },
