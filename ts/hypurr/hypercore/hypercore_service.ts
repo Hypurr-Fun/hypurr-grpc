@@ -1122,6 +1122,10 @@ export interface HistoricalWalletTrade {
      * @generated from protobuf field: hypercore.HistoricalTradeSide bid_side = 13
      */
     bidSide?: HistoricalTradeSide;
+    /**
+     * @generated from protobuf field: int64 realized_pnl = 14
+     */
+    realizedPnl: number; // USDC wei; realized PnL of this fill (perp only; 0 for spot / non-reducing fills)
 }
 /**
  * @generated from protobuf message hypercore.WalletTradesRequest
@@ -4985,7 +4989,8 @@ class HistoricalWalletTrade$Type extends MessageType<HistoricalWalletTrade> {
             { no: 10, name: "fee", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 11, name: "trade_dir_override", kind: "enum", T: () => ["hypercore.TradeDirOverride", TradeDirOverride] },
             { no: 12, name: "ask_side", kind: "message", T: () => HistoricalTradeSide },
-            { no: 13, name: "bid_side", kind: "message", T: () => HistoricalTradeSide }
+            { no: 13, name: "bid_side", kind: "message", T: () => HistoricalTradeSide },
+            { no: 14, name: "realized_pnl", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HistoricalWalletTrade>): HistoricalWalletTrade {
@@ -5001,6 +5006,7 @@ class HistoricalWalletTrade$Type extends MessageType<HistoricalWalletTrade> {
         message.toSize = 0;
         message.fee = 0;
         message.tradeDirOverride = 0;
+        message.realizedPnl = 0;
         if (value !== undefined)
             reflectionMergePartial<HistoricalWalletTrade>(this, message, value);
         return message;
@@ -5048,6 +5054,9 @@ class HistoricalWalletTrade$Type extends MessageType<HistoricalWalletTrade> {
                     break;
                 case /* hypercore.HistoricalTradeSide bid_side */ 13:
                     message.bidSide = HistoricalTradeSide.internalBinaryRead(reader, reader.uint32(), options, message.bidSide);
+                    break;
+                case /* int64 realized_pnl */ 14:
+                    message.realizedPnl = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5100,6 +5109,9 @@ class HistoricalWalletTrade$Type extends MessageType<HistoricalWalletTrade> {
         /* hypercore.HistoricalTradeSide bid_side = 13; */
         if (message.bidSide)
             HistoricalTradeSide.internalBinaryWrite(message.bidSide, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
+        /* int64 realized_pnl = 14; */
+        if (message.realizedPnl !== 0)
+            writer.tag(14, WireType.Varint).int64(message.realizedPnl);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

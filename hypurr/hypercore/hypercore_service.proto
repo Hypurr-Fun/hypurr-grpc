@@ -450,6 +450,7 @@ message HistoricalWalletTrade {
   TradeDirOverride trade_dir_override = 11;
   HistoricalTradeSide ask_side = 12;
   HistoricalTradeSide bid_side = 13;
+  int64 realized_pnl     = 14;              // USDC wei; realized PnL of this fill (perp only; 0 for spot / non-reducing fills)
 }
 
 message WalletTradesRequest {

@@ -5,7 +5,7 @@ import warnings
 
 from hypurr import ios_pb2 as hypurr_dot_ios__pb2
 
-GRPC_GENERATED_VERSION = '1.81.0'
+GRPC_GENERATED_VERSION = '1.80.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -25,7 +25,7 @@ if _version_not_supported:
     )
 
 
-class IosServiceStub:
+class IosServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -41,7 +41,7 @@ class IosServiceStub:
                 _registered_method=True)
 
 
-class IosServiceServicer:
+class IosServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def PortfolioSummary(self, request, context):
@@ -66,7 +66,7 @@ def add_IosServiceServicer_to_server(servicer, server):
 
 
  # This class is part of an EXPERIMENTAL API.
-class IosService:
+class IosService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
