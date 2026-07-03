@@ -39,12 +39,23 @@ class IosServiceStub(object):
                 request_serializer=hypurr_dot_ios__pb2.PortfolioSummaryRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios__pb2.PortfolioSummaryResponse.FromString,
                 _registered_method=True)
+        self.Home = channel.unary_unary(
+                '/hypurr.IosService/Home',
+                request_serializer=hypurr_dot_ios__pb2.HomeRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios__pb2.HomeResponse.FromString,
+                _registered_method=True)
 
 
 class IosServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def PortfolioSummary(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Home(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -57,6 +68,11 @@ def add_IosServiceServicer_to_server(servicer, server):
                     servicer.PortfolioSummary,
                     request_deserializer=hypurr_dot_ios__pb2.PortfolioSummaryRequest.FromString,
                     response_serializer=hypurr_dot_ios__pb2.PortfolioSummaryResponse.SerializeToString,
+            ),
+            'Home': grpc.unary_unary_rpc_method_handler(
+                    servicer.Home,
+                    request_deserializer=hypurr_dot_ios__pb2.HomeRequest.FromString,
+                    response_serializer=hypurr_dot_ios__pb2.HomeResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -86,6 +102,33 @@ class IosService(object):
             '/hypurr.IosService/PortfolioSummary',
             hypurr_dot_ios__pb2.PortfolioSummaryRequest.SerializeToString,
             hypurr_dot_ios__pb2.PortfolioSummaryResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Home(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.IosService/Home',
+            hypurr_dot_ios__pb2.HomeRequest.SerializeToString,
+            hypurr_dot_ios__pb2.HomeResponse.FromString,
             options,
             channel_credentials,
             insecure,
