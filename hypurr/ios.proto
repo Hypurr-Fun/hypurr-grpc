@@ -36,8 +36,26 @@ message PortfolioSummaryResponse {
 message HomeRequest {}
 
 message HomeResponse {
+  // Accounts summary card data.
+  HomeAccountsSummarySection accounts_summary = 1;
   // Recent activity feed, newest first.
   RecentActivitySection recent_activity = 10;
+}
+
+message HomeAccountsSummarySection {
+  // Sum across all accounts, USD cents.
+  int64 total_balance_cents = 1;
+  // 24-hour change, window-agnostic naming. e.g. 6.0 = +6%.
+  double change_percentage = 2;
+  repeated HomeAccountSummary accounts = 3;
+}
+
+message HomeAccountSummary {
+  string wallet_id = 1;
+  string name = 2;
+  string address = 3;
+  int64 balance_cents = 4;
+  double change_percentage = 5;
 }
 
 message RecentActivitySection {

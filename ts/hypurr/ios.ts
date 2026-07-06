@@ -74,11 +74,63 @@ export interface HomeRequest {
  */
 export interface HomeResponse {
     /**
+     * Accounts summary card data.
+     *
+     * @generated from protobuf field: hypurr.HomeAccountsSummarySection accounts_summary = 1
+     */
+    accountsSummary?: HomeAccountsSummarySection;
+    /**
      * Recent activity feed, newest first.
      *
      * @generated from protobuf field: hypurr.RecentActivitySection recent_activity = 10
      */
     recentActivity?: RecentActivitySection;
+}
+/**
+ * @generated from protobuf message hypurr.HomeAccountsSummarySection
+ */
+export interface HomeAccountsSummarySection {
+    /**
+     * Sum across all accounts, USD cents.
+     *
+     * @generated from protobuf field: int64 total_balance_cents = 1
+     */
+    totalBalanceCents: number;
+    /**
+     * 24-hour change, window-agnostic naming. e.g. 6.0 = +6%.
+     *
+     * @generated from protobuf field: double change_percentage = 2
+     */
+    changePercentage: number;
+    /**
+     * @generated from protobuf field: repeated hypurr.HomeAccountSummary accounts = 3
+     */
+    accounts: HomeAccountSummary[];
+}
+/**
+ * @generated from protobuf message hypurr.HomeAccountSummary
+ */
+export interface HomeAccountSummary {
+    /**
+     * @generated from protobuf field: string wallet_id = 1
+     */
+    walletId: string;
+    /**
+     * @generated from protobuf field: string name = 2
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: string address = 3
+     */
+    address: string;
+    /**
+     * @generated from protobuf field: int64 balance_cents = 4
+     */
+    balanceCents: number;
+    /**
+     * @generated from protobuf field: double change_percentage = 5
+     */
+    changePercentage: number;
 }
 /**
  * @generated from protobuf message hypurr.RecentActivitySection
@@ -536,6 +588,7 @@ export const HomeRequest = new HomeRequest$Type();
 class HomeResponse$Type extends MessageType<HomeResponse> {
     constructor() {
         super("hypurr.HomeResponse", [
+            { no: 1, name: "accounts_summary", kind: "message", T: () => HomeAccountsSummarySection },
             { no: 10, name: "recent_activity", kind: "message", T: () => RecentActivitySection }
         ]);
     }
@@ -550,6 +603,9 @@ class HomeResponse$Type extends MessageType<HomeResponse> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
+                case /* hypurr.HomeAccountsSummarySection accounts_summary */ 1:
+                    message.accountsSummary = HomeAccountsSummarySection.internalBinaryRead(reader, reader.uint32(), options, message.accountsSummary);
+                    break;
                 case /* hypurr.RecentActivitySection recent_activity */ 10:
                     message.recentActivity = RecentActivitySection.internalBinaryRead(reader, reader.uint32(), options, message.recentActivity);
                     break;
@@ -565,6 +621,9 @@ class HomeResponse$Type extends MessageType<HomeResponse> {
         return message;
     }
     internalBinaryWrite(message: HomeResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.HomeAccountsSummarySection accounts_summary = 1; */
+        if (message.accountsSummary)
+            HomeAccountsSummarySection.internalBinaryWrite(message.accountsSummary, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* hypurr.RecentActivitySection recent_activity = 10; */
         if (message.recentActivity)
             RecentActivitySection.internalBinaryWrite(message.recentActivity, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
@@ -578,6 +637,148 @@ class HomeResponse$Type extends MessageType<HomeResponse> {
  * @generated MessageType for protobuf message hypurr.HomeResponse
  */
 export const HomeResponse = new HomeResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HomeAccountsSummarySection$Type extends MessageType<HomeAccountsSummarySection> {
+    constructor() {
+        super("hypurr.HomeAccountsSummarySection", [
+            { no: 1, name: "total_balance_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "change_percentage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "accounts", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HomeAccountSummary }
+        ]);
+    }
+    create(value?: PartialMessage<HomeAccountsSummarySection>): HomeAccountsSummarySection {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.totalBalanceCents = 0;
+        message.changePercentage = 0;
+        message.accounts = [];
+        if (value !== undefined)
+            reflectionMergePartial<HomeAccountsSummarySection>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HomeAccountsSummarySection): HomeAccountsSummarySection {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 total_balance_cents */ 1:
+                    message.totalBalanceCents = reader.int64().toNumber();
+                    break;
+                case /* double change_percentage */ 2:
+                    message.changePercentage = reader.double();
+                    break;
+                case /* repeated hypurr.HomeAccountSummary accounts */ 3:
+                    message.accounts.push(HomeAccountSummary.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HomeAccountsSummarySection, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 total_balance_cents = 1; */
+        if (message.totalBalanceCents !== 0)
+            writer.tag(1, WireType.Varint).int64(message.totalBalanceCents);
+        /* double change_percentage = 2; */
+        if (message.changePercentage !== 0)
+            writer.tag(2, WireType.Bit64).double(message.changePercentage);
+        /* repeated hypurr.HomeAccountSummary accounts = 3; */
+        for (let i = 0; i < message.accounts.length; i++)
+            HomeAccountSummary.internalBinaryWrite(message.accounts[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HomeAccountsSummarySection
+ */
+export const HomeAccountsSummarySection = new HomeAccountsSummarySection$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HomeAccountSummary$Type extends MessageType<HomeAccountSummary> {
+    constructor() {
+        super("hypurr.HomeAccountSummary", [
+            { no: 1, name: "wallet_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "balance_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "change_percentage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HomeAccountSummary>): HomeAccountSummary {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletId = "";
+        message.name = "";
+        message.address = "";
+        message.balanceCents = 0;
+        message.changePercentage = 0;
+        if (value !== undefined)
+            reflectionMergePartial<HomeAccountSummary>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HomeAccountSummary): HomeAccountSummary {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_id */ 1:
+                    message.walletId = reader.string();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* string address */ 3:
+                    message.address = reader.string();
+                    break;
+                case /* int64 balance_cents */ 4:
+                    message.balanceCents = reader.int64().toNumber();
+                    break;
+                case /* double change_percentage */ 5:
+                    message.changePercentage = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HomeAccountSummary, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_id = 1; */
+        if (message.walletId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletId);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* string address = 3; */
+        if (message.address !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.address);
+        /* int64 balance_cents = 4; */
+        if (message.balanceCents !== 0)
+            writer.tag(4, WireType.Varint).int64(message.balanceCents);
+        /* double change_percentage = 5; */
+        if (message.changePercentage !== 0)
+            writer.tag(5, WireType.Bit64).double(message.changePercentage);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HomeAccountSummary
+ */
+export const HomeAccountSummary = new HomeAccountSummary$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RecentActivitySection$Type extends MessageType<RecentActivitySection> {
     constructor() {
