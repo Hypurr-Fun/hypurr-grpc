@@ -34,11 +34,6 @@ class IosServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.PortfolioSummary = channel.unary_unary(
-                '/hypurr.IosService/PortfolioSummary',
-                request_serializer=hypurr_dot_ios__pb2.PortfolioSummaryRequest.SerializeToString,
-                response_deserializer=hypurr_dot_ios__pb2.PortfolioSummaryResponse.FromString,
-                _registered_method=True)
         self.Home = channel.unary_unary(
                 '/hypurr.IosService/Home',
                 request_serializer=hypurr_dot_ios__pb2.HomeRequest.SerializeToString,
@@ -49,12 +44,6 @@ class IosServiceStub(object):
 class IosServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def PortfolioSummary(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def Home(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -64,11 +53,6 @@ class IosServiceServicer(object):
 
 def add_IosServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'PortfolioSummary': grpc.unary_unary_rpc_method_handler(
-                    servicer.PortfolioSummary,
-                    request_deserializer=hypurr_dot_ios__pb2.PortfolioSummaryRequest.FromString,
-                    response_serializer=hypurr_dot_ios__pb2.PortfolioSummaryResponse.SerializeToString,
-            ),
             'Home': grpc.unary_unary_rpc_method_handler(
                     servicer.Home,
                     request_deserializer=hypurr_dot_ios__pb2.HomeRequest.FromString,
@@ -84,33 +68,6 @@ def add_IosServiceServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class IosService(object):
     """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def PortfolioSummary(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/hypurr.IosService/PortfolioSummary',
-            hypurr_dot_ios__pb2.PortfolioSummaryRequest.SerializeToString,
-            hypurr_dot_ios__pb2.PortfolioSummaryResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
 
     @staticmethod
     def Home(request,

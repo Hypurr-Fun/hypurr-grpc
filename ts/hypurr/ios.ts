@@ -28,14 +28,9 @@ export interface Color {
     darkHex: string; // e.g. "#98FFC0"
 }
 /**
- * @generated from protobuf message hypurr.PortfolioSummaryRequest
+ * @generated from protobuf message hypurr.PortfolioSummarySection
  */
-export interface PortfolioSummaryRequest {
-}
-/**
- * @generated from protobuf message hypurr.PortfolioSummaryResponse
- */
-export interface PortfolioSummaryResponse {
+export interface PortfolioSummarySection {
     /**
      * Main card value in cents, e.g. "$22,482.17" -> 2248217.
      * Should be an int value already converted to the app's default currency, currently USD, scaled by 100 for cents.
@@ -79,6 +74,12 @@ export interface HomeResponse {
      * @generated from protobuf field: hypurr.HomeAccountsSummarySection accounts_summary = 1
      */
     accountsSummary?: HomeAccountsSummarySection;
+    /**
+     * Portfolio summary card data.
+     *
+     * @generated from protobuf field: hypurr.PortfolioSummarySection portfolio_summary = 2
+     */
+    portfolioSummary?: PortfolioSummarySection;
     /**
      * Recent activity feed, newest first.
      *
@@ -438,64 +439,26 @@ class Color$Type extends MessageType<Color> {
  */
 export const Color = new Color$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PortfolioSummaryRequest$Type extends MessageType<PortfolioSummaryRequest> {
+class PortfolioSummarySection$Type extends MessageType<PortfolioSummarySection> {
     constructor() {
-        super("hypurr.PortfolioSummaryRequest", []);
-    }
-    create(value?: PartialMessage<PortfolioSummaryRequest>): PortfolioSummaryRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<PortfolioSummaryRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioSummaryRequest): PortfolioSummaryRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PortfolioSummaryRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.PortfolioSummaryRequest
- */
-export const PortfolioSummaryRequest = new PortfolioSummaryRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class PortfolioSummaryResponse$Type extends MessageType<PortfolioSummaryResponse> {
-    constructor() {
-        super("hypurr.PortfolioSummaryResponse", [
+        super("hypurr.PortfolioSummarySection", [
             { no: 1, name: "total_value", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "absolute_change", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "percentage_change", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 4, name: "allocations", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioAllocation }
         ]);
     }
-    create(value?: PartialMessage<PortfolioSummaryResponse>): PortfolioSummaryResponse {
+    create(value?: PartialMessage<PortfolioSummarySection>): PortfolioSummarySection {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.totalValue = 0;
         message.absoluteChange = 0;
         message.percentageChange = 0;
         message.allocations = [];
         if (value !== undefined)
-            reflectionMergePartial<PortfolioSummaryResponse>(this, message, value);
+            reflectionMergePartial<PortfolioSummarySection>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioSummaryResponse): PortfolioSummaryResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioSummarySection): PortfolioSummarySection {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -523,7 +486,7 @@ class PortfolioSummaryResponse$Type extends MessageType<PortfolioSummaryResponse
         }
         return message;
     }
-    internalBinaryWrite(message: PortfolioSummaryResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PortfolioSummarySection, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* int64 total_value = 1; */
         if (message.totalValue !== 0)
             writer.tag(1, WireType.Varint).int64(message.totalValue);
@@ -543,9 +506,9 @@ class PortfolioSummaryResponse$Type extends MessageType<PortfolioSummaryResponse
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.PortfolioSummaryResponse
+ * @generated MessageType for protobuf message hypurr.PortfolioSummarySection
  */
-export const PortfolioSummaryResponse = new PortfolioSummaryResponse$Type();
+export const PortfolioSummarySection = new PortfolioSummarySection$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HomeRequest$Type extends MessageType<HomeRequest> {
     constructor() {
@@ -589,6 +552,7 @@ class HomeResponse$Type extends MessageType<HomeResponse> {
     constructor() {
         super("hypurr.HomeResponse", [
             { no: 1, name: "accounts_summary", kind: "message", T: () => HomeAccountsSummarySection },
+            { no: 2, name: "portfolio_summary", kind: "message", T: () => PortfolioSummarySection },
             { no: 10, name: "recent_activity", kind: "message", T: () => RecentActivitySection }
         ]);
     }
@@ -605,6 +569,9 @@ class HomeResponse$Type extends MessageType<HomeResponse> {
             switch (fieldNo) {
                 case /* hypurr.HomeAccountsSummarySection accounts_summary */ 1:
                     message.accountsSummary = HomeAccountsSummarySection.internalBinaryRead(reader, reader.uint32(), options, message.accountsSummary);
+                    break;
+                case /* hypurr.PortfolioSummarySection portfolio_summary */ 2:
+                    message.portfolioSummary = PortfolioSummarySection.internalBinaryRead(reader, reader.uint32(), options, message.portfolioSummary);
                     break;
                 case /* hypurr.RecentActivitySection recent_activity */ 10:
                     message.recentActivity = RecentActivitySection.internalBinaryRead(reader, reader.uint32(), options, message.recentActivity);
@@ -624,6 +591,9 @@ class HomeResponse$Type extends MessageType<HomeResponse> {
         /* hypurr.HomeAccountsSummarySection accounts_summary = 1; */
         if (message.accountsSummary)
             HomeAccountsSummarySection.internalBinaryWrite(message.accountsSummary, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.PortfolioSummarySection portfolio_summary = 2; */
+        if (message.portfolioSummary)
+            PortfolioSummarySection.internalBinaryWrite(message.portfolioSummary, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* hypurr.RecentActivitySection recent_activity = 10; */
         if (message.recentActivity)
             RecentActivitySection.internalBinaryWrite(message.recentActivity, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
@@ -1434,6 +1404,5 @@ export const PortfolioAllocation = new PortfolioAllocation$Type();
  * @generated ServiceType for protobuf service hypurr.IosService
  */
 export const IosService = new ServiceType("hypurr.IosService", [
-    { name: "PortfolioSummary", options: {}, I: PortfolioSummaryRequest, O: PortfolioSummaryResponse },
     { name: "Home", options: {}, I: HomeRequest, O: HomeResponse }
 ]);

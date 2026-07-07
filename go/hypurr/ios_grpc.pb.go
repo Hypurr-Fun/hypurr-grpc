@@ -19,15 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	IosService_PortfolioSummary_FullMethodName = "/hypurr.IosService/PortfolioSummary"
-	IosService_Home_FullMethodName             = "/hypurr.IosService/Home"
+	IosService_Home_FullMethodName = "/hypurr.IosService/Home"
 )
 
 // IosServiceClient is the client API for IosService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IosServiceClient interface {
-	PortfolioSummary(ctx context.Context, in *PortfolioSummaryRequest, opts ...grpc.CallOption) (*PortfolioSummaryResponse, error)
 	Home(ctx context.Context, in *HomeRequest, opts ...grpc.CallOption) (*HomeResponse, error)
 }
 
@@ -37,16 +35,6 @@ type iosServiceClient struct {
 
 func NewIosServiceClient(cc grpc.ClientConnInterface) IosServiceClient {
 	return &iosServiceClient{cc}
-}
-
-func (c *iosServiceClient) PortfolioSummary(ctx context.Context, in *PortfolioSummaryRequest, opts ...grpc.CallOption) (*PortfolioSummaryResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PortfolioSummaryResponse)
-	err := c.cc.Invoke(ctx, IosService_PortfolioSummary_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *iosServiceClient) Home(ctx context.Context, in *HomeRequest, opts ...grpc.CallOption) (*HomeResponse, error) {
@@ -63,7 +51,6 @@ func (c *iosServiceClient) Home(ctx context.Context, in *HomeRequest, opts ...gr
 // All implementations must embed UnimplementedIosServiceServer
 // for forward compatibility
 type IosServiceServer interface {
-	PortfolioSummary(context.Context, *PortfolioSummaryRequest) (*PortfolioSummaryResponse, error)
 	Home(context.Context, *HomeRequest) (*HomeResponse, error)
 	mustEmbedUnimplementedIosServiceServer()
 }
@@ -72,9 +59,6 @@ type IosServiceServer interface {
 type UnimplementedIosServiceServer struct {
 }
 
-func (UnimplementedIosServiceServer) PortfolioSummary(context.Context, *PortfolioSummaryRequest) (*PortfolioSummaryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PortfolioSummary not implemented")
-}
 func (UnimplementedIosServiceServer) Home(context.Context, *HomeRequest) (*HomeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Home not implemented")
 }
@@ -89,24 +73,6 @@ type UnsafeIosServiceServer interface {
 
 func RegisterIosServiceServer(s grpc.ServiceRegistrar, srv IosServiceServer) {
 	s.RegisterService(&IosService_ServiceDesc, srv)
-}
-
-func _IosService_PortfolioSummary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PortfolioSummaryRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(IosServiceServer).PortfolioSummary(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: IosService_PortfolioSummary_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IosServiceServer).PortfolioSummary(ctx, req.(*PortfolioSummaryRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _IosService_Home_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -134,10 +100,6 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "hypurr.IosService",
 	HandlerType: (*IosServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "PortfolioSummary",
-			Handler:    _IosService_PortfolioSummary_Handler,
-		},
 		{
 			MethodName: "Home",
 			Handler:    _IosService_Home_Handler,

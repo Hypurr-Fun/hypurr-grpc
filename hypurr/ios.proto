@@ -3,7 +3,6 @@ package hypurr;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
 service IosService {
-  rpc PortfolioSummary(PortfolioSummaryRequest) returns (PortfolioSummaryResponse);
   rpc Home(HomeRequest) returns (HomeResponse);
 }
 
@@ -14,9 +13,7 @@ message Color {
   string dark_hex = 2;  // e.g. "#98FFC0"
 }
 
-message PortfolioSummaryRequest {}
-
-message PortfolioSummaryResponse {
+message PortfolioSummarySection {
   // Main card value in cents, e.g. "$22,482.17" -> 2248217.
   // Should be an int value already converted to the app's default currency, currently USD, scaled by 100 for cents.
   int64 total_value = 1; // e.g. 2248217
@@ -38,6 +35,8 @@ message HomeRequest {}
 message HomeResponse {
   // Accounts summary card data.
   HomeAccountsSummarySection accounts_summary = 1;
+  // Portfolio summary card data.
+  PortfolioSummarySection portfolio_summary = 2;
   // Recent activity feed, newest first.
   RecentActivitySection recent_activity = 10;
 }
