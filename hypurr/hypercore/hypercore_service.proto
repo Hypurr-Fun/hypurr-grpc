@@ -238,6 +238,51 @@ message WalletLiquidation {
   double liquidation_price = 4;
 }
 
+// Sampling step for the liquidation map: only snapshots whose timestamp is a
+// multiple of the step are returned (alignment is relative to the unix epoch;
+// 1 month = 30 days). Snapshots are stored once per minute, so 1M returns
+// every snapshot.
+enum LiquidationStep {
+  LIQUIDATION_STEP_UNSPECIFIED = 0; // server treats as 1M (every snapshot)
+  LIQUIDATION_STEP_1M = 1;
+  LIQUIDATION_STEP_3M = 2;
+  LIQUIDATION_STEP_5M = 3;
+  LIQUIDATION_STEP_15M = 4;
+  LIQUIDATION_STEP_30M = 5;
+  LIQUIDATION_STEP_1H = 6;
+  LIQUIDATION_STEP_2H = 7;
+  LIQUIDATION_STEP_4H = 8;
+  LIQUIDATION_STEP_8H = 9;
+  LIQUIDATION_STEP_12H = 10;
+  LIQUIDATION_STEP_1D = 11;
+  LIQUIDATION_STEP_3D = 12;
+  LIQUIDATION_STEP_1W = 13;
+  LIQUIDATION_STEP_1MO = 14;
+}
+
+message LiquidationsRequest {
+  uint64 instrument_id = 1;
+  int64 from_ts = 2; // unix seconds, inclusive
+  int64 to_ts = 3;   // unix seconds, exclusive
+  LiquidationStep step = 4;
+}
+
+message LiquidationsResponse {
+  repeated LiquidationSnapshot snapshots = 1; // snapshot_ts ascending
+}
+
+message LiquidationSnapshot {
+  int64 snapshot_ts = 1;
+  double mark_price = 2;
+  repeated LiquidationBand bands = 3; // bucket ascending = price ascending
+}
+
+message LiquidationBand {
+  int32 bucket = 1; // signed 0.1%-of-mark distance band: -n = long side (n bands below mark), +n = short side (above); |n|=1 touches mark
+  double notional = 2;
+  uint32 count = 3;
+}
+
 enum MetricInterval {
   METRIC_INTERVAL_UNSPECIFIED = 0; // server treats as DAY
   METRIC_INTERVAL_HOUR = 1;
@@ -473,6 +518,7 @@ service HyperCore {
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
   rpc AggregatedWalletPositioningStream(AggregatedWalletPositioningStreamRequest) returns (stream AggregatedWalletPositioningStreamResponse) {}
   rpc AggregatedWalletLiquidations(AggregatedWalletLiquidationsRequest) returns (AggregatedWalletLiquidationsResponse) {}
+  rpc Liquidations(LiquidationsRequest) returns (LiquidationsResponse) {}
   rpc WalletBalancesStream(stream WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
   rpc WalletTradesStream(WalletTradesStreamRequest) returns (stream WalletTradesStreamResponse) {}
   rpc ValidatorDelegators(ValidatorDelegatorsRequest) returns (ValidatorDelegatorsResponse) {}
