@@ -550,6 +550,70 @@ export interface WalletLiquidation {
     liquidationPrice: number;
 }
 /**
+ * @generated from protobuf message hypercore.LiquidationsRequest
+ */
+export interface LiquidationsRequest {
+    /**
+     * @generated from protobuf field: uint64 instrument_id = 1
+     */
+    instrumentId: number;
+    /**
+     * @generated from protobuf field: int64 from_ts = 2
+     */
+    fromTs: number; // unix seconds, inclusive
+    /**
+     * @generated from protobuf field: int64 to_ts = 3
+     */
+    toTs: number; // unix seconds, exclusive
+    /**
+     * @generated from protobuf field: hypercore.LiquidationStep step = 4
+     */
+    step: LiquidationStep;
+}
+/**
+ * @generated from protobuf message hypercore.LiquidationsResponse
+ */
+export interface LiquidationsResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.LiquidationSnapshot snapshots = 1
+     */
+    snapshots: LiquidationSnapshot[]; // snapshot_ts ascending
+}
+/**
+ * @generated from protobuf message hypercore.LiquidationSnapshot
+ */
+export interface LiquidationSnapshot {
+    /**
+     * @generated from protobuf field: int64 snapshot_ts = 1
+     */
+    snapshotTs: number;
+    /**
+     * @generated from protobuf field: double mark_price = 2
+     */
+    markPrice: number;
+    /**
+     * @generated from protobuf field: repeated hypercore.LiquidationBand bands = 3
+     */
+    bands: LiquidationBand[]; // bucket ascending = price ascending
+}
+/**
+ * @generated from protobuf message hypercore.LiquidationBand
+ */
+export interface LiquidationBand {
+    /**
+     * @generated from protobuf field: int32 bucket = 1
+     */
+    bucket: number; // signed 0.1%-of-mark distance band: -n = long side (n bands below mark), +n = short side (above); |n|=1 touches mark
+    /**
+     * @generated from protobuf field: double notional = 2
+     */
+    notional: number;
+    /**
+     * @generated from protobuf field: uint32 count = 3
+     */
+    count: number;
+}
+/**
  * One time bucket of performance, for the whole account OR one instrument.
  * Identical fields regardless of interval or scope.
  *
@@ -1122,6 +1186,10 @@ export interface HistoricalWalletTrade {
      * @generated from protobuf field: hypercore.HistoricalTradeSide bid_side = 13
      */
     bidSide?: HistoricalTradeSide;
+    /**
+     * @generated from protobuf field: int64 realized_pnl = 14
+     */
+    realizedPnl: number; // USDC wei; realized PnL of this fill (perp only; 0 for spot / non-reducing fills)
 }
 /**
  * @generated from protobuf message hypercore.WalletTradesRequest
@@ -1254,6 +1322,78 @@ export enum TradeDirOverride {
      * @generated from protobuf enum value: TRADE_DIR_OVERRIDE_B = 2;
      */
     TRADE_DIR_OVERRIDE_B = 2
+}
+/**
+ * Sampling step for the liquidation map: only snapshots whose timestamp is a
+ * multiple of the step are returned (alignment is relative to the unix epoch;
+ * 1 month = 30 days). Snapshots are stored once per minute, so 1M returns
+ * every snapshot.
+ *
+ * @generated from protobuf enum hypercore.LiquidationStep
+ */
+export enum LiquidationStep {
+    /**
+     * server treats as 1M (every snapshot)
+     *
+     * @generated from protobuf enum value: LIQUIDATION_STEP_UNSPECIFIED = 0;
+     */
+    LIQUIDATION_STEP_UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_1M = 1;
+     */
+    LIQUIDATION_STEP_1M = 1,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_3M = 2;
+     */
+    LIQUIDATION_STEP_3M = 2,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_5M = 3;
+     */
+    LIQUIDATION_STEP_5M = 3,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_15M = 4;
+     */
+    LIQUIDATION_STEP_15M = 4,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_30M = 5;
+     */
+    LIQUIDATION_STEP_30M = 5,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_1H = 6;
+     */
+    LIQUIDATION_STEP_1H = 6,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_2H = 7;
+     */
+    LIQUIDATION_STEP_2H = 7,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_4H = 8;
+     */
+    LIQUIDATION_STEP_4H = 8,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_8H = 9;
+     */
+    LIQUIDATION_STEP_8H = 9,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_12H = 10;
+     */
+    LIQUIDATION_STEP_12H = 10,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_1D = 11;
+     */
+    LIQUIDATION_STEP_1D = 11,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_3D = 12;
+     */
+    LIQUIDATION_STEP_3D = 12,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_1W = 13;
+     */
+    LIQUIDATION_STEP_1W = 13,
+    /**
+     * @generated from protobuf enum value: LIQUIDATION_STEP_1MO = 14;
+     */
+    LIQUIDATION_STEP_1MO = 14
 }
 /**
  * @generated from protobuf enum hypercore.MetricInterval
@@ -3393,6 +3533,250 @@ class WalletLiquidation$Type extends MessageType<WalletLiquidation> {
  */
 export const WalletLiquidation = new WalletLiquidation$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class LiquidationsRequest$Type extends MessageType<LiquidationsRequest> {
+    constructor() {
+        super("hypercore.LiquidationsRequest", [
+            { no: 1, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "step", kind: "enum", T: () => ["hypercore.LiquidationStep", LiquidationStep] }
+        ]);
+    }
+    create(value?: PartialMessage<LiquidationsRequest>): LiquidationsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrumentId = 0;
+        message.fromTs = 0;
+        message.toTs = 0;
+        message.step = 0;
+        if (value !== undefined)
+            reflectionMergePartial<LiquidationsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LiquidationsRequest): LiquidationsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 instrument_id */ 1:
+                    message.instrumentId = reader.uint64().toNumber();
+                    break;
+                case /* int64 from_ts */ 2:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 3:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                case /* hypercore.LiquidationStep step */ 4:
+                    message.step = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: LiquidationsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 instrument_id = 1; */
+        if (message.instrumentId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.instrumentId);
+        /* int64 from_ts = 2; */
+        if (message.fromTs !== 0)
+            writer.tag(2, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 3; */
+        if (message.toTs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.toTs);
+        /* hypercore.LiquidationStep step = 4; */
+        if (message.step !== 0)
+            writer.tag(4, WireType.Varint).int32(message.step);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.LiquidationsRequest
+ */
+export const LiquidationsRequest = new LiquidationsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LiquidationsResponse$Type extends MessageType<LiquidationsResponse> {
+    constructor() {
+        super("hypercore.LiquidationsResponse", [
+            { no: 1, name: "snapshots", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => LiquidationSnapshot }
+        ]);
+    }
+    create(value?: PartialMessage<LiquidationsResponse>): LiquidationsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.snapshots = [];
+        if (value !== undefined)
+            reflectionMergePartial<LiquidationsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LiquidationsResponse): LiquidationsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.LiquidationSnapshot snapshots */ 1:
+                    message.snapshots.push(LiquidationSnapshot.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: LiquidationsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.LiquidationSnapshot snapshots = 1; */
+        for (let i = 0; i < message.snapshots.length; i++)
+            LiquidationSnapshot.internalBinaryWrite(message.snapshots[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.LiquidationsResponse
+ */
+export const LiquidationsResponse = new LiquidationsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LiquidationSnapshot$Type extends MessageType<LiquidationSnapshot> {
+    constructor() {
+        super("hypercore.LiquidationSnapshot", [
+            { no: 1, name: "snapshot_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "mark_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "bands", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => LiquidationBand }
+        ]);
+    }
+    create(value?: PartialMessage<LiquidationSnapshot>): LiquidationSnapshot {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.snapshotTs = 0;
+        message.markPrice = 0;
+        message.bands = [];
+        if (value !== undefined)
+            reflectionMergePartial<LiquidationSnapshot>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LiquidationSnapshot): LiquidationSnapshot {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 snapshot_ts */ 1:
+                    message.snapshotTs = reader.int64().toNumber();
+                    break;
+                case /* double mark_price */ 2:
+                    message.markPrice = reader.double();
+                    break;
+                case /* repeated hypercore.LiquidationBand bands */ 3:
+                    message.bands.push(LiquidationBand.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: LiquidationSnapshot, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 snapshot_ts = 1; */
+        if (message.snapshotTs !== 0)
+            writer.tag(1, WireType.Varint).int64(message.snapshotTs);
+        /* double mark_price = 2; */
+        if (message.markPrice !== 0)
+            writer.tag(2, WireType.Bit64).double(message.markPrice);
+        /* repeated hypercore.LiquidationBand bands = 3; */
+        for (let i = 0; i < message.bands.length; i++)
+            LiquidationBand.internalBinaryWrite(message.bands[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.LiquidationSnapshot
+ */
+export const LiquidationSnapshot = new LiquidationSnapshot$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LiquidationBand$Type extends MessageType<LiquidationBand> {
+    constructor() {
+        super("hypercore.LiquidationBand", [
+            { no: 1, name: "bucket", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "count", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<LiquidationBand>): LiquidationBand {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.bucket = 0;
+        message.notional = 0;
+        message.count = 0;
+        if (value !== undefined)
+            reflectionMergePartial<LiquidationBand>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LiquidationBand): LiquidationBand {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 bucket */ 1:
+                    message.bucket = reader.int32();
+                    break;
+                case /* double notional */ 2:
+                    message.notional = reader.double();
+                    break;
+                case /* uint32 count */ 3:
+                    message.count = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: LiquidationBand, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 bucket = 1; */
+        if (message.bucket !== 0)
+            writer.tag(1, WireType.Varint).int32(message.bucket);
+        /* double notional = 2; */
+        if (message.notional !== 0)
+            writer.tag(2, WireType.Bit64).double(message.notional);
+        /* uint32 count = 3; */
+        if (message.count !== 0)
+            writer.tag(3, WireType.Varint).uint32(message.count);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.LiquidationBand
+ */
+export const LiquidationBand = new LiquidationBand$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class PerformanceBucket$Type extends MessageType<PerformanceBucket> {
     constructor() {
         super("hypercore.PerformanceBucket", [
@@ -4985,7 +5369,8 @@ class HistoricalWalletTrade$Type extends MessageType<HistoricalWalletTrade> {
             { no: 10, name: "fee", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 11, name: "trade_dir_override", kind: "enum", T: () => ["hypercore.TradeDirOverride", TradeDirOverride] },
             { no: 12, name: "ask_side", kind: "message", T: () => HistoricalTradeSide },
-            { no: 13, name: "bid_side", kind: "message", T: () => HistoricalTradeSide }
+            { no: 13, name: "bid_side", kind: "message", T: () => HistoricalTradeSide },
+            { no: 14, name: "realized_pnl", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<HistoricalWalletTrade>): HistoricalWalletTrade {
@@ -5001,6 +5386,7 @@ class HistoricalWalletTrade$Type extends MessageType<HistoricalWalletTrade> {
         message.toSize = 0;
         message.fee = 0;
         message.tradeDirOverride = 0;
+        message.realizedPnl = 0;
         if (value !== undefined)
             reflectionMergePartial<HistoricalWalletTrade>(this, message, value);
         return message;
@@ -5048,6 +5434,9 @@ class HistoricalWalletTrade$Type extends MessageType<HistoricalWalletTrade> {
                     break;
                 case /* hypercore.HistoricalTradeSide bid_side */ 13:
                     message.bidSide = HistoricalTradeSide.internalBinaryRead(reader, reader.uint32(), options, message.bidSide);
+                    break;
+                case /* int64 realized_pnl */ 14:
+                    message.realizedPnl = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5100,6 +5489,9 @@ class HistoricalWalletTrade$Type extends MessageType<HistoricalWalletTrade> {
         /* hypercore.HistoricalTradeSide bid_side = 13; */
         if (message.bidSide)
             HistoricalTradeSide.internalBinaryWrite(message.bidSide, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
+        /* int64 realized_pnl = 14; */
+        if (message.realizedPnl !== 0)
+            writer.tag(14, WireType.Varint).int64(message.realizedPnl);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5268,6 +5660,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletBalances", options: {}, I: WalletBalancesRequest, O: WalletBalancesResponse },
     { name: "AggregatedWalletPositioningStream", serverStreaming: true, options: {}, I: AggregatedWalletPositioningStreamRequest, O: AggregatedWalletPositioningStreamResponse },
     { name: "AggregatedWalletLiquidations", options: {}, I: AggregatedWalletLiquidationsRequest, O: AggregatedWalletLiquidationsResponse },
+    { name: "Liquidations", options: {}, I: LiquidationsRequest, O: LiquidationsResponse },
     { name: "WalletBalancesStream", serverStreaming: true, clientStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
     { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },
     { name: "ValidatorDelegators", options: {}, I: ValidatorDelegatorsRequest, O: ValidatorDelegatorsResponse },

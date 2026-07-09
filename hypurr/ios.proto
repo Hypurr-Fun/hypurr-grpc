@@ -3,7 +3,7 @@ package hypurr;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
 service IosService {
-  rpc PortfolioSummary(PortfolioSummaryRequest) returns (PortfolioSummaryResponse);
+  rpc Home(HomeRequest) returns (HomeResponse);
 }
 
 // Color carries both theme variants for a single UI color.
@@ -13,9 +13,7 @@ message Color {
   string dark_hex = 2;  // e.g. "#98FFC0"
 }
 
-message PortfolioSummaryRequest {}
-
-message PortfolioSummaryResponse {
+message PortfolioSummarySection {
   // Main card value in cents, e.g. "$22,482.17" -> 2248217.
   // Should be an int value already converted to the app's default currency, currently USD, scaled by 100 for cents.
   int64 total_value = 1; // e.g. 2248217
@@ -30,6 +28,103 @@ message PortfolioSummaryResponse {
   // Response order is display order.
   // Mobile renders allocation rows and allocation bar segments in this exact order.
   repeated PortfolioAllocation allocations = 4;
+}
+
+message HomeRequest {}
+
+message HomeResponse {
+  // Accounts summary card data.
+  HomeAccountsSummarySection accounts_summary = 1;
+  // Portfolio summary card data.
+  PortfolioSummarySection portfolio_summary = 2;
+  // Recent activity feed, newest first.
+  RecentActivitySection recent_activity = 10;
+}
+
+message HomeAccountsSummarySection {
+  // Sum across all accounts, USD cents.
+  int64 total_balance_cents = 1;
+  // 24-hour change, window-agnostic naming. e.g. 6.0 = +6%.
+  double change_percentage = 2;
+  repeated HomeAccountSummary accounts = 3;
+}
+
+message HomeAccountSummary {
+  string wallet_id = 1;
+  string name = 2;
+  string address = 3;
+  int64 balance_cents = 4;
+  double change_percentage = 5;
+}
+
+message RecentActivitySection {
+  repeated ActivityItem items = 1;
+}
+
+enum PositionDirection {
+  POSITION_DIRECTION_UNSPECIFIED = 0;
+  POSITION_DIRECTION_LONG = 1;
+  POSITION_DIRECTION_SHORT = 2;
+}
+
+message ActivityItem {
+  // Stable unique id, e.g. "spot:<tradeID>", "perp:<tradeID>", "evmswap:<id>".
+  string id = 1;
+  // RFC3339 UTC timestamp.
+  string occurred_at = 2;
+  oneof activity {
+    SwapActivity swap = 10;
+    PositionActivity position = 11;
+    ClosePositionActivity close_position = 12;
+    SendActivity send = 13;
+    InternalTransferActivity internal_transfer = 14;
+    ReceiveActivity receive = 15;
+  }
+}
+
+message SwapActivity {
+  string from_asset_symbol = 1;
+  string from_asset_logo_url = 2;
+  string to_asset_symbol = 3;
+  string to_asset_logo_url = 4;
+  string from_token_amount = 5;
+  string to_token_amount = 6;
+}
+
+message PositionActivity {
+  PositionDirection direction = 1;
+  string asset_symbol = 2;
+  string asset_logo_url = 3;
+  string token_amount = 4;
+  // Notional of the fill in cents.
+  int64 cost_cents = 5;
+}
+
+message ClosePositionActivity {
+  PositionDirection direction = 1;
+  string asset_symbol = 2;
+  string asset_logo_url = 3;
+  string token_amount = 4;
+  // Realized PnL in cents, signed.
+  int64 realized_pnl_cents = 5;
+}
+
+message SendActivity {
+  string recipient = 1;
+  // Absolute USD value in cents.
+  int64 amount_cents = 2;
+}
+
+message InternalTransferActivity {
+  string destination = 1;
+  // Absolute USD value in cents.
+  int64 amount_cents = 2;
+}
+
+message ReceiveActivity {
+  string from = 1;
+  // Absolute USD value in cents.
+  int64 amount_cents = 2;
 }
 
 message PortfolioAllocation {
