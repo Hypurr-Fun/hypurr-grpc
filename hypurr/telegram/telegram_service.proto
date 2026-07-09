@@ -673,6 +673,7 @@ message PortfolioAllocatorSourceUpdateRequest {
   google.protobuf.DoubleValue weight = 4;       // new weight
   google.protobuf.Struct config = 5;            // new config (replaces existing)
   google.protobuf.BoolValue enabled = 6;        // enable/disable source
+  bool allow_while_enabled = 7;                 // permit a weight-only update while the allocator is enabled (picked up on the next rebalance cycle)
 }
 
 message PortfolioAllocatorSourceUpdateResponse {

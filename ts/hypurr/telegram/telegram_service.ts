@@ -1877,6 +1877,10 @@ export interface PortfolioAllocatorSourceUpdateRequest {
      * @generated from protobuf field: google.protobuf.BoolValue enabled = 6
      */
     enabled?: BoolValue; // enable/disable source
+    /**
+     * @generated from protobuf field: bool allow_while_enabled = 7
+     */
+    allowWhileEnabled: boolean; // permit a weight-only update while the allocator is enabled (picked up on the next rebalance cycle)
 }
 /**
  * @generated from protobuf message hypurr.PortfolioAllocatorSourceUpdateResponse
@@ -9352,7 +9356,8 @@ class PortfolioAllocatorSourceUpdateRequest$Type extends MessageType<PortfolioAl
             { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "weight", kind: "message", T: () => DoubleValue },
             { no: 5, name: "config", kind: "message", T: () => Struct },
-            { no: 6, name: "enabled", kind: "message", T: () => BoolValue }
+            { no: 6, name: "enabled", kind: "message", T: () => BoolValue },
+            { no: 7, name: "allow_while_enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioAllocatorSourceUpdateRequest>): PortfolioAllocatorSourceUpdateRequest {
@@ -9360,6 +9365,7 @@ class PortfolioAllocatorSourceUpdateRequest$Type extends MessageType<PortfolioAl
         message.authData = {};
         message.walletId = 0;
         message.name = "";
+        message.allowWhileEnabled = false;
         if (value !== undefined)
             reflectionMergePartial<PortfolioAllocatorSourceUpdateRequest>(this, message, value);
         return message;
@@ -9386,6 +9392,9 @@ class PortfolioAllocatorSourceUpdateRequest$Type extends MessageType<PortfolioAl
                     break;
                 case /* google.protobuf.BoolValue enabled */ 6:
                     message.enabled = BoolValue.internalBinaryRead(reader, reader.uint32(), options, message.enabled);
+                    break;
+                case /* bool allow_while_enabled */ 7:
+                    message.allowWhileEnabled = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -9433,6 +9442,9 @@ class PortfolioAllocatorSourceUpdateRequest$Type extends MessageType<PortfolioAl
         /* google.protobuf.BoolValue enabled = 6; */
         if (message.enabled)
             BoolValue.internalBinaryWrite(message.enabled, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* bool allow_while_enabled = 7; */
+        if (message.allowWhileEnabled !== false)
+            writer.tag(7, WireType.Varint).bool(message.allowWhileEnabled);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
