@@ -330,6 +330,264 @@ export interface ReceiveActivity {
     amountCents: number;
 }
 /**
+ * @generated from protobuf message hypurr.AssetDetailRequest
+ */
+export interface AssetDetailRequest {
+    /**
+     * Hyperliquid asset id, same convention as PortfolioAllocation.asset_id:
+     * < 10000 = perp index, >= 10000 = spot pair (10000 + spot index).
+     *
+     * @generated from protobuf field: uint64 asset_id = 1
+     */
+    assetId: number;
+    /**
+     * @generated from protobuf field: hypurr.AssetDetailChartPeriod chart_period = 2
+     */
+    chartPeriod: AssetDetailChartPeriod;
+}
+/**
+ * @generated from protobuf message hypurr.AssetDetailLiveUpdatesRequest
+ */
+export interface AssetDetailLiveUpdatesRequest {
+    /**
+     * @generated from protobuf field: uint64 asset_id = 1
+     */
+    assetId: number;
+}
+/**
+ * @generated from protobuf message hypurr.AssetDetailResponse
+ */
+export interface AssetDetailResponse {
+    /**
+     * @generated from protobuf field: hypurr.AssetDetailMetadata metadata = 1
+     */
+    metadata?: AssetDetailMetadata;
+    /**
+     * @generated from protobuf field: hypurr.AssetDetailPriceSummary price = 2
+     */
+    price?: AssetDetailPriceSummary;
+    /**
+     * @generated from protobuf field: hypurr.AssetDetailChart chart = 3
+     */
+    chart?: AssetDetailChart;
+    /**
+     * @generated from protobuf field: hypurr.AssetDetailOverview overview = 4
+     */
+    overview?: AssetDetailOverview;
+}
+/**
+ * Append-only live update for the active 1D view: mobile appends a new price
+ * point to the 1D chart and refreshes the hero price / market cap display.
+ *
+ * @generated from protobuf message hypurr.AssetDetailLiveUpdate
+ */
+export interface AssetDetailLiveUpdate {
+    /**
+     * RFC3339 UTC timestamp.
+     *
+     * @generated from protobuf field: string occurred_at = 1
+     */
+    occurredAt: string;
+    /**
+     * @generated from protobuf field: string price_usd_decimal = 2
+     */
+    priceUsdDecimal: string;
+    /**
+     * Signed change vs the previous day's close.
+     *
+     * @generated from protobuf field: string absolute_change_usd_decimal = 3
+     */
+    absoluteChangeUsdDecimal: string;
+    /**
+     * @generated from protobuf field: double change_percentage = 4
+     */
+    changePercentage: number;
+    /**
+     * @generated from protobuf field: int64 market_cap_cents = 5
+     */
+    marketCapCents: number;
+}
+/**
+ * @generated from protobuf message hypurr.AssetDetailMetadata
+ */
+export interface AssetDetailMetadata {
+    /**
+     * @generated from protobuf field: string symbol = 1
+     */
+    symbol: string; // e.g. "HFUN"
+    /**
+     * @generated from protobuf field: string name = 2
+     */
+    name: string; // e.g. "Hypurr Fun"
+    /**
+     * @generated from protobuf field: string venue_name = 3
+     */
+    venueName: string; // e.g. "Hyperliquid"
+    /**
+     * @generated from protobuf field: string logo_url = 4
+     */
+    logoUrl: string;
+}
+/**
+ * Decimal strings for prices accommodate sub-cent valuations.
+ *
+ * @generated from protobuf message hypurr.AssetDetailPriceSummary
+ */
+export interface AssetDetailPriceSummary {
+    /**
+     * @generated from protobuf field: string price_usd_decimal = 1
+     */
+    priceUsdDecimal: string;
+    /**
+     * Signed change vs the previous day's close.
+     *
+     * @generated from protobuf field: string absolute_change_usd_decimal = 2
+     */
+    absoluteChangeUsdDecimal: string;
+    /**
+     * @generated from protobuf field: double change_percentage = 3
+     */
+    changePercentage: number;
+    /**
+     * @generated from protobuf field: int64 market_cap_cents = 4
+     */
+    marketCapCents: number;
+}
+/**
+ * @generated from protobuf message hypurr.AssetDetailChart
+ */
+export interface AssetDetailChart {
+    /**
+     * @generated from protobuf field: hypurr.AssetDetailChartPeriod period = 1
+     */
+    period: AssetDetailChartPeriod;
+    /**
+     * Response order is display order, oldest point first.
+     *
+     * @generated from protobuf field: repeated hypurr.AssetDetailChartPoint points = 2
+     */
+    points: AssetDetailChartPoint[];
+}
+/**
+ * @generated from protobuf message hypurr.AssetDetailChartPoint
+ */
+export interface AssetDetailChartPoint {
+    /**
+     * @generated from protobuf field: string id = 1
+     */
+    id: string;
+    /**
+     * RFC3339 UTC timestamp.
+     *
+     * @generated from protobuf field: string occurred_at = 2
+     */
+    occurredAt: string;
+    /**
+     * @generated from protobuf field: string price_usd_decimal = 3
+     */
+    priceUsdDecimal: string;
+}
+/**
+ * Statistics values are display-formatted by the backend (e.g. "$1.2B").
+ * Fields with no backend data source are empty; mobile falls back locally.
+ *
+ * @generated from protobuf message hypurr.AssetDetailOverview
+ */
+export interface AssetDetailOverview {
+    /**
+     * @generated from protobuf oneof: overview
+     */
+    overview: {
+        oneofKind: "stock";
+        /**
+         * @generated from protobuf field: hypurr.AssetDetailStockOverview stock = 1
+         */
+        stock: AssetDetailStockOverview;
+    } | {
+        oneofKind: "crypto";
+        /**
+         * @generated from protobuf field: hypurr.AssetDetailCryptoOverview crypto = 2
+         */
+        crypto: AssetDetailCryptoOverview;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message hypurr.AssetDetailStockOverview
+ */
+export interface AssetDetailStockOverview {
+    /**
+     * @generated from protobuf field: string market_cap = 1
+     */
+    marketCap: string;
+    /**
+     * @generated from protobuf field: string pe_ratio = 2
+     */
+    peRatio: string;
+    /**
+     * @generated from protobuf field: string eps_ttm = 3
+     */
+    epsTtm: string;
+    /**
+     * @generated from protobuf field: string dividend_yield = 4
+     */
+    dividendYield: string;
+    /**
+     * @generated from protobuf field: string week_52_high = 5
+     */
+    week52High: string;
+    /**
+     * @generated from protobuf field: string week_52_low = 6
+     */
+    week52Low: string;
+    /**
+     * @generated from protobuf field: string avg_volume = 7
+     */
+    avgVolume: string;
+    /**
+     * @generated from protobuf field: string beta = 8
+     */
+    beta: string;
+    /**
+     * @generated from protobuf field: string description = 9
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf message hypurr.AssetDetailCryptoOverview
+ */
+export interface AssetDetailCryptoOverview {
+    /**
+     * @generated from protobuf field: string market_cap = 1
+     */
+    marketCap: string;
+    /**
+     * @generated from protobuf field: string volume_24h = 2
+     */
+    volume24H: string;
+    /**
+     * @generated from protobuf field: string holders = 3
+     */
+    holders: string;
+    /**
+     * @generated from protobuf field: string fdv = 4
+     */
+    fdv: string;
+    /**
+     * @generated from protobuf field: string liquidity = 5
+     */
+    liquidity: string;
+    /**
+     * @generated from protobuf field: string all_time_high = 6
+     */
+    allTimeHigh: string;
+    /**
+     * @generated from protobuf field: string description = 7
+     */
+    description: string;
+}
+/**
  * @generated from protobuf message hypurr.PortfolioAllocation
  */
 export interface PortfolioAllocation {
@@ -382,6 +640,41 @@ export enum PositionDirection {
      * @generated from protobuf enum value: POSITION_DIRECTION_SHORT = 2;
      */
     SHORT = 2
+}
+/**
+ * @generated from protobuf enum hypurr.AssetDetailChartPeriod
+ */
+export enum AssetDetailChartPeriod {
+    /**
+     * treated as 1D
+     *
+     * @generated from protobuf enum value: ASSET_DETAIL_CHART_PERIOD_UNSPECIFIED = 0;
+     */
+    ASSET_DETAIL_CHART_PERIOD_UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: ASSET_DETAIL_CHART_PERIOD_1D = 1;
+     */
+    ASSET_DETAIL_CHART_PERIOD_1D = 1,
+    /**
+     * @generated from protobuf enum value: ASSET_DETAIL_CHART_PERIOD_1W = 2;
+     */
+    ASSET_DETAIL_CHART_PERIOD_1W = 2,
+    /**
+     * @generated from protobuf enum value: ASSET_DETAIL_CHART_PERIOD_1M = 3;
+     */
+    ASSET_DETAIL_CHART_PERIOD_1M = 3,
+    /**
+     * @generated from protobuf enum value: ASSET_DETAIL_CHART_PERIOD_6M = 4;
+     */
+    ASSET_DETAIL_CHART_PERIOD_6M = 4,
+    /**
+     * @generated from protobuf enum value: ASSET_DETAIL_CHART_PERIOD_1Y = 5;
+     */
+    ASSET_DETAIL_CHART_PERIOD_1Y = 5,
+    /**
+     * @generated from protobuf enum value: ASSET_DETAIL_CHART_PERIOD_MAX = 6;
+     */
+    ASSET_DETAIL_CHART_PERIOD_MAX = 6
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class Color$Type extends MessageType<Color> {
@@ -1323,6 +1616,780 @@ class ReceiveActivity$Type extends MessageType<ReceiveActivity> {
  */
 export const ReceiveActivity = new ReceiveActivity$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class AssetDetailRequest$Type extends MessageType<AssetDetailRequest> {
+    constructor() {
+        super("hypurr.AssetDetailRequest", [
+            { no: 1, name: "asset_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "chart_period", kind: "enum", T: () => ["hypurr.AssetDetailChartPeriod", AssetDetailChartPeriod] }
+        ]);
+    }
+    create(value?: PartialMessage<AssetDetailRequest>): AssetDetailRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.assetId = 0;
+        message.chartPeriod = 0;
+        if (value !== undefined)
+            reflectionMergePartial<AssetDetailRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailRequest): AssetDetailRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 asset_id */ 1:
+                    message.assetId = reader.uint64().toNumber();
+                    break;
+                case /* hypurr.AssetDetailChartPeriod chart_period */ 2:
+                    message.chartPeriod = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetDetailRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 asset_id = 1; */
+        if (message.assetId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.assetId);
+        /* hypurr.AssetDetailChartPeriod chart_period = 2; */
+        if (message.chartPeriod !== 0)
+            writer.tag(2, WireType.Varint).int32(message.chartPeriod);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AssetDetailRequest
+ */
+export const AssetDetailRequest = new AssetDetailRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AssetDetailLiveUpdatesRequest$Type extends MessageType<AssetDetailLiveUpdatesRequest> {
+    constructor() {
+        super("hypurr.AssetDetailLiveUpdatesRequest", [
+            { no: 1, name: "asset_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AssetDetailLiveUpdatesRequest>): AssetDetailLiveUpdatesRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.assetId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<AssetDetailLiveUpdatesRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailLiveUpdatesRequest): AssetDetailLiveUpdatesRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 asset_id */ 1:
+                    message.assetId = reader.uint64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetDetailLiveUpdatesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 asset_id = 1; */
+        if (message.assetId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.assetId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AssetDetailLiveUpdatesRequest
+ */
+export const AssetDetailLiveUpdatesRequest = new AssetDetailLiveUpdatesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AssetDetailResponse$Type extends MessageType<AssetDetailResponse> {
+    constructor() {
+        super("hypurr.AssetDetailResponse", [
+            { no: 1, name: "metadata", kind: "message", T: () => AssetDetailMetadata },
+            { no: 2, name: "price", kind: "message", T: () => AssetDetailPriceSummary },
+            { no: 3, name: "chart", kind: "message", T: () => AssetDetailChart },
+            { no: 4, name: "overview", kind: "message", T: () => AssetDetailOverview }
+        ]);
+    }
+    create(value?: PartialMessage<AssetDetailResponse>): AssetDetailResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<AssetDetailResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailResponse): AssetDetailResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.AssetDetailMetadata metadata */ 1:
+                    message.metadata = AssetDetailMetadata.internalBinaryRead(reader, reader.uint32(), options, message.metadata);
+                    break;
+                case /* hypurr.AssetDetailPriceSummary price */ 2:
+                    message.price = AssetDetailPriceSummary.internalBinaryRead(reader, reader.uint32(), options, message.price);
+                    break;
+                case /* hypurr.AssetDetailChart chart */ 3:
+                    message.chart = AssetDetailChart.internalBinaryRead(reader, reader.uint32(), options, message.chart);
+                    break;
+                case /* hypurr.AssetDetailOverview overview */ 4:
+                    message.overview = AssetDetailOverview.internalBinaryRead(reader, reader.uint32(), options, message.overview);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetDetailResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.AssetDetailMetadata metadata = 1; */
+        if (message.metadata)
+            AssetDetailMetadata.internalBinaryWrite(message.metadata, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.AssetDetailPriceSummary price = 2; */
+        if (message.price)
+            AssetDetailPriceSummary.internalBinaryWrite(message.price, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.AssetDetailChart chart = 3; */
+        if (message.chart)
+            AssetDetailChart.internalBinaryWrite(message.chart, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.AssetDetailOverview overview = 4; */
+        if (message.overview)
+            AssetDetailOverview.internalBinaryWrite(message.overview, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AssetDetailResponse
+ */
+export const AssetDetailResponse = new AssetDetailResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AssetDetailLiveUpdate$Type extends MessageType<AssetDetailLiveUpdate> {
+    constructor() {
+        super("hypurr.AssetDetailLiveUpdate", [
+            { no: 1, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "price_usd_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "absolute_change_usd_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "change_percentage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "market_cap_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AssetDetailLiveUpdate>): AssetDetailLiveUpdate {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.occurredAt = "";
+        message.priceUsdDecimal = "";
+        message.absoluteChangeUsdDecimal = "";
+        message.changePercentage = 0;
+        message.marketCapCents = 0;
+        if (value !== undefined)
+            reflectionMergePartial<AssetDetailLiveUpdate>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailLiveUpdate): AssetDetailLiveUpdate {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string occurred_at */ 1:
+                    message.occurredAt = reader.string();
+                    break;
+                case /* string price_usd_decimal */ 2:
+                    message.priceUsdDecimal = reader.string();
+                    break;
+                case /* string absolute_change_usd_decimal */ 3:
+                    message.absoluteChangeUsdDecimal = reader.string();
+                    break;
+                case /* double change_percentage */ 4:
+                    message.changePercentage = reader.double();
+                    break;
+                case /* int64 market_cap_cents */ 5:
+                    message.marketCapCents = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetDetailLiveUpdate, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string occurred_at = 1; */
+        if (message.occurredAt !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.occurredAt);
+        /* string price_usd_decimal = 2; */
+        if (message.priceUsdDecimal !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.priceUsdDecimal);
+        /* string absolute_change_usd_decimal = 3; */
+        if (message.absoluteChangeUsdDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.absoluteChangeUsdDecimal);
+        /* double change_percentage = 4; */
+        if (message.changePercentage !== 0)
+            writer.tag(4, WireType.Bit64).double(message.changePercentage);
+        /* int64 market_cap_cents = 5; */
+        if (message.marketCapCents !== 0)
+            writer.tag(5, WireType.Varint).int64(message.marketCapCents);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AssetDetailLiveUpdate
+ */
+export const AssetDetailLiveUpdate = new AssetDetailLiveUpdate$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AssetDetailMetadata$Type extends MessageType<AssetDetailMetadata> {
+    constructor() {
+        super("hypurr.AssetDetailMetadata", [
+            { no: 1, name: "symbol", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "venue_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "logo_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AssetDetailMetadata>): AssetDetailMetadata {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.symbol = "";
+        message.name = "";
+        message.venueName = "";
+        message.logoUrl = "";
+        if (value !== undefined)
+            reflectionMergePartial<AssetDetailMetadata>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailMetadata): AssetDetailMetadata {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string symbol */ 1:
+                    message.symbol = reader.string();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* string venue_name */ 3:
+                    message.venueName = reader.string();
+                    break;
+                case /* string logo_url */ 4:
+                    message.logoUrl = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetDetailMetadata, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string symbol = 1; */
+        if (message.symbol !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.symbol);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* string venue_name = 3; */
+        if (message.venueName !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.venueName);
+        /* string logo_url = 4; */
+        if (message.logoUrl !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.logoUrl);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AssetDetailMetadata
+ */
+export const AssetDetailMetadata = new AssetDetailMetadata$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AssetDetailPriceSummary$Type extends MessageType<AssetDetailPriceSummary> {
+    constructor() {
+        super("hypurr.AssetDetailPriceSummary", [
+            { no: 1, name: "price_usd_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "absolute_change_usd_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "change_percentage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "market_cap_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AssetDetailPriceSummary>): AssetDetailPriceSummary {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.priceUsdDecimal = "";
+        message.absoluteChangeUsdDecimal = "";
+        message.changePercentage = 0;
+        message.marketCapCents = 0;
+        if (value !== undefined)
+            reflectionMergePartial<AssetDetailPriceSummary>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailPriceSummary): AssetDetailPriceSummary {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string price_usd_decimal */ 1:
+                    message.priceUsdDecimal = reader.string();
+                    break;
+                case /* string absolute_change_usd_decimal */ 2:
+                    message.absoluteChangeUsdDecimal = reader.string();
+                    break;
+                case /* double change_percentage */ 3:
+                    message.changePercentage = reader.double();
+                    break;
+                case /* int64 market_cap_cents */ 4:
+                    message.marketCapCents = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetDetailPriceSummary, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string price_usd_decimal = 1; */
+        if (message.priceUsdDecimal !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.priceUsdDecimal);
+        /* string absolute_change_usd_decimal = 2; */
+        if (message.absoluteChangeUsdDecimal !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.absoluteChangeUsdDecimal);
+        /* double change_percentage = 3; */
+        if (message.changePercentage !== 0)
+            writer.tag(3, WireType.Bit64).double(message.changePercentage);
+        /* int64 market_cap_cents = 4; */
+        if (message.marketCapCents !== 0)
+            writer.tag(4, WireType.Varint).int64(message.marketCapCents);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AssetDetailPriceSummary
+ */
+export const AssetDetailPriceSummary = new AssetDetailPriceSummary$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AssetDetailChart$Type extends MessageType<AssetDetailChart> {
+    constructor() {
+        super("hypurr.AssetDetailChart", [
+            { no: 1, name: "period", kind: "enum", T: () => ["hypurr.AssetDetailChartPeriod", AssetDetailChartPeriod] },
+            { no: 2, name: "points", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => AssetDetailChartPoint }
+        ]);
+    }
+    create(value?: PartialMessage<AssetDetailChart>): AssetDetailChart {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.period = 0;
+        message.points = [];
+        if (value !== undefined)
+            reflectionMergePartial<AssetDetailChart>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailChart): AssetDetailChart {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.AssetDetailChartPeriod period */ 1:
+                    message.period = reader.int32();
+                    break;
+                case /* repeated hypurr.AssetDetailChartPoint points */ 2:
+                    message.points.push(AssetDetailChartPoint.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetDetailChart, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.AssetDetailChartPeriod period = 1; */
+        if (message.period !== 0)
+            writer.tag(1, WireType.Varint).int32(message.period);
+        /* repeated hypurr.AssetDetailChartPoint points = 2; */
+        for (let i = 0; i < message.points.length; i++)
+            AssetDetailChartPoint.internalBinaryWrite(message.points[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AssetDetailChart
+ */
+export const AssetDetailChart = new AssetDetailChart$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AssetDetailChartPoint$Type extends MessageType<AssetDetailChartPoint> {
+    constructor() {
+        super("hypurr.AssetDetailChartPoint", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "price_usd_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AssetDetailChartPoint>): AssetDetailChartPoint {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = "";
+        message.occurredAt = "";
+        message.priceUsdDecimal = "";
+        if (value !== undefined)
+            reflectionMergePartial<AssetDetailChartPoint>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailChartPoint): AssetDetailChartPoint {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* string occurred_at */ 2:
+                    message.occurredAt = reader.string();
+                    break;
+                case /* string price_usd_decimal */ 3:
+                    message.priceUsdDecimal = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetDetailChartPoint, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* string occurred_at = 2; */
+        if (message.occurredAt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.occurredAt);
+        /* string price_usd_decimal = 3; */
+        if (message.priceUsdDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.priceUsdDecimal);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AssetDetailChartPoint
+ */
+export const AssetDetailChartPoint = new AssetDetailChartPoint$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AssetDetailOverview$Type extends MessageType<AssetDetailOverview> {
+    constructor() {
+        super("hypurr.AssetDetailOverview", [
+            { no: 1, name: "stock", kind: "message", oneof: "overview", T: () => AssetDetailStockOverview },
+            { no: 2, name: "crypto", kind: "message", oneof: "overview", T: () => AssetDetailCryptoOverview }
+        ]);
+    }
+    create(value?: PartialMessage<AssetDetailOverview>): AssetDetailOverview {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.overview = { oneofKind: undefined };
+        if (value !== undefined)
+            reflectionMergePartial<AssetDetailOverview>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailOverview): AssetDetailOverview {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.AssetDetailStockOverview stock */ 1:
+                    message.overview = {
+                        oneofKind: "stock",
+                        stock: AssetDetailStockOverview.internalBinaryRead(reader, reader.uint32(), options, (message.overview as any).stock)
+                    };
+                    break;
+                case /* hypurr.AssetDetailCryptoOverview crypto */ 2:
+                    message.overview = {
+                        oneofKind: "crypto",
+                        crypto: AssetDetailCryptoOverview.internalBinaryRead(reader, reader.uint32(), options, (message.overview as any).crypto)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetDetailOverview, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.AssetDetailStockOverview stock = 1; */
+        if (message.overview.oneofKind === "stock")
+            AssetDetailStockOverview.internalBinaryWrite(message.overview.stock, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.AssetDetailCryptoOverview crypto = 2; */
+        if (message.overview.oneofKind === "crypto")
+            AssetDetailCryptoOverview.internalBinaryWrite(message.overview.crypto, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AssetDetailOverview
+ */
+export const AssetDetailOverview = new AssetDetailOverview$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AssetDetailStockOverview$Type extends MessageType<AssetDetailStockOverview> {
+    constructor() {
+        super("hypurr.AssetDetailStockOverview", [
+            { no: 1, name: "market_cap", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "pe_ratio", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "eps_ttm", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "dividend_yield", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "week_52_high", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "week_52_low", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "avg_volume", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "beta", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AssetDetailStockOverview>): AssetDetailStockOverview {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.marketCap = "";
+        message.peRatio = "";
+        message.epsTtm = "";
+        message.dividendYield = "";
+        message.week52High = "";
+        message.week52Low = "";
+        message.avgVolume = "";
+        message.beta = "";
+        message.description = "";
+        if (value !== undefined)
+            reflectionMergePartial<AssetDetailStockOverview>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailStockOverview): AssetDetailStockOverview {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string market_cap */ 1:
+                    message.marketCap = reader.string();
+                    break;
+                case /* string pe_ratio */ 2:
+                    message.peRatio = reader.string();
+                    break;
+                case /* string eps_ttm */ 3:
+                    message.epsTtm = reader.string();
+                    break;
+                case /* string dividend_yield */ 4:
+                    message.dividendYield = reader.string();
+                    break;
+                case /* string week_52_high */ 5:
+                    message.week52High = reader.string();
+                    break;
+                case /* string week_52_low */ 6:
+                    message.week52Low = reader.string();
+                    break;
+                case /* string avg_volume */ 7:
+                    message.avgVolume = reader.string();
+                    break;
+                case /* string beta */ 8:
+                    message.beta = reader.string();
+                    break;
+                case /* string description */ 9:
+                    message.description = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetDetailStockOverview, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string market_cap = 1; */
+        if (message.marketCap !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.marketCap);
+        /* string pe_ratio = 2; */
+        if (message.peRatio !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.peRatio);
+        /* string eps_ttm = 3; */
+        if (message.epsTtm !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.epsTtm);
+        /* string dividend_yield = 4; */
+        if (message.dividendYield !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.dividendYield);
+        /* string week_52_high = 5; */
+        if (message.week52High !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.week52High);
+        /* string week_52_low = 6; */
+        if (message.week52Low !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.week52Low);
+        /* string avg_volume = 7; */
+        if (message.avgVolume !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.avgVolume);
+        /* string beta = 8; */
+        if (message.beta !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.beta);
+        /* string description = 9; */
+        if (message.description !== "")
+            writer.tag(9, WireType.LengthDelimited).string(message.description);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AssetDetailStockOverview
+ */
+export const AssetDetailStockOverview = new AssetDetailStockOverview$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AssetDetailCryptoOverview$Type extends MessageType<AssetDetailCryptoOverview> {
+    constructor() {
+        super("hypurr.AssetDetailCryptoOverview", [
+            { no: 1, name: "market_cap", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "volume_24h", kind: "scalar", jsonName: "volume24h", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "holders", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "fdv", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "liquidity", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "all_time_high", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AssetDetailCryptoOverview>): AssetDetailCryptoOverview {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.marketCap = "";
+        message.volume24H = "";
+        message.holders = "";
+        message.fdv = "";
+        message.liquidity = "";
+        message.allTimeHigh = "";
+        message.description = "";
+        if (value !== undefined)
+            reflectionMergePartial<AssetDetailCryptoOverview>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailCryptoOverview): AssetDetailCryptoOverview {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string market_cap */ 1:
+                    message.marketCap = reader.string();
+                    break;
+                case /* string volume_24h */ 2:
+                    message.volume24H = reader.string();
+                    break;
+                case /* string holders */ 3:
+                    message.holders = reader.string();
+                    break;
+                case /* string fdv */ 4:
+                    message.fdv = reader.string();
+                    break;
+                case /* string liquidity */ 5:
+                    message.liquidity = reader.string();
+                    break;
+                case /* string all_time_high */ 6:
+                    message.allTimeHigh = reader.string();
+                    break;
+                case /* string description */ 7:
+                    message.description = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetDetailCryptoOverview, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string market_cap = 1; */
+        if (message.marketCap !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.marketCap);
+        /* string volume_24h = 2; */
+        if (message.volume24H !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.volume24H);
+        /* string holders = 3; */
+        if (message.holders !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.holders);
+        /* string fdv = 4; */
+        if (message.fdv !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.fdv);
+        /* string liquidity = 5; */
+        if (message.liquidity !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.liquidity);
+        /* string all_time_high = 6; */
+        if (message.allTimeHigh !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.allTimeHigh);
+        /* string description = 7; */
+        if (message.description !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.description);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AssetDetailCryptoOverview
+ */
+export const AssetDetailCryptoOverview = new AssetDetailCryptoOverview$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class PortfolioAllocation$Type extends MessageType<PortfolioAllocation> {
     constructor() {
         super("hypurr.PortfolioAllocation", [
@@ -1404,5 +2471,7 @@ export const PortfolioAllocation = new PortfolioAllocation$Type();
  * @generated ServiceType for protobuf service hypurr.IosService
  */
 export const IosService = new ServiceType("hypurr.IosService", [
-    { name: "Home", options: {}, I: HomeRequest, O: HomeResponse }
+    { name: "Home", options: {}, I: HomeRequest, O: HomeResponse },
+    { name: "AssetDetail", options: {}, I: AssetDetailRequest, O: AssetDetailResponse },
+    { name: "AssetDetailLiveUpdates", serverStreaming: true, options: {}, I: AssetDetailLiveUpdatesRequest, O: AssetDetailLiveUpdate }
 ]);

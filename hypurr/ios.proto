@@ -4,6 +4,8 @@ option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
 service IosService {
   rpc Home(HomeRequest) returns (HomeResponse);
+  rpc AssetDetail(AssetDetailRequest) returns (AssetDetailResponse);
+  rpc AssetDetailLiveUpdates(AssetDetailLiveUpdatesRequest) returns (stream AssetDetailLiveUpdate);
 }
 
 // Color carries both theme variants for a single UI color.
@@ -125,6 +127,106 @@ message ReceiveActivity {
   string from = 1;
   // Absolute USD value in cents.
   int64 amount_cents = 2;
+}
+
+enum AssetDetailChartPeriod {
+  ASSET_DETAIL_CHART_PERIOD_UNSPECIFIED = 0; // treated as 1D
+  ASSET_DETAIL_CHART_PERIOD_1D = 1;
+  ASSET_DETAIL_CHART_PERIOD_1W = 2;
+  ASSET_DETAIL_CHART_PERIOD_1M = 3;
+  ASSET_DETAIL_CHART_PERIOD_6M = 4;
+  ASSET_DETAIL_CHART_PERIOD_1Y = 5;
+  ASSET_DETAIL_CHART_PERIOD_MAX = 6;
+}
+
+message AssetDetailRequest {
+  // Hyperliquid asset id, same convention as PortfolioAllocation.asset_id:
+  // < 10000 = perp index, >= 10000 = spot pair (10000 + spot index).
+  uint64 asset_id = 1;
+  AssetDetailChartPeriod chart_period = 2;
+}
+
+message AssetDetailLiveUpdatesRequest {
+  uint64 asset_id = 1;
+}
+
+message AssetDetailResponse {
+  AssetDetailMetadata metadata = 1;
+  AssetDetailPriceSummary price = 2;
+  AssetDetailChart chart = 3;
+  AssetDetailOverview overview = 4;
+}
+
+// Append-only live update for the active 1D view: mobile appends a new price
+// point to the 1D chart and refreshes the hero price / market cap display.
+message AssetDetailLiveUpdate {
+  // RFC3339 UTC timestamp.
+  string occurred_at = 1;
+  string price_usd_decimal = 2;
+  // Signed change vs the previous day's close.
+  string absolute_change_usd_decimal = 3;
+  double change_percentage = 4;
+  int64 market_cap_cents = 5;
+}
+
+message AssetDetailMetadata {
+  string symbol = 1;     // e.g. "HFUN"
+  string name = 2;       // e.g. "Hypurr Fun"
+  string venue_name = 3; // e.g. "Hyperliquid"
+  string logo_url = 4;
+}
+
+// Decimal strings for prices accommodate sub-cent valuations.
+message AssetDetailPriceSummary {
+  string price_usd_decimal = 1;
+  // Signed change vs the previous day's close.
+  string absolute_change_usd_decimal = 2;
+  double change_percentage = 3;
+  int64 market_cap_cents = 4;
+}
+
+message AssetDetailChart {
+  AssetDetailChartPeriod period = 1;
+  // Response order is display order, oldest point first.
+  repeated AssetDetailChartPoint points = 2;
+}
+
+message AssetDetailChartPoint {
+  string id = 1;
+  // RFC3339 UTC timestamp.
+  string occurred_at = 2;
+  string price_usd_decimal = 3;
+}
+
+// Statistics values are display-formatted by the backend (e.g. "$1.2B").
+// Fields with no backend data source are empty; mobile falls back locally.
+message AssetDetailOverview {
+  oneof overview {
+    AssetDetailStockOverview stock = 1;
+    AssetDetailCryptoOverview crypto = 2;
+  }
+}
+
+message AssetDetailStockOverview {
+  string market_cap = 1;
+  string pe_ratio = 2;
+  string eps_ttm = 3;
+  string dividend_yield = 4;
+  string week_52_high = 5;
+  string week_52_low = 6;
+  string avg_volume = 7;
+  string beta = 8;
+  string description = 9;
+}
+
+message AssetDetailCryptoOverview {
+  string market_cap = 1;
+  string volume_24h = 2;
+  string holders = 3;
+  string fdv = 4;
+  string liquidity = 5;
+  string all_time_high = 6;
+  string description = 7;
 }
 
 message PortfolioAllocation {
