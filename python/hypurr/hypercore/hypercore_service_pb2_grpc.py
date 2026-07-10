@@ -129,6 +129,16 @@ class HyperCoreStub(object):
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.FromString,
                 _registered_method=True)
+        self.Candles = channel.unary_unary(
+                '/hypercore.HyperCore/Candles',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.CandlesRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.CandlesResponse.FromString,
+                _registered_method=True)
+        self.HighLow = channel.unary_unary(
+                '/hypercore.HyperCore/HighLow',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowResponse.FromString,
+                _registered_method=True)
 
 
 class HyperCoreServicer(object):
@@ -248,6 +258,18 @@ class HyperCoreServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Candles(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def HighLow(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_HyperCoreServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -345,6 +367,16 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     servicer.WalletTrades,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.SerializeToString,
+            ),
+            'Candles': grpc.unary_unary_rpc_method_handler(
+                    servicer.Candles,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.CandlesRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.CandlesResponse.SerializeToString,
+            ),
+            'HighLow': grpc.unary_unary_rpc_method_handler(
+                    servicer.HighLow,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -860,6 +892,60 @@ class HyperCore(object):
             '/hypercore.HyperCore/WalletTrades',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Candles(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/Candles',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.CandlesRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.CandlesResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def HighLow(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/HighLow',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowResponse.FromString,
             options,
             channel_credentials,
             insecure,

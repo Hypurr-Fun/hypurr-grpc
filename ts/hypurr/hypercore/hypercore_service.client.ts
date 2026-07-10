@@ -4,6 +4,10 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
+import type { HighLowResponse } from "./hypercore_service";
+import type { HighLowRequest } from "./hypercore_service";
+import type { CandlesResponse } from "./hypercore_service";
+import type { CandlesRequest } from "./hypercore_service";
 import type { WalletTradesResponse } from "./hypercore_service";
 import type { WalletTradesRequest } from "./hypercore_service";
 import type { WalletsByMetricPercentileResponse } from "./hypercore_service";
@@ -127,6 +131,14 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: WalletTrades
      */
     walletTrades(input: WalletTradesRequest, options?: RpcOptions): UnaryCall<WalletTradesRequest, WalletTradesResponse>;
+    /**
+     * @generated from protobuf rpc: Candles
+     */
+    candles(input: CandlesRequest, options?: RpcOptions): UnaryCall<CandlesRequest, CandlesResponse>;
+    /**
+     * @generated from protobuf rpc: HighLow
+     */
+    highLow(input: HighLowRequest, options?: RpcOptions): UnaryCall<HighLowRequest, HighLowResponse>;
 }
 /**
  * @generated from protobuf service hypercore.HyperCore
@@ -269,5 +281,19 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
     walletTrades(input: WalletTradesRequest, options?: RpcOptions): UnaryCall<WalletTradesRequest, WalletTradesResponse> {
         const method = this.methods[18], opt = this._transport.mergeOptions(options);
         return stackIntercept<WalletTradesRequest, WalletTradesResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: Candles
+     */
+    candles(input: CandlesRequest, options?: RpcOptions): UnaryCall<CandlesRequest, CandlesResponse> {
+        const method = this.methods[19], opt = this._transport.mergeOptions(options);
+        return stackIntercept<CandlesRequest, CandlesResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: HighLow
+     */
+    highLow(input: HighLowRequest, options?: RpcOptions): UnaryCall<HighLowRequest, HighLowResponse> {
+        const method = this.methods[20], opt = this._transport.mergeOptions(options);
+        return stackIntercept<HighLowRequest, HighLowResponse>("unary", this._transport, method, opt, input);
     }
 }

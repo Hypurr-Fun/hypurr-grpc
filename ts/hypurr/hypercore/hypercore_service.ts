@@ -1237,6 +1237,99 @@ export interface WalletTradesResponse {
      */
     nextPageToken: string; // empty when exhausted
 }
+/**
+ * @generated from protobuf message hypercore.CandlesRequest
+ */
+export interface CandlesRequest {
+    /**
+     * @generated from protobuf field: int64 instrument_id = 1
+     */
+    instrumentId: number; // same convention as HistoricalWalletTrade.instrument_id: perp = index, spot = index + 10000
+    /**
+     * @generated from protobuf field: string interval = 2
+     */
+    interval: string; // "15m" | "1h" | "4h" | "1d" | "1w"
+    /**
+     * @generated from protobuf field: int64 from_ts = 3
+     */
+    fromTs: number; // inclusive, unix seconds; 0 = earliest
+    /**
+     * @generated from protobuf field: int64 to_ts = 4
+     */
+    toTs: number; // inclusive, unix seconds; 0 = now
+}
+/**
+ * @generated from protobuf message hypercore.Candle
+ */
+export interface Candle {
+    /**
+     * @generated from protobuf field: int64 open_time = 1
+     */
+    openTime: number; // bucket start, unix seconds
+    /**
+     * @generated from protobuf field: double open = 2
+     */
+    open: number;
+    /**
+     * @generated from protobuf field: double high = 3
+     */
+    high: number;
+    /**
+     * @generated from protobuf field: double low = 4
+     */
+    low: number;
+    /**
+     * @generated from protobuf field: double close = 5
+     */
+    close: number;
+    /**
+     * @generated from protobuf field: double volume = 6
+     */
+    volume: number; // base-denominated
+    /**
+     * @generated from protobuf field: int32 trades = 7
+     */
+    trades: number;
+}
+/**
+ * @generated from protobuf message hypercore.CandlesResponse
+ */
+export interface CandlesResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.Candle candles = 1
+     */
+    candles: Candle[]; // open_time ascending
+}
+/**
+ * @generated from protobuf message hypercore.HighLowRequest
+ */
+export interface HighLowRequest {
+    /**
+     * @generated from protobuf field: int64 instrument_id = 1
+     */
+    instrumentId: number; // same convention as CandlesRequest.instrument_id
+    /**
+     * @generated from protobuf field: int64 from_ts = 2
+     */
+    fromTs: number; // inclusive, unix seconds; 0 = earliest
+    /**
+     * @generated from protobuf field: int64 to_ts = 3
+     */
+    toTs: number; // inclusive, unix seconds; 0 = now
+}
+/**
+ * @generated from protobuf message hypercore.HighLowResponse
+ */
+export interface HighLowResponse {
+    /**
+     * @generated from protobuf field: double high = 1
+     */
+    high: number; // max traded price in range; 0 = no trades
+    /**
+     * @generated from protobuf field: double low = 2
+     */
+    low: number; // min traded price in range; 0 = no trades
+}
 // 
 // type Trade struct {
 // Coin             string           `json:"coin"`               // Perp symbol or @ notation
@@ -5652,6 +5745,337 @@ class WalletTradesResponse$Type extends MessageType<WalletTradesResponse> {
  * @generated MessageType for protobuf message hypercore.WalletTradesResponse
  */
 export const WalletTradesResponse = new WalletTradesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CandlesRequest$Type extends MessageType<CandlesRequest> {
+    constructor() {
+        super("hypercore.CandlesRequest", [
+            { no: 1, name: "instrument_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "interval", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CandlesRequest>): CandlesRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrumentId = 0;
+        message.interval = "";
+        message.fromTs = 0;
+        message.toTs = 0;
+        if (value !== undefined)
+            reflectionMergePartial<CandlesRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CandlesRequest): CandlesRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 instrument_id */ 1:
+                    message.instrumentId = reader.int64().toNumber();
+                    break;
+                case /* string interval */ 2:
+                    message.interval = reader.string();
+                    break;
+                case /* int64 from_ts */ 3:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 4:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CandlesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 instrument_id = 1; */
+        if (message.instrumentId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.instrumentId);
+        /* string interval = 2; */
+        if (message.interval !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.interval);
+        /* int64 from_ts = 3; */
+        if (message.fromTs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 4; */
+        if (message.toTs !== 0)
+            writer.tag(4, WireType.Varint).int64(message.toTs);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.CandlesRequest
+ */
+export const CandlesRequest = new CandlesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Candle$Type extends MessageType<Candle> {
+    constructor() {
+        super("hypercore.Candle", [
+            { no: 1, name: "open_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "open", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "high", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "low", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "close", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "volume", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "trades", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<Candle>): Candle {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.openTime = 0;
+        message.open = 0;
+        message.high = 0;
+        message.low = 0;
+        message.close = 0;
+        message.volume = 0;
+        message.trades = 0;
+        if (value !== undefined)
+            reflectionMergePartial<Candle>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Candle): Candle {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 open_time */ 1:
+                    message.openTime = reader.int64().toNumber();
+                    break;
+                case /* double open */ 2:
+                    message.open = reader.double();
+                    break;
+                case /* double high */ 3:
+                    message.high = reader.double();
+                    break;
+                case /* double low */ 4:
+                    message.low = reader.double();
+                    break;
+                case /* double close */ 5:
+                    message.close = reader.double();
+                    break;
+                case /* double volume */ 6:
+                    message.volume = reader.double();
+                    break;
+                case /* int32 trades */ 7:
+                    message.trades = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: Candle, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 open_time = 1; */
+        if (message.openTime !== 0)
+            writer.tag(1, WireType.Varint).int64(message.openTime);
+        /* double open = 2; */
+        if (message.open !== 0)
+            writer.tag(2, WireType.Bit64).double(message.open);
+        /* double high = 3; */
+        if (message.high !== 0)
+            writer.tag(3, WireType.Bit64).double(message.high);
+        /* double low = 4; */
+        if (message.low !== 0)
+            writer.tag(4, WireType.Bit64).double(message.low);
+        /* double close = 5; */
+        if (message.close !== 0)
+            writer.tag(5, WireType.Bit64).double(message.close);
+        /* double volume = 6; */
+        if (message.volume !== 0)
+            writer.tag(6, WireType.Bit64).double(message.volume);
+        /* int32 trades = 7; */
+        if (message.trades !== 0)
+            writer.tag(7, WireType.Varint).int32(message.trades);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.Candle
+ */
+export const Candle = new Candle$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CandlesResponse$Type extends MessageType<CandlesResponse> {
+    constructor() {
+        super("hypercore.CandlesResponse", [
+            { no: 1, name: "candles", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => Candle }
+        ]);
+    }
+    create(value?: PartialMessage<CandlesResponse>): CandlesResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.candles = [];
+        if (value !== undefined)
+            reflectionMergePartial<CandlesResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CandlesResponse): CandlesResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.Candle candles */ 1:
+                    message.candles.push(Candle.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CandlesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.Candle candles = 1; */
+        for (let i = 0; i < message.candles.length; i++)
+            Candle.internalBinaryWrite(message.candles[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.CandlesResponse
+ */
+export const CandlesResponse = new CandlesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HighLowRequest$Type extends MessageType<HighLowRequest> {
+    constructor() {
+        super("hypercore.HighLowRequest", [
+            { no: 1, name: "instrument_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HighLowRequest>): HighLowRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrumentId = 0;
+        message.fromTs = 0;
+        message.toTs = 0;
+        if (value !== undefined)
+            reflectionMergePartial<HighLowRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HighLowRequest): HighLowRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 instrument_id */ 1:
+                    message.instrumentId = reader.int64().toNumber();
+                    break;
+                case /* int64 from_ts */ 2:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 3:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HighLowRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 instrument_id = 1; */
+        if (message.instrumentId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.instrumentId);
+        /* int64 from_ts = 2; */
+        if (message.fromTs !== 0)
+            writer.tag(2, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 3; */
+        if (message.toTs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.toTs);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.HighLowRequest
+ */
+export const HighLowRequest = new HighLowRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HighLowResponse$Type extends MessageType<HighLowResponse> {
+    constructor() {
+        super("hypercore.HighLowResponse", [
+            { no: 1, name: "high", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 2, name: "low", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HighLowResponse>): HighLowResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.high = 0;
+        message.low = 0;
+        if (value !== undefined)
+            reflectionMergePartial<HighLowResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HighLowResponse): HighLowResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* double high */ 1:
+                    message.high = reader.double();
+                    break;
+                case /* double low */ 2:
+                    message.low = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HighLowResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* double high = 1; */
+        if (message.high !== 0)
+            writer.tag(1, WireType.Bit64).double(message.high);
+        /* double low = 2; */
+        if (message.low !== 0)
+            writer.tag(2, WireType.Bit64).double(message.low);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.HighLowResponse
+ */
+export const HighLowResponse = new HighLowResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypercore.HyperCore
  */
@@ -5674,5 +6098,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "SpotInstruments", options: {}, I: SpotInstrumentsRequest, O: SpotInstrumentsResponse },
     { name: "PerpInstruments", options: {}, I: PerpInstrumentsRequest, O: PerpInstrumentsResponse },
     { name: "WalletsByMetricPercentile", options: {}, I: WalletsByMetricPercentileRequest, O: WalletsByMetricPercentileResponse },
-    { name: "WalletTrades", options: {}, I: WalletTradesRequest, O: WalletTradesResponse }
+    { name: "WalletTrades", options: {}, I: WalletTradesRequest, O: WalletTradesResponse },
+    { name: "Candles", options: {}, I: CandlesRequest, O: CandlesResponse },
+    { name: "HighLow", options: {}, I: HighLowRequest, O: HighLowResponse }
 ]);
