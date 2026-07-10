@@ -38,7 +38,7 @@ const (
 	HyperCore_PerpInstruments_FullMethodName                   = "/hypercore.HyperCore/PerpInstruments"
 	HyperCore_WalletsByMetricPercentile_FullMethodName         = "/hypercore.HyperCore/WalletsByMetricPercentile"
 	HyperCore_WalletTrades_FullMethodName                      = "/hypercore.HyperCore/WalletTrades"
-	HyperCore_Candles_FullMethodName                           = "/hypercore.HyperCore/Candles"
+	HyperCore_OHLC_FullMethodName                              = "/hypercore.HyperCore/OHLC"
 	HyperCore_HighLow_FullMethodName                           = "/hypercore.HyperCore/HighLow"
 )
 
@@ -65,7 +65,7 @@ type HyperCoreClient interface {
 	PerpInstruments(ctx context.Context, in *PerpInstrumentsRequest, opts ...grpc.CallOption) (*PerpInstrumentsResponse, error)
 	WalletsByMetricPercentile(ctx context.Context, in *WalletsByMetricPercentileRequest, opts ...grpc.CallOption) (*WalletsByMetricPercentileResponse, error)
 	WalletTrades(ctx context.Context, in *WalletTradesRequest, opts ...grpc.CallOption) (*WalletTradesResponse, error)
-	Candles(ctx context.Context, in *CandlesRequest, opts ...grpc.CallOption) (*CandlesResponse, error)
+	OHLC(ctx context.Context, in *OHLCRequest, opts ...grpc.CallOption) (*OHLCResponse, error)
 	HighLow(ctx context.Context, in *HighLowRequest, opts ...grpc.CallOption) (*HighLowResponse, error)
 }
 
@@ -335,10 +335,10 @@ func (c *hyperCoreClient) WalletTrades(ctx context.Context, in *WalletTradesRequ
 	return out, nil
 }
 
-func (c *hyperCoreClient) Candles(ctx context.Context, in *CandlesRequest, opts ...grpc.CallOption) (*CandlesResponse, error) {
+func (c *hyperCoreClient) OHLC(ctx context.Context, in *OHLCRequest, opts ...grpc.CallOption) (*OHLCResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CandlesResponse)
-	err := c.cc.Invoke(ctx, HyperCore_Candles_FullMethodName, in, out, cOpts...)
+	out := new(OHLCResponse)
+	err := c.cc.Invoke(ctx, HyperCore_OHLC_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -378,7 +378,7 @@ type HyperCoreServer interface {
 	PerpInstruments(context.Context, *PerpInstrumentsRequest) (*PerpInstrumentsResponse, error)
 	WalletsByMetricPercentile(context.Context, *WalletsByMetricPercentileRequest) (*WalletsByMetricPercentileResponse, error)
 	WalletTrades(context.Context, *WalletTradesRequest) (*WalletTradesResponse, error)
-	Candles(context.Context, *CandlesRequest) (*CandlesResponse, error)
+	OHLC(context.Context, *OHLCRequest) (*OHLCResponse, error)
 	HighLow(context.Context, *HighLowRequest) (*HighLowResponse, error)
 	mustEmbedUnimplementedHyperCoreServer()
 }
@@ -444,8 +444,8 @@ func (UnimplementedHyperCoreServer) WalletsByMetricPercentile(context.Context, *
 func (UnimplementedHyperCoreServer) WalletTrades(context.Context, *WalletTradesRequest) (*WalletTradesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletTrades not implemented")
 }
-func (UnimplementedHyperCoreServer) Candles(context.Context, *CandlesRequest) (*CandlesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Candles not implemented")
+func (UnimplementedHyperCoreServer) OHLC(context.Context, *OHLCRequest) (*OHLCResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OHLC not implemented")
 }
 func (UnimplementedHyperCoreServer) HighLow(context.Context, *HighLowRequest) (*HighLowResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HighLow not implemented")
@@ -819,20 +819,20 @@ func _HyperCore_WalletTrades_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HyperCore_Candles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CandlesRequest)
+func _HyperCore_OHLC_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OHLCRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HyperCoreServer).Candles(ctx, in)
+		return srv.(HyperCoreServer).OHLC(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HyperCore_Candles_FullMethodName,
+		FullMethod: HyperCore_OHLC_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HyperCoreServer).Candles(ctx, req.(*CandlesRequest))
+		return srv.(HyperCoreServer).OHLC(ctx, req.(*OHLCRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -927,8 +927,8 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _HyperCore_WalletTrades_Handler,
 		},
 		{
-			MethodName: "Candles",
-			Handler:    _HyperCore_Candles_Handler,
+			MethodName: "OHLC",
+			Handler:    _HyperCore_OHLC_Handler,
 		},
 		{
 			MethodName: "HighLow",

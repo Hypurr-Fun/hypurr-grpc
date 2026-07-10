@@ -1238,9 +1238,9 @@ export interface WalletTradesResponse {
     nextPageToken: string; // empty when exhausted
 }
 /**
- * @generated from protobuf message hypercore.CandlesRequest
+ * @generated from protobuf message hypercore.OHLCRequest
  */
-export interface CandlesRequest {
+export interface OHLCRequest {
     /**
      * @generated from protobuf field: int64 instrument_id = 1
      */
@@ -1259,9 +1259,9 @@ export interface CandlesRequest {
     toTs: number; // inclusive, unix seconds; 0 = now
 }
 /**
- * @generated from protobuf message hypercore.Candle
+ * @generated from protobuf message hypercore.OHLC
  */
-export interface Candle {
+export interface OHLC {
     /**
      * @generated from protobuf field: int64 open_time = 1
      */
@@ -1282,23 +1282,15 @@ export interface Candle {
      * @generated from protobuf field: double close = 5
      */
     close: number;
-    /**
-     * @generated from protobuf field: double volume = 6
-     */
-    volume: number; // base-denominated
-    /**
-     * @generated from protobuf field: int32 trades = 7
-     */
-    trades: number;
 }
 /**
- * @generated from protobuf message hypercore.CandlesResponse
+ * @generated from protobuf message hypercore.OHLCResponse
  */
-export interface CandlesResponse {
+export interface OHLCResponse {
     /**
-     * @generated from protobuf field: repeated hypercore.Candle candles = 1
+     * @generated from protobuf field: repeated hypercore.OHLC ohlc = 1
      */
-    candles: Candle[]; // open_time ascending
+    ohlc: OHLC[]; // open_time ascending
 }
 /**
  * @generated from protobuf message hypercore.HighLowRequest
@@ -5746,26 +5738,26 @@ class WalletTradesResponse$Type extends MessageType<WalletTradesResponse> {
  */
 export const WalletTradesResponse = new WalletTradesResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CandlesRequest$Type extends MessageType<CandlesRequest> {
+class OHLCRequest$Type extends MessageType<OHLCRequest> {
     constructor() {
-        super("hypercore.CandlesRequest", [
+        super("hypercore.OHLCRequest", [
             { no: 1, name: "instrument_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "interval", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
-    create(value?: PartialMessage<CandlesRequest>): CandlesRequest {
+    create(value?: PartialMessage<OHLCRequest>): OHLCRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.instrumentId = 0;
         message.interval = "";
         message.fromTs = 0;
         message.toTs = 0;
         if (value !== undefined)
-            reflectionMergePartial<CandlesRequest>(this, message, value);
+            reflectionMergePartial<OHLCRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CandlesRequest): CandlesRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OHLCRequest): OHLCRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -5793,7 +5785,7 @@ class CandlesRequest$Type extends MessageType<CandlesRequest> {
         }
         return message;
     }
-    internalBinaryWrite(message: CandlesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: OHLCRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* int64 instrument_id = 1; */
         if (message.instrumentId !== 0)
             writer.tag(1, WireType.Varint).int64(message.instrumentId);
@@ -5813,36 +5805,32 @@ class CandlesRequest$Type extends MessageType<CandlesRequest> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypercore.CandlesRequest
+ * @generated MessageType for protobuf message hypercore.OHLCRequest
  */
-export const CandlesRequest = new CandlesRequest$Type();
+export const OHLCRequest = new OHLCRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class Candle$Type extends MessageType<Candle> {
+class OHLC$Type extends MessageType<OHLC> {
     constructor() {
-        super("hypercore.Candle", [
+        super("hypercore.OHLC", [
             { no: 1, name: "open_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "open", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 3, name: "high", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 4, name: "low", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 5, name: "close", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 6, name: "volume", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 7, name: "trades", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 5, name: "close", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
-    create(value?: PartialMessage<Candle>): Candle {
+    create(value?: PartialMessage<OHLC>): OHLC {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.openTime = 0;
         message.open = 0;
         message.high = 0;
         message.low = 0;
         message.close = 0;
-        message.volume = 0;
-        message.trades = 0;
         if (value !== undefined)
-            reflectionMergePartial<Candle>(this, message, value);
+            reflectionMergePartial<OHLC>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Candle): Candle {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OHLC): OHLC {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -5862,12 +5850,6 @@ class Candle$Type extends MessageType<Candle> {
                 case /* double close */ 5:
                     message.close = reader.double();
                     break;
-                case /* double volume */ 6:
-                    message.volume = reader.double();
-                    break;
-                case /* int32 trades */ 7:
-                    message.trades = reader.int32();
-                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5879,7 +5861,7 @@ class Candle$Type extends MessageType<Candle> {
         }
         return message;
     }
-    internalBinaryWrite(message: Candle, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: OHLC, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* int64 open_time = 1; */
         if (message.openTime !== 0)
             writer.tag(1, WireType.Varint).int64(message.openTime);
@@ -5895,12 +5877,6 @@ class Candle$Type extends MessageType<Candle> {
         /* double close = 5; */
         if (message.close !== 0)
             writer.tag(5, WireType.Bit64).double(message.close);
-        /* double volume = 6; */
-        if (message.volume !== 0)
-            writer.tag(6, WireType.Bit64).double(message.volume);
-        /* int32 trades = 7; */
-        if (message.trades !== 0)
-            writer.tag(7, WireType.Varint).int32(message.trades);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5908,30 +5884,30 @@ class Candle$Type extends MessageType<Candle> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypercore.Candle
+ * @generated MessageType for protobuf message hypercore.OHLC
  */
-export const Candle = new Candle$Type();
+export const OHLC = new OHLC$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CandlesResponse$Type extends MessageType<CandlesResponse> {
+class OHLCResponse$Type extends MessageType<OHLCResponse> {
     constructor() {
-        super("hypercore.CandlesResponse", [
-            { no: 1, name: "candles", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => Candle }
+        super("hypercore.OHLCResponse", [
+            { no: 1, name: "ohlc", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => OHLC }
         ]);
     }
-    create(value?: PartialMessage<CandlesResponse>): CandlesResponse {
+    create(value?: PartialMessage<OHLCResponse>): OHLCResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.candles = [];
+        message.ohlc = [];
         if (value !== undefined)
-            reflectionMergePartial<CandlesResponse>(this, message, value);
+            reflectionMergePartial<OHLCResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CandlesResponse): CandlesResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OHLCResponse): OHLCResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypercore.Candle candles */ 1:
-                    message.candles.push(Candle.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypercore.OHLC ohlc */ 1:
+                    message.ohlc.push(OHLC.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5944,10 +5920,10 @@ class CandlesResponse$Type extends MessageType<CandlesResponse> {
         }
         return message;
     }
-    internalBinaryWrite(message: CandlesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypercore.Candle candles = 1; */
-        for (let i = 0; i < message.candles.length; i++)
-            Candle.internalBinaryWrite(message.candles[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+    internalBinaryWrite(message: OHLCResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.OHLC ohlc = 1; */
+        for (let i = 0; i < message.ohlc.length; i++)
+            OHLC.internalBinaryWrite(message.ohlc[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5955,9 +5931,9 @@ class CandlesResponse$Type extends MessageType<CandlesResponse> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypercore.CandlesResponse
+ * @generated MessageType for protobuf message hypercore.OHLCResponse
  */
-export const CandlesResponse = new CandlesResponse$Type();
+export const OHLCResponse = new OHLCResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HighLowRequest$Type extends MessageType<HighLowRequest> {
     constructor() {
@@ -6099,6 +6075,6 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "PerpInstruments", options: {}, I: PerpInstrumentsRequest, O: PerpInstrumentsResponse },
     { name: "WalletsByMetricPercentile", options: {}, I: WalletsByMetricPercentileRequest, O: WalletsByMetricPercentileResponse },
     { name: "WalletTrades", options: {}, I: WalletTradesRequest, O: WalletTradesResponse },
-    { name: "Candles", options: {}, I: CandlesRequest, O: CandlesResponse },
+    { name: "OHLC", options: {}, I: OHLCRequest, O: OHLCResponse },
     { name: "HighLow", options: {}, I: HighLowRequest, O: HighLowResponse }
 ]);

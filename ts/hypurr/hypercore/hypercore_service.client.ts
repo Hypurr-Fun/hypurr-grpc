@@ -6,8 +6,8 @@ import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
 import type { HighLowResponse } from "./hypercore_service";
 import type { HighLowRequest } from "./hypercore_service";
-import type { CandlesResponse } from "./hypercore_service";
-import type { CandlesRequest } from "./hypercore_service";
+import type { OHLCResponse } from "./hypercore_service";
+import type { OHLCRequest } from "./hypercore_service";
 import type { WalletTradesResponse } from "./hypercore_service";
 import type { WalletTradesRequest } from "./hypercore_service";
 import type { WalletsByMetricPercentileResponse } from "./hypercore_service";
@@ -132,9 +132,9 @@ export interface IHyperCoreClient {
      */
     walletTrades(input: WalletTradesRequest, options?: RpcOptions): UnaryCall<WalletTradesRequest, WalletTradesResponse>;
     /**
-     * @generated from protobuf rpc: Candles
+     * @generated from protobuf rpc: OHLC
      */
-    candles(input: CandlesRequest, options?: RpcOptions): UnaryCall<CandlesRequest, CandlesResponse>;
+    oHLC(input: OHLCRequest, options?: RpcOptions): UnaryCall<OHLCRequest, OHLCResponse>;
     /**
      * @generated from protobuf rpc: HighLow
      */
@@ -283,11 +283,11 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
         return stackIntercept<WalletTradesRequest, WalletTradesResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: Candles
+     * @generated from protobuf rpc: OHLC
      */
-    candles(input: CandlesRequest, options?: RpcOptions): UnaryCall<CandlesRequest, CandlesResponse> {
+    oHLC(input: OHLCRequest, options?: RpcOptions): UnaryCall<OHLCRequest, OHLCResponse> {
         const method = this.methods[19], opt = this._transport.mergeOptions(options);
-        return stackIntercept<CandlesRequest, CandlesResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<OHLCRequest, OHLCResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HighLow

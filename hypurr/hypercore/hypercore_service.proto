@@ -513,25 +513,23 @@ message WalletTradesResponse {
   string next_page_token                = 3; // empty when exhausted
 }
 
-message CandlesRequest {
+message OHLCRequest {
   int64  instrument_id = 1; // same convention as HistoricalWalletTrade.instrument_id: perp = index, spot = index + 10000
   string interval      = 2; // "15m" | "1h" | "4h" | "1d" | "1w"
   int64  from_ts       = 3; // inclusive, unix seconds; 0 = earliest
   int64  to_ts         = 4; // inclusive, unix seconds; 0 = now
 }
 
-message Candle {
+message OHLC {
   int64  open_time = 1; // bucket start, unix seconds
   double open      = 2;
   double high      = 3;
   double low       = 4;
   double close     = 5;
-  double volume    = 6; // base-denominated
-  int32  trades    = 7;
 }
 
-message CandlesResponse {
-  repeated Candle candles = 1; // open_time ascending
+message OHLCResponse {
+  repeated OHLC ohlc = 1; // open_time ascending
 }
 
 message HighLowRequest {
@@ -565,7 +563,7 @@ service HyperCore {
   rpc PerpInstruments(PerpInstrumentsRequest) returns (PerpInstrumentsResponse);
   rpc WalletsByMetricPercentile(WalletsByMetricPercentileRequest) returns (WalletsByMetricPercentileResponse) {}
   rpc WalletTrades(WalletTradesRequest) returns (WalletTradesResponse) {}
-  rpc Candles(CandlesRequest) returns (CandlesResponse) {}
+  rpc OHLC(OHLCRequest) returns (OHLCResponse) {}
   rpc HighLow(HighLowRequest) returns (HighLowResponse) {}
 }
 

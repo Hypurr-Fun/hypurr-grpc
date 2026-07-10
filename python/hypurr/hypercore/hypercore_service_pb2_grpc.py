@@ -129,10 +129,10 @@ class HyperCoreStub(object):
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.FromString,
                 _registered_method=True)
-        self.Candles = channel.unary_unary(
-                '/hypercore.HyperCore/Candles',
-                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.CandlesRequest.SerializeToString,
-                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.CandlesResponse.FromString,
+        self.OHLC = channel.unary_unary(
+                '/hypercore.HyperCore/OHLC',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCResponse.FromString,
                 _registered_method=True)
         self.HighLow = channel.unary_unary(
                 '/hypercore.HyperCore/HighLow',
@@ -258,7 +258,7 @@ class HyperCoreServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def Candles(self, request, context):
+    def OHLC(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -368,10 +368,10 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.SerializeToString,
             ),
-            'Candles': grpc.unary_unary_rpc_method_handler(
-                    servicer.Candles,
-                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.CandlesRequest.FromString,
-                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.CandlesResponse.SerializeToString,
+            'OHLC': grpc.unary_unary_rpc_method_handler(
+                    servicer.OHLC,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCResponse.SerializeToString,
             ),
             'HighLow': grpc.unary_unary_rpc_method_handler(
                     servicer.HighLow,
@@ -903,7 +903,7 @@ class HyperCore(object):
             _registered_method=True)
 
     @staticmethod
-    def Candles(request,
+    def OHLC(request,
             target,
             options=(),
             channel_credentials=None,
@@ -916,9 +916,9 @@ class HyperCore(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/hypercore.HyperCore/Candles',
-            hypurr_dot_hypercore_dot_hypercore__service__pb2.CandlesRequest.SerializeToString,
-            hypurr_dot_hypercore_dot_hypercore__service__pb2.CandlesResponse.FromString,
+            '/hypercore.HyperCore/OHLC',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCResponse.FromString,
             options,
             channel_credentials,
             insecure,
