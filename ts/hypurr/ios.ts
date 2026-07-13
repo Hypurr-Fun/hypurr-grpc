@@ -518,39 +518,35 @@ export interface AssetDetailOverview {
  */
 export interface AssetDetailStockOverview {
     /**
-     * @generated from protobuf field: string market_cap = 1
-     */
-    marketCap: string;
-    /**
-     * @generated from protobuf field: string pe_ratio = 2
+     * @generated from protobuf field: string pe_ratio = 1
      */
     peRatio: string;
     /**
-     * @generated from protobuf field: string eps_ttm = 3
+     * @generated from protobuf field: string eps_ttm = 2
      */
     epsTtm: string;
     /**
-     * @generated from protobuf field: string dividend_yield = 4
+     * @generated from protobuf field: string dividend_yield = 3
      */
     dividendYield: string;
     /**
-     * @generated from protobuf field: string week_52_high = 5
+     * @generated from protobuf field: string week_52_high = 4
      */
     week52High: string;
     /**
-     * @generated from protobuf field: string week_52_low = 6
+     * @generated from protobuf field: string week_52_low = 5
      */
     week52Low: string;
     /**
-     * @generated from protobuf field: string avg_volume = 7
+     * @generated from protobuf field: string avg_volume = 6
      */
     avgVolume: string;
     /**
-     * @generated from protobuf field: string beta = 8
+     * @generated from protobuf field: string beta = 7
      */
     beta: string;
     /**
-     * @generated from protobuf field: string description = 9
+     * @generated from protobuf field: string description = 8
      */
     description: string;
 }
@@ -559,31 +555,27 @@ export interface AssetDetailStockOverview {
  */
 export interface AssetDetailCryptoOverview {
     /**
-     * @generated from protobuf field: string market_cap = 1
-     */
-    marketCap: string;
-    /**
-     * @generated from protobuf field: string volume_24h = 2
+     * @generated from protobuf field: string volume_24h = 1
      */
     volume24H: string;
     /**
-     * @generated from protobuf field: string holders = 3
+     * @generated from protobuf field: string holders = 2
      */
     holders: string;
     /**
-     * @generated from protobuf field: string fdv = 4
+     * @generated from protobuf field: string fdv = 3
      */
     fdv: string;
     /**
-     * @generated from protobuf field: string liquidity = 5
+     * @generated from protobuf field: string liquidity = 4
      */
     liquidity: string;
     /**
-     * @generated from protobuf field: string all_time_high = 6
+     * @generated from protobuf field: string all_time_high = 5
      */
     allTimeHigh: string;
     /**
-     * @generated from protobuf field: string description = 7
+     * @generated from protobuf field: string description = 6
      */
     description: string;
 }
@@ -2187,20 +2179,18 @@ export const AssetDetailOverview = new AssetDetailOverview$Type();
 class AssetDetailStockOverview$Type extends MessageType<AssetDetailStockOverview> {
     constructor() {
         super("hypurr.AssetDetailStockOverview", [
-            { no: 1, name: "market_cap", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "pe_ratio", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "eps_ttm", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "dividend_yield", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "week_52_high", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "week_52_low", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "avg_volume", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "beta", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 9, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "pe_ratio", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "eps_ttm", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "dividend_yield", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "week_52_high", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "week_52_low", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "avg_volume", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "beta", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<AssetDetailStockOverview>): AssetDetailStockOverview {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.marketCap = "";
         message.peRatio = "";
         message.epsTtm = "";
         message.dividendYield = "";
@@ -2218,31 +2208,28 @@ class AssetDetailStockOverview$Type extends MessageType<AssetDetailStockOverview
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string market_cap */ 1:
-                    message.marketCap = reader.string();
-                    break;
-                case /* string pe_ratio */ 2:
+                case /* string pe_ratio */ 1:
                     message.peRatio = reader.string();
                     break;
-                case /* string eps_ttm */ 3:
+                case /* string eps_ttm */ 2:
                     message.epsTtm = reader.string();
                     break;
-                case /* string dividend_yield */ 4:
+                case /* string dividend_yield */ 3:
                     message.dividendYield = reader.string();
                     break;
-                case /* string week_52_high */ 5:
+                case /* string week_52_high */ 4:
                     message.week52High = reader.string();
                     break;
-                case /* string week_52_low */ 6:
+                case /* string week_52_low */ 5:
                     message.week52Low = reader.string();
                     break;
-                case /* string avg_volume */ 7:
+                case /* string avg_volume */ 6:
                     message.avgVolume = reader.string();
                     break;
-                case /* string beta */ 8:
+                case /* string beta */ 7:
                     message.beta = reader.string();
                     break;
-                case /* string description */ 9:
+                case /* string description */ 8:
                     message.description = reader.string();
                     break;
                 default:
@@ -2257,33 +2244,30 @@ class AssetDetailStockOverview$Type extends MessageType<AssetDetailStockOverview
         return message;
     }
     internalBinaryWrite(message: AssetDetailStockOverview, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string market_cap = 1; */
-        if (message.marketCap !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.marketCap);
-        /* string pe_ratio = 2; */
+        /* string pe_ratio = 1; */
         if (message.peRatio !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.peRatio);
-        /* string eps_ttm = 3; */
+            writer.tag(1, WireType.LengthDelimited).string(message.peRatio);
+        /* string eps_ttm = 2; */
         if (message.epsTtm !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.epsTtm);
-        /* string dividend_yield = 4; */
+            writer.tag(2, WireType.LengthDelimited).string(message.epsTtm);
+        /* string dividend_yield = 3; */
         if (message.dividendYield !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.dividendYield);
-        /* string week_52_high = 5; */
+            writer.tag(3, WireType.LengthDelimited).string(message.dividendYield);
+        /* string week_52_high = 4; */
         if (message.week52High !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.week52High);
-        /* string week_52_low = 6; */
+            writer.tag(4, WireType.LengthDelimited).string(message.week52High);
+        /* string week_52_low = 5; */
         if (message.week52Low !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.week52Low);
-        /* string avg_volume = 7; */
+            writer.tag(5, WireType.LengthDelimited).string(message.week52Low);
+        /* string avg_volume = 6; */
         if (message.avgVolume !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.avgVolume);
-        /* string beta = 8; */
+            writer.tag(6, WireType.LengthDelimited).string(message.avgVolume);
+        /* string beta = 7; */
         if (message.beta !== "")
-            writer.tag(8, WireType.LengthDelimited).string(message.beta);
-        /* string description = 9; */
+            writer.tag(7, WireType.LengthDelimited).string(message.beta);
+        /* string description = 8; */
         if (message.description !== "")
-            writer.tag(9, WireType.LengthDelimited).string(message.description);
+            writer.tag(8, WireType.LengthDelimited).string(message.description);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2298,18 +2282,16 @@ export const AssetDetailStockOverview = new AssetDetailStockOverview$Type();
 class AssetDetailCryptoOverview$Type extends MessageType<AssetDetailCryptoOverview> {
     constructor() {
         super("hypurr.AssetDetailCryptoOverview", [
-            { no: 1, name: "market_cap", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "volume_24h", kind: "scalar", jsonName: "volume24h", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "holders", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "fdv", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "liquidity", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "all_time_high", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "volume_24h", kind: "scalar", jsonName: "volume24h", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "holders", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "fdv", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "liquidity", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "all_time_high", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<AssetDetailCryptoOverview>): AssetDetailCryptoOverview {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.marketCap = "";
         message.volume24H = "";
         message.holders = "";
         message.fdv = "";
@@ -2325,25 +2307,22 @@ class AssetDetailCryptoOverview$Type extends MessageType<AssetDetailCryptoOvervi
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string market_cap */ 1:
-                    message.marketCap = reader.string();
-                    break;
-                case /* string volume_24h */ 2:
+                case /* string volume_24h */ 1:
                     message.volume24H = reader.string();
                     break;
-                case /* string holders */ 3:
+                case /* string holders */ 2:
                     message.holders = reader.string();
                     break;
-                case /* string fdv */ 4:
+                case /* string fdv */ 3:
                     message.fdv = reader.string();
                     break;
-                case /* string liquidity */ 5:
+                case /* string liquidity */ 4:
                     message.liquidity = reader.string();
                     break;
-                case /* string all_time_high */ 6:
+                case /* string all_time_high */ 5:
                     message.allTimeHigh = reader.string();
                     break;
-                case /* string description */ 7:
+                case /* string description */ 6:
                     message.description = reader.string();
                     break;
                 default:
@@ -2358,27 +2337,24 @@ class AssetDetailCryptoOverview$Type extends MessageType<AssetDetailCryptoOvervi
         return message;
     }
     internalBinaryWrite(message: AssetDetailCryptoOverview, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string market_cap = 1; */
-        if (message.marketCap !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.marketCap);
-        /* string volume_24h = 2; */
+        /* string volume_24h = 1; */
         if (message.volume24H !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.volume24H);
-        /* string holders = 3; */
+            writer.tag(1, WireType.LengthDelimited).string(message.volume24H);
+        /* string holders = 2; */
         if (message.holders !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.holders);
-        /* string fdv = 4; */
+            writer.tag(2, WireType.LengthDelimited).string(message.holders);
+        /* string fdv = 3; */
         if (message.fdv !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.fdv);
-        /* string liquidity = 5; */
+            writer.tag(3, WireType.LengthDelimited).string(message.fdv);
+        /* string liquidity = 4; */
         if (message.liquidity !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.liquidity);
-        /* string all_time_high = 6; */
+            writer.tag(4, WireType.LengthDelimited).string(message.liquidity);
+        /* string all_time_high = 5; */
         if (message.allTimeHigh !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.allTimeHigh);
-        /* string description = 7; */
+            writer.tag(5, WireType.LengthDelimited).string(message.allTimeHigh);
+        /* string description = 6; */
         if (message.description !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.description);
+            writer.tag(6, WireType.LengthDelimited).string(message.description);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

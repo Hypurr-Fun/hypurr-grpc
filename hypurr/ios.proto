@@ -208,25 +208,23 @@ message AssetDetailOverview {
 }
 
 message AssetDetailStockOverview {
-  string market_cap = 1;
-  string pe_ratio = 2;
-  string eps_ttm = 3;
-  string dividend_yield = 4;
-  string week_52_high = 5;
-  string week_52_low = 6;
-  string avg_volume = 7;
-  string beta = 8;
-  string description = 9;
+  string pe_ratio = 1;
+  string eps_ttm = 2;
+  string dividend_yield = 3;
+  string week_52_high = 4;
+  string week_52_low = 5;
+  string avg_volume = 6;
+  string beta = 7;
+  string description = 8;
 }
 
 message AssetDetailCryptoOverview {
-  string market_cap = 1;
-  string volume_24h = 2;
-  string holders = 3;
-  string fdv = 4;
-  string liquidity = 5;
-  string all_time_high = 6;
-  string description = 7;
+  string volume_24h = 1;
+  string holders = 2;
+  string fdv = 3;
+  string liquidity = 4;
+  string all_time_high = 5;
+  string description = 6;
 }
 
 message PortfolioAllocation {
