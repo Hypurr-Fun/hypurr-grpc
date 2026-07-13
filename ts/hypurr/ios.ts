@@ -35,18 +35,19 @@ export interface PortfolioSummarySection {
      * Main card value in cents, e.g. "$22,482.17" -> 2248217.
      * Should be an int value already converted to the app's default currency, currently USD, scaled by 100 for cents.
      *
-     * @generated from protobuf field: int64 total_value = 1
+     * @generated from protobuf field: int64 total_value_cents = 1
      */
-    totalValue: number; // e.g. 2248217
+    totalValueCents: number; // e.g. 2248217
     /**
      * Change badge value, e.g. "+$1,284.35" -> 128435.
      * Signed int value, already converted to the app's default currency, scaled by 100 for cents.
      *
-     * @generated from protobuf field: int64 absolute_change = 2
+     * @generated from protobuf field: int64 absolute_change_cents = 2
      */
-    absoluteChange: number; // e.g. 128400 or -51200
+    absoluteChangeCents: number; // e.g. 128400 or -51200
     /**
      * Optional for the current design, but useful if the card later shows percentage change.
+     * Double value with 2 decimals precision e.g. 11.34 or -35.4
      *
      * @generated from protobuf field: double percentage_change = 3
      */
@@ -99,6 +100,7 @@ export interface HomeAccountsSummarySection {
     totalBalanceCents: number;
     /**
      * 24-hour change, window-agnostic naming. e.g. 6.0 = +6%.
+     * Double value with 2 decimals precision e.g. 11.34 or -35.4
      *
      * @generated from protobuf field: double change_percentage = 2
      */
@@ -125,10 +127,15 @@ export interface HomeAccountSummary {
      */
     address: string;
     /**
+     * Account balance in cents e.g. "$22,482.17" -> 2248217.
+     *
      * @generated from protobuf field: int64 balance_cents = 4
      */
     balanceCents: number;
     /**
+     * 24-hour change, window-agnostic naming. e.g. 6.0 = +6%.
+     * Double value with 2 decimals precision e.g. 11.34 or -35.4
+     *
      * @generated from protobuf field: double change_percentage = 5
      */
     changePercentage: number;
@@ -251,7 +258,7 @@ export interface PositionActivity {
      */
     tokenAmount: string;
     /**
-     * Notional of the fill in cents.
+     * Notional of the fill in cents e.g. "$22,482.17" -> 2248217.
      *
      * @generated from protobuf field: int64 cost_cents = 5
      */
@@ -278,7 +285,7 @@ export interface ClosePositionActivity {
      */
     tokenAmount: string;
     /**
-     * Realized PnL in cents, signed.
+     * Signed realized PnL in cents e.g. "$22,482.17" -> 2248217 or "-$22,482.17" -> -2248217.
      *
      * @generated from protobuf field: int64 realized_pnl_cents = 5
      */
@@ -293,7 +300,7 @@ export interface SendActivity {
      */
     recipient: string;
     /**
-     * Absolute USD value in cents.
+     * Absolute USD value in cents e.g. "$22,482.17" -> 2248217.
      *
      * @generated from protobuf field: int64 amount_cents = 2
      */
@@ -308,7 +315,7 @@ export interface InternalTransferActivity {
      */
     destination: string;
     /**
-     * Absolute USD value in cents.
+     * Absolute USD value in cents e.g. "$22,482.17" -> 2248217.
      *
      * @generated from protobuf field: int64 amount_cents = 2
      */
@@ -323,7 +330,7 @@ export interface ReceiveActivity {
      */
     from: string;
     /**
-     * Absolute USD value in cents.
+     * Absolute USD value in cents e.g. "$22,482.17" -> 2248217.
      *
      * @generated from protobuf field: int64 amount_cents = 2
      */
@@ -389,20 +396,27 @@ export interface AssetDetailLiveUpdate {
      */
     occurredAt: string;
     /**
-     * @generated from protobuf field: string price_usd_decimal = 2
-     */
-    priceUsdDecimal: string;
-    /**
-     * Signed change vs the previous day's close.
+     * Asset price with asset decimal precision e.g. "$22,482.17" -> "22482.17" or "$0.00017" -> "0.00017"
      *
-     * @generated from protobuf field: string absolute_change_usd_decimal = 3
+     * @generated from protobuf field: string price_decimal = 2
      */
-    absoluteChangeUsdDecimal: string;
+    priceDecimal: string;
     /**
+     * Signed change vs the previous day's close with asset decimal precision e.g. "$100.04" -> "100.04" or "$0.000001" -> "0.000001"
+     *
+     * @generated from protobuf field: string absolute_change_decimal = 3
+     */
+    absoluteChangeDecimal: string;
+    /**
+     * 24-hour change, window-agnostic naming. e.g. 6.0 = +6%.
+     * Double value with 2 decimals precision e.g. 11.34 or -35.4
+     *
      * @generated from protobuf field: double change_percentage = 4
      */
     changePercentage: number;
     /**
+     * Market cap of the asset in cents e.g. "$22,482.17" -> 2248217.
+     *
      * @generated from protobuf field: int64 market_cap_cents = 5
      */
     marketCapCents: number;
@@ -435,20 +449,27 @@ export interface AssetDetailMetadata {
  */
 export interface AssetDetailPriceSummary {
     /**
-     * @generated from protobuf field: string price_usd_decimal = 1
-     */
-    priceUsdDecimal: string;
-    /**
-     * Signed change vs the previous day's close.
+     * Asset price with asset decimal precision e.g. "$22,482.17" -> "22482.17" or "$0.00017" -> "0.00017"
      *
-     * @generated from protobuf field: string absolute_change_usd_decimal = 2
+     * @generated from protobuf field: string price_decimal = 1
      */
-    absoluteChangeUsdDecimal: string;
+    priceDecimal: string;
     /**
+     * Signed change over the asset detail price period with asset decimal precision e.g. "$100.04" -> "100.04" or "$0.000001" -> "0.000001"
+     *
+     * @generated from protobuf field: string absolute_change_decimal = 2
+     */
+    absoluteChangeDecimal: string;
+    /**
+     * Change over asset detail price period, window-agnostic naming. e.g. 6.0 = +6%.
+     * Double value with 2 decimals precision e.g. 11.34 or -35.4
+     *
      * @generated from protobuf field: double change_percentage = 3
      */
     changePercentage: number;
     /**
+     * Market cap of the asset in cents e.g. "$22,482.17" -> 2248217.
+     *
      * @generated from protobuf field: int64 market_cap_cents = 4
      */
     marketCapCents: number;
@@ -483,9 +504,11 @@ export interface AssetDetailChartPoint {
      */
     occurredAt: string;
     /**
-     * @generated from protobuf field: string price_usd_decimal = 3
+     * Asset price with asset decimal precision e.g. "$22,482.17" -> "22482.17" or "$0.00017" -> "0.00017"
+     *
+     * @generated from protobuf field: string price_decimal = 3
      */
-    priceUsdDecimal: string;
+    priceDecimal: string;
 }
 /**
  * Statistics values are display-formatted by the backend (e.g. "$1.2B").
@@ -518,34 +541,50 @@ export interface AssetDetailOverview {
  */
 export interface AssetDetailStockOverview {
     /**
+     * Price-to-earnings ratio with single decimal precision, e.g. "34.2".
+     *
      * @generated from protobuf field: string pe_ratio = 1
      */
     peRatio: string;
     /**
+     * Earnings per share, trailing twelve months, e.g. "$6.57".
+     *
      * @generated from protobuf field: string eps_ttm = 2
      */
     epsTtm: string;
     /**
+     * Dividend yield with the % sign, 2 decimal precision e.g. "0.44%"
+     *
      * @generated from protobuf field: string dividend_yield = 3
      */
     dividendYield: string;
     /**
+     * 52-week high price with up to asset decimals precision, e.g. "237.49" or "0.0001"
+     *
      * @generated from protobuf field: string week_52_high = 4
      */
     week52High: string;
     /**
+     * 52-week low price with up to asset decimals precision, e.g. "237.49" or "0.0001"
+     *
      * @generated from protobuf field: string week_52_low = 5
      */
     week52Low: string;
     /**
+     * Average daily volume with single decimal precision, e.g. "52.4M".
+     *
      * @generated from protobuf field: string avg_volume = 6
      */
     avgVolume: string;
     /**
+     * Beta of the asset with up to two decimal precision, e.g. "1.24"
+     *
      * @generated from protobuf field: string beta = 7
      */
     beta: string;
     /**
+     * Plain-text company description.
+     *
      * @generated from protobuf field: string description = 8
      */
     description: string;
@@ -555,26 +594,38 @@ export interface AssetDetailStockOverview {
  */
 export interface AssetDetailCryptoOverview {
     /**
+     * 24-hour trading volume with single decimal precision, e.g. "$1.2B".
+     *
      * @generated from protobuf field: string volume_24h = 1
      */
     volume24H: string;
     /**
+     * Number of holders with single decimal precision, e.g. "12.5K".
+     *
      * @generated from protobuf field: string holders = 2
      */
     holders: string;
     /**
+     * Fully diluted valuation with single decimal precision, e.g. "$4.5B".
+     *
      * @generated from protobuf field: string fdv = 3
      */
     fdv: string;
     /**
+     * Liquidity of the asset with single decimal precision, e.g. "$820.3K"
+     *
      * @generated from protobuf field: string liquidity = 4
      */
     liquidity: string;
     /**
+     * All-time high price with up to asset decimals precision, e.g. "237.49" or "0.0001"
+     *
      * @generated from protobuf field: string all_time_high = 5
      */
     allTimeHigh: string;
     /**
+     * Plain-text asset description.
+     *
      * @generated from protobuf field: string description = 6
      */
     description: string;
@@ -599,12 +650,13 @@ export interface PortfolioAllocation {
      * Row value, e.g. "$12.4K" -> 1240000.
      * Should be a decimal value already converted to the app's default currency, currently USD, scaled by 100 for cents.
      *
-     * @generated from protobuf field: int64 value = 3
+     * @generated from protobuf field: int64 value_cents = 3
      */
-    value: number; // e.g. 1240000
+    valueCents: number; // e.g. 1240000
     /**
      * Row percentage and allocation bar segment width, e.g. 51.
      * Mobile can calculate this from value / total_value, but backend-provided values avoid rounding mismatch.
+     * Double value with 2 decimals precision e.g. 11.34 or -35.4
      *
      * @generated from protobuf field: double percentage = 4
      */
@@ -727,16 +779,16 @@ export const Color = new Color$Type();
 class PortfolioSummarySection$Type extends MessageType<PortfolioSummarySection> {
     constructor() {
         super("hypurr.PortfolioSummarySection", [
-            { no: 1, name: "total_value", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "absolute_change", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 1, name: "total_value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "absolute_change_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "percentage_change", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 4, name: "allocations", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioAllocation }
         ]);
     }
     create(value?: PartialMessage<PortfolioSummarySection>): PortfolioSummarySection {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.totalValue = 0;
-        message.absoluteChange = 0;
+        message.totalValueCents = 0;
+        message.absoluteChangeCents = 0;
         message.percentageChange = 0;
         message.allocations = [];
         if (value !== undefined)
@@ -748,11 +800,11 @@ class PortfolioSummarySection$Type extends MessageType<PortfolioSummarySection> 
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* int64 total_value */ 1:
-                    message.totalValue = reader.int64().toNumber();
+                case /* int64 total_value_cents */ 1:
+                    message.totalValueCents = reader.int64().toNumber();
                     break;
-                case /* int64 absolute_change */ 2:
-                    message.absoluteChange = reader.int64().toNumber();
+                case /* int64 absolute_change_cents */ 2:
+                    message.absoluteChangeCents = reader.int64().toNumber();
                     break;
                 case /* double percentage_change */ 3:
                     message.percentageChange = reader.double();
@@ -772,12 +824,12 @@ class PortfolioSummarySection$Type extends MessageType<PortfolioSummarySection> 
         return message;
     }
     internalBinaryWrite(message: PortfolioSummarySection, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 total_value = 1; */
-        if (message.totalValue !== 0)
-            writer.tag(1, WireType.Varint).int64(message.totalValue);
-        /* int64 absolute_change = 2; */
-        if (message.absoluteChange !== 0)
-            writer.tag(2, WireType.Varint).int64(message.absoluteChange);
+        /* int64 total_value_cents = 1; */
+        if (message.totalValueCents !== 0)
+            writer.tag(1, WireType.Varint).int64(message.totalValueCents);
+        /* int64 absolute_change_cents = 2; */
+        if (message.absoluteChangeCents !== 0)
+            writer.tag(2, WireType.Varint).int64(message.absoluteChangeCents);
         /* double percentage_change = 3; */
         if (message.percentageChange !== 0)
             writer.tag(3, WireType.Bit64).double(message.percentageChange);
@@ -1781,8 +1833,8 @@ class AssetDetailLiveUpdate$Type extends MessageType<AssetDetailLiveUpdate> {
     constructor() {
         super("hypurr.AssetDetailLiveUpdate", [
             { no: 1, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "price_usd_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "absolute_change_usd_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "absolute_change_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "change_percentage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 5, name: "market_cap_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
@@ -1790,8 +1842,8 @@ class AssetDetailLiveUpdate$Type extends MessageType<AssetDetailLiveUpdate> {
     create(value?: PartialMessage<AssetDetailLiveUpdate>): AssetDetailLiveUpdate {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.occurredAt = "";
-        message.priceUsdDecimal = "";
-        message.absoluteChangeUsdDecimal = "";
+        message.priceDecimal = "";
+        message.absoluteChangeDecimal = "";
         message.changePercentage = 0;
         message.marketCapCents = 0;
         if (value !== undefined)
@@ -1806,11 +1858,11 @@ class AssetDetailLiveUpdate$Type extends MessageType<AssetDetailLiveUpdate> {
                 case /* string occurred_at */ 1:
                     message.occurredAt = reader.string();
                     break;
-                case /* string price_usd_decimal */ 2:
-                    message.priceUsdDecimal = reader.string();
+                case /* string price_decimal */ 2:
+                    message.priceDecimal = reader.string();
                     break;
-                case /* string absolute_change_usd_decimal */ 3:
-                    message.absoluteChangeUsdDecimal = reader.string();
+                case /* string absolute_change_decimal */ 3:
+                    message.absoluteChangeDecimal = reader.string();
                     break;
                 case /* double change_percentage */ 4:
                     message.changePercentage = reader.double();
@@ -1833,12 +1885,12 @@ class AssetDetailLiveUpdate$Type extends MessageType<AssetDetailLiveUpdate> {
         /* string occurred_at = 1; */
         if (message.occurredAt !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.occurredAt);
-        /* string price_usd_decimal = 2; */
-        if (message.priceUsdDecimal !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.priceUsdDecimal);
-        /* string absolute_change_usd_decimal = 3; */
-        if (message.absoluteChangeUsdDecimal !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.absoluteChangeUsdDecimal);
+        /* string price_decimal = 2; */
+        if (message.priceDecimal !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.priceDecimal);
+        /* string absolute_change_decimal = 3; */
+        if (message.absoluteChangeDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.absoluteChangeDecimal);
         /* double change_percentage = 4; */
         if (message.changePercentage !== 0)
             writer.tag(4, WireType.Bit64).double(message.changePercentage);
@@ -1930,16 +1982,16 @@ export const AssetDetailMetadata = new AssetDetailMetadata$Type();
 class AssetDetailPriceSummary$Type extends MessageType<AssetDetailPriceSummary> {
     constructor() {
         super("hypurr.AssetDetailPriceSummary", [
-            { no: 1, name: "price_usd_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "absolute_change_usd_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "absolute_change_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "change_percentage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 4, name: "market_cap_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<AssetDetailPriceSummary>): AssetDetailPriceSummary {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.priceUsdDecimal = "";
-        message.absoluteChangeUsdDecimal = "";
+        message.priceDecimal = "";
+        message.absoluteChangeDecimal = "";
         message.changePercentage = 0;
         message.marketCapCents = 0;
         if (value !== undefined)
@@ -1951,11 +2003,11 @@ class AssetDetailPriceSummary$Type extends MessageType<AssetDetailPriceSummary> 
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string price_usd_decimal */ 1:
-                    message.priceUsdDecimal = reader.string();
+                case /* string price_decimal */ 1:
+                    message.priceDecimal = reader.string();
                     break;
-                case /* string absolute_change_usd_decimal */ 2:
-                    message.absoluteChangeUsdDecimal = reader.string();
+                case /* string absolute_change_decimal */ 2:
+                    message.absoluteChangeDecimal = reader.string();
                     break;
                 case /* double change_percentage */ 3:
                     message.changePercentage = reader.double();
@@ -1975,12 +2027,12 @@ class AssetDetailPriceSummary$Type extends MessageType<AssetDetailPriceSummary> 
         return message;
     }
     internalBinaryWrite(message: AssetDetailPriceSummary, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string price_usd_decimal = 1; */
-        if (message.priceUsdDecimal !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.priceUsdDecimal);
-        /* string absolute_change_usd_decimal = 2; */
-        if (message.absoluteChangeUsdDecimal !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.absoluteChangeUsdDecimal);
+        /* string price_decimal = 1; */
+        if (message.priceDecimal !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.priceDecimal);
+        /* string absolute_change_decimal = 2; */
+        if (message.absoluteChangeDecimal !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.absoluteChangeDecimal);
         /* double change_percentage = 3; */
         if (message.changePercentage !== 0)
             writer.tag(3, WireType.Bit64).double(message.changePercentage);
@@ -2058,14 +2110,14 @@ class AssetDetailChartPoint$Type extends MessageType<AssetDetailChartPoint> {
         super("hypurr.AssetDetailChartPoint", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "price_usd_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<AssetDetailChartPoint>): AssetDetailChartPoint {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.id = "";
         message.occurredAt = "";
-        message.priceUsdDecimal = "";
+        message.priceDecimal = "";
         if (value !== undefined)
             reflectionMergePartial<AssetDetailChartPoint>(this, message, value);
         return message;
@@ -2081,8 +2133,8 @@ class AssetDetailChartPoint$Type extends MessageType<AssetDetailChartPoint> {
                 case /* string occurred_at */ 2:
                     message.occurredAt = reader.string();
                     break;
-                case /* string price_usd_decimal */ 3:
-                    message.priceUsdDecimal = reader.string();
+                case /* string price_decimal */ 3:
+                    message.priceDecimal = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2102,9 +2154,9 @@ class AssetDetailChartPoint$Type extends MessageType<AssetDetailChartPoint> {
         /* string occurred_at = 2; */
         if (message.occurredAt !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.occurredAt);
-        /* string price_usd_decimal = 3; */
-        if (message.priceUsdDecimal !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.priceUsdDecimal);
+        /* string price_decimal = 3; */
+        if (message.priceDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.priceDecimal);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2371,7 +2423,7 @@ class PortfolioAllocation$Type extends MessageType<PortfolioAllocation> {
         super("hypurr.PortfolioAllocation", [
             { no: 1, name: "asset_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "value", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "percentage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 5, name: "color", kind: "message", T: () => Color }
         ]);
@@ -2380,7 +2432,7 @@ class PortfolioAllocation$Type extends MessageType<PortfolioAllocation> {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.assetId = "";
         message.name = "";
-        message.value = 0;
+        message.valueCents = 0;
         message.percentage = 0;
         if (value !== undefined)
             reflectionMergePartial<PortfolioAllocation>(this, message, value);
@@ -2397,8 +2449,8 @@ class PortfolioAllocation$Type extends MessageType<PortfolioAllocation> {
                 case /* string name */ 2:
                     message.name = reader.string();
                     break;
-                case /* int64 value */ 3:
-                    message.value = reader.int64().toNumber();
+                case /* int64 value_cents */ 3:
+                    message.valueCents = reader.int64().toNumber();
                     break;
                 case /* double percentage */ 4:
                     message.percentage = reader.double();
@@ -2424,9 +2476,9 @@ class PortfolioAllocation$Type extends MessageType<PortfolioAllocation> {
         /* string name = 2; */
         if (message.name !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.name);
-        /* int64 value = 3; */
-        if (message.value !== 0)
-            writer.tag(3, WireType.Varint).int64(message.value);
+        /* int64 value_cents = 3; */
+        if (message.valueCents !== 0)
+            writer.tag(3, WireType.Varint).int64(message.valueCents);
         /* double percentage = 4; */
         if (message.percentage !== 0)
             writer.tag(4, WireType.Bit64).double(message.percentage);
