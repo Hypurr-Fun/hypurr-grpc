@@ -1764,7 +1764,7 @@ type AssetDetailStockOverview struct {
 	Week_52High string `protobuf:"bytes,4,opt,name=week_52_high,json=week52High,proto3" json:"week_52_high,omitempty"`
 	// 52-week low price with up to asset decimals precision, e.g. "237.49" or "0.0001"
 	Week_52Low string `protobuf:"bytes,5,opt,name=week_52_low,json=week52Low,proto3" json:"week_52_low,omitempty"`
-	// Average daily volume with single decimal precision, e.g. "52.4M".
+	// Average daily volume with single decimal precision, e.g. "$52.4M".
 	AvgVolume string `protobuf:"bytes,6,opt,name=avg_volume,json=avgVolume,proto3" json:"avg_volume,omitempty"`
 	// Beta of the asset with up to two decimal precision, e.g. "1.24"
 	Beta string `protobuf:"bytes,7,opt,name=beta,proto3" json:"beta,omitempty"`

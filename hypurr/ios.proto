@@ -232,7 +232,7 @@ message AssetDetailStockOverview {
   string week_52_high = 4;
   // 52-week low price with up to asset decimals precision, e.g. "237.49" or "0.0001"
   string week_52_low = 5;
-  // Average daily volume with single decimal precision, e.g. "52.4M".
+  // Average daily volume with single decimal precision, e.g. "$52.4M".
   string avg_volume = 6;
   // Beta of the asset with up to two decimal precision, e.g. "1.24"
   string beta = 7;

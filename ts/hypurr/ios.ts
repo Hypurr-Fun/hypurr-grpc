@@ -571,7 +571,7 @@ export interface AssetDetailStockOverview {
      */
     week52Low: string;
     /**
-     * Average daily volume with single decimal precision, e.g. "52.4M".
+     * Average daily volume with single decimal precision, e.g. "$52.4M".
      *
      * @generated from protobuf field: string avg_volume = 6
      */
