@@ -4,6 +4,8 @@ option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
 service IosService {
   rpc Home(HomeRequest) returns (HomeResponse);
+  rpc AssetDetail(AssetDetailRequest) returns (AssetDetailResponse);
+  rpc AssetDetailLiveUpdates(AssetDetailLiveUpdatesRequest) returns (stream AssetDetailLiveUpdate);
 }
 
 // Color carries both theme variants for a single UI color.
@@ -16,13 +18,14 @@ message Color {
 message PortfolioSummarySection {
   // Main card value in cents, e.g. "$22,482.17" -> 2248217.
   // Should be an int value already converted to the app's default currency, currently USD, scaled by 100 for cents.
-  int64 total_value = 1; // e.g. 2248217
+  int64 total_value_cents = 1; // e.g. 2248217
 
   // Change badge value, e.g. "+$1,284.35" -> 128435.
   // Signed int value, already converted to the app's default currency, scaled by 100 for cents.
-  int64 absolute_change = 2; // e.g. 128400 or -51200
+  int64 absolute_change_cents = 2; // e.g. 128400 or -51200
 
   // Optional for the current design, but useful if the card later shows percentage change.
+  // Double value with 2 decimals precision e.g. 11.34 or -35.4
   double percentage_change = 3;
 
   // Response order is display order.
@@ -45,6 +48,7 @@ message HomeAccountsSummarySection {
   // Sum across all accounts, USD cents.
   int64 total_balance_cents = 1;
   // 24-hour change, window-agnostic naming. e.g. 6.0 = +6%.
+  // Double value with 2 decimals precision e.g. 11.34 or -35.4
   double change_percentage = 2;
   repeated HomeAccountSummary accounts = 3;
 }
@@ -53,7 +57,10 @@ message HomeAccountSummary {
   string wallet_id = 1;
   string name = 2;
   string address = 3;
+  // Account balance in cents e.g. "$22,482.17" -> 2248217.
   int64 balance_cents = 4;
+  // 24-hour change, window-agnostic naming. e.g. 6.0 = +6%.
+  // Double value with 2 decimals precision e.g. 11.34 or -35.4
   double change_percentage = 5;
 }
 
@@ -96,7 +103,7 @@ message PositionActivity {
   string asset_symbol = 2;
   string asset_logo_url = 3;
   string token_amount = 4;
-  // Notional of the fill in cents.
+  // Notional of the fill in cents e.g. "$22,482.17" -> 2248217.
   int64 cost_cents = 5;
 }
 
@@ -105,26 +112,147 @@ message ClosePositionActivity {
   string asset_symbol = 2;
   string asset_logo_url = 3;
   string token_amount = 4;
-  // Realized PnL in cents, signed.
+  // Signed realized PnL in cents e.g. "$22,482.17" -> 2248217 or "-$22,482.17" -> -2248217.
   int64 realized_pnl_cents = 5;
 }
 
 message SendActivity {
   string recipient = 1;
-  // Absolute USD value in cents.
+  // Absolute USD value in cents e.g. "$22,482.17" -> 2248217.
   int64 amount_cents = 2;
 }
 
 message InternalTransferActivity {
   string destination = 1;
-  // Absolute USD value in cents.
+  // Absolute USD value in cents e.g. "$22,482.17" -> 2248217.
   int64 amount_cents = 2;
 }
 
 message ReceiveActivity {
   string from = 1;
-  // Absolute USD value in cents.
+  // Absolute USD value in cents e.g. "$22,482.17" -> 2248217.
   int64 amount_cents = 2;
+}
+
+enum AssetDetailChartPeriod {
+  ASSET_DETAIL_CHART_PERIOD_UNSPECIFIED = 0; // treated as 1D
+  ASSET_DETAIL_CHART_PERIOD_1D = 1;
+  ASSET_DETAIL_CHART_PERIOD_1W = 2;
+  ASSET_DETAIL_CHART_PERIOD_1M = 3;
+  ASSET_DETAIL_CHART_PERIOD_6M = 4;
+  ASSET_DETAIL_CHART_PERIOD_1Y = 5;
+  ASSET_DETAIL_CHART_PERIOD_MAX = 6;
+}
+
+message AssetDetailRequest {
+  // Hyperliquid asset id, same convention as PortfolioAllocation.asset_id:
+  // < 10000 = perp index, >= 10000 = spot pair (10000 + spot index).
+  uint64 asset_id = 1;
+  AssetDetailChartPeriod chart_period = 2;
+}
+
+message AssetDetailLiveUpdatesRequest {
+  uint64 asset_id = 1;
+}
+
+message AssetDetailResponse {
+  AssetDetailMetadata metadata = 1;
+  AssetDetailPriceSummary price = 2;
+  AssetDetailChart chart = 3;
+  AssetDetailOverview overview = 4;
+}
+
+// Append-only live update for the active 1D view: mobile appends a new price
+// point to the 1D chart and refreshes the hero price / market cap display.
+message AssetDetailLiveUpdate {
+  // RFC3339 UTC timestamp.
+  string occurred_at = 1;
+  // Asset price with asset decimal precision e.g. "$22,482.17" -> "22482.17" or "$0.00017" -> "0.00017"
+  string price_decimal = 2;
+  // Signed change vs the previous day's close with asset decimal precision e.g. "$100.04" -> "100.04" or "$0.000001" -> "0.000001"
+  string absolute_change_decimal = 3;
+  // 24-hour change, window-agnostic naming. e.g. 6.0 = +6%.
+  // Double value with 2 decimals precision e.g. 11.34 or -35.4
+  double change_percentage = 4;
+  // Market cap of the asset in cents e.g. "$22,482.17" -> 2248217.
+  int64 market_cap_cents = 5;
+}
+
+message AssetDetailMetadata {
+  string symbol = 1;     // e.g. "HFUN"
+  string name = 2;       // e.g. "Hypurr Fun"
+  string venue_name = 3; // e.g. "Hyperliquid"
+  string logo_url = 4;
+}
+
+// Decimal strings for prices accommodate sub-cent valuations.
+message AssetDetailPriceSummary {
+  // Asset price with asset decimal precision e.g. "$22,482.17" -> "22482.17" or "$0.00017" -> "0.00017"
+  string price_decimal = 1;
+  // Signed change over the asset detail price period with asset decimal precision e.g. "$100.04" -> "100.04" or "$0.000001" -> "0.000001"
+  string absolute_change_decimal = 2;
+  // Change over asset detail price period, window-agnostic naming. e.g. 6.0 = +6%.
+  // Double value with 2 decimals precision e.g. 11.34 or -35.4
+  double change_percentage = 3;
+  // Market cap of the asset in cents e.g. "$22,482.17" -> 2248217.
+  int64 market_cap_cents = 4;
+}
+
+message AssetDetailChart {
+  AssetDetailChartPeriod period = 1;
+  // Response order is display order, oldest point first.
+  repeated AssetDetailChartPoint points = 2;
+}
+
+message AssetDetailChartPoint {
+  string id = 1;
+  // RFC3339 UTC timestamp.
+  string occurred_at = 2;
+  // Asset price with asset decimal precision e.g. "$22,482.17" -> "22482.17" or "$0.00017" -> "0.00017"
+  string price_decimal = 3;
+}
+
+// Statistics values are display-formatted by the backend (e.g. "$1.2B").
+// Fields with no backend data source are empty; mobile falls back locally.
+message AssetDetailOverview {
+  oneof overview {
+    AssetDetailStockOverview stock = 1;
+    AssetDetailCryptoOverview crypto = 2;
+  }
+}
+
+message AssetDetailStockOverview {
+  // Price-to-earnings ratio with single decimal precision, e.g. "34.2".
+  string pe_ratio = 1;
+  // Earnings per share, trailing twelve months, e.g. "$6.57".
+  string eps_ttm = 2;
+  // Dividend yield with the % sign, 2 decimal precision e.g. "0.44%"
+  string dividend_yield = 3;
+  // 52-week high price with up to asset decimals precision, e.g. "237.49" or "0.0001"
+  string week_52_high = 4;
+  // 52-week low price with up to asset decimals precision, e.g. "237.49" or "0.0001"
+  string week_52_low = 5;
+  // Average daily volume with single decimal precision, e.g. "$52.4M".
+  string avg_volume = 6;
+  // Beta of the asset with up to two decimal precision, e.g. "1.24"
+  string beta = 7;
+  // Plain-text company description.
+  string description = 8;
+}
+
+message AssetDetailCryptoOverview {
+  // 24-hour trading volume with single decimal precision, e.g. "$1.2B".
+  string volume_24h = 1;
+  // Number of holders with single decimal precision, e.g. "12.5K".
+  string holders = 2;
+  // Fully diluted valuation with single decimal precision, e.g. "$4.5B".
+  string fdv = 3;
+  // Liquidity of the asset with single decimal precision, e.g. "$820.3K"
+  string liquidity = 4;
+  // All-time high price with up to asset decimals precision, e.g. "237.49" or "0.0001"
+  string all_time_high = 5;
+  // Plain-text asset description.
+  string description = 6;
 }
 
 message PortfolioAllocation {
@@ -136,10 +264,11 @@ message PortfolioAllocation {
 
   // Row value, e.g. "$12.4K" -> 1240000.
   // Should be a decimal value already converted to the app's default currency, currently USD, scaled by 100 for cents.
-  int64 value = 3; // e.g. 1240000
+  int64 value_cents = 3; // e.g. 1240000
 
   // Row percentage and allocation bar segment width, e.g. 51.
   // Mobile can calculate this from value / total_value, but backend-provided values avoid rounding mismatch.
+  // Double value with 2 decimals precision e.g. 11.34 or -35.4
   double percentage = 4;
 
   // Dot color and matching allocation bar segment color (light + dark variants).

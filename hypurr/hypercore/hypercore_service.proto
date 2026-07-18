@@ -513,6 +513,36 @@ message WalletTradesResponse {
   string next_page_token                = 3; // empty when exhausted
 }
 
+message OHLCRequest {
+  int64  instrument_id = 1; // same convention as HistoricalWalletTrade.instrument_id: perp = index, spot = index + 10000
+  string interval      = 2; // "15m" | "1h" | "4h" | "1d" | "1w"
+  int64  from_ts       = 3; // inclusive, unix seconds; 0 = earliest
+  int64  to_ts         = 4; // inclusive, unix seconds; 0 = now
+}
+
+message OHLC {
+  int64  open_time = 1; // bucket start, unix seconds
+  double open      = 2;
+  double high      = 3;
+  double low       = 4;
+  double close     = 5;
+}
+
+message OHLCResponse {
+  repeated OHLC ohlc = 1; // open_time ascending
+}
+
+message HighLowRequest {
+  int64 instrument_id = 1; // same convention as CandlesRequest.instrument_id
+  int64 from_ts       = 2; // inclusive, unix seconds; 0 = earliest
+  int64 to_ts         = 3; // inclusive, unix seconds; 0 = now
+}
+
+message HighLowResponse {
+  double high = 1; // max traded price in range; 0 = no trades
+  double low  = 2; // min traded price in range; 0 = no trades
+}
+
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
@@ -533,6 +563,8 @@ service HyperCore {
   rpc PerpInstruments(PerpInstrumentsRequest) returns (PerpInstrumentsResponse);
   rpc WalletsByMetricPercentile(WalletsByMetricPercentileRequest) returns (WalletsByMetricPercentileResponse) {}
   rpc WalletTrades(WalletTradesRequest) returns (WalletTradesResponse) {}
+  rpc OHLC(OHLCRequest) returns (OHLCResponse) {}
+  rpc HighLow(HighLowRequest) returns (HighLowResponse) {}
 }
 
 /*
