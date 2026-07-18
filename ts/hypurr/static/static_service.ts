@@ -148,18 +148,18 @@ export interface HyperliquidPerpPairsResponse {
     pairs: HyperliquidPerpPair[];
 }
 /**
- * @generated from protobuf message hypurr.HyperliquidWalletRequest
+ * @generated from protobuf message hypurr.HyperliquidPublicWalletRequest
  */
-export interface HyperliquidWalletRequest {
+export interface HyperliquidPublicWalletRequest {
     /**
      * @generated from protobuf field: google.protobuf.StringValue ethereum_address = 1
      */
     ethereumAddress?: StringValue;
 }
 /**
- * @generated from protobuf message hypurr.HyperliquidWalletResponse
+ * @generated from protobuf message hypurr.HyperliquidPublicWalletResponse
  */
-export interface HyperliquidWalletResponse {
+export interface HyperliquidPublicWalletResponse {
     /**
      * @generated from protobuf field: hypurr.HyperliquidWallet wallet = 1
      */
@@ -1333,19 +1333,19 @@ class HyperliquidPerpPairsResponse$Type extends MessageType<HyperliquidPerpPairs
  */
 export const HyperliquidPerpPairsResponse = new HyperliquidPerpPairsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HyperliquidWalletRequest$Type extends MessageType<HyperliquidWalletRequest> {
+class HyperliquidPublicWalletRequest$Type extends MessageType<HyperliquidPublicWalletRequest> {
     constructor() {
-        super("hypurr.HyperliquidWalletRequest", [
+        super("hypurr.HyperliquidPublicWalletRequest", [
             { no: 1, name: "ethereum_address", kind: "message", T: () => StringValue }
         ]);
     }
-    create(value?: PartialMessage<HyperliquidWalletRequest>): HyperliquidWalletRequest {
+    create(value?: PartialMessage<HyperliquidPublicWalletRequest>): HyperliquidPublicWalletRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         if (value !== undefined)
-            reflectionMergePartial<HyperliquidWalletRequest>(this, message, value);
+            reflectionMergePartial<HyperliquidPublicWalletRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidWalletRequest): HyperliquidWalletRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidPublicWalletRequest): HyperliquidPublicWalletRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1364,7 +1364,7 @@ class HyperliquidWalletRequest$Type extends MessageType<HyperliquidWalletRequest
         }
         return message;
     }
-    internalBinaryWrite(message: HyperliquidWalletRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HyperliquidPublicWalletRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* google.protobuf.StringValue ethereum_address = 1; */
         if (message.ethereumAddress)
             StringValue.internalBinaryWrite(message.ethereumAddress, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -1375,23 +1375,23 @@ class HyperliquidWalletRequest$Type extends MessageType<HyperliquidWalletRequest
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HyperliquidWalletRequest
+ * @generated MessageType for protobuf message hypurr.HyperliquidPublicWalletRequest
  */
-export const HyperliquidWalletRequest = new HyperliquidWalletRequest$Type();
+export const HyperliquidPublicWalletRequest = new HyperliquidPublicWalletRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HyperliquidWalletResponse$Type extends MessageType<HyperliquidWalletResponse> {
+class HyperliquidPublicWalletResponse$Type extends MessageType<HyperliquidPublicWalletResponse> {
     constructor() {
-        super("hypurr.HyperliquidWalletResponse", [
+        super("hypurr.HyperliquidPublicWalletResponse", [
             { no: 1, name: "wallet", kind: "message", T: () => HyperliquidWallet }
         ]);
     }
-    create(value?: PartialMessage<HyperliquidWalletResponse>): HyperliquidWalletResponse {
+    create(value?: PartialMessage<HyperliquidPublicWalletResponse>): HyperliquidPublicWalletResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         if (value !== undefined)
-            reflectionMergePartial<HyperliquidWalletResponse>(this, message, value);
+            reflectionMergePartial<HyperliquidPublicWalletResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidWalletResponse): HyperliquidWalletResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidPublicWalletResponse): HyperliquidPublicWalletResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1410,7 +1410,7 @@ class HyperliquidWalletResponse$Type extends MessageType<HyperliquidWalletRespon
         }
         return message;
     }
-    internalBinaryWrite(message: HyperliquidWalletResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: HyperliquidPublicWalletResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* hypurr.HyperliquidWallet wallet = 1; */
         if (message.wallet)
             HyperliquidWallet.internalBinaryWrite(message.wallet, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -1421,9 +1421,9 @@ class HyperliquidWalletResponse$Type extends MessageType<HyperliquidWalletRespon
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.HyperliquidWalletResponse
+ * @generated MessageType for protobuf message hypurr.HyperliquidPublicWalletResponse
  */
-export const HyperliquidWalletResponse = new HyperliquidWalletResponse$Type();
+export const HyperliquidPublicWalletResponse = new HyperliquidPublicWalletResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidLaunchesRequest$Type extends MessageType<HyperliquidLaunchesRequest> {
     constructor() {
@@ -3792,7 +3792,7 @@ export const Static = new ServiceType("hypurr.Static", [
     { name: "HyperliquidSpotPair", options: {}, I: HyperliquidSpotPairRequest, O: HyperliquidSpotPairResponse },
     { name: "HyperliquidSpotPairs", options: {}, I: HyperliquidSpotPairsRequest, O: HyperliquidSpotPairsResponse },
     { name: "HyperliquidPerpPairs", options: {}, I: HyperliquidPerpPairsRequest, O: HyperliquidPerpPairsResponse },
-    { name: "HyperliquidWallet", options: {}, I: HyperliquidWalletRequest, O: HyperliquidWalletResponse },
+    { name: "HyperliquidPublicWallet", options: {}, I: HyperliquidPublicWalletRequest, O: HyperliquidPublicWalletResponse },
     { name: "HyperliquidWalletDeploySessions", options: {}, I: HyperliquidWalletDeploySessionsRequest, O: HyperliquidWalletDeploySessionsResponse },
     { name: "HyperliquidWalletPerformance", options: {}, I: HyperliquidWalletPerformanceRequest, O: HyperliquidWalletPerformanceResponse },
     { name: "HyperliquidLaunch", options: {}, I: HyperliquidLaunchRequest, O: HyperliquidLaunchResponse },

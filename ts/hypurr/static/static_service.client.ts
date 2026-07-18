@@ -49,8 +49,8 @@ import type { HyperliquidWalletPerformanceResponse } from "./static_service";
 import type { HyperliquidWalletPerformanceRequest } from "./static_service";
 import type { HyperliquidWalletDeploySessionsResponse } from "./static_service";
 import type { HyperliquidWalletDeploySessionsRequest } from "./static_service";
-import type { HyperliquidWalletResponse } from "./static_service";
-import type { HyperliquidWalletRequest } from "./static_service";
+import type { HyperliquidPublicWalletResponse } from "./static_service";
+import type { HyperliquidPublicWalletRequest } from "./static_service";
 import type { HyperliquidPerpPairsResponse } from "./static_service";
 import type { HyperliquidPerpPairsRequest } from "./static_service";
 import type { HyperliquidSpotPairsResponse } from "./static_service";
@@ -102,9 +102,9 @@ export interface IStaticClient {
      */
     hyperliquidPerpPairs(input: HyperliquidPerpPairsRequest, options?: RpcOptions): UnaryCall<HyperliquidPerpPairsRequest, HyperliquidPerpPairsResponse>;
     /**
-     * @generated from protobuf rpc: HyperliquidWallet
+     * @generated from protobuf rpc: HyperliquidPublicWallet
      */
-    hyperliquidWallet(input: HyperliquidWalletRequest, options?: RpcOptions): UnaryCall<HyperliquidWalletRequest, HyperliquidWalletResponse>;
+    hyperliquidPublicWallet(input: HyperliquidPublicWalletRequest, options?: RpcOptions): UnaryCall<HyperliquidPublicWalletRequest, HyperliquidPublicWalletResponse>;
     /**
      * @generated from protobuf rpc: HyperliquidWalletDeploySessions
      */
@@ -265,11 +265,11 @@ export class StaticClient implements IStaticClient, ServiceInfo {
         return stackIntercept<HyperliquidPerpPairsRequest, HyperliquidPerpPairsResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: HyperliquidWallet
+     * @generated from protobuf rpc: HyperliquidPublicWallet
      */
-    hyperliquidWallet(input: HyperliquidWalletRequest, options?: RpcOptions): UnaryCall<HyperliquidWalletRequest, HyperliquidWalletResponse> {
+    hyperliquidPublicWallet(input: HyperliquidPublicWalletRequest, options?: RpcOptions): UnaryCall<HyperliquidPublicWalletRequest, HyperliquidPublicWalletResponse> {
         const method = this.methods[7], opt = this._transport.mergeOptions(options);
-        return stackIntercept<HyperliquidWalletRequest, HyperliquidWalletResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<HyperliquidPublicWalletRequest, HyperliquidPublicWalletResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HyperliquidWalletDeploySessions

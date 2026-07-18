@@ -26,7 +26,7 @@ const (
 	Static_HyperliquidSpotPair_FullMethodName                        = "/hypurr.Static/HyperliquidSpotPair"
 	Static_HyperliquidSpotPairs_FullMethodName                       = "/hypurr.Static/HyperliquidSpotPairs"
 	Static_HyperliquidPerpPairs_FullMethodName                       = "/hypurr.Static/HyperliquidPerpPairs"
-	Static_HyperliquidWallet_FullMethodName                          = "/hypurr.Static/HyperliquidWallet"
+	Static_HyperliquidPublicWallet_FullMethodName                    = "/hypurr.Static/HyperliquidPublicWallet"
 	Static_HyperliquidWalletDeploySessions_FullMethodName            = "/hypurr.Static/HyperliquidWalletDeploySessions"
 	Static_HyperliquidWalletPerformance_FullMethodName               = "/hypurr.Static/HyperliquidWalletPerformance"
 	Static_HyperliquidLaunch_FullMethodName                          = "/hypurr.Static/HyperliquidLaunch"
@@ -64,7 +64,7 @@ type StaticClient interface {
 	HyperliquidSpotPair(ctx context.Context, in *HyperliquidSpotPairRequest, opts ...grpc.CallOption) (*HyperliquidSpotPairResponse, error)
 	HyperliquidSpotPairs(ctx context.Context, in *HyperliquidSpotPairsRequest, opts ...grpc.CallOption) (*HyperliquidSpotPairsResponse, error)
 	HyperliquidPerpPairs(ctx context.Context, in *HyperliquidPerpPairsRequest, opts ...grpc.CallOption) (*HyperliquidPerpPairsResponse, error)
-	HyperliquidWallet(ctx context.Context, in *HyperliquidWalletRequest, opts ...grpc.CallOption) (*HyperliquidWalletResponse, error)
+	HyperliquidPublicWallet(ctx context.Context, in *HyperliquidPublicWalletRequest, opts ...grpc.CallOption) (*HyperliquidPublicWalletResponse, error)
 	HyperliquidWalletDeploySessions(ctx context.Context, in *HyperliquidWalletDeploySessionsRequest, opts ...grpc.CallOption) (*HyperliquidWalletDeploySessionsResponse, error)
 	HyperliquidWalletPerformance(ctx context.Context, in *HyperliquidWalletPerformanceRequest, opts ...grpc.CallOption) (*HyperliquidWalletPerformanceResponse, error)
 	// Launch
@@ -194,10 +194,10 @@ func (c *staticClient) HyperliquidPerpPairs(ctx context.Context, in *Hyperliquid
 	return out, nil
 }
 
-func (c *staticClient) HyperliquidWallet(ctx context.Context, in *HyperliquidWalletRequest, opts ...grpc.CallOption) (*HyperliquidWalletResponse, error) {
+func (c *staticClient) HyperliquidPublicWallet(ctx context.Context, in *HyperliquidPublicWalletRequest, opts ...grpc.CallOption) (*HyperliquidPublicWalletResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HyperliquidWalletResponse)
-	err := c.cc.Invoke(ctx, Static_HyperliquidWallet_FullMethodName, in, out, cOpts...)
+	out := new(HyperliquidPublicWalletResponse)
+	err := c.cc.Invoke(ctx, Static_HyperliquidPublicWallet_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -662,7 +662,7 @@ type StaticServer interface {
 	HyperliquidSpotPair(context.Context, *HyperliquidSpotPairRequest) (*HyperliquidSpotPairResponse, error)
 	HyperliquidSpotPairs(context.Context, *HyperliquidSpotPairsRequest) (*HyperliquidSpotPairsResponse, error)
 	HyperliquidPerpPairs(context.Context, *HyperliquidPerpPairsRequest) (*HyperliquidPerpPairsResponse, error)
-	HyperliquidWallet(context.Context, *HyperliquidWalletRequest) (*HyperliquidWalletResponse, error)
+	HyperliquidPublicWallet(context.Context, *HyperliquidPublicWalletRequest) (*HyperliquidPublicWalletResponse, error)
 	HyperliquidWalletDeploySessions(context.Context, *HyperliquidWalletDeploySessionsRequest) (*HyperliquidWalletDeploySessionsResponse, error)
 	HyperliquidWalletPerformance(context.Context, *HyperliquidWalletPerformanceRequest) (*HyperliquidWalletPerformanceResponse, error)
 	// Launch
@@ -717,8 +717,8 @@ func (UnimplementedStaticServer) HyperliquidSpotPairs(context.Context, *Hyperliq
 func (UnimplementedStaticServer) HyperliquidPerpPairs(context.Context, *HyperliquidPerpPairsRequest) (*HyperliquidPerpPairsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidPerpPairs not implemented")
 }
-func (UnimplementedStaticServer) HyperliquidWallet(context.Context, *HyperliquidWalletRequest) (*HyperliquidWalletResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidWallet not implemented")
+func (UnimplementedStaticServer) HyperliquidPublicWallet(context.Context, *HyperliquidPublicWalletRequest) (*HyperliquidPublicWalletResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidPublicWallet not implemented")
 }
 func (UnimplementedStaticServer) HyperliquidWalletDeploySessions(context.Context, *HyperliquidWalletDeploySessionsRequest) (*HyperliquidWalletDeploySessionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidWalletDeploySessions not implemented")
@@ -934,20 +934,20 @@ func _Static_HyperliquidPerpPairs_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Static_HyperliquidWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HyperliquidWalletRequest)
+func _Static_HyperliquidPublicWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HyperliquidPublicWalletRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StaticServer).HyperliquidWallet(ctx, in)
+		return srv.(StaticServer).HyperliquidPublicWallet(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Static_HyperliquidWallet_FullMethodName,
+		FullMethod: Static_HyperliquidPublicWallet_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StaticServer).HyperliquidWallet(ctx, req.(*HyperliquidWalletRequest))
+		return srv.(StaticServer).HyperliquidPublicWallet(ctx, req.(*HyperliquidPublicWalletRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1443,8 +1443,8 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Static_HyperliquidPerpPairs_Handler,
 		},
 		{
-			MethodName: "HyperliquidWallet",
-			Handler:    _Static_HyperliquidWallet_Handler,
+			MethodName: "HyperliquidPublicWallet",
+			Handler:    _Static_HyperliquidPublicWallet_Handler,
 		},
 		{
 			MethodName: "HyperliquidWalletDeploySessions",
