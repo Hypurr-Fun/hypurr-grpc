@@ -10079,6 +10079,7 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "CreateHyperliquidSpotSniperConfig", options: {}, I: CreateHyperliquidSpotSniperConfigRequest, O: CreateHyperliquidSpotSniperConfigResponse },
     { name: "DeleteHyperliquidSpotSniperConfig", options: {}, I: DeleteHyperliquidSpotSniperConfigRequest, O: DeleteHyperliquidSpotSniperConfigResponse },
     { name: "UpdateHyperliquidSpotSniperConfig", options: {}, I: UpdateHyperliquidSpotSniperConfigRequest, O: UpdateHyperliquidSpotSniperConfigResponse },
+    { name: "HyperliquidWallet", options: {}, I: HyperliquidWalletRequest, O: HyperliquidWalletResponse },
     { name: "HyperliquidWalletCreate", options: {}, I: HyperliquidWalletCreateRequest, O: HyperliquidWalletCreateResponse },
     { name: "HyperliquidWalletImport", options: {}, I: HyperliquidWalletImportRequest, O: HyperliquidWalletImportResponse },
     { name: "HyperliquidWalletDelete", options: {}, I: HyperliquidWalletDeleteRequest, O: HyperliquidWalletDeleteResponse },

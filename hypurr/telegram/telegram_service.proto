@@ -783,6 +783,7 @@ service Telegram {
   rpc DeleteHyperliquidSpotSniperConfig (DeleteHyperliquidSpotSniperConfigRequest) returns (DeleteHyperliquidSpotSniperConfigResponse) {}
   rpc UpdateHyperliquidSpotSniperConfig (UpdateHyperliquidSpotSniperConfigRequest) returns (UpdateHyperliquidSpotSniperConfigResponse) {}
 
+  rpc HyperliquidWallet (HyperliquidWalletRequest) returns (HyperliquidWalletResponse) {}
   rpc HyperliquidWalletCreate (HyperliquidWalletCreateRequest) returns (HyperliquidWalletCreateResponse) {}
   rpc HyperliquidWalletImport (HyperliquidWalletImportRequest) returns (HyperliquidWalletImportResponse) {}
   rpc HyperliquidWalletDelete (HyperliquidWalletDeleteRequest) returns (HyperliquidWalletDeleteResponse) {}
