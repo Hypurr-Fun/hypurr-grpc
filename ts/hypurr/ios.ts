@@ -515,78 +515,72 @@ export interface AssetDetailOverview {
      * @generated from protobuf oneof: overview
      */
     overview: {
-        oneofKind: "stock";
+        oneofKind: "perp";
         /**
-         * @generated from protobuf field: hypurr.AssetDetailStockOverview stock = 1
+         * @generated from protobuf field: hypurr.AssetDetailPerpOverview perp = 1
          */
-        stock: AssetDetailStockOverview;
+        perp: AssetDetailPerpOverview;
     } | {
-        oneofKind: "crypto";
+        oneofKind: "spot";
         /**
-         * @generated from protobuf field: hypurr.AssetDetailCryptoOverview crypto = 2
+         * @generated from protobuf field: hypurr.AssetDetailSpotOverview spot = 2
          */
-        crypto: AssetDetailCryptoOverview;
+        spot: AssetDetailSpotOverview;
     } | {
         oneofKind: undefined;
     };
 }
 /**
- * @generated from protobuf message hypurr.AssetDetailStockOverview
+ * @generated from protobuf message hypurr.AssetDetailPerpOverview
  */
-export interface AssetDetailStockOverview {
+export interface AssetDetailPerpOverview {
     /**
-     * Price-to-earnings ratio with single decimal precision, e.g. "34.2".
+     * 24-hour trading volume with single decimal precision, e.g. "$1.2B".
      *
-     * @generated from protobuf field: string pe_ratio = 1
+     * @generated from protobuf field: string volume_24h = 1
      */
-    peRatio: string;
+    volume24H: string;
     /**
-     * Earnings per share, trailing twelve months, e.g. "$6.57".
+     * Current open interests on the instrument with single decimal precision, e.g. "$45.1M".
      *
-     * @generated from protobuf field: string eps_ttm = 2
+     * @generated from protobuf field: string open_interests = 2
      */
-    epsTtm: string;
+    openInterests: string;
     /**
-     * Dividend yield with the % sign, 2 decimal precision e.g. "0.44%"
+     * Current hourly funding on the instrument in %, positive means longs pay shorts, e.g. "0.0012%" or "-0.001%"
      *
-     * @generated from protobuf field: string dividend_yield = 3
+     * @generated from protobuf field: string funding = 3
      */
-    dividendYield: string;
+    funding: string;
     /**
-     * 52-week high price with up to asset decimals precision, e.g. "237.49" or "0.0001"
+     * All-time high price with up to asset decimals precision, e.g. "237.49" or "0.0001"
      *
-     * @generated from protobuf field: string week_52_high = 4
+     * @generated from protobuf field: string all_time_high = 4
      */
-    week52High: string;
+    allTimeHigh: string;
     /**
-     * 52-week low price with up to asset decimals precision, e.g. "237.49" or "0.0001"
+     * The max leverage for the asset, e.g. "10x" or "3x"
      *
-     * @generated from protobuf field: string week_52_low = 5
+     * @generated from protobuf field: string max_leverage = 5
      */
-    week52Low: string;
+    maxLeverage: string;
     /**
-     * Average daily volume with single decimal precision, e.g. "$52.4M".
+     * Plain-text asset description.
      *
-     * @generated from protobuf field: string avg_volume = 6
-     */
-    avgVolume: string;
-    /**
-     * Beta of the asset with up to two decimal precision, e.g. "1.24"
-     *
-     * @generated from protobuf field: string beta = 7
-     */
-    beta: string;
-    /**
-     * Plain-text company description.
-     *
-     * @generated from protobuf field: string description = 8
+     * @generated from protobuf field: string description = 6
      */
     description: string;
+    /**
+     * Plain-text asset category.
+     *
+     * @generated from protobuf field: string category = 7
+     */
+    category: string;
 }
 /**
- * @generated from protobuf message hypurr.AssetDetailCryptoOverview
+ * @generated from protobuf message hypurr.AssetDetailSpotOverview
  */
-export interface AssetDetailCryptoOverview {
+export interface AssetDetailSpotOverview {
     /**
      * 24-hour trading volume with single decimal precision, e.g. "$1.2B".
      *
@@ -606,21 +600,15 @@ export interface AssetDetailCryptoOverview {
      */
     fdv: string;
     /**
-     * Liquidity of the asset with single decimal precision, e.g. "$820.3K"
-     *
-     * @generated from protobuf field: string liquidity = 4
-     */
-    liquidity: string;
-    /**
      * All-time high price with up to asset decimals precision, e.g. "237.49" or "0.0001"
      *
-     * @generated from protobuf field: string all_time_high = 5
+     * @generated from protobuf field: string all_time_high = 4
      */
     allTimeHigh: string;
     /**
      * Plain-text asset description.
      *
-     * @generated from protobuf field: string description = 6
+     * @generated from protobuf field: string description = 5
      */
     description: string;
 }
@@ -2157,8 +2145,8 @@ export const AssetDetailChartPoint = new AssetDetailChartPoint$Type();
 class AssetDetailOverview$Type extends MessageType<AssetDetailOverview> {
     constructor() {
         super("hypurr.AssetDetailOverview", [
-            { no: 1, name: "stock", kind: "message", oneof: "overview", T: () => AssetDetailStockOverview },
-            { no: 2, name: "crypto", kind: "message", oneof: "overview", T: () => AssetDetailCryptoOverview }
+            { no: 1, name: "perp", kind: "message", oneof: "overview", T: () => AssetDetailPerpOverview },
+            { no: 2, name: "spot", kind: "message", oneof: "overview", T: () => AssetDetailSpotOverview }
         ]);
     }
     create(value?: PartialMessage<AssetDetailOverview>): AssetDetailOverview {
@@ -2173,16 +2161,16 @@ class AssetDetailOverview$Type extends MessageType<AssetDetailOverview> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* hypurr.AssetDetailStockOverview stock */ 1:
+                case /* hypurr.AssetDetailPerpOverview perp */ 1:
                     message.overview = {
-                        oneofKind: "stock",
-                        stock: AssetDetailStockOverview.internalBinaryRead(reader, reader.uint32(), options, (message.overview as any).stock)
+                        oneofKind: "perp",
+                        perp: AssetDetailPerpOverview.internalBinaryRead(reader, reader.uint32(), options, (message.overview as any).perp)
                     };
                     break;
-                case /* hypurr.AssetDetailCryptoOverview crypto */ 2:
+                case /* hypurr.AssetDetailSpotOverview spot */ 2:
                     message.overview = {
-                        oneofKind: "crypto",
-                        crypto: AssetDetailCryptoOverview.internalBinaryRead(reader, reader.uint32(), options, (message.overview as any).crypto)
+                        oneofKind: "spot",
+                        spot: AssetDetailSpotOverview.internalBinaryRead(reader, reader.uint32(), options, (message.overview as any).spot)
                     };
                     break;
                 default:
@@ -2197,12 +2185,12 @@ class AssetDetailOverview$Type extends MessageType<AssetDetailOverview> {
         return message;
     }
     internalBinaryWrite(message: AssetDetailOverview, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* hypurr.AssetDetailStockOverview stock = 1; */
-        if (message.overview.oneofKind === "stock")
-            AssetDetailStockOverview.internalBinaryWrite(message.overview.stock, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* hypurr.AssetDetailCryptoOverview crypto = 2; */
-        if (message.overview.oneofKind === "crypto")
-            AssetDetailCryptoOverview.internalBinaryWrite(message.overview.crypto, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.AssetDetailPerpOverview perp = 1; */
+        if (message.overview.oneofKind === "perp")
+            AssetDetailPerpOverview.internalBinaryWrite(message.overview.perp, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.AssetDetailSpotOverview spot = 2; */
+        if (message.overview.oneofKind === "spot")
+            AssetDetailSpotOverview.internalBinaryWrite(message.overview.spot, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2214,61 +2202,56 @@ class AssetDetailOverview$Type extends MessageType<AssetDetailOverview> {
  */
 export const AssetDetailOverview = new AssetDetailOverview$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class AssetDetailStockOverview$Type extends MessageType<AssetDetailStockOverview> {
+class AssetDetailPerpOverview$Type extends MessageType<AssetDetailPerpOverview> {
     constructor() {
-        super("hypurr.AssetDetailStockOverview", [
-            { no: 1, name: "pe_ratio", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "eps_ttm", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "dividend_yield", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "week_52_high", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "week_52_low", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "avg_volume", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "beta", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        super("hypurr.AssetDetailPerpOverview", [
+            { no: 1, name: "volume_24h", kind: "scalar", jsonName: "volume24h", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "open_interests", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "funding", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "all_time_high", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "max_leverage", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "category", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<AssetDetailStockOverview>): AssetDetailStockOverview {
+    create(value?: PartialMessage<AssetDetailPerpOverview>): AssetDetailPerpOverview {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.peRatio = "";
-        message.epsTtm = "";
-        message.dividendYield = "";
-        message.week52High = "";
-        message.week52Low = "";
-        message.avgVolume = "";
-        message.beta = "";
+        message.volume24H = "";
+        message.openInterests = "";
+        message.funding = "";
+        message.allTimeHigh = "";
+        message.maxLeverage = "";
         message.description = "";
+        message.category = "";
         if (value !== undefined)
-            reflectionMergePartial<AssetDetailStockOverview>(this, message, value);
+            reflectionMergePartial<AssetDetailPerpOverview>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailStockOverview): AssetDetailStockOverview {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailPerpOverview): AssetDetailPerpOverview {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string pe_ratio */ 1:
-                    message.peRatio = reader.string();
+                case /* string volume_24h */ 1:
+                    message.volume24H = reader.string();
                     break;
-                case /* string eps_ttm */ 2:
-                    message.epsTtm = reader.string();
+                case /* string open_interests */ 2:
+                    message.openInterests = reader.string();
                     break;
-                case /* string dividend_yield */ 3:
-                    message.dividendYield = reader.string();
+                case /* string funding */ 3:
+                    message.funding = reader.string();
                     break;
-                case /* string week_52_high */ 4:
-                    message.week52High = reader.string();
+                case /* string all_time_high */ 4:
+                    message.allTimeHigh = reader.string();
                     break;
-                case /* string week_52_low */ 5:
-                    message.week52Low = reader.string();
+                case /* string max_leverage */ 5:
+                    message.maxLeverage = reader.string();
                     break;
-                case /* string avg_volume */ 6:
-                    message.avgVolume = reader.string();
-                    break;
-                case /* string beta */ 7:
-                    message.beta = reader.string();
-                    break;
-                case /* string description */ 8:
+                case /* string description */ 6:
                     message.description = reader.string();
+                    break;
+                case /* string category */ 7:
+                    message.category = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2281,31 +2264,28 @@ class AssetDetailStockOverview$Type extends MessageType<AssetDetailStockOverview
         }
         return message;
     }
-    internalBinaryWrite(message: AssetDetailStockOverview, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string pe_ratio = 1; */
-        if (message.peRatio !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.peRatio);
-        /* string eps_ttm = 2; */
-        if (message.epsTtm !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.epsTtm);
-        /* string dividend_yield = 3; */
-        if (message.dividendYield !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.dividendYield);
-        /* string week_52_high = 4; */
-        if (message.week52High !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.week52High);
-        /* string week_52_low = 5; */
-        if (message.week52Low !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.week52Low);
-        /* string avg_volume = 6; */
-        if (message.avgVolume !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.avgVolume);
-        /* string beta = 7; */
-        if (message.beta !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.beta);
-        /* string description = 8; */
+    internalBinaryWrite(message: AssetDetailPerpOverview, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string volume_24h = 1; */
+        if (message.volume24H !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.volume24H);
+        /* string open_interests = 2; */
+        if (message.openInterests !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.openInterests);
+        /* string funding = 3; */
+        if (message.funding !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.funding);
+        /* string all_time_high = 4; */
+        if (message.allTimeHigh !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.allTimeHigh);
+        /* string max_leverage = 5; */
+        if (message.maxLeverage !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.maxLeverage);
+        /* string description = 6; */
         if (message.description !== "")
-            writer.tag(8, WireType.LengthDelimited).string(message.description);
+            writer.tag(6, WireType.LengthDelimited).string(message.description);
+        /* string category = 7; */
+        if (message.category !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.category);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2313,34 +2293,32 @@ class AssetDetailStockOverview$Type extends MessageType<AssetDetailStockOverview
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.AssetDetailStockOverview
+ * @generated MessageType for protobuf message hypurr.AssetDetailPerpOverview
  */
-export const AssetDetailStockOverview = new AssetDetailStockOverview$Type();
+export const AssetDetailPerpOverview = new AssetDetailPerpOverview$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class AssetDetailCryptoOverview$Type extends MessageType<AssetDetailCryptoOverview> {
+class AssetDetailSpotOverview$Type extends MessageType<AssetDetailSpotOverview> {
     constructor() {
-        super("hypurr.AssetDetailCryptoOverview", [
+        super("hypurr.AssetDetailSpotOverview", [
             { no: 1, name: "volume_24h", kind: "scalar", jsonName: "volume24h", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "holders", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "fdv", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "liquidity", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "all_time_high", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "all_time_high", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<AssetDetailCryptoOverview>): AssetDetailCryptoOverview {
+    create(value?: PartialMessage<AssetDetailSpotOverview>): AssetDetailSpotOverview {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.volume24H = "";
         message.holders = "";
         message.fdv = "";
-        message.liquidity = "";
         message.allTimeHigh = "";
         message.description = "";
         if (value !== undefined)
-            reflectionMergePartial<AssetDetailCryptoOverview>(this, message, value);
+            reflectionMergePartial<AssetDetailSpotOverview>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailCryptoOverview): AssetDetailCryptoOverview {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailSpotOverview): AssetDetailSpotOverview {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -2354,13 +2332,10 @@ class AssetDetailCryptoOverview$Type extends MessageType<AssetDetailCryptoOvervi
                 case /* string fdv */ 3:
                     message.fdv = reader.string();
                     break;
-                case /* string liquidity */ 4:
-                    message.liquidity = reader.string();
-                    break;
-                case /* string all_time_high */ 5:
+                case /* string all_time_high */ 4:
                     message.allTimeHigh = reader.string();
                     break;
-                case /* string description */ 6:
+                case /* string description */ 5:
                     message.description = reader.string();
                     break;
                 default:
@@ -2374,7 +2349,7 @@ class AssetDetailCryptoOverview$Type extends MessageType<AssetDetailCryptoOvervi
         }
         return message;
     }
-    internalBinaryWrite(message: AssetDetailCryptoOverview, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: AssetDetailSpotOverview, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string volume_24h = 1; */
         if (message.volume24H !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.volume24H);
@@ -2384,15 +2359,12 @@ class AssetDetailCryptoOverview$Type extends MessageType<AssetDetailCryptoOvervi
         /* string fdv = 3; */
         if (message.fdv !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.fdv);
-        /* string liquidity = 4; */
-        if (message.liquidity !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.liquidity);
-        /* string all_time_high = 5; */
+        /* string all_time_high = 4; */
         if (message.allTimeHigh !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.allTimeHigh);
-        /* string description = 6; */
+            writer.tag(4, WireType.LengthDelimited).string(message.allTimeHigh);
+        /* string description = 5; */
         if (message.description !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.description);
+            writer.tag(5, WireType.LengthDelimited).string(message.description);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2400,9 +2372,9 @@ class AssetDetailCryptoOverview$Type extends MessageType<AssetDetailCryptoOvervi
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.AssetDetailCryptoOverview
+ * @generated MessageType for protobuf message hypurr.AssetDetailSpotOverview
  */
-export const AssetDetailCryptoOverview = new AssetDetailCryptoOverview$Type();
+export const AssetDetailSpotOverview = new AssetDetailSpotOverview$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PortfolioAllocation$Type extends MessageType<PortfolioAllocation> {
     constructor() {

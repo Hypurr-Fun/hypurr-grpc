@@ -214,43 +214,39 @@ message AssetDetailChartPoint {
 // Fields with no backend data source are empty; mobile falls back locally.
 message AssetDetailOverview {
   oneof overview {
-    AssetDetailStockOverview stock = 1;
-    AssetDetailCryptoOverview crypto = 2;
+    AssetDetailPerpOverview perp = 1;
+    AssetDetailSpotOverview spot = 2;
   }
 }
 
-message AssetDetailStockOverview {
-  // Price-to-earnings ratio with single decimal precision, e.g. "34.2".
-  string pe_ratio = 1;
-  // Earnings per share, trailing twelve months, e.g. "$6.57".
-  string eps_ttm = 2;
-  // Dividend yield with the % sign, 2 decimal precision e.g. "0.44%"
-  string dividend_yield = 3;
-  // 52-week high price with up to asset decimals precision, e.g. "237.49" or "0.0001"
-  string week_52_high = 4;
-  // 52-week low price with up to asset decimals precision, e.g. "237.49" or "0.0001"
-  string week_52_low = 5;
-  // Average daily volume with single decimal precision, e.g. "$52.4M".
-  string avg_volume = 6;
-  // Beta of the asset with up to two decimal precision, e.g. "1.24"
-  string beta = 7;
-  // Plain-text company description.
-  string description = 8;
+message AssetDetailPerpOverview {
+  // 24-hour trading volume with single decimal precision, e.g. "$1.2B".
+  string volume_24h = 1;
+  // Current open interests on the instrument with single decimal precision, e.g. "$45.1M".
+  string open_interests = 2;
+  // Current hourly funding on the instrument in %, positive means longs pay shorts, e.g. "0.0012%" or "-0.001%"
+  string funding = 3;
+  // All-time high price with up to asset decimals precision, e.g. "237.49" or "0.0001"
+  string all_time_high = 4;
+  // The max leverage for the asset, e.g. "10x" or "3x"
+  string max_leverage = 5;
+  // Plain-text asset description.
+  string description = 6;
+  // Plain-text asset category.
+  string category = 7;
 }
 
-message AssetDetailCryptoOverview {
+message AssetDetailSpotOverview {
   // 24-hour trading volume with single decimal precision, e.g. "$1.2B".
   string volume_24h = 1;
   // Number of holders with single decimal precision, e.g. "12.5K".
   string holders = 2;
   // Fully diluted valuation with single decimal precision, e.g. "$4.5B".
   string fdv = 3;
-  // Liquidity of the asset with single decimal precision, e.g. "$820.3K"
-  string liquidity = 4;
   // All-time high price with up to asset decimals precision, e.g. "237.49" or "0.0001"
-  string all_time_high = 5;
+  string all_time_high = 4;
   // Plain-text asset description.
-  string description = 6;
+  string description = 5;
 }
 
 message PortfolioAllocation {
