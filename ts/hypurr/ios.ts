@@ -384,7 +384,7 @@ export interface AssetDetailResponse {
 }
 /**
  * Append-only live update for the active 1D view: mobile appends a new price
- * point to the 1D chart and refreshes the hero price / market cap display.
+ * point to the 1D chart and refreshes the hero price / market cap or open interest display.
  *
  * @generated from protobuf message hypurr.AssetDetailLiveUpdate
  */
@@ -402,11 +402,27 @@ export interface AssetDetailLiveUpdate {
      */
     priceDecimal: string;
     /**
-     * Market cap of the asset in cents e.g. "$22,482.17" -> 2248217.
-     *
-     * @generated from protobuf field: int64 market_cap_cents = 3
+     * @generated from protobuf oneof: valuation
      */
-    marketCapCents: number;
+    valuation: {
+        oneofKind: "marketCapCents";
+        /**
+         * Market cap of the spot asset in cents e.g. "$22,482.17" -> 2248217.
+         *
+         * @generated from protobuf field: int64 market_cap_cents = 3
+         */
+        marketCapCents: number;
+    } | {
+        oneofKind: "openInterestCents";
+        /**
+         * Open interest of the perp in cents, same encoding.
+         *
+         * @generated from protobuf field: int64 open_interest_cents = 4
+         */
+        openInterestCents: number;
+    } | {
+        oneofKind: undefined;
+    };
 }
 /**
  * @generated from protobuf message hypurr.AssetDetailMetadata
@@ -455,11 +471,27 @@ export interface AssetDetailPriceSummary {
      */
     changePercentage: number;
     /**
-     * Market cap of the asset in cents e.g. "$22,482.17" -> 2248217.
-     *
-     * @generated from protobuf field: int64 market_cap_cents = 4
+     * @generated from protobuf oneof: valuation
      */
-    marketCapCents: number;
+    valuation: {
+        oneofKind: "marketCapCents";
+        /**
+         * Market cap of the spot instrument in cents e.g. "$22,482.17" -> 2248217.
+         *
+         * @generated from protobuf field: int64 market_cap_cents = 4
+         */
+        marketCapCents: number;
+    } | {
+        oneofKind: "openInterestCents";
+        /**
+         * Open interest of the perp in cents, same encoding.
+         *
+         * @generated from protobuf field: int64 open_interest_cents = 5
+         */
+        openInterestCents: number;
+    } | {
+        oneofKind: undefined;
+    };
 }
 /**
  * @generated from protobuf message hypurr.AssetDetailChart
@@ -1816,14 +1848,15 @@ class AssetDetailLiveUpdate$Type extends MessageType<AssetDetailLiveUpdate> {
         super("hypurr.AssetDetailLiveUpdate", [
             { no: 1, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "market_cap_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 3, name: "market_cap_cents", kind: "scalar", oneof: "valuation", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "open_interest_cents", kind: "scalar", oneof: "valuation", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<AssetDetailLiveUpdate>): AssetDetailLiveUpdate {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.occurredAt = "";
         message.priceDecimal = "";
-        message.marketCapCents = 0;
+        message.valuation = { oneofKind: undefined };
         if (value !== undefined)
             reflectionMergePartial<AssetDetailLiveUpdate>(this, message, value);
         return message;
@@ -1840,7 +1873,16 @@ class AssetDetailLiveUpdate$Type extends MessageType<AssetDetailLiveUpdate> {
                     message.priceDecimal = reader.string();
                     break;
                 case /* int64 market_cap_cents */ 3:
-                    message.marketCapCents = reader.int64().toNumber();
+                    message.valuation = {
+                        oneofKind: "marketCapCents",
+                        marketCapCents: reader.int64().toNumber()
+                    };
+                    break;
+                case /* int64 open_interest_cents */ 4:
+                    message.valuation = {
+                        oneofKind: "openInterestCents",
+                        openInterestCents: reader.int64().toNumber()
+                    };
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1861,8 +1903,11 @@ class AssetDetailLiveUpdate$Type extends MessageType<AssetDetailLiveUpdate> {
         if (message.priceDecimal !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.priceDecimal);
         /* int64 market_cap_cents = 3; */
-        if (message.marketCapCents !== 0)
-            writer.tag(3, WireType.Varint).int64(message.marketCapCents);
+        if (message.valuation.oneofKind === "marketCapCents")
+            writer.tag(3, WireType.Varint).int64(message.valuation.marketCapCents);
+        /* int64 open_interest_cents = 4; */
+        if (message.valuation.oneofKind === "openInterestCents")
+            writer.tag(4, WireType.Varint).int64(message.valuation.openInterestCents);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1951,7 +1996,8 @@ class AssetDetailPriceSummary$Type extends MessageType<AssetDetailPriceSummary> 
             { no: 1, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "absolute_change_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "change_percentage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 4, name: "market_cap_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 4, name: "market_cap_cents", kind: "scalar", oneof: "valuation", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "open_interest_cents", kind: "scalar", oneof: "valuation", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<AssetDetailPriceSummary>): AssetDetailPriceSummary {
@@ -1959,7 +2005,7 @@ class AssetDetailPriceSummary$Type extends MessageType<AssetDetailPriceSummary> 
         message.priceDecimal = "";
         message.absoluteChangeDecimal = "";
         message.changePercentage = 0;
-        message.marketCapCents = 0;
+        message.valuation = { oneofKind: undefined };
         if (value !== undefined)
             reflectionMergePartial<AssetDetailPriceSummary>(this, message, value);
         return message;
@@ -1979,7 +2025,16 @@ class AssetDetailPriceSummary$Type extends MessageType<AssetDetailPriceSummary> 
                     message.changePercentage = reader.double();
                     break;
                 case /* int64 market_cap_cents */ 4:
-                    message.marketCapCents = reader.int64().toNumber();
+                    message.valuation = {
+                        oneofKind: "marketCapCents",
+                        marketCapCents: reader.int64().toNumber()
+                    };
+                    break;
+                case /* int64 open_interest_cents */ 5:
+                    message.valuation = {
+                        oneofKind: "openInterestCents",
+                        openInterestCents: reader.int64().toNumber()
+                    };
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2003,8 +2058,11 @@ class AssetDetailPriceSummary$Type extends MessageType<AssetDetailPriceSummary> 
         if (message.changePercentage !== 0)
             writer.tag(3, WireType.Bit64).double(message.changePercentage);
         /* int64 market_cap_cents = 4; */
-        if (message.marketCapCents !== 0)
-            writer.tag(4, WireType.Varint).int64(message.marketCapCents);
+        if (message.valuation.oneofKind === "marketCapCents")
+            writer.tag(4, WireType.Varint).int64(message.valuation.marketCapCents);
+        /* int64 open_interest_cents = 5; */
+        if (message.valuation.oneofKind === "openInterestCents")
+            writer.tag(5, WireType.Varint).int64(message.valuation.openInterestCents);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
