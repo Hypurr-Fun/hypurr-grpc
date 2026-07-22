@@ -64,11 +64,11 @@ message HyperliquidPerpPairsResponse {
   repeated HyperliquidPerpPair pairs = 1;
 }
 
-message HyperliquidWalletRequest {
+message HyperliquidPublicWalletRequest {
   google.protobuf.StringValue ethereum_address = 1;
 }
 
-message HyperliquidWalletResponse {
+message HyperliquidPublicWalletResponse {
   HyperliquidWallet wallet = 1;
 }
 
@@ -304,7 +304,7 @@ service Static {
   rpc HyperliquidSpotPairs (HyperliquidSpotPairsRequest) returns (HyperliquidSpotPairsResponse) {}
   rpc HyperliquidPerpPairs (HyperliquidPerpPairsRequest) returns (HyperliquidPerpPairsResponse) {}
 
-  rpc HyperliquidWallet (HyperliquidWalletRequest) returns (HyperliquidWalletResponse) {}
+  rpc HyperliquidPublicWallet (HyperliquidPublicWalletRequest) returns (HyperliquidPublicWalletResponse) {}
   rpc HyperliquidWalletDeploySessions (HyperliquidWalletDeploySessionsRequest) returns (HyperliquidWalletDeploySessionsResponse) {}
   rpc HyperliquidWalletPerformance (HyperliquidWalletPerformanceRequest) returns (HyperliquidWalletPerformanceResponse) {}
 

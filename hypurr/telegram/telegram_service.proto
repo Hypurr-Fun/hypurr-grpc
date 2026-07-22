@@ -271,6 +271,15 @@ message UpdateHyperliquidSpotSniperConfigResponse {
   bool success = 1;
 }
 
+message HyperliquidWalletRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+}
+
+message HyperliquidWalletResponse {
+  HyperliquidWallet wallet = 1;
+}
+
 // TODO Deprecated
 message HyperliquidWalletSpotTwapSessionsRequest {
   map<string, string> auth_data = 1;
@@ -774,6 +783,7 @@ service Telegram {
   rpc DeleteHyperliquidSpotSniperConfig (DeleteHyperliquidSpotSniperConfigRequest) returns (DeleteHyperliquidSpotSniperConfigResponse) {}
   rpc UpdateHyperliquidSpotSniperConfig (UpdateHyperliquidSpotSniperConfigRequest) returns (UpdateHyperliquidSpotSniperConfigResponse) {}
 
+  rpc HyperliquidWallet (HyperliquidWalletRequest) returns (HyperliquidWalletResponse) {}
   rpc HyperliquidWalletCreate (HyperliquidWalletCreateRequest) returns (HyperliquidWalletCreateResponse) {}
   rpc HyperliquidWalletImport (HyperliquidWalletImportRequest) returns (HyperliquidWalletImportResponse) {}
   rpc HyperliquidWalletDelete (HyperliquidWalletDeleteRequest) returns (HyperliquidWalletDeleteResponse) {}

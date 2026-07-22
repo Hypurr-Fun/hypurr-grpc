@@ -169,6 +169,11 @@ class TelegramStub:
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigRequest.SerializeToString,
                 response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigResponse.FromString,
                 _registered_method=True)
+        self.HyperliquidWallet = channel.unary_unary(
+                '/hypurr.Telegram/HyperliquidWallet',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletResponse.FromString,
+                _registered_method=True)
         self.HyperliquidWalletCreate = channel.unary_unary(
                 '/hypurr.Telegram/HyperliquidWalletCreate',
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletCreateRequest.SerializeToString,
@@ -487,6 +492,12 @@ class TelegramServicer:
         raise NotImplementedError('Method not implemented!')
 
     def UpdateHyperliquidSpotSniperConfig(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def HyperliquidWallet(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -812,6 +823,11 @@ def add_TelegramServicer_to_server(servicer, server):
                     servicer.UpdateHyperliquidSpotSniperConfig,
                     request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigRequest.FromString,
                     response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigResponse.SerializeToString,
+            ),
+            'HyperliquidWallet': grpc.unary_unary_rpc_method_handler(
+                    servicer.HyperliquidWallet,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletResponse.SerializeToString,
             ),
             'HyperliquidWalletCreate': grpc.unary_unary_rpc_method_handler(
                     servicer.HyperliquidWalletCreate,
@@ -1693,6 +1709,33 @@ class Telegram:
             '/hypurr.Telegram/UpdateHyperliquidSpotSniperConfig',
             hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigRequest.SerializeToString,
             hypurr_dot_telegram_dot_telegram__service__pb2.UpdateHyperliquidSpotSniperConfigResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def HyperliquidWallet(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/HyperliquidWallet',
+            hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletResponse.FromString,
             options,
             channel_credentials,
             insecure,

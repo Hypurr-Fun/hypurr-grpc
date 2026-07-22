@@ -69,10 +69,10 @@ class StaticStub:
                 request_serializer=hypurr_dot_static_dot_static__service__pb2.HyperliquidPerpPairsRequest.SerializeToString,
                 response_deserializer=hypurr_dot_static_dot_static__service__pb2.HyperliquidPerpPairsResponse.FromString,
                 _registered_method=True)
-        self.HyperliquidWallet = channel.unary_unary(
-                '/hypurr.Static/HyperliquidWallet',
-                request_serializer=hypurr_dot_static_dot_static__service__pb2.HyperliquidWalletRequest.SerializeToString,
-                response_deserializer=hypurr_dot_static_dot_static__service__pb2.HyperliquidWalletResponse.FromString,
+        self.HyperliquidPublicWallet = channel.unary_unary(
+                '/hypurr.Static/HyperliquidPublicWallet',
+                request_serializer=hypurr_dot_static_dot_static__service__pb2.HyperliquidPublicWalletRequest.SerializeToString,
+                response_deserializer=hypurr_dot_static_dot_static__service__pb2.HyperliquidPublicWalletResponse.FromString,
                 _registered_method=True)
         self.HyperliquidWalletDeploySessions = channel.unary_unary(
                 '/hypurr.Static/HyperliquidWalletDeploySessions',
@@ -241,7 +241,7 @@ class StaticServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def HyperliquidWallet(self, request, context):
+    def HyperliquidPublicWallet(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -431,10 +431,10 @@ def add_StaticServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_static_dot_static__service__pb2.HyperliquidPerpPairsRequest.FromString,
                     response_serializer=hypurr_dot_static_dot_static__service__pb2.HyperliquidPerpPairsResponse.SerializeToString,
             ),
-            'HyperliquidWallet': grpc.unary_unary_rpc_method_handler(
-                    servicer.HyperliquidWallet,
-                    request_deserializer=hypurr_dot_static_dot_static__service__pb2.HyperliquidWalletRequest.FromString,
-                    response_serializer=hypurr_dot_static_dot_static__service__pb2.HyperliquidWalletResponse.SerializeToString,
+            'HyperliquidPublicWallet': grpc.unary_unary_rpc_method_handler(
+                    servicer.HyperliquidPublicWallet,
+                    request_deserializer=hypurr_dot_static_dot_static__service__pb2.HyperliquidPublicWalletRequest.FromString,
+                    response_serializer=hypurr_dot_static_dot_static__service__pb2.HyperliquidPublicWalletResponse.SerializeToString,
             ),
             'HyperliquidWalletDeploySessions': grpc.unary_unary_rpc_method_handler(
                     servicer.HyperliquidWalletDeploySessions,
@@ -757,7 +757,7 @@ class Static:
             _registered_method=True)
 
     @staticmethod
-    def HyperliquidWallet(request,
+    def HyperliquidPublicWallet(request,
             target,
             options=(),
             channel_credentials=None,
@@ -770,9 +770,9 @@ class Static:
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/hypurr.Static/HyperliquidWallet',
-            hypurr_dot_static_dot_static__service__pb2.HyperliquidWalletRequest.SerializeToString,
-            hypurr_dot_static_dot_static__service__pb2.HyperliquidWalletResponse.FromString,
+            '/hypurr.Static/HyperliquidPublicWallet',
+            hypurr_dot_static_dot_static__service__pb2.HyperliquidPublicWalletRequest.SerializeToString,
+            hypurr_dot_static_dot_static__service__pb2.HyperliquidPublicWalletResponse.FromString,
             options,
             channel_credentials,
             insecure,
