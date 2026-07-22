@@ -169,13 +169,8 @@ message AssetDetailLiveUpdate {
   string occurred_at = 1;
   // Asset price with asset decimal precision e.g. "$22,482.17" -> "22482.17" or "$0.00017" -> "0.00017"
   string price_decimal = 2;
-  // Signed change vs the previous day's close with asset decimal precision e.g. "$100.04" -> "100.04" or "$0.000001" -> "0.000001"
-  string absolute_change_decimal = 3;
-  // 24-hour change, window-agnostic naming. e.g. 6.0 = +6%.
-  // Double value with 2 decimals precision e.g. 11.34 or -35.4
-  double change_percentage = 4;
   // Market cap of the asset in cents e.g. "$22,482.17" -> 2248217.
-  int64 market_cap_cents = 5;
+  int64 market_cap_cents = 3;
 }
 
 message AssetDetailMetadata {
@@ -202,6 +197,9 @@ message AssetDetailChart {
   AssetDetailChartPeriod period = 1;
   // Response order is display order, oldest point first.
   repeated AssetDetailChartPoint points = 2;
+  // Candle interval for this chart period, in seconds. Mobile uses this
+  // to bucket live updates onto the same time axis as the initial chart.
+  int64 candle_interval_seconds = 3;
 }
 
 message AssetDetailChartPoint {

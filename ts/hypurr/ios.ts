@@ -402,22 +402,9 @@ export interface AssetDetailLiveUpdate {
      */
     priceDecimal: string;
     /**
-     * Signed change vs the previous day's close with asset decimal precision e.g. "$100.04" -> "100.04" or "$0.000001" -> "0.000001"
-     *
-     * @generated from protobuf field: string absolute_change_decimal = 3
-     */
-    absoluteChangeDecimal: string;
-    /**
-     * 24-hour change, window-agnostic naming. e.g. 6.0 = +6%.
-     * Double value with 2 decimals precision e.g. 11.34 or -35.4
-     *
-     * @generated from protobuf field: double change_percentage = 4
-     */
-    changePercentage: number;
-    /**
      * Market cap of the asset in cents e.g. "$22,482.17" -> 2248217.
      *
-     * @generated from protobuf field: int64 market_cap_cents = 5
+     * @generated from protobuf field: int64 market_cap_cents = 3
      */
     marketCapCents: number;
 }
@@ -488,6 +475,13 @@ export interface AssetDetailChart {
      * @generated from protobuf field: repeated hypurr.AssetDetailChartPoint points = 2
      */
     points: AssetDetailChartPoint[];
+    /**
+     * Candle interval for this chart period, in seconds. Mobile uses this
+     * to bucket live updates onto the same time axis as the initial chart.
+     *
+     * @generated from protobuf field: int64 candle_interval_seconds = 3
+     */
+    candleIntervalSeconds: number;
 }
 /**
  * @generated from protobuf message hypurr.AssetDetailChartPoint
@@ -1834,17 +1828,13 @@ class AssetDetailLiveUpdate$Type extends MessageType<AssetDetailLiveUpdate> {
         super("hypurr.AssetDetailLiveUpdate", [
             { no: 1, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "absolute_change_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "change_percentage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 5, name: "market_cap_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 3, name: "market_cap_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<AssetDetailLiveUpdate>): AssetDetailLiveUpdate {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.occurredAt = "";
         message.priceDecimal = "";
-        message.absoluteChangeDecimal = "";
-        message.changePercentage = 0;
         message.marketCapCents = 0;
         if (value !== undefined)
             reflectionMergePartial<AssetDetailLiveUpdate>(this, message, value);
@@ -1861,13 +1851,7 @@ class AssetDetailLiveUpdate$Type extends MessageType<AssetDetailLiveUpdate> {
                 case /* string price_decimal */ 2:
                     message.priceDecimal = reader.string();
                     break;
-                case /* string absolute_change_decimal */ 3:
-                    message.absoluteChangeDecimal = reader.string();
-                    break;
-                case /* double change_percentage */ 4:
-                    message.changePercentage = reader.double();
-                    break;
-                case /* int64 market_cap_cents */ 5:
+                case /* int64 market_cap_cents */ 3:
                     message.marketCapCents = reader.int64().toNumber();
                     break;
                 default:
@@ -1888,15 +1872,9 @@ class AssetDetailLiveUpdate$Type extends MessageType<AssetDetailLiveUpdate> {
         /* string price_decimal = 2; */
         if (message.priceDecimal !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.priceDecimal);
-        /* string absolute_change_decimal = 3; */
-        if (message.absoluteChangeDecimal !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.absoluteChangeDecimal);
-        /* double change_percentage = 4; */
-        if (message.changePercentage !== 0)
-            writer.tag(4, WireType.Bit64).double(message.changePercentage);
-        /* int64 market_cap_cents = 5; */
+        /* int64 market_cap_cents = 3; */
         if (message.marketCapCents !== 0)
-            writer.tag(5, WireType.Varint).int64(message.marketCapCents);
+            writer.tag(3, WireType.Varint).int64(message.marketCapCents);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2054,13 +2032,15 @@ class AssetDetailChart$Type extends MessageType<AssetDetailChart> {
     constructor() {
         super("hypurr.AssetDetailChart", [
             { no: 1, name: "period", kind: "enum", T: () => ["hypurr.AssetDetailChartPeriod", AssetDetailChartPeriod] },
-            { no: 2, name: "points", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => AssetDetailChartPoint }
+            { no: 2, name: "points", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => AssetDetailChartPoint },
+            { no: 3, name: "candle_interval_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<AssetDetailChart>): AssetDetailChart {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.period = 0;
         message.points = [];
+        message.candleIntervalSeconds = 0;
         if (value !== undefined)
             reflectionMergePartial<AssetDetailChart>(this, message, value);
         return message;
@@ -2075,6 +2055,9 @@ class AssetDetailChart$Type extends MessageType<AssetDetailChart> {
                     break;
                 case /* repeated hypurr.AssetDetailChartPoint points */ 2:
                     message.points.push(AssetDetailChartPoint.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* int64 candle_interval_seconds */ 3:
+                    message.candleIntervalSeconds = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2094,6 +2077,9 @@ class AssetDetailChart$Type extends MessageType<AssetDetailChart> {
         /* repeated hypurr.AssetDetailChartPoint points = 2; */
         for (let i = 0; i < message.points.length; i++)
             AssetDetailChartPoint.internalBinaryWrite(message.points[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* int64 candle_interval_seconds = 3; */
+        if (message.candleIntervalSeconds !== 0)
+            writer.tag(3, WireType.Varint).int64(message.candleIntervalSeconds);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
