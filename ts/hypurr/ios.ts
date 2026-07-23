@@ -573,39 +573,33 @@ export interface AssetDetailPerpOverview {
      */
     volume24H: string;
     /**
-     * Current open interests on the instrument with single decimal precision, e.g. "$45.1M".
-     *
-     * @generated from protobuf field: string open_interests = 2
-     */
-    openInterests: string;
-    /**
      * Current hourly funding on the instrument in %, positive means longs pay shorts, e.g. "0.0012%" or "-0.001%"
      *
-     * @generated from protobuf field: string funding = 3
+     * @generated from protobuf field: string funding = 2
      */
     funding: string;
     /**
      * All-time high price with up to asset decimals precision, e.g. "237.49" or "0.0001"
      *
-     * @generated from protobuf field: string all_time_high = 4
+     * @generated from protobuf field: string all_time_high = 3
      */
     allTimeHigh: string;
     /**
      * The max leverage for the asset, e.g. "10x" or "3x"
      *
-     * @generated from protobuf field: string max_leverage = 5
+     * @generated from protobuf field: string max_leverage = 4
      */
     maxLeverage: string;
     /**
      * Plain-text asset description.
      *
-     * @generated from protobuf field: string description = 6
+     * @generated from protobuf field: string description = 5
      */
     description: string;
     /**
      * Plain-text asset category.
      *
-     * @generated from protobuf field: string category = 7
+     * @generated from protobuf field: string category = 6
      */
     category: string;
 }
@@ -2264,18 +2258,16 @@ class AssetDetailPerpOverview$Type extends MessageType<AssetDetailPerpOverview> 
     constructor() {
         super("hypurr.AssetDetailPerpOverview", [
             { no: 1, name: "volume_24h", kind: "scalar", jsonName: "volume24h", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "open_interests", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "funding", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "all_time_high", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "max_leverage", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "category", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "funding", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "all_time_high", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "max_leverage", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "category", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<AssetDetailPerpOverview>): AssetDetailPerpOverview {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.volume24H = "";
-        message.openInterests = "";
         message.funding = "";
         message.allTimeHigh = "";
         message.maxLeverage = "";
@@ -2293,22 +2285,19 @@ class AssetDetailPerpOverview$Type extends MessageType<AssetDetailPerpOverview> 
                 case /* string volume_24h */ 1:
                     message.volume24H = reader.string();
                     break;
-                case /* string open_interests */ 2:
-                    message.openInterests = reader.string();
-                    break;
-                case /* string funding */ 3:
+                case /* string funding */ 2:
                     message.funding = reader.string();
                     break;
-                case /* string all_time_high */ 4:
+                case /* string all_time_high */ 3:
                     message.allTimeHigh = reader.string();
                     break;
-                case /* string max_leverage */ 5:
+                case /* string max_leverage */ 4:
                     message.maxLeverage = reader.string();
                     break;
-                case /* string description */ 6:
+                case /* string description */ 5:
                     message.description = reader.string();
                     break;
-                case /* string category */ 7:
+                case /* string category */ 6:
                     message.category = reader.string();
                     break;
                 default:
@@ -2326,24 +2315,21 @@ class AssetDetailPerpOverview$Type extends MessageType<AssetDetailPerpOverview> 
         /* string volume_24h = 1; */
         if (message.volume24H !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.volume24H);
-        /* string open_interests = 2; */
-        if (message.openInterests !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.openInterests);
-        /* string funding = 3; */
+        /* string funding = 2; */
         if (message.funding !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.funding);
-        /* string all_time_high = 4; */
+            writer.tag(2, WireType.LengthDelimited).string(message.funding);
+        /* string all_time_high = 3; */
         if (message.allTimeHigh !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.allTimeHigh);
-        /* string max_leverage = 5; */
+            writer.tag(3, WireType.LengthDelimited).string(message.allTimeHigh);
+        /* string max_leverage = 4; */
         if (message.maxLeverage !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.maxLeverage);
-        /* string description = 6; */
+            writer.tag(4, WireType.LengthDelimited).string(message.maxLeverage);
+        /* string description = 5; */
         if (message.description !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.description);
-        /* string category = 7; */
+            writer.tag(5, WireType.LengthDelimited).string(message.description);
+        /* string category = 6; */
         if (message.category !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.category);
+            writer.tag(6, WireType.LengthDelimited).string(message.category);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
