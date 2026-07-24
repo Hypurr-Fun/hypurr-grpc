@@ -1219,6 +1219,10 @@ export interface WalletTradesRequest {
      * @generated from protobuf field: string page_token = 6
      */
     pageToken: string; // from previous response; empty = first page
+    /**
+     * @generated from protobuf field: repeated int64 asset_ids = 7
+     */
+    assetIds: number[]; // same convention as HistoricalWalletTrade.instrument_id: perp = index, spot = index + 10000; empty = no filter
 }
 /**
  * @generated from protobuf message hypercore.WalletTradesResponse
@@ -5596,7 +5600,8 @@ class WalletTradesRequest$Type extends MessageType<WalletTradesRequest> {
             { no: 3, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "type", kind: "enum", T: () => ["hypercore.WalletTradeType", WalletTradeType, "WALLET_TRADE_TYPE_"] },
             { no: 5, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 6, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "asset_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<WalletTradesRequest>): WalletTradesRequest {
@@ -5607,6 +5612,7 @@ class WalletTradesRequest$Type extends MessageType<WalletTradesRequest> {
         message.type = 0;
         message.pageSize = 0;
         message.pageToken = "";
+        message.assetIds = [];
         if (value !== undefined)
             reflectionMergePartial<WalletTradesRequest>(this, message, value);
         return message;
@@ -5633,6 +5639,13 @@ class WalletTradesRequest$Type extends MessageType<WalletTradesRequest> {
                     break;
                 case /* string page_token */ 6:
                     message.pageToken = reader.string();
+                    break;
+                case /* repeated int64 asset_ids */ 7:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.assetIds.push(reader.int64().toNumber());
+                    else
+                        message.assetIds.push(reader.int64().toNumber());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5664,6 +5677,13 @@ class WalletTradesRequest$Type extends MessageType<WalletTradesRequest> {
         /* string page_token = 6; */
         if (message.pageToken !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.pageToken);
+        /* repeated int64 asset_ids = 7; */
+        if (message.assetIds.length) {
+            writer.tag(7, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.assetIds.length; i++)
+                writer.int64(message.assetIds[i]);
+            writer.join();
+        }
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
