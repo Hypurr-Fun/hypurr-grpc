@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { IosService } from "./ios";
+import type { AssetMetadataCatalogResponse } from "./ios";
+import type { AssetMetadataCatalogRequest } from "./ios";
 import type { AssetDetailLiveUpdate } from "./ios";
 import type { AssetDetailLiveUpdatesRequest } from "./ios";
 import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
@@ -30,6 +32,10 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: AssetDetailLiveUpdates
      */
     assetDetailLiveUpdates(input: AssetDetailLiveUpdatesRequest, options?: RpcOptions): ServerStreamingCall<AssetDetailLiveUpdatesRequest, AssetDetailLiveUpdate>;
+    /**
+     * @generated from protobuf rpc: AssetMetadataCatalog
+     */
+    assetMetadataCatalog(input: AssetMetadataCatalogRequest, options?: RpcOptions): UnaryCall<AssetMetadataCatalogRequest, AssetMetadataCatalogResponse>;
 }
 /**
  * @generated from protobuf service hypurr.IosService
@@ -60,5 +66,12 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
     assetDetailLiveUpdates(input: AssetDetailLiveUpdatesRequest, options?: RpcOptions): ServerStreamingCall<AssetDetailLiveUpdatesRequest, AssetDetailLiveUpdate> {
         const method = this.methods[2], opt = this._transport.mergeOptions(options);
         return stackIntercept<AssetDetailLiveUpdatesRequest, AssetDetailLiveUpdate>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: AssetMetadataCatalog
+     */
+    assetMetadataCatalog(input: AssetMetadataCatalogRequest, options?: RpcOptions): UnaryCall<AssetMetadataCatalogRequest, AssetMetadataCatalogResponse> {
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        return stackIntercept<AssetMetadataCatalogRequest, AssetMetadataCatalogResponse>("unary", this._transport, method, opt, input);
     }
 }

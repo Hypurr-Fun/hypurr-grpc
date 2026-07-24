@@ -6,7 +6,10 @@ service IosService {
   rpc Home(HomeRequest) returns (HomeResponse);
   rpc AssetDetail(AssetDetailRequest) returns (AssetDetailResponse);
   rpc AssetDetailLiveUpdates(AssetDetailLiveUpdatesRequest) returns (stream AssetDetailLiveUpdate);
+  rpc AssetMetadataCatalog(AssetMetadataCatalogRequest) returns (AssetMetadataCatalogResponse);
 }
+
+// ==== Shared ====
 
 // Color carries both theme variants for a single UI color.
 // Expected format: #RRGGBB.
@@ -15,23 +18,7 @@ message Color {
   string dark_hex = 2;  // e.g. "#98FFC0"
 }
 
-message PortfolioSummarySection {
-  // Main card value in cents, e.g. "$22,482.17" -> 2248217.
-  // Should be an int value already converted to the app's default currency, currently USD, scaled by 100 for cents.
-  int64 total_value_cents = 1; // e.g. 2248217
-
-  // Change badge value, e.g. "+$1,284.35" -> 128435.
-  // Signed int value, already converted to the app's default currency, scaled by 100 for cents.
-  int64 absolute_change_cents = 2; // e.g. 128400 or -51200
-
-  // Optional for the current design, but useful if the card later shows percentage change.
-  // Double value with 2 decimals precision e.g. 11.34 or -35.4
-  double percentage_change = 3;
-
-  // Response order is display order.
-  // Mobile renders allocation rows and allocation bar segments in this exact order.
-  repeated PortfolioAllocation allocations = 4;
-}
+// ==== Home ====
 
 message HomeRequest {}
 
@@ -62,6 +49,44 @@ message HomeAccountSummary {
   // 24-hour change, window-agnostic naming. e.g. 6.0 = +6%.
   // Double value with 2 decimals precision e.g. 11.34 or -35.4
   double change_percentage = 5;
+}
+
+message PortfolioSummarySection {
+  // Main card value in cents, e.g. "$22,482.17" -> 2248217.
+  // Should be an int value already converted to the app's default currency, currently USD, scaled by 100 for cents.
+  int64 total_value_cents = 1; // e.g. 2248217
+
+  // Change badge value, e.g. "+$1,284.35" -> 128435.
+  // Signed int value, already converted to the app's default currency, scaled by 100 for cents.
+  int64 absolute_change_cents = 2; // e.g. 128400 or -51200
+
+  // Optional for the current design, but useful if the card later shows percentage change.
+  // Double value with 2 decimals precision e.g. 11.34 or -35.4
+  double percentage_change = 3;
+
+  // Response order is display order.
+  // Mobile renders allocation rows and allocation bar segments in this exact order.
+  repeated PortfolioAllocation allocations = 4;
+}
+
+message PortfolioAllocation {
+  // Asset id from Hyperliquid: https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/asset-ids.
+  string asset_id = 1;
+
+  // Display name shown in the row, e.g. "HFUN", "ETH", "USDC".
+  string name = 2;
+
+  // Row value, e.g. "$12.4K" -> 1240000.
+  // Should be a decimal value already converted to the app's default currency, currently USD, scaled by 100 for cents.
+  int64 value_cents = 3; // e.g. 1240000
+
+  // Row percentage and allocation bar segment width, e.g. 51.
+  // Mobile can calculate this from value / total_value, but backend-provided values avoid rounding mismatch.
+  // Double value with 2 decimals precision e.g. 11.34 or -35.4
+  double percentage = 4;
+
+  // Dot color and matching allocation bar segment color (light + dark variants).
+  Color color = 5;
 }
 
 message RecentActivitySection {
@@ -134,6 +159,8 @@ message ReceiveActivity {
   int64 amount_cents = 2;
 }
 
+// ==== AssetDetail ====
+
 enum AssetDetailChartPeriod {
   ASSET_DETAIL_CHART_PERIOD_UNSPECIFIED = 0; // treated as 1D
   ASSET_DETAIL_CHART_PERIOD_1D = 1;
@@ -151,30 +178,11 @@ message AssetDetailRequest {
   AssetDetailChartPeriod chart_period = 2;
 }
 
-message AssetDetailLiveUpdatesRequest {
-  uint64 asset_id = 1;
-}
-
 message AssetDetailResponse {
   AssetDetailMetadata metadata = 1;
   AssetDetailPriceSummary price = 2;
   AssetDetailChart chart = 3;
   AssetDetailOverview overview = 4;
-}
-
-// Append-only live update for the active 1D view: mobile appends a new price
-// point to the 1D chart and refreshes the hero price / market cap or open interest display.
-message AssetDetailLiveUpdate {
-  // RFC3339 UTC timestamp.
-  string occurred_at = 1;
-  // Asset price with asset decimal precision e.g. "$22,482.17" -> "22482.17" or "$0.00017" -> "0.00017"
-  string price_decimal = 2;
-  oneof valuation {
-    // Market cap of the spot asset in cents e.g. "$22,482.17" -> 2248217.
-    int64 market_cap_cents = 3;
-    // Open interest of the perp in cents, same encoding.
-    int64 open_interest_cents = 4;
-  }
 }
 
 message AssetDetailMetadata {
@@ -255,22 +263,46 @@ message AssetDetailSpotOverview {
   string description = 5;
 }
 
-message PortfolioAllocation {
-  // Asset id from Hyperliquid: https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/asset-ids.
-  string asset_id = 1;
+// ==== AssetDetailLiveUpdates ====
 
-  // Display name shown in the row, e.g. "HFUN", "ETH", "USDC".
-  string name = 2;
+message AssetDetailLiveUpdatesRequest {
+  uint64 asset_id = 1;
+}
 
-  // Row value, e.g. "$12.4K" -> 1240000.
-  // Should be a decimal value already converted to the app's default currency, currently USD, scaled by 100 for cents.
-  int64 value_cents = 3; // e.g. 1240000
+// Append-only live update for the active 1D view: mobile appends a new price
+// point to the 1D chart and refreshes the hero price / market cap or open interest display.
+message AssetDetailLiveUpdate {
+  // RFC3339 UTC timestamp.
+  string occurred_at = 1;
+  // Asset price with asset decimal precision e.g. "$22,482.17" -> "22482.17" or "$0.00017" -> "0.00017"
+  string price_decimal = 2;
+  oneof valuation {
+    // Market cap of the spot asset in cents e.g. "$22,482.17" -> 2248217.
+    int64 market_cap_cents = 3;
+    // Open interest of the perp in cents, same encoding.
+    int64 open_interest_cents = 4;
+  }
+}
 
-  // Row percentage and allocation bar segment width, e.g. 51.
-  // Mobile can calculate this from value / total_value, but backend-provided values avoid rounding mismatch.
-  // Double value with 2 decimals precision e.g. 11.34 or -35.4
-  double percentage = 4;
+// ==== AssetMetadataCatalog ====
 
-  // Dot color and matching allocation bar segment color (light + dark variants).
+message AssetMetadataCatalogRequest {}
+
+message AssetMetadataCatalogResponse {
+  // Active/searchable assets. Mobile fetches this on app launch and can filter locally.
+  repeated AssetMetadata assets = 1;
+}
+
+message AssetMetadata {
+  // Stable Hyperliquid/backend asset id used for navigation.
+  // Same convention as asset detail: perp = pair id, spot = 10000 + spot index.
+  uint64 asset_id = 1;
+
+  string symbol = 2; // e.g. "HFUN"
+  string name = 3;   // e.g. "Hypurr Fun"
+
+  // Full remote image URL. Mobile owns fallback if empty.
+  string logo_url = 4;
+
   Color color = 5;
 }
