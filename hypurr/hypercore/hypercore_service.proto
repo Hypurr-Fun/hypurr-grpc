@@ -506,6 +506,7 @@ message WalletTradesRequest {
   WalletTradeType type  = 4; // ALL = perp + spot merged
   int32  page_size      = 5; // max 2000; 0 = 2000
   string page_token     = 6; // from previous response; empty = first page
+  repeated int64 asset_ids = 7; // same convention as HistoricalWalletTrade.instrument_id: perp = index, spot = index + 10000; empty = no filter
 }
 
 message WalletTradesResponse {
