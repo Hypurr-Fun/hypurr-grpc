@@ -51,6 +51,7 @@ message WalletFilter {
   WalletTag tag = 3;
   repeated WalletTag included_tags = 4;
   repeated WalletTag excluded_tags = 5;
+  repeated string excluded_addresses = 6;
 }
 
 message TradeSideInfo {
