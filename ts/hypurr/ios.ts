@@ -788,7 +788,8 @@ export interface AccountWallet {
      */
     balanceCents: number;
     /**
-     * Backend-owned avatar color; deterministic default when the user hasn't set one.
+     * Backend-derived avatar color; fallback/placeholder when image_url is
+     * empty or still loading.
      *
      * @generated from protobuf field: hypurr.Color color = 5
      */
@@ -808,6 +809,12 @@ export interface AccountWallet {
      * @generated from protobuf field: hypurr.SpotAccountBalanceSection spot = 8
      */
     spot?: SpotAccountBalanceSection;
+    /**
+     * Avatar image; empty = no image, show the color avatar.
+     *
+     * @generated from protobuf field: string image_url = 9
+     */
+    imageUrl: string;
 }
 /**
  * @generated from protobuf message hypurr.CashAccountBalanceSection
@@ -2948,7 +2955,8 @@ class AccountWallet$Type extends MessageType<AccountWallet> {
             { no: 5, name: "color", kind: "message", T: () => Color },
             { no: 6, name: "cash", kind: "message", T: () => CashAccountBalanceSection },
             { no: 7, name: "perp", kind: "message", T: () => PerpAccountBalanceSection },
-            { no: 8, name: "spot", kind: "message", T: () => SpotAccountBalanceSection }
+            { no: 8, name: "spot", kind: "message", T: () => SpotAccountBalanceSection },
+            { no: 9, name: "image_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<AccountWallet>): AccountWallet {
@@ -2957,6 +2965,7 @@ class AccountWallet$Type extends MessageType<AccountWallet> {
         message.name = "";
         message.address = "";
         message.balanceCents = 0;
+        message.imageUrl = "";
         if (value !== undefined)
             reflectionMergePartial<AccountWallet>(this, message, value);
         return message;
@@ -2989,6 +2998,9 @@ class AccountWallet$Type extends MessageType<AccountWallet> {
                     break;
                 case /* hypurr.SpotAccountBalanceSection spot */ 8:
                     message.spot = SpotAccountBalanceSection.internalBinaryRead(reader, reader.uint32(), options, message.spot);
+                    break;
+                case /* string image_url */ 9:
+                    message.imageUrl = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3026,6 +3038,9 @@ class AccountWallet$Type extends MessageType<AccountWallet> {
         /* hypurr.SpotAccountBalanceSection spot = 8; */
         if (message.spot)
             SpotAccountBalanceSection.internalBinaryWrite(message.spot, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* string image_url = 9; */
+        if (message.imageUrl !== "")
+            writer.tag(9, WireType.LengthDelimited).string(message.imageUrl);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

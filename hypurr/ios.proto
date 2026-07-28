@@ -336,7 +336,8 @@ message AccountWallet {
   // Wallet total, USD cents.
   int64 balance_cents = 4;
 
-  // Backend-owned avatar color; deterministic default when the user hasn't set one.
+  // Backend-derived avatar color; fallback/placeholder when image_url is
+  // empty or still loading.
   Color color = 5;
 
   // Display order is cash, perp, spot. A section is absent when the
@@ -344,6 +345,9 @@ message AccountWallet {
   CashAccountBalanceSection cash = 6;
   PerpAccountBalanceSection perp = 7;
   SpotAccountBalanceSection spot = 8;
+
+  // Avatar image; empty = no image, show the color avatar.
+  string image_url = 9;
 }
 
 message CashAccountBalanceSection {
