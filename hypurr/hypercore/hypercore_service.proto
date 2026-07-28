@@ -131,6 +131,7 @@ message AggregatedWalletPositioningStreamRequest {
 message AggregatedWalletPositioningStreamResponse {
   AggregatedWalletPositioningSummary summary = 1;
   repeated WalletPositioning wallet_positions = 2;
+  double mark_price = 3;
 }
 
 message WalletPositioning {

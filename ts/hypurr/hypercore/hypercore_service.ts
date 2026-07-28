@@ -268,6 +268,10 @@ export interface AggregatedWalletPositioningStreamResponse {
      * @generated from protobuf field: repeated hypercore.WalletPositioning wallet_positions = 2
      */
     walletPositions: WalletPositioning[];
+    /**
+     * @generated from protobuf field: double mark_price = 3
+     */
+    markPrice: number;
 }
 /**
  * @generated from protobuf message hypercore.WalletPositioning
@@ -2436,12 +2440,14 @@ class AggregatedWalletPositioningStreamResponse$Type extends MessageType<Aggrega
     constructor() {
         super("hypercore.AggregatedWalletPositioningStreamResponse", [
             { no: 1, name: "summary", kind: "message", T: () => AggregatedWalletPositioningSummary },
-            { no: 2, name: "wallet_positions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletPositioning }
+            { no: 2, name: "wallet_positions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletPositioning },
+            { no: 3, name: "mark_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<AggregatedWalletPositioningStreamResponse>): AggregatedWalletPositioningStreamResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.walletPositions = [];
+        message.markPrice = 0;
         if (value !== undefined)
             reflectionMergePartial<AggregatedWalletPositioningStreamResponse>(this, message, value);
         return message;
@@ -2456,6 +2462,9 @@ class AggregatedWalletPositioningStreamResponse$Type extends MessageType<Aggrega
                     break;
                 case /* repeated hypercore.WalletPositioning wallet_positions */ 2:
                     message.walletPositions.push(WalletPositioning.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* double mark_price */ 3:
+                    message.markPrice = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2475,6 +2484,9 @@ class AggregatedWalletPositioningStreamResponse$Type extends MessageType<Aggrega
         /* repeated hypercore.WalletPositioning wallet_positions = 2; */
         for (let i = 0; i < message.walletPositions.length; i++)
             WalletPositioning.internalBinaryWrite(message.walletPositions[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* double mark_price = 3; */
+        if (message.markPrice !== 0)
+            writer.tag(3, WireType.Bit64).double(message.markPrice);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
