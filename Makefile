@@ -1,8 +1,5 @@
 # Protobuf definitions
 PROTO_FILES := $(shell find hypurr -type f -name '*.proto')
-# Protobuf Go files
-PROTO_GEN_GO_FILES = $(patsubst %.proto, go/%.pb.go, $(PROTO_FILES))
-PROTO_GEN_GO_GRPC_FILES = $(patsubst %.proto, go/%_grpc.pb.go, $(PROTO_FILES))
 # Protobuf TypeScript files
 PROTO_GEN_TS_FILES = $(patsubst %.proto, ts/%_pb.js, $(PROTO_FILES))
 # Protobuf Python files
@@ -33,8 +30,14 @@ all: build
 # Build everything
 build: golang javascript python
 
-# Compile Protobuf for Go
-golang: $(PROTO_GEN_GO_FILES)
+# Compile Protobuf for Go. Always regenerate: checked-in generated files can
+# retain newer mtimes while containing stale output after a merge.
+golang:
+	@mkdir -p go
+	$(PROTO_GO_MAKER) \
+		--go_out=go --go-grpc_out=go \
+		--go_opt=paths=source_relative --go-grpc_opt=paths=source_relative \
+		$(PROTO_FILES)
 
 # Compile Protobuf for TypeScript
 javascript: $(PROTO_GEN_TS_FILES)
@@ -47,14 +50,6 @@ py-deps: $(PY)
 $(PY):
 	python3 -m venv .venv
 	$(PY) -m pip install --quiet --upgrade pip 'grpcio-tools>=1.62'
-
-# Generate Go protobuf files
-go/%.pb.go go/%_grpc.pb.go: %.proto
-	@mkdir -p $(dir $@)
-	$(PROTO_GO_MAKER) \
-		--go_out=go --go-grpc_out=go \
-		--go_opt=paths=source_relative --go-grpc_opt=paths=source_relative \
-		$<
 
 # Generate TypeScript protobuf files
 ts/%_pb.js: %.proto

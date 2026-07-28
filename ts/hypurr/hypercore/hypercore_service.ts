@@ -39,6 +39,10 @@ export interface WalletFilter {
      * @generated from protobuf field: repeated hypercore.WalletTag excluded_tags = 5
      */
     excludedTags: WalletTag[];
+    /**
+     * @generated from protobuf field: repeated string excluded_addresses = 6
+     */
+    excludedAddresses: string[];
 }
 /**
  * @generated from protobuf message hypercore.TradeSideInfo
@@ -1565,7 +1569,8 @@ class WalletFilter$Type extends MessageType<WalletFilter> {
             { no: 2, name: "bloom_filter", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
             { no: 3, name: "tag", kind: "enum", T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] },
             { no: 4, name: "included_tags", kind: "enum", repeat: 1 /*RepeatType.PACKED*/, T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] },
-            { no: 5, name: "excluded_tags", kind: "enum", repeat: 1 /*RepeatType.PACKED*/, T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] }
+            { no: 5, name: "excluded_tags", kind: "enum", repeat: 1 /*RepeatType.PACKED*/, T: () => ["hypercore.WalletTag", WalletTag, "WALLET_TAG_"] },
+            { no: 6, name: "excluded_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<WalletFilter>): WalletFilter {
@@ -1575,6 +1580,7 @@ class WalletFilter$Type extends MessageType<WalletFilter> {
         message.tag = 0;
         message.includedTags = [];
         message.excludedTags = [];
+        message.excludedAddresses = [];
         if (value !== undefined)
             reflectionMergePartial<WalletFilter>(this, message, value);
         return message;
@@ -1606,6 +1612,9 @@ class WalletFilter$Type extends MessageType<WalletFilter> {
                             message.excludedTags.push(reader.int32());
                     else
                         message.excludedTags.push(reader.int32());
+                    break;
+                case /* repeated string excluded_addresses */ 6:
+                    message.excludedAddresses.push(reader.string());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1642,6 +1651,9 @@ class WalletFilter$Type extends MessageType<WalletFilter> {
                 writer.int32(message.excludedTags[i]);
             writer.join();
         }
+        /* repeated string excluded_addresses = 6; */
+        for (let i = 0; i < message.excludedAddresses.length; i++)
+            writer.tag(6, WireType.LengthDelimited).string(message.excludedAddresses[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
