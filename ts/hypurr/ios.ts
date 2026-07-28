@@ -730,6 +730,133 @@ export interface AssetMetadata {
      */
     color?: Color;
 }
+// ==== Accounts ====
+
+/**
+ * @generated from protobuf message hypurr.AccountsRequest
+ */
+export interface AccountsRequest {
+}
+/**
+ * @generated from protobuf message hypurr.AccountsResponse
+ */
+export interface AccountsResponse {
+    /**
+     * Sum across all wallets, USD cents.
+     *
+     * @generated from protobuf field: int64 total_balance_cents = 1
+     */
+    totalBalanceCents: number;
+    /**
+     * Signed account change, USD cents.
+     * Backend owns the window/meaning; mobile only renders the value.
+     *
+     * @generated from protobuf field: int64 change_cents = 2
+     */
+    changeCents: number;
+    /**
+     * Response order is display order.
+     *
+     * @generated from protobuf field: repeated hypurr.AccountWallet wallets = 3
+     */
+    wallets: AccountWallet[];
+}
+/**
+ * @generated from protobuf message hypurr.AccountWallet
+ */
+export interface AccountWallet {
+    /**
+     * Stable wallet id for diffing and local expand/collapse state.
+     *
+     * @generated from protobuf field: string wallet_id = 1
+     */
+    walletId: string;
+    /**
+     * @generated from protobuf field: string name = 2
+     */
+    name: string;
+    /**
+     * Full address; mobile owns middle truncation.
+     *
+     * @generated from protobuf field: string address = 3
+     */
+    address: string;
+    /**
+     * Wallet total, USD cents.
+     *
+     * @generated from protobuf field: int64 balance_cents = 4
+     */
+    balanceCents: number;
+    /**
+     * Backend-derived avatar color; fallback/placeholder when image_url is
+     * empty or still loading.
+     *
+     * @generated from protobuf field: hypurr.Color color = 5
+     */
+    color?: Color;
+    /**
+     * Display order is cash, perp, spot. A section is absent when the
+     * wallet has nothing to show in it.
+     *
+     * @generated from protobuf field: hypurr.CashAccountBalanceSection cash = 6
+     */
+    cash?: CashAccountBalanceSection;
+    /**
+     * @generated from protobuf field: hypurr.PerpAccountBalanceSection perp = 7
+     */
+    perp?: PerpAccountBalanceSection;
+    /**
+     * @generated from protobuf field: hypurr.SpotAccountBalanceSection spot = 8
+     */
+    spot?: SpotAccountBalanceSection;
+    /**
+     * Avatar image; empty = no image, show the color avatar.
+     *
+     * @generated from protobuf field: string image_url = 9
+     */
+    imageUrl: string;
+}
+/**
+ * @generated from protobuf message hypurr.CashAccountBalanceSection
+ */
+export interface CashAccountBalanceSection {
+    /**
+     * Section total, USD cents.
+     *
+     * @generated from protobuf field: int64 balance_cents = 1
+     */
+    balanceCents: number;
+}
+/**
+ * @generated from protobuf message hypurr.PerpAccountBalanceSection
+ */
+export interface PerpAccountBalanceSection {
+    /**
+     * Section total, USD cents.
+     *
+     * @generated from protobuf field: int64 balance_cents = 1
+     */
+    balanceCents: number;
+    /**
+     * @generated from protobuf field: int32 open_perps_count = 2
+     */
+    openPerpsCount: number;
+}
+/**
+ * @generated from protobuf message hypurr.SpotAccountBalanceSection
+ */
+export interface SpotAccountBalanceSection {
+    /**
+     * Section total, USD cents.
+     *
+     * @generated from protobuf field: int64 balance_cents = 1
+     */
+    balanceCents: number;
+    /**
+     * @generated from protobuf field: int32 token_count = 2
+     */
+    tokenCount: number;
+}
 /**
  * @generated from protobuf enum hypurr.PositionDirection
  */
@@ -2716,6 +2843,371 @@ class AssetMetadata$Type extends MessageType<AssetMetadata> {
  * @generated MessageType for protobuf message hypurr.AssetMetadata
  */
 export const AssetMetadata = new AssetMetadata$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AccountsRequest$Type extends MessageType<AccountsRequest> {
+    constructor() {
+        super("hypurr.AccountsRequest", []);
+    }
+    create(value?: PartialMessage<AccountsRequest>): AccountsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<AccountsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AccountsRequest): AccountsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AccountsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AccountsRequest
+ */
+export const AccountsRequest = new AccountsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AccountsResponse$Type extends MessageType<AccountsResponse> {
+    constructor() {
+        super("hypurr.AccountsResponse", [
+            { no: 1, name: "total_balance_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "change_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => AccountWallet }
+        ]);
+    }
+    create(value?: PartialMessage<AccountsResponse>): AccountsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.totalBalanceCents = 0;
+        message.changeCents = 0;
+        message.wallets = [];
+        if (value !== undefined)
+            reflectionMergePartial<AccountsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AccountsResponse): AccountsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 total_balance_cents */ 1:
+                    message.totalBalanceCents = reader.int64().toNumber();
+                    break;
+                case /* int64 change_cents */ 2:
+                    message.changeCents = reader.int64().toNumber();
+                    break;
+                case /* repeated hypurr.AccountWallet wallets */ 3:
+                    message.wallets.push(AccountWallet.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AccountsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 total_balance_cents = 1; */
+        if (message.totalBalanceCents !== 0)
+            writer.tag(1, WireType.Varint).int64(message.totalBalanceCents);
+        /* int64 change_cents = 2; */
+        if (message.changeCents !== 0)
+            writer.tag(2, WireType.Varint).int64(message.changeCents);
+        /* repeated hypurr.AccountWallet wallets = 3; */
+        for (let i = 0; i < message.wallets.length; i++)
+            AccountWallet.internalBinaryWrite(message.wallets[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AccountsResponse
+ */
+export const AccountsResponse = new AccountsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AccountWallet$Type extends MessageType<AccountWallet> {
+    constructor() {
+        super("hypurr.AccountWallet", [
+            { no: 1, name: "wallet_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "balance_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "color", kind: "message", T: () => Color },
+            { no: 6, name: "cash", kind: "message", T: () => CashAccountBalanceSection },
+            { no: 7, name: "perp", kind: "message", T: () => PerpAccountBalanceSection },
+            { no: 8, name: "spot", kind: "message", T: () => SpotAccountBalanceSection },
+            { no: 9, name: "image_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AccountWallet>): AccountWallet {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletId = "";
+        message.name = "";
+        message.address = "";
+        message.balanceCents = 0;
+        message.imageUrl = "";
+        if (value !== undefined)
+            reflectionMergePartial<AccountWallet>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AccountWallet): AccountWallet {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_id */ 1:
+                    message.walletId = reader.string();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* string address */ 3:
+                    message.address = reader.string();
+                    break;
+                case /* int64 balance_cents */ 4:
+                    message.balanceCents = reader.int64().toNumber();
+                    break;
+                case /* hypurr.Color color */ 5:
+                    message.color = Color.internalBinaryRead(reader, reader.uint32(), options, message.color);
+                    break;
+                case /* hypurr.CashAccountBalanceSection cash */ 6:
+                    message.cash = CashAccountBalanceSection.internalBinaryRead(reader, reader.uint32(), options, message.cash);
+                    break;
+                case /* hypurr.PerpAccountBalanceSection perp */ 7:
+                    message.perp = PerpAccountBalanceSection.internalBinaryRead(reader, reader.uint32(), options, message.perp);
+                    break;
+                case /* hypurr.SpotAccountBalanceSection spot */ 8:
+                    message.spot = SpotAccountBalanceSection.internalBinaryRead(reader, reader.uint32(), options, message.spot);
+                    break;
+                case /* string image_url */ 9:
+                    message.imageUrl = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AccountWallet, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_id = 1; */
+        if (message.walletId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletId);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* string address = 3; */
+        if (message.address !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.address);
+        /* int64 balance_cents = 4; */
+        if (message.balanceCents !== 0)
+            writer.tag(4, WireType.Varint).int64(message.balanceCents);
+        /* hypurr.Color color = 5; */
+        if (message.color)
+            Color.internalBinaryWrite(message.color, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.CashAccountBalanceSection cash = 6; */
+        if (message.cash)
+            CashAccountBalanceSection.internalBinaryWrite(message.cash, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.PerpAccountBalanceSection perp = 7; */
+        if (message.perp)
+            PerpAccountBalanceSection.internalBinaryWrite(message.perp, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.SpotAccountBalanceSection spot = 8; */
+        if (message.spot)
+            SpotAccountBalanceSection.internalBinaryWrite(message.spot, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* string image_url = 9; */
+        if (message.imageUrl !== "")
+            writer.tag(9, WireType.LengthDelimited).string(message.imageUrl);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.AccountWallet
+ */
+export const AccountWallet = new AccountWallet$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CashAccountBalanceSection$Type extends MessageType<CashAccountBalanceSection> {
+    constructor() {
+        super("hypurr.CashAccountBalanceSection", [
+            { no: 1, name: "balance_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CashAccountBalanceSection>): CashAccountBalanceSection {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.balanceCents = 0;
+        if (value !== undefined)
+            reflectionMergePartial<CashAccountBalanceSection>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CashAccountBalanceSection): CashAccountBalanceSection {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 balance_cents */ 1:
+                    message.balanceCents = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CashAccountBalanceSection, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 balance_cents = 1; */
+        if (message.balanceCents !== 0)
+            writer.tag(1, WireType.Varint).int64(message.balanceCents);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.CashAccountBalanceSection
+ */
+export const CashAccountBalanceSection = new CashAccountBalanceSection$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PerpAccountBalanceSection$Type extends MessageType<PerpAccountBalanceSection> {
+    constructor() {
+        super("hypurr.PerpAccountBalanceSection", [
+            { no: 1, name: "balance_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "open_perps_count", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PerpAccountBalanceSection>): PerpAccountBalanceSection {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.balanceCents = 0;
+        message.openPerpsCount = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PerpAccountBalanceSection>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerpAccountBalanceSection): PerpAccountBalanceSection {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 balance_cents */ 1:
+                    message.balanceCents = reader.int64().toNumber();
+                    break;
+                case /* int32 open_perps_count */ 2:
+                    message.openPerpsCount = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PerpAccountBalanceSection, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 balance_cents = 1; */
+        if (message.balanceCents !== 0)
+            writer.tag(1, WireType.Varint).int64(message.balanceCents);
+        /* int32 open_perps_count = 2; */
+        if (message.openPerpsCount !== 0)
+            writer.tag(2, WireType.Varint).int32(message.openPerpsCount);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PerpAccountBalanceSection
+ */
+export const PerpAccountBalanceSection = new PerpAccountBalanceSection$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SpotAccountBalanceSection$Type extends MessageType<SpotAccountBalanceSection> {
+    constructor() {
+        super("hypurr.SpotAccountBalanceSection", [
+            { no: 1, name: "balance_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "token_count", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SpotAccountBalanceSection>): SpotAccountBalanceSection {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.balanceCents = 0;
+        message.tokenCount = 0;
+        if (value !== undefined)
+            reflectionMergePartial<SpotAccountBalanceSection>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SpotAccountBalanceSection): SpotAccountBalanceSection {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 balance_cents */ 1:
+                    message.balanceCents = reader.int64().toNumber();
+                    break;
+                case /* int32 token_count */ 2:
+                    message.tokenCount = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SpotAccountBalanceSection, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 balance_cents = 1; */
+        if (message.balanceCents !== 0)
+            writer.tag(1, WireType.Varint).int64(message.balanceCents);
+        /* int32 token_count = 2; */
+        if (message.tokenCount !== 0)
+            writer.tag(2, WireType.Varint).int32(message.tokenCount);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SpotAccountBalanceSection
+ */
+export const SpotAccountBalanceSection = new SpotAccountBalanceSection$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.IosService
  */
@@ -2723,5 +3215,6 @@ export const IosService = new ServiceType("hypurr.IosService", [
     { name: "Home", options: {}, I: HomeRequest, O: HomeResponse },
     { name: "AssetDetail", options: {}, I: AssetDetailRequest, O: AssetDetailResponse },
     { name: "AssetDetailLiveUpdates", serverStreaming: true, options: {}, I: AssetDetailLiveUpdatesRequest, O: AssetDetailLiveUpdate },
-    { name: "AssetMetadataCatalog", options: {}, I: AssetMetadataCatalogRequest, O: AssetMetadataCatalogResponse }
+    { name: "AssetMetadataCatalog", options: {}, I: AssetMetadataCatalogRequest, O: AssetMetadataCatalogResponse },
+    { name: "Accounts", options: {}, I: AccountsRequest, O: AccountsResponse }
 ]);
