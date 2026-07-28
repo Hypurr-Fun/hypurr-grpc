@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { IosService } from "./ios";
+import type { AccountsResponse } from "./ios";
+import type { AccountsRequest } from "./ios";
 import type { AssetMetadataCatalogResponse } from "./ios";
 import type { AssetMetadataCatalogRequest } from "./ios";
 import type { AssetDetailLiveUpdate } from "./ios";
@@ -36,6 +38,10 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: AssetMetadataCatalog
      */
     assetMetadataCatalog(input: AssetMetadataCatalogRequest, options?: RpcOptions): UnaryCall<AssetMetadataCatalogRequest, AssetMetadataCatalogResponse>;
+    /**
+     * @generated from protobuf rpc: Accounts
+     */
+    accounts(input: AccountsRequest, options?: RpcOptions): UnaryCall<AccountsRequest, AccountsResponse>;
 }
 /**
  * @generated from protobuf service hypurr.IosService
@@ -73,5 +79,12 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
     assetMetadataCatalog(input: AssetMetadataCatalogRequest, options?: RpcOptions): UnaryCall<AssetMetadataCatalogRequest, AssetMetadataCatalogResponse> {
         const method = this.methods[3], opt = this._transport.mergeOptions(options);
         return stackIntercept<AssetMetadataCatalogRequest, AssetMetadataCatalogResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: Accounts
+     */
+    accounts(input: AccountsRequest, options?: RpcOptions): UnaryCall<AccountsRequest, AccountsResponse> {
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
+        return stackIntercept<AccountsRequest, AccountsResponse>("unary", this._transport, method, opt, input);
     }
 }

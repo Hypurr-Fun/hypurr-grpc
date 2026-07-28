@@ -7,6 +7,7 @@ service IosService {
   rpc AssetDetail(AssetDetailRequest) returns (AssetDetailResponse);
   rpc AssetDetailLiveUpdates(AssetDetailLiveUpdatesRequest) returns (stream AssetDetailLiveUpdate);
   rpc AssetMetadataCatalog(AssetMetadataCatalogRequest) returns (AssetMetadataCatalogResponse);
+  rpc Accounts(AccountsRequest) returns (AccountsResponse);
 }
 
 // ==== Shared ====
@@ -305,4 +306,59 @@ message AssetMetadata {
   string logo_url = 4;
 
   Color color = 5;
+}
+
+// ==== Accounts ====
+
+message AccountsRequest {}
+
+message AccountsResponse {
+  // Sum across all wallets, USD cents.
+  int64 total_balance_cents = 1;
+
+  // Signed account change, USD cents.
+  // Backend owns the window/meaning; mobile only renders the value.
+  int64 change_cents = 2;
+
+  // Response order is display order.
+  repeated AccountWallet wallets = 3;
+}
+
+message AccountWallet {
+  // Stable wallet id for diffing and local expand/collapse state.
+  string wallet_id = 1;
+
+  string name = 2;
+
+  // Full address; mobile owns middle truncation.
+  string address = 3;
+
+  // Wallet total, USD cents.
+  int64 balance_cents = 4;
+
+  // Backend-owned avatar color; deterministic default when the user hasn't set one.
+  Color color = 5;
+
+  // Display order is cash, perp, spot. A section is absent when the
+  // wallet has nothing to show in it.
+  CashAccountBalanceSection cash = 6;
+  PerpAccountBalanceSection perp = 7;
+  SpotAccountBalanceSection spot = 8;
+}
+
+message CashAccountBalanceSection {
+  // Section total, USD cents.
+  int64 balance_cents = 1;
+}
+
+message PerpAccountBalanceSection {
+  // Section total, USD cents.
+  int64 balance_cents = 1;
+  int32 open_perps_count = 2;
+}
+
+message SpotAccountBalanceSection {
+  // Section total, USD cents.
+  int64 balance_cents = 1;
+  int32 token_count = 2;
 }
