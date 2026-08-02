@@ -1401,7 +1401,11 @@ export enum WalletTag {
     /**
      * @generated from protobuf enum value: WALLET_TAG_LONG_TERM_HOLDER = 10;
      */
-    LONG_TERM_HOLDER = 10
+    LONG_TERM_HOLDER = 10,
+    /**
+     * @generated from protobuf enum value: WALLET_TAG_HIGH_WIN_RATE_XYZ = 11;
+     */
+    HIGH_WIN_RATE_XYZ = 11
 }
 /**
  * @generated from protobuf enum hypercore.TradeDirOverride
