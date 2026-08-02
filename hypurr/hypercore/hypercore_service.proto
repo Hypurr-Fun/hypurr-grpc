@@ -37,6 +37,7 @@ enum WalletTag {
   WALLET_TAG_HIGH_WIN_RATE = 8;
   WALLET_TAG_LOW_WIN_RATE = 9;
   WALLET_TAG_LONG_TERM_HOLDER = 10;
+  WALLET_TAG_HIGH_WIN_RATE_XYZ = 11;
 }
 
 enum TradeDirOverride {
