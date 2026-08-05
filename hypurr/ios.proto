@@ -8,6 +8,7 @@ service IosService {
   rpc AssetDetailLiveUpdates(AssetDetailLiveUpdatesRequest) returns (stream AssetDetailLiveUpdate);
   rpc AssetMetadataCatalog(AssetMetadataCatalogRequest) returns (AssetMetadataCatalogResponse);
   rpc Accounts(AccountsRequest) returns (AccountsResponse);
+  rpc Profile(ProfileRequest) returns (ProfileResponse);
 }
 
 // ==== Shared ====
@@ -17,6 +18,25 @@ service IosService {
 message Color {
   string light_hex = 1; // e.g. "#98FFC0"
   string dark_hex = 2;  // e.g. "#98FFC0"
+}
+
+// Shared asset identity used by the catalog and profile positions.
+message Asset {
+  // Stable Hyperliquid/backend asset id used for navigation.
+  // Same convention as asset detail: perp = pair id, spot = 10000 + spot index.
+  // 0 = not navigable.
+  uint64 asset_id = 1;
+
+  string symbol = 2; // e.g. "HFUN"
+  string name = 3;   // e.g. "Hypurr Fun"
+
+  // Full remote image URL. Mobile owns fallback if empty.
+  string logo_url = 4;
+
+  Color color = 5;
+
+  // e.g. "Hyperliquid", or the hip3 dex name.
+  string venue_name = 6;
 }
 
 // ==== Home ====
@@ -180,17 +200,10 @@ message AssetDetailRequest {
 }
 
 message AssetDetailResponse {
-  AssetDetailMetadata metadata = 1;
+  Asset metadata = 1;
   AssetDetailPriceSummary price = 2;
   AssetDetailChart chart = 3;
   AssetDetailOverview overview = 4;
-}
-
-message AssetDetailMetadata {
-  string symbol = 1;     // e.g. "HFUN"
-  string name = 2;       // e.g. "Hypurr Fun"
-  string venue_name = 3; // e.g. "Hyperliquid"
-  string logo_url = 4;
 }
 
 // Decimal strings for prices accommodate sub-cent valuations.
@@ -291,21 +304,7 @@ message AssetMetadataCatalogRequest {}
 
 message AssetMetadataCatalogResponse {
   // Active/searchable assets. Mobile fetches this on app launch and can filter locally.
-  repeated AssetMetadata assets = 1;
-}
-
-message AssetMetadata {
-  // Stable Hyperliquid/backend asset id used for navigation.
-  // Same convention as asset detail: perp = pair id, spot = 10000 + spot index.
-  uint64 asset_id = 1;
-
-  string symbol = 2; // e.g. "HFUN"
-  string name = 3;   // e.g. "Hypurr Fun"
-
-  // Full remote image URL. Mobile owns fallback if empty.
-  string logo_url = 4;
-
-  Color color = 5;
+  repeated Asset assets = 1;
 }
 
 // ==== Accounts ====
@@ -353,6 +352,134 @@ message AccountWallet {
 message CashAccountBalanceSection {
   // Section total, USD cents.
   int64 balance_cents = 1;
+}
+
+// ==== Profile ====
+
+enum ProfileChartPeriod {
+  PROFILE_CHART_PERIOD_UNSPECIFIED = 0; // treated as 24H
+  PROFILE_CHART_PERIOD_24H = 1;
+  PROFILE_CHART_PERIOD_7D = 2;
+  PROFILE_CHART_PERIOD_30D = 3;
+}
+
+message ProfileRequest {
+  // Profile owner being viewed, Telegram user id. 0 = the authenticated caller.
+  int64 user_id = 1;
+
+  ProfileChartPeriod chart_period = 2;
+}
+
+message ProfileResponse {
+  ProfileIdentity identity = 1;
+
+  // Absent until the follow feature exists; mobile hides the counts row.
+  ProfileSocialSummary social = 2;
+
+  // Trading data is private by default: activity, portfolio and positions
+  // are absent when viewing another user's profile.
+  ProfileActivitySummary activity = 3;
+  ProfilePortfolioSummary portfolio = 4;
+
+  // Response order is display order. Mobile filters by status locally.
+  // Closed positions carry at most the 30 most recent exits within the
+  // requested chart period.
+  repeated ProfilePosition positions = 5;
+}
+
+message ProfileIdentity {
+  string display_name = 1; // e.g. "MaGicConch"
+
+  // Handle with the @ prefix, e.g. "@MaGica_Conch".
+  string handle = 2;
+
+  // Avatar initials shown in the profile badge, e.g. "MC".
+  string initials = 3;
+
+  // Plain-text bio. Empty until profile bios exist; mobile hides the row.
+  string bio = 4;
+
+  // Full URL opened when tapping the X badge or handle. Empty until profile
+  // links exist; mobile hides the badge.
+  string x_url = 5;
+
+  // RFC3339 UTC timestamp of the user's first appearance. Mobile owns
+  // presentation formatting, e.g. "Joined January 2026".
+  string joined_at = 6;
+}
+
+message ProfileSocialSummary {
+  int32 following_count = 1;
+  int32 followers_count = 2;
+}
+
+// Computed over the last 30 days.
+message ProfileActivitySummary {
+  // Mean round-trip duration in seconds of positions fully closed in the
+  // window. Mobile owns compact formatting, e.g. "21h 11m avg. hold".
+  int64 average_hold_seconds = 1;
+
+  int32 trade_count = 2;
+}
+
+message ProfilePortfolioSummary {
+  // Portfolio total in cents, e.g. "$22,482.17" -> 2248217.
+  int64 value_cents = 1;
+
+  // Signed USD change over the selected chart period, measured from the
+  // first chart point, e.g. 128400 or -51200.
+  int64 absolute_change_cents = 2;
+
+  // "Total cash" card: USDC + free perp collateral, USD cents.
+  int64 total_cash_cents = 3;
+
+  ProfileChart chart = 4;
+}
+
+message ProfileChart {
+  ProfileChartPeriod period = 1;
+
+  // Response order is drawing order, oldest point first; the last point is
+  // the live portfolio value.
+  repeated ProfileChartPoint points = 2;
+}
+
+message ProfileChartPoint {
+  string id = 1; // bucket open unix seconds, e.g. "1752624000"
+
+  // RFC3339 UTC timestamp.
+  string occurred_at = 2;
+
+  // USD portfolio value at this point in cents, e.g. "$6.46" -> 646.
+  int64 value_cents = 3;
+}
+
+enum ProfilePositionStatus {
+  PROFILE_POSITION_STATUS_UNSPECIFIED = 0;
+  PROFILE_POSITION_STATUS_OPEN = 1;
+  PROFILE_POSITION_STATUS_CLOSED = 2;
+}
+
+message ProfilePosition {
+  // Stable unique id, e.g. "open:perp:159", "closed:spot:10005".
+  string id = 1;
+
+  Asset asset = 2;
+
+  // Token quantity as a decimal string to avoid floating-point precision
+  // loss; for CLOSED, the exited quantity. Mobile owns display rounding.
+  string quantity = 3;
+
+  // OPEN: current value at mark, USD cents. CLOSED: exit proceeds, USD
+  // cents. e.g. "$22,482.17" -> 2248217.
+  int64 market_value_cents = 4;
+
+  // OPEN: unrealized PnL vs cost basis. CLOSED: realized PnL of the round
+  // trip. Double value with 2 decimals precision e.g. 11.34 or -98.33.
+  // Mobile owns color, sign/absolute display, and rounding.
+  double change_percentage = 5;
+
+  ProfilePositionStatus status = 6;
 }
 
 message PerpAccountBalanceSection {
