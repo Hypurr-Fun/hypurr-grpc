@@ -381,10 +381,21 @@ message ProfileResponse {
   ProfileActivitySummary activity = 3;
   ProfilePortfolioSummary portfolio = 4;
 
-  // Response order is display order. Mobile filters by status locally.
-  // Closed positions carry at most the 30 most recent exits within the
-  // requested chart period.
-  repeated ProfilePosition positions = 5;
+  // All currently open positions. Response order is display order.
+  repeated ProfilePosition open_positions = 5;
+
+  // First closed-positions page, always ordered by most recent exit: at
+  // most the 30 exits within the requested chart period.
+  ProfileClosedPositionsResponse recent_closed_positions = 6;
+}
+
+message ProfileClosedPositionsResponse {
+  // Response order is display order.
+  repeated ProfilePosition positions = 1;
+
+  // Empty when there are no more positions. Always empty until the
+  // paginated ClosedPositions RPC exists.
+  string next_page_token = 2;
 }
 
 message ProfileIdentity {
@@ -454,32 +465,27 @@ message ProfileChartPoint {
   int64 value_cents = 3;
 }
 
-enum ProfilePositionStatus {
-  PROFILE_POSITION_STATUS_UNSPECIFIED = 0;
-  PROFILE_POSITION_STATUS_OPEN = 1;
-  PROFILE_POSITION_STATUS_CLOSED = 2;
-}
-
+// Open/closed is implied by the containing field (open_positions vs a
+// closed-positions page), so there is no status enum.
 message ProfilePosition {
-  // Stable unique id, e.g. "open:perp:159", "closed:spot:10005".
+  // Stable unique id, e.g. "open:perp:159", "closed:spot:10005:1784100577068".
   string id = 1;
 
   Asset asset = 2;
 
   // Token quantity as a decimal string to avoid floating-point precision
-  // loss; for CLOSED, the exited quantity. Mobile owns display rounding.
+  // loss; for closed rows, the exited quantity. Mobile owns display
+  // rounding.
   string quantity = 3;
 
-  // OPEN: current value at mark, USD cents. CLOSED: exit proceeds, USD
+  // Open: current value at mark, USD cents. Closed: exit proceeds, USD
   // cents. e.g. "$22,482.17" -> 2248217.
   int64 market_value_cents = 4;
 
-  // OPEN: unrealized PnL vs cost basis. CLOSED: realized PnL of the round
+  // Open: unrealized PnL vs cost basis. Closed: realized PnL of the round
   // trip. Double value with 2 decimals precision e.g. 11.34 or -98.33.
   // Mobile owns color, sign/absolute display, and rounding.
   double change_percentage = 5;
-
-  ProfilePositionStatus status = 6;
 }
 
 message PerpAccountBalanceSection {
