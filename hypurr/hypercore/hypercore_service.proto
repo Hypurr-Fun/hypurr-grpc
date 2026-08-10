@@ -555,10 +555,21 @@ enum PnlClass {
   PNL_CLASS_OUTCOME     = 3;
 }
 
+message PnlClassFilter {
+  repeated PnlClass classes = 1; // empty = all supported classes
+}
+
+message PnlAssetFilter {
+  repeated int64 asset_ids = 1; // instrument ids: perp index (builder dexes at 100k+), 100M+ outcomes
+}
+
 message PnlRankRequest {
-  int64 from_ts             = 1; // inclusive, unix seconds; 0 = all-time
-  int64 to_ts               = 2; // exclusive, unix seconds; 0 = now
-  repeated PnlClass classes = 3; // classes summed into the ranking; empty = all supported
+  int64 from_ts = 1; // inclusive, unix seconds; 0 = all-time
+  int64 to_ts   = 2; // exclusive, unix seconds; 0 = now
+  oneof filter {     // unset = all supported classes
+    PnlClassFilter classes = 3;
+    PnlAssetFilter assets  = 4;
+  }
 }
 
 message PnlRankEntry {

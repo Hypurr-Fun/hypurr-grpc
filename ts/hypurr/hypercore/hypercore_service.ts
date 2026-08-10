@@ -1335,6 +1335,24 @@ export interface HighLowResponse {
     low: number; // min traded price in range; 0 = no trades
 }
 /**
+ * @generated from protobuf message hypercore.PnlClassFilter
+ */
+export interface PnlClassFilter {
+    /**
+     * @generated from protobuf field: repeated hypercore.PnlClass classes = 1
+     */
+    classes: PnlClass[]; // empty = all supported classes
+}
+/**
+ * @generated from protobuf message hypercore.PnlAssetFilter
+ */
+export interface PnlAssetFilter {
+    /**
+     * @generated from protobuf field: repeated int64 asset_ids = 1
+     */
+    assetIds: number[]; // instrument ids: perp index (builder dexes at 100k+), 100M+ outcomes
+}
+/**
  * @generated from protobuf message hypercore.PnlRankRequest
  */
 export interface PnlRankRequest {
@@ -1347,9 +1365,25 @@ export interface PnlRankRequest {
      */
     toTs: number; // exclusive, unix seconds; 0 = now
     /**
-     * @generated from protobuf field: repeated hypercore.PnlClass classes = 3
+     * unset = all supported classes
+     *
+     * @generated from protobuf oneof: filter
      */
-    classes: PnlClass[]; // classes summed into the ranking; empty = all supported
+    filter: {
+        oneofKind: "classes";
+        /**
+         * @generated from protobuf field: hypercore.PnlClassFilter classes = 3
+         */
+        classes: PnlClassFilter;
+    } | {
+        oneofKind: "assets";
+        /**
+         * @generated from protobuf field: hypercore.PnlAssetFilter assets = 4
+         */
+        assets: PnlAssetFilter;
+    } | {
+        oneofKind: undefined;
+    };
 }
 /**
  * @generated from protobuf message hypercore.PnlRankEntry
@@ -6181,19 +6215,130 @@ class HighLowResponse$Type extends MessageType<HighLowResponse> {
  */
 export const HighLowResponse = new HighLowResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class PnlClassFilter$Type extends MessageType<PnlClassFilter> {
+    constructor() {
+        super("hypercore.PnlClassFilter", [
+            { no: 1, name: "classes", kind: "enum", repeat: 1 /*RepeatType.PACKED*/, T: () => ["hypercore.PnlClass", PnlClass, "PNL_CLASS_"] }
+        ]);
+    }
+    create(value?: PartialMessage<PnlClassFilter>): PnlClassFilter {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.classes = [];
+        if (value !== undefined)
+            reflectionMergePartial<PnlClassFilter>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PnlClassFilter): PnlClassFilter {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.PnlClass classes */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.classes.push(reader.int32());
+                    else
+                        message.classes.push(reader.int32());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PnlClassFilter, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.PnlClass classes = 1; */
+        if (message.classes.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.classes.length; i++)
+                writer.int32(message.classes[i]);
+            writer.join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PnlClassFilter
+ */
+export const PnlClassFilter = new PnlClassFilter$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PnlAssetFilter$Type extends MessageType<PnlAssetFilter> {
+    constructor() {
+        super("hypercore.PnlAssetFilter", [
+            { no: 1, name: "asset_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PnlAssetFilter>): PnlAssetFilter {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.assetIds = [];
+        if (value !== undefined)
+            reflectionMergePartial<PnlAssetFilter>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PnlAssetFilter): PnlAssetFilter {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated int64 asset_ids */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.assetIds.push(reader.int64().toNumber());
+                    else
+                        message.assetIds.push(reader.int64().toNumber());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PnlAssetFilter, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated int64 asset_ids = 1; */
+        if (message.assetIds.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.assetIds.length; i++)
+                writer.int64(message.assetIds[i]);
+            writer.join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PnlAssetFilter
+ */
+export const PnlAssetFilter = new PnlAssetFilter$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class PnlRankRequest$Type extends MessageType<PnlRankRequest> {
     constructor() {
         super("hypercore.PnlRankRequest", [
             { no: 1, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "classes", kind: "enum", repeat: 1 /*RepeatType.PACKED*/, T: () => ["hypercore.PnlClass", PnlClass, "PNL_CLASS_"] }
+            { no: 3, name: "classes", kind: "message", oneof: "filter", T: () => PnlClassFilter },
+            { no: 4, name: "assets", kind: "message", oneof: "filter", T: () => PnlAssetFilter }
         ]);
     }
     create(value?: PartialMessage<PnlRankRequest>): PnlRankRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.fromTs = 0;
         message.toTs = 0;
-        message.classes = [];
+        message.filter = { oneofKind: undefined };
         if (value !== undefined)
             reflectionMergePartial<PnlRankRequest>(this, message, value);
         return message;
@@ -6209,12 +6354,17 @@ class PnlRankRequest$Type extends MessageType<PnlRankRequest> {
                 case /* int64 to_ts */ 2:
                     message.toTs = reader.int64().toNumber();
                     break;
-                case /* repeated hypercore.PnlClass classes */ 3:
-                    if (wireType === WireType.LengthDelimited)
-                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
-                            message.classes.push(reader.int32());
-                    else
-                        message.classes.push(reader.int32());
+                case /* hypercore.PnlClassFilter classes */ 3:
+                    message.filter = {
+                        oneofKind: "classes",
+                        classes: PnlClassFilter.internalBinaryRead(reader, reader.uint32(), options, (message.filter as any).classes)
+                    };
+                    break;
+                case /* hypercore.PnlAssetFilter assets */ 4:
+                    message.filter = {
+                        oneofKind: "assets",
+                        assets: PnlAssetFilter.internalBinaryRead(reader, reader.uint32(), options, (message.filter as any).assets)
+                    };
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -6234,13 +6384,12 @@ class PnlRankRequest$Type extends MessageType<PnlRankRequest> {
         /* int64 to_ts = 2; */
         if (message.toTs !== 0)
             writer.tag(2, WireType.Varint).int64(message.toTs);
-        /* repeated hypercore.PnlClass classes = 3; */
-        if (message.classes.length) {
-            writer.tag(3, WireType.LengthDelimited).fork();
-            for (let i = 0; i < message.classes.length; i++)
-                writer.int32(message.classes[i]);
-            writer.join();
-        }
+        /* hypercore.PnlClassFilter classes = 3; */
+        if (message.filter.oneofKind === "classes")
+            PnlClassFilter.internalBinaryWrite(message.filter.classes, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* hypercore.PnlAssetFilter assets = 4; */
+        if (message.filter.oneofKind === "assets")
+            PnlAssetFilter.internalBinaryWrite(message.filter.assets, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
