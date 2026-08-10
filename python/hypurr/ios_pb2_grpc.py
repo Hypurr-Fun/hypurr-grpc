@@ -59,6 +59,11 @@ class IosServiceStub(object):
                 request_serializer=hypurr_dot_ios__pb2.AccountsRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios__pb2.AccountsResponse.FromString,
                 _registered_method=True)
+        self.Profile = channel.unary_unary(
+                '/hypurr.IosService/Profile',
+                request_serializer=hypurr_dot_ios__pb2.ProfileRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios__pb2.ProfileResponse.FromString,
+                _registered_method=True)
 
 
 class IosServiceServicer(object):
@@ -94,6 +99,12 @@ class IosServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Profile(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_IosServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -121,6 +132,11 @@ def add_IosServiceServicer_to_server(servicer, server):
                     servicer.Accounts,
                     request_deserializer=hypurr_dot_ios__pb2.AccountsRequest.FromString,
                     response_serializer=hypurr_dot_ios__pb2.AccountsResponse.SerializeToString,
+            ),
+            'Profile': grpc.unary_unary_rpc_method_handler(
+                    servicer.Profile,
+                    request_deserializer=hypurr_dot_ios__pb2.ProfileRequest.FromString,
+                    response_serializer=hypurr_dot_ios__pb2.ProfileResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -258,6 +274,33 @@ class IosService(object):
             '/hypurr.IosService/Accounts',
             hypurr_dot_ios__pb2.AccountsRequest.SerializeToString,
             hypurr_dot_ios__pb2.AccountsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Profile(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.IosService/Profile',
+            hypurr_dot_ios__pb2.ProfileRequest.SerializeToString,
+            hypurr_dot_ios__pb2.ProfileResponse.FromString,
             options,
             channel_credentials,
             insecure,

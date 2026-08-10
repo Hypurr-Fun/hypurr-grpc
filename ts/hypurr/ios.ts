@@ -29,6 +29,45 @@ export interface Color {
      */
     darkHex: string; // e.g. "#98FFC0"
 }
+/**
+ * Shared asset identity used by the catalog and profile positions.
+ *
+ * @generated from protobuf message hypurr.Asset
+ */
+export interface Asset {
+    /**
+     * Stable Hyperliquid/backend asset id used for navigation.
+     * Same convention as asset detail: perp = pair id, spot = 10000 + spot index.
+     * 0 = not navigable.
+     *
+     * @generated from protobuf field: uint64 asset_id = 1
+     */
+    assetId: number;
+    /**
+     * @generated from protobuf field: string symbol = 2
+     */
+    symbol: string; // e.g. "HFUN"
+    /**
+     * @generated from protobuf field: string name = 3
+     */
+    name: string; // e.g. "Hypurr Fun"
+    /**
+     * Full remote image URL. Mobile owns fallback if empty.
+     *
+     * @generated from protobuf field: string logo_url = 4
+     */
+    logoUrl: string;
+    /**
+     * @generated from protobuf field: hypurr.Color color = 5
+     */
+    color?: Color;
+    /**
+     * e.g. "Hyperliquid", or the hip3 dex name.
+     *
+     * @generated from protobuf field: string venue_name = 6
+     */
+    venueName: string;
+}
 // ==== Home ====
 
 /**
@@ -399,9 +438,9 @@ export interface AssetDetailRequest {
  */
 export interface AssetDetailResponse {
     /**
-     * @generated from protobuf field: hypurr.AssetDetailMetadata metadata = 1
+     * @generated from protobuf field: hypurr.Asset metadata = 1
      */
-    metadata?: AssetDetailMetadata;
+    metadata?: Asset;
     /**
      * @generated from protobuf field: hypurr.AssetDetailPriceSummary price = 2
      */
@@ -414,27 +453,6 @@ export interface AssetDetailResponse {
      * @generated from protobuf field: hypurr.AssetDetailOverview overview = 4
      */
     overview?: AssetDetailOverview;
-}
-/**
- * @generated from protobuf message hypurr.AssetDetailMetadata
- */
-export interface AssetDetailMetadata {
-    /**
-     * @generated from protobuf field: string symbol = 1
-     */
-    symbol: string; // e.g. "HFUN"
-    /**
-     * @generated from protobuf field: string name = 2
-     */
-    name: string; // e.g. "Hypurr Fun"
-    /**
-     * @generated from protobuf field: string venue_name = 3
-     */
-    venueName: string; // e.g. "Hyperliquid"
-    /**
-     * @generated from protobuf field: string logo_url = 4
-     */
-    logoUrl: string;
 }
 /**
  * Decimal strings for prices accommodate sub-cent valuations.
@@ -696,39 +714,9 @@ export interface AssetMetadataCatalogResponse {
     /**
      * Active/searchable assets. Mobile fetches this on app launch and can filter locally.
      *
-     * @generated from protobuf field: repeated hypurr.AssetMetadata assets = 1
+     * @generated from protobuf field: repeated hypurr.Asset assets = 1
      */
-    assets: AssetMetadata[];
-}
-/**
- * @generated from protobuf message hypurr.AssetMetadata
- */
-export interface AssetMetadata {
-    /**
-     * Stable Hyperliquid/backend asset id used for navigation.
-     * Same convention as asset detail: perp = pair id, spot = 10000 + spot index.
-     *
-     * @generated from protobuf field: uint64 asset_id = 1
-     */
-    assetId: number;
-    /**
-     * @generated from protobuf field: string symbol = 2
-     */
-    symbol: string; // e.g. "HFUN"
-    /**
-     * @generated from protobuf field: string name = 3
-     */
-    name: string; // e.g. "Hypurr Fun"
-    /**
-     * Full remote image URL. Mobile owns fallback if empty.
-     *
-     * @generated from protobuf field: string logo_url = 4
-     */
-    logoUrl: string;
-    /**
-     * @generated from protobuf field: hypurr.Color color = 5
-     */
-    color?: Color;
+    assets: Asset[];
 }
 // ==== Accounts ====
 
@@ -828,6 +816,256 @@ export interface CashAccountBalanceSection {
     balanceCents: number;
 }
 /**
+ * @generated from protobuf message hypurr.ProfileRequest
+ */
+export interface ProfileRequest {
+    /**
+     * Profile owner being viewed, Telegram user id. 0 = the authenticated caller.
+     *
+     * @generated from protobuf field: int64 user_id = 1
+     */
+    userId: number;
+    /**
+     * @generated from protobuf field: hypurr.ProfileChartPeriod chart_period = 2
+     */
+    chartPeriod: ProfileChartPeriod;
+}
+/**
+ * @generated from protobuf message hypurr.ProfileResponse
+ */
+export interface ProfileResponse {
+    /**
+     * @generated from protobuf field: hypurr.ProfileIdentity identity = 1
+     */
+    identity?: ProfileIdentity;
+    /**
+     * Absent until the follow feature exists; mobile hides the counts row.
+     *
+     * @generated from protobuf field: hypurr.ProfileSocialSummary social = 2
+     */
+    social?: ProfileSocialSummary;
+    /**
+     * Trading data is private by default: activity, portfolio and positions
+     * are absent when viewing another user's profile.
+     *
+     * @generated from protobuf field: hypurr.ProfileActivitySummary activity = 3
+     */
+    activity?: ProfileActivitySummary;
+    /**
+     * @generated from protobuf field: hypurr.ProfilePortfolioSummary portfolio = 4
+     */
+    portfolio?: ProfilePortfolioSummary;
+    /**
+     * All currently open positions. Response order is display order.
+     *
+     * @generated from protobuf field: repeated hypurr.ProfilePosition open_positions = 5
+     */
+    openPositions: ProfilePosition[];
+    /**
+     * First closed-positions page, always ordered by most recent exit: at
+     * most the 30 exits within the requested chart period.
+     *
+     * @generated from protobuf field: hypurr.ProfileClosedPositionsResponse recent_closed_positions = 6
+     */
+    recentClosedPositions?: ProfileClosedPositionsResponse;
+}
+/**
+ * @generated from protobuf message hypurr.ProfileClosedPositionsResponse
+ */
+export interface ProfileClosedPositionsResponse {
+    /**
+     * Response order is display order.
+     *
+     * @generated from protobuf field: repeated hypurr.ProfilePosition positions = 1
+     */
+    positions: ProfilePosition[];
+    /**
+     * Empty when there are no more positions. Always empty until the
+     * paginated ClosedPositions RPC exists.
+     *
+     * @generated from protobuf field: string next_page_token = 2
+     */
+    nextPageToken: string;
+}
+/**
+ * @generated from protobuf message hypurr.ProfileIdentity
+ */
+export interface ProfileIdentity {
+    /**
+     * @generated from protobuf field: string display_name = 1
+     */
+    displayName: string; // e.g. "MaGicConch"
+    /**
+     * Handle with the @ prefix, e.g. "@MaGica_Conch".
+     *
+     * @generated from protobuf field: string handle = 2
+     */
+    handle: string;
+    /**
+     * Avatar initials shown in the profile badge, e.g. "MC".
+     *
+     * @generated from protobuf field: string initials = 3
+     */
+    initials: string;
+    /**
+     * Plain-text bio. Empty until profile bios exist; mobile hides the row.
+     *
+     * @generated from protobuf field: string bio = 4
+     */
+    bio: string;
+    /**
+     * Full URL opened when tapping the X badge or handle. Empty until profile
+     * links exist; mobile hides the badge.
+     *
+     * @generated from protobuf field: string x_url = 5
+     */
+    xUrl: string;
+    /**
+     * RFC3339 UTC timestamp of the user's first appearance. Mobile owns
+     * presentation formatting, e.g. "Joined January 2026".
+     *
+     * @generated from protobuf field: string joined_at = 6
+     */
+    joinedAt: string;
+}
+/**
+ * @generated from protobuf message hypurr.ProfileSocialSummary
+ */
+export interface ProfileSocialSummary {
+    /**
+     * @generated from protobuf field: int32 following_count = 1
+     */
+    followingCount: number;
+    /**
+     * @generated from protobuf field: int32 followers_count = 2
+     */
+    followersCount: number;
+}
+/**
+ * Computed over the last 30 days.
+ *
+ * @generated from protobuf message hypurr.ProfileActivitySummary
+ */
+export interface ProfileActivitySummary {
+    /**
+     * Mean round-trip duration in seconds of positions fully closed in the
+     * window. Mobile owns compact formatting, e.g. "21h 11m avg. hold".
+     *
+     * @generated from protobuf field: int64 average_hold_seconds = 1
+     */
+    averageHoldSeconds: number;
+    /**
+     * @generated from protobuf field: int32 trade_count = 2
+     */
+    tradeCount: number;
+}
+/**
+ * @generated from protobuf message hypurr.ProfilePortfolioSummary
+ */
+export interface ProfilePortfolioSummary {
+    /**
+     * Portfolio total in cents, e.g. "$22,482.17" -> 2248217.
+     *
+     * @generated from protobuf field: int64 value_cents = 1
+     */
+    valueCents: number;
+    /**
+     * Signed USD change over the selected chart period, measured from the
+     * first chart point, e.g. 128400 or -51200.
+     *
+     * @generated from protobuf field: int64 absolute_change_cents = 2
+     */
+    absoluteChangeCents: number;
+    /**
+     * "Total cash" card: USDC + free perp collateral, USD cents.
+     *
+     * @generated from protobuf field: int64 total_cash_cents = 3
+     */
+    totalCashCents: number;
+    /**
+     * @generated from protobuf field: hypurr.ProfileChart chart = 4
+     */
+    chart?: ProfileChart;
+}
+/**
+ * @generated from protobuf message hypurr.ProfileChart
+ */
+export interface ProfileChart {
+    /**
+     * @generated from protobuf field: hypurr.ProfileChartPeriod period = 1
+     */
+    period: ProfileChartPeriod;
+    /**
+     * Response order is drawing order, oldest point first; the last point is
+     * the live portfolio value.
+     *
+     * @generated from protobuf field: repeated hypurr.ProfileChartPoint points = 2
+     */
+    points: ProfileChartPoint[];
+}
+/**
+ * @generated from protobuf message hypurr.ProfileChartPoint
+ */
+export interface ProfileChartPoint {
+    /**
+     * @generated from protobuf field: string id = 1
+     */
+    id: string; // bucket open unix seconds, e.g. "1752624000"
+    /**
+     * RFC3339 UTC timestamp.
+     *
+     * @generated from protobuf field: string occurred_at = 2
+     */
+    occurredAt: string;
+    /**
+     * USD portfolio value at this point in cents, e.g. "$6.46" -> 646.
+     *
+     * @generated from protobuf field: int64 value_cents = 3
+     */
+    valueCents: number;
+}
+/**
+ * Open/closed is implied by the containing field (open_positions vs a
+ * closed-positions page), so there is no status enum.
+ *
+ * @generated from protobuf message hypurr.ProfilePosition
+ */
+export interface ProfilePosition {
+    /**
+     * Stable unique id, e.g. "open:perp:159", "closed:spot:10005:1784100577068".
+     *
+     * @generated from protobuf field: string id = 1
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: hypurr.Asset asset = 2
+     */
+    asset?: Asset;
+    /**
+     * Token quantity as a decimal string to avoid floating-point precision
+     * loss; for closed rows, the exited quantity. Mobile owns display
+     * rounding.
+     *
+     * @generated from protobuf field: string quantity = 3
+     */
+    quantity: string;
+    /**
+     * Open: current value at mark, USD cents. Closed: exit proceeds, USD
+     * cents. e.g. "$22,482.17" -> 2248217.
+     *
+     * @generated from protobuf field: int64 market_value_cents = 4
+     */
+    marketValueCents: number;
+    /**
+     * Open: unrealized PnL vs cost basis. Closed: realized PnL of the round
+     * trip. Double value with 2 decimals precision e.g. 11.34 or -98.33.
+     * Mobile owns color, sign/absolute display, and rounding.
+     *
+     * @generated from protobuf field: double change_percentage = 5
+     */
+    changePercentage: number;
+}
+/**
  * @generated from protobuf message hypurr.PerpAccountBalanceSection
  */
 export interface PerpAccountBalanceSection {
@@ -911,6 +1149,31 @@ export enum AssetDetailChartPeriod {
      */
     ASSET_DETAIL_CHART_PERIOD_MAX = 6
 }
+// ==== Profile ====
+
+/**
+ * @generated from protobuf enum hypurr.ProfileChartPeriod
+ */
+export enum ProfileChartPeriod {
+    /**
+     * treated as 24H
+     *
+     * @generated from protobuf enum value: PROFILE_CHART_PERIOD_UNSPECIFIED = 0;
+     */
+    PROFILE_CHART_PERIOD_UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: PROFILE_CHART_PERIOD_24H = 1;
+     */
+    PROFILE_CHART_PERIOD_24H = 1,
+    /**
+     * @generated from protobuf enum value: PROFILE_CHART_PERIOD_7D = 2;
+     */
+    PROFILE_CHART_PERIOD_7D = 2,
+    /**
+     * @generated from protobuf enum value: PROFILE_CHART_PERIOD_30D = 3;
+     */
+    PROFILE_CHART_PERIOD_30D = 3
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class Color$Type extends MessageType<Color> {
     constructor() {
@@ -966,6 +1229,92 @@ class Color$Type extends MessageType<Color> {
  * @generated MessageType for protobuf message hypurr.Color
  */
 export const Color = new Color$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Asset$Type extends MessageType<Asset> {
+    constructor() {
+        super("hypurr.Asset", [
+            { no: 1, name: "asset_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "symbol", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "logo_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "color", kind: "message", T: () => Color },
+            { no: 6, name: "venue_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<Asset>): Asset {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.assetId = 0;
+        message.symbol = "";
+        message.name = "";
+        message.logoUrl = "";
+        message.venueName = "";
+        if (value !== undefined)
+            reflectionMergePartial<Asset>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Asset): Asset {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 asset_id */ 1:
+                    message.assetId = reader.uint64().toNumber();
+                    break;
+                case /* string symbol */ 2:
+                    message.symbol = reader.string();
+                    break;
+                case /* string name */ 3:
+                    message.name = reader.string();
+                    break;
+                case /* string logo_url */ 4:
+                    message.logoUrl = reader.string();
+                    break;
+                case /* hypurr.Color color */ 5:
+                    message.color = Color.internalBinaryRead(reader, reader.uint32(), options, message.color);
+                    break;
+                case /* string venue_name */ 6:
+                    message.venueName = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: Asset, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 asset_id = 1; */
+        if (message.assetId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.assetId);
+        /* string symbol = 2; */
+        if (message.symbol !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.symbol);
+        /* string name = 3; */
+        if (message.name !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.name);
+        /* string logo_url = 4; */
+        if (message.logoUrl !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.logoUrl);
+        /* hypurr.Color color = 5; */
+        if (message.color)
+            Color.internalBinaryWrite(message.color, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* string venue_name = 6; */
+        if (message.venueName !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.venueName);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.Asset
+ */
+export const Asset = new Asset$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HomeRequest$Type extends MessageType<HomeRequest> {
     constructor() {
@@ -1987,7 +2336,7 @@ export const AssetDetailRequest = new AssetDetailRequest$Type();
 class AssetDetailResponse$Type extends MessageType<AssetDetailResponse> {
     constructor() {
         super("hypurr.AssetDetailResponse", [
-            { no: 1, name: "metadata", kind: "message", T: () => AssetDetailMetadata },
+            { no: 1, name: "metadata", kind: "message", T: () => Asset },
             { no: 2, name: "price", kind: "message", T: () => AssetDetailPriceSummary },
             { no: 3, name: "chart", kind: "message", T: () => AssetDetailChart },
             { no: 4, name: "overview", kind: "message", T: () => AssetDetailOverview }
@@ -2004,8 +2353,8 @@ class AssetDetailResponse$Type extends MessageType<AssetDetailResponse> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* hypurr.AssetDetailMetadata metadata */ 1:
-                    message.metadata = AssetDetailMetadata.internalBinaryRead(reader, reader.uint32(), options, message.metadata);
+                case /* hypurr.Asset metadata */ 1:
+                    message.metadata = Asset.internalBinaryRead(reader, reader.uint32(), options, message.metadata);
                     break;
                 case /* hypurr.AssetDetailPriceSummary price */ 2:
                     message.price = AssetDetailPriceSummary.internalBinaryRead(reader, reader.uint32(), options, message.price);
@@ -2028,9 +2377,9 @@ class AssetDetailResponse$Type extends MessageType<AssetDetailResponse> {
         return message;
     }
     internalBinaryWrite(message: AssetDetailResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* hypurr.AssetDetailMetadata metadata = 1; */
+        /* hypurr.Asset metadata = 1; */
         if (message.metadata)
-            AssetDetailMetadata.internalBinaryWrite(message.metadata, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            Asset.internalBinaryWrite(message.metadata, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* hypurr.AssetDetailPriceSummary price = 2; */
         if (message.price)
             AssetDetailPriceSummary.internalBinaryWrite(message.price, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
@@ -2050,77 +2399,6 @@ class AssetDetailResponse$Type extends MessageType<AssetDetailResponse> {
  * @generated MessageType for protobuf message hypurr.AssetDetailResponse
  */
 export const AssetDetailResponse = new AssetDetailResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class AssetDetailMetadata$Type extends MessageType<AssetDetailMetadata> {
-    constructor() {
-        super("hypurr.AssetDetailMetadata", [
-            { no: 1, name: "symbol", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "venue_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "logo_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<AssetDetailMetadata>): AssetDetailMetadata {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.symbol = "";
-        message.name = "";
-        message.venueName = "";
-        message.logoUrl = "";
-        if (value !== undefined)
-            reflectionMergePartial<AssetDetailMetadata>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailMetadata): AssetDetailMetadata {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string symbol */ 1:
-                    message.symbol = reader.string();
-                    break;
-                case /* string name */ 2:
-                    message.name = reader.string();
-                    break;
-                case /* string venue_name */ 3:
-                    message.venueName = reader.string();
-                    break;
-                case /* string logo_url */ 4:
-                    message.logoUrl = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: AssetDetailMetadata, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string symbol = 1; */
-        if (message.symbol !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.symbol);
-        /* string name = 2; */
-        if (message.name !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.name);
-        /* string venue_name = 3; */
-        if (message.venueName !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.venueName);
-        /* string logo_url = 4; */
-        if (message.logoUrl !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.logoUrl);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.AssetDetailMetadata
- */
-export const AssetDetailMetadata = new AssetDetailMetadata$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class AssetDetailPriceSummary$Type extends MessageType<AssetDetailPriceSummary> {
     constructor() {
@@ -2722,7 +3000,7 @@ export const AssetMetadataCatalogRequest = new AssetMetadataCatalogRequest$Type(
 class AssetMetadataCatalogResponse$Type extends MessageType<AssetMetadataCatalogResponse> {
     constructor() {
         super("hypurr.AssetMetadataCatalogResponse", [
-            { no: 1, name: "assets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => AssetMetadata }
+            { no: 1, name: "assets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => Asset }
         ]);
     }
     create(value?: PartialMessage<AssetMetadataCatalogResponse>): AssetMetadataCatalogResponse {
@@ -2737,8 +3015,8 @@ class AssetMetadataCatalogResponse$Type extends MessageType<AssetMetadataCatalog
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypurr.AssetMetadata assets */ 1:
-                    message.assets.push(AssetMetadata.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.Asset assets */ 1:
+                    message.assets.push(Asset.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2752,9 +3030,9 @@ class AssetMetadataCatalogResponse$Type extends MessageType<AssetMetadataCatalog
         return message;
     }
     internalBinaryWrite(message: AssetMetadataCatalogResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypurr.AssetMetadata assets = 1; */
+        /* repeated hypurr.Asset assets = 1; */
         for (let i = 0; i < message.assets.length; i++)
-            AssetMetadata.internalBinaryWrite(message.assets[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            Asset.internalBinaryWrite(message.assets[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2765,84 +3043,6 @@ class AssetMetadataCatalogResponse$Type extends MessageType<AssetMetadataCatalog
  * @generated MessageType for protobuf message hypurr.AssetMetadataCatalogResponse
  */
 export const AssetMetadataCatalogResponse = new AssetMetadataCatalogResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class AssetMetadata$Type extends MessageType<AssetMetadata> {
-    constructor() {
-        super("hypurr.AssetMetadata", [
-            { no: 1, name: "asset_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "symbol", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "logo_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "color", kind: "message", T: () => Color }
-        ]);
-    }
-    create(value?: PartialMessage<AssetMetadata>): AssetMetadata {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.assetId = 0;
-        message.symbol = "";
-        message.name = "";
-        message.logoUrl = "";
-        if (value !== undefined)
-            reflectionMergePartial<AssetMetadata>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetMetadata): AssetMetadata {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* uint64 asset_id */ 1:
-                    message.assetId = reader.uint64().toNumber();
-                    break;
-                case /* string symbol */ 2:
-                    message.symbol = reader.string();
-                    break;
-                case /* string name */ 3:
-                    message.name = reader.string();
-                    break;
-                case /* string logo_url */ 4:
-                    message.logoUrl = reader.string();
-                    break;
-                case /* hypurr.Color color */ 5:
-                    message.color = Color.internalBinaryRead(reader, reader.uint32(), options, message.color);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: AssetMetadata, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint64 asset_id = 1; */
-        if (message.assetId !== 0)
-            writer.tag(1, WireType.Varint).uint64(message.assetId);
-        /* string symbol = 2; */
-        if (message.symbol !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.symbol);
-        /* string name = 3; */
-        if (message.name !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.name);
-        /* string logo_url = 4; */
-        if (message.logoUrl !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.logoUrl);
-        /* hypurr.Color color = 5; */
-        if (message.color)
-            Color.internalBinaryWrite(message.color, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.AssetMetadata
- */
-export const AssetMetadata = new AssetMetadata$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class AccountsRequest$Type extends MessageType<AccountsRequest> {
     constructor() {
@@ -3099,6 +3299,661 @@ class CashAccountBalanceSection$Type extends MessageType<CashAccountBalanceSecti
  */
 export const CashAccountBalanceSection = new CashAccountBalanceSection$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class ProfileRequest$Type extends MessageType<ProfileRequest> {
+    constructor() {
+        super("hypurr.ProfileRequest", [
+            { no: 1, name: "user_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "chart_period", kind: "enum", T: () => ["hypurr.ProfileChartPeriod", ProfileChartPeriod] }
+        ]);
+    }
+    create(value?: PartialMessage<ProfileRequest>): ProfileRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.userId = 0;
+        message.chartPeriod = 0;
+        if (value !== undefined)
+            reflectionMergePartial<ProfileRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProfileRequest): ProfileRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 user_id */ 1:
+                    message.userId = reader.int64().toNumber();
+                    break;
+                case /* hypurr.ProfileChartPeriod chart_period */ 2:
+                    message.chartPeriod = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ProfileRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 user_id = 1; */
+        if (message.userId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.userId);
+        /* hypurr.ProfileChartPeriod chart_period = 2; */
+        if (message.chartPeriod !== 0)
+            writer.tag(2, WireType.Varint).int32(message.chartPeriod);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ProfileRequest
+ */
+export const ProfileRequest = new ProfileRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ProfileResponse$Type extends MessageType<ProfileResponse> {
+    constructor() {
+        super("hypurr.ProfileResponse", [
+            { no: 1, name: "identity", kind: "message", T: () => ProfileIdentity },
+            { no: 2, name: "social", kind: "message", T: () => ProfileSocialSummary },
+            { no: 3, name: "activity", kind: "message", T: () => ProfileActivitySummary },
+            { no: 4, name: "portfolio", kind: "message", T: () => ProfilePortfolioSummary },
+            { no: 5, name: "open_positions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ProfilePosition },
+            { no: 6, name: "recent_closed_positions", kind: "message", T: () => ProfileClosedPositionsResponse }
+        ]);
+    }
+    create(value?: PartialMessage<ProfileResponse>): ProfileResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.openPositions = [];
+        if (value !== undefined)
+            reflectionMergePartial<ProfileResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProfileResponse): ProfileResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.ProfileIdentity identity */ 1:
+                    message.identity = ProfileIdentity.internalBinaryRead(reader, reader.uint32(), options, message.identity);
+                    break;
+                case /* hypurr.ProfileSocialSummary social */ 2:
+                    message.social = ProfileSocialSummary.internalBinaryRead(reader, reader.uint32(), options, message.social);
+                    break;
+                case /* hypurr.ProfileActivitySummary activity */ 3:
+                    message.activity = ProfileActivitySummary.internalBinaryRead(reader, reader.uint32(), options, message.activity);
+                    break;
+                case /* hypurr.ProfilePortfolioSummary portfolio */ 4:
+                    message.portfolio = ProfilePortfolioSummary.internalBinaryRead(reader, reader.uint32(), options, message.portfolio);
+                    break;
+                case /* repeated hypurr.ProfilePosition open_positions */ 5:
+                    message.openPositions.push(ProfilePosition.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* hypurr.ProfileClosedPositionsResponse recent_closed_positions */ 6:
+                    message.recentClosedPositions = ProfileClosedPositionsResponse.internalBinaryRead(reader, reader.uint32(), options, message.recentClosedPositions);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ProfileResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.ProfileIdentity identity = 1; */
+        if (message.identity)
+            ProfileIdentity.internalBinaryWrite(message.identity, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ProfileSocialSummary social = 2; */
+        if (message.social)
+            ProfileSocialSummary.internalBinaryWrite(message.social, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ProfileActivitySummary activity = 3; */
+        if (message.activity)
+            ProfileActivitySummary.internalBinaryWrite(message.activity, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ProfilePortfolioSummary portfolio = 4; */
+        if (message.portfolio)
+            ProfilePortfolioSummary.internalBinaryWrite(message.portfolio, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.ProfilePosition open_positions = 5; */
+        for (let i = 0; i < message.openPositions.length; i++)
+            ProfilePosition.internalBinaryWrite(message.openPositions[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ProfileClosedPositionsResponse recent_closed_positions = 6; */
+        if (message.recentClosedPositions)
+            ProfileClosedPositionsResponse.internalBinaryWrite(message.recentClosedPositions, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ProfileResponse
+ */
+export const ProfileResponse = new ProfileResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ProfileClosedPositionsResponse$Type extends MessageType<ProfileClosedPositionsResponse> {
+    constructor() {
+        super("hypurr.ProfileClosedPositionsResponse", [
+            { no: 1, name: "positions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ProfilePosition },
+            { no: 2, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ProfileClosedPositionsResponse>): ProfileClosedPositionsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.positions = [];
+        message.nextPageToken = "";
+        if (value !== undefined)
+            reflectionMergePartial<ProfileClosedPositionsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProfileClosedPositionsResponse): ProfileClosedPositionsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.ProfilePosition positions */ 1:
+                    message.positions.push(ProfilePosition.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string next_page_token */ 2:
+                    message.nextPageToken = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ProfileClosedPositionsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.ProfilePosition positions = 1; */
+        for (let i = 0; i < message.positions.length; i++)
+            ProfilePosition.internalBinaryWrite(message.positions[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string next_page_token = 2; */
+        if (message.nextPageToken !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.nextPageToken);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ProfileClosedPositionsResponse
+ */
+export const ProfileClosedPositionsResponse = new ProfileClosedPositionsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ProfileIdentity$Type extends MessageType<ProfileIdentity> {
+    constructor() {
+        super("hypurr.ProfileIdentity", [
+            { no: 1, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "handle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "initials", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "bio", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "x_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "joined_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ProfileIdentity>): ProfileIdentity {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.displayName = "";
+        message.handle = "";
+        message.initials = "";
+        message.bio = "";
+        message.xUrl = "";
+        message.joinedAt = "";
+        if (value !== undefined)
+            reflectionMergePartial<ProfileIdentity>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProfileIdentity): ProfileIdentity {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string display_name */ 1:
+                    message.displayName = reader.string();
+                    break;
+                case /* string handle */ 2:
+                    message.handle = reader.string();
+                    break;
+                case /* string initials */ 3:
+                    message.initials = reader.string();
+                    break;
+                case /* string bio */ 4:
+                    message.bio = reader.string();
+                    break;
+                case /* string x_url */ 5:
+                    message.xUrl = reader.string();
+                    break;
+                case /* string joined_at */ 6:
+                    message.joinedAt = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ProfileIdentity, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string display_name = 1; */
+        if (message.displayName !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.displayName);
+        /* string handle = 2; */
+        if (message.handle !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.handle);
+        /* string initials = 3; */
+        if (message.initials !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.initials);
+        /* string bio = 4; */
+        if (message.bio !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.bio);
+        /* string x_url = 5; */
+        if (message.xUrl !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.xUrl);
+        /* string joined_at = 6; */
+        if (message.joinedAt !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.joinedAt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ProfileIdentity
+ */
+export const ProfileIdentity = new ProfileIdentity$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ProfileSocialSummary$Type extends MessageType<ProfileSocialSummary> {
+    constructor() {
+        super("hypurr.ProfileSocialSummary", [
+            { no: 1, name: "following_count", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "followers_count", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ProfileSocialSummary>): ProfileSocialSummary {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.followingCount = 0;
+        message.followersCount = 0;
+        if (value !== undefined)
+            reflectionMergePartial<ProfileSocialSummary>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProfileSocialSummary): ProfileSocialSummary {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 following_count */ 1:
+                    message.followingCount = reader.int32();
+                    break;
+                case /* int32 followers_count */ 2:
+                    message.followersCount = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ProfileSocialSummary, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 following_count = 1; */
+        if (message.followingCount !== 0)
+            writer.tag(1, WireType.Varint).int32(message.followingCount);
+        /* int32 followers_count = 2; */
+        if (message.followersCount !== 0)
+            writer.tag(2, WireType.Varint).int32(message.followersCount);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ProfileSocialSummary
+ */
+export const ProfileSocialSummary = new ProfileSocialSummary$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ProfileActivitySummary$Type extends MessageType<ProfileActivitySummary> {
+    constructor() {
+        super("hypurr.ProfileActivitySummary", [
+            { no: 1, name: "average_hold_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "trade_count", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ProfileActivitySummary>): ProfileActivitySummary {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.averageHoldSeconds = 0;
+        message.tradeCount = 0;
+        if (value !== undefined)
+            reflectionMergePartial<ProfileActivitySummary>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProfileActivitySummary): ProfileActivitySummary {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 average_hold_seconds */ 1:
+                    message.averageHoldSeconds = reader.int64().toNumber();
+                    break;
+                case /* int32 trade_count */ 2:
+                    message.tradeCount = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ProfileActivitySummary, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 average_hold_seconds = 1; */
+        if (message.averageHoldSeconds !== 0)
+            writer.tag(1, WireType.Varint).int64(message.averageHoldSeconds);
+        /* int32 trade_count = 2; */
+        if (message.tradeCount !== 0)
+            writer.tag(2, WireType.Varint).int32(message.tradeCount);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ProfileActivitySummary
+ */
+export const ProfileActivitySummary = new ProfileActivitySummary$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ProfilePortfolioSummary$Type extends MessageType<ProfilePortfolioSummary> {
+    constructor() {
+        super("hypurr.ProfilePortfolioSummary", [
+            { no: 1, name: "value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "absolute_change_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "total_cash_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "chart", kind: "message", T: () => ProfileChart }
+        ]);
+    }
+    create(value?: PartialMessage<ProfilePortfolioSummary>): ProfilePortfolioSummary {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.valueCents = 0;
+        message.absoluteChangeCents = 0;
+        message.totalCashCents = 0;
+        if (value !== undefined)
+            reflectionMergePartial<ProfilePortfolioSummary>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProfilePortfolioSummary): ProfilePortfolioSummary {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 value_cents */ 1:
+                    message.valueCents = reader.int64().toNumber();
+                    break;
+                case /* int64 absolute_change_cents */ 2:
+                    message.absoluteChangeCents = reader.int64().toNumber();
+                    break;
+                case /* int64 total_cash_cents */ 3:
+                    message.totalCashCents = reader.int64().toNumber();
+                    break;
+                case /* hypurr.ProfileChart chart */ 4:
+                    message.chart = ProfileChart.internalBinaryRead(reader, reader.uint32(), options, message.chart);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ProfilePortfolioSummary, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 value_cents = 1; */
+        if (message.valueCents !== 0)
+            writer.tag(1, WireType.Varint).int64(message.valueCents);
+        /* int64 absolute_change_cents = 2; */
+        if (message.absoluteChangeCents !== 0)
+            writer.tag(2, WireType.Varint).int64(message.absoluteChangeCents);
+        /* int64 total_cash_cents = 3; */
+        if (message.totalCashCents !== 0)
+            writer.tag(3, WireType.Varint).int64(message.totalCashCents);
+        /* hypurr.ProfileChart chart = 4; */
+        if (message.chart)
+            ProfileChart.internalBinaryWrite(message.chart, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ProfilePortfolioSummary
+ */
+export const ProfilePortfolioSummary = new ProfilePortfolioSummary$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ProfileChart$Type extends MessageType<ProfileChart> {
+    constructor() {
+        super("hypurr.ProfileChart", [
+            { no: 1, name: "period", kind: "enum", T: () => ["hypurr.ProfileChartPeriod", ProfileChartPeriod] },
+            { no: 2, name: "points", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ProfileChartPoint }
+        ]);
+    }
+    create(value?: PartialMessage<ProfileChart>): ProfileChart {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.period = 0;
+        message.points = [];
+        if (value !== undefined)
+            reflectionMergePartial<ProfileChart>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProfileChart): ProfileChart {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.ProfileChartPeriod period */ 1:
+                    message.period = reader.int32();
+                    break;
+                case /* repeated hypurr.ProfileChartPoint points */ 2:
+                    message.points.push(ProfileChartPoint.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ProfileChart, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.ProfileChartPeriod period = 1; */
+        if (message.period !== 0)
+            writer.tag(1, WireType.Varint).int32(message.period);
+        /* repeated hypurr.ProfileChartPoint points = 2; */
+        for (let i = 0; i < message.points.length; i++)
+            ProfileChartPoint.internalBinaryWrite(message.points[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ProfileChart
+ */
+export const ProfileChart = new ProfileChart$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ProfileChartPoint$Type extends MessageType<ProfileChartPoint> {
+    constructor() {
+        super("hypurr.ProfileChartPoint", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ProfileChartPoint>): ProfileChartPoint {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = "";
+        message.occurredAt = "";
+        message.valueCents = 0;
+        if (value !== undefined)
+            reflectionMergePartial<ProfileChartPoint>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProfileChartPoint): ProfileChartPoint {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* string occurred_at */ 2:
+                    message.occurredAt = reader.string();
+                    break;
+                case /* int64 value_cents */ 3:
+                    message.valueCents = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ProfileChartPoint, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* string occurred_at = 2; */
+        if (message.occurredAt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.occurredAt);
+        /* int64 value_cents = 3; */
+        if (message.valueCents !== 0)
+            writer.tag(3, WireType.Varint).int64(message.valueCents);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ProfileChartPoint
+ */
+export const ProfileChartPoint = new ProfileChartPoint$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ProfilePosition$Type extends MessageType<ProfilePosition> {
+    constructor() {
+        super("hypurr.ProfilePosition", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "asset", kind: "message", T: () => Asset },
+            { no: 3, name: "quantity", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "market_value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "change_percentage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ProfilePosition>): ProfilePosition {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = "";
+        message.quantity = "";
+        message.marketValueCents = 0;
+        message.changePercentage = 0;
+        if (value !== undefined)
+            reflectionMergePartial<ProfilePosition>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProfilePosition): ProfilePosition {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* hypurr.Asset asset */ 2:
+                    message.asset = Asset.internalBinaryRead(reader, reader.uint32(), options, message.asset);
+                    break;
+                case /* string quantity */ 3:
+                    message.quantity = reader.string();
+                    break;
+                case /* int64 market_value_cents */ 4:
+                    message.marketValueCents = reader.int64().toNumber();
+                    break;
+                case /* double change_percentage */ 5:
+                    message.changePercentage = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ProfilePosition, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* hypurr.Asset asset = 2; */
+        if (message.asset)
+            Asset.internalBinaryWrite(message.asset, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string quantity = 3; */
+        if (message.quantity !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.quantity);
+        /* int64 market_value_cents = 4; */
+        if (message.marketValueCents !== 0)
+            writer.tag(4, WireType.Varint).int64(message.marketValueCents);
+        /* double change_percentage = 5; */
+        if (message.changePercentage !== 0)
+            writer.tag(5, WireType.Bit64).double(message.changePercentage);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ProfilePosition
+ */
+export const ProfilePosition = new ProfilePosition$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class PerpAccountBalanceSection$Type extends MessageType<PerpAccountBalanceSection> {
     constructor() {
         super("hypurr.PerpAccountBalanceSection", [
@@ -3216,5 +4071,6 @@ export const IosService = new ServiceType("hypurr.IosService", [
     { name: "AssetDetail", options: {}, I: AssetDetailRequest, O: AssetDetailResponse },
     { name: "AssetDetailLiveUpdates", serverStreaming: true, options: {}, I: AssetDetailLiveUpdatesRequest, O: AssetDetailLiveUpdate },
     { name: "AssetMetadataCatalog", options: {}, I: AssetMetadataCatalogRequest, O: AssetMetadataCatalogResponse },
-    { name: "Accounts", options: {}, I: AccountsRequest, O: AccountsResponse }
+    { name: "Accounts", options: {}, I: AccountsRequest, O: AccountsResponse },
+    { name: "Profile", options: {}, I: ProfileRequest, O: ProfileResponse }
 ]);

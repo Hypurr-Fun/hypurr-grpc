@@ -24,6 +24,7 @@ const (
 	IosService_AssetDetailLiveUpdates_FullMethodName = "/hypurr.IosService/AssetDetailLiveUpdates"
 	IosService_AssetMetadataCatalog_FullMethodName   = "/hypurr.IosService/AssetMetadataCatalog"
 	IosService_Accounts_FullMethodName               = "/hypurr.IosService/Accounts"
+	IosService_Profile_FullMethodName                = "/hypurr.IosService/Profile"
 )
 
 // IosServiceClient is the client API for IosService service.
@@ -35,6 +36,7 @@ type IosServiceClient interface {
 	AssetDetailLiveUpdates(ctx context.Context, in *AssetDetailLiveUpdatesRequest, opts ...grpc.CallOption) (IosService_AssetDetailLiveUpdatesClient, error)
 	AssetMetadataCatalog(ctx context.Context, in *AssetMetadataCatalogRequest, opts ...grpc.CallOption) (*AssetMetadataCatalogResponse, error)
 	Accounts(ctx context.Context, in *AccountsRequest, opts ...grpc.CallOption) (*AccountsResponse, error)
+	Profile(ctx context.Context, in *ProfileRequest, opts ...grpc.CallOption) (*ProfileResponse, error)
 }
 
 type iosServiceClient struct {
@@ -118,6 +120,16 @@ func (c *iosServiceClient) Accounts(ctx context.Context, in *AccountsRequest, op
 	return out, nil
 }
 
+func (c *iosServiceClient) Profile(ctx context.Context, in *ProfileRequest, opts ...grpc.CallOption) (*ProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ProfileResponse)
+	err := c.cc.Invoke(ctx, IosService_Profile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IosServiceServer is the server API for IosService service.
 // All implementations must embed UnimplementedIosServiceServer
 // for forward compatibility
@@ -127,6 +139,7 @@ type IosServiceServer interface {
 	AssetDetailLiveUpdates(*AssetDetailLiveUpdatesRequest, IosService_AssetDetailLiveUpdatesServer) error
 	AssetMetadataCatalog(context.Context, *AssetMetadataCatalogRequest) (*AssetMetadataCatalogResponse, error)
 	Accounts(context.Context, *AccountsRequest) (*AccountsResponse, error)
+	Profile(context.Context, *ProfileRequest) (*ProfileResponse, error)
 	mustEmbedUnimplementedIosServiceServer()
 }
 
@@ -148,6 +161,9 @@ func (UnimplementedIosServiceServer) AssetMetadataCatalog(context.Context, *Asse
 }
 func (UnimplementedIosServiceServer) Accounts(context.Context, *AccountsRequest) (*AccountsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Accounts not implemented")
+}
+func (UnimplementedIosServiceServer) Profile(context.Context, *ProfileRequest) (*ProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Profile not implemented")
 }
 func (UnimplementedIosServiceServer) mustEmbedUnimplementedIosServiceServer() {}
 
@@ -255,6 +271,24 @@ func _IosService_Accounts_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IosService_Profile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IosServiceServer).Profile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IosService_Profile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IosServiceServer).Profile(ctx, req.(*ProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IosService_ServiceDesc is the grpc.ServiceDesc for IosService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -277,6 +311,10 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Accounts",
 			Handler:    _IosService_Accounts_Handler,
+		},
+		{
+			MethodName: "Profile",
+			Handler:    _IosService_Profile_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
