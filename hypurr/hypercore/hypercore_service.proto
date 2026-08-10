@@ -563,12 +563,19 @@ message PnlAssetFilter {
   repeated int64 asset_ids = 1; // instrument ids: perp index (builder dexes at 100k+), 100M+ outcomes
 }
 
+enum PnlRankPeriod {
+  PNL_RANK_PERIOD_UNSPECIFIED = 0; // server treats as 24H
+  PNL_RANK_PERIOD_24H         = 1;
+  PNL_RANK_PERIOD_7D          = 2;
+  PNL_RANK_PERIOD_30D         = 3;
+  PNL_RANK_PERIOD_ALL         = 4;
+}
+
 message PnlRankRequest {
-  int64 from_ts = 1; // inclusive, unix seconds; 0 = all-time
-  int64 to_ts   = 2; // exclusive, unix seconds; 0 = now
-  oneof filter {     // unset = all supported classes
-    PnlClassFilter classes = 3;
-    PnlAssetFilter assets  = 4;
+  PnlRankPeriod period = 1; // trailing window ending now
+  oneof filter {            // unset = all supported classes
+    PnlClassFilter classes = 2;
+    PnlAssetFilter assets  = 3;
   }
 }
 

@@ -1357,13 +1357,9 @@ export interface PnlAssetFilter {
  */
 export interface PnlRankRequest {
     /**
-     * @generated from protobuf field: int64 from_ts = 1
+     * @generated from protobuf field: hypercore.PnlRankPeriod period = 1
      */
-    fromTs: number; // inclusive, unix seconds; 0 = all-time
-    /**
-     * @generated from protobuf field: int64 to_ts = 2
-     */
-    toTs: number; // exclusive, unix seconds; 0 = now
+    period: PnlRankPeriod; // trailing window ending now
     /**
      * unset = all supported classes
      *
@@ -1372,13 +1368,13 @@ export interface PnlRankRequest {
     filter: {
         oneofKind: "classes";
         /**
-         * @generated from protobuf field: hypercore.PnlClassFilter classes = 3
+         * @generated from protobuf field: hypercore.PnlClassFilter classes = 2
          */
         classes: PnlClassFilter;
     } | {
         oneofKind: "assets";
         /**
-         * @generated from protobuf field: hypercore.PnlAssetFilter assets = 4
+         * @generated from protobuf field: hypercore.PnlAssetFilter assets = 3
          */
         assets: PnlAssetFilter;
     } | {
@@ -1682,6 +1678,33 @@ export enum PnlClass {
      * @generated from protobuf enum value: PNL_CLASS_OUTCOME = 3;
      */
     OUTCOME = 3
+}
+/**
+ * @generated from protobuf enum hypercore.PnlRankPeriod
+ */
+export enum PnlRankPeriod {
+    /**
+     * server treats as 24H
+     *
+     * @generated from protobuf enum value: PNL_RANK_PERIOD_UNSPECIFIED = 0;
+     */
+    PNL_RANK_PERIOD_UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: PNL_RANK_PERIOD_24H = 1;
+     */
+    PNL_RANK_PERIOD_24H = 1,
+    /**
+     * @generated from protobuf enum value: PNL_RANK_PERIOD_7D = 2;
+     */
+    PNL_RANK_PERIOD_7D = 2,
+    /**
+     * @generated from protobuf enum value: PNL_RANK_PERIOD_30D = 3;
+     */
+    PNL_RANK_PERIOD_30D = 3,
+    /**
+     * @generated from protobuf enum value: PNL_RANK_PERIOD_ALL = 4;
+     */
+    PNL_RANK_PERIOD_ALL = 4
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class WalletFilter$Type extends MessageType<WalletFilter> {
@@ -6328,16 +6351,14 @@ export const PnlAssetFilter = new PnlAssetFilter$Type();
 class PnlRankRequest$Type extends MessageType<PnlRankRequest> {
     constructor() {
         super("hypercore.PnlRankRequest", [
-            { no: 1, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "classes", kind: "message", oneof: "filter", T: () => PnlClassFilter },
-            { no: 4, name: "assets", kind: "message", oneof: "filter", T: () => PnlAssetFilter }
+            { no: 1, name: "period", kind: "enum", T: () => ["hypercore.PnlRankPeriod", PnlRankPeriod] },
+            { no: 2, name: "classes", kind: "message", oneof: "filter", T: () => PnlClassFilter },
+            { no: 3, name: "assets", kind: "message", oneof: "filter", T: () => PnlAssetFilter }
         ]);
     }
     create(value?: PartialMessage<PnlRankRequest>): PnlRankRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.fromTs = 0;
-        message.toTs = 0;
+        message.period = 0;
         message.filter = { oneofKind: undefined };
         if (value !== undefined)
             reflectionMergePartial<PnlRankRequest>(this, message, value);
@@ -6348,19 +6369,16 @@ class PnlRankRequest$Type extends MessageType<PnlRankRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* int64 from_ts */ 1:
-                    message.fromTs = reader.int64().toNumber();
+                case /* hypercore.PnlRankPeriod period */ 1:
+                    message.period = reader.int32();
                     break;
-                case /* int64 to_ts */ 2:
-                    message.toTs = reader.int64().toNumber();
-                    break;
-                case /* hypercore.PnlClassFilter classes */ 3:
+                case /* hypercore.PnlClassFilter classes */ 2:
                     message.filter = {
                         oneofKind: "classes",
                         classes: PnlClassFilter.internalBinaryRead(reader, reader.uint32(), options, (message.filter as any).classes)
                     };
                     break;
-                case /* hypercore.PnlAssetFilter assets */ 4:
+                case /* hypercore.PnlAssetFilter assets */ 3:
                     message.filter = {
                         oneofKind: "assets",
                         assets: PnlAssetFilter.internalBinaryRead(reader, reader.uint32(), options, (message.filter as any).assets)
@@ -6378,18 +6396,15 @@ class PnlRankRequest$Type extends MessageType<PnlRankRequest> {
         return message;
     }
     internalBinaryWrite(message: PnlRankRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 from_ts = 1; */
-        if (message.fromTs !== 0)
-            writer.tag(1, WireType.Varint).int64(message.fromTs);
-        /* int64 to_ts = 2; */
-        if (message.toTs !== 0)
-            writer.tag(2, WireType.Varint).int64(message.toTs);
-        /* hypercore.PnlClassFilter classes = 3; */
+        /* hypercore.PnlRankPeriod period = 1; */
+        if (message.period !== 0)
+            writer.tag(1, WireType.Varint).int32(message.period);
+        /* hypercore.PnlClassFilter classes = 2; */
         if (message.filter.oneofKind === "classes")
-            PnlClassFilter.internalBinaryWrite(message.filter.classes, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* hypercore.PnlAssetFilter assets = 4; */
+            PnlClassFilter.internalBinaryWrite(message.filter.classes, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* hypercore.PnlAssetFilter assets = 3; */
         if (message.filter.oneofKind === "assets")
-            PnlAssetFilter.internalBinaryWrite(message.filter.assets, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+            PnlAssetFilter.internalBinaryWrite(message.filter.assets, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
