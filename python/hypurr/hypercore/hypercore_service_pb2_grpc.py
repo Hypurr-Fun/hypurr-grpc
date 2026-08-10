@@ -5,7 +5,7 @@ import warnings
 
 from hypurr.hypercore import hypercore_service_pb2 as hypurr_dot_hypercore_dot_hypercore__service__pb2
 
-GRPC_GENERATED_VERSION = '1.81.0'
+GRPC_GENERATED_VERSION = '1.80.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -25,7 +25,7 @@ if _version_not_supported:
     )
 
 
-class HyperCoreStub:
+class HyperCoreStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -139,9 +139,14 @@ class HyperCoreStub:
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowResponse.FromString,
                 _registered_method=True)
+        self.PnlRank = channel.unary_unary(
+                '/hypercore.HyperCore/PnlRank',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankResponse.FromString,
+                _registered_method=True)
 
 
-class HyperCoreServicer:
+class HyperCoreServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def WalletMovements(self, request, context):
@@ -270,6 +275,12 @@ class HyperCoreServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PnlRank(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_HyperCoreServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -378,6 +389,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowResponse.SerializeToString,
             ),
+            'PnlRank': grpc.unary_unary_rpc_method_handler(
+                    servicer.PnlRank,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankResponse.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'hypercore.HyperCore', rpc_method_handlers)
@@ -386,7 +402,7 @@ def add_HyperCoreServicer_to_server(servicer, server):
 
 
  # This class is part of an EXPERIMENTAL API.
-class HyperCore:
+class HyperCore(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -946,6 +962,33 @@ class HyperCore:
             '/hypercore.HyperCore/HighLow',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PnlRank(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/PnlRank',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankResponse.FromString,
             options,
             channel_credentials,
             insecure,

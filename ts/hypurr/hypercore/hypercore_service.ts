@@ -1334,6 +1334,61 @@ export interface HighLowResponse {
      */
     low: number; // min traded price in range; 0 = no trades
 }
+/**
+ * @generated from protobuf message hypercore.PnlRankRequest
+ */
+export interface PnlRankRequest {
+    /**
+     * @generated from protobuf field: int64 from_ts = 1
+     */
+    fromTs: number; // inclusive, unix seconds; 0 = all-time
+    /**
+     * @generated from protobuf field: int64 to_ts = 2
+     */
+    toTs: number; // exclusive, unix seconds; 0 = now
+    /**
+     * @generated from protobuf field: repeated hypercore.PnlClass classes = 3
+     */
+    classes: PnlClass[]; // classes summed into the ranking; empty = all supported
+}
+/**
+ * @generated from protobuf message hypercore.PnlRankEntry
+ */
+export interface PnlRankEntry {
+    /**
+     * @generated from protobuf field: string wallet_address = 1
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: uint32 rank = 2
+     */
+    rank: number; // 1-based
+    /**
+     * @generated from protobuf field: double total_pnl = 3
+     */
+    totalPnl: number; // USDC, realized + unrealized over the frame
+    /**
+     * @generated from protobuf field: double realized_pnl = 4
+     */
+    realizedPnl: number;
+    /**
+     * @generated from protobuf field: double unrealized_pnl = 5
+     */
+    unrealizedPnl: number; // change in unrealized over the frame, not open mark-to-market
+    /**
+     * @generated from protobuf field: uint32 rank_24h_ago = 6
+     */
+    rank24HAgo: number; // rank in the same frame ending 24h earlier; 0 = not ranked then
+}
+/**
+ * @generated from protobuf message hypercore.PnlRankResponse
+ */
+export interface PnlRankResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.PnlRankEntry entries = 1
+     */
+    entries: PnlRankEntry[]; // rank ascending
+}
 // 
 // type Trade struct {
 // Coin             string           `json:"coin"`               // Perp symbol or @ notation
@@ -1568,6 +1623,31 @@ export enum WalletTradeType {
      * @generated from protobuf enum value: WALLET_TRADE_TYPE_SPOT = 2;
      */
     SPOT = 2
+}
+/**
+ * ----- Top-1000 wallets by PnL over a time frame -----
+ *
+ * @generated from protobuf enum hypercore.PnlClass
+ */
+export enum PnlClass {
+    /**
+     * @generated from protobuf enum value: PNL_CLASS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: PNL_CLASS_PERP = 1;
+     */
+    PERP = 1,
+    /**
+     * not computed yet — requests including it get UNIMPLEMENTED
+     *
+     * @generated from protobuf enum value: PNL_CLASS_SPOT = 2;
+     */
+    SPOT = 2,
+    /**
+     * @generated from protobuf enum value: PNL_CLASS_OUTCOME = 3;
+     */
+    OUTCOME = 3
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class WalletFilter$Type extends MessageType<WalletFilter> {
@@ -6100,6 +6180,211 @@ class HighLowResponse$Type extends MessageType<HighLowResponse> {
  * @generated MessageType for protobuf message hypercore.HighLowResponse
  */
 export const HighLowResponse = new HighLowResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PnlRankRequest$Type extends MessageType<PnlRankRequest> {
+    constructor() {
+        super("hypercore.PnlRankRequest", [
+            { no: 1, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "classes", kind: "enum", repeat: 1 /*RepeatType.PACKED*/, T: () => ["hypercore.PnlClass", PnlClass, "PNL_CLASS_"] }
+        ]);
+    }
+    create(value?: PartialMessage<PnlRankRequest>): PnlRankRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.fromTs = 0;
+        message.toTs = 0;
+        message.classes = [];
+        if (value !== undefined)
+            reflectionMergePartial<PnlRankRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PnlRankRequest): PnlRankRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 from_ts */ 1:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 2:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                case /* repeated hypercore.PnlClass classes */ 3:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.classes.push(reader.int32());
+                    else
+                        message.classes.push(reader.int32());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PnlRankRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 from_ts = 1; */
+        if (message.fromTs !== 0)
+            writer.tag(1, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 2; */
+        if (message.toTs !== 0)
+            writer.tag(2, WireType.Varint).int64(message.toTs);
+        /* repeated hypercore.PnlClass classes = 3; */
+        if (message.classes.length) {
+            writer.tag(3, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.classes.length; i++)
+                writer.int32(message.classes[i]);
+            writer.join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PnlRankRequest
+ */
+export const PnlRankRequest = new PnlRankRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PnlRankEntry$Type extends MessageType<PnlRankEntry> {
+    constructor() {
+        super("hypercore.PnlRankEntry", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "rank", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "total_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "realized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "unrealized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "rank_24h_ago", kind: "scalar", jsonName: "rank24hAgo", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PnlRankEntry>): PnlRankEntry {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        message.rank = 0;
+        message.totalPnl = 0;
+        message.realizedPnl = 0;
+        message.unrealizedPnl = 0;
+        message.rank24HAgo = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PnlRankEntry>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PnlRankEntry): PnlRankEntry {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* uint32 rank */ 2:
+                    message.rank = reader.uint32();
+                    break;
+                case /* double total_pnl */ 3:
+                    message.totalPnl = reader.double();
+                    break;
+                case /* double realized_pnl */ 4:
+                    message.realizedPnl = reader.double();
+                    break;
+                case /* double unrealized_pnl */ 5:
+                    message.unrealizedPnl = reader.double();
+                    break;
+                case /* uint32 rank_24h_ago */ 6:
+                    message.rank24HAgo = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PnlRankEntry, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* uint32 rank = 2; */
+        if (message.rank !== 0)
+            writer.tag(2, WireType.Varint).uint32(message.rank);
+        /* double total_pnl = 3; */
+        if (message.totalPnl !== 0)
+            writer.tag(3, WireType.Bit64).double(message.totalPnl);
+        /* double realized_pnl = 4; */
+        if (message.realizedPnl !== 0)
+            writer.tag(4, WireType.Bit64).double(message.realizedPnl);
+        /* double unrealized_pnl = 5; */
+        if (message.unrealizedPnl !== 0)
+            writer.tag(5, WireType.Bit64).double(message.unrealizedPnl);
+        /* uint32 rank_24h_ago = 6; */
+        if (message.rank24HAgo !== 0)
+            writer.tag(6, WireType.Varint).uint32(message.rank24HAgo);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PnlRankEntry
+ */
+export const PnlRankEntry = new PnlRankEntry$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PnlRankResponse$Type extends MessageType<PnlRankResponse> {
+    constructor() {
+        super("hypercore.PnlRankResponse", [
+            { no: 1, name: "entries", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PnlRankEntry }
+        ]);
+    }
+    create(value?: PartialMessage<PnlRankResponse>): PnlRankResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.entries = [];
+        if (value !== undefined)
+            reflectionMergePartial<PnlRankResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PnlRankResponse): PnlRankResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.PnlRankEntry entries */ 1:
+                    message.entries.push(PnlRankEntry.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PnlRankResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.PnlRankEntry entries = 1; */
+        for (let i = 0; i < message.entries.length; i++)
+            PnlRankEntry.internalBinaryWrite(message.entries[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PnlRankResponse
+ */
+export const PnlRankResponse = new PnlRankResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypercore.HyperCore
  */
@@ -6124,5 +6409,6 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletsByMetricPercentile", options: {}, I: WalletsByMetricPercentileRequest, O: WalletsByMetricPercentileResponse },
     { name: "WalletTrades", options: {}, I: WalletTradesRequest, O: WalletTradesResponse },
     { name: "OHLC", options: {}, I: OHLCRequest, O: OHLCResponse },
-    { name: "HighLow", options: {}, I: HighLowRequest, O: HighLowResponse }
+    { name: "HighLow", options: {}, I: HighLowRequest, O: HighLowResponse },
+    { name: "PnlRank", options: {}, I: PnlRankRequest, O: PnlRankResponse }
 ]);

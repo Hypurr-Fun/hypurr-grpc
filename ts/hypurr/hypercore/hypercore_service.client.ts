@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
+import type { PnlRankResponse } from "./hypercore_service";
+import type { PnlRankRequest } from "./hypercore_service";
 import type { HighLowResponse } from "./hypercore_service";
 import type { HighLowRequest } from "./hypercore_service";
 import type { OHLCResponse } from "./hypercore_service";
@@ -139,6 +141,10 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: HighLow
      */
     highLow(input: HighLowRequest, options?: RpcOptions): UnaryCall<HighLowRequest, HighLowResponse>;
+    /**
+     * @generated from protobuf rpc: PnlRank
+     */
+    pnlRank(input: PnlRankRequest, options?: RpcOptions): UnaryCall<PnlRankRequest, PnlRankResponse>;
 }
 /**
  * @generated from protobuf service hypercore.HyperCore
@@ -295,5 +301,12 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
     highLow(input: HighLowRequest, options?: RpcOptions): UnaryCall<HighLowRequest, HighLowResponse> {
         const method = this.methods[20], opt = this._transport.mergeOptions(options);
         return stackIntercept<HighLowRequest, HighLowResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: PnlRank
+     */
+    pnlRank(input: PnlRankRequest, options?: RpcOptions): UnaryCall<PnlRankRequest, PnlRankResponse> {
+        const method = this.methods[21], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PnlRankRequest, PnlRankResponse>("unary", this._transport, method, opt, input);
     }
 }

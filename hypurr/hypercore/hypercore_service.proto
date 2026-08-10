@@ -547,6 +547,33 @@ message HighLowResponse {
   double low  = 2; // min traded price in range; 0 = no trades
 }
 
+// ----- Top-1000 wallets by PnL over a time frame -----
+enum PnlClass {
+  PNL_CLASS_UNSPECIFIED = 0;
+  PNL_CLASS_PERP        = 1;
+  PNL_CLASS_SPOT        = 2; // not computed yet — requests including it get UNIMPLEMENTED
+  PNL_CLASS_OUTCOME     = 3;
+}
+
+message PnlRankRequest {
+  int64 from_ts             = 1; // inclusive, unix seconds; 0 = all-time
+  int64 to_ts               = 2; // exclusive, unix seconds; 0 = now
+  repeated PnlClass classes = 3; // classes summed into the ranking; empty = all supported
+}
+
+message PnlRankEntry {
+  string wallet_address  = 1;
+  uint32 rank            = 2; // 1-based
+  double total_pnl       = 3; // USDC, realized + unrealized over the frame
+  double realized_pnl    = 4;
+  double unrealized_pnl  = 5; // change in unrealized over the frame, not open mark-to-market
+  uint32 rank_24h_ago    = 6; // rank in the same frame ending 24h earlier; 0 = not ranked then
+}
+
+message PnlRankResponse {
+  repeated PnlRankEntry entries = 1; // rank ascending
+}
+
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
@@ -569,6 +596,7 @@ service HyperCore {
   rpc WalletTrades(WalletTradesRequest) returns (WalletTradesResponse) {}
   rpc OHLC(OHLCRequest) returns (OHLCResponse) {}
   rpc HighLow(HighLowRequest) returns (HighLowResponse) {}
+  rpc PnlRank(PnlRankRequest) returns (PnlRankResponse) {}
 }
 
 /*
