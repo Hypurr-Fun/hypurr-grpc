@@ -71,6 +71,10 @@ export interface ERC20AccountBalance {
      * @generated from protobuf field: bool is_owner = 4
      */
     isOwner: boolean;
+    /**
+     * @generated from protobuf field: int64 chain_id = 5
+     */
+    chainId: number;
 }
 /**
  * UniswapV2 Pair messages
@@ -447,7 +451,8 @@ class ERC20AccountBalance$Type extends MessageType<ERC20AccountBalance> {
             { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "contract", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "balance", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "is_owner", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 4, name: "is_owner", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 5, name: "chain_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<ERC20AccountBalance>): ERC20AccountBalance {
@@ -456,6 +461,7 @@ class ERC20AccountBalance$Type extends MessageType<ERC20AccountBalance> {
         message.contract = "";
         message.balance = "";
         message.isOwner = false;
+        message.chainId = 0;
         if (value !== undefined)
             reflectionMergePartial<ERC20AccountBalance>(this, message, value);
         return message;
@@ -476,6 +482,9 @@ class ERC20AccountBalance$Type extends MessageType<ERC20AccountBalance> {
                     break;
                 case /* bool is_owner */ 4:
                     message.isOwner = reader.bool();
+                    break;
+                case /* int64 chain_id */ 5:
+                    message.chainId = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -501,6 +510,9 @@ class ERC20AccountBalance$Type extends MessageType<ERC20AccountBalance> {
         /* bool is_owner = 4; */
         if (message.isOwner !== false)
             writer.tag(4, WireType.Varint).bool(message.isOwner);
+        /* int64 chain_id = 5; */
+        if (message.chainId !== 0)
+            writer.tag(5, WireType.Varint).int64(message.chainId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

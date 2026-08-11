@@ -402,6 +402,10 @@ export interface ERC20AccountBalancesRequest {
      * @generated from protobuf field: string address = 1
      */
     address: string;
+    /**
+     * @generated from protobuf field: int64 chain_id = 2
+     */
+    chainId: number;
 }
 /**
  * @generated from protobuf message hypurr.ERC20AccountBalancesResponse
@@ -1935,12 +1939,14 @@ export const UniV3SwapStreamResponse = new UniV3SwapStreamResponse$Type();
 class ERC20AccountBalancesRequest$Type extends MessageType<ERC20AccountBalancesRequest> {
     constructor() {
         super("hypurr.ERC20AccountBalancesRequest", [
-            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "chain_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<ERC20AccountBalancesRequest>): ERC20AccountBalancesRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.address = "";
+        message.chainId = 0;
         if (value !== undefined)
             reflectionMergePartial<ERC20AccountBalancesRequest>(this, message, value);
         return message;
@@ -1952,6 +1958,9 @@ class ERC20AccountBalancesRequest$Type extends MessageType<ERC20AccountBalancesR
             switch (fieldNo) {
                 case /* string address */ 1:
                     message.address = reader.string();
+                    break;
+                case /* int64 chain_id */ 2:
+                    message.chainId = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1968,6 +1977,9 @@ class ERC20AccountBalancesRequest$Type extends MessageType<ERC20AccountBalancesR
         /* string address = 1; */
         if (message.address !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.address);
+        /* int64 chain_id = 2; */
+        if (message.chainId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.chainId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

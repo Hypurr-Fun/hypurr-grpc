@@ -23,6 +23,7 @@ message ERC20AccountBalance {
   string contract = 2;
   string balance = 3;  // Using string for big integers
   bool is_owner = 4;
+  int64 chain_id = 5;
 }
 
 // UniswapV2 Pair messages
