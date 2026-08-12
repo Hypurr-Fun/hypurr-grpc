@@ -8,6 +8,7 @@ package eoa
 
 import (
 	context "context"
+	hypurr "gitlab.com/hypurr/hypurr-grpc/go/hypurr"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -27,6 +28,7 @@ const (
 	EOA_EditHyperliquidLaunch_FullMethodName    = "/eoa.EOA/EditHyperliquidLaunch"
 	EOA_LaunchHpumpV1Launch_FullMethodName      = "/eoa.EOA/LaunchHpumpV1Launch"
 	EOA_HyperliquidSpotTrade_FullMethodName     = "/eoa.EOA/HyperliquidSpotTrade"
+	EOA_OnrampPurchases_FullMethodName          = "/eoa.EOA/OnrampPurchases"
 )
 
 // EOAClient is the client API for EOA service.
@@ -45,6 +47,8 @@ type EOAClient interface {
 	LaunchHpumpV1Launch(ctx context.Context, in *LaunchHpumpV1LaunchRequest, opts ...grpc.CallOption) (*LaunchHpumpV1LaunchResponse, error)
 	// Spot
 	HyperliquidSpotTrade(ctx context.Context, in *HyperliquidSpotTradeRequest, opts ...grpc.CallOption) (*HyperliquidSpotTradeResponse, error)
+	// Onramp — account derived from the session token
+	OnrampPurchases(ctx context.Context, in *hypurr.OnrampPurchasesRequest, opts ...grpc.CallOption) (*hypurr.OnrampPurchasesResponse, error)
 }
 
 type eOAClient struct {
@@ -135,6 +139,16 @@ func (c *eOAClient) HyperliquidSpotTrade(ctx context.Context, in *HyperliquidSpo
 	return out, nil
 }
 
+func (c *eOAClient) OnrampPurchases(ctx context.Context, in *hypurr.OnrampPurchasesRequest, opts ...grpc.CallOption) (*hypurr.OnrampPurchasesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(hypurr.OnrampPurchasesResponse)
+	err := c.cc.Invoke(ctx, EOA_OnrampPurchases_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // EOAServer is the server API for EOA service.
 // All implementations must embed UnimplementedEOAServer
 // for forward compatibility
@@ -151,6 +165,8 @@ type EOAServer interface {
 	LaunchHpumpV1Launch(context.Context, *LaunchHpumpV1LaunchRequest) (*LaunchHpumpV1LaunchResponse, error)
 	// Spot
 	HyperliquidSpotTrade(context.Context, *HyperliquidSpotTradeRequest) (*HyperliquidSpotTradeResponse, error)
+	// Onramp — account derived from the session token
+	OnrampPurchases(context.Context, *hypurr.OnrampPurchasesRequest) (*hypurr.OnrampPurchasesResponse, error)
 	mustEmbedUnimplementedEOAServer()
 }
 
@@ -181,6 +197,9 @@ func (UnimplementedEOAServer) LaunchHpumpV1Launch(context.Context, *LaunchHpumpV
 }
 func (UnimplementedEOAServer) HyperliquidSpotTrade(context.Context, *HyperliquidSpotTradeRequest) (*HyperliquidSpotTradeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidSpotTrade not implemented")
+}
+func (UnimplementedEOAServer) OnrampPurchases(context.Context, *hypurr.OnrampPurchasesRequest) (*hypurr.OnrampPurchasesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OnrampPurchases not implemented")
 }
 func (UnimplementedEOAServer) mustEmbedUnimplementedEOAServer() {}
 
@@ -339,6 +358,24 @@ func _EOA_HyperliquidSpotTrade_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _EOA_OnrampPurchases_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(hypurr.OnrampPurchasesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EOAServer).OnrampPurchases(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: EOA_OnrampPurchases_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EOAServer).OnrampPurchases(ctx, req.(*hypurr.OnrampPurchasesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // EOA_ServiceDesc is the grpc.ServiceDesc for EOA service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -377,6 +414,10 @@ var EOA_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HyperliquidSpotTrade",
 			Handler:    _EOA_HyperliquidSpotTrade_Handler,
+		},
+		{
+			MethodName: "OnrampPurchases",
+			Handler:    _EOA_OnrampPurchases_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
