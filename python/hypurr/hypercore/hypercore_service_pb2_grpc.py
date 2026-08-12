@@ -5,7 +5,7 @@ import warnings
 
 from hypurr.hypercore import hypercore_service_pb2 as hypurr_dot_hypercore_dot_hypercore__service__pb2
 
-GRPC_GENERATED_VERSION = '1.80.0'
+GRPC_GENERATED_VERSION = '1.81.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -25,7 +25,7 @@ if _version_not_supported:
     )
 
 
-class HyperCoreStub(object):
+class HyperCoreStub:
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -51,6 +51,11 @@ class HyperCoreStub(object):
                 _registered_method=True)
         self.AggregatedWalletLiquidations = channel.unary_unary(
                 '/hypercore.HyperCore/AggregatedWalletLiquidations',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsResponse.FromString,
+                _registered_method=True)
+        self.AggregatedWalletLiquidationsStream = channel.unary_stream(
+                '/hypercore.HyperCore/AggregatedWalletLiquidationsStream',
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsResponse.FromString,
                 _registered_method=True)
@@ -146,7 +151,7 @@ class HyperCoreStub(object):
                 _registered_method=True)
 
 
-class HyperCoreServicer(object):
+class HyperCoreServicer:
     """Missing associated documentation comment in .proto file."""
 
     def WalletMovements(self, request, context):
@@ -168,6 +173,12 @@ class HyperCoreServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def AggregatedWalletLiquidations(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AggregatedWalletLiquidationsStream(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -304,6 +315,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsResponse.SerializeToString,
             ),
+            'AggregatedWalletLiquidationsStream': grpc.unary_stream_rpc_method_handler(
+                    servicer.AggregatedWalletLiquidationsStream,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsResponse.SerializeToString,
+            ),
             'Liquidations': grpc.unary_unary_rpc_method_handler(
                     servicer.Liquidations,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationsRequest.FromString,
@@ -402,7 +418,7 @@ def add_HyperCoreServicer_to_server(servicer, server):
 
 
  # This class is part of an EXPERIMENTAL API.
-class HyperCore(object):
+class HyperCore:
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -501,6 +517,33 @@ class HyperCore(object):
             request,
             target,
             '/hypercore.HyperCore/AggregatedWalletLiquidations',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AggregatedWalletLiquidationsStream(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(
+            request,
+            target,
+            '/hypercore.HyperCore/AggregatedWalletLiquidationsStream',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.AggregatedWalletLiquidationsResponse.FromString,
             options,
