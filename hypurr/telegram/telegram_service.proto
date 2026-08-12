@@ -14,6 +14,7 @@ import "hypurr/trade.proto";
 import "hypurr/cabal.proto";
 import "hypurr/support.proto";
 import "hypurr/portfolio.proto";
+import "hypurr/onramp.proto";
 import "google/protobuf/struct.proto";
 
 
@@ -741,6 +742,11 @@ message AuthorizationCodeCreateResponse {
 }
 
 
+message TelegramOnrampPurchasesRequest {
+  map<string, string> auth_data = 1;
+  string app = 2;
+}
+
 service Telegram {
   rpc TelegramUser (TelegramUserRequest) returns (TelegramUserResponse) {}
   rpc TelegramAuthExchange (TelegramAuthExchangeRequest) returns (TelegramAuthExchangeResponse) {}
@@ -820,4 +826,7 @@ service Telegram {
   rpc PortfolioAllocatorSourceCreate(PortfolioAllocatorSourceCreateRequest) returns (PortfolioAllocatorSourceCreateResponse) {}
   rpc PortfolioAllocatorSourceUpdate(PortfolioAllocatorSourceUpdateRequest) returns (PortfolioAllocatorSourceUpdateResponse) {}
   rpc PortfolioAllocatorSourceDelete(PortfolioAllocatorSourceDeleteRequest) returns (PortfolioAllocatorSourceDeleteResponse) {}
+
+  // Onramp — purchases across all of the user's wallets
+  rpc OnrampPurchases (TelegramOnrampPurchasesRequest) returns (OnrampPurchasesResponse) {}
 }
