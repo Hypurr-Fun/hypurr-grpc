@@ -597,8 +597,8 @@ service HyperCore {
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
   rpc AggregatedWalletPositioningStream(AggregatedWalletPositioningStreamRequest) returns (stream AggregatedWalletPositioningStreamResponse) {}
   rpc AggregatedWalletLiquidations(AggregatedWalletLiquidationsRequest) returns (AggregatedWalletLiquidationsResponse) {}
-  rpc AggregatedWalletLiquidationsStream(AggregatedWalletLiquidationsRequest) returns (stream AggregatedWalletLiquidationsResponse) {}
   rpc Liquidations(LiquidationsRequest) returns (LiquidationsResponse) {}
+  rpc LiquidationsStream(LiquidationsRequest) returns (stream LiquidationSnapshot) {}
   rpc WalletBalancesStream(stream WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
   rpc WalletTradesStream(WalletTradesStreamRequest) returns (stream WalletTradesStreamResponse) {}
   rpc ValidatorDelegators(ValidatorDelegatorsRequest) returns (ValidatorDelegatorsResponse) {}
