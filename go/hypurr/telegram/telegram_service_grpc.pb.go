@@ -8,6 +8,7 @@ package telegram
 
 import (
 	context "context"
+	hypurr "gitlab.com/hypurr/hypurr-grpc/go/hypurr"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -77,6 +78,7 @@ const (
 	Telegram_PortfolioAllocatorSourceCreate_FullMethodName    = "/hypurr.Telegram/PortfolioAllocatorSourceCreate"
 	Telegram_PortfolioAllocatorSourceUpdate_FullMethodName    = "/hypurr.Telegram/PortfolioAllocatorSourceUpdate"
 	Telegram_PortfolioAllocatorSourceDelete_FullMethodName    = "/hypurr.Telegram/PortfolioAllocatorSourceDelete"
+	Telegram_OnrampPurchases_FullMethodName                   = "/hypurr.Telegram/OnrampPurchases"
 )
 
 // TelegramClient is the client API for Telegram service.
@@ -150,6 +152,8 @@ type TelegramClient interface {
 	PortfolioAllocatorSourceCreate(ctx context.Context, in *PortfolioAllocatorSourceCreateRequest, opts ...grpc.CallOption) (*PortfolioAllocatorSourceCreateResponse, error)
 	PortfolioAllocatorSourceUpdate(ctx context.Context, in *PortfolioAllocatorSourceUpdateRequest, opts ...grpc.CallOption) (*PortfolioAllocatorSourceUpdateResponse, error)
 	PortfolioAllocatorSourceDelete(ctx context.Context, in *PortfolioAllocatorSourceDeleteRequest, opts ...grpc.CallOption) (*PortfolioAllocatorSourceDeleteResponse, error)
+	// Onramp — purchases across all of the user's wallets
+	OnrampPurchases(ctx context.Context, in *TelegramOnrampPurchasesRequest, opts ...grpc.CallOption) (*hypurr.OnrampPurchasesResponse, error)
 }
 
 type telegramClient struct {
@@ -763,6 +767,16 @@ func (c *telegramClient) PortfolioAllocatorSourceDelete(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *telegramClient) OnrampPurchases(ctx context.Context, in *TelegramOnrampPurchasesRequest, opts ...grpc.CallOption) (*hypurr.OnrampPurchasesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(hypurr.OnrampPurchasesResponse)
+	err := c.cc.Invoke(ctx, Telegram_OnrampPurchases_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TelegramServer is the server API for Telegram service.
 // All implementations must embed UnimplementedTelegramServer
 // for forward compatibility
@@ -834,6 +848,8 @@ type TelegramServer interface {
 	PortfolioAllocatorSourceCreate(context.Context, *PortfolioAllocatorSourceCreateRequest) (*PortfolioAllocatorSourceCreateResponse, error)
 	PortfolioAllocatorSourceUpdate(context.Context, *PortfolioAllocatorSourceUpdateRequest) (*PortfolioAllocatorSourceUpdateResponse, error)
 	PortfolioAllocatorSourceDelete(context.Context, *PortfolioAllocatorSourceDeleteRequest) (*PortfolioAllocatorSourceDeleteResponse, error)
+	// Onramp — purchases across all of the user's wallets
+	OnrampPurchases(context.Context, *TelegramOnrampPurchasesRequest) (*hypurr.OnrampPurchasesResponse, error)
 	mustEmbedUnimplementedTelegramServer()
 }
 
@@ -1014,6 +1030,9 @@ func (UnimplementedTelegramServer) PortfolioAllocatorSourceUpdate(context.Contex
 }
 func (UnimplementedTelegramServer) PortfolioAllocatorSourceDelete(context.Context, *PortfolioAllocatorSourceDeleteRequest) (*PortfolioAllocatorSourceDeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PortfolioAllocatorSourceDelete not implemented")
+}
+func (UnimplementedTelegramServer) OnrampPurchases(context.Context, *TelegramOnrampPurchasesRequest) (*hypurr.OnrampPurchasesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OnrampPurchases not implemented")
 }
 func (UnimplementedTelegramServer) mustEmbedUnimplementedTelegramServer() {}
 
@@ -2075,6 +2094,24 @@ func _Telegram_PortfolioAllocatorSourceDelete_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Telegram_OnrampPurchases_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TelegramOnrampPurchasesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).OnrampPurchases(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_OnrampPurchases_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).OnrampPurchases(ctx, req.(*TelegramOnrampPurchasesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Telegram_ServiceDesc is the grpc.ServiceDesc for Telegram service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2309,6 +2346,10 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PortfolioAllocatorSourceDelete",
 			Handler:    _Telegram_PortfolioAllocatorSourceDelete_Handler,
+		},
+		{
+			MethodName: "OnrampPurchases",
+			Handler:    _Telegram_OnrampPurchases_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

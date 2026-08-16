@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { EOA } from "./eoa_service";
+import type { OnrampPurchasesResponse } from "../onramp";
+import type { OnrampPurchasesRequest } from "../onramp";
 import type { HyperliquidSpotTradeResponse } from "./eoa_service";
 import type { HyperliquidSpotTradeRequest } from "./eoa_service";
 import type { LaunchHpumpV1LaunchResponse } from "./eoa_service";
@@ -65,6 +67,12 @@ export interface IEOAClient {
      * @generated from protobuf rpc: HyperliquidSpotTrade
      */
     hyperliquidSpotTrade(input: HyperliquidSpotTradeRequest, options?: RpcOptions): UnaryCall<HyperliquidSpotTradeRequest, HyperliquidSpotTradeResponse>;
+    /**
+     * Onramp — account derived from the session token
+     *
+     * @generated from protobuf rpc: OnrampPurchases
+     */
+    onrampPurchases(input: OnrampPurchasesRequest, options?: RpcOptions): UnaryCall<OnrampPurchasesRequest, OnrampPurchasesResponse>;
 }
 /**
  * Authed endpoints
@@ -136,5 +144,14 @@ export class EOAClient implements IEOAClient, ServiceInfo {
     hyperliquidSpotTrade(input: HyperliquidSpotTradeRequest, options?: RpcOptions): UnaryCall<HyperliquidSpotTradeRequest, HyperliquidSpotTradeResponse> {
         const method = this.methods[7], opt = this._transport.mergeOptions(options);
         return stackIntercept<HyperliquidSpotTradeRequest, HyperliquidSpotTradeResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * Onramp — account derived from the session token
+     *
+     * @generated from protobuf rpc: OnrampPurchases
+     */
+    onrampPurchases(input: OnrampPurchasesRequest, options?: RpcOptions): UnaryCall<OnrampPurchasesRequest, OnrampPurchasesResponse> {
+        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        return stackIntercept<OnrampPurchasesRequest, OnrampPurchasesResponse>("unary", this._transport, method, opt, input);
     }
 }

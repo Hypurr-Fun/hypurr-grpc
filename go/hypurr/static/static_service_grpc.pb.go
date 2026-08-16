@@ -8,6 +8,7 @@ package static
 
 import (
 	context "context"
+	hypurr "gitlab.com/hypurr/hypurr-grpc/go/hypurr"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -51,6 +52,10 @@ const (
 	Static_TelegramUserPublic_FullMethodName                         = "/hypurr.Static/TelegramUserPublic"
 	Static_SetHyperliquidWalletDeploySessionTarget_FullMethodName    = "/hypurr.Static/SetHyperliquidWalletDeploySessionTarget"
 	Static_DeleteHyperliquidWalletDeploySessionTarget_FullMethodName = "/hypurr.Static/DeleteHyperliquidWalletDeploySessionTarget"
+	Static_OnrampQuotes_FullMethodName                               = "/hypurr.Static/OnrampQuotes"
+	Static_OnrampCheckoutUrl_FullMethodName                          = "/hypurr.Static/OnrampCheckoutUrl"
+	Static_OnrampTxStatus_FullMethodName                             = "/hypurr.Static/OnrampTxStatus"
+	Static_OnrampStorePermit_FullMethodName                          = "/hypurr.Static/OnrampStorePermit"
 )
 
 // StaticClient is the client API for Static service.
@@ -91,6 +96,10 @@ type StaticClient interface {
 	TelegramUserPublic(ctx context.Context, in *TelegramUserPublicRequest, opts ...grpc.CallOption) (*TelegramUserPublicResponse, error)
 	SetHyperliquidWalletDeploySessionTarget(ctx context.Context, in *SetHyperliquidWalletDeploySessionTargetRequest, opts ...grpc.CallOption) (*SetHyperliquidWalletDeploySessionTargetResponse, error)
 	DeleteHyperliquidWalletDeploySessionTarget(ctx context.Context, in *DeleteHyperliquidWalletDeploySessionTargetRequest, opts ...grpc.CallOption) (*DeleteHyperliquidWalletDeploySessionTargetResponse, error)
+	OnrampQuotes(ctx context.Context, in *hypurr.OnrampQuotesRequest, opts ...grpc.CallOption) (*hypurr.OnrampQuotesResponse, error)
+	OnrampCheckoutUrl(ctx context.Context, in *hypurr.OnrampCheckoutUrlRequest, opts ...grpc.CallOption) (*hypurr.OnrampCheckoutUrlResponse, error)
+	OnrampTxStatus(ctx context.Context, in *hypurr.OnrampTxStatusRequest, opts ...grpc.CallOption) (*hypurr.OnrampTxStatusResponse, error)
+	OnrampStorePermit(ctx context.Context, in *hypurr.OnrampStorePermitRequest, opts ...grpc.CallOption) (*hypurr.OnrampStorePermitResponse, error)
 }
 
 type staticClient struct {
@@ -651,6 +660,46 @@ func (c *staticClient) DeleteHyperliquidWalletDeploySessionTarget(ctx context.Co
 	return out, nil
 }
 
+func (c *staticClient) OnrampQuotes(ctx context.Context, in *hypurr.OnrampQuotesRequest, opts ...grpc.CallOption) (*hypurr.OnrampQuotesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(hypurr.OnrampQuotesResponse)
+	err := c.cc.Invoke(ctx, Static_OnrampQuotes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staticClient) OnrampCheckoutUrl(ctx context.Context, in *hypurr.OnrampCheckoutUrlRequest, opts ...grpc.CallOption) (*hypurr.OnrampCheckoutUrlResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(hypurr.OnrampCheckoutUrlResponse)
+	err := c.cc.Invoke(ctx, Static_OnrampCheckoutUrl_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staticClient) OnrampTxStatus(ctx context.Context, in *hypurr.OnrampTxStatusRequest, opts ...grpc.CallOption) (*hypurr.OnrampTxStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(hypurr.OnrampTxStatusResponse)
+	err := c.cc.Invoke(ctx, Static_OnrampTxStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *staticClient) OnrampStorePermit(ctx context.Context, in *hypurr.OnrampStorePermitRequest, opts ...grpc.CallOption) (*hypurr.OnrampStorePermitResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(hypurr.OnrampStorePermitResponse)
+	err := c.cc.Invoke(ctx, Static_OnrampStorePermit_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StaticServer is the server API for Static service.
 // All implementations must embed UnimplementedStaticServer
 // for forward compatibility
@@ -689,6 +738,10 @@ type StaticServer interface {
 	TelegramUserPublic(context.Context, *TelegramUserPublicRequest) (*TelegramUserPublicResponse, error)
 	SetHyperliquidWalletDeploySessionTarget(context.Context, *SetHyperliquidWalletDeploySessionTargetRequest) (*SetHyperliquidWalletDeploySessionTargetResponse, error)
 	DeleteHyperliquidWalletDeploySessionTarget(context.Context, *DeleteHyperliquidWalletDeploySessionTargetRequest) (*DeleteHyperliquidWalletDeploySessionTargetResponse, error)
+	OnrampQuotes(context.Context, *hypurr.OnrampQuotesRequest) (*hypurr.OnrampQuotesResponse, error)
+	OnrampCheckoutUrl(context.Context, *hypurr.OnrampCheckoutUrlRequest) (*hypurr.OnrampCheckoutUrlResponse, error)
+	OnrampTxStatus(context.Context, *hypurr.OnrampTxStatusRequest) (*hypurr.OnrampTxStatusResponse, error)
+	OnrampStorePermit(context.Context, *hypurr.OnrampStorePermitRequest) (*hypurr.OnrampStorePermitResponse, error)
 	mustEmbedUnimplementedStaticServer()
 }
 
@@ -791,6 +844,18 @@ func (UnimplementedStaticServer) SetHyperliquidWalletDeploySessionTarget(context
 }
 func (UnimplementedStaticServer) DeleteHyperliquidWalletDeploySessionTarget(context.Context, *DeleteHyperliquidWalletDeploySessionTargetRequest) (*DeleteHyperliquidWalletDeploySessionTargetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHyperliquidWalletDeploySessionTarget not implemented")
+}
+func (UnimplementedStaticServer) OnrampQuotes(context.Context, *hypurr.OnrampQuotesRequest) (*hypurr.OnrampQuotesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OnrampQuotes not implemented")
+}
+func (UnimplementedStaticServer) OnrampCheckoutUrl(context.Context, *hypurr.OnrampCheckoutUrlRequest) (*hypurr.OnrampCheckoutUrlResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OnrampCheckoutUrl not implemented")
+}
+func (UnimplementedStaticServer) OnrampTxStatus(context.Context, *hypurr.OnrampTxStatusRequest) (*hypurr.OnrampTxStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OnrampTxStatus not implemented")
+}
+func (UnimplementedStaticServer) OnrampStorePermit(context.Context, *hypurr.OnrampStorePermitRequest) (*hypurr.OnrampStorePermitResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OnrampStorePermit not implemented")
 }
 func (UnimplementedStaticServer) mustEmbedUnimplementedStaticServer() {}
 
@@ -1411,6 +1476,78 @@ func _Static_DeleteHyperliquidWalletDeploySessionTarget_Handler(srv interface{},
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Static_OnrampQuotes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(hypurr.OnrampQuotesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).OnrampQuotes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_OnrampQuotes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).OnrampQuotes(ctx, req.(*hypurr.OnrampQuotesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Static_OnrampCheckoutUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(hypurr.OnrampCheckoutUrlRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).OnrampCheckoutUrl(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_OnrampCheckoutUrl_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).OnrampCheckoutUrl(ctx, req.(*hypurr.OnrampCheckoutUrlRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Static_OnrampTxStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(hypurr.OnrampTxStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).OnrampTxStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_OnrampTxStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).OnrampTxStatus(ctx, req.(*hypurr.OnrampTxStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Static_OnrampStorePermit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(hypurr.OnrampStorePermitRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StaticServer).OnrampStorePermit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Static_OnrampStorePermit_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StaticServer).OnrampStorePermit(ctx, req.(*hypurr.OnrampStorePermitRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Static_ServiceDesc is the grpc.ServiceDesc for Static service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1505,6 +1642,22 @@ var Static_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteHyperliquidWalletDeploySessionTarget",
 			Handler:    _Static_DeleteHyperliquidWalletDeploySessionTarget_Handler,
+		},
+		{
+			MethodName: "OnrampQuotes",
+			Handler:    _Static_OnrampQuotes_Handler,
+		},
+		{
+			MethodName: "OnrampCheckoutUrl",
+			Handler:    _Static_OnrampCheckoutUrl_Handler,
+		},
+		{
+			MethodName: "OnrampTxStatus",
+			Handler:    _Static_OnrampTxStatus_Handler,
+		},
+		{
+			MethodName: "OnrampStorePermit",
+			Handler:    _Static_OnrampStorePermit_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

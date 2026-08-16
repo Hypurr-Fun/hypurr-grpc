@@ -12,6 +12,7 @@ import "hypurr/cabal.proto";
 import "hypurr/evm.proto";
 import "hypurr/hpumpv1.proto";
 import "hypurr/common.proto";
+import "hypurr/onramp.proto";
 
 message HyperliquidTokenHoldersRequest {
   int64 token_id = 1;
@@ -337,4 +338,9 @@ service Static {
 
   rpc SetHyperliquidWalletDeploySessionTarget (SetHyperliquidWalletDeploySessionTargetRequest) returns (SetHyperliquidWalletDeploySessionTargetResponse) {}
   rpc DeleteHyperliquidWalletDeploySessionTarget (DeleteHyperliquidWalletDeploySessionTargetRequest) returns (DeleteHyperliquidWalletDeploySessionTargetResponse) {}
+
+  rpc OnrampQuotes (OnrampQuotesRequest) returns (OnrampQuotesResponse) {}
+  rpc OnrampCheckoutUrl (OnrampCheckoutUrlRequest) returns (OnrampCheckoutUrlResponse) {}
+  rpc OnrampTxStatus (OnrampTxStatusRequest) returns (OnrampTxStatusResponse) {}
+  rpc OnrampStorePermit (OnrampStorePermitRequest) returns (OnrampStorePermitResponse) {}
 }

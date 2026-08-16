@@ -7,6 +7,7 @@ import "hypurr/launch.proto";
 import "hypurr/common.proto";
 import "hypurr/hpumpv1.proto";
 import "google/protobuf/wrappers.proto";
+import "hypurr/onramp.proto";
 
 message EOASignature {
   string r = 1;
@@ -148,4 +149,7 @@ service EOA {
 
   // Spot
   rpc HyperliquidSpotTrade (HyperliquidSpotTradeRequest) returns (HyperliquidSpotTradeResponse) {}
+
+  // Onramp — account derived from the session token
+  rpc OnrampPurchases (hypurr.OnrampPurchasesRequest) returns (hypurr.OnrampPurchasesResponse) {}
 }

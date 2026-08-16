@@ -1,0 +1,110 @@
+syntax = "proto3";
+package hypurr;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
+
+// Onramp — fiat→crypto purchases through Onramper, shared by every Hypurr
+// app. Purchases pay out USDC on Arbitrum to the USER'S OWN address; the
+// Arbitrum indexer bridges it to Hyperliquid via the official bridge
+// (permit-signed server-side for custodial wallets, browser-signed for
+// EOAs). All methods are unauthenticated by design: quotes/checkout are
+// pre-login, statuses are keyed by unguessable session uuids, and permits
+// are self-authenticating signatures.
+
+// One provider quote, passed through from Onramper's aggregator.
+message OnrampQuote {
+  string ramp = 1;           // provider id, e.g. "banxa"
+  string payment_method = 2;
+  double rate = 3;
+  double payout = 4;         // USDC received
+  double network_fee = 5;
+  double transaction_fee = 6;
+  string quote_id = 7;
+  repeated string errors = 8; // provider-side error messages, empty when quotable
+}
+
+message OnrampQuotesRequest {
+  string fiat = 1;            // ISO code, e.g. "usd"
+  string amount = 2;          // fiat amount as decimal string
+  string country = 3;         // optional ISO country
+  string payment_method = 4;  // optional filter
+  string session = 5;         // stable per-browser id for returning-user quotes
+}
+
+message OnrampQuotesResponse {
+  repeated OnrampQuote quotes = 1;
+}
+
+message OnrampCheckoutUrlRequest {
+  string app = 1;             // consuming app id, e.g. "hfun-bet"
+  string account = 2;         // user's Hyperliquid account = payout address
+  string amount = 3;          // fiat amount as decimal string
+  string fiat = 4;
+  string provider = 5;        // optional: jump straight to this provider
+  string payment_method = 6;
+  string session = 7;         // purchase-attempt uuid (Onramper partnerContext)
+  bool direct = 8;            // checkout-intent path (provider-hosted URL)
+}
+
+message OnrampCheckoutUrlResponse {
+  string url = 1;
+}
+
+// Latest payment-leg status for a purchase (webhook or poller fed).
+message OnrampTxStatus {
+  string status = 1;          // init|new|pending|paid|completed|canceled|failed
+  string onramp = 2;
+  string transaction_id = 3;
+  string onramp_transaction_id = 4; // the provider's own order id
+  double out_amount = 5;
+  string transaction_hash = 6;
+  string status_date = 7;
+}
+
+message OnrampTxStatusRequest {
+  string session = 1;
+}
+
+message OnrampTxStatusResponse {
+  OnrampTxStatus tx = 1;      // unset until the first event arrives
+}
+
+message OnrampPurchase {
+  string session = 1;
+  string account = 2;
+  string payout_address = 3;
+  string provider = 4;
+  string payment_method = 5;
+  string fiat = 6;
+  double amount = 7;
+  int64 created_at = 8;       // unix ms
+  string transaction_id = 9;
+  OnrampTxStatus tx = 10;     // unset until the first event arrives
+}
+
+// Served by the authenticated services (EOA, Telegram); the account is
+// derived from the caller's auth, never taken as input — purchase history
+// must not be queryable by arbitrary address.
+message OnrampPurchasesRequest {
+  string app = 1;
+}
+
+message OnrampPurchasesResponse {
+  repeated OnrampPurchase purchases = 1;
+}
+
+// A browser-signed USDC EIP-2612 permit for an EOA payout address, stored
+// at checkout time. Self-authenticating: the signature must recover
+// `owner` over the exact permit the bridge will consume (spender = the
+// official HL bridge). Nothing spends gas until the owner's purchase is
+// webhook-verified paid AND the USDC has arrived.
+message OnrampStorePermitRequest {
+  string owner = 1;           // 0x address
+  string value = 2;           // uint256 decimal string
+  string nonce = 3;           // USDC permit nonce at signing time
+  int64 deadline = 4;         // unix seconds
+  uint32 v = 5;               // 27 or 28
+  string r = 6;               // 0x-prefixed 32-byte hex
+  string s = 7;               // 0x-prefixed 32-byte hex
+}
+
+message OnrampStorePermitResponse {}

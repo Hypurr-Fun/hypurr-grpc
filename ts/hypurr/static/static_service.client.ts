@@ -4,6 +4,14 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Static } from "./static_service";
+import type { OnrampStorePermitResponse } from "../onramp";
+import type { OnrampStorePermitRequest } from "../onramp";
+import type { OnrampTxStatusResponse } from "../onramp";
+import type { OnrampTxStatusRequest } from "../onramp";
+import type { OnrampCheckoutUrlResponse } from "../onramp";
+import type { OnrampCheckoutUrlRequest } from "../onramp";
+import type { OnrampQuotesResponse } from "../onramp";
+import type { OnrampQuotesRequest } from "../onramp";
 import type { DeleteHyperliquidWalletDeploySessionTargetResponse } from "./static_service";
 import type { DeleteHyperliquidWalletDeploySessionTargetRequest } from "./static_service";
 import type { SetHyperliquidWalletDeploySessionTargetResponse } from "./static_service";
@@ -205,6 +213,22 @@ export interface IStaticClient {
      * @generated from protobuf rpc: DeleteHyperliquidWalletDeploySessionTarget
      */
     deleteHyperliquidWalletDeploySessionTarget(input: DeleteHyperliquidWalletDeploySessionTargetRequest, options?: RpcOptions): UnaryCall<DeleteHyperliquidWalletDeploySessionTargetRequest, DeleteHyperliquidWalletDeploySessionTargetResponse>;
+    /**
+     * @generated from protobuf rpc: OnrampQuotes
+     */
+    onrampQuotes(input: OnrampQuotesRequest, options?: RpcOptions): UnaryCall<OnrampQuotesRequest, OnrampQuotesResponse>;
+    /**
+     * @generated from protobuf rpc: OnrampCheckoutUrl
+     */
+    onrampCheckoutUrl(input: OnrampCheckoutUrlRequest, options?: RpcOptions): UnaryCall<OnrampCheckoutUrlRequest, OnrampCheckoutUrlResponse>;
+    /**
+     * @generated from protobuf rpc: OnrampTxStatus
+     */
+    onrampTxStatus(input: OnrampTxStatusRequest, options?: RpcOptions): UnaryCall<OnrampTxStatusRequest, OnrampTxStatusResponse>;
+    /**
+     * @generated from protobuf rpc: OnrampStorePermit
+     */
+    onrampStorePermit(input: OnrampStorePermitRequest, options?: RpcOptions): UnaryCall<OnrampStorePermitRequest, OnrampStorePermitResponse>;
 }
 /**
  * @generated from protobuf service hypurr.Static
@@ -442,5 +466,33 @@ export class StaticClient implements IStaticClient, ServiceInfo {
     deleteHyperliquidWalletDeploySessionTarget(input: DeleteHyperliquidWalletDeploySessionTargetRequest, options?: RpcOptions): UnaryCall<DeleteHyperliquidWalletDeploySessionTargetRequest, DeleteHyperliquidWalletDeploySessionTargetResponse> {
         const method = this.methods[31], opt = this._transport.mergeOptions(options);
         return stackIntercept<DeleteHyperliquidWalletDeploySessionTargetRequest, DeleteHyperliquidWalletDeploySessionTargetResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: OnrampQuotes
+     */
+    onrampQuotes(input: OnrampQuotesRequest, options?: RpcOptions): UnaryCall<OnrampQuotesRequest, OnrampQuotesResponse> {
+        const method = this.methods[32], opt = this._transport.mergeOptions(options);
+        return stackIntercept<OnrampQuotesRequest, OnrampQuotesResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: OnrampCheckoutUrl
+     */
+    onrampCheckoutUrl(input: OnrampCheckoutUrlRequest, options?: RpcOptions): UnaryCall<OnrampCheckoutUrlRequest, OnrampCheckoutUrlResponse> {
+        const method = this.methods[33], opt = this._transport.mergeOptions(options);
+        return stackIntercept<OnrampCheckoutUrlRequest, OnrampCheckoutUrlResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: OnrampTxStatus
+     */
+    onrampTxStatus(input: OnrampTxStatusRequest, options?: RpcOptions): UnaryCall<OnrampTxStatusRequest, OnrampTxStatusResponse> {
+        const method = this.methods[34], opt = this._transport.mergeOptions(options);
+        return stackIntercept<OnrampTxStatusRequest, OnrampTxStatusResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: OnrampStorePermit
+     */
+    onrampStorePermit(input: OnrampStorePermitRequest, options?: RpcOptions): UnaryCall<OnrampStorePermitRequest, OnrampStorePermitResponse> {
+        const method = this.methods[35], opt = this._transport.mergeOptions(options);
+        return stackIntercept<OnrampStorePermitRequest, OnrampStorePermitResponse>("unary", this._transport, method, opt, input);
     }
 }
