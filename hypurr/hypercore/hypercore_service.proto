@@ -286,6 +286,51 @@ message LiquidationBand {
   uint32 count = 3;
 }
 
+// Sampling step for order-book depth: only snapshots whose timestamp is a
+// multiple of the step are returned (alignment is relative to the unix epoch;
+// 1 month = 30 days). Snapshots are stored once per minute, so 1M returns
+// every snapshot.
+enum OrderBookDepthStep {
+  ORDER_BOOK_DEPTH_STEP_UNSPECIFIED = 0; // server treats as 1M (every snapshot)
+  ORDER_BOOK_DEPTH_STEP_1M = 1;
+  ORDER_BOOK_DEPTH_STEP_3M = 2;
+  ORDER_BOOK_DEPTH_STEP_5M = 3;
+  ORDER_BOOK_DEPTH_STEP_15M = 4;
+  ORDER_BOOK_DEPTH_STEP_30M = 5;
+  ORDER_BOOK_DEPTH_STEP_1H = 6;
+  ORDER_BOOK_DEPTH_STEP_2H = 7;
+  ORDER_BOOK_DEPTH_STEP_4H = 8;
+  ORDER_BOOK_DEPTH_STEP_8H = 9;
+  ORDER_BOOK_DEPTH_STEP_12H = 10;
+  ORDER_BOOK_DEPTH_STEP_1D = 11;
+  ORDER_BOOK_DEPTH_STEP_3D = 12;
+  ORDER_BOOK_DEPTH_STEP_1W = 13;
+  ORDER_BOOK_DEPTH_STEP_1MO = 14;
+}
+
+message OrderBookDepthRequest {
+  uint64 instrument_id = 1;
+  int64 from_ts = 2; // unix seconds, inclusive
+  int64 to_ts = 3;   // unix seconds, exclusive
+  OrderBookDepthStep step = 4;
+}
+
+message OrderBookDepthResponse {
+  repeated OrderBookDepthSnapshot snapshots = 1; // snapshot_ts ascending
+}
+
+message OrderBookDepthSnapshot {
+  int64 snapshot_ts = 1;
+  double mid_price = 2;
+  repeated OrderBookDepthBand bands = 3; // bucket ascending = price ascending
+}
+
+message OrderBookDepthBand {
+  int32 bucket = 1; // signed 0.1%-of-mid band: -n = bids (n bands below mid), +n = asks (above); |n|=1 touches mid
+  double notional = 2;
+  uint32 count = 3;
+}
+
 enum MetricInterval {
   METRIC_INTERVAL_UNSPECIFIED = 0; // server treats as DAY
   METRIC_INTERVAL_HOUR = 1;
@@ -599,6 +644,7 @@ service HyperCore {
   rpc AggregatedWalletLiquidations(AggregatedWalletLiquidationsRequest) returns (AggregatedWalletLiquidationsResponse) {}
   rpc Liquidations(LiquidationsRequest) returns (LiquidationsResponse) {}
   rpc LiquidationsStream(LiquidationsRequest) returns (stream LiquidationSnapshot) {}
+  rpc OrderBookDepth(OrderBookDepthRequest) returns (OrderBookDepthResponse) {}
   rpc WalletBalancesStream(stream WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
   rpc WalletTradesStream(WalletTradesStreamRequest) returns (stream WalletTradesStreamResponse) {}
   rpc ValidatorDelegators(ValidatorDelegatorsRequest) returns (ValidatorDelegatorsResponse) {}

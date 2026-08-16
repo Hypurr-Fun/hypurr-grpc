@@ -25,6 +25,7 @@ const (
 	HyperCore_AggregatedWalletLiquidations_FullMethodName      = "/hypercore.HyperCore/AggregatedWalletLiquidations"
 	HyperCore_Liquidations_FullMethodName                      = "/hypercore.HyperCore/Liquidations"
 	HyperCore_LiquidationsStream_FullMethodName                = "/hypercore.HyperCore/LiquidationsStream"
+	HyperCore_OrderBookDepth_FullMethodName                    = "/hypercore.HyperCore/OrderBookDepth"
 	HyperCore_WalletBalancesStream_FullMethodName              = "/hypercore.HyperCore/WalletBalancesStream"
 	HyperCore_WalletTradesStream_FullMethodName                = "/hypercore.HyperCore/WalletTradesStream"
 	HyperCore_ValidatorDelegators_FullMethodName               = "/hypercore.HyperCore/ValidatorDelegators"
@@ -54,6 +55,7 @@ type HyperCoreClient interface {
 	AggregatedWalletLiquidations(ctx context.Context, in *AggregatedWalletLiquidationsRequest, opts ...grpc.CallOption) (*AggregatedWalletLiquidationsResponse, error)
 	Liquidations(ctx context.Context, in *LiquidationsRequest, opts ...grpc.CallOption) (*LiquidationsResponse, error)
 	LiquidationsStream(ctx context.Context, in *LiquidationsRequest, opts ...grpc.CallOption) (HyperCore_LiquidationsStreamClient, error)
+	OrderBookDepth(ctx context.Context, in *OrderBookDepthRequest, opts ...grpc.CallOption) (*OrderBookDepthResponse, error)
 	WalletBalancesStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_WalletBalancesStreamClient, error)
 	WalletTradesStream(ctx context.Context, in *WalletTradesStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletTradesStreamClient, error)
 	ValidatorDelegators(ctx context.Context, in *ValidatorDelegatorsRequest, opts ...grpc.CallOption) (*ValidatorDelegatorsResponse, error)
@@ -185,6 +187,16 @@ func (x *hyperCoreLiquidationsStreamClient) Recv() (*LiquidationSnapshot, error)
 		return nil, err
 	}
 	return m, nil
+}
+
+func (c *hyperCoreClient) OrderBookDepth(ctx context.Context, in *OrderBookDepthRequest, opts ...grpc.CallOption) (*OrderBookDepthResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(OrderBookDepthResponse)
+	err := c.cc.Invoke(ctx, HyperCore_OrderBookDepth_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *hyperCoreClient) WalletBalancesStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_WalletBalancesStreamClient, error) {
@@ -412,6 +424,7 @@ type HyperCoreServer interface {
 	AggregatedWalletLiquidations(context.Context, *AggregatedWalletLiquidationsRequest) (*AggregatedWalletLiquidationsResponse, error)
 	Liquidations(context.Context, *LiquidationsRequest) (*LiquidationsResponse, error)
 	LiquidationsStream(*LiquidationsRequest, HyperCore_LiquidationsStreamServer) error
+	OrderBookDepth(context.Context, *OrderBookDepthRequest) (*OrderBookDepthResponse, error)
 	WalletBalancesStream(HyperCore_WalletBalancesStreamServer) error
 	WalletTradesStream(*WalletTradesStreamRequest, HyperCore_WalletTradesStreamServer) error
 	ValidatorDelegators(context.Context, *ValidatorDelegatorsRequest) (*ValidatorDelegatorsResponse, error)
@@ -453,6 +466,9 @@ func (UnimplementedHyperCoreServer) Liquidations(context.Context, *LiquidationsR
 }
 func (UnimplementedHyperCoreServer) LiquidationsStream(*LiquidationsRequest, HyperCore_LiquidationsStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method LiquidationsStream not implemented")
+}
+func (UnimplementedHyperCoreServer) OrderBookDepth(context.Context, *OrderBookDepthRequest) (*OrderBookDepthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OrderBookDepth not implemented")
 }
 func (UnimplementedHyperCoreServer) WalletBalancesStream(HyperCore_WalletBalancesStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method WalletBalancesStream not implemented")
@@ -630,6 +646,24 @@ type hyperCoreLiquidationsStreamServer struct {
 
 func (x *hyperCoreLiquidationsStreamServer) Send(m *LiquidationSnapshot) error {
 	return x.ServerStream.SendMsg(m)
+}
+
+func _HyperCore_OrderBookDepth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OrderBookDepthRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).OrderBookDepth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_OrderBookDepth_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).OrderBookDepth(ctx, req.(*OrderBookDepthRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _HyperCore_WalletBalancesStream_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -971,6 +1005,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Liquidations",
 			Handler:    _HyperCore_Liquidations_Handler,
+		},
+		{
+			MethodName: "OrderBookDepth",
+			Handler:    _HyperCore_OrderBookDepth_Handler,
 		},
 		{
 			MethodName: "ValidatorDelegators",

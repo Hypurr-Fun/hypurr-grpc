@@ -64,6 +64,11 @@ class HyperCoreStub:
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationsRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationSnapshot.FromString,
                 _registered_method=True)
+        self.OrderBookDepth = channel.unary_unary(
+                '/hypercore.HyperCore/OrderBookDepth',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OrderBookDepthRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OrderBookDepthResponse.FromString,
+                _registered_method=True)
         self.WalletBalancesStream = channel.stream_stream(
                 '/hypercore.HyperCore/WalletBalancesStream',
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletBalancesStreamRequest.SerializeToString,
@@ -185,6 +190,12 @@ class HyperCoreServicer:
         raise NotImplementedError('Method not implemented!')
 
     def LiquidationsStream(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def OrderBookDepth(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -324,6 +335,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     servicer.LiquidationsStream,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationsRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationSnapshot.SerializeToString,
+            ),
+            'OrderBookDepth': grpc.unary_unary_rpc_method_handler(
+                    servicer.OrderBookDepth,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OrderBookDepthRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OrderBookDepthResponse.SerializeToString,
             ),
             'WalletBalancesStream': grpc.stream_stream_rpc_method_handler(
                     servicer.WalletBalancesStream,
@@ -573,6 +589,33 @@ class HyperCore:
             '/hypercore.HyperCore/LiquidationsStream',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationsRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationSnapshot.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def OrderBookDepth(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/OrderBookDepth',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.OrderBookDepthRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.OrderBookDepthResponse.FromString,
             options,
             channel_credentials,
             insecure,

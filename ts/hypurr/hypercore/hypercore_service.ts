@@ -622,6 +622,70 @@ export interface LiquidationBand {
     count: number;
 }
 /**
+ * @generated from protobuf message hypercore.OrderBookDepthRequest
+ */
+export interface OrderBookDepthRequest {
+    /**
+     * @generated from protobuf field: uint64 instrument_id = 1
+     */
+    instrumentId: number;
+    /**
+     * @generated from protobuf field: int64 from_ts = 2
+     */
+    fromTs: number; // unix seconds, inclusive
+    /**
+     * @generated from protobuf field: int64 to_ts = 3
+     */
+    toTs: number; // unix seconds, exclusive
+    /**
+     * @generated from protobuf field: hypercore.OrderBookDepthStep step = 4
+     */
+    step: OrderBookDepthStep;
+}
+/**
+ * @generated from protobuf message hypercore.OrderBookDepthResponse
+ */
+export interface OrderBookDepthResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.OrderBookDepthSnapshot snapshots = 1
+     */
+    snapshots: OrderBookDepthSnapshot[]; // snapshot_ts ascending
+}
+/**
+ * @generated from protobuf message hypercore.OrderBookDepthSnapshot
+ */
+export interface OrderBookDepthSnapshot {
+    /**
+     * @generated from protobuf field: int64 snapshot_ts = 1
+     */
+    snapshotTs: number;
+    /**
+     * @generated from protobuf field: double mid_price = 2
+     */
+    midPrice: number;
+    /**
+     * @generated from protobuf field: repeated hypercore.OrderBookDepthBand bands = 3
+     */
+    bands: OrderBookDepthBand[]; // bucket ascending = price ascending
+}
+/**
+ * @generated from protobuf message hypercore.OrderBookDepthBand
+ */
+export interface OrderBookDepthBand {
+    /**
+     * @generated from protobuf field: int32 bucket = 1
+     */
+    bucket: number; // signed 0.1%-of-mid band: -n = bids (n bands below mid), +n = asks (above); |n|=1 touches mid
+    /**
+     * @generated from protobuf field: double notional = 2
+     */
+    notional: number;
+    /**
+     * @generated from protobuf field: uint32 count = 3
+     */
+    count: number;
+}
+/**
  * One time bucket of performance, for the whole account OR one instrument.
  * Identical fields regardless of interval or scope.
  *
@@ -1580,6 +1644,78 @@ export enum LiquidationStep {
      * @generated from protobuf enum value: LIQUIDATION_STEP_1MO = 14;
      */
     LIQUIDATION_STEP_1MO = 14
+}
+/**
+ * Sampling step for order-book depth: only snapshots whose timestamp is a
+ * multiple of the step are returned (alignment is relative to the unix epoch;
+ * 1 month = 30 days). Snapshots are stored once per minute, so 1M returns
+ * every snapshot.
+ *
+ * @generated from protobuf enum hypercore.OrderBookDepthStep
+ */
+export enum OrderBookDepthStep {
+    /**
+     * server treats as 1M (every snapshot)
+     *
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_UNSPECIFIED = 0;
+     */
+    ORDER_BOOK_DEPTH_STEP_UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_1M = 1;
+     */
+    ORDER_BOOK_DEPTH_STEP_1M = 1,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_3M = 2;
+     */
+    ORDER_BOOK_DEPTH_STEP_3M = 2,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_5M = 3;
+     */
+    ORDER_BOOK_DEPTH_STEP_5M = 3,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_15M = 4;
+     */
+    ORDER_BOOK_DEPTH_STEP_15M = 4,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_30M = 5;
+     */
+    ORDER_BOOK_DEPTH_STEP_30M = 5,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_1H = 6;
+     */
+    ORDER_BOOK_DEPTH_STEP_1H = 6,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_2H = 7;
+     */
+    ORDER_BOOK_DEPTH_STEP_2H = 7,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_4H = 8;
+     */
+    ORDER_BOOK_DEPTH_STEP_4H = 8,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_8H = 9;
+     */
+    ORDER_BOOK_DEPTH_STEP_8H = 9,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_12H = 10;
+     */
+    ORDER_BOOK_DEPTH_STEP_12H = 10,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_1D = 11;
+     */
+    ORDER_BOOK_DEPTH_STEP_1D = 11,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_3D = 12;
+     */
+    ORDER_BOOK_DEPTH_STEP_3D = 12,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_1W = 13;
+     */
+    ORDER_BOOK_DEPTH_STEP_1W = 13,
+    /**
+     * @generated from protobuf enum value: ORDER_BOOK_DEPTH_STEP_1MO = 14;
+     */
+    ORDER_BOOK_DEPTH_STEP_1MO = 14
 }
 /**
  * @generated from protobuf enum hypercore.MetricInterval
@@ -4030,6 +4166,250 @@ class LiquidationBand$Type extends MessageType<LiquidationBand> {
  * @generated MessageType for protobuf message hypercore.LiquidationBand
  */
 export const LiquidationBand = new LiquidationBand$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OrderBookDepthRequest$Type extends MessageType<OrderBookDepthRequest> {
+    constructor() {
+        super("hypercore.OrderBookDepthRequest", [
+            { no: 1, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "step", kind: "enum", T: () => ["hypercore.OrderBookDepthStep", OrderBookDepthStep] }
+        ]);
+    }
+    create(value?: PartialMessage<OrderBookDepthRequest>): OrderBookDepthRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrumentId = 0;
+        message.fromTs = 0;
+        message.toTs = 0;
+        message.step = 0;
+        if (value !== undefined)
+            reflectionMergePartial<OrderBookDepthRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OrderBookDepthRequest): OrderBookDepthRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 instrument_id */ 1:
+                    message.instrumentId = reader.uint64().toNumber();
+                    break;
+                case /* int64 from_ts */ 2:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 3:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                case /* hypercore.OrderBookDepthStep step */ 4:
+                    message.step = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OrderBookDepthRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 instrument_id = 1; */
+        if (message.instrumentId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.instrumentId);
+        /* int64 from_ts = 2; */
+        if (message.fromTs !== 0)
+            writer.tag(2, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 3; */
+        if (message.toTs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.toTs);
+        /* hypercore.OrderBookDepthStep step = 4; */
+        if (message.step !== 0)
+            writer.tag(4, WireType.Varint).int32(message.step);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.OrderBookDepthRequest
+ */
+export const OrderBookDepthRequest = new OrderBookDepthRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OrderBookDepthResponse$Type extends MessageType<OrderBookDepthResponse> {
+    constructor() {
+        super("hypercore.OrderBookDepthResponse", [
+            { no: 1, name: "snapshots", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => OrderBookDepthSnapshot }
+        ]);
+    }
+    create(value?: PartialMessage<OrderBookDepthResponse>): OrderBookDepthResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.snapshots = [];
+        if (value !== undefined)
+            reflectionMergePartial<OrderBookDepthResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OrderBookDepthResponse): OrderBookDepthResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.OrderBookDepthSnapshot snapshots */ 1:
+                    message.snapshots.push(OrderBookDepthSnapshot.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OrderBookDepthResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.OrderBookDepthSnapshot snapshots = 1; */
+        for (let i = 0; i < message.snapshots.length; i++)
+            OrderBookDepthSnapshot.internalBinaryWrite(message.snapshots[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.OrderBookDepthResponse
+ */
+export const OrderBookDepthResponse = new OrderBookDepthResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OrderBookDepthSnapshot$Type extends MessageType<OrderBookDepthSnapshot> {
+    constructor() {
+        super("hypercore.OrderBookDepthSnapshot", [
+            { no: 1, name: "snapshot_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "mid_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "bands", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => OrderBookDepthBand }
+        ]);
+    }
+    create(value?: PartialMessage<OrderBookDepthSnapshot>): OrderBookDepthSnapshot {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.snapshotTs = 0;
+        message.midPrice = 0;
+        message.bands = [];
+        if (value !== undefined)
+            reflectionMergePartial<OrderBookDepthSnapshot>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OrderBookDepthSnapshot): OrderBookDepthSnapshot {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 snapshot_ts */ 1:
+                    message.snapshotTs = reader.int64().toNumber();
+                    break;
+                case /* double mid_price */ 2:
+                    message.midPrice = reader.double();
+                    break;
+                case /* repeated hypercore.OrderBookDepthBand bands */ 3:
+                    message.bands.push(OrderBookDepthBand.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OrderBookDepthSnapshot, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 snapshot_ts = 1; */
+        if (message.snapshotTs !== 0)
+            writer.tag(1, WireType.Varint).int64(message.snapshotTs);
+        /* double mid_price = 2; */
+        if (message.midPrice !== 0)
+            writer.tag(2, WireType.Bit64).double(message.midPrice);
+        /* repeated hypercore.OrderBookDepthBand bands = 3; */
+        for (let i = 0; i < message.bands.length; i++)
+            OrderBookDepthBand.internalBinaryWrite(message.bands[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.OrderBookDepthSnapshot
+ */
+export const OrderBookDepthSnapshot = new OrderBookDepthSnapshot$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OrderBookDepthBand$Type extends MessageType<OrderBookDepthBand> {
+    constructor() {
+        super("hypercore.OrderBookDepthBand", [
+            { no: 1, name: "bucket", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "count", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<OrderBookDepthBand>): OrderBookDepthBand {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.bucket = 0;
+        message.notional = 0;
+        message.count = 0;
+        if (value !== undefined)
+            reflectionMergePartial<OrderBookDepthBand>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OrderBookDepthBand): OrderBookDepthBand {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 bucket */ 1:
+                    message.bucket = reader.int32();
+                    break;
+                case /* double notional */ 2:
+                    message.notional = reader.double();
+                    break;
+                case /* uint32 count */ 3:
+                    message.count = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OrderBookDepthBand, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 bucket = 1; */
+        if (message.bucket !== 0)
+            writer.tag(1, WireType.Varint).int32(message.bucket);
+        /* double notional = 2; */
+        if (message.notional !== 0)
+            writer.tag(2, WireType.Bit64).double(message.notional);
+        /* uint32 count = 3; */
+        if (message.count !== 0)
+            writer.tag(3, WireType.Varint).uint32(message.count);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.OrderBookDepthBand
+ */
+export const OrderBookDepthBand = new OrderBookDepthBand$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PerformanceBucket$Type extends MessageType<PerformanceBucket> {
     constructor() {
@@ -6559,6 +6939,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "AggregatedWalletLiquidations", options: {}, I: AggregatedWalletLiquidationsRequest, O: AggregatedWalletLiquidationsResponse },
     { name: "Liquidations", options: {}, I: LiquidationsRequest, O: LiquidationsResponse },
     { name: "LiquidationsStream", serverStreaming: true, options: {}, I: LiquidationsRequest, O: LiquidationSnapshot },
+    { name: "OrderBookDepth", options: {}, I: OrderBookDepthRequest, O: OrderBookDepthResponse },
     { name: "WalletBalancesStream", serverStreaming: true, clientStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
     { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },
     { name: "ValidatorDelegators", options: {}, I: ValidatorDelegatorsRequest, O: ValidatorDelegatorsResponse },
