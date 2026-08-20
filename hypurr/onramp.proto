@@ -49,9 +49,21 @@ message OnrampCheckoutUrlResponse {
   string url = 1;
 }
 
-// Latest payment-leg status for a purchase (webhook or poller fed).
+enum OnrampStatus {
+  ONRAMP_STATUS_UNSPECIFIED = 0;
+  ONRAMP_STATUS_INIT = 1;       // created-only, no payment signal yet
+  ONRAMP_STATUS_NEW = 2;
+  ONRAMP_STATUS_PENDING = 3;
+  ONRAMP_STATUS_PAID = 4;
+  ONRAMP_STATUS_COMPLETED = 5;
+  ONRAMP_STATUS_CANCELED = 6;
+  ONRAMP_STATUS_FAILED = 7;
+  ONRAMP_STATUS_AWAITING_SIGNATURE = 8; // server-derived
+  ONRAMP_STATUS_BRIDGED = 9;            // server-derived
+}
+
 message OnrampTxStatus {
-  string status = 1;          // init|new|pending|paid|completed|canceled|failed
+  OnrampStatus status = 1;
   string onramp = 2;
   string transaction_id = 3;
   string onramp_transaction_id = 4; // the provider's own order id
