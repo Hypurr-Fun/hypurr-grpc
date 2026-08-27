@@ -15,6 +15,7 @@ import "hypurr/cabal.proto";
 import "hypurr/support.proto";
 import "hypurr/portfolio.proto";
 import "hypurr/onramp.proto";
+import "hypurr/telegram/pnl_card.proto";
 import "google/protobuf/struct.proto";
 
 
@@ -753,6 +754,7 @@ service Telegram {
   // Issues a Hypurr OAuth authorization code after verifying provider identity evidence.
   rpc CreateAuthorizationCode (AuthorizationCodeCreateRequest) returns (AuthorizationCodeCreateResponse) {}
   rpc TelegramUserWallets (TelegramUserWalletsRequest) returns (TelegramUserWalletsResponse) {}
+  rpc GeneratePnlCard (GeneratePnlCardRequest) returns (GeneratePnlCardResponse) {}
   rpc HyperliquidMostTrackedWallets (HyperliquidMostTrackedWalletsRequest) returns (HyperliquidMostTrackedWalletsResponse) {}
 
   // Launch

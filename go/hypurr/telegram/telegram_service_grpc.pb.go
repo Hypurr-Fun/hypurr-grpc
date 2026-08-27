@@ -24,6 +24,7 @@ const (
 	Telegram_TelegramAuthExchange_FullMethodName              = "/hypurr.Telegram/TelegramAuthExchange"
 	Telegram_CreateAuthorizationCode_FullMethodName           = "/hypurr.Telegram/CreateAuthorizationCode"
 	Telegram_TelegramUserWallets_FullMethodName               = "/hypurr.Telegram/TelegramUserWallets"
+	Telegram_GeneratePnlCard_FullMethodName                   = "/hypurr.Telegram/GeneratePnlCard"
 	Telegram_HyperliquidMostTrackedWallets_FullMethodName     = "/hypurr.Telegram/HyperliquidMostTrackedWallets"
 	Telegram_HyperliquidLaunchTrade_FullMethodName            = "/hypurr.Telegram/HyperliquidLaunchTrade"
 	Telegram_LaunchHyperliquidLaunch_FullMethodName           = "/hypurr.Telegram/LaunchHyperliquidLaunch"
@@ -90,6 +91,7 @@ type TelegramClient interface {
 	// Issues a Hypurr OAuth authorization code after verifying provider identity evidence.
 	CreateAuthorizationCode(ctx context.Context, in *AuthorizationCodeCreateRequest, opts ...grpc.CallOption) (*AuthorizationCodeCreateResponse, error)
 	TelegramUserWallets(ctx context.Context, in *TelegramUserWalletsRequest, opts ...grpc.CallOption) (*TelegramUserWalletsResponse, error)
+	GeneratePnlCard(ctx context.Context, in *GeneratePnlCardRequest, opts ...grpc.CallOption) (*GeneratePnlCardResponse, error)
 	HyperliquidMostTrackedWallets(ctx context.Context, in *HyperliquidMostTrackedWalletsRequest, opts ...grpc.CallOption) (*HyperliquidMostTrackedWalletsResponse, error)
 	// Launch
 	HyperliquidLaunchTrade(ctx context.Context, in *HyperliquidLaunchTradeRequest, opts ...grpc.CallOption) (*HyperliquidLaunchTradeResponse, error)
@@ -198,6 +200,16 @@ func (c *telegramClient) TelegramUserWallets(ctx context.Context, in *TelegramUs
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(TelegramUserWalletsResponse)
 	err := c.cc.Invoke(ctx, Telegram_TelegramUserWallets_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) GeneratePnlCard(ctx context.Context, in *GeneratePnlCardRequest, opts ...grpc.CallOption) (*GeneratePnlCardResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GeneratePnlCardResponse)
+	err := c.cc.Invoke(ctx, Telegram_GeneratePnlCard_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -786,6 +798,7 @@ type TelegramServer interface {
 	// Issues a Hypurr OAuth authorization code after verifying provider identity evidence.
 	CreateAuthorizationCode(context.Context, *AuthorizationCodeCreateRequest) (*AuthorizationCodeCreateResponse, error)
 	TelegramUserWallets(context.Context, *TelegramUserWalletsRequest) (*TelegramUserWalletsResponse, error)
+	GeneratePnlCard(context.Context, *GeneratePnlCardRequest) (*GeneratePnlCardResponse, error)
 	HyperliquidMostTrackedWallets(context.Context, *HyperliquidMostTrackedWalletsRequest) (*HyperliquidMostTrackedWalletsResponse, error)
 	// Launch
 	HyperliquidLaunchTrade(context.Context, *HyperliquidLaunchTradeRequest) (*HyperliquidLaunchTradeResponse, error)
@@ -868,6 +881,9 @@ func (UnimplementedTelegramServer) CreateAuthorizationCode(context.Context, *Aut
 }
 func (UnimplementedTelegramServer) TelegramUserWallets(context.Context, *TelegramUserWalletsRequest) (*TelegramUserWalletsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TelegramUserWallets not implemented")
+}
+func (UnimplementedTelegramServer) GeneratePnlCard(context.Context, *GeneratePnlCardRequest) (*GeneratePnlCardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GeneratePnlCard not implemented")
 }
 func (UnimplementedTelegramServer) HyperliquidMostTrackedWallets(context.Context, *HyperliquidMostTrackedWalletsRequest) (*HyperliquidMostTrackedWalletsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidMostTrackedWallets not implemented")
@@ -1115,6 +1131,24 @@ func _Telegram_TelegramUserWallets_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TelegramServer).TelegramUserWallets(ctx, req.(*TelegramUserWalletsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_GeneratePnlCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GeneratePnlCardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).GeneratePnlCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_GeneratePnlCard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).GeneratePnlCard(ctx, req.(*GeneratePnlCardRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2134,6 +2168,10 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TelegramUserWallets",
 			Handler:    _Telegram_TelegramUserWallets_Handler,
+		},
+		{
+			MethodName: "GeneratePnlCard",
+			Handler:    _Telegram_GeneratePnlCard_Handler,
 		},
 		{
 			MethodName: "HyperliquidMostTrackedWallets",

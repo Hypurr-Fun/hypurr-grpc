@@ -2,6 +2,8 @@
 // @generated from protobuf file "hypurr/telegram/telegram_service.proto" (package "hypurr", syntax proto3)
 // tslint:disable
 import { OnrampPurchasesResponse } from "../onramp";
+import { GeneratePnlCardResponse } from "./pnl_card";
+import { GeneratePnlCardRequest } from "./pnl_card";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
 import type { IBinaryWriter } from "@protobuf-ts/runtime";
@@ -10143,6 +10145,7 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "TelegramAuthExchange", options: {}, I: TelegramAuthExchangeRequest, O: TelegramAuthExchangeResponse },
     { name: "CreateAuthorizationCode", options: {}, I: AuthorizationCodeCreateRequest, O: AuthorizationCodeCreateResponse },
     { name: "TelegramUserWallets", options: {}, I: TelegramUserWalletsRequest, O: TelegramUserWalletsResponse },
+    { name: "GeneratePnlCard", options: {}, I: GeneratePnlCardRequest, O: GeneratePnlCardResponse },
     { name: "HyperliquidMostTrackedWallets", options: {}, I: HyperliquidMostTrackedWalletsRequest, O: HyperliquidMostTrackedWalletsResponse },
     { name: "HyperliquidLaunchTrade", options: {}, I: HyperliquidLaunchTradeRequest, O: HyperliquidLaunchTradeResponse },
     { name: "LaunchHyperliquidLaunch", options: {}, I: LaunchHyperliquidLaunchRequest, O: LaunchHyperliquidLaunchResponse },

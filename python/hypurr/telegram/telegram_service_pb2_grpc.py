@@ -3,6 +3,8 @@
 import grpc
 import warnings
 
+from hypurr import onramp_pb2 as hypurr_dot_onramp__pb2
+from hypurr.telegram import pnl_card_pb2 as hypurr_dot_telegram_dot_pnl__card__pb2
 from hypurr.telegram import telegram_service_pb2 as hypurr_dot_telegram_dot_telegram__service__pb2
 
 GRPC_GENERATED_VERSION = '1.81.0'
@@ -53,6 +55,11 @@ class TelegramStub:
                 '/hypurr.Telegram/TelegramUserWallets',
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserWalletsRequest.SerializeToString,
                 response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserWalletsResponse.FromString,
+                _registered_method=True)
+        self.GeneratePnlCard = channel.unary_unary(
+                '/hypurr.Telegram/GeneratePnlCard',
+                request_serializer=hypurr_dot_telegram_dot_pnl__card__pb2.GeneratePnlCardRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_pnl__card__pb2.GeneratePnlCardResponse.FromString,
                 _registered_method=True)
         self.HyperliquidMostTrackedWallets = channel.unary_unary(
                 '/hypurr.Telegram/HyperliquidMostTrackedWallets',
@@ -324,6 +331,11 @@ class TelegramStub:
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDeleteRequest.SerializeToString,
                 response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDeleteResponse.FromString,
                 _registered_method=True)
+        self.OnrampPurchases = channel.unary_unary(
+                '/hypurr.Telegram/OnrampPurchases',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramOnrampPurchasesRequest.SerializeToString,
+                response_deserializer=hypurr_dot_onramp__pb2.OnrampPurchasesResponse.FromString,
+                _registered_method=True)
 
 
 class TelegramServicer:
@@ -349,6 +361,12 @@ class TelegramServicer:
         raise NotImplementedError('Method not implemented!')
 
     def TelegramUserWallets(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GeneratePnlCard(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -686,6 +704,13 @@ class TelegramServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def OnrampPurchases(self, request, context):
+        """Onramp — purchases across all of the user's wallets
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_TelegramServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -708,6 +733,11 @@ def add_TelegramServicer_to_server(servicer, server):
                     servicer.TelegramUserWallets,
                     request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserWalletsRequest.FromString,
                     response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserWalletsResponse.SerializeToString,
+            ),
+            'GeneratePnlCard': grpc.unary_unary_rpc_method_handler(
+                    servicer.GeneratePnlCard,
+                    request_deserializer=hypurr_dot_telegram_dot_pnl__card__pb2.GeneratePnlCardRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_pnl__card__pb2.GeneratePnlCardResponse.SerializeToString,
             ),
             'HyperliquidMostTrackedWallets': grpc.unary_unary_rpc_method_handler(
                     servicer.HyperliquidMostTrackedWallets,
@@ -979,6 +1009,11 @@ def add_TelegramServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDeleteRequest.FromString,
                     response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDeleteResponse.SerializeToString,
             ),
+            'OnrampPurchases': grpc.unary_unary_rpc_method_handler(
+                    servicer.OnrampPurchases,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramOnrampPurchasesRequest.FromString,
+                    response_serializer=hypurr_dot_onramp__pb2.OnrampPurchasesResponse.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'hypurr.Telegram', rpc_method_handlers)
@@ -1088,6 +1123,33 @@ class Telegram:
             '/hypurr.Telegram/TelegramUserWallets',
             hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserWalletsRequest.SerializeToString,
             hypurr_dot_telegram_dot_telegram__service__pb2.TelegramUserWalletsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GeneratePnlCard(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/GeneratePnlCard',
+            hypurr_dot_telegram_dot_pnl__card__pb2.GeneratePnlCardRequest.SerializeToString,
+            hypurr_dot_telegram_dot_pnl__card__pb2.GeneratePnlCardResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -2546,6 +2608,33 @@ class Telegram:
             '/hypurr.Telegram/PortfolioAllocatorSourceDelete',
             hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDeleteRequest.SerializeToString,
             hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDeleteResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def OnrampPurchases(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/OnrampPurchases',
+            hypurr_dot_telegram_dot_telegram__service__pb2.TelegramOnrampPurchasesRequest.SerializeToString,
+            hypurr_dot_onramp__pb2.OnrampPurchasesResponse.FromString,
             options,
             channel_credentials,
             insecure,

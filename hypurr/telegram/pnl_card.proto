@@ -1,0 +1,42 @@
+syntax = "proto3";
+package hypurr;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/telegram";
+
+enum PnlCardAssetType {
+  PNL_CARD_ASSET_TYPE_UNSPECIFIED = 0;
+  PNL_CARD_ASSET_TYPE_PERP = 1;
+  PNL_CARD_ASSET_TYPE_SPOT = 2;
+  PNL_CARD_ASSET_TYPE_LAUNCH = 3;
+}
+
+enum PnlCardMetric {
+  PNL_CARD_METRIC_UNSPECIFIED = 0; // treated as TOTAL
+  PNL_CARD_METRIC_TOTAL = 1;
+  PNL_CARD_METRIC_RUNNING = 2;
+  PNL_CARD_METRIC_PERCENT = 3;
+}
+
+enum PnlCardStyle {
+  PNL_CARD_STYLE_UNSPECIFIED = 0; // treated as CLEAN
+  PNL_CARD_STYLE_CLEAN = 1;
+  PNL_CARD_STYLE_CLOWN = 2;
+  PNL_CARD_STYLE_COZY = 3;
+  PNL_CARD_STYLE_DASI = 4;
+  PNL_CARD_STYLE_COOK = 5;
+  PNL_CARD_STYLE_CARO = 6;
+}
+
+message GeneratePnlCardRequest {
+  map<string, string> auth_data = 1;
+  // Wallet ownership is checked against the authenticated Hfun account.
+  int64 wallet_id = 2;
+  PnlCardAssetType asset_type = 3;
+  // Database pair id for PERP/SPOT, or launch id for LAUNCH. Perp id 0 is valid.
+  int64 asset_id = 4;
+  PnlCardMetric metric = 5;
+  PnlCardStyle style = 6;
+}
+
+message GeneratePnlCardResponse {
+  bytes png = 1;
+}
