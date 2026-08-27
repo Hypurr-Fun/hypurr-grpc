@@ -138,15 +138,15 @@ export interface OnrampCheckoutUrlResponse {
     url: string;
 }
 /**
- * Latest payment-leg status for a purchase (webhook or poller fed).
+ * Latest status for a purchase.
  *
  * @generated from protobuf message hypurr.OnrampTxStatus
  */
 export interface OnrampTxStatus {
     /**
-     * @generated from protobuf field: string status = 1
+     * @generated from protobuf field: hypurr.OnrampStatus status = 1
      */
-    status: string; // init|new|pending|paid|completed|canceled|failed
+    status: OnrampStatus;
     /**
      * @generated from protobuf field: string onramp = 2
      */
@@ -300,6 +300,64 @@ export interface OnrampStorePermitRequest {
  * @generated from protobuf message hypurr.OnrampStorePermitResponse
  */
 export interface OnrampStorePermitResponse {
+}
+/**
+ * Purchase status. INIT..FAILED mirror Onramper's payment leg (webhook or
+ * poller fed; an unrecognized provider status maps to UNSPECIFIED). The
+ * server overlays the delivery leg on top: a paid payout with no bridge
+ * permit on file reads AWAITING_SIGNATURE (EOA clients prompt for the sign;
+ * custodial ones treat it as in-progress), and once the HL bridge tx is
+ * submitted it reads BRIDGED.
+ *
+ * @generated from protobuf enum hypurr.OnrampStatus
+ */
+export enum OnrampStatus {
+    /**
+     * @generated from protobuf enum value: ONRAMP_STATUS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * created-only, no payment signal yet
+     *
+     * @generated from protobuf enum value: ONRAMP_STATUS_INIT = 1;
+     */
+    INIT = 1,
+    /**
+     * @generated from protobuf enum value: ONRAMP_STATUS_NEW = 2;
+     */
+    NEW = 2,
+    /**
+     * @generated from protobuf enum value: ONRAMP_STATUS_PENDING = 3;
+     */
+    PENDING = 3,
+    /**
+     * @generated from protobuf enum value: ONRAMP_STATUS_PAID = 4;
+     */
+    PAID = 4,
+    /**
+     * @generated from protobuf enum value: ONRAMP_STATUS_COMPLETED = 5;
+     */
+    COMPLETED = 5,
+    /**
+     * @generated from protobuf enum value: ONRAMP_STATUS_CANCELED = 6;
+     */
+    CANCELED = 6,
+    /**
+     * @generated from protobuf enum value: ONRAMP_STATUS_FAILED = 7;
+     */
+    FAILED = 7,
+    /**
+     * server-derived
+     *
+     * @generated from protobuf enum value: ONRAMP_STATUS_AWAITING_SIGNATURE = 8;
+     */
+    AWAITING_SIGNATURE = 8,
+    /**
+     * server-derived
+     *
+     * @generated from protobuf enum value: ONRAMP_STATUS_BRIDGED = 9;
+     */
+    BRIDGED = 9
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class OnrampQuote$Type extends MessageType<OnrampQuote> {
@@ -684,7 +742,7 @@ export const OnrampCheckoutUrlResponse = new OnrampCheckoutUrlResponse$Type();
 class OnrampTxStatus$Type extends MessageType<OnrampTxStatus> {
     constructor() {
         super("hypurr.OnrampTxStatus", [
-            { no: 1, name: "status", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "status", kind: "enum", T: () => ["hypurr.OnrampStatus", OnrampStatus, "ONRAMP_STATUS_"] },
             { no: 2, name: "onramp", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "transaction_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "onramp_transaction_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -695,7 +753,7 @@ class OnrampTxStatus$Type extends MessageType<OnrampTxStatus> {
     }
     create(value?: PartialMessage<OnrampTxStatus>): OnrampTxStatus {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.status = "";
+        message.status = 0;
         message.onramp = "";
         message.transactionId = "";
         message.onrampTransactionId = "";
@@ -711,8 +769,8 @@ class OnrampTxStatus$Type extends MessageType<OnrampTxStatus> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string status */ 1:
-                    message.status = reader.string();
+                case /* hypurr.OnrampStatus status */ 1:
+                    message.status = reader.int32();
                     break;
                 case /* string onramp */ 2:
                     message.onramp = reader.string();
@@ -744,9 +802,9 @@ class OnrampTxStatus$Type extends MessageType<OnrampTxStatus> {
         return message;
     }
     internalBinaryWrite(message: OnrampTxStatus, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string status = 1; */
-        if (message.status !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.status);
+        /* hypurr.OnrampStatus status = 1; */
+        if (message.status !== 0)
+            writer.tag(1, WireType.Varint).int32(message.status);
         /* string onramp = 2; */
         if (message.onramp !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.onramp);
