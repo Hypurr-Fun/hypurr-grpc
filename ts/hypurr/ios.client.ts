@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { IosService } from "./ios";
+import type { UserSnapshot } from "./ios";
+import type { UserStreamRequest } from "./ios";
 import type { ProfileResponse } from "./ios";
 import type { ProfileRequest } from "./ios";
 import type { AccountsResponse } from "./ios";
@@ -48,6 +50,10 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: Profile
      */
     profile(input: ProfileRequest, options?: RpcOptions): UnaryCall<ProfileRequest, ProfileResponse>;
+    /**
+     * @generated from protobuf rpc: UserStream
+     */
+    userStream(input: UserStreamRequest, options?: RpcOptions): ServerStreamingCall<UserStreamRequest, UserSnapshot>;
 }
 /**
  * @generated from protobuf service hypurr.IosService
@@ -99,5 +105,12 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
     profile(input: ProfileRequest, options?: RpcOptions): UnaryCall<ProfileRequest, ProfileResponse> {
         const method = this.methods[5], opt = this._transport.mergeOptions(options);
         return stackIntercept<ProfileRequest, ProfileResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: UserStream
+     */
+    userStream(input: UserStreamRequest, options?: RpcOptions): ServerStreamingCall<UserStreamRequest, UserSnapshot> {
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        return stackIntercept<UserStreamRequest, UserSnapshot>("serverStreaming", this._transport, method, opt, input);
     }
 }

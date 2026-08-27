@@ -138,8 +138,6 @@ export interface OnrampCheckoutUrlResponse {
     url: string;
 }
 /**
- * Latest status for a purchase.
- *
  * @generated from protobuf message hypurr.OnrampTxStatus
  */
 export interface OnrampTxStatus {
@@ -302,13 +300,6 @@ export interface OnrampStorePermitRequest {
 export interface OnrampStorePermitResponse {
 }
 /**
- * Purchase status. INIT..FAILED mirror Onramper's payment leg (webhook or
- * poller fed; an unrecognized provider status maps to UNSPECIFIED). The
- * server overlays the delivery leg on top: a paid payout with no bridge
- * permit on file reads AWAITING_SIGNATURE (EOA clients prompt for the sign;
- * custodial ones treat it as in-progress), and once the HL bridge tx is
- * submitted it reads BRIDGED.
- *
  * @generated from protobuf enum hypurr.OnrampStatus
  */
 export enum OnrampStatus {

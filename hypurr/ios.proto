@@ -9,9 +9,15 @@ service IosService {
   rpc AssetMetadataCatalog(AssetMetadataCatalogRequest) returns (AssetMetadataCatalogResponse);
   rpc Accounts(AccountsRequest) returns (AccountsResponse);
   rpc Profile(ProfileRequest) returns (ProfileResponse);
+  rpc UserStream(UserStreamRequest) returns (stream UserSnapshot);
 }
 
 // ==== Shared ====
+
+message WalletReference {
+  string wallet_id = 1;
+  string name = 2;
+}
 
 // Color carries both theme variants for a single UI color.
 // Expected format: #RRGGBB.
@@ -498,4 +504,63 @@ message SpotAccountBalanceSection {
   // Section total, USD cents.
   int64 balance_cents = 1;
   int32 token_count = 2;
+}
+
+// ==== UserStream ====
+
+message UserStreamRequest {}
+
+message UserSnapshot {
+  // RFC3339 UTC time when the service calculated this consistent snapshot.
+  string as_of = 1;
+
+  // Aggregate across every authenticated wallet.
+  PortfolioValue all_wallets_value = 2;
+  // Wallet selector display order.
+  repeated UserWallet wallets = 3;
+}
+
+message PortfolioValue {
+  int64 total_balance_cents = 1;
+  int64 change_cents = 2;       // Signed value for the current product period.
+  double change_percentage = 3; // Signed value for the same period.
+}
+
+message UserWallet {
+  WalletReference wallet = 1;
+  PortfolioValue value = 2;
+
+  // Empty arrays mean this wallet has no current holdings or positions.
+  // Response order is display order.
+  repeated SpotHolding spot_holdings = 3;
+  repeated OpenPerpPosition perp_positions = 4;
+}
+
+// Shared by Home, Portfolio, Asset Detail, and Trading.
+message SpotHolding {
+  Asset asset = 1;
+  string quantity_decimal = 2;
+  int64 market_value_cents = 3;
+}
+
+// Shared by Home, Portfolio, Asset Detail, and Trading.
+message OpenPerpPosition {
+  string position_id = 1;
+  Asset asset = 2;
+  int32 leverage = 3;
+  PerpSide side = 4;
+  int64 unrealized_pnl_cents = 5; // Signed value.
+  double roe_percent = 6;         // Signed value.
+
+  // Presence means iOS shows a liquidation warning.
+  PerpLiquidationWarning liquidation_warning = 7;
+}
+
+enum PerpSide {
+  PERP_SIDE_LONG = 0;
+  PERP_SIDE_SHORT = 1;
+}
+
+message PerpLiquidationWarning {
+  double distance_percentage = 1;
 }
