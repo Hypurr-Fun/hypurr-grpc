@@ -40,9 +40,6 @@ message Asset {
   string logo_url = 4;
 
   Color color = 5;
-
-  // e.g. "Hyperliquid", or the hip3 dex name.
-  string venue_name = 6;
 }
 
 // ==== Home ====
@@ -538,22 +535,24 @@ message UserWallet {
 
 // Shared by Home, Portfolio, Asset Detail, and Trading.
 message SpotHolding {
-  Asset asset = 1;
-  string quantity_decimal = 2;
-  int64 market_value_cents = 3;
+  string position_id = 1; // unique identifier for the position (e.g. "chain:wallet:asset_id" for Hypercore)
+  Asset asset = 2;
+  string quantity_decimal = 3;
+  int64 market_value_cents = 4;
 }
 
 // Shared by Home, Portfolio, Asset Detail, and Trading.
 message OpenPerpPosition {
-  string position_id = 1;
-  Asset asset = 2;
-  int32 leverage = 3;
-  PerpSide side = 4;
-  int64 unrealized_pnl_cents = 5; // Signed value.
-  double roe_percent = 6;         // Signed value.
+  string position_id = 1; // unique identifier for the position (e.g. "chain:wallet:asset_id" for Hypercore)
+  string dex = 2;
+  Asset asset = 3;
+  int32 leverage = 4;
+  PerpSide side = 5;
+  int64 unrealized_pnl_cents = 6; // Signed value.
+  double roe_percent = 7;         // Signed value.
 
   // Presence means iOS shows a liquidation warning.
-  PerpLiquidationWarning liquidation_warning = 7;
+  PerpLiquidationWarning liquidation_warning = 8;
 }
 
 enum PerpSide {

@@ -74,12 +74,6 @@ export interface Asset {
      * @generated from protobuf field: hypurr.Color color = 5
      */
     color?: Color;
-    /**
-     * e.g. "Hyperliquid", or the hip3 dex name.
-     *
-     * @generated from protobuf field: string venue_name = 6
-     */
-    venueName: string;
 }
 // ==== Home ====
 
@@ -1186,15 +1180,19 @@ export interface UserWallet {
  */
 export interface SpotHolding {
     /**
-     * @generated from protobuf field: hypurr.Asset asset = 1
+     * @generated from protobuf field: string position_id = 1
+     */
+    positionId: string; // unique identifier for the position (e.g. "chain:wallet:asset_id" for Hypercore)
+    /**
+     * @generated from protobuf field: hypurr.Asset asset = 2
      */
     asset?: Asset;
     /**
-     * @generated from protobuf field: string quantity_decimal = 2
+     * @generated from protobuf field: string quantity_decimal = 3
      */
     quantityDecimal: string;
     /**
-     * @generated from protobuf field: int64 market_value_cents = 3
+     * @generated from protobuf field: int64 market_value_cents = 4
      */
     marketValueCents: number;
 }
@@ -1207,31 +1205,35 @@ export interface OpenPerpPosition {
     /**
      * @generated from protobuf field: string position_id = 1
      */
-    positionId: string;
+    positionId: string; // unique identifier for the position (e.g. "chain:wallet:asset_id" for Hypercore)
     /**
-     * @generated from protobuf field: hypurr.Asset asset = 2
+     * @generated from protobuf field: string dex = 2
+     */
+    dex: string;
+    /**
+     * @generated from protobuf field: hypurr.Asset asset = 3
      */
     asset?: Asset;
     /**
-     * @generated from protobuf field: int32 leverage = 3
+     * @generated from protobuf field: int32 leverage = 4
      */
     leverage: number;
     /**
-     * @generated from protobuf field: hypurr.PerpSide side = 4
+     * @generated from protobuf field: hypurr.PerpSide side = 5
      */
     side: PerpSide;
     /**
-     * @generated from protobuf field: int64 unrealized_pnl_cents = 5
+     * @generated from protobuf field: int64 unrealized_pnl_cents = 6
      */
     unrealizedPnlCents: number; // Signed value.
     /**
-     * @generated from protobuf field: double roe_percent = 6
+     * @generated from protobuf field: double roe_percent = 7
      */
     roePercent: number; // Signed value.
     /**
      * Presence means iOS shows a liquidation warning.
      *
-     * @generated from protobuf field: hypurr.PerpLiquidationWarning liquidation_warning = 7
+     * @generated from protobuf field: hypurr.PerpLiquidationWarning liquidation_warning = 8
      */
     liquidationWarning?: PerpLiquidationWarning;
 }
@@ -1454,8 +1456,7 @@ class Asset$Type extends MessageType<Asset> {
             { no: 2, name: "symbol", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "logo_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "color", kind: "message", T: () => Color },
-            { no: 6, name: "venue_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 5, name: "color", kind: "message", T: () => Color }
         ]);
     }
     create(value?: PartialMessage<Asset>): Asset {
@@ -1464,7 +1465,6 @@ class Asset$Type extends MessageType<Asset> {
         message.symbol = "";
         message.name = "";
         message.logoUrl = "";
-        message.venueName = "";
         if (value !== undefined)
             reflectionMergePartial<Asset>(this, message, value);
         return message;
@@ -1488,9 +1488,6 @@ class Asset$Type extends MessageType<Asset> {
                     break;
                 case /* hypurr.Color color */ 5:
                     message.color = Color.internalBinaryRead(reader, reader.uint32(), options, message.color);
-                    break;
-                case /* string venue_name */ 6:
-                    message.venueName = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1519,9 +1516,6 @@ class Asset$Type extends MessageType<Asset> {
         /* hypurr.Color color = 5; */
         if (message.color)
             Color.internalBinaryWrite(message.color, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* string venue_name = 6; */
-        if (message.venueName !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.venueName);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4516,13 +4510,15 @@ export const UserWallet = new UserWallet$Type();
 class SpotHolding$Type extends MessageType<SpotHolding> {
     constructor() {
         super("hypurr.SpotHolding", [
-            { no: 1, name: "asset", kind: "message", T: () => Asset },
-            { no: 2, name: "quantity_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "market_value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 1, name: "position_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "asset", kind: "message", T: () => Asset },
+            { no: 3, name: "quantity_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "market_value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<SpotHolding>): SpotHolding {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.positionId = "";
         message.quantityDecimal = "";
         message.marketValueCents = 0;
         if (value !== undefined)
@@ -4534,13 +4530,16 @@ class SpotHolding$Type extends MessageType<SpotHolding> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* hypurr.Asset asset */ 1:
+                case /* string position_id */ 1:
+                    message.positionId = reader.string();
+                    break;
+                case /* hypurr.Asset asset */ 2:
                     message.asset = Asset.internalBinaryRead(reader, reader.uint32(), options, message.asset);
                     break;
-                case /* string quantity_decimal */ 2:
+                case /* string quantity_decimal */ 3:
                     message.quantityDecimal = reader.string();
                     break;
-                case /* int64 market_value_cents */ 3:
+                case /* int64 market_value_cents */ 4:
                     message.marketValueCents = reader.int64().toNumber();
                     break;
                 default:
@@ -4555,15 +4554,18 @@ class SpotHolding$Type extends MessageType<SpotHolding> {
         return message;
     }
     internalBinaryWrite(message: SpotHolding, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* hypurr.Asset asset = 1; */
+        /* string position_id = 1; */
+        if (message.positionId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.positionId);
+        /* hypurr.Asset asset = 2; */
         if (message.asset)
-            Asset.internalBinaryWrite(message.asset, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* string quantity_decimal = 2; */
+            Asset.internalBinaryWrite(message.asset, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string quantity_decimal = 3; */
         if (message.quantityDecimal !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.quantityDecimal);
-        /* int64 market_value_cents = 3; */
+            writer.tag(3, WireType.LengthDelimited).string(message.quantityDecimal);
+        /* int64 market_value_cents = 4; */
         if (message.marketValueCents !== 0)
-            writer.tag(3, WireType.Varint).int64(message.marketValueCents);
+            writer.tag(4, WireType.Varint).int64(message.marketValueCents);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4579,17 +4581,19 @@ class OpenPerpPosition$Type extends MessageType<OpenPerpPosition> {
     constructor() {
         super("hypurr.OpenPerpPosition", [
             { no: 1, name: "position_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "asset", kind: "message", T: () => Asset },
-            { no: 3, name: "leverage", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "side", kind: "enum", T: () => ["hypurr.PerpSide", PerpSide, "PERP_SIDE_"] },
-            { no: 5, name: "unrealized_pnl_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 6, name: "roe_percent", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 7, name: "liquidation_warning", kind: "message", T: () => PerpLiquidationWarning }
+            { no: 2, name: "dex", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "asset", kind: "message", T: () => Asset },
+            { no: 4, name: "leverage", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 5, name: "side", kind: "enum", T: () => ["hypurr.PerpSide", PerpSide, "PERP_SIDE_"] },
+            { no: 6, name: "unrealized_pnl_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "roe_percent", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "liquidation_warning", kind: "message", T: () => PerpLiquidationWarning }
         ]);
     }
     create(value?: PartialMessage<OpenPerpPosition>): OpenPerpPosition {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.positionId = "";
+        message.dex = "";
         message.leverage = 0;
         message.side = 0;
         message.unrealizedPnlCents = 0;
@@ -4606,22 +4610,25 @@ class OpenPerpPosition$Type extends MessageType<OpenPerpPosition> {
                 case /* string position_id */ 1:
                     message.positionId = reader.string();
                     break;
-                case /* hypurr.Asset asset */ 2:
+                case /* string dex */ 2:
+                    message.dex = reader.string();
+                    break;
+                case /* hypurr.Asset asset */ 3:
                     message.asset = Asset.internalBinaryRead(reader, reader.uint32(), options, message.asset);
                     break;
-                case /* int32 leverage */ 3:
+                case /* int32 leverage */ 4:
                     message.leverage = reader.int32();
                     break;
-                case /* hypurr.PerpSide side */ 4:
+                case /* hypurr.PerpSide side */ 5:
                     message.side = reader.int32();
                     break;
-                case /* int64 unrealized_pnl_cents */ 5:
+                case /* int64 unrealized_pnl_cents */ 6:
                     message.unrealizedPnlCents = reader.int64().toNumber();
                     break;
-                case /* double roe_percent */ 6:
+                case /* double roe_percent */ 7:
                     message.roePercent = reader.double();
                     break;
-                case /* hypurr.PerpLiquidationWarning liquidation_warning */ 7:
+                case /* hypurr.PerpLiquidationWarning liquidation_warning */ 8:
                     message.liquidationWarning = PerpLiquidationWarning.internalBinaryRead(reader, reader.uint32(), options, message.liquidationWarning);
                     break;
                 default:
@@ -4639,24 +4646,27 @@ class OpenPerpPosition$Type extends MessageType<OpenPerpPosition> {
         /* string position_id = 1; */
         if (message.positionId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.positionId);
-        /* hypurr.Asset asset = 2; */
+        /* string dex = 2; */
+        if (message.dex !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.dex);
+        /* hypurr.Asset asset = 3; */
         if (message.asset)
-            Asset.internalBinaryWrite(message.asset, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* int32 leverage = 3; */
+            Asset.internalBinaryWrite(message.asset, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* int32 leverage = 4; */
         if (message.leverage !== 0)
-            writer.tag(3, WireType.Varint).int32(message.leverage);
-        /* hypurr.PerpSide side = 4; */
+            writer.tag(4, WireType.Varint).int32(message.leverage);
+        /* hypurr.PerpSide side = 5; */
         if (message.side !== 0)
-            writer.tag(4, WireType.Varint).int32(message.side);
-        /* int64 unrealized_pnl_cents = 5; */
+            writer.tag(5, WireType.Varint).int32(message.side);
+        /* int64 unrealized_pnl_cents = 6; */
         if (message.unrealizedPnlCents !== 0)
-            writer.tag(5, WireType.Varint).int64(message.unrealizedPnlCents);
-        /* double roe_percent = 6; */
+            writer.tag(6, WireType.Varint).int64(message.unrealizedPnlCents);
+        /* double roe_percent = 7; */
         if (message.roePercent !== 0)
-            writer.tag(6, WireType.Bit64).double(message.roePercent);
-        /* hypurr.PerpLiquidationWarning liquidation_warning = 7; */
+            writer.tag(7, WireType.Bit64).double(message.roePercent);
+        /* hypurr.PerpLiquidationWarning liquidation_warning = 8; */
         if (message.liquidationWarning)
-            PerpLiquidationWarning.internalBinaryWrite(message.liquidationWarning, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+            PerpLiquidationWarning.internalBinaryWrite(message.liquidationWarning, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

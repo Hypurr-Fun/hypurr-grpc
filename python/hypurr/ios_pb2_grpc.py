@@ -64,6 +64,11 @@ class IosServiceStub(object):
                 request_serializer=hypurr_dot_ios__pb2.ProfileRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios__pb2.ProfileResponse.FromString,
                 _registered_method=True)
+        self.UserStream = channel.unary_stream(
+                '/hypurr.IosService/UserStream',
+                request_serializer=hypurr_dot_ios__pb2.UserStreamRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios__pb2.UserSnapshot.FromString,
+                _registered_method=True)
 
 
 class IosServiceServicer(object):
@@ -105,6 +110,12 @@ class IosServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def UserStream(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_IosServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -137,6 +148,11 @@ def add_IosServiceServicer_to_server(servicer, server):
                     servicer.Profile,
                     request_deserializer=hypurr_dot_ios__pb2.ProfileRequest.FromString,
                     response_serializer=hypurr_dot_ios__pb2.ProfileResponse.SerializeToString,
+            ),
+            'UserStream': grpc.unary_stream_rpc_method_handler(
+                    servicer.UserStream,
+                    request_deserializer=hypurr_dot_ios__pb2.UserStreamRequest.FromString,
+                    response_serializer=hypurr_dot_ios__pb2.UserSnapshot.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -301,6 +317,33 @@ class IosService(object):
             '/hypurr.IosService/Profile',
             hypurr_dot_ios__pb2.ProfileRequest.SerializeToString,
             hypurr_dot_ios__pb2.ProfileResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UserStream(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(
+            request,
+            target,
+            '/hypurr.IosService/UserStream',
+            hypurr_dot_ios__pb2.UserStreamRequest.SerializeToString,
+            hypurr_dot_ios__pb2.UserSnapshot.FromString,
             options,
             channel_credentials,
             insecure,
