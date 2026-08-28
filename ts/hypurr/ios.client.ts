@@ -14,9 +14,11 @@ import type { AssetMetadataCatalogResponse } from "./ios";
 import type { AssetMetadataCatalogRequest } from "./ios";
 import type { AssetDetailLiveUpdate } from "./ios";
 import type { AssetDetailLiveUpdatesRequest } from "./ios";
-import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { AssetDetailResponse } from "./ios";
 import type { AssetDetailRequest } from "./ios";
+import type { LiveAssetUpdate } from "./ios";
+import type { LiveAssetUpdatesRequest } from "./ios";
+import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { HomeResponse } from "./ios";
 import type { HomeRequest } from "./ios";
@@ -30,6 +32,10 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: Home
      */
     home(input: HomeRequest, options?: RpcOptions): UnaryCall<HomeRequest, HomeResponse>;
+    /**
+     * @generated from protobuf rpc: LiveAssetUpdates
+     */
+    liveAssetUpdates(input: LiveAssetUpdatesRequest, options?: RpcOptions): ServerStreamingCall<LiveAssetUpdatesRequest, LiveAssetUpdate>;
     /**
      * @generated from protobuf rpc: AssetDetail
      */
@@ -72,45 +78,52 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
         return stackIntercept<HomeRequest, HomeResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: LiveAssetUpdates
+     */
+    liveAssetUpdates(input: LiveAssetUpdatesRequest, options?: RpcOptions): ServerStreamingCall<LiveAssetUpdatesRequest, LiveAssetUpdate> {
+        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        return stackIntercept<LiveAssetUpdatesRequest, LiveAssetUpdate>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: AssetDetail
      */
     assetDetail(input: AssetDetailRequest, options?: RpcOptions): UnaryCall<AssetDetailRequest, AssetDetailResponse> {
-        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        const method = this.methods[2], opt = this._transport.mergeOptions(options);
         return stackIntercept<AssetDetailRequest, AssetDetailResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: AssetDetailLiveUpdates
      */
     assetDetailLiveUpdates(input: AssetDetailLiveUpdatesRequest, options?: RpcOptions): ServerStreamingCall<AssetDetailLiveUpdatesRequest, AssetDetailLiveUpdate> {
-        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
         return stackIntercept<AssetDetailLiveUpdatesRequest, AssetDetailLiveUpdate>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: AssetMetadataCatalog
      */
     assetMetadataCatalog(input: AssetMetadataCatalogRequest, options?: RpcOptions): UnaryCall<AssetMetadataCatalogRequest, AssetMetadataCatalogResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<AssetMetadataCatalogRequest, AssetMetadataCatalogResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: Accounts
      */
     accounts(input: AccountsRequest, options?: RpcOptions): UnaryCall<AccountsRequest, AccountsResponse> {
-        const method = this.methods[4], opt = this._transport.mergeOptions(options);
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
         return stackIntercept<AccountsRequest, AccountsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: Profile
      */
     profile(input: ProfileRequest, options?: RpcOptions): UnaryCall<ProfileRequest, ProfileResponse> {
-        const method = this.methods[5], opt = this._transport.mergeOptions(options);
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
         return stackIntercept<ProfileRequest, ProfileResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: UserStream
      */
     userStream(input: UserStreamRequest, options?: RpcOptions): ServerStreamingCall<UserStreamRequest, UserSnapshot> {
-        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        const method = this.methods[7], opt = this._transport.mergeOptions(options);
         return stackIntercept<UserStreamRequest, UserSnapshot>("serverStreaming", this._transport, method, opt, input);
     }
 }

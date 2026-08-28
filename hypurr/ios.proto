@@ -4,6 +4,7 @@ option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
 service IosService {
   rpc Home(HomeRequest) returns (HomeResponse);
+  rpc LiveAssetUpdates(LiveAssetUpdatesRequest) returns (stream LiveAssetUpdate);
   rpc AssetDetail(AssetDetailRequest) returns (AssetDetailResponse);
   rpc AssetDetailLiveUpdates(AssetDetailLiveUpdatesRequest) returns (stream AssetDetailLiveUpdate);
   rpc AssetMetadataCatalog(AssetMetadataCatalogRequest) returns (AssetMetadataCatalogResponse);
@@ -181,6 +182,27 @@ message ReceiveActivity {
   string from = 1;
   // Absolute USD value in cents e.g. "$22,482.17" -> 2248217.
   int64 amount_cents = 2;
+}
+
+// ==== LiveAssetUpdates ====
+
+message LiveAssetUpdatesRequest {}
+
+message LiveAssetUpdate {
+  // Asset affected by this update.
+  uint64 asset_id = 1;
+
+  // RFC3339 UTC time at which this asset update occurred.
+  string occurred_at = 2;
+
+  oneof update {
+    AssetPriceUpdate price = 10;
+  }
+}
+
+message AssetPriceUpdate {
+  // Asset price with asset decimal precision e.g. "$22,482.17" -> "22482.17" or "$0.00017" -> "0.00017"
+  string price_decimal = 1;
 }
 
 // ==== AssetDetail ====

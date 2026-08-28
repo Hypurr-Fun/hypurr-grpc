@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion8
 
 const (
 	IosService_Home_FullMethodName                   = "/hypurr.IosService/Home"
+	IosService_LiveAssetUpdates_FullMethodName       = "/hypurr.IosService/LiveAssetUpdates"
 	IosService_AssetDetail_FullMethodName            = "/hypurr.IosService/AssetDetail"
 	IosService_AssetDetailLiveUpdates_FullMethodName = "/hypurr.IosService/AssetDetailLiveUpdates"
 	IosService_AssetMetadataCatalog_FullMethodName   = "/hypurr.IosService/AssetMetadataCatalog"
@@ -33,6 +34,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IosServiceClient interface {
 	Home(ctx context.Context, in *HomeRequest, opts ...grpc.CallOption) (*HomeResponse, error)
+	LiveAssetUpdates(ctx context.Context, in *LiveAssetUpdatesRequest, opts ...grpc.CallOption) (IosService_LiveAssetUpdatesClient, error)
 	AssetDetail(ctx context.Context, in *AssetDetailRequest, opts ...grpc.CallOption) (*AssetDetailResponse, error)
 	AssetDetailLiveUpdates(ctx context.Context, in *AssetDetailLiveUpdatesRequest, opts ...grpc.CallOption) (IosService_AssetDetailLiveUpdatesClient, error)
 	AssetMetadataCatalog(ctx context.Context, in *AssetMetadataCatalogRequest, opts ...grpc.CallOption) (*AssetMetadataCatalogResponse, error)
@@ -59,6 +61,39 @@ func (c *iosServiceClient) Home(ctx context.Context, in *HomeRequest, opts ...gr
 	return out, nil
 }
 
+func (c *iosServiceClient) LiveAssetUpdates(ctx context.Context, in *LiveAssetUpdatesRequest, opts ...grpc.CallOption) (IosService_LiveAssetUpdatesClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &IosService_ServiceDesc.Streams[0], IosService_LiveAssetUpdates_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &iosServiceLiveAssetUpdatesClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type IosService_LiveAssetUpdatesClient interface {
+	Recv() (*LiveAssetUpdate, error)
+	grpc.ClientStream
+}
+
+type iosServiceLiveAssetUpdatesClient struct {
+	grpc.ClientStream
+}
+
+func (x *iosServiceLiveAssetUpdatesClient) Recv() (*LiveAssetUpdate, error) {
+	m := new(LiveAssetUpdate)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *iosServiceClient) AssetDetail(ctx context.Context, in *AssetDetailRequest, opts ...grpc.CallOption) (*AssetDetailResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AssetDetailResponse)
@@ -71,7 +106,7 @@ func (c *iosServiceClient) AssetDetail(ctx context.Context, in *AssetDetailReque
 
 func (c *iosServiceClient) AssetDetailLiveUpdates(ctx context.Context, in *AssetDetailLiveUpdatesRequest, opts ...grpc.CallOption) (IosService_AssetDetailLiveUpdatesClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &IosService_ServiceDesc.Streams[0], IosService_AssetDetailLiveUpdates_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &IosService_ServiceDesc.Streams[1], IosService_AssetDetailLiveUpdates_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +169,7 @@ func (c *iosServiceClient) Profile(ctx context.Context, in *ProfileRequest, opts
 
 func (c *iosServiceClient) UserStream(ctx context.Context, in *UserStreamRequest, opts ...grpc.CallOption) (IosService_UserStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &IosService_ServiceDesc.Streams[1], IosService_UserStream_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &IosService_ServiceDesc.Streams[2], IosService_UserStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -170,6 +205,7 @@ func (x *iosServiceUserStreamClient) Recv() (*UserSnapshot, error) {
 // for forward compatibility
 type IosServiceServer interface {
 	Home(context.Context, *HomeRequest) (*HomeResponse, error)
+	LiveAssetUpdates(*LiveAssetUpdatesRequest, IosService_LiveAssetUpdatesServer) error
 	AssetDetail(context.Context, *AssetDetailRequest) (*AssetDetailResponse, error)
 	AssetDetailLiveUpdates(*AssetDetailLiveUpdatesRequest, IosService_AssetDetailLiveUpdatesServer) error
 	AssetMetadataCatalog(context.Context, *AssetMetadataCatalogRequest) (*AssetMetadataCatalogResponse, error)
@@ -185,6 +221,9 @@ type UnimplementedIosServiceServer struct {
 
 func (UnimplementedIosServiceServer) Home(context.Context, *HomeRequest) (*HomeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Home not implemented")
+}
+func (UnimplementedIosServiceServer) LiveAssetUpdates(*LiveAssetUpdatesRequest, IosService_LiveAssetUpdatesServer) error {
+	return status.Errorf(codes.Unimplemented, "method LiveAssetUpdates not implemented")
 }
 func (UnimplementedIosServiceServer) AssetDetail(context.Context, *AssetDetailRequest) (*AssetDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AssetDetail not implemented")
@@ -233,6 +272,27 @@ func _IosService_Home_Handler(srv interface{}, ctx context.Context, dec func(int
 		return srv.(IosServiceServer).Home(ctx, req.(*HomeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
+}
+
+func _IosService_LiveAssetUpdates_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(LiveAssetUpdatesRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(IosServiceServer).LiveAssetUpdates(m, &iosServiceLiveAssetUpdatesServer{ServerStream: stream})
+}
+
+type IosService_LiveAssetUpdatesServer interface {
+	Send(*LiveAssetUpdate) error
+	grpc.ServerStream
+}
+
+type iosServiceLiveAssetUpdatesServer struct {
+	grpc.ServerStream
+}
+
+func (x *iosServiceLiveAssetUpdatesServer) Send(m *LiveAssetUpdate) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _IosService_AssetDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -378,6 +438,11 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "LiveAssetUpdates",
+			Handler:       _IosService_LiveAssetUpdates_Handler,
+			ServerStreams: true,
+		},
 		{
 			StreamName:    "AssetDetailLiveUpdates",
 			Handler:       _IosService_AssetDetailLiveUpdates_Handler,
