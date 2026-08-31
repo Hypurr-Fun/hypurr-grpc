@@ -49,7 +49,7 @@ type KmsClient interface {
 	LoginOrRegister(ctx context.Context, in *KmsLoginOrRegisterRequest, opts ...grpc.CallOption) (*KmsLoginOrRegisterResponse, error)
 	// Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
 	// metadata); the bot derives the account id from the VERIFIED claims —
-	// never from client input. RPC names mirror the enclave ops.
+	// never from client input.
 	AddProvider(ctx context.Context, in *KmsAddProviderRequest, opts ...grpc.CallOption) (*KmsAddProviderResponse, error)
 	AccountEnable2FA(ctx context.Context, in *KmsAccountEnable2FARequest, opts ...grpc.CallOption) (*KmsAccountEnable2FAResponse, error)
 	AccountDisable2FA(ctx context.Context, in *KmsAccountDisable2FARequest, opts ...grpc.CallOption) (*KmsAccountDisable2FAResponse, error)
@@ -189,7 +189,7 @@ type KmsServer interface {
 	LoginOrRegister(context.Context, *KmsLoginOrRegisterRequest) (*KmsLoginOrRegisterResponse, error)
 	// Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
 	// metadata); the bot derives the account id from the VERIFIED claims —
-	// never from client input. RPC names mirror the enclave ops.
+	// never from client input.
 	AddProvider(context.Context, *KmsAddProviderRequest) (*KmsAddProviderResponse, error)
 	AccountEnable2FA(context.Context, *KmsAccountEnable2FARequest) (*KmsAccountEnable2FAResponse, error)
 	AccountDisable2FA(context.Context, *KmsAccountDisable2FARequest) (*KmsAccountDisable2FAResponse, error)
