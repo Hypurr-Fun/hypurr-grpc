@@ -53,6 +53,11 @@ message KmsAddProviderRequest {
   // independently verifies them against the sealed payload.
   string added_subject_hash = 2;
   string provider_type = 3;
+  string instance_jwt = 4;
+  // Proof of possession: raw r||s P-256 signature over
+  // sha256(encrypted_payload) by the session device key. Forwarded blindly;
+  // the KMS instance verifies it.
+  bytes signature = 5;
 }
 
 message KmsAddProviderResponse {
@@ -61,6 +66,11 @@ message KmsAddProviderResponse {
 
 message KmsAccountEnable2FARequest {
   bytes encrypted_payload = 1;
+  string instance_jwt = 2;
+  // Proof of possession: raw r||s P-256 signature over
+  // sha256(encrypted_payload) by the session device key. Forwarded blindly;
+  // the KMS instance verifies it.
+  bytes signature = 3;
 }
 
 message KmsAccountEnable2FAResponse {
@@ -69,6 +79,11 @@ message KmsAccountEnable2FAResponse {
 
 message KmsAccountDisable2FARequest {
   bytes encrypted_payload = 1;
+  string instance_jwt = 2;
+  // Proof of possession: raw r||s P-256 signature over
+  // sha256(encrypted_payload) by the session device key. Forwarded blindly;
+  // the KMS instance verifies it.
+  bytes signature = 3;
 }
 
 message KmsAccountDisable2FAResponse {
@@ -77,6 +92,11 @@ message KmsAccountDisable2FAResponse {
 
 message KmsAccountShardSecretRequest {
   bytes encrypted_payload = 1;
+  string instance_jwt = 2;
+  // Proof of possession: raw r||s P-256 signature over
+  // sha256(encrypted_payload) by the session device key. Forwarded blindly;
+  // the KMS instance verifies it.
+  bytes signature = 3;
 }
 
 message KmsAccountShardSecretResponse {
