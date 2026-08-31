@@ -1,0 +1,120 @@
+syntax = "proto3";
+package hypurr;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
+
+// Kms forwards sealed client payloads between the app and the hfun-kms
+// instance. The bot is a dumb pipe: payloads are sealed to the enclave,
+// responses are attestation documents the client verifies against its own
+// pinned trust anchors — nothing here can be read or altered in transit.
+service Kms {
+  // GetAttestation returns a fresh enclave attestation — the start of every
+  // client ceremony (single-use nonce + ephemeral sealing key).
+  rpc GetAttestation(KmsGetAttestationRequest) returns (KmsGetAttestationResponse);
+  // LoginOrRegister forwards a sealed login/register payload. Pre-auth by
+  // nature; on success the bot links the KMS account to an Hfun user using
+  // the verified response, never client input.
+  rpc LoginOrRegister(KmsLoginOrRegisterRequest) returns (KmsLoginOrRegisterResponse);
+
+  // Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
+  // metadata); the bot derives the account id from the VERIFIED claims —
+  // never from client input.
+  rpc AddProvider(KmsAddProviderRequest) returns (KmsAddProviderResponse);
+  rpc AccountEnable2FA(KmsAccountEnable2FARequest) returns (KmsAccountEnable2FAResponse);
+  rpc AccountDisable2FA(KmsAccountDisable2FARequest) returns (KmsAccountDisable2FAResponse);
+  rpc AccountShardSecret(KmsAccountShardSecretRequest) returns (KmsAccountShardSecretResponse);
+
+  // Locked-out flows: no bot JWT exists; routed by the plaintext
+  // subject_hash like LoginOrRegister. Auth lives inside the sealed payload
+  // and is enforced by the enclave.
+  rpc RequestFactorReset(KmsRequestFactorResetRequest) returns (KmsRequestFactorResetResponse);
+  rpc CancelFactorReset(KmsCancelFactorResetRequest) returns (KmsCancelFactorResetResponse);
+  rpc ExecuteFactorReset(KmsExecuteFactorResetRequest) returns (KmsExecuteFactorResetResponse);
+  rpc RecoverKeys(KmsRecoverKeysRequest) returns (KmsRecoverKeysResponse);
+}
+
+message KmsGetAttestationRequest {}
+
+message KmsGetAttestationResponse {
+  bytes attestation = 1;
+}
+
+message KmsLoginOrRegisterRequest {
+  bytes encrypted_payload = 1;
+  string subject_hash = 2;
+}
+
+message KmsLoginOrRegisterResponse {
+  bytes attestation = 1;
+}
+
+message KmsAddProviderRequest {
+  bytes encrypted_payload = 1;
+  // Plaintext routing for the instance's uniqueness checks; the enclave
+  // independently verifies them against the sealed payload.
+  string added_subject_hash = 2;
+  string provider_type = 3;
+}
+
+message KmsAddProviderResponse {
+  bytes attestation = 1;
+}
+
+message KmsAccountEnable2FARequest {
+  bytes encrypted_payload = 1;
+}
+
+message KmsAccountEnable2FAResponse {
+  bytes attestation = 1;
+}
+
+message KmsAccountDisable2FARequest {
+  bytes encrypted_payload = 1;
+}
+
+message KmsAccountDisable2FAResponse {
+  bytes attestation = 1;
+}
+
+message KmsAccountShardSecretRequest {
+  bytes encrypted_payload = 1;
+}
+
+message KmsAccountShardSecretResponse {
+  bytes attestation = 1;
+}
+
+message KmsRequestFactorResetRequest {
+  bytes encrypted_payload = 1;
+  string subject_hash = 2;
+}
+
+message KmsRequestFactorResetResponse {
+  bytes attestation = 1;
+}
+
+message KmsCancelFactorResetRequest {
+  bytes encrypted_payload = 1;
+  string subject_hash = 2;
+}
+
+message KmsCancelFactorResetResponse {
+  bytes attestation = 1;
+}
+
+message KmsExecuteFactorResetRequest {
+  bytes encrypted_payload = 1;
+  string subject_hash = 2;
+}
+
+message KmsExecuteFactorResetResponse {
+  bytes attestation = 1;
+}
+
+message KmsRecoverKeysRequest {
+  bytes encrypted_payload = 1;
+  string subject_hash = 2;
+}
+
+message KmsRecoverKeysResponse {
+  bytes attestation = 1;
+}
