@@ -1234,6 +1234,12 @@ export interface SpotHolding {
      * @generated from protobuf field: int64 market_value_cents = 4
      */
     marketValueCents: number;
+    /**
+     * Present for every current spot holding.
+     *
+     * @generated from protobuf field: hypurr.SpotPositionDetails position_details = 5
+     */
+    positionDetails?: SpotPositionDetails;
 }
 /**
  * Shared by Home, Portfolio, Asset Detail, and Trading.
@@ -1275,6 +1281,87 @@ export interface OpenPerpPosition {
      * @generated from protobuf field: hypurr.PerpLiquidationWarning liquidation_warning = 8
      */
     liquidationWarning?: PerpLiquidationWarning;
+    /**
+     * Present for every current open perpetual position.
+     *
+     * @generated from protobuf field: hypurr.PerpPositionDetails position_details = 9
+     */
+    positionDetails?: PerpPositionDetails;
+}
+/**
+ * @generated from protobuf message hypurr.SpotPositionDetails
+ */
+export interface SpotPositionDetails {
+    /**
+     * @generated from protobuf field: int64 unrealized_pnl_cents = 1
+     */
+    unrealizedPnlCents: number; // Signed.
+    /**
+     * @generated from protobuf field: string average_cost_price_decimal = 2
+     */
+    averageCostPriceDecimal: string;
+    /**
+     * @generated from protobuf field: double roe_percent = 3
+     */
+    roePercent: number; // Signed.
+    /**
+     * @generated from protobuf field: double portfolio_share_percent = 4
+     */
+    portfolioSharePercent: number;
+}
+/**
+ * @generated from protobuf message hypurr.PerpPositionDetails
+ */
+export interface PerpPositionDetails {
+    /**
+     * @generated from protobuf field: int64 funding_cents = 1
+     */
+    fundingCents: number; // Signed net funding value.
+    /**
+     * @generated from protobuf field: string mark_price_decimal = 2
+     */
+    markPriceDecimal: string;
+    /**
+     * @generated from protobuf field: string entry_price_decimal = 3
+     */
+    entryPriceDecimal: string;
+    /**
+     * @generated from protobuf field: string liquidation_price_decimal = 4
+     */
+    liquidationPriceDecimal: string;
+    /**
+     * @generated from protobuf field: string size_decimal = 5
+     */
+    sizeDecimal: string; // Base-asset quantity.
+    /**
+     * @generated from protobuf field: int64 notional_value_cents = 6
+     */
+    notionalValueCents: number; // Current USD notional.
+    /**
+     * @generated from protobuf field: int64 margin_cents = 7
+     */
+    marginCents: number; // Margin shown for this position.
+    /**
+     * @generated from protobuf field: hypurr.PerpMarginMode margin_mode = 8
+     */
+    marginMode: PerpMarginMode;
+    /**
+     * @generated from protobuf field: hypurr.PerpAutoClose auto_close = 9
+     */
+    autoClose?: PerpAutoClose;
+}
+/**
+ * @generated from protobuf message hypurr.PerpAutoClose
+ */
+export interface PerpAutoClose {
+    /**
+     * @generated from protobuf field: string take_profit_price_decimal = 1
+     */
+    takeProfitPriceDecimal: string;
+    /**
+     * @generated from protobuf field: string stop_loss_price_decimal = 2
+     */
+    stopLossPriceDecimal: string;
 }
 /**
  * @generated from protobuf message hypurr.PerpLiquidationWarning
@@ -1363,6 +1450,19 @@ export enum ProfileChartPeriod {
      * @generated from protobuf enum value: PROFILE_CHART_PERIOD_30D = 3;
      */
     PROFILE_CHART_PERIOD_30D = 3
+}
+/**
+ * @generated from protobuf enum hypurr.PerpMarginMode
+ */
+export enum PerpMarginMode {
+    /**
+     * @generated from protobuf enum value: PERP_MARGIN_MODE_ISOLATED = 0;
+     */
+    ISOLATED = 0,
+    /**
+     * @generated from protobuf enum value: PERP_MARGIN_MODE_CROSS = 1;
+     */
+    CROSS = 1
 }
 /**
  * @generated from protobuf enum hypurr.PerpSide
@@ -4700,7 +4800,8 @@ class SpotHolding$Type extends MessageType<SpotHolding> {
             { no: 1, name: "position_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "asset", kind: "message", T: () => Asset },
             { no: 3, name: "quantity_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "market_value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 4, name: "market_value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "position_details", kind: "message", T: () => SpotPositionDetails }
         ]);
     }
     create(value?: PartialMessage<SpotHolding>): SpotHolding {
@@ -4729,6 +4830,9 @@ class SpotHolding$Type extends MessageType<SpotHolding> {
                 case /* int64 market_value_cents */ 4:
                     message.marketValueCents = reader.int64().toNumber();
                     break;
+                case /* hypurr.SpotPositionDetails position_details */ 5:
+                    message.positionDetails = SpotPositionDetails.internalBinaryRead(reader, reader.uint32(), options, message.positionDetails);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -4753,6 +4857,9 @@ class SpotHolding$Type extends MessageType<SpotHolding> {
         /* int64 market_value_cents = 4; */
         if (message.marketValueCents !== 0)
             writer.tag(4, WireType.Varint).int64(message.marketValueCents);
+        /* hypurr.SpotPositionDetails position_details = 5; */
+        if (message.positionDetails)
+            SpotPositionDetails.internalBinaryWrite(message.positionDetails, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4774,7 +4881,8 @@ class OpenPerpPosition$Type extends MessageType<OpenPerpPosition> {
             { no: 5, name: "side", kind: "enum", T: () => ["hypurr.PerpSide", PerpSide, "PERP_SIDE_"] },
             { no: 6, name: "unrealized_pnl_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 7, name: "roe_percent", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 8, name: "liquidation_warning", kind: "message", T: () => PerpLiquidationWarning }
+            { no: 8, name: "liquidation_warning", kind: "message", T: () => PerpLiquidationWarning },
+            { no: 9, name: "position_details", kind: "message", T: () => PerpPositionDetails }
         ]);
     }
     create(value?: PartialMessage<OpenPerpPosition>): OpenPerpPosition {
@@ -4818,6 +4926,9 @@ class OpenPerpPosition$Type extends MessageType<OpenPerpPosition> {
                 case /* hypurr.PerpLiquidationWarning liquidation_warning */ 8:
                     message.liquidationWarning = PerpLiquidationWarning.internalBinaryRead(reader, reader.uint32(), options, message.liquidationWarning);
                     break;
+                case /* hypurr.PerpPositionDetails position_details */ 9:
+                    message.positionDetails = PerpPositionDetails.internalBinaryRead(reader, reader.uint32(), options, message.positionDetails);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -4854,6 +4965,9 @@ class OpenPerpPosition$Type extends MessageType<OpenPerpPosition> {
         /* hypurr.PerpLiquidationWarning liquidation_warning = 8; */
         if (message.liquidationWarning)
             PerpLiquidationWarning.internalBinaryWrite(message.liquidationWarning, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.PerpPositionDetails position_details = 9; */
+        if (message.positionDetails)
+            PerpPositionDetails.internalBinaryWrite(message.positionDetails, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4864,6 +4978,242 @@ class OpenPerpPosition$Type extends MessageType<OpenPerpPosition> {
  * @generated MessageType for protobuf message hypurr.OpenPerpPosition
  */
 export const OpenPerpPosition = new OpenPerpPosition$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SpotPositionDetails$Type extends MessageType<SpotPositionDetails> {
+    constructor() {
+        super("hypurr.SpotPositionDetails", [
+            { no: 1, name: "unrealized_pnl_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "average_cost_price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "roe_percent", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "portfolio_share_percent", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SpotPositionDetails>): SpotPositionDetails {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.unrealizedPnlCents = 0;
+        message.averageCostPriceDecimal = "";
+        message.roePercent = 0;
+        message.portfolioSharePercent = 0;
+        if (value !== undefined)
+            reflectionMergePartial<SpotPositionDetails>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SpotPositionDetails): SpotPositionDetails {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 unrealized_pnl_cents */ 1:
+                    message.unrealizedPnlCents = reader.int64().toNumber();
+                    break;
+                case /* string average_cost_price_decimal */ 2:
+                    message.averageCostPriceDecimal = reader.string();
+                    break;
+                case /* double roe_percent */ 3:
+                    message.roePercent = reader.double();
+                    break;
+                case /* double portfolio_share_percent */ 4:
+                    message.portfolioSharePercent = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SpotPositionDetails, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 unrealized_pnl_cents = 1; */
+        if (message.unrealizedPnlCents !== 0)
+            writer.tag(1, WireType.Varint).int64(message.unrealizedPnlCents);
+        /* string average_cost_price_decimal = 2; */
+        if (message.averageCostPriceDecimal !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.averageCostPriceDecimal);
+        /* double roe_percent = 3; */
+        if (message.roePercent !== 0)
+            writer.tag(3, WireType.Bit64).double(message.roePercent);
+        /* double portfolio_share_percent = 4; */
+        if (message.portfolioSharePercent !== 0)
+            writer.tag(4, WireType.Bit64).double(message.portfolioSharePercent);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.SpotPositionDetails
+ */
+export const SpotPositionDetails = new SpotPositionDetails$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PerpPositionDetails$Type extends MessageType<PerpPositionDetails> {
+    constructor() {
+        super("hypurr.PerpPositionDetails", [
+            { no: 1, name: "funding_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "mark_price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "entry_price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "liquidation_price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "size_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "notional_value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "margin_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 8, name: "margin_mode", kind: "enum", T: () => ["hypurr.PerpMarginMode", PerpMarginMode, "PERP_MARGIN_MODE_"] },
+            { no: 9, name: "auto_close", kind: "message", T: () => PerpAutoClose }
+        ]);
+    }
+    create(value?: PartialMessage<PerpPositionDetails>): PerpPositionDetails {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.fundingCents = 0;
+        message.markPriceDecimal = "";
+        message.entryPriceDecimal = "";
+        message.liquidationPriceDecimal = "";
+        message.sizeDecimal = "";
+        message.notionalValueCents = 0;
+        message.marginCents = 0;
+        message.marginMode = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PerpPositionDetails>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerpPositionDetails): PerpPositionDetails {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 funding_cents */ 1:
+                    message.fundingCents = reader.int64().toNumber();
+                    break;
+                case /* string mark_price_decimal */ 2:
+                    message.markPriceDecimal = reader.string();
+                    break;
+                case /* string entry_price_decimal */ 3:
+                    message.entryPriceDecimal = reader.string();
+                    break;
+                case /* string liquidation_price_decimal */ 4:
+                    message.liquidationPriceDecimal = reader.string();
+                    break;
+                case /* string size_decimal */ 5:
+                    message.sizeDecimal = reader.string();
+                    break;
+                case /* int64 notional_value_cents */ 6:
+                    message.notionalValueCents = reader.int64().toNumber();
+                    break;
+                case /* int64 margin_cents */ 7:
+                    message.marginCents = reader.int64().toNumber();
+                    break;
+                case /* hypurr.PerpMarginMode margin_mode */ 8:
+                    message.marginMode = reader.int32();
+                    break;
+                case /* hypurr.PerpAutoClose auto_close */ 9:
+                    message.autoClose = PerpAutoClose.internalBinaryRead(reader, reader.uint32(), options, message.autoClose);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PerpPositionDetails, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 funding_cents = 1; */
+        if (message.fundingCents !== 0)
+            writer.tag(1, WireType.Varint).int64(message.fundingCents);
+        /* string mark_price_decimal = 2; */
+        if (message.markPriceDecimal !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.markPriceDecimal);
+        /* string entry_price_decimal = 3; */
+        if (message.entryPriceDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.entryPriceDecimal);
+        /* string liquidation_price_decimal = 4; */
+        if (message.liquidationPriceDecimal !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.liquidationPriceDecimal);
+        /* string size_decimal = 5; */
+        if (message.sizeDecimal !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.sizeDecimal);
+        /* int64 notional_value_cents = 6; */
+        if (message.notionalValueCents !== 0)
+            writer.tag(6, WireType.Varint).int64(message.notionalValueCents);
+        /* int64 margin_cents = 7; */
+        if (message.marginCents !== 0)
+            writer.tag(7, WireType.Varint).int64(message.marginCents);
+        /* hypurr.PerpMarginMode margin_mode = 8; */
+        if (message.marginMode !== 0)
+            writer.tag(8, WireType.Varint).int32(message.marginMode);
+        /* hypurr.PerpAutoClose auto_close = 9; */
+        if (message.autoClose)
+            PerpAutoClose.internalBinaryWrite(message.autoClose, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PerpPositionDetails
+ */
+export const PerpPositionDetails = new PerpPositionDetails$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PerpAutoClose$Type extends MessageType<PerpAutoClose> {
+    constructor() {
+        super("hypurr.PerpAutoClose", [
+            { no: 1, name: "take_profit_price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "stop_loss_price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PerpAutoClose>): PerpAutoClose {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.takeProfitPriceDecimal = "";
+        message.stopLossPriceDecimal = "";
+        if (value !== undefined)
+            reflectionMergePartial<PerpAutoClose>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerpAutoClose): PerpAutoClose {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string take_profit_price_decimal */ 1:
+                    message.takeProfitPriceDecimal = reader.string();
+                    break;
+                case /* string stop_loss_price_decimal */ 2:
+                    message.stopLossPriceDecimal = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PerpAutoClose, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string take_profit_price_decimal = 1; */
+        if (message.takeProfitPriceDecimal !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.takeProfitPriceDecimal);
+        /* string stop_loss_price_decimal = 2; */
+        if (message.stopLossPriceDecimal !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.stopLossPriceDecimal);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PerpAutoClose
+ */
+export const PerpAutoClose = new PerpAutoClose$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PerpLiquidationWarning$Type extends MessageType<PerpLiquidationWarning> {
     constructor() {

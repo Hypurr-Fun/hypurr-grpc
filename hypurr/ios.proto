@@ -559,6 +559,9 @@ message SpotHolding {
   Asset asset = 2;
   string quantity_decimal = 3;
   int64 market_value_cents = 4;
+
+  // Present for every current spot holding.
+  SpotPositionDetails position_details = 5;
 }
 
 // Shared by Home, Portfolio, Asset Detail, and Trading.
@@ -573,6 +576,38 @@ message OpenPerpPosition {
 
   // Presence means iOS shows a liquidation warning.
   PerpLiquidationWarning liquidation_warning = 8;
+
+  // Present for every current open perpetual position.
+  PerpPositionDetails position_details = 9;
+}
+
+message SpotPositionDetails {
+  int64 unrealized_pnl_cents = 1; // Signed.
+  string average_cost_price_decimal = 2;
+  double roe_percent = 3; // Signed.
+  double portfolio_share_percent = 4;
+}
+
+message PerpPositionDetails {
+  int64 funding_cents = 1; // Signed net funding value.
+  string mark_price_decimal = 2;
+  string entry_price_decimal = 3;
+  string liquidation_price_decimal = 4;
+  string size_decimal = 5; // Base-asset quantity.
+  int64 notional_value_cents = 6; // Current USD notional.
+  int64 margin_cents = 7; // Margin shown for this position.
+  PerpMarginMode margin_mode = 8;
+  PerpAutoClose auto_close = 9;
+}
+
+enum PerpMarginMode {
+  PERP_MARGIN_MODE_ISOLATED = 0;
+  PERP_MARGIN_MODE_CROSS = 1;
+}
+
+message PerpAutoClose {
+  string take_profit_price_decimal = 1;
+  string stop_loss_price_decimal = 2;
 }
 
 enum PerpSide {
