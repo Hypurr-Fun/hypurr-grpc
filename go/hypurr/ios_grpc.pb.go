@@ -78,7 +78,7 @@ func (c *iosServiceClient) LiveAssetUpdates(ctx context.Context, in *LiveAssetUp
 }
 
 type IosService_LiveAssetUpdatesClient interface {
-	Recv() (*LiveAssetUpdate, error)
+	Recv() (*LiveAssetPriceUpdates, error)
 	grpc.ClientStream
 }
 
@@ -86,8 +86,8 @@ type iosServiceLiveAssetUpdatesClient struct {
 	grpc.ClientStream
 }
 
-func (x *iosServiceLiveAssetUpdatesClient) Recv() (*LiveAssetUpdate, error) {
-	m := new(LiveAssetUpdate)
+func (x *iosServiceLiveAssetUpdatesClient) Recv() (*LiveAssetPriceUpdates, error) {
+	m := new(LiveAssetPriceUpdates)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -283,7 +283,7 @@ func _IosService_LiveAssetUpdates_Handler(srv interface{}, stream grpc.ServerStr
 }
 
 type IosService_LiveAssetUpdatesServer interface {
-	Send(*LiveAssetUpdate) error
+	Send(*LiveAssetPriceUpdates) error
 	grpc.ServerStream
 }
 
@@ -291,7 +291,7 @@ type iosServiceLiveAssetUpdatesServer struct {
 	grpc.ServerStream
 }
 
-func (x *iosServiceLiveAssetUpdatesServer) Send(m *LiveAssetUpdate) error {
+func (x *iosServiceLiveAssetUpdatesServer) Send(m *LiveAssetPriceUpdates) error {
 	return x.ServerStream.SendMsg(m)
 }
 

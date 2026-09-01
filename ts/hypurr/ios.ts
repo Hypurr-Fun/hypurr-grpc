@@ -432,9 +432,18 @@ export interface ReceiveActivity {
 export interface LiveAssetUpdatesRequest {
 }
 /**
- * @generated from protobuf message hypurr.LiveAssetUpdate
+ * @generated from protobuf message hypurr.LiveAssetPriceUpdates
  */
-export interface LiveAssetUpdate {
+export interface LiveAssetPriceUpdates {
+    /**
+     * @generated from protobuf field: repeated hypurr.LiveAssetPriceUpdate updates = 1
+     */
+    updates: LiveAssetPriceUpdate[];
+}
+/**
+ * @generated from protobuf message hypurr.LiveAssetPriceUpdate
+ */
+export interface LiveAssetPriceUpdate {
     /**
      * Asset affected by this update.
      *
@@ -448,27 +457,9 @@ export interface LiveAssetUpdate {
      */
     occurredAt: string;
     /**
-     * @generated from protobuf oneof: update
-     */
-    update: {
-        oneofKind: "price";
-        /**
-         * @generated from protobuf field: hypurr.AssetPriceUpdate price = 10
-         */
-        price: AssetPriceUpdate;
-    } | {
-        oneofKind: undefined;
-    };
-}
-/**
- * @generated from protobuf message hypurr.AssetPriceUpdate
- */
-export interface AssetPriceUpdate {
-    /**
-     * Required unformatted base-10 decimal string.
-     * Examples: "114321.5", "0.00017".
+     * Asset price with asset decimal precision e.g. "$22,482.17" -> "22482.17" or "$0.00017" -> "0.00017"
      *
-     * @generated from protobuf field: string price_decimal = 1
+     * @generated from protobuf field: string price_decimal = 3
      */
     priceDecimal: string;
 }
@@ -2575,39 +2566,26 @@ class LiveAssetUpdatesRequest$Type extends MessageType<LiveAssetUpdatesRequest> 
  */
 export const LiveAssetUpdatesRequest = new LiveAssetUpdatesRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class LiveAssetUpdate$Type extends MessageType<LiveAssetUpdate> {
+class LiveAssetPriceUpdates$Type extends MessageType<LiveAssetPriceUpdates> {
     constructor() {
-        super("hypurr.LiveAssetUpdate", [
-            { no: 1, name: "asset_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 10, name: "price", kind: "message", oneof: "update", T: () => AssetPriceUpdate }
+        super("hypurr.LiveAssetPriceUpdates", [
+            { no: 1, name: "updates", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => LiveAssetPriceUpdate }
         ]);
     }
-    create(value?: PartialMessage<LiveAssetUpdate>): LiveAssetUpdate {
+    create(value?: PartialMessage<LiveAssetPriceUpdates>): LiveAssetPriceUpdates {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.assetId = 0;
-        message.occurredAt = "";
-        message.update = { oneofKind: undefined };
+        message.updates = [];
         if (value !== undefined)
-            reflectionMergePartial<LiveAssetUpdate>(this, message, value);
+            reflectionMergePartial<LiveAssetPriceUpdates>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LiveAssetUpdate): LiveAssetUpdate {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LiveAssetPriceUpdates): LiveAssetPriceUpdates {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* uint64 asset_id */ 1:
-                    message.assetId = reader.uint64().toNumber();
-                    break;
-                case /* string occurred_at */ 2:
-                    message.occurredAt = reader.string();
-                    break;
-                case /* hypurr.AssetPriceUpdate price */ 10:
-                    message.update = {
-                        oneofKind: "price",
-                        price: AssetPriceUpdate.internalBinaryRead(reader, reader.uint32(), options, (message.update as any).price)
-                    };
+                case /* repeated hypurr.LiveAssetPriceUpdate updates */ 1:
+                    message.updates.push(LiveAssetPriceUpdate.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2620,16 +2598,10 @@ class LiveAssetUpdate$Type extends MessageType<LiveAssetUpdate> {
         }
         return message;
     }
-    internalBinaryWrite(message: LiveAssetUpdate, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint64 asset_id = 1; */
-        if (message.assetId !== 0)
-            writer.tag(1, WireType.Varint).uint64(message.assetId);
-        /* string occurred_at = 2; */
-        if (message.occurredAt !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.occurredAt);
-        /* hypurr.AssetPriceUpdate price = 10; */
-        if (message.update.oneofKind === "price")
-            AssetPriceUpdate.internalBinaryWrite(message.update.price, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+    internalBinaryWrite(message: LiveAssetPriceUpdates, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.LiveAssetPriceUpdate updates = 1; */
+        for (let i = 0; i < message.updates.length; i++)
+            LiveAssetPriceUpdate.internalBinaryWrite(message.updates[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2637,29 +2609,39 @@ class LiveAssetUpdate$Type extends MessageType<LiveAssetUpdate> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.LiveAssetUpdate
+ * @generated MessageType for protobuf message hypurr.LiveAssetPriceUpdates
  */
-export const LiveAssetUpdate = new LiveAssetUpdate$Type();
+export const LiveAssetPriceUpdates = new LiveAssetPriceUpdates$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class AssetPriceUpdate$Type extends MessageType<AssetPriceUpdate> {
+class LiveAssetPriceUpdate$Type extends MessageType<LiveAssetPriceUpdate> {
     constructor() {
-        super("hypurr.AssetPriceUpdate", [
-            { no: 1, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        super("hypurr.LiveAssetPriceUpdate", [
+            { no: 1, name: "asset_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<AssetPriceUpdate>): AssetPriceUpdate {
+    create(value?: PartialMessage<LiveAssetPriceUpdate>): LiveAssetPriceUpdate {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.assetId = 0;
+        message.occurredAt = "";
         message.priceDecimal = "";
         if (value !== undefined)
-            reflectionMergePartial<AssetPriceUpdate>(this, message, value);
+            reflectionMergePartial<LiveAssetPriceUpdate>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetPriceUpdate): AssetPriceUpdate {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LiveAssetPriceUpdate): LiveAssetPriceUpdate {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string price_decimal */ 1:
+                case /* uint64 asset_id */ 1:
+                    message.assetId = reader.uint64().toNumber();
+                    break;
+                case /* string occurred_at */ 2:
+                    message.occurredAt = reader.string();
+                    break;
+                case /* string price_decimal */ 3:
                     message.priceDecimal = reader.string();
                     break;
                 default:
@@ -2673,10 +2655,16 @@ class AssetPriceUpdate$Type extends MessageType<AssetPriceUpdate> {
         }
         return message;
     }
-    internalBinaryWrite(message: AssetPriceUpdate, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string price_decimal = 1; */
+    internalBinaryWrite(message: LiveAssetPriceUpdate, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 asset_id = 1; */
+        if (message.assetId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.assetId);
+        /* string occurred_at = 2; */
+        if (message.occurredAt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.occurredAt);
+        /* string price_decimal = 3; */
         if (message.priceDecimal !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.priceDecimal);
+            writer.tag(3, WireType.LengthDelimited).string(message.priceDecimal);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2684,9 +2672,9 @@ class AssetPriceUpdate$Type extends MessageType<AssetPriceUpdate> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.AssetPriceUpdate
+ * @generated MessageType for protobuf message hypurr.LiveAssetPriceUpdate
  */
-export const AssetPriceUpdate = new AssetPriceUpdate$Type();
+export const LiveAssetPriceUpdate = new LiveAssetPriceUpdate$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class AssetDetailRequest$Type extends MessageType<AssetDetailRequest> {
     constructor() {
@@ -4928,7 +4916,7 @@ export const PerpLiquidationWarning = new PerpLiquidationWarning$Type();
  */
 export const IosService = new ServiceType("hypurr.IosService", [
     { name: "Home", options: {}, I: HomeRequest, O: HomeResponse },
-    { name: "LiveAssetUpdates", serverStreaming: true, options: {}, I: LiveAssetUpdatesRequest, O: LiveAssetUpdate },
+    { name: "LiveAssetUpdates", serverStreaming: true, options: {}, I: LiveAssetUpdatesRequest, O: LiveAssetPriceUpdates },
     { name: "AssetDetail", options: {}, I: AssetDetailRequest, O: AssetDetailResponse },
     { name: "AssetDetailLiveUpdates", serverStreaming: true, options: {}, I: AssetDetailLiveUpdatesRequest, O: AssetDetailLiveUpdate },
     { name: "AssetMetadataCatalog", options: {}, I: AssetMetadataCatalogRequest, O: AssetMetadataCatalogResponse },

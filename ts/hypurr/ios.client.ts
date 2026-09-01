@@ -16,7 +16,7 @@ import type { AssetDetailLiveUpdate } from "./ios";
 import type { AssetDetailLiveUpdatesRequest } from "./ios";
 import type { AssetDetailResponse } from "./ios";
 import type { AssetDetailRequest } from "./ios";
-import type { LiveAssetUpdate } from "./ios";
+import type { LiveAssetPriceUpdates } from "./ios";
 import type { LiveAssetUpdatesRequest } from "./ios";
 import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
@@ -35,7 +35,7 @@ export interface IIosServiceClient {
     /**
      * @generated from protobuf rpc: LiveAssetUpdates
      */
-    liveAssetUpdates(input: LiveAssetUpdatesRequest, options?: RpcOptions): ServerStreamingCall<LiveAssetUpdatesRequest, LiveAssetUpdate>;
+    liveAssetUpdates(input: LiveAssetUpdatesRequest, options?: RpcOptions): ServerStreamingCall<LiveAssetUpdatesRequest, LiveAssetPriceUpdates>;
     /**
      * @generated from protobuf rpc: AssetDetail
      */
@@ -80,9 +80,9 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
     /**
      * @generated from protobuf rpc: LiveAssetUpdates
      */
-    liveAssetUpdates(input: LiveAssetUpdatesRequest, options?: RpcOptions): ServerStreamingCall<LiveAssetUpdatesRequest, LiveAssetUpdate> {
+    liveAssetUpdates(input: LiveAssetUpdatesRequest, options?: RpcOptions): ServerStreamingCall<LiveAssetUpdatesRequest, LiveAssetPriceUpdates> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);
-        return stackIntercept<LiveAssetUpdatesRequest, LiveAssetUpdate>("serverStreaming", this._transport, method, opt, input);
+        return stackIntercept<LiveAssetUpdatesRequest, LiveAssetPriceUpdates>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: AssetDetail

@@ -42,7 +42,7 @@ class IosServiceStub(object):
         self.LiveAssetUpdates = channel.unary_stream(
                 '/hypurr.IosService/LiveAssetUpdates',
                 request_serializer=hypurr_dot_ios__pb2.LiveAssetUpdatesRequest.SerializeToString,
-                response_deserializer=hypurr_dot_ios__pb2.LiveAssetUpdate.FromString,
+                response_deserializer=hypurr_dot_ios__pb2.LiveAssetPriceUpdates.FromString,
                 _registered_method=True)
         self.AssetDetail = channel.unary_unary(
                 '/hypurr.IosService/AssetDetail',
@@ -138,7 +138,7 @@ def add_IosServiceServicer_to_server(servicer, server):
             'LiveAssetUpdates': grpc.unary_stream_rpc_method_handler(
                     servicer.LiveAssetUpdates,
                     request_deserializer=hypurr_dot_ios__pb2.LiveAssetUpdatesRequest.FromString,
-                    response_serializer=hypurr_dot_ios__pb2.LiveAssetUpdate.SerializeToString,
+                    response_serializer=hypurr_dot_ios__pb2.LiveAssetPriceUpdates.SerializeToString,
             ),
             'AssetDetail': grpc.unary_unary_rpc_method_handler(
                     servicer.AssetDetail,
@@ -224,7 +224,7 @@ class IosService(object):
             target,
             '/hypurr.IosService/LiveAssetUpdates',
             hypurr_dot_ios__pb2.LiveAssetUpdatesRequest.SerializeToString,
-            hypurr_dot_ios__pb2.LiveAssetUpdate.FromString,
+            hypurr_dot_ios__pb2.LiveAssetPriceUpdates.FromString,
             options,
             channel_credentials,
             insecure,
