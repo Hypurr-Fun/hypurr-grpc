@@ -30,6 +30,14 @@ service Kms {
   rpc CancelFactorReset(KmsCancelFactorResetRequest) returns (KmsCancelFactorResetResponse);
   rpc ExecuteFactorReset(KmsExecuteFactorResetRequest) returns (KmsExecuteFactorResetResponse);
   rpc RecoverKeys(KmsRecoverKeysRequest) returns (KmsRecoverKeysResponse);
+
+  // Custodial -> KMS migration, 2FA cohort only: when the login response set
+  // migration.requires_2fa, the app re-sends THAT login attestation plus the
+  // legacy bot TOTP to receive the sealed wallet keys. Stateless: the bot
+  // re-verifies the attestation and seals to the device key attested inside
+  // it, so a replayed attestation yields keys only the victim's device can
+  // open.
+  rpc CompleteMigrationRelease(KmsCompleteMigrationReleaseRequest) returns (KmsCompleteMigrationReleaseResponse);
 }
 
 message KmsGetAttestationRequest {}
@@ -45,6 +53,38 @@ message KmsLoginOrRegisterRequest {
 
 message KmsLoginOrRegisterResponse {
   bytes attestation = 1;
+  // Set when a legacy custodial bot account was detected for this telegram
+  // identity (custodial -> KMS migration). Absent otherwise.
+  KmsMigrationRelease migration = 2;
+}
+
+// One legacy wallet key, CMS-sealed to the enclave-attested device key of
+// THIS login. The app unseals and escrows it via AccountShardSecret.
+message KmsSealedWalletKey {
+  string address = 1;
+  bytes sealed_secret = 2;
+}
+
+message KmsMigrationRelease {
+  // Sealed keys, present unless requires_2fa is set.
+  repeated KmsSealedWalletKey wallets = 1;
+  // The legacy account has bot-side 2FA: call CompleteMigrationRelease with
+  // the login attestation + TOTP to get the wallets.
+  bool requires_2fa = 2;
+  // Telegram-first onboarding: migration must be completed before the app
+  // proceeds (product-enforced).
+  bool forced = 3;
+}
+
+message KmsCompleteMigrationReleaseRequest {
+  // The attestation from the KmsLoginOrRegisterResponse that reported
+  // requires_2fa. Must still be within the verifier freshness window.
+  bytes attestation = 1;
+  string two_fa_code = 2;
+}
+
+message KmsCompleteMigrationReleaseResponse {
+  repeated KmsSealedWalletKey wallets = 1;
 }
 
 message KmsAddProviderRequest {
