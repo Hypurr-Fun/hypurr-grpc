@@ -1318,13 +1318,13 @@ export interface WalletTradesResponse {
  */
 export interface OHLCRequest {
     /**
-     * @generated from protobuf field: int64 instrument_id = 1
+     * @generated from protobuf field: repeated int64 instrument_ids = 1
      */
-    instrumentId: number; // same convention as HistoricalWalletTrade.instrument_id: perp = index, spot = index + 10000
+    instrumentIds: number[]; // non-empty, max 100; same convention as HistoricalWalletTrade.instrument_id: perp = index, spot = index + 10000
     /**
-     * @generated from protobuf field: string interval = 2
+     * @generated from protobuf field: hypercore.OHLCInterval interval = 2
      */
-    interval: string; // "15m" | "1h" | "4h" | "1d" | "1w"
+    interval: OHLCInterval;
     /**
      * @generated from protobuf field: int64 from_ts = 3
      */
@@ -1360,13 +1360,26 @@ export interface OHLC {
     close: number;
 }
 /**
+ * @generated from protobuf message hypercore.OHLCSeries
+ */
+export interface OHLCSeries {
+    /**
+     * @generated from protobuf field: int64 instrument_id = 1
+     */
+    instrumentId: number;
+    /**
+     * @generated from protobuf field: repeated hypercore.OHLC ohlc = 2
+     */
+    ohlc: OHLC[]; // open_time ascending
+}
+/**
  * @generated from protobuf message hypercore.OHLCResponse
  */
 export interface OHLCResponse {
     /**
-     * @generated from protobuf field: repeated hypercore.OHLC ohlc = 1
+     * @generated from protobuf field: repeated hypercore.OHLCSeries series = 1
      */
-    ohlc: OHLC[]; // open_time ascending
+    series: OHLCSeries[]; // request order
 }
 /**
  * @generated from protobuf message hypercore.HighLowRequest
@@ -1789,6 +1802,62 @@ export enum WalletTradeType {
      * @generated from protobuf enum value: WALLET_TRADE_TYPE_SPOT = 2;
      */
     SPOT = 2
+}
+/**
+ * Numbering matches hypurr.HistoricalChartInterval in ios.proto; convert by cast.
+ * 30D is a fixed 30-day step, not a calendar month.
+ *
+ * @generated from protobuf enum hypercore.OHLCInterval
+ */
+export enum OHLCInterval {
+    /**
+     * @generated from protobuf enum value: OHLC_INTERVAL_UNSPECIFIED = 0;
+     */
+    OHLC_INTERVAL_UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: OHLC_INTERVAL_15M = 1;
+     */
+    OHLC_INTERVAL_15M = 1,
+    /**
+     * @generated from protobuf enum value: OHLC_INTERVAL_30M = 2;
+     */
+    OHLC_INTERVAL_30M = 2,
+    /**
+     * @generated from protobuf enum value: OHLC_INTERVAL_1H = 3;
+     */
+    OHLC_INTERVAL_1H = 3,
+    /**
+     * @generated from protobuf enum value: OHLC_INTERVAL_2H = 4;
+     */
+    OHLC_INTERVAL_2H = 4,
+    /**
+     * @generated from protobuf enum value: OHLC_INTERVAL_4H = 5;
+     */
+    OHLC_INTERVAL_4H = 5,
+    /**
+     * @generated from protobuf enum value: OHLC_INTERVAL_8H = 6;
+     */
+    OHLC_INTERVAL_8H = 6,
+    /**
+     * @generated from protobuf enum value: OHLC_INTERVAL_12H = 7;
+     */
+    OHLC_INTERVAL_12H = 7,
+    /**
+     * @generated from protobuf enum value: OHLC_INTERVAL_1D = 8;
+     */
+    OHLC_INTERVAL_1D = 8,
+    /**
+     * @generated from protobuf enum value: OHLC_INTERVAL_3D = 9;
+     */
+    OHLC_INTERVAL_3D = 9,
+    /**
+     * @generated from protobuf enum value: OHLC_INTERVAL_1W = 10;
+     */
+    OHLC_INTERVAL_1W = 10,
+    /**
+     * @generated from protobuf enum value: OHLC_INTERVAL_30D = 11;
+     */
+    OHLC_INTERVAL_30D = 11
 }
 /**
  * ----- Top-1000 wallets by PnL over a time frame -----
@@ -6306,16 +6375,16 @@ export const WalletTradesResponse = new WalletTradesResponse$Type();
 class OHLCRequest$Type extends MessageType<OHLCRequest> {
     constructor() {
         super("hypercore.OHLCRequest", [
-            { no: 1, name: "instrument_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "interval", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "instrument_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "interval", kind: "enum", T: () => ["hypercore.OHLCInterval", OHLCInterval] },
             { no: 3, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<OHLCRequest>): OHLCRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.instrumentId = 0;
-        message.interval = "";
+        message.instrumentIds = [];
+        message.interval = 0;
         message.fromTs = 0;
         message.toTs = 0;
         if (value !== undefined)
@@ -6327,11 +6396,15 @@ class OHLCRequest$Type extends MessageType<OHLCRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* int64 instrument_id */ 1:
-                    message.instrumentId = reader.int64().toNumber();
+                case /* repeated int64 instrument_ids */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.instrumentIds.push(reader.int64().toNumber());
+                    else
+                        message.instrumentIds.push(reader.int64().toNumber());
                     break;
-                case /* string interval */ 2:
-                    message.interval = reader.string();
+                case /* hypercore.OHLCInterval interval */ 2:
+                    message.interval = reader.int32();
                     break;
                 case /* int64 from_ts */ 3:
                     message.fromTs = reader.int64().toNumber();
@@ -6351,12 +6424,16 @@ class OHLCRequest$Type extends MessageType<OHLCRequest> {
         return message;
     }
     internalBinaryWrite(message: OHLCRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 instrument_id = 1; */
-        if (message.instrumentId !== 0)
-            writer.tag(1, WireType.Varint).int64(message.instrumentId);
-        /* string interval = 2; */
-        if (message.interval !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.interval);
+        /* repeated int64 instrument_ids = 1; */
+        if (message.instrumentIds.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.instrumentIds.length; i++)
+                writer.int64(message.instrumentIds[i]);
+            writer.join();
+        }
+        /* hypercore.OHLCInterval interval = 2; */
+        if (message.interval !== 0)
+            writer.tag(2, WireType.Varint).int32(message.interval);
         /* int64 from_ts = 3; */
         if (message.fromTs !== 0)
             writer.tag(3, WireType.Varint).int64(message.fromTs);
@@ -6453,25 +6530,30 @@ class OHLC$Type extends MessageType<OHLC> {
  */
 export const OHLC = new OHLC$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class OHLCResponse$Type extends MessageType<OHLCResponse> {
+class OHLCSeries$Type extends MessageType<OHLCSeries> {
     constructor() {
-        super("hypercore.OHLCResponse", [
-            { no: 1, name: "ohlc", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => OHLC }
+        super("hypercore.OHLCSeries", [
+            { no: 1, name: "instrument_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "ohlc", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => OHLC }
         ]);
     }
-    create(value?: PartialMessage<OHLCResponse>): OHLCResponse {
+    create(value?: PartialMessage<OHLCSeries>): OHLCSeries {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrumentId = 0;
         message.ohlc = [];
         if (value !== undefined)
-            reflectionMergePartial<OHLCResponse>(this, message, value);
+            reflectionMergePartial<OHLCSeries>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OHLCResponse): OHLCResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OHLCSeries): OHLCSeries {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated hypercore.OHLC ohlc */ 1:
+                case /* int64 instrument_id */ 1:
+                    message.instrumentId = reader.int64().toNumber();
+                    break;
+                case /* repeated hypercore.OHLC ohlc */ 2:
                     message.ohlc.push(OHLC.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -6485,10 +6567,60 @@ class OHLCResponse$Type extends MessageType<OHLCResponse> {
         }
         return message;
     }
-    internalBinaryWrite(message: OHLCResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated hypercore.OHLC ohlc = 1; */
+    internalBinaryWrite(message: OHLCSeries, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 instrument_id = 1; */
+        if (message.instrumentId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.instrumentId);
+        /* repeated hypercore.OHLC ohlc = 2; */
         for (let i = 0; i < message.ohlc.length; i++)
-            OHLC.internalBinaryWrite(message.ohlc[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            OHLC.internalBinaryWrite(message.ohlc[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.OHLCSeries
+ */
+export const OHLCSeries = new OHLCSeries$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OHLCResponse$Type extends MessageType<OHLCResponse> {
+    constructor() {
+        super("hypercore.OHLCResponse", [
+            { no: 1, name: "series", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => OHLCSeries }
+        ]);
+    }
+    create(value?: PartialMessage<OHLCResponse>): OHLCResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.series = [];
+        if (value !== undefined)
+            reflectionMergePartial<OHLCResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OHLCResponse): OHLCResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.OHLCSeries series */ 1:
+                    message.series.push(OHLCSeries.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OHLCResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.OHLCSeries series = 1; */
+        for (let i = 0; i < message.series.length; i++)
+            OHLCSeries.internalBinaryWrite(message.series[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

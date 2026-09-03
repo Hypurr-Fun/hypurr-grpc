@@ -562,11 +562,28 @@ message WalletTradesResponse {
   string next_page_token                = 3; // empty when exhausted
 }
 
+// Numbering matches hypurr.HistoricalChartInterval in ios.proto; convert by cast.
+// 30D is a fixed 30-day step, not a calendar month.
+enum OHLCInterval {
+  OHLC_INTERVAL_UNSPECIFIED = 0;
+  OHLC_INTERVAL_15M         = 1;
+  OHLC_INTERVAL_30M         = 2;
+  OHLC_INTERVAL_1H          = 3;
+  OHLC_INTERVAL_2H          = 4;
+  OHLC_INTERVAL_4H          = 5;
+  OHLC_INTERVAL_8H          = 6;
+  OHLC_INTERVAL_12H         = 7;
+  OHLC_INTERVAL_1D          = 8;
+  OHLC_INTERVAL_3D          = 9;
+  OHLC_INTERVAL_1W          = 10;
+  OHLC_INTERVAL_30D         = 11;
+}
+
 message OHLCRequest {
-  int64  instrument_id = 1; // same convention as HistoricalWalletTrade.instrument_id: perp = index, spot = index + 10000
-  string interval      = 2; // "15m" | "1h" | "4h" | "1d" | "1w"
-  int64  from_ts       = 3; // inclusive, unix seconds; 0 = earliest
-  int64  to_ts         = 4; // inclusive, unix seconds; 0 = now
+  repeated int64 instrument_ids = 1; // non-empty, max 100; same convention as HistoricalWalletTrade.instrument_id: perp = index, spot = index + 10000
+  OHLCInterval   interval       = 2;
+  int64          from_ts        = 3; // inclusive, unix seconds; 0 = earliest
+  int64          to_ts          = 4; // inclusive, unix seconds; 0 = now
 }
 
 message OHLC {
@@ -577,8 +594,13 @@ message OHLC {
   double close     = 5;
 }
 
+message OHLCSeries {
+  int64         instrument_id = 1;
+  repeated OHLC ohlc          = 2; // open_time ascending
+}
+
 message OHLCResponse {
-  repeated OHLC ohlc = 1; // open_time ascending
+  repeated OHLCSeries series = 1; // request order
 }
 
 message HighLowRequest {

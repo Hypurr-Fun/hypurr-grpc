@@ -43,13 +43,15 @@ export interface Color {
     darkHex: string; // e.g. "#98FFC0"
 }
 /**
- * Identifies the asset regardless of the chain, dex,...
+ * Shared asset identity used by the catalog and profile positions.
  *
  * @generated from protobuf message hypurr.Asset
  */
 export interface Asset {
     /**
-     * Identifies the asset (e.g. HYPE, BTC, ETH).
+     * Stable Hyperliquid/backend asset id used for navigation.
+     * Same convention as asset detail: perp = pair id, spot = 10000 + spot index.
+     * 0 = not navigable.
      *
      * @generated from protobuf field: uint64 asset_id = 1
      */
@@ -1631,9 +1633,9 @@ export enum HistoricalChartInterval {
      */
     HISTORICAL_CHART_INTERVAL_1W = 10,
     /**
-     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_1_MONTH = 11;
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_30D = 11;
      */
-    HISTORICAL_CHART_INTERVAL_1_MONTH = 11
+    HISTORICAL_CHART_INTERVAL_30D = 11
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class WalletReference$Type extends MessageType<WalletReference> {
