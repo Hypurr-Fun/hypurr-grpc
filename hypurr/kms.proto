@@ -102,6 +102,11 @@ message KmsAddProviderRequest {
 
 message KmsAddProviderResponse {
   bytes attestation = 1;
+  // Set when the added provider is a telegram identity owned by a legacy
+  // custodial bot account (custodial -> KMS migration); same shape as on
+  // login. Keys are only included when the enclave attested the session's
+  // device key (session-token owner auth).
+  KmsMigrationRelease migration = 2;
 }
 
 message KmsAccountEnable2FARequest {
