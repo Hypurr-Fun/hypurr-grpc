@@ -11,6 +11,7 @@ service IosService {
   rpc Accounts(AccountsRequest) returns (AccountsResponse);
   rpc Profile(ProfileRequest) returns (ProfileResponse);
   rpc UserStream(UserStreamRequest) returns (stream UserSnapshot);
+  rpc HistoricalPriceCandles(HistoricalPriceCandlesRequest) returns (HistoricalPriceCandlesResponse);
 }
 
 // ==== Shared ====
@@ -214,6 +215,9 @@ enum AssetDetailChartPeriod {
   ASSET_DETAIL_CHART_PERIOD_1Y = 5;
   ASSET_DETAIL_CHART_PERIOD_MAX = 6;
 }
+
+// TODO: Rename to Instrument.
+// TODO: add protocol asset id.
 
 message AssetDetailRequest {
   // Hyperliquid asset id, same convention as PortfolioAllocation.asset_id:
@@ -555,7 +559,7 @@ message UserWallet {
 
 // Shared by Home, Portfolio, Asset Detail, and Trading.
 message SpotHolding {
-  string position_id = 1; // unique identifier for the position (e.g. "chain:wallet:asset_id" for Hypercore)
+  string position_id = 1; // unique identifier for the position (e.g. "wallet:protocol_asset_id")
   Asset asset = 2;
   string quantity_decimal = 3;
   int64 market_value_cents = 4;
@@ -566,7 +570,7 @@ message SpotHolding {
 
 // Shared by Home, Portfolio, Asset Detail, and Trading.
 message OpenPerpPosition {
-  string position_id = 1; // unique identifier for the position (e.g. "chain:wallet:asset_id" for Hypercore)
+  string position_id = 1; // unique identifier for the position (e.g. "wallet:protocol_asset_id")
   string dex = 2;
   Asset asset = 3;
   int32 leverage = 4;
@@ -617,4 +621,60 @@ enum PerpSide {
 
 message PerpLiquidationWarning {
   double distance_percentage = 1;
+}
+
+// ==== HistoricalPriceCandles ====
+
+// Mirrors the chart intervals supported by the iOS app; the floor is 15
+// minutes. Deliberately does not permit arbitrary durations.
+enum HistoricalChartInterval {
+  HISTORICAL_CHART_INTERVAL_UNSPECIFIED = 0;
+  HISTORICAL_CHART_INTERVAL_15M = 1;
+  HISTORICAL_CHART_INTERVAL_30M = 2;
+  HISTORICAL_CHART_INTERVAL_1H = 3;
+  HISTORICAL_CHART_INTERVAL_2H = 4;
+  HISTORICAL_CHART_INTERVAL_4H = 5;
+  HISTORICAL_CHART_INTERVAL_8H = 6;
+  HISTORICAL_CHART_INTERVAL_12H = 7;
+  HISTORICAL_CHART_INTERVAL_1D = 8;
+  HISTORICAL_CHART_INTERVAL_3D = 9;
+  HISTORICAL_CHART_INTERVAL_1W = 10;
+  HISTORICAL_CHART_INTERVAL_1_MONTH = 11;
+}
+
+message HistoricalPriceCandlesRequest {
+  // Non-empty; asset ids use the Hyperliquid convention (see AssetDetailRequest).
+  repeated uint64 asset_ids = 1;
+  // RFC3339 UTC range: [start_at, end_at).
+  string start_at = 2;
+  string end_at = 3;
+  HistoricalChartInterval interval = 4;
+}
+
+message HistoricalPriceCandlesResponse {
+  // Effective bucket duration in seconds; same role as
+  // AssetDetailChart.candle_interval_seconds.
+  int64 candle_interval_seconds = 1;
+  // One series per requested asset, in request order.
+  repeated HistoricalPriceCandleSeries series = 2;
+}
+
+message HistoricalPriceCandleSeries {
+  uint64 asset_id = 1;
+  // Oldest first; empty when the asset has no observations in the range.
+  repeated HistoricalPriceCandle candles = 2;
+}
+
+message HistoricalPriceCandle {
+  // Stable, series-unique id, e.g. "<asset_id>:<bucket_start_rfc3339>".
+  string id = 1;
+  // RFC3339 UTC start of the candle bucket.
+  string occurred_at = 2;
+  // Simple price for price-only consumers. Always equals close_decimal.
+  string price_decimal = 3;
+  // USD OHLC decimal strings; low <= min(open, close), high >= max(open, close).
+  string open_decimal = 4;
+  string high_decimal = 5;
+  string low_decimal = 6;
+  string close_decimal = 7;
 }

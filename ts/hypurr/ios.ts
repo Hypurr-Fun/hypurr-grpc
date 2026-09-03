@@ -43,15 +43,13 @@ export interface Color {
     darkHex: string; // e.g. "#98FFC0"
 }
 /**
- * Shared asset identity used by the catalog and profile positions.
+ * Identifies the asset regardless of the chain, dex,...
  *
  * @generated from protobuf message hypurr.Asset
  */
 export interface Asset {
     /**
-     * Stable Hyperliquid/backend asset id used for navigation.
-     * Same convention as asset detail: perp = pair id, spot = 10000 + spot index.
-     * 0 = not navigable.
+     * Identifies the asset (e.g. HYPE, BTC, ETH).
      *
      * @generated from protobuf field: uint64 asset_id = 1
      */
@@ -463,6 +461,9 @@ export interface LiveAssetPriceUpdate {
      */
     priceDecimal: string;
 }
+// TODO: Rename to Instrument.
+// TODO: add protocol asset id.
+
 /**
  * @generated from protobuf message hypurr.AssetDetailRequest
  */
@@ -1221,7 +1222,7 @@ export interface SpotHolding {
     /**
      * @generated from protobuf field: string position_id = 1
      */
-    positionId: string; // unique identifier for the position (e.g. "chain:wallet:asset_id" for Hypercore)
+    positionId: string; // unique identifier for the position (e.g. "wallet:protocol_asset_id")
     /**
      * @generated from protobuf field: hypurr.Asset asset = 2
      */
@@ -1250,7 +1251,7 @@ export interface OpenPerpPosition {
     /**
      * @generated from protobuf field: string position_id = 1
      */
-    positionId: string; // unique identifier for the position (e.g. "chain:wallet:asset_id" for Hypercore)
+    positionId: string; // unique identifier for the position (e.g. "wallet:protocol_asset_id")
     /**
      * @generated from protobuf field: string dex = 2
      */
@@ -1373,6 +1374,105 @@ export interface PerpLiquidationWarning {
     distancePercentage: number;
 }
 /**
+ * @generated from protobuf message hypurr.HistoricalPriceCandlesRequest
+ */
+export interface HistoricalPriceCandlesRequest {
+    /**
+     * Non-empty; asset ids use the Hyperliquid convention (see AssetDetailRequest).
+     *
+     * @generated from protobuf field: repeated uint64 asset_ids = 1
+     */
+    assetIds: number[];
+    /**
+     * RFC3339 UTC range: [start_at, end_at).
+     *
+     * @generated from protobuf field: string start_at = 2
+     */
+    startAt: string;
+    /**
+     * @generated from protobuf field: string end_at = 3
+     */
+    endAt: string;
+    /**
+     * @generated from protobuf field: hypurr.HistoricalChartInterval interval = 4
+     */
+    interval: HistoricalChartInterval;
+}
+/**
+ * @generated from protobuf message hypurr.HistoricalPriceCandlesResponse
+ */
+export interface HistoricalPriceCandlesResponse {
+    /**
+     * Effective bucket duration in seconds; same role as
+     * AssetDetailChart.candle_interval_seconds.
+     *
+     * @generated from protobuf field: int64 candle_interval_seconds = 1
+     */
+    candleIntervalSeconds: number;
+    /**
+     * One series per requested asset, in request order.
+     *
+     * @generated from protobuf field: repeated hypurr.HistoricalPriceCandleSeries series = 2
+     */
+    series: HistoricalPriceCandleSeries[];
+}
+/**
+ * @generated from protobuf message hypurr.HistoricalPriceCandleSeries
+ */
+export interface HistoricalPriceCandleSeries {
+    /**
+     * @generated from protobuf field: uint64 asset_id = 1
+     */
+    assetId: number;
+    /**
+     * Oldest first; empty when the asset has no observations in the range.
+     *
+     * @generated from protobuf field: repeated hypurr.HistoricalPriceCandle candles = 2
+     */
+    candles: HistoricalPriceCandle[];
+}
+/**
+ * @generated from protobuf message hypurr.HistoricalPriceCandle
+ */
+export interface HistoricalPriceCandle {
+    /**
+     * Stable, series-unique id, e.g. "<asset_id>:<bucket_start_rfc3339>".
+     *
+     * @generated from protobuf field: string id = 1
+     */
+    id: string;
+    /**
+     * RFC3339 UTC start of the candle bucket.
+     *
+     * @generated from protobuf field: string occurred_at = 2
+     */
+    occurredAt: string;
+    /**
+     * Simple price for price-only consumers. Always equals close_decimal.
+     *
+     * @generated from protobuf field: string price_decimal = 3
+     */
+    priceDecimal: string;
+    /**
+     * USD OHLC decimal strings; low <= min(open, close), high >= max(open, close).
+     *
+     * @generated from protobuf field: string open_decimal = 4
+     */
+    openDecimal: string;
+    /**
+     * @generated from protobuf field: string high_decimal = 5
+     */
+    highDecimal: string;
+    /**
+     * @generated from protobuf field: string low_decimal = 6
+     */
+    lowDecimal: string;
+    /**
+     * @generated from protobuf field: string close_decimal = 7
+     */
+    closeDecimal: string;
+}
+/**
  * @generated from protobuf enum hypurr.PositionDirection
  */
 export enum PositionDirection {
@@ -1476,6 +1576,64 @@ export enum PerpSide {
      * @generated from protobuf enum value: PERP_SIDE_SHORT = 1;
      */
     SHORT = 1
+}
+// ==== HistoricalPriceCandles ====
+
+/**
+ * Mirrors the chart intervals supported by the iOS app; the floor is 15
+ * minutes. Deliberately does not permit arbitrary durations.
+ *
+ * @generated from protobuf enum hypurr.HistoricalChartInterval
+ */
+export enum HistoricalChartInterval {
+    /**
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_UNSPECIFIED = 0;
+     */
+    HISTORICAL_CHART_INTERVAL_UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_15M = 1;
+     */
+    HISTORICAL_CHART_INTERVAL_15M = 1,
+    /**
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_30M = 2;
+     */
+    HISTORICAL_CHART_INTERVAL_30M = 2,
+    /**
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_1H = 3;
+     */
+    HISTORICAL_CHART_INTERVAL_1H = 3,
+    /**
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_2H = 4;
+     */
+    HISTORICAL_CHART_INTERVAL_2H = 4,
+    /**
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_4H = 5;
+     */
+    HISTORICAL_CHART_INTERVAL_4H = 5,
+    /**
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_8H = 6;
+     */
+    HISTORICAL_CHART_INTERVAL_8H = 6,
+    /**
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_12H = 7;
+     */
+    HISTORICAL_CHART_INTERVAL_12H = 7,
+    /**
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_1D = 8;
+     */
+    HISTORICAL_CHART_INTERVAL_1D = 8,
+    /**
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_3D = 9;
+     */
+    HISTORICAL_CHART_INTERVAL_3D = 9,
+    /**
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_1W = 10;
+     */
+    HISTORICAL_CHART_INTERVAL_1W = 10,
+    /**
+     * @generated from protobuf enum value: HISTORICAL_CHART_INTERVAL_1_MONTH = 11;
+     */
+    HISTORICAL_CHART_INTERVAL_1_MONTH = 11
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class WalletReference$Type extends MessageType<WalletReference> {
@@ -5261,6 +5419,290 @@ class PerpLiquidationWarning$Type extends MessageType<PerpLiquidationWarning> {
  * @generated MessageType for protobuf message hypurr.PerpLiquidationWarning
  */
 export const PerpLiquidationWarning = new PerpLiquidationWarning$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HistoricalPriceCandlesRequest$Type extends MessageType<HistoricalPriceCandlesRequest> {
+    constructor() {
+        super("hypurr.HistoricalPriceCandlesRequest", [
+            { no: 1, name: "asset_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "start_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "end_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "interval", kind: "enum", T: () => ["hypurr.HistoricalChartInterval", HistoricalChartInterval] }
+        ]);
+    }
+    create(value?: PartialMessage<HistoricalPriceCandlesRequest>): HistoricalPriceCandlesRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.assetIds = [];
+        message.startAt = "";
+        message.endAt = "";
+        message.interval = 0;
+        if (value !== undefined)
+            reflectionMergePartial<HistoricalPriceCandlesRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HistoricalPriceCandlesRequest): HistoricalPriceCandlesRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated uint64 asset_ids */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.assetIds.push(reader.uint64().toNumber());
+                    else
+                        message.assetIds.push(reader.uint64().toNumber());
+                    break;
+                case /* string start_at */ 2:
+                    message.startAt = reader.string();
+                    break;
+                case /* string end_at */ 3:
+                    message.endAt = reader.string();
+                    break;
+                case /* hypurr.HistoricalChartInterval interval */ 4:
+                    message.interval = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HistoricalPriceCandlesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated uint64 asset_ids = 1; */
+        if (message.assetIds.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.assetIds.length; i++)
+                writer.uint64(message.assetIds[i]);
+            writer.join();
+        }
+        /* string start_at = 2; */
+        if (message.startAt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.startAt);
+        /* string end_at = 3; */
+        if (message.endAt !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.endAt);
+        /* hypurr.HistoricalChartInterval interval = 4; */
+        if (message.interval !== 0)
+            writer.tag(4, WireType.Varint).int32(message.interval);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HistoricalPriceCandlesRequest
+ */
+export const HistoricalPriceCandlesRequest = new HistoricalPriceCandlesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HistoricalPriceCandlesResponse$Type extends MessageType<HistoricalPriceCandlesResponse> {
+    constructor() {
+        super("hypurr.HistoricalPriceCandlesResponse", [
+            { no: 1, name: "candle_interval_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "series", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HistoricalPriceCandleSeries }
+        ]);
+    }
+    create(value?: PartialMessage<HistoricalPriceCandlesResponse>): HistoricalPriceCandlesResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.candleIntervalSeconds = 0;
+        message.series = [];
+        if (value !== undefined)
+            reflectionMergePartial<HistoricalPriceCandlesResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HistoricalPriceCandlesResponse): HistoricalPriceCandlesResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 candle_interval_seconds */ 1:
+                    message.candleIntervalSeconds = reader.int64().toNumber();
+                    break;
+                case /* repeated hypurr.HistoricalPriceCandleSeries series */ 2:
+                    message.series.push(HistoricalPriceCandleSeries.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HistoricalPriceCandlesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 candle_interval_seconds = 1; */
+        if (message.candleIntervalSeconds !== 0)
+            writer.tag(1, WireType.Varint).int64(message.candleIntervalSeconds);
+        /* repeated hypurr.HistoricalPriceCandleSeries series = 2; */
+        for (let i = 0; i < message.series.length; i++)
+            HistoricalPriceCandleSeries.internalBinaryWrite(message.series[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HistoricalPriceCandlesResponse
+ */
+export const HistoricalPriceCandlesResponse = new HistoricalPriceCandlesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HistoricalPriceCandleSeries$Type extends MessageType<HistoricalPriceCandleSeries> {
+    constructor() {
+        super("hypurr.HistoricalPriceCandleSeries", [
+            { no: 1, name: "asset_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "candles", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HistoricalPriceCandle }
+        ]);
+    }
+    create(value?: PartialMessage<HistoricalPriceCandleSeries>): HistoricalPriceCandleSeries {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.assetId = 0;
+        message.candles = [];
+        if (value !== undefined)
+            reflectionMergePartial<HistoricalPriceCandleSeries>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HistoricalPriceCandleSeries): HistoricalPriceCandleSeries {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 asset_id */ 1:
+                    message.assetId = reader.uint64().toNumber();
+                    break;
+                case /* repeated hypurr.HistoricalPriceCandle candles */ 2:
+                    message.candles.push(HistoricalPriceCandle.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HistoricalPriceCandleSeries, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 asset_id = 1; */
+        if (message.assetId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.assetId);
+        /* repeated hypurr.HistoricalPriceCandle candles = 2; */
+        for (let i = 0; i < message.candles.length; i++)
+            HistoricalPriceCandle.internalBinaryWrite(message.candles[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HistoricalPriceCandleSeries
+ */
+export const HistoricalPriceCandleSeries = new HistoricalPriceCandleSeries$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HistoricalPriceCandle$Type extends MessageType<HistoricalPriceCandle> {
+    constructor() {
+        super("hypurr.HistoricalPriceCandle", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "open_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "high_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "low_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "close_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HistoricalPriceCandle>): HistoricalPriceCandle {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = "";
+        message.occurredAt = "";
+        message.priceDecimal = "";
+        message.openDecimal = "";
+        message.highDecimal = "";
+        message.lowDecimal = "";
+        message.closeDecimal = "";
+        if (value !== undefined)
+            reflectionMergePartial<HistoricalPriceCandle>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HistoricalPriceCandle): HistoricalPriceCandle {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* string occurred_at */ 2:
+                    message.occurredAt = reader.string();
+                    break;
+                case /* string price_decimal */ 3:
+                    message.priceDecimal = reader.string();
+                    break;
+                case /* string open_decimal */ 4:
+                    message.openDecimal = reader.string();
+                    break;
+                case /* string high_decimal */ 5:
+                    message.highDecimal = reader.string();
+                    break;
+                case /* string low_decimal */ 6:
+                    message.lowDecimal = reader.string();
+                    break;
+                case /* string close_decimal */ 7:
+                    message.closeDecimal = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HistoricalPriceCandle, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* string occurred_at = 2; */
+        if (message.occurredAt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.occurredAt);
+        /* string price_decimal = 3; */
+        if (message.priceDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.priceDecimal);
+        /* string open_decimal = 4; */
+        if (message.openDecimal !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.openDecimal);
+        /* string high_decimal = 5; */
+        if (message.highDecimal !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.highDecimal);
+        /* string low_decimal = 6; */
+        if (message.lowDecimal !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.lowDecimal);
+        /* string close_decimal = 7; */
+        if (message.closeDecimal !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.closeDecimal);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HistoricalPriceCandle
+ */
+export const HistoricalPriceCandle = new HistoricalPriceCandle$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.IosService
  */
@@ -5272,5 +5714,6 @@ export const IosService = new ServiceType("hypurr.IosService", [
     { name: "AssetMetadataCatalog", options: {}, I: AssetMetadataCatalogRequest, O: AssetMetadataCatalogResponse },
     { name: "Accounts", options: {}, I: AccountsRequest, O: AccountsResponse },
     { name: "Profile", options: {}, I: ProfileRequest, O: ProfileResponse },
-    { name: "UserStream", serverStreaming: true, options: {}, I: UserStreamRequest, O: UserSnapshot }
+    { name: "UserStream", serverStreaming: true, options: {}, I: UserStreamRequest, O: UserSnapshot },
+    { name: "HistoricalPriceCandles", options: {}, I: HistoricalPriceCandlesRequest, O: HistoricalPriceCandlesResponse }
 ]);
