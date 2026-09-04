@@ -71,9 +71,6 @@ message KmsMigrationRelease {
   // The legacy account has bot-side 2FA: call CompleteMigrationRelease with
   // the login attestation + TOTP to get the wallets.
   bool requires_2fa = 2;
-  // Telegram-first onboarding: migration must be completed before the app
-  // proceeds (product-enforced).
-  bool forced = 3;
 }
 
 message KmsCompleteMigrationReleaseRequest {
