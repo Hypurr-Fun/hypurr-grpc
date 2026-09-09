@@ -39,6 +39,7 @@ const (
 	HyperCore_SpotInstruments_FullMethodName                   = "/hypercore.HyperCore/SpotInstruments"
 	HyperCore_PerpInstruments_FullMethodName                   = "/hypercore.HyperCore/PerpInstruments"
 	HyperCore_WalletsByMetricPercentile_FullMethodName         = "/hypercore.HyperCore/WalletsByMetricPercentile"
+	HyperCore_DirtyWallets_FullMethodName                      = "/hypercore.HyperCore/DirtyWallets"
 	HyperCore_WalletTrades_FullMethodName                      = "/hypercore.HyperCore/WalletTrades"
 	HyperCore_OHLC_FullMethodName                              = "/hypercore.HyperCore/OHLC"
 	HyperCore_HighLow_FullMethodName                           = "/hypercore.HyperCore/HighLow"
@@ -69,6 +70,7 @@ type HyperCoreClient interface {
 	SpotInstruments(ctx context.Context, in *SpotInstrumentsRequest, opts ...grpc.CallOption) (*SpotInstrumentsResponse, error)
 	PerpInstruments(ctx context.Context, in *PerpInstrumentsRequest, opts ...grpc.CallOption) (*PerpInstrumentsResponse, error)
 	WalletsByMetricPercentile(ctx context.Context, in *WalletsByMetricPercentileRequest, opts ...grpc.CallOption) (*WalletsByMetricPercentileResponse, error)
+	DirtyWallets(ctx context.Context, in *DirtyWalletsRequest, opts ...grpc.CallOption) (*DirtyWalletsResponse, error)
 	WalletTrades(ctx context.Context, in *WalletTradesRequest, opts ...grpc.CallOption) (*WalletTradesResponse, error)
 	OHLC(ctx context.Context, in *OHLCRequest, opts ...grpc.CallOption) (*OHLCResponse, error)
 	HighLow(ctx context.Context, in *HighLowRequest, opts ...grpc.CallOption) (*HighLowResponse, error)
@@ -374,6 +376,16 @@ func (c *hyperCoreClient) WalletsByMetricPercentile(ctx context.Context, in *Wal
 	return out, nil
 }
 
+func (c *hyperCoreClient) DirtyWallets(ctx context.Context, in *DirtyWalletsRequest, opts ...grpc.CallOption) (*DirtyWalletsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DirtyWalletsResponse)
+	err := c.cc.Invoke(ctx, HyperCore_DirtyWallets_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *hyperCoreClient) WalletTrades(ctx context.Context, in *WalletTradesRequest, opts ...grpc.CallOption) (*WalletTradesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(WalletTradesResponse)
@@ -438,6 +450,7 @@ type HyperCoreServer interface {
 	SpotInstruments(context.Context, *SpotInstrumentsRequest) (*SpotInstrumentsResponse, error)
 	PerpInstruments(context.Context, *PerpInstrumentsRequest) (*PerpInstrumentsResponse, error)
 	WalletsByMetricPercentile(context.Context, *WalletsByMetricPercentileRequest) (*WalletsByMetricPercentileResponse, error)
+	DirtyWallets(context.Context, *DirtyWalletsRequest) (*DirtyWalletsResponse, error)
 	WalletTrades(context.Context, *WalletTradesRequest) (*WalletTradesResponse, error)
 	OHLC(context.Context, *OHLCRequest) (*OHLCResponse, error)
 	HighLow(context.Context, *HighLowRequest) (*HighLowResponse, error)
@@ -508,6 +521,9 @@ func (UnimplementedHyperCoreServer) PerpInstruments(context.Context, *PerpInstru
 }
 func (UnimplementedHyperCoreServer) WalletsByMetricPercentile(context.Context, *WalletsByMetricPercentileRequest) (*WalletsByMetricPercentileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletsByMetricPercentile not implemented")
+}
+func (UnimplementedHyperCoreServer) DirtyWallets(context.Context, *DirtyWalletsRequest) (*DirtyWalletsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DirtyWallets not implemented")
 }
 func (UnimplementedHyperCoreServer) WalletTrades(context.Context, *WalletTradesRequest) (*WalletTradesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletTrades not implemented")
@@ -911,6 +927,24 @@ func _HyperCore_WalletsByMetricPercentile_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_DirtyWallets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DirtyWalletsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).DirtyWallets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_DirtyWallets_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).DirtyWallets(ctx, req.(*DirtyWalletsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _HyperCore_WalletTrades_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(WalletTradesRequest)
 	if err := dec(in); err != nil {
@@ -1053,6 +1087,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WalletsByMetricPercentile",
 			Handler:    _HyperCore_WalletsByMetricPercentile_Handler,
+		},
+		{
+			MethodName: "DirtyWallets",
+			Handler:    _HyperCore_DirtyWallets_Handler,
 		},
 		{
 			MethodName: "WalletTrades",

@@ -546,6 +546,18 @@ message HistoricalWalletTrade {
   int64 realized_pnl     = 14;              // USDC wei; realized PnL of this fill (perp only; 0 for spot / non-reducing fills)
 }
 
+message DirtyWalletsRequest {
+  // Inclusive execution-minute bound in Unix seconds. Must be positive and within the retained seven days.
+  int64 from_ts = 1;
+  // Exclusive execution-minute bound in Unix seconds. Zero selects the request time.
+  int64 to_ts = 2;
+}
+
+message DirtyWalletsResponse {
+  // Unique sorted addresses from the stored range plus all currently pending wallets.
+  repeated string wallet_addresses = 1;
+}
+
 message WalletTradesRequest {
   string wallet_address = 1;
   int64  from_ts        = 2; // inclusive, unix seconds; 0 = earliest
@@ -680,6 +692,7 @@ service HyperCore {
   rpc SpotInstruments(SpotInstrumentsRequest) returns (SpotInstrumentsResponse);
   rpc PerpInstruments(PerpInstrumentsRequest) returns (PerpInstrumentsResponse);
   rpc WalletsByMetricPercentile(WalletsByMetricPercentileRequest) returns (WalletsByMetricPercentileResponse) {}
+  rpc DirtyWallets(DirtyWalletsRequest) returns (DirtyWalletsResponse) {}
   rpc WalletTrades(WalletTradesRequest) returns (WalletTradesResponse) {}
   rpc OHLC(OHLCRequest) returns (OHLCResponse) {}
   rpc HighLow(HighLowRequest) returns (HighLowResponse) {}

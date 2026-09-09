@@ -1264,6 +1264,34 @@ export interface HistoricalWalletTrade {
     realizedPnl: number; // USDC wei; realized PnL of this fill (perp only; 0 for spot / non-reducing fills)
 }
 /**
+ * @generated from protobuf message hypercore.DirtyWalletsRequest
+ */
+export interface DirtyWalletsRequest {
+    /**
+     * Inclusive execution-minute bound in Unix seconds. Must be positive and within the retained seven days.
+     *
+     * @generated from protobuf field: int64 from_ts = 1
+     */
+    fromTs: number;
+    /**
+     * Exclusive execution-minute bound in Unix seconds. Zero selects the request time.
+     *
+     * @generated from protobuf field: int64 to_ts = 2
+     */
+    toTs: number;
+}
+/**
+ * @generated from protobuf message hypercore.DirtyWalletsResponse
+ */
+export interface DirtyWalletsResponse {
+    /**
+     * Unique sorted addresses from the stored range plus all currently pending wallets.
+     *
+     * @generated from protobuf field: repeated string wallet_addresses = 1
+     */
+    walletAddresses: string[];
+}
+/**
  * @generated from protobuf message hypercore.WalletTradesRequest
  */
 export interface WalletTradesRequest {
@@ -6206,6 +6234,108 @@ class HistoricalWalletTrade$Type extends MessageType<HistoricalWalletTrade> {
  */
 export const HistoricalWalletTrade = new HistoricalWalletTrade$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class DirtyWalletsRequest$Type extends MessageType<DirtyWalletsRequest> {
+    constructor() {
+        super("hypercore.DirtyWalletsRequest", [
+            { no: 1, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<DirtyWalletsRequest>): DirtyWalletsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.fromTs = 0;
+        message.toTs = 0;
+        if (value !== undefined)
+            reflectionMergePartial<DirtyWalletsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DirtyWalletsRequest): DirtyWalletsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 from_ts */ 1:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 2:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: DirtyWalletsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 from_ts = 1; */
+        if (message.fromTs !== 0)
+            writer.tag(1, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 2; */
+        if (message.toTs !== 0)
+            writer.tag(2, WireType.Varint).int64(message.toTs);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.DirtyWalletsRequest
+ */
+export const DirtyWalletsRequest = new DirtyWalletsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DirtyWalletsResponse$Type extends MessageType<DirtyWalletsResponse> {
+    constructor() {
+        super("hypercore.DirtyWalletsResponse", [
+            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<DirtyWalletsResponse>): DirtyWalletsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddresses = [];
+        if (value !== undefined)
+            reflectionMergePartial<DirtyWalletsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DirtyWalletsResponse): DirtyWalletsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string wallet_addresses */ 1:
+                    message.walletAddresses.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: DirtyWalletsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string wallet_addresses = 1; */
+        for (let i = 0; i < message.walletAddresses.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.DirtyWalletsResponse
+ */
+export const DirtyWalletsResponse = new DirtyWalletsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class WalletTradesRequest$Type extends MessageType<WalletTradesRequest> {
     constructor() {
         super("hypercore.WalletTradesRequest", [
@@ -7085,6 +7215,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "SpotInstruments", options: {}, I: SpotInstrumentsRequest, O: SpotInstrumentsResponse },
     { name: "PerpInstruments", options: {}, I: PerpInstrumentsRequest, O: PerpInstrumentsResponse },
     { name: "WalletsByMetricPercentile", options: {}, I: WalletsByMetricPercentileRequest, O: WalletsByMetricPercentileResponse },
+    { name: "DirtyWallets", options: {}, I: DirtyWalletsRequest, O: DirtyWalletsResponse },
     { name: "WalletTrades", options: {}, I: WalletTradesRequest, O: WalletTradesResponse },
     { name: "OHLC", options: {}, I: OHLCRequest, O: OHLCResponse },
     { name: "HighLow", options: {}, I: HighLowRequest, O: HighLowResponse },

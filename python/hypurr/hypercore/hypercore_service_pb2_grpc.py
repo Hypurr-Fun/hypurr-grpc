@@ -134,6 +134,11 @@ class HyperCoreStub(object):
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileResponse.FromString,
                 _registered_method=True)
+        self.DirtyWallets = channel.unary_unary(
+                '/hypercore.HyperCore/DirtyWallets',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.DirtyWalletsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.DirtyWalletsResponse.FromString,
+                _registered_method=True)
         self.WalletTrades = channel.unary_unary(
                 '/hypercore.HyperCore/WalletTrades',
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.SerializeToString,
@@ -279,6 +284,12 @@ class HyperCoreServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def DirtyWallets(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def WalletTrades(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -405,6 +416,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     servicer.WalletsByMetricPercentile,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileResponse.SerializeToString,
+            ),
+            'DirtyWallets': grpc.unary_unary_rpc_method_handler(
+                    servicer.DirtyWallets,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.DirtyWalletsRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.DirtyWalletsResponse.SerializeToString,
             ),
             'WalletTrades': grpc.unary_unary_rpc_method_handler(
                     servicer.WalletTrades,
@@ -967,6 +983,33 @@ class HyperCore(object):
             '/hypercore.HyperCore/WalletsByMetricPercentile',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DirtyWallets(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/DirtyWallets',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.DirtyWalletsRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.DirtyWalletsResponse.FromString,
             options,
             channel_credentials,
             insecure,
