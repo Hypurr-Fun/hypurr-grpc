@@ -123,6 +123,84 @@ message WalletTradesStreamResponse {
   repeated WalletTrade trades = 2;
 }
 
+message WalletEventsStreamRequest {
+  // Supply exactly one filter. Bloom filters use the WalletTradesStream encoding and lowercase wallet addresses.
+  repeated string wallet_addresses = 1;
+  bytes bloom_filter = 2;
+}
+
+message WalletEvent {
+  string wallet_address = 1;
+  // Stored fill CustomHash or movement Hash. Combine with wallet, payload kind, and fill market for deduplication.
+  string source_id = 2;
+  int64 timestamp_ms = 3; // Unix milliseconds.
+  int64 timestamp_ns = 4; // Original Unix nanoseconds for source ordering.
+  oneof payload {
+    WalletFillEvent fill = 5;
+    WalletMovementEvent movement = 6;
+  }
+}
+
+message WalletEventAsset {
+  enum Kind {
+    KIND_UNSPECIFIED = 0;
+    KIND_TOKEN = 1;
+    KIND_PERP = 2;
+    KIND_OUTCOME = 3;
+  }
+  Kind kind = 1;
+  int64 id = 2; // Indexer asset or instrument ID in the namespace selected by kind.
+  // Divide the associated integer amount by 10^decimals. The same asset can use different scales in different fields.
+  uint32 decimals = 3;
+}
+
+message WalletFillEvent {
+  enum Market {
+    MARKET_UNSPECIFIED = 0;
+    MARKET_PERP = 1;
+    MARKET_SPOT = 2;
+    MARKET_OUTCOME = 3;
+  }
+  Market market = 1;
+  int64 instrument_id = 2; // Public indexer instrument ID, including spot pair encoding.
+  WalletEventAsset from_asset = 3;
+  WalletEventAsset to_asset = 4;
+  int64 from_size = 5;
+  int64 to_size = 6; // Spot and outcome sizes already subtract the fee.
+  WalletEventAsset fee_asset = 7;
+  int64 fee = 8; // Signed stored fee in fee_asset units. Negative values are rebates.
+  int64 start_pos = 10; // Base position units: to_asset for buys, from_asset for sells.
+  // closed_pnl, cum_pnl, and cum_fees use from_asset units for buys and to_asset units for sells.
+  google.protobuf.Int64Value closed_pnl = 11; // Gross realized PnL, excluding fees and funding.
+  // Stored totals through this fill. Full closes and flips retain the completed position's final totals.
+  // The next fill starts a new total when position continuity and source order establish the boundary.
+  // Each absent total has unknown coverage. The consumer keeps spot activity totals null.
+  google.protobuf.Int64Value cum_pnl = 12;
+  // Signed quote fees, including the full flip fee under the existing indexer policy.
+  google.protobuf.Int64Value cum_fees = 13;
+  int64 order_id = 14;
+  google.protobuf.Int64Value twap_id = 15;
+  google.protobuf.Int64Value execution_index = 16;
+  bool is_buy = 17;
+  string action = 18; // Stored direction override, including outcome actions and liquidations.
+}
+
+message WalletMovementEvent {
+  string movement_type = 1;
+  WalletEventAsset asset = 2;
+  int64 amount = 3;
+  google.protobuf.DoubleValue usdc_value = 4; // Unscaled USDC value. Absent when the stored row cannot establish its presence.
+  WalletEventAsset fee_asset = 5; // Absent when the fee denomination is unknown.
+  google.protobuf.Int64Value fee = 6; // Signed fee in fee_asset units. Absent when the fee is unknown.
+  int64 commission = 7; // Vault withdrawal commission in asset units. Zero for other movement types.
+  string user = 8;
+  string destination = 9; // Source value, which can identify an account or a ledger.
+  string source_dex = 10;
+  string destination_dex = 11;
+  google.protobuf.Int64Value source_dex_index = 12;
+  google.protobuf.Int64Value destination_dex_index = 13;
+}
+
 message AggregatedWalletPositioningStreamRequest {
   WalletFilter filter = 1;
   uint64 instrument_id = 2;
@@ -681,6 +759,8 @@ service HyperCore {
   rpc OrderBookDepth(OrderBookDepthRequest) returns (OrderBookDepthResponse) {}
   rpc WalletBalancesStream(stream WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
   rpc WalletTradesStream(WalletTradesStreamRequest) returns (stream WalletTradesStreamResponse) {}
+  // Sends individual committed wallet events during the subscription. Reconnects do not replay events.
+  rpc WalletEventsStream(WalletEventsStreamRequest) returns (stream WalletEvent) {}
   rpc ValidatorDelegators(ValidatorDelegatorsRequest) returns (ValidatorDelegatorsResponse) {}
   rpc ReferrerWallet(ReferrerWalletRequest) returns (ReferrerWalletResponse) {}
   rpc WalletTags(WalletTagsRequest) returns (WalletTagsResponse) {}

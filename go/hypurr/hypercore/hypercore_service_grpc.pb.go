@@ -28,6 +28,7 @@ const (
 	HyperCore_OrderBookDepth_FullMethodName                    = "/hypercore.HyperCore/OrderBookDepth"
 	HyperCore_WalletBalancesStream_FullMethodName              = "/hypercore.HyperCore/WalletBalancesStream"
 	HyperCore_WalletTradesStream_FullMethodName                = "/hypercore.HyperCore/WalletTradesStream"
+	HyperCore_WalletEventsStream_FullMethodName                = "/hypercore.HyperCore/WalletEventsStream"
 	HyperCore_ValidatorDelegators_FullMethodName               = "/hypercore.HyperCore/ValidatorDelegators"
 	HyperCore_ReferrerWallet_FullMethodName                    = "/hypercore.HyperCore/ReferrerWallet"
 	HyperCore_WalletTags_FullMethodName                        = "/hypercore.HyperCore/WalletTags"
@@ -59,6 +60,8 @@ type HyperCoreClient interface {
 	OrderBookDepth(ctx context.Context, in *OrderBookDepthRequest, opts ...grpc.CallOption) (*OrderBookDepthResponse, error)
 	WalletBalancesStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_WalletBalancesStreamClient, error)
 	WalletTradesStream(ctx context.Context, in *WalletTradesStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletTradesStreamClient, error)
+	// Sends individual committed wallet events during the subscription. Reconnects do not replay events.
+	WalletEventsStream(ctx context.Context, in *WalletEventsStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletEventsStreamClient, error)
 	ValidatorDelegators(ctx context.Context, in *ValidatorDelegatorsRequest, opts ...grpc.CallOption) (*ValidatorDelegatorsResponse, error)
 	ReferrerWallet(ctx context.Context, in *ReferrerWalletRequest, opts ...grpc.CallOption) (*ReferrerWalletResponse, error)
 	WalletTags(ctx context.Context, in *WalletTagsRequest, opts ...grpc.CallOption) (*WalletTagsResponse, error)
@@ -266,6 +269,39 @@ func (x *hyperCoreWalletTradesStreamClient) Recv() (*WalletTradesStreamResponse,
 	return m, nil
 }
 
+func (c *hyperCoreClient) WalletEventsStream(ctx context.Context, in *WalletEventsStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletEventsStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[4], HyperCore_WalletEventsStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &hyperCoreWalletEventsStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type HyperCore_WalletEventsStreamClient interface {
+	Recv() (*WalletEvent, error)
+	grpc.ClientStream
+}
+
+type hyperCoreWalletEventsStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *hyperCoreWalletEventsStreamClient) Recv() (*WalletEvent, error) {
+	m := new(WalletEvent)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *hyperCoreClient) ValidatorDelegators(ctx context.Context, in *ValidatorDelegatorsRequest, opts ...grpc.CallOption) (*ValidatorDelegatorsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ValidatorDelegatorsResponse)
@@ -439,6 +475,8 @@ type HyperCoreServer interface {
 	OrderBookDepth(context.Context, *OrderBookDepthRequest) (*OrderBookDepthResponse, error)
 	WalletBalancesStream(HyperCore_WalletBalancesStreamServer) error
 	WalletTradesStream(*WalletTradesStreamRequest, HyperCore_WalletTradesStreamServer) error
+	// Sends individual committed wallet events during the subscription. Reconnects do not replay events.
+	WalletEventsStream(*WalletEventsStreamRequest, HyperCore_WalletEventsStreamServer) error
 	ValidatorDelegators(context.Context, *ValidatorDelegatorsRequest) (*ValidatorDelegatorsResponse, error)
 	ReferrerWallet(context.Context, *ReferrerWalletRequest) (*ReferrerWalletResponse, error)
 	WalletTags(context.Context, *WalletTagsRequest) (*WalletTagsResponse, error)
@@ -488,6 +526,9 @@ func (UnimplementedHyperCoreServer) WalletBalancesStream(HyperCore_WalletBalance
 }
 func (UnimplementedHyperCoreServer) WalletTradesStream(*WalletTradesStreamRequest, HyperCore_WalletTradesStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method WalletTradesStream not implemented")
+}
+func (UnimplementedHyperCoreServer) WalletEventsStream(*WalletEventsStreamRequest, HyperCore_WalletEventsStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method WalletEventsStream not implemented")
 }
 func (UnimplementedHyperCoreServer) ValidatorDelegators(context.Context, *ValidatorDelegatorsRequest) (*ValidatorDelegatorsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidatorDelegators not implemented")
@@ -726,6 +767,27 @@ type hyperCoreWalletTradesStreamServer struct {
 }
 
 func (x *hyperCoreWalletTradesStreamServer) Send(m *WalletTradesStreamResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _HyperCore_WalletEventsStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(WalletEventsStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HyperCoreServer).WalletEventsStream(m, &hyperCoreWalletEventsStreamServer{ServerStream: stream})
+}
+
+type HyperCore_WalletEventsStreamServer interface {
+	Send(*WalletEvent) error
+	grpc.ServerStream
+}
+
+type hyperCoreWalletEventsStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *hyperCoreWalletEventsStreamServer) Send(m *WalletEvent) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -1129,6 +1191,11 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "WalletTradesStream",
 			Handler:       _HyperCore_WalletTradesStream_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "WalletEventsStream",
+			Handler:       _HyperCore_WalletEventsStream_Handler,
 			ServerStreams: true,
 		},
 	},

@@ -240,6 +240,261 @@ export interface WalletTradesStreamResponse {
     trades: WalletTrade[];
 }
 /**
+ * @generated from protobuf message hypercore.WalletEventsStreamRequest
+ */
+export interface WalletEventsStreamRequest {
+    /**
+     * Supply exactly one filter. Bloom filters use the WalletTradesStream encoding and lowercase wallet addresses.
+     *
+     * @generated from protobuf field: repeated string wallet_addresses = 1
+     */
+    walletAddresses: string[];
+    /**
+     * @generated from protobuf field: bytes bloom_filter = 2
+     */
+    bloomFilter: Uint8Array;
+}
+/**
+ * @generated from protobuf message hypercore.WalletEvent
+ */
+export interface WalletEvent {
+    /**
+     * @generated from protobuf field: string wallet_address = 1
+     */
+    walletAddress: string;
+    /**
+     * Stored fill CustomHash or movement Hash. Combine with wallet, payload kind, and fill market for deduplication.
+     *
+     * @generated from protobuf field: string source_id = 2
+     */
+    sourceId: string;
+    /**
+     * @generated from protobuf field: int64 timestamp_ms = 3
+     */
+    timestampMs: number; // Unix milliseconds.
+    /**
+     * @generated from protobuf field: int64 timestamp_ns = 4
+     */
+    timestampNs: number; // Original Unix nanoseconds for source ordering.
+    /**
+     * @generated from protobuf oneof: payload
+     */
+    payload: {
+        oneofKind: "fill";
+        /**
+         * @generated from protobuf field: hypercore.WalletFillEvent fill = 5
+         */
+        fill: WalletFillEvent;
+    } | {
+        oneofKind: "movement";
+        /**
+         * @generated from protobuf field: hypercore.WalletMovementEvent movement = 6
+         */
+        movement: WalletMovementEvent;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message hypercore.WalletEventAsset
+ */
+export interface WalletEventAsset {
+    /**
+     * @generated from protobuf field: hypercore.WalletEventAsset.Kind kind = 1
+     */
+    kind: WalletEventAsset_Kind;
+    /**
+     * @generated from protobuf field: int64 id = 2
+     */
+    id: number; // Indexer asset or instrument ID in the namespace selected by kind.
+    /**
+     * Divide the associated integer amount by 10^decimals. The same asset can use different scales in different fields.
+     *
+     * @generated from protobuf field: uint32 decimals = 3
+     */
+    decimals: number;
+}
+/**
+ * @generated from protobuf enum hypercore.WalletEventAsset.Kind
+ */
+export enum WalletEventAsset_Kind {
+    /**
+     * @generated from protobuf enum value: KIND_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: KIND_TOKEN = 1;
+     */
+    TOKEN = 1,
+    /**
+     * @generated from protobuf enum value: KIND_PERP = 2;
+     */
+    PERP = 2,
+    /**
+     * @generated from protobuf enum value: KIND_OUTCOME = 3;
+     */
+    OUTCOME = 3
+}
+/**
+ * @generated from protobuf message hypercore.WalletFillEvent
+ */
+export interface WalletFillEvent {
+    /**
+     * @generated from protobuf field: hypercore.WalletFillEvent.Market market = 1
+     */
+    market: WalletFillEvent_Market;
+    /**
+     * @generated from protobuf field: int64 instrument_id = 2
+     */
+    instrumentId: number; // Public indexer instrument ID, including spot pair encoding.
+    /**
+     * @generated from protobuf field: hypercore.WalletEventAsset from_asset = 3
+     */
+    fromAsset?: WalletEventAsset;
+    /**
+     * @generated from protobuf field: hypercore.WalletEventAsset to_asset = 4
+     */
+    toAsset?: WalletEventAsset;
+    /**
+     * @generated from protobuf field: int64 from_size = 5
+     */
+    fromSize: number;
+    /**
+     * @generated from protobuf field: int64 to_size = 6
+     */
+    toSize: number; // Spot and outcome sizes already subtract the fee.
+    /**
+     * @generated from protobuf field: hypercore.WalletEventAsset fee_asset = 7
+     */
+    feeAsset?: WalletEventAsset;
+    /**
+     * @generated from protobuf field: int64 fee = 8
+     */
+    fee: number; // Signed stored fee in fee_asset units. Negative values are rebates.
+    /**
+     * @generated from protobuf field: int64 start_pos = 10
+     */
+    startPos: number; // Base position units: to_asset for buys, from_asset for sells.
+    /**
+     * closed_pnl, cum_pnl, and cum_fees use from_asset units for buys and to_asset units for sells.
+     *
+     * @generated from protobuf field: google.protobuf.Int64Value closed_pnl = 11
+     */
+    closedPnl?: Int64Value; // Gross realized PnL, excluding fees and funding.
+    /**
+     * Stored totals through this fill. Full closes and flips retain the completed position's final totals.
+     * The next fill starts a new total when position continuity and source order establish the boundary.
+     * Each absent total has unknown coverage. The consumer keeps spot activity totals null.
+     *
+     * @generated from protobuf field: google.protobuf.Int64Value cum_pnl = 12
+     */
+    cumPnl?: Int64Value;
+    /**
+     * Signed quote fees, including the full flip fee under the existing indexer policy.
+     *
+     * @generated from protobuf field: google.protobuf.Int64Value cum_fees = 13
+     */
+    cumFees?: Int64Value;
+    /**
+     * @generated from protobuf field: int64 order_id = 14
+     */
+    orderId: number;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value twap_id = 15
+     */
+    twapId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value execution_index = 16
+     */
+    executionIndex?: Int64Value;
+    /**
+     * @generated from protobuf field: bool is_buy = 17
+     */
+    isBuy: boolean;
+    /**
+     * @generated from protobuf field: string action = 18
+     */
+    action: string; // Stored direction override, including outcome actions and liquidations.
+}
+/**
+ * @generated from protobuf enum hypercore.WalletFillEvent.Market
+ */
+export enum WalletFillEvent_Market {
+    /**
+     * @generated from protobuf enum value: MARKET_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: MARKET_PERP = 1;
+     */
+    PERP = 1,
+    /**
+     * @generated from protobuf enum value: MARKET_SPOT = 2;
+     */
+    SPOT = 2,
+    /**
+     * @generated from protobuf enum value: MARKET_OUTCOME = 3;
+     */
+    OUTCOME = 3
+}
+/**
+ * @generated from protobuf message hypercore.WalletMovementEvent
+ */
+export interface WalletMovementEvent {
+    /**
+     * @generated from protobuf field: string movement_type = 1
+     */
+    movementType: string;
+    /**
+     * @generated from protobuf field: hypercore.WalletEventAsset asset = 2
+     */
+    asset?: WalletEventAsset;
+    /**
+     * @generated from protobuf field: int64 amount = 3
+     */
+    amount: number;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue usdc_value = 4
+     */
+    usdcValue?: DoubleValue; // Unscaled USDC value. Absent when the stored row cannot establish its presence.
+    /**
+     * @generated from protobuf field: hypercore.WalletEventAsset fee_asset = 5
+     */
+    feeAsset?: WalletEventAsset; // Absent when the fee denomination is unknown.
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value fee = 6
+     */
+    fee?: Int64Value; // Signed fee in fee_asset units. Absent when the fee is unknown.
+    /**
+     * @generated from protobuf field: int64 commission = 7
+     */
+    commission: number; // Vault withdrawal commission in asset units. Zero for other movement types.
+    /**
+     * @generated from protobuf field: string user = 8
+     */
+    user: string;
+    /**
+     * @generated from protobuf field: string destination = 9
+     */
+    destination: string; // Source value, which can identify an account or a ledger.
+    /**
+     * @generated from protobuf field: string source_dex = 10
+     */
+    sourceDex: string;
+    /**
+     * @generated from protobuf field: string destination_dex = 11
+     */
+    destinationDex: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value source_dex_index = 12
+     */
+    sourceDexIndex?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value destination_dex_index = 13
+     */
+    destinationDexIndex?: Int64Value;
+}
+/**
  * @generated from protobuf message hypercore.AggregatedWalletPositioningStreamRequest
  */
 export interface AggregatedWalletPositioningStreamRequest {
@@ -2747,6 +3002,520 @@ class WalletTradesStreamResponse$Type extends MessageType<WalletTradesStreamResp
  * @generated MessageType for protobuf message hypercore.WalletTradesStreamResponse
  */
 export const WalletTradesStreamResponse = new WalletTradesStreamResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletEventsStreamRequest$Type extends MessageType<WalletEventsStreamRequest> {
+    constructor() {
+        super("hypercore.WalletEventsStreamRequest", [
+            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "bloom_filter", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletEventsStreamRequest>): WalletEventsStreamRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddresses = [];
+        message.bloomFilter = new Uint8Array(0);
+        if (value !== undefined)
+            reflectionMergePartial<WalletEventsStreamRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletEventsStreamRequest): WalletEventsStreamRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string wallet_addresses */ 1:
+                    message.walletAddresses.push(reader.string());
+                    break;
+                case /* bytes bloom_filter */ 2:
+                    message.bloomFilter = reader.bytes();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletEventsStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string wallet_addresses = 1; */
+        for (let i = 0; i < message.walletAddresses.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
+        /* bytes bloom_filter = 2; */
+        if (message.bloomFilter.length)
+            writer.tag(2, WireType.LengthDelimited).bytes(message.bloomFilter);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletEventsStreamRequest
+ */
+export const WalletEventsStreamRequest = new WalletEventsStreamRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletEvent$Type extends MessageType<WalletEvent> {
+    constructor() {
+        super("hypercore.WalletEvent", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "source_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "timestamp_ms", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "timestamp_ns", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "fill", kind: "message", oneof: "payload", T: () => WalletFillEvent },
+            { no: 6, name: "movement", kind: "message", oneof: "payload", T: () => WalletMovementEvent }
+        ]);
+    }
+    create(value?: PartialMessage<WalletEvent>): WalletEvent {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        message.sourceId = "";
+        message.timestampMs = 0;
+        message.timestampNs = 0;
+        message.payload = { oneofKind: undefined };
+        if (value !== undefined)
+            reflectionMergePartial<WalletEvent>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletEvent): WalletEvent {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* string source_id */ 2:
+                    message.sourceId = reader.string();
+                    break;
+                case /* int64 timestamp_ms */ 3:
+                    message.timestampMs = reader.int64().toNumber();
+                    break;
+                case /* int64 timestamp_ns */ 4:
+                    message.timestampNs = reader.int64().toNumber();
+                    break;
+                case /* hypercore.WalletFillEvent fill */ 5:
+                    message.payload = {
+                        oneofKind: "fill",
+                        fill: WalletFillEvent.internalBinaryRead(reader, reader.uint32(), options, (message.payload as any).fill)
+                    };
+                    break;
+                case /* hypercore.WalletMovementEvent movement */ 6:
+                    message.payload = {
+                        oneofKind: "movement",
+                        movement: WalletMovementEvent.internalBinaryRead(reader, reader.uint32(), options, (message.payload as any).movement)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletEvent, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* string source_id = 2; */
+        if (message.sourceId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.sourceId);
+        /* int64 timestamp_ms = 3; */
+        if (message.timestampMs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.timestampMs);
+        /* int64 timestamp_ns = 4; */
+        if (message.timestampNs !== 0)
+            writer.tag(4, WireType.Varint).int64(message.timestampNs);
+        /* hypercore.WalletFillEvent fill = 5; */
+        if (message.payload.oneofKind === "fill")
+            WalletFillEvent.internalBinaryWrite(message.payload.fill, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* hypercore.WalletMovementEvent movement = 6; */
+        if (message.payload.oneofKind === "movement")
+            WalletMovementEvent.internalBinaryWrite(message.payload.movement, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletEvent
+ */
+export const WalletEvent = new WalletEvent$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletEventAsset$Type extends MessageType<WalletEventAsset> {
+    constructor() {
+        super("hypercore.WalletEventAsset", [
+            { no: 1, name: "kind", kind: "enum", T: () => ["hypercore.WalletEventAsset.Kind", WalletEventAsset_Kind, "KIND_"] },
+            { no: 2, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "decimals", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletEventAsset>): WalletEventAsset {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.kind = 0;
+        message.id = 0;
+        message.decimals = 0;
+        if (value !== undefined)
+            reflectionMergePartial<WalletEventAsset>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletEventAsset): WalletEventAsset {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypercore.WalletEventAsset.Kind kind */ 1:
+                    message.kind = reader.int32();
+                    break;
+                case /* int64 id */ 2:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* uint32 decimals */ 3:
+                    message.decimals = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletEventAsset, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypercore.WalletEventAsset.Kind kind = 1; */
+        if (message.kind !== 0)
+            writer.tag(1, WireType.Varint).int32(message.kind);
+        /* int64 id = 2; */
+        if (message.id !== 0)
+            writer.tag(2, WireType.Varint).int64(message.id);
+        /* uint32 decimals = 3; */
+        if (message.decimals !== 0)
+            writer.tag(3, WireType.Varint).uint32(message.decimals);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletEventAsset
+ */
+export const WalletEventAsset = new WalletEventAsset$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletFillEvent$Type extends MessageType<WalletFillEvent> {
+    constructor() {
+        super("hypercore.WalletFillEvent", [
+            { no: 1, name: "market", kind: "enum", T: () => ["hypercore.WalletFillEvent.Market", WalletFillEvent_Market, "MARKET_"] },
+            { no: 2, name: "instrument_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "from_asset", kind: "message", T: () => WalletEventAsset },
+            { no: 4, name: "to_asset", kind: "message", T: () => WalletEventAsset },
+            { no: 5, name: "from_size", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "to_size", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "fee_asset", kind: "message", T: () => WalletEventAsset },
+            { no: 8, name: "fee", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 10, name: "start_pos", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 11, name: "closed_pnl", kind: "message", T: () => Int64Value },
+            { no: 12, name: "cum_pnl", kind: "message", T: () => Int64Value },
+            { no: 13, name: "cum_fees", kind: "message", T: () => Int64Value },
+            { no: 14, name: "order_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 15, name: "twap_id", kind: "message", T: () => Int64Value },
+            { no: 16, name: "execution_index", kind: "message", T: () => Int64Value },
+            { no: 17, name: "is_buy", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 18, name: "action", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletFillEvent>): WalletFillEvent {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.market = 0;
+        message.instrumentId = 0;
+        message.fromSize = 0;
+        message.toSize = 0;
+        message.fee = 0;
+        message.startPos = 0;
+        message.orderId = 0;
+        message.isBuy = false;
+        message.action = "";
+        if (value !== undefined)
+            reflectionMergePartial<WalletFillEvent>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletFillEvent): WalletFillEvent {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypercore.WalletFillEvent.Market market */ 1:
+                    message.market = reader.int32();
+                    break;
+                case /* int64 instrument_id */ 2:
+                    message.instrumentId = reader.int64().toNumber();
+                    break;
+                case /* hypercore.WalletEventAsset from_asset */ 3:
+                    message.fromAsset = WalletEventAsset.internalBinaryRead(reader, reader.uint32(), options, message.fromAsset);
+                    break;
+                case /* hypercore.WalletEventAsset to_asset */ 4:
+                    message.toAsset = WalletEventAsset.internalBinaryRead(reader, reader.uint32(), options, message.toAsset);
+                    break;
+                case /* int64 from_size */ 5:
+                    message.fromSize = reader.int64().toNumber();
+                    break;
+                case /* int64 to_size */ 6:
+                    message.toSize = reader.int64().toNumber();
+                    break;
+                case /* hypercore.WalletEventAsset fee_asset */ 7:
+                    message.feeAsset = WalletEventAsset.internalBinaryRead(reader, reader.uint32(), options, message.feeAsset);
+                    break;
+                case /* int64 fee */ 8:
+                    message.fee = reader.int64().toNumber();
+                    break;
+                case /* int64 start_pos */ 10:
+                    message.startPos = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.Int64Value closed_pnl */ 11:
+                    message.closedPnl = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.closedPnl);
+                    break;
+                case /* google.protobuf.Int64Value cum_pnl */ 12:
+                    message.cumPnl = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.cumPnl);
+                    break;
+                case /* google.protobuf.Int64Value cum_fees */ 13:
+                    message.cumFees = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.cumFees);
+                    break;
+                case /* int64 order_id */ 14:
+                    message.orderId = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.Int64Value twap_id */ 15:
+                    message.twapId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.twapId);
+                    break;
+                case /* google.protobuf.Int64Value execution_index */ 16:
+                    message.executionIndex = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.executionIndex);
+                    break;
+                case /* bool is_buy */ 17:
+                    message.isBuy = reader.bool();
+                    break;
+                case /* string action */ 18:
+                    message.action = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletFillEvent, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypercore.WalletFillEvent.Market market = 1; */
+        if (message.market !== 0)
+            writer.tag(1, WireType.Varint).int32(message.market);
+        /* int64 instrument_id = 2; */
+        if (message.instrumentId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.instrumentId);
+        /* hypercore.WalletEventAsset from_asset = 3; */
+        if (message.fromAsset)
+            WalletEventAsset.internalBinaryWrite(message.fromAsset, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* hypercore.WalletEventAsset to_asset = 4; */
+        if (message.toAsset)
+            WalletEventAsset.internalBinaryWrite(message.toAsset, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* int64 from_size = 5; */
+        if (message.fromSize !== 0)
+            writer.tag(5, WireType.Varint).int64(message.fromSize);
+        /* int64 to_size = 6; */
+        if (message.toSize !== 0)
+            writer.tag(6, WireType.Varint).int64(message.toSize);
+        /* hypercore.WalletEventAsset fee_asset = 7; */
+        if (message.feeAsset)
+            WalletEventAsset.internalBinaryWrite(message.feeAsset, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* int64 fee = 8; */
+        if (message.fee !== 0)
+            writer.tag(8, WireType.Varint).int64(message.fee);
+        /* int64 start_pos = 10; */
+        if (message.startPos !== 0)
+            writer.tag(10, WireType.Varint).int64(message.startPos);
+        /* google.protobuf.Int64Value closed_pnl = 11; */
+        if (message.closedPnl)
+            Int64Value.internalBinaryWrite(message.closedPnl, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value cum_pnl = 12; */
+        if (message.cumPnl)
+            Int64Value.internalBinaryWrite(message.cumPnl, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value cum_fees = 13; */
+        if (message.cumFees)
+            Int64Value.internalBinaryWrite(message.cumFees, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
+        /* int64 order_id = 14; */
+        if (message.orderId !== 0)
+            writer.tag(14, WireType.Varint).int64(message.orderId);
+        /* google.protobuf.Int64Value twap_id = 15; */
+        if (message.twapId)
+            Int64Value.internalBinaryWrite(message.twapId, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value execution_index = 16; */
+        if (message.executionIndex)
+            Int64Value.internalBinaryWrite(message.executionIndex, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
+        /* bool is_buy = 17; */
+        if (message.isBuy !== false)
+            writer.tag(17, WireType.Varint).bool(message.isBuy);
+        /* string action = 18; */
+        if (message.action !== "")
+            writer.tag(18, WireType.LengthDelimited).string(message.action);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletFillEvent
+ */
+export const WalletFillEvent = new WalletFillEvent$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletMovementEvent$Type extends MessageType<WalletMovementEvent> {
+    constructor() {
+        super("hypercore.WalletMovementEvent", [
+            { no: 1, name: "movement_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "asset", kind: "message", T: () => WalletEventAsset },
+            { no: 3, name: "amount", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "usdc_value", kind: "message", T: () => DoubleValue },
+            { no: 5, name: "fee_asset", kind: "message", T: () => WalletEventAsset },
+            { no: 6, name: "fee", kind: "message", T: () => Int64Value },
+            { no: 7, name: "commission", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 8, name: "user", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "destination", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "source_dex", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "destination_dex", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 12, name: "source_dex_index", kind: "message", T: () => Int64Value },
+            { no: 13, name: "destination_dex_index", kind: "message", T: () => Int64Value }
+        ]);
+    }
+    create(value?: PartialMessage<WalletMovementEvent>): WalletMovementEvent {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.movementType = "";
+        message.amount = 0;
+        message.commission = 0;
+        message.user = "";
+        message.destination = "";
+        message.sourceDex = "";
+        message.destinationDex = "";
+        if (value !== undefined)
+            reflectionMergePartial<WalletMovementEvent>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletMovementEvent): WalletMovementEvent {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string movement_type */ 1:
+                    message.movementType = reader.string();
+                    break;
+                case /* hypercore.WalletEventAsset asset */ 2:
+                    message.asset = WalletEventAsset.internalBinaryRead(reader, reader.uint32(), options, message.asset);
+                    break;
+                case /* int64 amount */ 3:
+                    message.amount = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.DoubleValue usdc_value */ 4:
+                    message.usdcValue = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.usdcValue);
+                    break;
+                case /* hypercore.WalletEventAsset fee_asset */ 5:
+                    message.feeAsset = WalletEventAsset.internalBinaryRead(reader, reader.uint32(), options, message.feeAsset);
+                    break;
+                case /* google.protobuf.Int64Value fee */ 6:
+                    message.fee = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.fee);
+                    break;
+                case /* int64 commission */ 7:
+                    message.commission = reader.int64().toNumber();
+                    break;
+                case /* string user */ 8:
+                    message.user = reader.string();
+                    break;
+                case /* string destination */ 9:
+                    message.destination = reader.string();
+                    break;
+                case /* string source_dex */ 10:
+                    message.sourceDex = reader.string();
+                    break;
+                case /* string destination_dex */ 11:
+                    message.destinationDex = reader.string();
+                    break;
+                case /* google.protobuf.Int64Value source_dex_index */ 12:
+                    message.sourceDexIndex = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.sourceDexIndex);
+                    break;
+                case /* google.protobuf.Int64Value destination_dex_index */ 13:
+                    message.destinationDexIndex = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.destinationDexIndex);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletMovementEvent, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string movement_type = 1; */
+        if (message.movementType !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.movementType);
+        /* hypercore.WalletEventAsset asset = 2; */
+        if (message.asset)
+            WalletEventAsset.internalBinaryWrite(message.asset, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* int64 amount = 3; */
+        if (message.amount !== 0)
+            writer.tag(3, WireType.Varint).int64(message.amount);
+        /* google.protobuf.DoubleValue usdc_value = 4; */
+        if (message.usdcValue)
+            DoubleValue.internalBinaryWrite(message.usdcValue, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* hypercore.WalletEventAsset fee_asset = 5; */
+        if (message.feeAsset)
+            WalletEventAsset.internalBinaryWrite(message.feeAsset, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value fee = 6; */
+        if (message.fee)
+            Int64Value.internalBinaryWrite(message.fee, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* int64 commission = 7; */
+        if (message.commission !== 0)
+            writer.tag(7, WireType.Varint).int64(message.commission);
+        /* string user = 8; */
+        if (message.user !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.user);
+        /* string destination = 9; */
+        if (message.destination !== "")
+            writer.tag(9, WireType.LengthDelimited).string(message.destination);
+        /* string source_dex = 10; */
+        if (message.sourceDex !== "")
+            writer.tag(10, WireType.LengthDelimited).string(message.sourceDex);
+        /* string destination_dex = 11; */
+        if (message.destinationDex !== "")
+            writer.tag(11, WireType.LengthDelimited).string(message.destinationDex);
+        /* google.protobuf.Int64Value source_dex_index = 12; */
+        if (message.sourceDexIndex)
+            Int64Value.internalBinaryWrite(message.sourceDexIndex, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value destination_dex_index = 13; */
+        if (message.destinationDexIndex)
+            Int64Value.internalBinaryWrite(message.destinationDexIndex, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletMovementEvent
+ */
+export const WalletMovementEvent = new WalletMovementEvent$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class AggregatedWalletPositioningStreamRequest$Type extends MessageType<AggregatedWalletPositioningStreamRequest> {
     constructor() {
@@ -7204,6 +7973,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "OrderBookDepth", options: {}, I: OrderBookDepthRequest, O: OrderBookDepthResponse },
     { name: "WalletBalancesStream", serverStreaming: true, clientStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
     { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },
+    { name: "WalletEventsStream", serverStreaming: true, options: {}, I: WalletEventsStreamRequest, O: WalletEvent },
     { name: "ValidatorDelegators", options: {}, I: ValidatorDelegatorsRequest, O: ValidatorDelegatorsResponse },
     { name: "ReferrerWallet", options: {}, I: ReferrerWalletRequest, O: ReferrerWalletResponse },
     { name: "WalletTags", options: {}, I: WalletTagsRequest, O: WalletTagsResponse },
