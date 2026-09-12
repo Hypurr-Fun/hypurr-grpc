@@ -255,6 +255,87 @@ export interface WalletEventsStreamRequest {
     bloomFilter: Uint8Array;
 }
 /**
+ * @generated from protobuf message hypercore.WalletEventsRequest
+ */
+export interface WalletEventsRequest {
+    /**
+     * At most 100 wallets. Duplicate addresses are invalid.
+     *
+     * @generated from protobuf field: repeated hypercore.WalletEventsQuery wallets = 1
+     */
+    wallets: WalletEventsQuery[];
+    /**
+     * Maximum events per wallet. Zero selects 100. Maximum: 2,000.
+     * Wallet count multiplied by the resolved page size must not exceed 10,000.
+     *
+     * @generated from protobuf field: uint32 page_size = 2
+     */
+    pageSize: number;
+}
+/**
+ * @generated from protobuf message hypercore.WalletEventsQuery
+ */
+export interface WalletEventsQuery {
+    /**
+     * @generated from protobuf field: string wallet_address = 1
+     */
+    walletAddress: string;
+    /**
+     * Inclusive Unix milliseconds. Zero selects the earliest stored event.
+     *
+     * @generated from protobuf field: int64 from_timestamp_ms = 2
+     */
+    fromTimestampMs: number;
+    /**
+     * Exclusive Unix milliseconds. Zero selects server time for each request.
+     *
+     * @generated from protobuf field: int64 to_timestamp_ms = 3
+     */
+    toTimestampMs: number;
+    /**
+     * Continuation for the same wallet and time range.
+     *
+     * @generated from protobuf field: string page_token = 4
+     */
+    pageToken: string;
+}
+/**
+ * @generated from protobuf message hypercore.WalletEventsResponse
+ */
+export interface WalletEventsResponse {
+    /**
+     * Results retain request order. Each wallet has an independent read snapshot.
+     *
+     * @generated from protobuf field: repeated hypercore.WalletEventsResult wallets = 1
+     */
+    wallets: WalletEventsResult[];
+}
+/**
+ * @generated from protobuf message hypercore.WalletEventsResult
+ */
+export interface WalletEventsResult {
+    /**
+     * @generated from protobuf field: string wallet_address = 1
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: bool indexed = 2
+     */
+    indexed: boolean; // A wallet database exists. This does not establish complete history coverage.
+    /**
+     * Newest first, ordered by nanosecond timestamp, source kind, and source identity.
+     *
+     * @generated from protobuf field: repeated hypercore.WalletEvent events = 3
+     */
+    events: WalletEvent[];
+    /**
+     * Continue while this token is present, even if missing asset metadata produced an empty event list.
+     *
+     * @generated from protobuf field: string next_page_token = 4
+     */
+    nextPageToken: string;
+}
+/**
  * @generated from protobuf message hypercore.WalletEvent
  */
 export interface WalletEvent {
@@ -3057,6 +3138,250 @@ class WalletEventsStreamRequest$Type extends MessageType<WalletEventsStreamReque
  * @generated MessageType for protobuf message hypercore.WalletEventsStreamRequest
  */
 export const WalletEventsStreamRequest = new WalletEventsStreamRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletEventsRequest$Type extends MessageType<WalletEventsRequest> {
+    constructor() {
+        super("hypercore.WalletEventsRequest", [
+            { no: 1, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletEventsQuery },
+            { no: 2, name: "page_size", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletEventsRequest>): WalletEventsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.wallets = [];
+        message.pageSize = 0;
+        if (value !== undefined)
+            reflectionMergePartial<WalletEventsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletEventsRequest): WalletEventsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.WalletEventsQuery wallets */ 1:
+                    message.wallets.push(WalletEventsQuery.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* uint32 page_size */ 2:
+                    message.pageSize = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletEventsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.WalletEventsQuery wallets = 1; */
+        for (let i = 0; i < message.wallets.length; i++)
+            WalletEventsQuery.internalBinaryWrite(message.wallets[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* uint32 page_size = 2; */
+        if (message.pageSize !== 0)
+            writer.tag(2, WireType.Varint).uint32(message.pageSize);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletEventsRequest
+ */
+export const WalletEventsRequest = new WalletEventsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletEventsQuery$Type extends MessageType<WalletEventsQuery> {
+    constructor() {
+        super("hypercore.WalletEventsQuery", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "from_timestamp_ms", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "to_timestamp_ms", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletEventsQuery>): WalletEventsQuery {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        message.fromTimestampMs = 0;
+        message.toTimestampMs = 0;
+        message.pageToken = "";
+        if (value !== undefined)
+            reflectionMergePartial<WalletEventsQuery>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletEventsQuery): WalletEventsQuery {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* int64 from_timestamp_ms */ 2:
+                    message.fromTimestampMs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_timestamp_ms */ 3:
+                    message.toTimestampMs = reader.int64().toNumber();
+                    break;
+                case /* string page_token */ 4:
+                    message.pageToken = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletEventsQuery, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* int64 from_timestamp_ms = 2; */
+        if (message.fromTimestampMs !== 0)
+            writer.tag(2, WireType.Varint).int64(message.fromTimestampMs);
+        /* int64 to_timestamp_ms = 3; */
+        if (message.toTimestampMs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.toTimestampMs);
+        /* string page_token = 4; */
+        if (message.pageToken !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.pageToken);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletEventsQuery
+ */
+export const WalletEventsQuery = new WalletEventsQuery$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletEventsResponse$Type extends MessageType<WalletEventsResponse> {
+    constructor() {
+        super("hypercore.WalletEventsResponse", [
+            { no: 1, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletEventsResult }
+        ]);
+    }
+    create(value?: PartialMessage<WalletEventsResponse>): WalletEventsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.wallets = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletEventsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletEventsResponse): WalletEventsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.WalletEventsResult wallets */ 1:
+                    message.wallets.push(WalletEventsResult.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletEventsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.WalletEventsResult wallets = 1; */
+        for (let i = 0; i < message.wallets.length; i++)
+            WalletEventsResult.internalBinaryWrite(message.wallets[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletEventsResponse
+ */
+export const WalletEventsResponse = new WalletEventsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletEventsResult$Type extends MessageType<WalletEventsResult> {
+    constructor() {
+        super("hypercore.WalletEventsResult", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "indexed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 3, name: "events", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletEvent },
+            { no: 4, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletEventsResult>): WalletEventsResult {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        message.indexed = false;
+        message.events = [];
+        message.nextPageToken = "";
+        if (value !== undefined)
+            reflectionMergePartial<WalletEventsResult>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletEventsResult): WalletEventsResult {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* bool indexed */ 2:
+                    message.indexed = reader.bool();
+                    break;
+                case /* repeated hypercore.WalletEvent events */ 3:
+                    message.events.push(WalletEvent.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string next_page_token */ 4:
+                    message.nextPageToken = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletEventsResult, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* bool indexed = 2; */
+        if (message.indexed !== false)
+            writer.tag(2, WireType.Varint).bool(message.indexed);
+        /* repeated hypercore.WalletEvent events = 3; */
+        for (let i = 0; i < message.events.length; i++)
+            WalletEvent.internalBinaryWrite(message.events[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* string next_page_token = 4; */
+        if (message.nextPageToken !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.nextPageToken);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletEventsResult
+ */
+export const WalletEventsResult = new WalletEventsResult$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class WalletEvent$Type extends MessageType<WalletEvent> {
     constructor() {
@@ -7974,6 +8299,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletBalancesStream", serverStreaming: true, clientStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
     { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },
     { name: "WalletEventsStream", serverStreaming: true, options: {}, I: WalletEventsStreamRequest, O: WalletEvent },
+    { name: "WalletEvents", options: {}, I: WalletEventsRequest, O: WalletEventsResponse },
     { name: "ValidatorDelegators", options: {}, I: ValidatorDelegatorsRequest, O: ValidatorDelegatorsResponse },
     { name: "ReferrerWallet", options: {}, I: ReferrerWalletRequest, O: ReferrerWalletResponse },
     { name: "WalletTags", options: {}, I: WalletTagsRequest, O: WalletTagsResponse },
