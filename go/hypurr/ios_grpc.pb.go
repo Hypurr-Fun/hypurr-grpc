@@ -24,8 +24,6 @@ const (
 	IosService_AssetDetail_FullMethodName            = "/hypurr.IosService/AssetDetail"
 	IosService_AssetDetailLiveUpdates_FullMethodName = "/hypurr.IosService/AssetDetailLiveUpdates"
 	IosService_AssetMetadataCatalog_FullMethodName   = "/hypurr.IosService/AssetMetadataCatalog"
-	IosService_Accounts_FullMethodName               = "/hypurr.IosService/Accounts"
-	IosService_Profile_FullMethodName                = "/hypurr.IosService/Profile"
 	IosService_UserStream_FullMethodName             = "/hypurr.IosService/UserStream"
 	IosService_HistoricalPriceCandles_FullMethodName = "/hypurr.IosService/HistoricalPriceCandles"
 )
@@ -39,8 +37,6 @@ type IosServiceClient interface {
 	AssetDetail(ctx context.Context, in *AssetDetailRequest, opts ...grpc.CallOption) (*AssetDetailResponse, error)
 	AssetDetailLiveUpdates(ctx context.Context, in *AssetDetailLiveUpdatesRequest, opts ...grpc.CallOption) (IosService_AssetDetailLiveUpdatesClient, error)
 	AssetMetadataCatalog(ctx context.Context, in *AssetMetadataCatalogRequest, opts ...grpc.CallOption) (*AssetMetadataCatalogResponse, error)
-	Accounts(ctx context.Context, in *AccountsRequest, opts ...grpc.CallOption) (*AccountsResponse, error)
-	Profile(ctx context.Context, in *ProfileRequest, opts ...grpc.CallOption) (*ProfileResponse, error)
 	UserStream(ctx context.Context, in *UserStreamRequest, opts ...grpc.CallOption) (IosService_UserStreamClient, error)
 	HistoricalPriceCandles(ctx context.Context, in *HistoricalPriceCandlesRequest, opts ...grpc.CallOption) (*HistoricalPriceCandlesResponse, error)
 }
@@ -149,26 +145,6 @@ func (c *iosServiceClient) AssetMetadataCatalog(ctx context.Context, in *AssetMe
 	return out, nil
 }
 
-func (c *iosServiceClient) Accounts(ctx context.Context, in *AccountsRequest, opts ...grpc.CallOption) (*AccountsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AccountsResponse)
-	err := c.cc.Invoke(ctx, IosService_Accounts_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *iosServiceClient) Profile(ctx context.Context, in *ProfileRequest, opts ...grpc.CallOption) (*ProfileResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ProfileResponse)
-	err := c.cc.Invoke(ctx, IosService_Profile_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *iosServiceClient) UserStream(ctx context.Context, in *UserStreamRequest, opts ...grpc.CallOption) (IosService_UserStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &IosService_ServiceDesc.Streams[2], IosService_UserStream_FullMethodName, cOpts...)
@@ -221,8 +197,6 @@ type IosServiceServer interface {
 	AssetDetail(context.Context, *AssetDetailRequest) (*AssetDetailResponse, error)
 	AssetDetailLiveUpdates(*AssetDetailLiveUpdatesRequest, IosService_AssetDetailLiveUpdatesServer) error
 	AssetMetadataCatalog(context.Context, *AssetMetadataCatalogRequest) (*AssetMetadataCatalogResponse, error)
-	Accounts(context.Context, *AccountsRequest) (*AccountsResponse, error)
-	Profile(context.Context, *ProfileRequest) (*ProfileResponse, error)
 	UserStream(*UserStreamRequest, IosService_UserStreamServer) error
 	HistoricalPriceCandles(context.Context, *HistoricalPriceCandlesRequest) (*HistoricalPriceCandlesResponse, error)
 	mustEmbedUnimplementedIosServiceServer()
@@ -246,12 +220,6 @@ func (UnimplementedIosServiceServer) AssetDetailLiveUpdates(*AssetDetailLiveUpda
 }
 func (UnimplementedIosServiceServer) AssetMetadataCatalog(context.Context, *AssetMetadataCatalogRequest) (*AssetMetadataCatalogResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AssetMetadataCatalog not implemented")
-}
-func (UnimplementedIosServiceServer) Accounts(context.Context, *AccountsRequest) (*AccountsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Accounts not implemented")
-}
-func (UnimplementedIosServiceServer) Profile(context.Context, *ProfileRequest) (*ProfileResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Profile not implemented")
 }
 func (UnimplementedIosServiceServer) UserStream(*UserStreamRequest, IosService_UserStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method UserStream not implemented")
@@ -368,42 +336,6 @@ func _IosService_AssetMetadataCatalog_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _IosService_Accounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AccountsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(IosServiceServer).Accounts(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: IosService_Accounts_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IosServiceServer).Accounts(ctx, req.(*AccountsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _IosService_Profile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProfileRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(IosServiceServer).Profile(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: IosService_Profile_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IosServiceServer).Profile(ctx, req.(*ProfileRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _IosService_UserStream_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(UserStreamRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -461,14 +393,6 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AssetMetadataCatalog",
 			Handler:    _IosService_AssetMetadataCatalog_Handler,
-		},
-		{
-			MethodName: "Accounts",
-			Handler:    _IosService_Accounts_Handler,
-		},
-		{
-			MethodName: "Profile",
-			Handler:    _IosService_Profile_Handler,
 		},
 		{
 			MethodName: "HistoricalPriceCandles",

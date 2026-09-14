@@ -8,10 +8,6 @@ import type { HistoricalPriceCandlesResponse } from "./ios";
 import type { HistoricalPriceCandlesRequest } from "./ios";
 import type { UserSnapshot } from "./ios";
 import type { UserStreamRequest } from "./ios";
-import type { ProfileResponse } from "./ios";
-import type { ProfileRequest } from "./ios";
-import type { AccountsResponse } from "./ios";
-import type { AccountsRequest } from "./ios";
 import type { AssetMetadataCatalogResponse } from "./ios";
 import type { AssetMetadataCatalogRequest } from "./ios";
 import type { AssetDetailLiveUpdate } from "./ios";
@@ -50,14 +46,6 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: AssetMetadataCatalog
      */
     assetMetadataCatalog(input: AssetMetadataCatalogRequest, options?: RpcOptions): UnaryCall<AssetMetadataCatalogRequest, AssetMetadataCatalogResponse>;
-    /**
-     * @generated from protobuf rpc: Accounts
-     */
-    accounts(input: AccountsRequest, options?: RpcOptions): UnaryCall<AccountsRequest, AccountsResponse>;
-    /**
-     * @generated from protobuf rpc: Profile
-     */
-    profile(input: ProfileRequest, options?: RpcOptions): UnaryCall<ProfileRequest, ProfileResponse>;
     /**
      * @generated from protobuf rpc: UserStream
      */
@@ -112,31 +100,17 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
         return stackIntercept<AssetMetadataCatalogRequest, AssetMetadataCatalogResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: Accounts
-     */
-    accounts(input: AccountsRequest, options?: RpcOptions): UnaryCall<AccountsRequest, AccountsResponse> {
-        const method = this.methods[5], opt = this._transport.mergeOptions(options);
-        return stackIntercept<AccountsRequest, AccountsResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: Profile
-     */
-    profile(input: ProfileRequest, options?: RpcOptions): UnaryCall<ProfileRequest, ProfileResponse> {
-        const method = this.methods[6], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ProfileRequest, ProfileResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
      * @generated from protobuf rpc: UserStream
      */
     userStream(input: UserStreamRequest, options?: RpcOptions): ServerStreamingCall<UserStreamRequest, UserSnapshot> {
-        const method = this.methods[7], opt = this._transport.mergeOptions(options);
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
         return stackIntercept<UserStreamRequest, UserSnapshot>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HistoricalPriceCandles
      */
     historicalPriceCandles(input: HistoricalPriceCandlesRequest, options?: RpcOptions): UnaryCall<HistoricalPriceCandlesRequest, HistoricalPriceCandlesResponse> {
-        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
         return stackIntercept<HistoricalPriceCandlesRequest, HistoricalPriceCandlesResponse>("unary", this._transport, method, opt, input);
     }
 }
