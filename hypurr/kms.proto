@@ -14,6 +14,12 @@ service Kms {
   // nature; on success the bot links the KMS account to an Hfun user using
   // the verified response, never client input.
   rpc LoginOrRegister(KmsLoginOrRegisterRequest) returns (KmsLoginOrRegisterResponse);
+  // Pre-check before sealing a login: which intent to use for this provider
+  // identity, and whether it is an existing Telegram bot account (so the app
+  // can say the bot wallets will be imported). Authenticated by the provider
+  // id_token itself — the bot verifies it — so it only ever answers about
+  // the caller's own identity, never acts as an account-existence oracle.
+  rpc LoginIntent(KmsLoginIntentRequest) returns (KmsLoginIntentResponse);
 
   // Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
   // metadata); the bot derives the account id from the VERIFIED claims —
@@ -44,6 +50,24 @@ message KmsGetAttestationRequest {}
 
 message KmsGetAttestationResponse {
   bytes attestation = 1;
+}
+
+enum KmsLoginIntentKind {
+  KMS_LOGIN_INTENT_KIND_UNSPECIFIED = 0;
+  KMS_LOGIN_INTENT_KIND_LOGIN = 1;
+  KMS_LOGIN_INTENT_KIND_REGISTER = 2;
+  // Register, and the identity is an existing Telegram bot account whose
+  // custodial wallets will be imported during onboarding.
+  KMS_LOGIN_INTENT_KIND_REGISTER_IMPORTING_BOT_WALLETS = 3;
+}
+
+message KmsLoginIntentRequest {
+  string provider = 1; // telegram | google | apple
+  string id_token = 2; // the provider id_token the app is about to log in with
+}
+
+message KmsLoginIntentResponse {
+  KmsLoginIntentKind intent = 1;
 }
 
 message KmsLoginOrRegisterRequest {
