@@ -19,18 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Kms_GetAttestation_FullMethodName           = "/hypurr.Kms/GetAttestation"
-	Kms_LoginOrRegister_FullMethodName          = "/hypurr.Kms/LoginOrRegister"
-	Kms_LoginIntent_FullMethodName              = "/hypurr.Kms/LoginIntent"
-	Kms_AddProvider_FullMethodName              = "/hypurr.Kms/AddProvider"
-	Kms_AccountEnable2FA_FullMethodName         = "/hypurr.Kms/AccountEnable2FA"
-	Kms_AccountDisable2FA_FullMethodName        = "/hypurr.Kms/AccountDisable2FA"
-	Kms_AccountShardSecret_FullMethodName       = "/hypurr.Kms/AccountShardSecret"
-	Kms_RequestFactorReset_FullMethodName       = "/hypurr.Kms/RequestFactorReset"
-	Kms_CancelFactorReset_FullMethodName        = "/hypurr.Kms/CancelFactorReset"
-	Kms_ExecuteFactorReset_FullMethodName       = "/hypurr.Kms/ExecuteFactorReset"
-	Kms_RecoverKeys_FullMethodName              = "/hypurr.Kms/RecoverKeys"
-	Kms_CompleteMigrationRelease_FullMethodName = "/hypurr.Kms/CompleteMigrationRelease"
+	Kms_GetAttestation_FullMethodName         = "/hypurr.Kms/GetAttestation"
+	Kms_LoginOrRegister_FullMethodName        = "/hypurr.Kms/LoginOrRegister"
+	Kms_LoginIntent_FullMethodName            = "/hypurr.Kms/LoginIntent"
+	Kms_AddProvider_FullMethodName            = "/hypurr.Kms/AddProvider"
+	Kms_AccountEnable2FA_FullMethodName       = "/hypurr.Kms/AccountEnable2FA"
+	Kms_AccountDisable2FA_FullMethodName      = "/hypurr.Kms/AccountDisable2FA"
+	Kms_AccountShardSecret_FullMethodName     = "/hypurr.Kms/AccountShardSecret"
+	Kms_RequestFactorReset_FullMethodName     = "/hypurr.Kms/RequestFactorReset"
+	Kms_CancelFactorReset_FullMethodName      = "/hypurr.Kms/CancelFactorReset"
+	Kms_ExecuteFactorReset_FullMethodName     = "/hypurr.Kms/ExecuteFactorReset"
+	Kms_RecoverKeys_FullMethodName            = "/hypurr.Kms/RecoverKeys"
+	Kms_CompleteAccountHandoff_FullMethodName = "/hypurr.Kms/CompleteAccountHandoff"
 )
 
 // KmsClient is the client API for Kms service.
@@ -50,10 +50,9 @@ type KmsClient interface {
 	// the verified response, never client input.
 	LoginOrRegister(ctx context.Context, in *KmsLoginOrRegisterRequest, opts ...grpc.CallOption) (*KmsLoginOrRegisterResponse, error)
 	// Pre-check before sealing a login: which intent to use for this provider
-	// identity, and whether it is an existing Telegram bot account (so the app
-	// can say the bot wallets will be imported). Authenticated by the provider
-	// id_token itself — the bot verifies it — so it only ever answers about
-	// the caller's own identity, never acts as an account-existence oracle.
+	// identity. Authenticated by the provider id_token itself — the bot
+	// verifies it — so it only ever answers about the caller's own identity,
+	// never acts as an account-existence oracle.
 	LoginIntent(ctx context.Context, in *KmsLoginIntentRequest, opts ...grpc.CallOption) (*KmsLoginIntentResponse, error)
 	// Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
 	// metadata); the bot derives the account id from the VERIFIED claims —
@@ -69,13 +68,13 @@ type KmsClient interface {
 	CancelFactorReset(ctx context.Context, in *KmsCancelFactorResetRequest, opts ...grpc.CallOption) (*KmsCancelFactorResetResponse, error)
 	ExecuteFactorReset(ctx context.Context, in *KmsExecuteFactorResetRequest, opts ...grpc.CallOption) (*KmsExecuteFactorResetResponse, error)
 	RecoverKeys(ctx context.Context, in *KmsRecoverKeysRequest, opts ...grpc.CallOption) (*KmsRecoverKeysResponse, error)
-	// Custodial -> KMS migration, 2FA cohort only: when the login response set
-	// migration.requires_2fa, the app re-sends THAT login attestation plus the
-	// legacy bot TOTP to receive the sealed wallet keys. Stateless: the bot
+	// Custodial -> KMS migration, users with bot-side TOTP only: when the login
+	// response set handoff.requires_2fa, the app re-sends THAT login
+	// attestation plus the TOTP code to receive the handoff. Stateless: the bot
 	// re-verifies the attestation and seals to the device key attested inside
-	// it, so a replayed attestation yields keys only the victim's device can
+	// it, so a replayed attestation yields data only the victim's device can
 	// open.
-	CompleteMigrationRelease(ctx context.Context, in *KmsCompleteMigrationReleaseRequest, opts ...grpc.CallOption) (*KmsCompleteMigrationReleaseResponse, error)
+	CompleteAccountHandoff(ctx context.Context, in *KmsCompleteAccountHandoffRequest, opts ...grpc.CallOption) (*KmsCompleteAccountHandoffResponse, error)
 }
 
 type kmsClient struct {
@@ -196,10 +195,10 @@ func (c *kmsClient) RecoverKeys(ctx context.Context, in *KmsRecoverKeysRequest, 
 	return out, nil
 }
 
-func (c *kmsClient) CompleteMigrationRelease(ctx context.Context, in *KmsCompleteMigrationReleaseRequest, opts ...grpc.CallOption) (*KmsCompleteMigrationReleaseResponse, error) {
+func (c *kmsClient) CompleteAccountHandoff(ctx context.Context, in *KmsCompleteAccountHandoffRequest, opts ...grpc.CallOption) (*KmsCompleteAccountHandoffResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(KmsCompleteMigrationReleaseResponse)
-	err := c.cc.Invoke(ctx, Kms_CompleteMigrationRelease_FullMethodName, in, out, cOpts...)
+	out := new(KmsCompleteAccountHandoffResponse)
+	err := c.cc.Invoke(ctx, Kms_CompleteAccountHandoff_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -223,10 +222,9 @@ type KmsServer interface {
 	// the verified response, never client input.
 	LoginOrRegister(context.Context, *KmsLoginOrRegisterRequest) (*KmsLoginOrRegisterResponse, error)
 	// Pre-check before sealing a login: which intent to use for this provider
-	// identity, and whether it is an existing Telegram bot account (so the app
-	// can say the bot wallets will be imported). Authenticated by the provider
-	// id_token itself — the bot verifies it — so it only ever answers about
-	// the caller's own identity, never acts as an account-existence oracle.
+	// identity. Authenticated by the provider id_token itself — the bot
+	// verifies it — so it only ever answers about the caller's own identity,
+	// never acts as an account-existence oracle.
 	LoginIntent(context.Context, *KmsLoginIntentRequest) (*KmsLoginIntentResponse, error)
 	// Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
 	// metadata); the bot derives the account id from the VERIFIED claims —
@@ -242,13 +240,13 @@ type KmsServer interface {
 	CancelFactorReset(context.Context, *KmsCancelFactorResetRequest) (*KmsCancelFactorResetResponse, error)
 	ExecuteFactorReset(context.Context, *KmsExecuteFactorResetRequest) (*KmsExecuteFactorResetResponse, error)
 	RecoverKeys(context.Context, *KmsRecoverKeysRequest) (*KmsRecoverKeysResponse, error)
-	// Custodial -> KMS migration, 2FA cohort only: when the login response set
-	// migration.requires_2fa, the app re-sends THAT login attestation plus the
-	// legacy bot TOTP to receive the sealed wallet keys. Stateless: the bot
+	// Custodial -> KMS migration, users with bot-side TOTP only: when the login
+	// response set handoff.requires_2fa, the app re-sends THAT login
+	// attestation plus the TOTP code to receive the handoff. Stateless: the bot
 	// re-verifies the attestation and seals to the device key attested inside
-	// it, so a replayed attestation yields keys only the victim's device can
+	// it, so a replayed attestation yields data only the victim's device can
 	// open.
-	CompleteMigrationRelease(context.Context, *KmsCompleteMigrationReleaseRequest) (*KmsCompleteMigrationReleaseResponse, error)
+	CompleteAccountHandoff(context.Context, *KmsCompleteAccountHandoffRequest) (*KmsCompleteAccountHandoffResponse, error)
 	mustEmbedUnimplementedKmsServer()
 }
 
@@ -289,8 +287,8 @@ func (UnimplementedKmsServer) ExecuteFactorReset(context.Context, *KmsExecuteFac
 func (UnimplementedKmsServer) RecoverKeys(context.Context, *KmsRecoverKeysRequest) (*KmsRecoverKeysResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RecoverKeys not implemented")
 }
-func (UnimplementedKmsServer) CompleteMigrationRelease(context.Context, *KmsCompleteMigrationReleaseRequest) (*KmsCompleteMigrationReleaseResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CompleteMigrationRelease not implemented")
+func (UnimplementedKmsServer) CompleteAccountHandoff(context.Context, *KmsCompleteAccountHandoffRequest) (*KmsCompleteAccountHandoffResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompleteAccountHandoff not implemented")
 }
 func (UnimplementedKmsServer) mustEmbedUnimplementedKmsServer() {}
 
@@ -503,20 +501,20 @@ func _Kms_RecoverKeys_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Kms_CompleteMigrationRelease_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(KmsCompleteMigrationReleaseRequest)
+func _Kms_CompleteAccountHandoff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KmsCompleteAccountHandoffRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(KmsServer).CompleteMigrationRelease(ctx, in)
+		return srv.(KmsServer).CompleteAccountHandoff(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Kms_CompleteMigrationRelease_FullMethodName,
+		FullMethod: Kms_CompleteAccountHandoff_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KmsServer).CompleteMigrationRelease(ctx, req.(*KmsCompleteMigrationReleaseRequest))
+		return srv.(KmsServer).CompleteAccountHandoff(ctx, req.(*KmsCompleteAccountHandoffRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -573,8 +571,8 @@ var Kms_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Kms_RecoverKeys_Handler,
 		},
 		{
-			MethodName: "CompleteMigrationRelease",
-			Handler:    _Kms_CompleteMigrationRelease_Handler,
+			MethodName: "CompleteAccountHandoff",
+			Handler:    _Kms_CompleteAccountHandoff_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
