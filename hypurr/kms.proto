@@ -43,6 +43,15 @@ service Kms {
   // it, so a replayed attestation yields data only the victim's device can
   // open.
   rpc CompleteAccountHandoff(KmsCompleteAccountHandoffRequest) returns (KmsCompleteAccountHandoffResponse);
+
+  // Hyperliquid agent for a KMS wallet, same three steps as the telegram EOA
+  // flow. Authenticated with the bot JWT. The bot generates the agent key,
+  // the wallet key signs approveAgent (in the enclave via AccountSignMessage
+  // on web, on the device on iOS), the bot submits it and trades with the
+  // agent key.
+  rpc HyperliquidAgentSignatureCreate(KmsHyperliquidAgentSignatureCreateRequest) returns (KmsHyperliquidAgentSignatureCreateResponse);
+  rpc HyperliquidAgentWalletCreate(KmsHyperliquidAgentWalletCreateRequest) returns (KmsHyperliquidAgentWalletCreateResponse);
+  rpc HyperliquidAgentWalletRenew(KmsHyperliquidAgentWalletRenewRequest) returns (KmsHyperliquidAgentWalletRenewResponse);
 }
 
 message KmsGetAttestationRequest {}
@@ -194,3 +203,46 @@ message KmsRecoverKeysRequest {
 message KmsRecoverKeysResponse {
   bytes attestation = 1;
 }
+
+message KmsHyperliquidAgentSignatureCreateRequest {
+  // The KMS wallet that will approve the agent.
+  string wallet_address = 1;
+}
+
+message KmsHyperliquidAgentSignatureCreateResponse {
+  string agent_address = 1;
+  // "<name> <wallet> <expires_at>", the expiry is parsed from it.
+  string agent_name = 2;
+  int64 nonce = 3;
+  int64 signature_chain_id = 4;
+}
+
+message KmsEIP712Signature {
+  string agent_address = 1;
+  string agent_name = 2;
+  int64 nonce = 3;
+  // 65 bytes r||s||v, hex.
+  string signature = 4;
+  int64 chain_id = 5;
+}
+
+message KmsHyperliquidAgentWalletCreateRequest {
+  string name = 1;
+  oneof proof {
+    // Web: the AccountSignMessage attestation carrying the approveAgent
+    // action and its signature.
+    bytes attestation = 2;
+    KmsEIP712Signature signature = 3;
+  }
+}
+
+message KmsHyperliquidAgentWalletCreateResponse {}
+
+message KmsHyperliquidAgentWalletRenewRequest {
+  oneof proof {
+    bytes attestation = 1;
+    KmsEIP712Signature signature = 2;
+  }
+}
+
+message KmsHyperliquidAgentWalletRenewResponse {}
