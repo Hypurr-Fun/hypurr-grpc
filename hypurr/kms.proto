@@ -15,10 +15,9 @@ service Kms {
   // the verified response, never client input.
   rpc LoginOrRegister(KmsLoginOrRegisterRequest) returns (KmsLoginOrRegisterResponse);
   // Pre-check before sealing a login: which intent to use for this provider
-  // identity, and whether it is an existing Telegram bot account (so the app
-  // can say the bot wallets will be imported). Authenticated by the provider
-  // id_token itself — the bot verifies it — so it only ever answers about
-  // the caller's own identity, never acts as an account-existence oracle.
+  // identity. Authenticated by the provider id_token itself — the bot
+  // verifies it — so it only ever answers about the caller's own identity,
+  // never acts as an account-existence oracle.
   rpc LoginIntent(KmsLoginIntentRequest) returns (KmsLoginIntentResponse);
 
   // Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
@@ -28,6 +27,10 @@ service Kms {
   rpc AccountEnable2FA(KmsAccountEnable2FARequest) returns (KmsAccountEnable2FAResponse);
   rpc AccountDisable2FA(KmsAccountDisable2FARequest) returns (KmsAccountDisable2FAResponse);
   rpc AccountShardSecret(KmsAccountShardSecretRequest) returns (KmsAccountShardSecretResponse);
+  // AccountSignMessage has the enclave sign one Hypercore action with the
+  // wallet key. The response attestation carries the signature and the
+  // canonical action that was signed.
+  rpc AccountSignMessage(KmsAccountSignMessageRequest) returns (KmsAccountSignMessageResponse);
 
   // Locked-out flows: no bot JWT exists; routed by the plaintext
   // subject_hash like LoginOrRegister. Auth lives inside the sealed payload
@@ -37,13 +40,22 @@ service Kms {
   rpc ExecuteFactorReset(KmsExecuteFactorResetRequest) returns (KmsExecuteFactorResetResponse);
   rpc RecoverKeys(KmsRecoverKeysRequest) returns (KmsRecoverKeysResponse);
 
-  // Custodial -> KMS migration, 2FA cohort only: when the login response set
-  // migration.requires_2fa, the app re-sends THAT login attestation plus the
-  // legacy bot TOTP to receive the sealed wallet keys. Stateless: the bot
+  // Custodial -> KMS migration, users with bot-side TOTP only: when the login
+  // response set handoff.requires_2fa, the app re-sends THAT login
+  // attestation plus the TOTP code to receive the handoff. Stateless: the bot
   // re-verifies the attestation and seals to the device key attested inside
-  // it, so a replayed attestation yields keys only the victim's device can
+  // it, so a replayed attestation yields data only the victim's device can
   // open.
-  rpc CompleteMigrationRelease(KmsCompleteMigrationReleaseRequest) returns (KmsCompleteMigrationReleaseResponse);
+  rpc CompleteAccountHandoff(KmsCompleteAccountHandoffRequest) returns (KmsCompleteAccountHandoffResponse);
+
+  // Hyperliquid agent for a KMS wallet, same three steps as the telegram EOA
+  // flow. Authenticated with the bot JWT. The bot generates the agent key,
+  // the wallet key signs approveAgent (in the enclave via AccountSignMessage
+  // on web, on the device on iOS), the bot submits it and trades with the
+  // agent key.
+  rpc HyperliquidAgentSignatureCreate(KmsHyperliquidAgentSignatureCreateRequest) returns (KmsHyperliquidAgentSignatureCreateResponse);
+  rpc HyperliquidAgentWalletCreate(KmsHyperliquidAgentWalletCreateRequest) returns (KmsHyperliquidAgentWalletCreateResponse);
+  rpc HyperliquidAgentWalletRenew(KmsHyperliquidAgentWalletRenewRequest) returns (KmsHyperliquidAgentWalletRenewResponse);
 }
 
 message KmsGetAttestationRequest {}
@@ -56,9 +68,6 @@ enum KmsLoginIntentKind {
   KMS_LOGIN_INTENT_KIND_UNSPECIFIED = 0;
   KMS_LOGIN_INTENT_KIND_LOGIN = 1;
   KMS_LOGIN_INTENT_KIND_REGISTER = 2;
-  // Register, and the identity is an existing Telegram bot account whose
-  // custodial wallets will be imported during onboarding.
-  KMS_LOGIN_INTENT_KIND_REGISTER_IMPORTING_BOT_WALLETS = 3;
 }
 
 message KmsLoginIntentRequest {
@@ -77,35 +86,34 @@ message KmsLoginOrRegisterRequest {
 
 message KmsLoginOrRegisterResponse {
   bytes attestation = 1;
-  // Set when a legacy custodial bot account was detected for this telegram
-  // identity (custodial -> KMS migration). Absent otherwise.
-  KmsMigrationRelease migration = 2;
+  // Set on the first logins of a legacy bot user whose KMS account the bot
+  // created for them (custodial -> KMS migration). Absent otherwise.
+  KmsAccountHandoff handoff = 2;
 }
 
-// One legacy wallet key, CMS-sealed to the enclave-attested device key of
-// THIS login. The app unseals and escrows it via AccountShardSecret.
-message KmsSealedWalletKey {
-  string address = 1;
-  bytes sealed_secret = 2;
+// The bot-held half of a migrated account: the user shard and recovery codes
+// the enclave issued when the bot registered the account, each sealed to the
+// enclave-attested device key of THIS login. The app stores them like the
+// ones a normal registration returns. Re-delivered on every login for 7 days
+// after the first delivery, then purged from the bot.
+message KmsAccountHandoff {
+  // Present unless requires_2fa is set.
+  bytes user_shard_sealed = 1;
+  bytes recovery_codes_sealed = 2;
+  // The account's factor is the bot TOTP: call CompleteAccountHandoff with
+  // the login attestation + code to get the shard and codes.
+  bool requires_2fa = 3;
 }
 
-message KmsMigrationRelease {
-  // Sealed keys, present unless requires_2fa is set.
-  repeated KmsSealedWalletKey wallets = 1;
-  // The legacy account has bot-side 2FA: call CompleteMigrationRelease with
-  // the login attestation + TOTP to get the wallets.
-  bool requires_2fa = 2;
-}
-
-message KmsCompleteMigrationReleaseRequest {
+message KmsCompleteAccountHandoffRequest {
   // The attestation from the KmsLoginOrRegisterResponse that reported
   // requires_2fa. Must still be within the verifier freshness window.
   bytes attestation = 1;
   string two_fa_code = 2;
 }
 
-message KmsCompleteMigrationReleaseResponse {
-  repeated KmsSealedWalletKey wallets = 1;
+message KmsCompleteAccountHandoffResponse {
+  KmsAccountHandoff handoff = 1;
 }
 
 message KmsAddProviderRequest {
@@ -123,11 +131,6 @@ message KmsAddProviderRequest {
 
 message KmsAddProviderResponse {
   bytes attestation = 1;
-  // Set when the added provider is a telegram identity owned by a legacy
-  // custodial bot account (custodial -> KMS migration); same shape as on
-  // login. Keys are only included when the enclave attested the session's
-  // device key (session-token owner auth).
-  KmsMigrationRelease migration = 2;
 }
 
 message KmsAccountEnable2FARequest {
@@ -204,3 +207,57 @@ message KmsRecoverKeysRequest {
 message KmsRecoverKeysResponse {
   bytes attestation = 1;
 }
+
+message KmsAccountSignMessageRequest {
+  bytes encrypted_payload = 1;
+  string instance_jwt = 2;
+  // Proof of possession over encrypted_payload with the device key.
+  bytes signature = 3;
+  string key_id = 4;
+}
+
+message KmsAccountSignMessageResponse {
+  bytes attestation = 1;
+}
+
+message KmsHyperliquidAgentSignatureCreateRequest {
+  // The KMS wallet that will approve the agent.
+  string wallet_address = 1;
+}
+
+message KmsHyperliquidAgentSignatureCreateResponse {
+  string agent_address = 1;
+  // "<name> <wallet> <expires_at>", the expiry is parsed from it.
+  string agent_name = 2;
+  int64 nonce = 3;
+  int64 signature_chain_id = 4;
+}
+
+message KmsEIP712Signature {
+  string agent_address = 1;
+  string agent_name = 2;
+  int64 nonce = 3;
+  // 65 bytes r||s||v, hex.
+  string signature = 4;
+  int64 chain_id = 5;
+}
+
+message KmsHyperliquidAgentWalletCreateRequest {
+  oneof proof {
+    // Web: the AccountSignMessage attestation carrying the approveAgent
+    // action and its signature.
+    bytes attestation = 1;
+    KmsEIP712Signature signature = 2;
+  }
+}
+
+message KmsHyperliquidAgentWalletCreateResponse {}
+
+message KmsHyperliquidAgentWalletRenewRequest {
+  oneof proof {
+    bytes attestation = 1;
+    KmsEIP712Signature signature = 2;
+  }
+}
+
+message KmsHyperliquidAgentWalletRenewResponse {}
