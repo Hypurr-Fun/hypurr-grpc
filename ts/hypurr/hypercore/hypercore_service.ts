@@ -388,12 +388,6 @@ export interface WalletEventAsset {
      * @generated from protobuf field: int64 id = 2
      */
     id: number; // Indexer asset or instrument ID in the namespace selected by kind.
-    /**
-     * Divide the associated integer amount by 10^decimals. The same asset can use different scales in different fields.
-     *
-     * @generated from protobuf field: uint32 decimals = 3
-     */
-    decimals: number;
 }
 /**
  * @generated from protobuf enum hypercore.WalletEventAsset.Kind
@@ -437,45 +431,51 @@ export interface WalletFillEvent {
      */
     toAsset?: WalletEventAsset;
     /**
-     * @generated from protobuf field: int64 from_size = 5
+     * @generated from protobuf field: double from_size = 5
      */
-    fromSize: number;
+    fromSize: number; // Amount in from_asset units.
     /**
-     * @generated from protobuf field: int64 to_size = 6
+     * @generated from protobuf field: double to_size = 6
      */
-    toSize: number; // Spot and outcome sizes already subtract the fee.
+    toSize: number; // Amount in to_asset units. Spot and outcome sizes already subtract the fee.
     /**
      * @generated from protobuf field: hypercore.WalletEventAsset fee_asset = 7
      */
     feeAsset?: WalletEventAsset;
     /**
-     * @generated from protobuf field: int64 fee = 8
+     * @generated from protobuf field: double fee = 8
      */
-    fee: number; // Signed stored fee in fee_asset units. Negative values are rebates.
+    fee: number; // Signed fee in fee_asset units. Negative values are rebates.
     /**
-     * @generated from protobuf field: int64 start_pos = 10
+     * @generated from protobuf field: double start_pos = 9
      */
     startPos: number; // Base position units: to_asset for buys, from_asset for sells.
     /**
+     * Base position after this fill, calculated with integers before scaling. Zero means no remaining position.
+     *
+     * @generated from protobuf field: double end_pos = 10
+     */
+    endPos: number;
+    /**
      * closed_pnl, cum_pnl, and cum_fees use from_asset units for buys and to_asset units for sells.
      *
-     * @generated from protobuf field: google.protobuf.Int64Value closed_pnl = 11
+     * @generated from protobuf field: google.protobuf.DoubleValue closed_pnl = 11
      */
-    closedPnl?: Int64Value; // Gross realized PnL, excluding fees and funding.
+    closedPnl?: DoubleValue; // Gross realized PnL, excluding fees and funding.
     /**
      * Stored totals through this fill. Full closes and flips retain the completed position's final totals.
      * The next fill starts a new total when position continuity and source order establish the boundary.
      * Each absent total has unknown coverage. The consumer keeps spot activity totals null.
      *
-     * @generated from protobuf field: google.protobuf.Int64Value cum_pnl = 12
+     * @generated from protobuf field: google.protobuf.DoubleValue cum_pnl = 12
      */
-    cumPnl?: Int64Value;
+    cumPnl?: DoubleValue;
     /**
      * Signed quote fees, including the full flip fee under the existing indexer policy.
      *
-     * @generated from protobuf field: google.protobuf.Int64Value cum_fees = 13
+     * @generated from protobuf field: google.protobuf.DoubleValue cum_fees = 13
      */
-    cumFees?: Int64Value;
+    cumFees?: DoubleValue;
     /**
      * @generated from protobuf field: int64 order_id = 14
      */
@@ -531,9 +531,9 @@ export interface WalletMovementEvent {
      */
     asset?: WalletEventAsset;
     /**
-     * @generated from protobuf field: int64 amount = 3
+     * @generated from protobuf field: double amount = 3
      */
-    amount: number;
+    amount: number; // Amount in asset units.
     /**
      * @generated from protobuf field: google.protobuf.DoubleValue usdc_value = 4
      */
@@ -543,11 +543,11 @@ export interface WalletMovementEvent {
      */
     feeAsset?: WalletEventAsset; // Absent when the fee denomination is unknown.
     /**
-     * @generated from protobuf field: google.protobuf.Int64Value fee = 6
+     * @generated from protobuf field: google.protobuf.DoubleValue fee = 6
      */
-    fee?: Int64Value; // Signed fee in fee_asset units. Absent when the fee is unknown.
+    fee?: DoubleValue; // Signed fee in fee_asset units. Absent when the fee is unknown.
     /**
-     * @generated from protobuf field: int64 commission = 7
+     * @generated from protobuf field: double commission = 7
      */
     commission: number; // Vault withdrawal commission in asset units. Zero for other movement types.
     /**
@@ -3479,15 +3479,13 @@ class WalletEventAsset$Type extends MessageType<WalletEventAsset> {
     constructor() {
         super("hypercore.WalletEventAsset", [
             { no: 1, name: "kind", kind: "enum", T: () => ["hypercore.WalletEventAsset.Kind", WalletEventAsset_Kind, "KIND_"] },
-            { no: 2, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 3, name: "decimals", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+            { no: 2, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<WalletEventAsset>): WalletEventAsset {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.kind = 0;
         message.id = 0;
-        message.decimals = 0;
         if (value !== undefined)
             reflectionMergePartial<WalletEventAsset>(this, message, value);
         return message;
@@ -3502,9 +3500,6 @@ class WalletEventAsset$Type extends MessageType<WalletEventAsset> {
                     break;
                 case /* int64 id */ 2:
                     message.id = reader.int64().toNumber();
-                    break;
-                case /* uint32 decimals */ 3:
-                    message.decimals = reader.uint32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3524,9 +3519,6 @@ class WalletEventAsset$Type extends MessageType<WalletEventAsset> {
         /* int64 id = 2; */
         if (message.id !== 0)
             writer.tag(2, WireType.Varint).int64(message.id);
-        /* uint32 decimals = 3; */
-        if (message.decimals !== 0)
-            writer.tag(3, WireType.Varint).uint32(message.decimals);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3545,14 +3537,15 @@ class WalletFillEvent$Type extends MessageType<WalletFillEvent> {
             { no: 2, name: "instrument_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "from_asset", kind: "message", T: () => WalletEventAsset },
             { no: 4, name: "to_asset", kind: "message", T: () => WalletEventAsset },
-            { no: 5, name: "from_size", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 6, name: "to_size", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "from_size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "to_size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 7, name: "fee_asset", kind: "message", T: () => WalletEventAsset },
-            { no: 8, name: "fee", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 10, name: "start_pos", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 11, name: "closed_pnl", kind: "message", T: () => Int64Value },
-            { no: 12, name: "cum_pnl", kind: "message", T: () => Int64Value },
-            { no: 13, name: "cum_fees", kind: "message", T: () => Int64Value },
+            { no: 8, name: "fee", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "start_pos", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "end_pos", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "closed_pnl", kind: "message", T: () => DoubleValue },
+            { no: 12, name: "cum_pnl", kind: "message", T: () => DoubleValue },
+            { no: 13, name: "cum_fees", kind: "message", T: () => DoubleValue },
             { no: 14, name: "order_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 15, name: "twap_id", kind: "message", T: () => Int64Value },
             { no: 16, name: "execution_index", kind: "message", T: () => Int64Value },
@@ -3568,6 +3561,7 @@ class WalletFillEvent$Type extends MessageType<WalletFillEvent> {
         message.toSize = 0;
         message.fee = 0;
         message.startPos = 0;
+        message.endPos = 0;
         message.orderId = 0;
         message.isBuy = false;
         message.action = "";
@@ -3592,29 +3586,32 @@ class WalletFillEvent$Type extends MessageType<WalletFillEvent> {
                 case /* hypercore.WalletEventAsset to_asset */ 4:
                     message.toAsset = WalletEventAsset.internalBinaryRead(reader, reader.uint32(), options, message.toAsset);
                     break;
-                case /* int64 from_size */ 5:
-                    message.fromSize = reader.int64().toNumber();
+                case /* double from_size */ 5:
+                    message.fromSize = reader.double();
                     break;
-                case /* int64 to_size */ 6:
-                    message.toSize = reader.int64().toNumber();
+                case /* double to_size */ 6:
+                    message.toSize = reader.double();
                     break;
                 case /* hypercore.WalletEventAsset fee_asset */ 7:
                     message.feeAsset = WalletEventAsset.internalBinaryRead(reader, reader.uint32(), options, message.feeAsset);
                     break;
-                case /* int64 fee */ 8:
-                    message.fee = reader.int64().toNumber();
+                case /* double fee */ 8:
+                    message.fee = reader.double();
                     break;
-                case /* int64 start_pos */ 10:
-                    message.startPos = reader.int64().toNumber();
+                case /* double start_pos */ 9:
+                    message.startPos = reader.double();
                     break;
-                case /* google.protobuf.Int64Value closed_pnl */ 11:
-                    message.closedPnl = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.closedPnl);
+                case /* double end_pos */ 10:
+                    message.endPos = reader.double();
                     break;
-                case /* google.protobuf.Int64Value cum_pnl */ 12:
-                    message.cumPnl = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.cumPnl);
+                case /* google.protobuf.DoubleValue closed_pnl */ 11:
+                    message.closedPnl = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.closedPnl);
                     break;
-                case /* google.protobuf.Int64Value cum_fees */ 13:
-                    message.cumFees = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.cumFees);
+                case /* google.protobuf.DoubleValue cum_pnl */ 12:
+                    message.cumPnl = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.cumPnl);
+                    break;
+                case /* google.protobuf.DoubleValue cum_fees */ 13:
+                    message.cumFees = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.cumFees);
                     break;
                 case /* int64 order_id */ 14:
                     message.orderId = reader.int64().toNumber();
@@ -3655,30 +3652,33 @@ class WalletFillEvent$Type extends MessageType<WalletFillEvent> {
         /* hypercore.WalletEventAsset to_asset = 4; */
         if (message.toAsset)
             WalletEventAsset.internalBinaryWrite(message.toAsset, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* int64 from_size = 5; */
+        /* double from_size = 5; */
         if (message.fromSize !== 0)
-            writer.tag(5, WireType.Varint).int64(message.fromSize);
-        /* int64 to_size = 6; */
+            writer.tag(5, WireType.Bit64).double(message.fromSize);
+        /* double to_size = 6; */
         if (message.toSize !== 0)
-            writer.tag(6, WireType.Varint).int64(message.toSize);
+            writer.tag(6, WireType.Bit64).double(message.toSize);
         /* hypercore.WalletEventAsset fee_asset = 7; */
         if (message.feeAsset)
             WalletEventAsset.internalBinaryWrite(message.feeAsset, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-        /* int64 fee = 8; */
+        /* double fee = 8; */
         if (message.fee !== 0)
-            writer.tag(8, WireType.Varint).int64(message.fee);
-        /* int64 start_pos = 10; */
+            writer.tag(8, WireType.Bit64).double(message.fee);
+        /* double start_pos = 9; */
         if (message.startPos !== 0)
-            writer.tag(10, WireType.Varint).int64(message.startPos);
-        /* google.protobuf.Int64Value closed_pnl = 11; */
+            writer.tag(9, WireType.Bit64).double(message.startPos);
+        /* double end_pos = 10; */
+        if (message.endPos !== 0)
+            writer.tag(10, WireType.Bit64).double(message.endPos);
+        /* google.protobuf.DoubleValue closed_pnl = 11; */
         if (message.closedPnl)
-            Int64Value.internalBinaryWrite(message.closedPnl, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Int64Value cum_pnl = 12; */
+            DoubleValue.internalBinaryWrite(message.closedPnl, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue cum_pnl = 12; */
         if (message.cumPnl)
-            Int64Value.internalBinaryWrite(message.cumPnl, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Int64Value cum_fees = 13; */
+            DoubleValue.internalBinaryWrite(message.cumPnl, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue cum_fees = 13; */
         if (message.cumFees)
-            Int64Value.internalBinaryWrite(message.cumFees, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
+            DoubleValue.internalBinaryWrite(message.cumFees, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
         /* int64 order_id = 14; */
         if (message.orderId !== 0)
             writer.tag(14, WireType.Varint).int64(message.orderId);
@@ -3710,11 +3710,11 @@ class WalletMovementEvent$Type extends MessageType<WalletMovementEvent> {
         super("hypercore.WalletMovementEvent", [
             { no: 1, name: "movement_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "asset", kind: "message", T: () => WalletEventAsset },
-            { no: 3, name: "amount", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "amount", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 4, name: "usdc_value", kind: "message", T: () => DoubleValue },
             { no: 5, name: "fee_asset", kind: "message", T: () => WalletEventAsset },
-            { no: 6, name: "fee", kind: "message", T: () => Int64Value },
-            { no: 7, name: "commission", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "fee", kind: "message", T: () => DoubleValue },
+            { no: 7, name: "commission", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 8, name: "user", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 9, name: "destination", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 10, name: "source_dex", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -3747,8 +3747,8 @@ class WalletMovementEvent$Type extends MessageType<WalletMovementEvent> {
                 case /* hypercore.WalletEventAsset asset */ 2:
                     message.asset = WalletEventAsset.internalBinaryRead(reader, reader.uint32(), options, message.asset);
                     break;
-                case /* int64 amount */ 3:
-                    message.amount = reader.int64().toNumber();
+                case /* double amount */ 3:
+                    message.amount = reader.double();
                     break;
                 case /* google.protobuf.DoubleValue usdc_value */ 4:
                     message.usdcValue = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.usdcValue);
@@ -3756,11 +3756,11 @@ class WalletMovementEvent$Type extends MessageType<WalletMovementEvent> {
                 case /* hypercore.WalletEventAsset fee_asset */ 5:
                     message.feeAsset = WalletEventAsset.internalBinaryRead(reader, reader.uint32(), options, message.feeAsset);
                     break;
-                case /* google.protobuf.Int64Value fee */ 6:
-                    message.fee = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.fee);
+                case /* google.protobuf.DoubleValue fee */ 6:
+                    message.fee = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.fee);
                     break;
-                case /* int64 commission */ 7:
-                    message.commission = reader.int64().toNumber();
+                case /* double commission */ 7:
+                    message.commission = reader.double();
                     break;
                 case /* string user */ 8:
                     message.user = reader.string();
@@ -3798,21 +3798,21 @@ class WalletMovementEvent$Type extends MessageType<WalletMovementEvent> {
         /* hypercore.WalletEventAsset asset = 2; */
         if (message.asset)
             WalletEventAsset.internalBinaryWrite(message.asset, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* int64 amount = 3; */
+        /* double amount = 3; */
         if (message.amount !== 0)
-            writer.tag(3, WireType.Varint).int64(message.amount);
+            writer.tag(3, WireType.Bit64).double(message.amount);
         /* google.protobuf.DoubleValue usdc_value = 4; */
         if (message.usdcValue)
             DoubleValue.internalBinaryWrite(message.usdcValue, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         /* hypercore.WalletEventAsset fee_asset = 5; */
         if (message.feeAsset)
             WalletEventAsset.internalBinaryWrite(message.feeAsset, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Int64Value fee = 6; */
+        /* google.protobuf.DoubleValue fee = 6; */
         if (message.fee)
-            Int64Value.internalBinaryWrite(message.fee, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* int64 commission = 7; */
+            DoubleValue.internalBinaryWrite(message.fee, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* double commission = 7; */
         if (message.commission !== 0)
-            writer.tag(7, WireType.Varint).int64(message.commission);
+            writer.tag(7, WireType.Bit64).double(message.commission);
         /* string user = 8; */
         if (message.user !== "")
             writer.tag(8, WireType.LengthDelimited).string(message.user);
