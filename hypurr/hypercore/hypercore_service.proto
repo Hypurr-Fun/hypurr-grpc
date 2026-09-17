@@ -182,8 +182,6 @@ message WalletEventAsset {
   }
   Kind kind = 1;
   int64 id = 2; // Indexer asset or instrument ID in the namespace selected by kind.
-  // Divide the associated integer amount by 10^decimals. The same asset can use different scales in different fields.
-  uint32 decimals = 3;
 }
 
 message WalletFillEvent {
@@ -197,19 +195,21 @@ message WalletFillEvent {
   int64 instrument_id = 2; // Public indexer instrument ID, including spot pair encoding.
   WalletEventAsset from_asset = 3;
   WalletEventAsset to_asset = 4;
-  int64 from_size = 5;
-  int64 to_size = 6; // Spot and outcome sizes already subtract the fee.
+  double from_size = 5; // Amount in from_asset units.
+  double to_size = 6; // Amount in to_asset units. Spot and outcome sizes already subtract the fee.
   WalletEventAsset fee_asset = 7;
-  int64 fee = 8; // Signed stored fee in fee_asset units. Negative values are rebates.
-  int64 start_pos = 10; // Base position units: to_asset for buys, from_asset for sells.
+  double fee = 8; // Signed fee in fee_asset units. Negative values are rebates.
+  double start_pos = 9; // Base position units: to_asset for buys, from_asset for sells.
+  // Base position after this fill, calculated with integers before scaling. Zero means no remaining position.
+  double end_pos = 10;
   // closed_pnl, cum_pnl, and cum_fees use from_asset units for buys and to_asset units for sells.
-  google.protobuf.Int64Value closed_pnl = 11; // Gross realized PnL, excluding fees and funding.
+  google.protobuf.DoubleValue closed_pnl = 11; // Gross realized PnL, excluding fees and funding.
   // Stored totals through this fill. Full closes and flips retain the completed position's final totals.
   // The next fill starts a new total when position continuity and source order establish the boundary.
   // Each absent total has unknown coverage. The consumer keeps spot activity totals null.
-  google.protobuf.Int64Value cum_pnl = 12;
+  google.protobuf.DoubleValue cum_pnl = 12;
   // Signed quote fees, including the full flip fee under the existing indexer policy.
-  google.protobuf.Int64Value cum_fees = 13;
+  google.protobuf.DoubleValue cum_fees = 13;
   int64 order_id = 14;
   google.protobuf.Int64Value twap_id = 15;
   google.protobuf.Int64Value execution_index = 16;
@@ -220,11 +220,11 @@ message WalletFillEvent {
 message WalletMovementEvent {
   string movement_type = 1;
   WalletEventAsset asset = 2;
-  int64 amount = 3;
+  double amount = 3; // Amount in asset units.
   google.protobuf.DoubleValue usdc_value = 4; // Unscaled USDC value. Absent when the stored row cannot establish its presence.
   WalletEventAsset fee_asset = 5; // Absent when the fee denomination is unknown.
-  google.protobuf.Int64Value fee = 6; // Signed fee in fee_asset units. Absent when the fee is unknown.
-  int64 commission = 7; // Vault withdrawal commission in asset units. Zero for other movement types.
+  google.protobuf.DoubleValue fee = 6; // Signed fee in fee_asset units. Absent when the fee is unknown.
+  double commission = 7; // Vault withdrawal commission in asset units. Zero for other movement types.
   string user = 8;
   string destination = 9; // Source value, which can identify an account or a ledger.
   string source_dex = 10;
