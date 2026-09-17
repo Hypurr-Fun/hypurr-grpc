@@ -26,6 +26,7 @@ const (
 	Kms_AccountEnable2FA_FullMethodName                = "/hypurr.Kms/AccountEnable2FA"
 	Kms_AccountDisable2FA_FullMethodName               = "/hypurr.Kms/AccountDisable2FA"
 	Kms_AccountShardSecret_FullMethodName              = "/hypurr.Kms/AccountShardSecret"
+	Kms_AccountSignMessage_FullMethodName              = "/hypurr.Kms/AccountSignMessage"
 	Kms_RequestFactorReset_FullMethodName              = "/hypurr.Kms/RequestFactorReset"
 	Kms_CancelFactorReset_FullMethodName               = "/hypurr.Kms/CancelFactorReset"
 	Kms_ExecuteFactorReset_FullMethodName              = "/hypurr.Kms/ExecuteFactorReset"
@@ -64,6 +65,10 @@ type KmsClient interface {
 	AccountEnable2FA(ctx context.Context, in *KmsAccountEnable2FARequest, opts ...grpc.CallOption) (*KmsAccountEnable2FAResponse, error)
 	AccountDisable2FA(ctx context.Context, in *KmsAccountDisable2FARequest, opts ...grpc.CallOption) (*KmsAccountDisable2FAResponse, error)
 	AccountShardSecret(ctx context.Context, in *KmsAccountShardSecretRequest, opts ...grpc.CallOption) (*KmsAccountShardSecretResponse, error)
+	// AccountSignMessage has the enclave sign one Hypercore action with the
+	// wallet key. The response attestation carries the signature and the
+	// canonical action that was signed.
+	AccountSignMessage(ctx context.Context, in *KmsAccountSignMessageRequest, opts ...grpc.CallOption) (*KmsAccountSignMessageResponse, error)
 	// Locked-out flows: no bot JWT exists; routed by the plaintext
 	// subject_hash like LoginOrRegister. Auth lives inside the sealed payload
 	// and is enforced by the enclave.
@@ -160,6 +165,16 @@ func (c *kmsClient) AccountShardSecret(ctx context.Context, in *KmsAccountShardS
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(KmsAccountShardSecretResponse)
 	err := c.cc.Invoke(ctx, Kms_AccountShardSecret_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *kmsClient) AccountSignMessage(ctx context.Context, in *KmsAccountSignMessageRequest, opts ...grpc.CallOption) (*KmsAccountSignMessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(KmsAccountSignMessageResponse)
+	err := c.cc.Invoke(ctx, Kms_AccountSignMessage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -274,6 +289,10 @@ type KmsServer interface {
 	AccountEnable2FA(context.Context, *KmsAccountEnable2FARequest) (*KmsAccountEnable2FAResponse, error)
 	AccountDisable2FA(context.Context, *KmsAccountDisable2FARequest) (*KmsAccountDisable2FAResponse, error)
 	AccountShardSecret(context.Context, *KmsAccountShardSecretRequest) (*KmsAccountShardSecretResponse, error)
+	// AccountSignMessage has the enclave sign one Hypercore action with the
+	// wallet key. The response attestation carries the signature and the
+	// canonical action that was signed.
+	AccountSignMessage(context.Context, *KmsAccountSignMessageRequest) (*KmsAccountSignMessageResponse, error)
 	// Locked-out flows: no bot JWT exists; routed by the plaintext
 	// subject_hash like LoginOrRegister. Auth lives inside the sealed payload
 	// and is enforced by the enclave.
@@ -323,6 +342,9 @@ func (UnimplementedKmsServer) AccountDisable2FA(context.Context, *KmsAccountDisa
 }
 func (UnimplementedKmsServer) AccountShardSecret(context.Context, *KmsAccountShardSecretRequest) (*KmsAccountShardSecretResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AccountShardSecret not implemented")
+}
+func (UnimplementedKmsServer) AccountSignMessage(context.Context, *KmsAccountSignMessageRequest) (*KmsAccountSignMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AccountSignMessage not implemented")
 }
 func (UnimplementedKmsServer) RequestFactorReset(context.Context, *KmsRequestFactorResetRequest) (*KmsRequestFactorResetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RequestFactorReset not implemented")
@@ -483,6 +505,24 @@ func _Kms_AccountShardSecret_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(KmsServer).AccountShardSecret(ctx, req.(*KmsAccountShardSecretRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Kms_AccountSignMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KmsAccountSignMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KmsServer).AccountSignMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Kms_AccountSignMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KmsServer).AccountSignMessage(ctx, req.(*KmsAccountSignMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -665,6 +705,10 @@ var Kms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AccountShardSecret",
 			Handler:    _Kms_AccountShardSecret_Handler,
+		},
+		{
+			MethodName: "AccountSignMessage",
+			Handler:    _Kms_AccountSignMessage_Handler,
 		},
 		{
 			MethodName: "RequestFactorReset",

@@ -27,6 +27,10 @@ service Kms {
   rpc AccountEnable2FA(KmsAccountEnable2FARequest) returns (KmsAccountEnable2FAResponse);
   rpc AccountDisable2FA(KmsAccountDisable2FARequest) returns (KmsAccountDisable2FAResponse);
   rpc AccountShardSecret(KmsAccountShardSecretRequest) returns (KmsAccountShardSecretResponse);
+  // AccountSignMessage has the enclave sign one Hypercore action with the
+  // wallet key. The response attestation carries the signature and the
+  // canonical action that was signed.
+  rpc AccountSignMessage(KmsAccountSignMessageRequest) returns (KmsAccountSignMessageResponse);
 
   // Locked-out flows: no bot JWT exists; routed by the plaintext
   // subject_hash like LoginOrRegister. Auth lives inside the sealed payload
@@ -204,6 +208,18 @@ message KmsRecoverKeysResponse {
   bytes attestation = 1;
 }
 
+message KmsAccountSignMessageRequest {
+  bytes encrypted_payload = 1;
+  string instance_jwt = 2;
+  // Proof of possession over encrypted_payload with the device key.
+  bytes signature = 3;
+  string key_id = 4;
+}
+
+message KmsAccountSignMessageResponse {
+  bytes attestation = 1;
+}
+
 message KmsHyperliquidAgentSignatureCreateRequest {
   // The KMS wallet that will approve the agent.
   string wallet_address = 1;
@@ -227,12 +243,11 @@ message KmsEIP712Signature {
 }
 
 message KmsHyperliquidAgentWalletCreateRequest {
-  string name = 1;
   oneof proof {
     // Web: the AccountSignMessage attestation carrying the approveAgent
     // action and its signature.
-    bytes attestation = 2;
-    KmsEIP712Signature signature = 3;
+    bytes attestation = 1;
+    KmsEIP712Signature signature = 2;
   }
 }
 
