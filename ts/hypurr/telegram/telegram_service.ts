@@ -511,6 +511,45 @@ export interface HyperliquidScaleCreateResponse {
     session?: HyperliquidWalletScaleSession;
 }
 /**
+ * Updates either or both endpoints. Omitted prices remain unchanged.
+ * Running sessions reprice unfilled orders asynchronously.
+ *
+ * @generated from protobuf message hypurr.HyperliquidScaleModifyRequest
+ */
+export interface HyperliquidScaleModifyRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: int64 wallet_id = 2
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: int64 session_id = 3
+     */
+    sessionId: number;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue start_price = 4
+     */
+    startPrice?: DoubleValue;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue end_price = 5
+     */
+    endPrice?: DoubleValue;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidScaleModifyResponse
+ */
+export interface HyperliquidScaleModifyResponse {
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidWalletScaleSession session = 1
+     */
+    session?: HyperliquidWalletScaleSession;
+}
+/**
  * @generated from protobuf message hypurr.HyperliquidScaleCancelRequest
  */
 export interface HyperliquidScaleCancelRequest {
@@ -3808,6 +3847,145 @@ class HyperliquidScaleCreateResponse$Type extends MessageType<HyperliquidScaleCr
  * @generated MessageType for protobuf message hypurr.HyperliquidScaleCreateResponse
  */
 export const HyperliquidScaleCreateResponse = new HyperliquidScaleCreateResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidScaleModifyRequest$Type extends MessageType<HyperliquidScaleModifyRequest> {
+    constructor() {
+        super("hypurr.HyperliquidScaleModifyRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "session_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "start_price", kind: "message", T: () => DoubleValue },
+            { no: 5, name: "end_price", kind: "message", T: () => DoubleValue }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidScaleModifyRequest>): HyperliquidScaleModifyRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.authData = {};
+        message.walletId = 0;
+        message.sessionId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidScaleModifyRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidScaleModifyRequest): HyperliquidScaleModifyRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* int64 session_id */ 3:
+                    message.sessionId = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.DoubleValue start_price */ 4:
+                    message.startPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.startPrice);
+                    break;
+                case /* google.protobuf.DoubleValue end_price */ 5:
+                    message.endPrice = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.endPrice);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: HyperliquidScaleModifyRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HyperliquidScaleModifyRequest["authData"] | undefined, val: HyperliquidScaleModifyRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for hypurr.HyperliquidScaleModifyRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: HyperliquidScaleModifyRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of globalThis.Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* int64 session_id = 3; */
+        if (message.sessionId !== 0)
+            writer.tag(3, WireType.Varint).int64(message.sessionId);
+        /* google.protobuf.DoubleValue start_price = 4; */
+        if (message.startPrice)
+            DoubleValue.internalBinaryWrite(message.startPrice, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue end_price = 5; */
+        if (message.endPrice)
+            DoubleValue.internalBinaryWrite(message.endPrice, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidScaleModifyRequest
+ */
+export const HyperliquidScaleModifyRequest = new HyperliquidScaleModifyRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidScaleModifyResponse$Type extends MessageType<HyperliquidScaleModifyResponse> {
+    constructor() {
+        super("hypurr.HyperliquidScaleModifyResponse", [
+            { no: 1, name: "session", kind: "message", T: () => HyperliquidWalletScaleSession }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidScaleModifyResponse>): HyperliquidScaleModifyResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidScaleModifyResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidScaleModifyResponse): HyperliquidScaleModifyResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.HyperliquidWalletScaleSession session */ 1:
+                    message.session = HyperliquidWalletScaleSession.internalBinaryRead(reader, reader.uint32(), options, message.session);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidScaleModifyResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.HyperliquidWalletScaleSession session = 1; */
+        if (message.session)
+            HyperliquidWalletScaleSession.internalBinaryWrite(message.session, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidScaleModifyResponse
+ */
+export const HyperliquidScaleModifyResponse = new HyperliquidScaleModifyResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidScaleCancelRequest$Type extends MessageType<HyperliquidScaleCancelRequest> {
     constructor() {
@@ -10164,6 +10342,7 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "HyperliquidTwapModify", options: {}, I: HyperliquidTwapModifyRequest, O: HyperliquidTwapModifyResponse },
     { name: "HyperliquidTwapCancel", options: {}, I: HyperliquidTwapCancelRequest, O: HyperliquidTwapCancelResponse },
     { name: "HyperliquidScaleCreate", options: {}, I: HyperliquidScaleCreateRequest, O: HyperliquidScaleCreateResponse },
+    { name: "HyperliquidScaleModify", options: {}, I: HyperliquidScaleModifyRequest, O: HyperliquidScaleModifyResponse },
     { name: "HyperliquidScaleCancel", options: {}, I: HyperliquidScaleCancelRequest, O: HyperliquidScaleCancelResponse },
     { name: "HyperliquidSpotSniperConfigs", options: {}, I: HyperliquidSpotSniperConfigsRequest, O: HyperliquidSpotSniperConfigsResponse },
     { name: "CreateHyperliquidSpotSniperConfig", options: {}, I: CreateHyperliquidSpotSniperConfigRequest, O: CreateHyperliquidSpotSniperConfigResponse },

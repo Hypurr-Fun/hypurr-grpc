@@ -151,6 +151,11 @@ class TelegramStub:
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCreateRequest.SerializeToString,
                 response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCreateResponse.FromString,
                 _registered_method=True)
+        self.HyperliquidScaleModify = channel.unary_unary(
+                '/hypurr.Telegram/HyperliquidScaleModify',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleModifyRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleModifyResponse.FromString,
+                _registered_method=True)
         self.HyperliquidScaleCancel = channel.unary_unary(
                 '/hypurr.Telegram/HyperliquidScaleCancel',
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCancelRequest.SerializeToString,
@@ -480,6 +485,12 @@ class TelegramServicer:
         raise NotImplementedError('Method not implemented!')
 
     def HyperliquidScaleCreate(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def HyperliquidScaleModify(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -828,6 +839,11 @@ def add_TelegramServicer_to_server(servicer, server):
                     servicer.HyperliquidScaleCreate,
                     request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCreateRequest.FromString,
                     response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCreateResponse.SerializeToString,
+            ),
+            'HyperliquidScaleModify': grpc.unary_unary_rpc_method_handler(
+                    servicer.HyperliquidScaleModify,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleModifyRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleModifyResponse.SerializeToString,
             ),
             'HyperliquidScaleCancel': grpc.unary_unary_rpc_method_handler(
                     servicer.HyperliquidScaleCancel,
@@ -1636,6 +1652,33 @@ class Telegram:
             '/hypurr.Telegram/HyperliquidScaleCreate',
             hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCreateRequest.SerializeToString,
             hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCreateResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def HyperliquidScaleModify(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/HyperliquidScaleModify',
+            hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleModifyRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleModifyResponse.FromString,
             options,
             channel_credentials,
             insecure,

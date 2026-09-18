@@ -181,6 +181,21 @@ message HyperliquidScaleCreateResponse {
   HyperliquidWalletScaleSession session = 1;
 }
 
+
+// Updates either or both endpoints. Omitted prices remain unchanged.
+// Running sessions reprice unfilled orders asynchronously.
+message HyperliquidScaleModifyRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  int64 session_id = 3;
+  google.protobuf.DoubleValue start_price = 4;
+  google.protobuf.DoubleValue end_price = 5;
+}
+
+message HyperliquidScaleModifyResponse {
+  HyperliquidWalletScaleSession session = 1;
+}
+
 message HyperliquidScaleCancelRequest {
   map<string, string> auth_data = 1;
   int64 wallet_id = 2;
@@ -784,6 +799,7 @@ service Telegram {
   rpc HyperliquidTwapModify (HyperliquidTwapModifyRequest) returns (HyperliquidTwapModifyResponse) {}
   rpc HyperliquidTwapCancel (HyperliquidTwapCancelRequest) returns (HyperliquidTwapCancelResponse) {}
   rpc HyperliquidScaleCreate (HyperliquidScaleCreateRequest) returns (HyperliquidScaleCreateResponse) {}
+  rpc HyperliquidScaleModify (HyperliquidScaleModifyRequest) returns (HyperliquidScaleModifyResponse) {}
   rpc HyperliquidScaleCancel (HyperliquidScaleCancelRequest) returns (HyperliquidScaleCancelResponse) {}
 
   rpc HyperliquidSpotSniperConfigs (HyperliquidSpotSniperConfigsRequest) returns (HyperliquidSpotSniperConfigsResponse) {}
