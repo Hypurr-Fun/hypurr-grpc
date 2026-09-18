@@ -123,6 +123,117 @@ message WalletTradesStreamResponse {
   repeated WalletTrade trades = 2;
 }
 
+message WalletEventsStreamRequest {
+  // Supply exactly one filter. Bloom filters use the WalletTradesStream encoding and lowercase wallet addresses.
+  repeated string wallet_addresses = 1;
+  bytes bloom_filter = 2;
+}
+
+message WalletEventsRequest {
+  // At most 100 wallets. Duplicate addresses are invalid.
+  repeated WalletEventsQuery wallets = 1;
+  // Maximum events per wallet. Zero selects 100. Maximum: 2,000.
+  // Wallet count multiplied by the resolved page size must not exceed 10,000.
+  uint32 page_size = 2;
+}
+
+message WalletEventsQuery {
+  string wallet_address = 1;
+  // Inclusive Unix milliseconds. Zero selects the earliest stored event.
+  int64 from_timestamp_ms = 2;
+  // Exclusive Unix milliseconds. Zero selects server time for each request.
+  int64 to_timestamp_ms = 3;
+  // Continuation for the same wallet and time range.
+  string page_token = 4;
+}
+
+message WalletEventsResponse {
+  // Results retain request order. Each wallet has an independent read snapshot.
+  repeated WalletEventsResult wallets = 1;
+}
+
+message WalletEventsResult {
+  string wallet_address = 1;
+  bool indexed = 2; // A wallet database exists. This does not establish complete history coverage.
+  // Newest first, ordered by nanosecond timestamp, source kind, and source identity.
+  repeated WalletEvent events = 3;
+  // Continue while this token is present, even if missing asset metadata produced an empty event list.
+  string next_page_token = 4;
+}
+
+message WalletEvent {
+  string wallet_address = 1;
+  // Stored fill CustomHash or movement Hash. Combine with wallet, payload kind, and fill market for deduplication.
+  string source_id = 2;
+  int64 timestamp_ms = 3; // Unix milliseconds.
+  int64 timestamp_ns = 4; // Original Unix nanoseconds for source ordering.
+  oneof payload {
+    WalletFillEvent fill = 5;
+    WalletMovementEvent movement = 6;
+  }
+}
+
+message WalletEventAsset {
+  enum Kind {
+    KIND_UNSPECIFIED = 0;
+    KIND_TOKEN = 1;
+    KIND_PERP = 2;
+    KIND_OUTCOME = 3;
+  }
+  Kind kind = 1;
+  int64 id = 2; // Indexer asset or instrument ID in the namespace selected by kind.
+}
+
+message WalletFillEvent {
+  enum Market {
+    MARKET_UNSPECIFIED = 0;
+    MARKET_PERP = 1;
+    MARKET_SPOT = 2;
+    MARKET_OUTCOME = 3;
+  }
+  Market market = 1;
+  int64 instrument_id = 2; // Public indexer instrument ID, including spot pair encoding.
+  WalletEventAsset from_asset = 3;
+  WalletEventAsset to_asset = 4;
+  double from_size = 5; // Amount in from_asset units.
+  double to_size = 6; // Amount in to_asset units. Spot and outcome sizes already subtract the fee.
+  WalletEventAsset fee_asset = 7;
+  double fee = 8; // Signed fee in fee_asset units. Negative values are rebates.
+  double start_pos = 9; // Base position units: to_asset for buys, from_asset for sells.
+  // Base position after this fill, calculated with integers before scaling. Zero means no remaining position.
+  double end_pos = 10;
+  // closed_pnl, cum_pnl, and cum_fees use from_asset units for buys and to_asset units for sells.
+  google.protobuf.DoubleValue closed_pnl = 11; // Gross realized PnL, excluding fees and funding.
+  // Stored totals through this fill. Full closes and flips retain the completed position's final totals.
+  // The next fill starts a new total when position continuity and source order establish the boundary.
+  // Each absent total has unknown coverage. The consumer keeps spot activity totals null.
+  google.protobuf.DoubleValue cum_pnl = 12;
+  // Signed quote fees, including the full flip fee under the existing indexer policy.
+  google.protobuf.DoubleValue cum_fees = 13;
+  int64 order_id = 14;
+  google.protobuf.Int64Value twap_id = 15;
+  google.protobuf.Int64Value execution_index = 16;
+  bool is_buy = 17;
+  string action = 18; // Stored direction override, including outcome actions.
+  bool liquidated = 19; // True when stored liquidation metadata identifies this wallet as the liquidated side.
+}
+
+message WalletMovementEvent {
+  string movement_type = 1;
+  WalletEventAsset asset = 2;
+  double amount = 3; // Amount in asset units.
+  google.protobuf.DoubleValue usdc_value = 4; // Unscaled USDC value. Absent when the stored row cannot establish its presence.
+  WalletEventAsset fee_asset = 5; // Absent when the fee denomination is unknown.
+  google.protobuf.DoubleValue fee = 6; // Signed fee in fee_asset units. Absent when the fee is unknown.
+  double commission = 7; // Vault withdrawal commission in asset units. Zero for other movement types.
+  string user = 8;
+  string destination = 9; // Source value, which can identify an account or a ledger.
+  string source_dex = 10;
+  string destination_dex = 11;
+  google.protobuf.Int64Value source_dex_index = 12;
+  google.protobuf.Int64Value destination_dex_index = 13;
+}
+
 message AggregatedWalletPositioningStreamRequest {
   WalletFilter filter = 1;
   uint64 instrument_id = 2;
@@ -546,6 +657,18 @@ message HistoricalWalletTrade {
   int64 realized_pnl     = 14;              // USDC wei; realized PnL of this fill (perp only; 0 for spot / non-reducing fills)
 }
 
+message DirtyWalletsRequest {
+  // Inclusive execution-minute bound in Unix seconds. Must be positive and within the retained seven days.
+  int64 from_ts = 1;
+  // Exclusive execution-minute bound in Unix seconds. Zero selects the request time.
+  int64 to_ts = 2;
+}
+
+message DirtyWalletsResponse {
+  // Unique sorted addresses from the stored range plus all currently pending wallets.
+  repeated string wallet_addresses = 1;
+}
+
 message WalletTradesRequest {
   string wallet_address = 1;
   int64  from_ts        = 2; // inclusive, unix seconds; 0 = earliest
@@ -669,6 +792,9 @@ service HyperCore {
   rpc OrderBookDepth(OrderBookDepthRequest) returns (OrderBookDepthResponse) {}
   rpc WalletBalancesStream(stream WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
   rpc WalletTradesStream(WalletTradesStreamRequest) returns (stream WalletTradesStreamResponse) {}
+  // Sends individual committed wallet events during the subscription. Reconnects do not replay events.
+  rpc WalletEventsStream(WalletEventsStreamRequest) returns (stream WalletEvent) {}
+  rpc WalletEvents(WalletEventsRequest) returns (WalletEventsResponse) {}
   rpc ValidatorDelegators(ValidatorDelegatorsRequest) returns (ValidatorDelegatorsResponse) {}
   rpc ReferrerWallet(ReferrerWalletRequest) returns (ReferrerWalletResponse) {}
   rpc WalletTags(WalletTagsRequest) returns (WalletTagsResponse) {}
@@ -680,6 +806,7 @@ service HyperCore {
   rpc SpotInstruments(SpotInstrumentsRequest) returns (SpotInstrumentsResponse);
   rpc PerpInstruments(PerpInstrumentsRequest) returns (PerpInstrumentsResponse);
   rpc WalletsByMetricPercentile(WalletsByMetricPercentileRequest) returns (WalletsByMetricPercentileResponse) {}
+  rpc DirtyWallets(DirtyWalletsRequest) returns (DirtyWalletsResponse) {}
   rpc WalletTrades(WalletTradesRequest) returns (WalletTradesResponse) {}
   rpc OHLC(OHLCRequest) returns (OHLCResponse) {}
   rpc HighLow(HighLowRequest) returns (HighLowResponse) {}

@@ -79,6 +79,16 @@ class HyperCoreStub(object):
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesStreamRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesStreamResponse.FromString,
                 _registered_method=True)
+        self.WalletEventsStream = channel.unary_stream(
+                '/hypercore.HyperCore/WalletEventsStream',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletEventsStreamRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletEvent.FromString,
+                _registered_method=True)
+        self.WalletEvents = channel.unary_unary(
+                '/hypercore.HyperCore/WalletEvents',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletEventsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletEventsResponse.FromString,
+                _registered_method=True)
         self.ValidatorDelegators = channel.unary_unary(
                 '/hypercore.HyperCore/ValidatorDelegators',
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ValidatorDelegatorsRequest.SerializeToString,
@@ -133,6 +143,11 @@ class HyperCoreStub(object):
                 '/hypercore.HyperCore/WalletsByMetricPercentile',
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileResponse.FromString,
+                _registered_method=True)
+        self.DirtyWallets = channel.unary_unary(
+                '/hypercore.HyperCore/DirtyWallets',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.DirtyWalletsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.DirtyWalletsResponse.FromString,
                 _registered_method=True)
         self.WalletTrades = channel.unary_unary(
                 '/hypercore.HyperCore/WalletTrades',
@@ -213,6 +228,19 @@ class HyperCoreServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def WalletEventsStream(self, request, context):
+        """Sends individual committed wallet events during the subscription. Reconnects do not replay events.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def WalletEvents(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def ValidatorDelegators(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -274,6 +302,12 @@ class HyperCoreServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def WalletsByMetricPercentile(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DirtyWallets(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -351,6 +385,16 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesStreamRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesStreamResponse.SerializeToString,
             ),
+            'WalletEventsStream': grpc.unary_stream_rpc_method_handler(
+                    servicer.WalletEventsStream,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletEventsStreamRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletEvent.SerializeToString,
+            ),
+            'WalletEvents': grpc.unary_unary_rpc_method_handler(
+                    servicer.WalletEvents,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletEventsRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletEventsResponse.SerializeToString,
+            ),
             'ValidatorDelegators': grpc.unary_unary_rpc_method_handler(
                     servicer.ValidatorDelegators,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ValidatorDelegatorsRequest.FromString,
@@ -405,6 +449,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     servicer.WalletsByMetricPercentile,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileResponse.SerializeToString,
+            ),
+            'DirtyWallets': grpc.unary_unary_rpc_method_handler(
+                    servicer.DirtyWallets,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.DirtyWalletsRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.DirtyWalletsResponse.SerializeToString,
             ),
             'WalletTrades': grpc.unary_unary_rpc_method_handler(
                     servicer.WalletTrades,
@@ -670,6 +719,60 @@ class HyperCore(object):
             '/hypercore.HyperCore/WalletTradesStream',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesStreamRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesStreamResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def WalletEventsStream(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(
+            request,
+            target,
+            '/hypercore.HyperCore/WalletEventsStream',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletEventsStreamRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletEvent.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def WalletEvents(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/WalletEvents',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletEventsRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletEventsResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -967,6 +1070,33 @@ class HyperCore(object):
             '/hypercore.HyperCore/WalletsByMetricPercentile',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletsByMetricPercentileResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DirtyWallets(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/DirtyWallets',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.DirtyWalletsRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.DirtyWalletsResponse.FromString,
             options,
             channel_credentials,
             insecure,
