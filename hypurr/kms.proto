@@ -31,6 +31,10 @@ service Kms {
   // wallet key. The response attestation carries the signature and the
   // canonical action that was signed.
   rpc AccountSignMessage(KmsAccountSignMessageRequest) returns (KmsAccountSignMessageResponse);
+  // GetAccountInfo is the account-routed read: providers, wallets, factor
+  // types and enclave agents, straight from the instance, plus the bot's
+  // Hyperliquid agent state per wallet. No enclave round-trip.
+  rpc GetAccountInfo(KmsGetAccountInfoRequest) returns (KmsGetAccountInfoResponse);
 
   // Locked-out flows: no bot JWT exists; routed by the plaintext
   // subject_hash like LoginOrRegister. Auth lives inside the sealed payload
@@ -147,6 +151,42 @@ message KmsAccountDisable2FAResponse {
   bytes attestation = 1;
 }
 
+message KmsGetAccountInfoRequest {
+  string instance_jwt = 1;
+}
+
+message KmsGetAccountInfoResponse {
+  string account_id = 1;
+  repeated KmsProviderInfo providers = 2;
+  repeated KmsWalletInfo wallets = 3;
+  repeated string two_factor_types = 4;
+  repeated KmsAgentInfo agents = 5;
+}
+
+message KmsProviderInfo {
+  string provider_id = 1;
+  string type = 2;
+  int64 added_at = 3;
+}
+
+message KmsWalletInfo {
+  // The KMS wallet id, the key_id AccountSignMessage takes.
+  string id = 1;
+  string type = 2;
+  string address = 3;
+  int64 added_at = 4;
+  // Bot side: when the bot's Hyperliquid agent for this wallet expires,
+  // unix milliseconds. 0 when no agent has been approved yet.
+  int64 hyperliquid_agent_expires_at = 5;
+}
+
+message KmsAgentInfo {
+  string agent_id = 1;
+  string name = 2;
+  int64 expires_at = 3;
+  int64 created_at = 4;
+}
+
 message KmsAccountShardSecretRequest {
   bytes encrypted_payload = 1;
   string instance_jwt = 2;
@@ -213,6 +253,7 @@ message KmsHyperliquidAgentSignatureCreateResponse {
   string agent_name = 2;
   int64 nonce = 3;
   int64 signature_chain_id = 4;
+  string hyperliquid_chain = 5;
 }
 
 message KmsEIP712Signature {
