@@ -214,7 +214,8 @@ message WalletFillEvent {
   google.protobuf.Int64Value twap_id = 15;
   google.protobuf.Int64Value execution_index = 16;
   bool is_buy = 17;
-  string action = 18; // Stored direction override, including outcome actions and liquidations.
+  string action = 18; // Stored direction override, including outcome actions.
+  bool liquidated = 19; // True when stored liquidation metadata identifies this wallet as the liquidated side.
 }
 
 message WalletMovementEvent {

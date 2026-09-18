@@ -495,7 +495,11 @@ export interface WalletFillEvent {
     /**
      * @generated from protobuf field: string action = 18
      */
-    action: string; // Stored direction override, including outcome actions and liquidations.
+    action: string; // Stored direction override, including outcome actions.
+    /**
+     * @generated from protobuf field: bool liquidated = 19
+     */
+    liquidated: boolean; // True when stored liquidation metadata identifies this wallet as the liquidated side.
 }
 /**
  * @generated from protobuf enum hypercore.WalletFillEvent.Market
@@ -3550,7 +3554,8 @@ class WalletFillEvent$Type extends MessageType<WalletFillEvent> {
             { no: 15, name: "twap_id", kind: "message", T: () => Int64Value },
             { no: 16, name: "execution_index", kind: "message", T: () => Int64Value },
             { no: 17, name: "is_buy", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 18, name: "action", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 18, name: "action", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 19, name: "liquidated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<WalletFillEvent>): WalletFillEvent {
@@ -3565,6 +3570,7 @@ class WalletFillEvent$Type extends MessageType<WalletFillEvent> {
         message.orderId = 0;
         message.isBuy = false;
         message.action = "";
+        message.liquidated = false;
         if (value !== undefined)
             reflectionMergePartial<WalletFillEvent>(this, message, value);
         return message;
@@ -3627,6 +3633,9 @@ class WalletFillEvent$Type extends MessageType<WalletFillEvent> {
                     break;
                 case /* string action */ 18:
                     message.action = reader.string();
+                    break;
+                case /* bool liquidated */ 19:
+                    message.liquidated = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3694,6 +3703,9 @@ class WalletFillEvent$Type extends MessageType<WalletFillEvent> {
         /* string action = 18; */
         if (message.action !== "")
             writer.tag(18, WireType.LengthDelimited).string(message.action);
+        /* bool liquidated = 19; */
+        if (message.liquidated !== false)
+            writer.tag(19, WireType.Varint).bool(message.liquidated);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
