@@ -1,0 +1,267 @@
+syntax = "proto3";
+package hypurr.ios.v2;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios/v2;iosv2";
+
+service IosService {
+  rpc Home(HomeRequest) returns (HomeResponse);
+}
+
+// ==== Shared ====
+
+// Color carries both theme variants for a single UI color.
+// Expected format: #RRGGBB.
+message Color {
+  string light_hex = 1; // e.g. "#98FFC0"
+  string dark_hex = 2;  // e.g. "#98FFC0"
+}
+
+enum AssetClass {
+  ASSET_CLASS_UNSPECIFIED = 0;
+  ASSET_CLASS_CRYPTO = 1;
+  ASSET_CLASS_STABLE = 2;
+  ASSET_CLASS_EQUITY = 3;
+  ASSET_CLASS_COMMODITY = 4;
+  ASSET_CLASS_FX = 5;
+  ASSET_CLASS_INDEX = 6;
+}
+
+// Tier 1. An exposure: BTC. The same for the BTC perp, the UBTC book and a WBTC balance.
+message Asset {
+  // Registry asset id.
+  uint32 asset_id = 1;
+  string symbol = 2; // e.g. "BTC"
+  string name = 3;   // e.g. "Bitcoin"
+  // Full remote image URL. Mobile owns fallback if empty.
+  string logo_url = 4;
+  Color color = 5;
+  AssetClass class = 6;
+  // True until a curator has confirmed it. Provisional assets are shown
+  // like any other but never merged with anything by the app.
+  bool provisional = 7;
+}
+
+enum TokenRepresentation {
+  TOKEN_REPRESENTATION_UNSPECIFIED = 0;
+  TOKEN_REPRESENTATION_NATIVE = 1;    // HYPE on Hypercore, native PUMP
+  TOKEN_REPRESENTATION_BRIDGED = 2;   // UBTC (Unit), USDT0
+  TOKEN_REPRESENTATION_WRAPPED = 3;   // WBTC, WHYPE
+  TOKEN_REPRESENTATION_CANONICAL = 4; // USDC on Arbitrum
+}
+
+// Tier 2. A token on a chain: what a wallet holds and what a swap moves.
+message Token {
+  // Registry chain-asset id. 0 for a long-tail token with no registry row;
+  // then `ref` is the identity.
+  uint64 token_id = 1;
+  // Stable string identity for every token, registered or not:
+  // "chain:hypercore:0x8f25…" (native id) or "chain:hyperevm:0x9fdb…" (address).
+  string ref = 2;
+  string chain = 3;  // "hypercore", "hyperevm"
+  string symbol = 4; // the token's own: "UBTC"
+  string name = 5;   // "Unit Bitcoin"
+  string logo_url = 6;
+  Color color = 7;
+  TokenRepresentation representation = 8;
+  string issuer = 9; // "unit", "usdt0"; empty for native
+  // The exposure this token is a representation of. Absent for a token no
+  // curator has mapped; the app then treats the token as its own thing.
+  Asset asset = 10;
+  // The spot book that prices this token. Absent when unpriced. Check
+  // presence, not zero: market id 0 is a valid market.
+  optional uint64 spot_market_id = 11;
+}
+
+enum MarketKind {
+  MARKET_KIND_UNSPECIFIED = 0;
+  MARKET_KIND_SPOT = 1;
+  MARKET_KIND_PERP = 2;
+  MARKET_KIND_POOL = 3;
+}
+
+// Tier 3. An instrument on a venue: what a position is in and an order is placed on.
+message Market {
+  // Registry security id. Equals the Hyperliquid pair id: perp index,
+  // 10000 + spot index, 100000 + 10000 * dex index + index for HIP-3.
+  uint64 market_id = 1;
+  MarketKind kind = 2;
+  string venue = 3;           // "hyperliquid"
+  string segment = 4;         // HIP-3 dex: "xyz"; empty on the native dex
+  string symbol = 5;          // display: "BTC-PERP", "UBTC/USDC", "xyz:TSLA"
+  string standard_symbol = 6; // "HYP:PERP:BTC/USDC", "HYP:xyz:PERP:TSLA/USDC"
+  // Units of the underlying per contract: 1000 for kPEPE, else 1. Order
+  // sizes and position quantities are in contracts.
+  double multiplier = 7;
+  // The exposure. Always present for a registered market.
+  Asset asset = 8;
+  // Spot and pool: the token delivered. Absent for a perp.
+  Token base = 9;
+  // Quote token for spot and pool; margin token for a perp.
+  Token quote = 10;
+  string logo_url = 11;
+  Color color = 12;
+}
+
+enum PositionDirection {
+  POSITION_DIRECTION_UNSPECIFIED = 0;
+  POSITION_DIRECTION_LONG = 1;
+  POSITION_DIRECTION_SHORT = 2;
+}
+
+// ==== Home ====
+
+message HomeRequest {
+  // Empty means all wallets. This scopes recent_activity only.
+  string wallet_id = 1;
+}
+
+message HomeResponse {
+  RecentActivitySection recent_activity = 1;
+  repeated HomeMarketCategory market_categories = 2;
+}
+
+message HomeMarketCategory {
+  // Stable backend/config identifier for diffing and analytics.
+  string id = 1;
+  // Backend-configured display title.
+  string title = 2;
+  // Backend-configured display order.
+  repeated HomeMarketPrice assets = 3;
+}
+
+message HomeMarketPrice {
+  // The price is the one of the asset's reference market.
+  Asset asset = 1;
+  // Required, unformatted base-10 decimal string.
+  // No currency symbol, grouping, rounding, or floating-point conversion.
+  // Examples: "114321.5", "0.00017".
+  string price_decimal = 2;
+  // Exactly 12 points, oldest first: Home's fixed 24h, 2-hour series.
+  repeated AssetPricePoint history = 3;
+}
+
+message AssetPricePoint {
+  string occurred_at = 1;   // RFC3339 UTC.
+  string price_decimal = 2; // Same format as HomeMarketPrice.price_decimal.
+}
+
+message ActivityTokenAmount {
+  Token token = 1;
+  string quantity_decimal = 2;
+}
+
+message HfunUser {
+  int64 user_id = 1;
+  string handle = 2;
+  string avatar_url = 3;
+}
+
+message ActivityParty {
+  oneof identity {
+    HfunUser hfun_user = 1; // Only with a verified wallet-to-user link.
+    string wallet_address = 2;
+  }
+}
+
+message RecentActivitySection {
+  repeated ActivityItem items = 1; // At most three, newest first.
+}
+
+message ActivityItem {
+  string id = 1;
+  string occurred_at = 2; // RFC3339 UTC.
+  oneof activity {
+    DepositActivity deposit = 10;
+    WithdrawActivity withdraw = 11;
+    SendActivity send = 12;
+    ReceiveActivity receive = 13;
+    AccountClassTransferActivity account_class_transfer = 14;
+    SpotFillActivity spot_fill = 15;
+    OpenPerpActivity open_perp = 16;
+    ClosePerpActivity close_perp = 17;
+    LiquidationActivity liquidation = 19;
+    GenesisAllocationActivity genesis_allocation = 20;
+    SwapActivity swap = 21;
+  }
+}
+
+message DepositActivity {
+  ActivityTokenAmount received = 1;
+  int64 usd_value_cents = 2;
+}
+
+message WithdrawActivity {
+  ActivityTokenAmount sent = 1;
+  int64 usd_value_cents = 2;
+}
+
+message SendActivity {
+  ActivityParty recipient = 1;
+  ActivityTokenAmount sent = 2;
+  int64 usd_value_cents = 3;
+}
+
+message ReceiveActivity {
+  ActivityParty sender = 1;
+  ActivityTokenAmount received = 2;
+  int64 usd_value_cents = 3;
+}
+
+enum AccountClass {
+  ACCOUNT_CLASS_UNSPECIFIED = 0;
+  ACCOUNT_CLASS_SPOT = 1;
+  ACCOUNT_CLASS_PERPS = 2;
+}
+
+message AccountClassTransferActivity {
+  AccountClass destination = 1;
+  string usdc_amount_decimal = 2;
+}
+
+enum TradeSide {
+  TRADE_SIDE_UNSPECIFIED = 0;
+  TRADE_SIDE_BUY = 1;
+  TRADE_SIDE_SELL = 2;
+}
+
+message SpotFillActivity {
+  TradeSide side = 1;
+  ActivityTokenAmount filled = 2;
+  int64 usd_value_cents = 3;
+}
+
+message OpenPerpActivity {
+  PositionDirection direction = 1;
+  Market market = 2;
+  string size_decimal = 3;
+  string fill_price_decimal = 4;
+  int64 fee_cents = 5;
+}
+
+message ClosePerpActivity {
+  PositionDirection direction = 1;
+  Market market = 2;
+  string size_decimal = 3;
+  oneof result {
+    int64 realized_pnl_cents = 4; // Signed; only when supplied upstream.
+    ExecutionPriceAndFee execution = 5;
+  }
+}
+
+message ExecutionPriceAndFee {
+  string fill_price_decimal = 1;
+  int64 fee_cents = 2;
+}
+
+message LiquidationActivity {
+  Market market = 1;
+  int64 post_liquidation_account_value_cents = 2;
+}
+
+message GenesisAllocationActivity {
+  ActivityTokenAmount received = 1;
+}
+
+message SwapActivity {
+  ActivityTokenAmount sent = 1;
+  ActivityTokenAmount received = 2;
+}
