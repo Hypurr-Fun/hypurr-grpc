@@ -607,9 +607,13 @@ export interface LiquidationActivity {
      */
     market?: Market;
     /**
-     * @generated from protobuf field: int64 post_liquidation_account_value_cents = 2
+     * @generated from protobuf field: string size_decimal = 2
      */
-    postLiquidationAccountValueCents: number;
+    sizeDecimal: string; // Contracts liquidated.
+    /**
+     * @generated from protobuf field: int64 usd_value_cents = 3
+     */
+    usdValueCents: number; // Notional of the liquidated size.
 }
 /**
  * @generated from protobuf message hypurr.ios.v2.GenesisAllocationActivity
@@ -2414,12 +2418,14 @@ class LiquidationActivity$Type extends MessageType<LiquidationActivity> {
     constructor() {
         super("hypurr.ios.v2.LiquidationActivity", [
             { no: 1, name: "market", kind: "message", T: () => Market },
-            { no: 2, name: "post_liquidation_account_value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 2, name: "size_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "usd_value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<LiquidationActivity>): LiquidationActivity {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.postLiquidationAccountValueCents = 0;
+        message.sizeDecimal = "";
+        message.usdValueCents = 0;
         if (value !== undefined)
             reflectionMergePartial<LiquidationActivity>(this, message, value);
         return message;
@@ -2432,8 +2438,11 @@ class LiquidationActivity$Type extends MessageType<LiquidationActivity> {
                 case /* hypurr.ios.v2.Market market */ 1:
                     message.market = Market.internalBinaryRead(reader, reader.uint32(), options, message.market);
                     break;
-                case /* int64 post_liquidation_account_value_cents */ 2:
-                    message.postLiquidationAccountValueCents = reader.int64().toNumber();
+                case /* string size_decimal */ 2:
+                    message.sizeDecimal = reader.string();
+                    break;
+                case /* int64 usd_value_cents */ 3:
+                    message.usdValueCents = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2450,9 +2459,12 @@ class LiquidationActivity$Type extends MessageType<LiquidationActivity> {
         /* hypurr.ios.v2.Market market = 1; */
         if (message.market)
             Market.internalBinaryWrite(message.market, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* int64 post_liquidation_account_value_cents = 2; */
-        if (message.postLiquidationAccountValueCents !== 0)
-            writer.tag(2, WireType.Varint).int64(message.postLiquidationAccountValueCents);
+        /* string size_decimal = 2; */
+        if (message.sizeDecimal !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.sizeDecimal);
+        /* int64 usd_value_cents = 3; */
+        if (message.usdValueCents !== 0)
+            writer.tag(3, WireType.Varint).int64(message.usdValueCents);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

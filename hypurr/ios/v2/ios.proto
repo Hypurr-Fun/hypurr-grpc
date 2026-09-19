@@ -254,7 +254,8 @@ message ExecutionPriceAndFee {
 
 message LiquidationActivity {
   Market market = 1;
-  int64 post_liquidation_account_value_cents = 2;
+  string size_decimal = 2;   // Contracts liquidated.
+  int64 usd_value_cents = 3; // Notional of the liquidated size.
 }
 
 message GenesisAllocationActivity {
