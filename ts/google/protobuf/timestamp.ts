@@ -97,7 +97,6 @@ import { MessageType } from "@protobuf-ts/runtime";
  *     Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
  *         .setNanos((int) ((millis % 1000) * 1000000)).build();
  *
- *
  * Example 5: Compute Timestamp from Java `Instant.now()`.
  *
  *     Instant now = Instant.now();
@@ -105,7 +104,6 @@ import { MessageType } from "@protobuf-ts/runtime";
  *     Timestamp timestamp =
  *         Timestamp.newBuilder().setSeconds(now.getEpochSecond())
  *             .setNanos(now.getNano()).build();
- *
  *
  * Example 6: Compute Timestamp from current time in Python.
  *
@@ -136,26 +134,26 @@ import { MessageType } from "@protobuf-ts/runtime";
  * [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with
  * the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
  * the Joda Time's [`ISODateTimeFormat.dateTime()`](
- * http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime%2D%2D
+ * http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
  * ) to obtain a formatter capable of generating timestamps in this format.
- *
  *
  *
  * @generated from protobuf message google.protobuf.Timestamp
  */
 export interface Timestamp {
     /**
-     * Represents seconds of UTC time since Unix epoch
-     * 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to
-     * 9999-12-31T23:59:59Z inclusive.
+     * Represents seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z. Must
+     * be between -315576000000 and 315576000000 inclusive (which corresponds to
+     * 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z).
      *
      * @generated from protobuf field: int64 seconds = 1
      */
     seconds: number;
     /**
-     * Non-negative fractions of a second at nanosecond resolution. Negative
-     * second values with fractions must still have non-negative nanos values
-     * that count forward in time. Must be from 0 to 999,999,999
+     * Non-negative fractions of a second at nanosecond resolution. This field is
+     * the nanosecond portion of the duration, not an alternative to seconds.
+     * Negative second values with fractions must still have non-negative nanos
+     * values that count forward in time. Must be between 0 and 999,999,999
      * inclusive.
      *
      * @generated from protobuf field: int32 nanos = 2
