@@ -1,0 +1,64 @@
+syntax = "proto3";
+package aconnect;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/aconnect";
+
+// Execution service authenticated by the existing hfun JWT bearer token.
+// Caller identity and scopes come exclusively from the verified JWT.
+// Never retry writes automatically, including UNAVAILABLE/DEADLINE_EXCEEDED.
+service AConnect {
+  rpc PlaceOrder(PlaceOrderRequest) returns (OrderResponse);
+  rpc CancelOrder(CancelOrderRequest) returns (OrderResponse);
+}
+
+// Identifiers only. Credentials are resolved from hypurr's encrypted store.
+message ExecutionAccount {
+  reserved 1;
+  reserved "hfun_user_id";
+  int64 exchange_account_id = 2;
+}
+
+enum Side { SIDE_UNSPECIFIED = 0; BUY = 1; SELL = 2; }
+enum OrderType { ORDER_TYPE_UNSPECIFIED = 0; LIMIT = 1; MARKET = 2; }
+enum TimeInForce {
+  TIME_IN_FORCE_UNSPECIFIED = 0;
+  GOOD_TILL_CANCEL = 1;
+  IMMEDIATE_OR_CANCEL = 2;
+  FILL_OR_KILL = 3;
+  POST_ONLY = 4;
+}
+
+message PlaceOrderRequest {
+  ExecutionAccount account = 1;
+  // Hypurr registry ID; zero is valid. No caller-supplied venue or symbol.
+  int64 security_id = 2;
+  Side side = 3;
+  OrderType order_type = 4;
+  TimeInForce time_in_force = 5;
+  double quantity = 6;
+  optional double price = 7;
+  string client_order_id = 8;
+  bool reduce_only = 9;
+  bool post_only = 10;
+}
+message CancelOrderRequest {
+  ExecutionAccount account = 1;
+  int64 security_id = 2;
+  oneof identifier {
+    string order_id = 3;
+    string client_order_id = 4;
+  }
+}
+
+enum Outcome {
+  OUTCOME_UNSPECIFIED = 0;
+  ACCEPTED = 1;
+  REJECTED = 2;
+  // Execution may have happened. Reconcile before submitting again.
+  UNKNOWN = 3;
+}
+message OrderResponse {
+  int64 security_id = 1;
+  Outcome outcome = 2;
+  string order_id = 3;
+  string rejection_reason = 4;
+}

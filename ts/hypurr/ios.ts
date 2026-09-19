@@ -841,6 +841,8 @@ export interface UserWallet {
 /**
  * Shared by Home, Portfolio, Asset Detail, and Trading.
  *
+ * wallet:protocol_asset_id
+ *
  * @generated from protobuf message hypurr.SpotHolding
  */
 export interface SpotHolding {

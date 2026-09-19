@@ -363,7 +363,7 @@ message UserWallet {
 }
 
 // Shared by Home, Portfolio, Asset Detail, and Trading.
-message SpotHolding {
+message SpotHolding { // wallet:protocol_asset_id
   string position_id = 1; // unique identifier for the position (e.g. "wallet:protocol_asset_id")
   Asset asset = 2;
   string quantity_decimal = 3;
