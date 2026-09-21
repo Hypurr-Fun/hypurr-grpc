@@ -4,6 +4,7 @@ option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios/v2;iosv2";
 
 service IosService {
   rpc Home(HomeRequest) returns (HomeResponse);
+  rpc LiveAssetUpdates(LiveAssetUpdatesRequest) returns (stream AssetTicks);
 }
 
 // ==== Shared ====
@@ -142,6 +143,24 @@ message HomeMarketPrice {
 message AssetPricePoint {
   string occurred_at = 1;   // RFC3339 UTC.
   string price_decimal = 2; // Same format as HomeMarketPrice.price_decimal.
+}
+
+// ==== Live prices ====
+
+message LiveAssetUpdatesRequest {
+  // Empty = every asset with a live market.
+  repeated uint32 asset_ids = 1;
+}
+
+message AssetTicks {
+  repeated AssetTick ticks = 1;
+}
+
+message AssetTick {
+  uint32 asset_id = 1;
+  string occurred_at = 2;   // RFC3339 UTC.
+  // Price of the asset's reference market. Same format as HomeMarketPrice.price_decimal.
+  string price_decimal = 3;
 }
 
 message ActivityTokenAmount {

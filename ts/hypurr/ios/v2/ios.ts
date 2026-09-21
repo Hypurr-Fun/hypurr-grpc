@@ -288,6 +288,47 @@ export interface AssetPricePoint {
      */
     priceDecimal: string; // Same format as HomeMarketPrice.price_decimal.
 }
+// ==== Live prices ====
+
+/**
+ * @generated from protobuf message hypurr.ios.v2.LiveAssetUpdatesRequest
+ */
+export interface LiveAssetUpdatesRequest {
+    /**
+     * Empty = every asset with a live market.
+     *
+     * @generated from protobuf field: repeated uint32 asset_ids = 1
+     */
+    assetIds: number[];
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.AssetTicks
+ */
+export interface AssetTicks {
+    /**
+     * @generated from protobuf field: repeated hypurr.ios.v2.AssetTick ticks = 1
+     */
+    ticks: AssetTick[];
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.AssetTick
+ */
+export interface AssetTick {
+    /**
+     * @generated from protobuf field: uint32 asset_id = 1
+     */
+    assetId: number;
+    /**
+     * @generated from protobuf field: string occurred_at = 2
+     */
+    occurredAt: string; // RFC3339 UTC.
+    /**
+     * Price of the asset's reference market. Same format as HomeMarketPrice.price_decimal.
+     *
+     * @generated from protobuf field: string price_decimal = 3
+     */
+    priceDecimal: string;
+}
 /**
  * @generated from protobuf message hypurr.ios.v2.ActivityTokenAmount
  */
@@ -1461,6 +1502,171 @@ class AssetPricePoint$Type extends MessageType<AssetPricePoint> {
  */
 export const AssetPricePoint = new AssetPricePoint$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class LiveAssetUpdatesRequest$Type extends MessageType<LiveAssetUpdatesRequest> {
+    constructor() {
+        super("hypurr.ios.v2.LiveAssetUpdatesRequest", [
+            { no: 1, name: "asset_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<LiveAssetUpdatesRequest>): LiveAssetUpdatesRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.assetIds = [];
+        if (value !== undefined)
+            reflectionMergePartial<LiveAssetUpdatesRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LiveAssetUpdatesRequest): LiveAssetUpdatesRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated uint32 asset_ids */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.assetIds.push(reader.uint32());
+                    else
+                        message.assetIds.push(reader.uint32());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: LiveAssetUpdatesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated uint32 asset_ids = 1; */
+        if (message.assetIds.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.assetIds.length; i++)
+                writer.uint32(message.assetIds[i]);
+            writer.join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.LiveAssetUpdatesRequest
+ */
+export const LiveAssetUpdatesRequest = new LiveAssetUpdatesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AssetTicks$Type extends MessageType<AssetTicks> {
+    constructor() {
+        super("hypurr.ios.v2.AssetTicks", [
+            { no: 1, name: "ticks", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => AssetTick }
+        ]);
+    }
+    create(value?: PartialMessage<AssetTicks>): AssetTicks {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.ticks = [];
+        if (value !== undefined)
+            reflectionMergePartial<AssetTicks>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetTicks): AssetTicks {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.ios.v2.AssetTick ticks */ 1:
+                    message.ticks.push(AssetTick.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetTicks, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.ios.v2.AssetTick ticks = 1; */
+        for (let i = 0; i < message.ticks.length; i++)
+            AssetTick.internalBinaryWrite(message.ticks[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.AssetTicks
+ */
+export const AssetTicks = new AssetTicks$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AssetTick$Type extends MessageType<AssetTick> {
+    constructor() {
+        super("hypurr.ios.v2.AssetTick", [
+            { no: 1, name: "asset_id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AssetTick>): AssetTick {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.assetId = 0;
+        message.occurredAt = "";
+        message.priceDecimal = "";
+        if (value !== undefined)
+            reflectionMergePartial<AssetTick>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetTick): AssetTick {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint32 asset_id */ 1:
+                    message.assetId = reader.uint32();
+                    break;
+                case /* string occurred_at */ 2:
+                    message.occurredAt = reader.string();
+                    break;
+                case /* string price_decimal */ 3:
+                    message.priceDecimal = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AssetTick, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint32 asset_id = 1; */
+        if (message.assetId !== 0)
+            writer.tag(1, WireType.Varint).uint32(message.assetId);
+        /* string occurred_at = 2; */
+        if (message.occurredAt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.occurredAt);
+        /* string price_decimal = 3; */
+        if (message.priceDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.priceDecimal);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.AssetTick
+ */
+export const AssetTick = new AssetTick$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class ActivityTokenAmount$Type extends MessageType<ActivityTokenAmount> {
     constructor() {
         super("hypurr.ios.v2.ActivityTokenAmount", [
@@ -2578,5 +2784,6 @@ export const SwapActivity = new SwapActivity$Type();
  * @generated ServiceType for protobuf service hypurr.ios.v2.IosService
  */
 export const IosService = new ServiceType("hypurr.ios.v2.IosService", [
-    { name: "Home", options: {}, I: HomeRequest, O: HomeResponse }
+    { name: "Home", options: {}, I: HomeRequest, O: HomeResponse },
+    { name: "LiveAssetUpdates", serverStreaming: true, options: {}, I: LiveAssetUpdatesRequest, O: AssetTicks }
 ]);

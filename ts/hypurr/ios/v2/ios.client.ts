@@ -4,6 +4,9 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { IosService } from "./ios";
+import type { AssetTicks } from "./ios";
+import type { LiveAssetUpdatesRequest } from "./ios";
+import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { HomeResponse } from "./ios";
 import type { HomeRequest } from "./ios";
@@ -17,6 +20,10 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: Home
      */
     home(input: HomeRequest, options?: RpcOptions): UnaryCall<HomeRequest, HomeResponse>;
+    /**
+     * @generated from protobuf rpc: LiveAssetUpdates
+     */
+    liveAssetUpdates(input: LiveAssetUpdatesRequest, options?: RpcOptions): ServerStreamingCall<LiveAssetUpdatesRequest, AssetTicks>;
 }
 /**
  * @generated from protobuf service hypurr.ios.v2.IosService
@@ -33,5 +40,12 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
     home(input: HomeRequest, options?: RpcOptions): UnaryCall<HomeRequest, HomeResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
         return stackIntercept<HomeRequest, HomeResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: LiveAssetUpdates
+     */
+    liveAssetUpdates(input: LiveAssetUpdatesRequest, options?: RpcOptions): ServerStreamingCall<LiveAssetUpdatesRequest, AssetTicks> {
+        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        return stackIntercept<LiveAssetUpdatesRequest, AssetTicks>("serverStreaming", this._transport, method, opt, input);
     }
 }

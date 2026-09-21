@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	IosService_Home_FullMethodName = "/hypurr.ios.v2.IosService/Home"
+	IosService_Home_FullMethodName             = "/hypurr.ios.v2.IosService/Home"
+	IosService_LiveAssetUpdates_FullMethodName = "/hypurr.ios.v2.IosService/LiveAssetUpdates"
 )
 
 // IosServiceClient is the client API for IosService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IosServiceClient interface {
 	Home(ctx context.Context, in *HomeRequest, opts ...grpc.CallOption) (*HomeResponse, error)
+	LiveAssetUpdates(ctx context.Context, in *LiveAssetUpdatesRequest, opts ...grpc.CallOption) (IosService_LiveAssetUpdatesClient, error)
 }
 
 type iosServiceClient struct {
@@ -47,11 +49,45 @@ func (c *iosServiceClient) Home(ctx context.Context, in *HomeRequest, opts ...gr
 	return out, nil
 }
 
+func (c *iosServiceClient) LiveAssetUpdates(ctx context.Context, in *LiveAssetUpdatesRequest, opts ...grpc.CallOption) (IosService_LiveAssetUpdatesClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &IosService_ServiceDesc.Streams[0], IosService_LiveAssetUpdates_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &iosServiceLiveAssetUpdatesClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type IosService_LiveAssetUpdatesClient interface {
+	Recv() (*AssetTicks, error)
+	grpc.ClientStream
+}
+
+type iosServiceLiveAssetUpdatesClient struct {
+	grpc.ClientStream
+}
+
+func (x *iosServiceLiveAssetUpdatesClient) Recv() (*AssetTicks, error) {
+	m := new(AssetTicks)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // IosServiceServer is the server API for IosService service.
 // All implementations must embed UnimplementedIosServiceServer
 // for forward compatibility
 type IosServiceServer interface {
 	Home(context.Context, *HomeRequest) (*HomeResponse, error)
+	LiveAssetUpdates(*LiveAssetUpdatesRequest, IosService_LiveAssetUpdatesServer) error
 	mustEmbedUnimplementedIosServiceServer()
 }
 
@@ -61,6 +97,9 @@ type UnimplementedIosServiceServer struct {
 
 func (UnimplementedIosServiceServer) Home(context.Context, *HomeRequest) (*HomeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Home not implemented")
+}
+func (UnimplementedIosServiceServer) LiveAssetUpdates(*LiveAssetUpdatesRequest, IosService_LiveAssetUpdatesServer) error {
+	return status.Errorf(codes.Unimplemented, "method LiveAssetUpdates not implemented")
 }
 func (UnimplementedIosServiceServer) mustEmbedUnimplementedIosServiceServer() {}
 
@@ -93,6 +132,27 @@ func _IosService_Home_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IosService_LiveAssetUpdates_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(LiveAssetUpdatesRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(IosServiceServer).LiveAssetUpdates(m, &iosServiceLiveAssetUpdatesServer{ServerStream: stream})
+}
+
+type IosService_LiveAssetUpdatesServer interface {
+	Send(*AssetTicks) error
+	grpc.ServerStream
+}
+
+type iosServiceLiveAssetUpdatesServer struct {
+	grpc.ServerStream
+}
+
+func (x *iosServiceLiveAssetUpdatesServer) Send(m *AssetTicks) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // IosService_ServiceDesc is the grpc.ServiceDesc for IosService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -105,6 +165,12 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _IosService_Home_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "LiveAssetUpdates",
+			Handler:       _IosService_LiveAssetUpdates_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "hypurr/ios/v2/ios.proto",
 }
