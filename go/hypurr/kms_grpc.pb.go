@@ -27,6 +27,7 @@ const (
 	Kms_AccountDisable2FA_FullMethodName               = "/hypurr.Kms/AccountDisable2FA"
 	Kms_AccountShardSecret_FullMethodName              = "/hypurr.Kms/AccountShardSecret"
 	Kms_AccountSignMessage_FullMethodName              = "/hypurr.Kms/AccountSignMessage"
+	Kms_GetAccountInfo_FullMethodName                  = "/hypurr.Kms/GetAccountInfo"
 	Kms_RequestFactorReset_FullMethodName              = "/hypurr.Kms/RequestFactorReset"
 	Kms_CancelFactorReset_FullMethodName               = "/hypurr.Kms/CancelFactorReset"
 	Kms_ExecuteFactorReset_FullMethodName              = "/hypurr.Kms/ExecuteFactorReset"
@@ -69,6 +70,10 @@ type KmsClient interface {
 	// wallet key. The response attestation carries the signature and the
 	// canonical action that was signed.
 	AccountSignMessage(ctx context.Context, in *KmsAccountSignMessageRequest, opts ...grpc.CallOption) (*KmsAccountSignMessageResponse, error)
+	// GetAccountInfo is the account-routed read: providers, wallets, factor
+	// types and enclave agents, straight from the instance, plus the bot's
+	// Hyperliquid agent state per wallet. No enclave round-trip.
+	GetAccountInfo(ctx context.Context, in *KmsGetAccountInfoRequest, opts ...grpc.CallOption) (*KmsGetAccountInfoResponse, error)
 	// Locked-out flows: no bot JWT exists; routed by the plaintext
 	// subject_hash like LoginOrRegister. Auth lives inside the sealed payload
 	// and is enforced by the enclave.
@@ -175,6 +180,16 @@ func (c *kmsClient) AccountSignMessage(ctx context.Context, in *KmsAccountSignMe
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(KmsAccountSignMessageResponse)
 	err := c.cc.Invoke(ctx, Kms_AccountSignMessage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *kmsClient) GetAccountInfo(ctx context.Context, in *KmsGetAccountInfoRequest, opts ...grpc.CallOption) (*KmsGetAccountInfoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(KmsGetAccountInfoResponse)
+	err := c.cc.Invoke(ctx, Kms_GetAccountInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -293,6 +308,10 @@ type KmsServer interface {
 	// wallet key. The response attestation carries the signature and the
 	// canonical action that was signed.
 	AccountSignMessage(context.Context, *KmsAccountSignMessageRequest) (*KmsAccountSignMessageResponse, error)
+	// GetAccountInfo is the account-routed read: providers, wallets, factor
+	// types and enclave agents, straight from the instance, plus the bot's
+	// Hyperliquid agent state per wallet. No enclave round-trip.
+	GetAccountInfo(context.Context, *KmsGetAccountInfoRequest) (*KmsGetAccountInfoResponse, error)
 	// Locked-out flows: no bot JWT exists; routed by the plaintext
 	// subject_hash like LoginOrRegister. Auth lives inside the sealed payload
 	// and is enforced by the enclave.
@@ -345,6 +364,9 @@ func (UnimplementedKmsServer) AccountShardSecret(context.Context, *KmsAccountSha
 }
 func (UnimplementedKmsServer) AccountSignMessage(context.Context, *KmsAccountSignMessageRequest) (*KmsAccountSignMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AccountSignMessage not implemented")
+}
+func (UnimplementedKmsServer) GetAccountInfo(context.Context, *KmsGetAccountInfoRequest) (*KmsGetAccountInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccountInfo not implemented")
 }
 func (UnimplementedKmsServer) RequestFactorReset(context.Context, *KmsRequestFactorResetRequest) (*KmsRequestFactorResetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RequestFactorReset not implemented")
@@ -523,6 +545,24 @@ func _Kms_AccountSignMessage_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(KmsServer).AccountSignMessage(ctx, req.(*KmsAccountSignMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Kms_GetAccountInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KmsGetAccountInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KmsServer).GetAccountInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Kms_GetAccountInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KmsServer).GetAccountInfo(ctx, req.(*KmsGetAccountInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -709,6 +749,10 @@ var Kms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AccountSignMessage",
 			Handler:    _Kms_AccountSignMessage_Handler,
+		},
+		{
+			MethodName: "GetAccountInfo",
+			Handler:    _Kms_GetAccountInfo_Handler,
 		},
 		{
 			MethodName: "RequestFactorReset",
