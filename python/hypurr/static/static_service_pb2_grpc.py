@@ -3,6 +3,7 @@
 import grpc
 import warnings
 
+from hypurr import onramp_pb2 as hypurr_dot_onramp__pb2
 from hypurr.static import static_service_pb2 as hypurr_dot_static_dot_static__service__pb2
 
 GRPC_GENERATED_VERSION = '1.81.0'
@@ -193,6 +194,26 @@ class StaticStub:
                 '/hypurr.Static/DeleteHyperliquidWalletDeploySessionTarget',
                 request_serializer=hypurr_dot_static_dot_static__service__pb2.DeleteHyperliquidWalletDeploySessionTargetRequest.SerializeToString,
                 response_deserializer=hypurr_dot_static_dot_static__service__pb2.DeleteHyperliquidWalletDeploySessionTargetResponse.FromString,
+                _registered_method=True)
+        self.OnrampQuotes = channel.unary_unary(
+                '/hypurr.Static/OnrampQuotes',
+                request_serializer=hypurr_dot_onramp__pb2.OnrampQuotesRequest.SerializeToString,
+                response_deserializer=hypurr_dot_onramp__pb2.OnrampQuotesResponse.FromString,
+                _registered_method=True)
+        self.OnrampCheckoutUrl = channel.unary_unary(
+                '/hypurr.Static/OnrampCheckoutUrl',
+                request_serializer=hypurr_dot_onramp__pb2.OnrampCheckoutUrlRequest.SerializeToString,
+                response_deserializer=hypurr_dot_onramp__pb2.OnrampCheckoutUrlResponse.FromString,
+                _registered_method=True)
+        self.OnrampTxStatus = channel.unary_unary(
+                '/hypurr.Static/OnrampTxStatus',
+                request_serializer=hypurr_dot_onramp__pb2.OnrampTxStatusRequest.SerializeToString,
+                response_deserializer=hypurr_dot_onramp__pb2.OnrampTxStatusResponse.FromString,
+                _registered_method=True)
+        self.OnrampStorePermit = channel.unary_unary(
+                '/hypurr.Static/OnrampStorePermit',
+                request_serializer=hypurr_dot_onramp__pb2.OnrampStorePermitRequest.SerializeToString,
+                response_deserializer=hypurr_dot_onramp__pb2.OnrampStorePermitResponse.FromString,
                 _registered_method=True)
 
 
@@ -393,6 +414,30 @@ class StaticServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def OnrampQuotes(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def OnrampCheckoutUrl(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def OnrampTxStatus(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def OnrampStorePermit(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_StaticServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -555,6 +600,26 @@ def add_StaticServicer_to_server(servicer, server):
                     servicer.DeleteHyperliquidWalletDeploySessionTarget,
                     request_deserializer=hypurr_dot_static_dot_static__service__pb2.DeleteHyperliquidWalletDeploySessionTargetRequest.FromString,
                     response_serializer=hypurr_dot_static_dot_static__service__pb2.DeleteHyperliquidWalletDeploySessionTargetResponse.SerializeToString,
+            ),
+            'OnrampQuotes': grpc.unary_unary_rpc_method_handler(
+                    servicer.OnrampQuotes,
+                    request_deserializer=hypurr_dot_onramp__pb2.OnrampQuotesRequest.FromString,
+                    response_serializer=hypurr_dot_onramp__pb2.OnrampQuotesResponse.SerializeToString,
+            ),
+            'OnrampCheckoutUrl': grpc.unary_unary_rpc_method_handler(
+                    servicer.OnrampCheckoutUrl,
+                    request_deserializer=hypurr_dot_onramp__pb2.OnrampCheckoutUrlRequest.FromString,
+                    response_serializer=hypurr_dot_onramp__pb2.OnrampCheckoutUrlResponse.SerializeToString,
+            ),
+            'OnrampTxStatus': grpc.unary_unary_rpc_method_handler(
+                    servicer.OnrampTxStatus,
+                    request_deserializer=hypurr_dot_onramp__pb2.OnrampTxStatusRequest.FromString,
+                    response_serializer=hypurr_dot_onramp__pb2.OnrampTxStatusResponse.SerializeToString,
+            ),
+            'OnrampStorePermit': grpc.unary_unary_rpc_method_handler(
+                    servicer.OnrampStorePermit,
+                    request_deserializer=hypurr_dot_onramp__pb2.OnrampStorePermitRequest.FromString,
+                    response_serializer=hypurr_dot_onramp__pb2.OnrampStorePermitResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -1421,6 +1486,114 @@ class Static:
             '/hypurr.Static/DeleteHyperliquidWalletDeploySessionTarget',
             hypurr_dot_static_dot_static__service__pb2.DeleteHyperliquidWalletDeploySessionTargetRequest.SerializeToString,
             hypurr_dot_static_dot_static__service__pb2.DeleteHyperliquidWalletDeploySessionTargetResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def OnrampQuotes(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Static/OnrampQuotes',
+            hypurr_dot_onramp__pb2.OnrampQuotesRequest.SerializeToString,
+            hypurr_dot_onramp__pb2.OnrampQuotesResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def OnrampCheckoutUrl(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Static/OnrampCheckoutUrl',
+            hypurr_dot_onramp__pb2.OnrampCheckoutUrlRequest.SerializeToString,
+            hypurr_dot_onramp__pb2.OnrampCheckoutUrlResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def OnrampTxStatus(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Static/OnrampTxStatus',
+            hypurr_dot_onramp__pb2.OnrampTxStatusRequest.SerializeToString,
+            hypurr_dot_onramp__pb2.OnrampTxStatusResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def OnrampStorePermit(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Static/OnrampStorePermit',
+            hypurr_dot_onramp__pb2.OnrampStorePermitRequest.SerializeToString,
+            hypurr_dot_onramp__pb2.OnrampStorePermitResponse.FromString,
             options,
             channel_credentials,
             insecure,

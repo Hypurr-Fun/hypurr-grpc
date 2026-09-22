@@ -6,7 +6,7 @@ setup(
     packages=find_namespace_packages(where="python"),
     package_dir={"": "python"},
     install_requires=[
-        "grpcio>=1.76,<2",
+        "grpcio>=1.81,<2",
         "protobuf>=6.33.5,<7",
     ],
     url="https://github.com/Hypurr-Fun/hypurr-grpc",

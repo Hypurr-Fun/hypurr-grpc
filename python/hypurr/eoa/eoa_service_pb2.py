@@ -27,9 +27,10 @@ from hypurr import launch_pb2 as hypurr_dot_launch__pb2
 from hypurr import common_pb2 as hypurr_dot_common__pb2
 from hypurr import hpumpv1_pb2 as hypurr_dot_hpumpv1__pb2
 from google.protobuf import wrappers_pb2 as google_dot_protobuf_dot_wrappers__pb2
+from hypurr import onramp_pb2 as hypurr_dot_onramp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1chypurr/eoa/eoa_service.proto\x12\x03\x65oa\x1a\x13hypurr/wallet.proto\x1a\x13hypurr/launch.proto\x1a\x13hypurr/common.proto\x1a\x14hypurr/hpumpv1.proto\x1a\x1egoogle/protobuf/wrappers.proto\"/\n\x0c\x45OASignature\x12\t\n\x01r\x18\x01 \x01(\t\x12\t\n\x01s\x18\x02 \x01(\t\x12\t\n\x01v\x18\x03 \x01(\r\"\xfb\x01\n\x1dHyperliquidLaunchTradeRequest\x12\x11\n\tsignature\x18\x01 \x01(\t\x12\x11\n\tlaunch_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12\x37\n\tdirection\x18\x04 \x01(\x0e\x32$.eoa.HyperliquidLaunchTradeDirection\x12\x0e\n\x06\x61mount\x18\x05 \x01(\t\x12\x18\n\x10\x65thereum_address\x18\x06 \x01(\t\x12\x0c\n\x04time\x18\x07 \x01(\x03\x12\x14\n\x0cmax_slippage\x18\x08 \x01(\x01\x12\x1a\n\x12signature_chain_id\x18\t \x01(\x03\"m\n\x1eHyperliquidLaunchTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"\x8a\x01\n\x1bHyperliquidSpotTradeRequest\x12\x0f\n\x07pair_id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x37\n\tdirection\x18\x03 \x01(\x0e\x32$.eoa.HyperliquidLaunchTradeDirection\x12\x0e\n\x06\x61mount\x18\x04 \x01(\x01\"k\n\x1cHyperliquidSpotTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"Y\n\x1eLaunchHyperliquidLaunchRequest\x12\x12\n\nbase_asset\x18\x01 \x01(\t\x12\x13\n\x0bquote_asset\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x01\"/\n\x1c\x45OAUserAgentChallengeRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\".\n\x1d\x45OAUserAgentChallengeResponse\x12\r\n\x05\x61gent\x18\x01 \x01(\t\"9\n\x0e\x45OAUserRequest\x12\'\n\tsignature\x18\x01 \x01(\x0b\x32\x14.eoa.EIP712Signature\"n\n\x0f\x45IP712Signature\x12\x14\n\x0c\x61gentAddress\x18\x01 \x01(\t\x12\x11\n\tagentName\x18\x02 \x01(\t\x12\r\n\x05nonce\x18\x03 \x01(\x03\x12\x11\n\tsignature\x18\x04 \x01(\t\x12\x10\n\x08\x63hain_id\x18\x05 \x01(\x03\"Z\n\x0f\x45OAUserResponse\x12\x1c\n\x05token\x18\x01 \x01(\x0b\x32\r.eoa.EOAToken\x12)\n\x06wallet\x18\x02 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\".\n\x08\x45OAToken\x12\x0e\n\x06secret\x18\x01 \x01(\t\x12\x12\n\nexpires_at\x18\x02 \x01(\x03\"!\n\x1fPendingHyperliquidLaunchRequest\"M\n PendingHyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\x9c\x02\n\x1c\x45\x64itHyperliquidLaunchRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x12\n\ntoken_name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x11\n\tfull_name\x18\x04 \x01(\t\x12*\n\x05media\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.BytesValue\x12%\n\nmedia_type\x18\x06 \x01(\x0e\x32\x11.hypurr.MediaType\x12\x1a\n\x12\x64\x65v_lockup_seconds\x18\x07 \x01(\x03\x12!\n\x19initial_purchase_notional\x18\x08 \x01(\x01\"J\n\x1d\x45\x64itHyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\x8e\x01\n\x1aLaunchHpumpV1LaunchRequest\x12\x13\n\x0b\x64\x65scription\x18\x01 \x01(\t\x12\x12\n\ntoken_name\x18\x02 \x01(\t\x12\x11\n\tfull_name\x18\x03 \x01(\t\x12\r\n\x05media\x18\x04 \x01(\x0c\x12%\n\nmedia_type\x18\x05 \x01(\x0e\x32\x11.hypurr.MediaType\"V\n\x1bLaunchHpumpV1LaunchResponse\x12\x10\n\x08ipfs_url\x18\x01 \x01(\t\x12\x12\n\ntoken_name\x18\x02 \x01(\t\x12\x11\n\tfull_name\x18\x03 \x01(\t\"3\n\x17\x45OAUserEvmModifyRequest\x12\x18\n\x10using_big_blocks\x18\x01 \x01(\x08\"\x1a\n\x18\x45OAUserEvmModifyResponse*4\n\x1fHyperliquidLaunchTradeDirection\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\x32\xdf\x05\n\x03\x45OA\x12`\n\x15\x45OAUserAgentChallenge\x12!.eoa.EOAUserAgentChallengeRequest\x1a\".eoa.EOAUserAgentChallengeResponse\"\x00\x12\x36\n\x07\x45OAUser\x12\x13.eoa.EOAUserRequest\x1a\x14.eoa.EOAUserResponse\"\x00\x12Q\n\x10\x45OAUserEvmModify\x12\x1c.eoa.EOAUserEvmModifyRequest\x1a\x1d.eoa.EOAUserEvmModifyResponse\"\x00\x12i\n\x18PendingHyperliquidLaunch\x12$.eoa.PendingHyperliquidLaunchRequest\x1a%.eoa.PendingHyperliquidLaunchResponse\"\x00\x12\x63\n\x16HyperliquidLaunchTrade\x12\".eoa.HyperliquidLaunchTradeRequest\x1a#.eoa.HyperliquidLaunchTradeResponse\"\x00\x12`\n\x15\x45\x64itHyperliquidLaunch\x12!.eoa.EditHyperliquidLaunchRequest\x1a\".eoa.EditHyperliquidLaunchResponse\"\x00\x12Z\n\x13LaunchHpumpV1Launch\x12\x1f.eoa.LaunchHpumpV1LaunchRequest\x1a .eoa.LaunchHpumpV1LaunchResponse\"\x00\x12]\n\x14HyperliquidSpotTrade\x12 .eoa.HyperliquidSpotTradeRequest\x1a!.eoa.HyperliquidSpotTradeResponse\"\x00\x42-Z+gitlab.com/hypurr/hypurr-grpc/go/hypurr/eoab\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1chypurr/eoa/eoa_service.proto\x12\x03\x65oa\x1a\x13hypurr/wallet.proto\x1a\x13hypurr/launch.proto\x1a\x13hypurr/common.proto\x1a\x14hypurr/hpumpv1.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x13hypurr/onramp.proto\"/\n\x0c\x45OASignature\x12\t\n\x01r\x18\x01 \x01(\t\x12\t\n\x01s\x18\x02 \x01(\t\x12\t\n\x01v\x18\x03 \x01(\r\"\xfb\x01\n\x1dHyperliquidLaunchTradeRequest\x12\x11\n\tsignature\x18\x01 \x01(\t\x12\x11\n\tlaunch_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12\x37\n\tdirection\x18\x04 \x01(\x0e\x32$.eoa.HyperliquidLaunchTradeDirection\x12\x0e\n\x06\x61mount\x18\x05 \x01(\t\x12\x18\n\x10\x65thereum_address\x18\x06 \x01(\t\x12\x0c\n\x04time\x18\x07 \x01(\x03\x12\x14\n\x0cmax_slippage\x18\x08 \x01(\x01\x12\x1a\n\x12signature_chain_id\x18\t \x01(\x03\"m\n\x1eHyperliquidLaunchTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"\x8a\x01\n\x1bHyperliquidSpotTradeRequest\x12\x0f\n\x07pair_id\x18\x01 \x01(\x03\x12\x11\n\twallet_id\x18\x02 \x01(\x03\x12\x37\n\tdirection\x18\x03 \x01(\x0e\x32$.eoa.HyperliquidLaunchTradeDirection\x12\x0e\n\x06\x61mount\x18\x04 \x01(\x01\"k\n\x1cHyperliquidSpotTradeResponse\x12\x13\n\x0b\x62\x61se_amount\x18\x01 \x01(\x01\x12\x14\n\x0cquote_amount\x18\x02 \x01(\x01\x12\x0f\n\x07message\x18\x03 \x01(\t\x12\x0f\n\x07success\x18\x04 \x01(\x08\"Y\n\x1eLaunchHyperliquidLaunchRequest\x12\x12\n\nbase_asset\x18\x01 \x01(\t\x12\x13\n\x0bquote_asset\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x01\"/\n\x1c\x45OAUserAgentChallengeRequest\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\".\n\x1d\x45OAUserAgentChallengeResponse\x12\r\n\x05\x61gent\x18\x01 \x01(\t\"9\n\x0e\x45OAUserRequest\x12\'\n\tsignature\x18\x01 \x01(\x0b\x32\x14.eoa.EIP712Signature\"n\n\x0f\x45IP712Signature\x12\x14\n\x0c\x61gentAddress\x18\x01 \x01(\t\x12\x11\n\tagentName\x18\x02 \x01(\t\x12\r\n\x05nonce\x18\x03 \x01(\x03\x12\x11\n\tsignature\x18\x04 \x01(\t\x12\x10\n\x08\x63hain_id\x18\x05 \x01(\x03\"Z\n\x0f\x45OAUserResponse\x12\x1c\n\x05token\x18\x01 \x01(\x0b\x32\r.eoa.EOAToken\x12)\n\x06wallet\x18\x02 \x01(\x0b\x32\x19.hypurr.HyperliquidWallet\".\n\x08\x45OAToken\x12\x0e\n\x06secret\x18\x01 \x01(\t\x12\x12\n\nexpires_at\x18\x02 \x01(\x03\"!\n\x1fPendingHyperliquidLaunchRequest\"M\n PendingHyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\x9c\x02\n\x1c\x45\x64itHyperliquidLaunchRequest\x12.\n\tlaunch_id\x18\x01 \x01(\x0b\x32\x1b.google.protobuf.Int64Value\x12\x12\n\ntoken_name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x11\n\tfull_name\x18\x04 \x01(\t\x12*\n\x05media\x18\x05 \x01(\x0b\x32\x1b.google.protobuf.BytesValue\x12%\n\nmedia_type\x18\x06 \x01(\x0e\x32\x11.hypurr.MediaType\x12\x1a\n\x12\x64\x65v_lockup_seconds\x18\x07 \x01(\x03\x12!\n\x19initial_purchase_notional\x18\x08 \x01(\x01\"J\n\x1d\x45\x64itHyperliquidLaunchResponse\x12)\n\x06launch\x18\x01 \x01(\x0b\x32\x19.hypurr.HyperliquidLaunch\"\x8e\x01\n\x1aLaunchHpumpV1LaunchRequest\x12\x13\n\x0b\x64\x65scription\x18\x01 \x01(\t\x12\x12\n\ntoken_name\x18\x02 \x01(\t\x12\x11\n\tfull_name\x18\x03 \x01(\t\x12\r\n\x05media\x18\x04 \x01(\x0c\x12%\n\nmedia_type\x18\x05 \x01(\x0e\x32\x11.hypurr.MediaType\"V\n\x1bLaunchHpumpV1LaunchResponse\x12\x10\n\x08ipfs_url\x18\x01 \x01(\t\x12\x12\n\ntoken_name\x18\x02 \x01(\t\x12\x11\n\tfull_name\x18\x03 \x01(\t\"3\n\x17\x45OAUserEvmModifyRequest\x12\x18\n\x10using_big_blocks\x18\x01 \x01(\x08\"\x1a\n\x18\x45OAUserEvmModifyResponse*4\n\x1fHyperliquidLaunchTradeDirection\x12\x07\n\x03\x42UY\x10\x00\x12\x08\n\x04SELL\x10\x01\x32\xb5\x06\n\x03\x45OA\x12`\n\x15\x45OAUserAgentChallenge\x12!.eoa.EOAUserAgentChallengeRequest\x1a\".eoa.EOAUserAgentChallengeResponse\"\x00\x12\x36\n\x07\x45OAUser\x12\x13.eoa.EOAUserRequest\x1a\x14.eoa.EOAUserResponse\"\x00\x12Q\n\x10\x45OAUserEvmModify\x12\x1c.eoa.EOAUserEvmModifyRequest\x1a\x1d.eoa.EOAUserEvmModifyResponse\"\x00\x12i\n\x18PendingHyperliquidLaunch\x12$.eoa.PendingHyperliquidLaunchRequest\x1a%.eoa.PendingHyperliquidLaunchResponse\"\x00\x12\x63\n\x16HyperliquidLaunchTrade\x12\".eoa.HyperliquidLaunchTradeRequest\x1a#.eoa.HyperliquidLaunchTradeResponse\"\x00\x12`\n\x15\x45\x64itHyperliquidLaunch\x12!.eoa.EditHyperliquidLaunchRequest\x1a\".eoa.EditHyperliquidLaunchResponse\"\x00\x12Z\n\x13LaunchHpumpV1Launch\x12\x1f.eoa.LaunchHpumpV1LaunchRequest\x1a .eoa.LaunchHpumpV1LaunchResponse\"\x00\x12]\n\x14HyperliquidSpotTrade\x12 .eoa.HyperliquidSpotTradeRequest\x1a!.eoa.HyperliquidSpotTradeResponse\"\x00\x12T\n\x0fOnrampPurchases\x12\x1e.hypurr.OnrampPurchasesRequest\x1a\x1f.hypurr.OnrampPurchasesResponse\"\x00\x42-Z+gitlab.com/hypurr/hypurr-grpc/go/hypurr/eoab\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -37,48 +38,48 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'hypurr.eoa.eoa_service_pb2'
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z+gitlab.com/hypurr/hypurr-grpc/go/hypurr/eoa'
-  _globals['_HYPERLIQUIDLAUNCHTRADEDIRECTION']._serialized_start=2108
-  _globals['_HYPERLIQUIDLAUNCHTRADEDIRECTION']._serialized_end=2160
-  _globals['_EOASIGNATURE']._serialized_start=154
-  _globals['_EOASIGNATURE']._serialized_end=201
-  _globals['_HYPERLIQUIDLAUNCHTRADEREQUEST']._serialized_start=204
-  _globals['_HYPERLIQUIDLAUNCHTRADEREQUEST']._serialized_end=455
-  _globals['_HYPERLIQUIDLAUNCHTRADERESPONSE']._serialized_start=457
-  _globals['_HYPERLIQUIDLAUNCHTRADERESPONSE']._serialized_end=566
-  _globals['_HYPERLIQUIDSPOTTRADEREQUEST']._serialized_start=569
-  _globals['_HYPERLIQUIDSPOTTRADEREQUEST']._serialized_end=707
-  _globals['_HYPERLIQUIDSPOTTRADERESPONSE']._serialized_start=709
-  _globals['_HYPERLIQUIDSPOTTRADERESPONSE']._serialized_end=816
-  _globals['_LAUNCHHYPERLIQUIDLAUNCHREQUEST']._serialized_start=818
-  _globals['_LAUNCHHYPERLIQUIDLAUNCHREQUEST']._serialized_end=907
-  _globals['_EOAUSERAGENTCHALLENGEREQUEST']._serialized_start=909
-  _globals['_EOAUSERAGENTCHALLENGEREQUEST']._serialized_end=956
-  _globals['_EOAUSERAGENTCHALLENGERESPONSE']._serialized_start=958
-  _globals['_EOAUSERAGENTCHALLENGERESPONSE']._serialized_end=1004
-  _globals['_EOAUSERREQUEST']._serialized_start=1006
-  _globals['_EOAUSERREQUEST']._serialized_end=1063
-  _globals['_EIP712SIGNATURE']._serialized_start=1065
-  _globals['_EIP712SIGNATURE']._serialized_end=1175
-  _globals['_EOAUSERRESPONSE']._serialized_start=1177
-  _globals['_EOAUSERRESPONSE']._serialized_end=1267
-  _globals['_EOATOKEN']._serialized_start=1269
-  _globals['_EOATOKEN']._serialized_end=1315
-  _globals['_PENDINGHYPERLIQUIDLAUNCHREQUEST']._serialized_start=1317
-  _globals['_PENDINGHYPERLIQUIDLAUNCHREQUEST']._serialized_end=1350
-  _globals['_PENDINGHYPERLIQUIDLAUNCHRESPONSE']._serialized_start=1352
-  _globals['_PENDINGHYPERLIQUIDLAUNCHRESPONSE']._serialized_end=1429
-  _globals['_EDITHYPERLIQUIDLAUNCHREQUEST']._serialized_start=1432
-  _globals['_EDITHYPERLIQUIDLAUNCHREQUEST']._serialized_end=1716
-  _globals['_EDITHYPERLIQUIDLAUNCHRESPONSE']._serialized_start=1718
-  _globals['_EDITHYPERLIQUIDLAUNCHRESPONSE']._serialized_end=1792
-  _globals['_LAUNCHHPUMPV1LAUNCHREQUEST']._serialized_start=1795
-  _globals['_LAUNCHHPUMPV1LAUNCHREQUEST']._serialized_end=1937
-  _globals['_LAUNCHHPUMPV1LAUNCHRESPONSE']._serialized_start=1939
-  _globals['_LAUNCHHPUMPV1LAUNCHRESPONSE']._serialized_end=2025
-  _globals['_EOAUSEREVMMODIFYREQUEST']._serialized_start=2027
-  _globals['_EOAUSEREVMMODIFYREQUEST']._serialized_end=2078
-  _globals['_EOAUSEREVMMODIFYRESPONSE']._serialized_start=2080
-  _globals['_EOAUSEREVMMODIFYRESPONSE']._serialized_end=2106
-  _globals['_EOA']._serialized_start=2163
-  _globals['_EOA']._serialized_end=2898
+  _globals['_HYPERLIQUIDLAUNCHTRADEDIRECTION']._serialized_start=2129
+  _globals['_HYPERLIQUIDLAUNCHTRADEDIRECTION']._serialized_end=2181
+  _globals['_EOASIGNATURE']._serialized_start=175
+  _globals['_EOASIGNATURE']._serialized_end=222
+  _globals['_HYPERLIQUIDLAUNCHTRADEREQUEST']._serialized_start=225
+  _globals['_HYPERLIQUIDLAUNCHTRADEREQUEST']._serialized_end=476
+  _globals['_HYPERLIQUIDLAUNCHTRADERESPONSE']._serialized_start=478
+  _globals['_HYPERLIQUIDLAUNCHTRADERESPONSE']._serialized_end=587
+  _globals['_HYPERLIQUIDSPOTTRADEREQUEST']._serialized_start=590
+  _globals['_HYPERLIQUIDSPOTTRADEREQUEST']._serialized_end=728
+  _globals['_HYPERLIQUIDSPOTTRADERESPONSE']._serialized_start=730
+  _globals['_HYPERLIQUIDSPOTTRADERESPONSE']._serialized_end=837
+  _globals['_LAUNCHHYPERLIQUIDLAUNCHREQUEST']._serialized_start=839
+  _globals['_LAUNCHHYPERLIQUIDLAUNCHREQUEST']._serialized_end=928
+  _globals['_EOAUSERAGENTCHALLENGEREQUEST']._serialized_start=930
+  _globals['_EOAUSERAGENTCHALLENGEREQUEST']._serialized_end=977
+  _globals['_EOAUSERAGENTCHALLENGERESPONSE']._serialized_start=979
+  _globals['_EOAUSERAGENTCHALLENGERESPONSE']._serialized_end=1025
+  _globals['_EOAUSERREQUEST']._serialized_start=1027
+  _globals['_EOAUSERREQUEST']._serialized_end=1084
+  _globals['_EIP712SIGNATURE']._serialized_start=1086
+  _globals['_EIP712SIGNATURE']._serialized_end=1196
+  _globals['_EOAUSERRESPONSE']._serialized_start=1198
+  _globals['_EOAUSERRESPONSE']._serialized_end=1288
+  _globals['_EOATOKEN']._serialized_start=1290
+  _globals['_EOATOKEN']._serialized_end=1336
+  _globals['_PENDINGHYPERLIQUIDLAUNCHREQUEST']._serialized_start=1338
+  _globals['_PENDINGHYPERLIQUIDLAUNCHREQUEST']._serialized_end=1371
+  _globals['_PENDINGHYPERLIQUIDLAUNCHRESPONSE']._serialized_start=1373
+  _globals['_PENDINGHYPERLIQUIDLAUNCHRESPONSE']._serialized_end=1450
+  _globals['_EDITHYPERLIQUIDLAUNCHREQUEST']._serialized_start=1453
+  _globals['_EDITHYPERLIQUIDLAUNCHREQUEST']._serialized_end=1737
+  _globals['_EDITHYPERLIQUIDLAUNCHRESPONSE']._serialized_start=1739
+  _globals['_EDITHYPERLIQUIDLAUNCHRESPONSE']._serialized_end=1813
+  _globals['_LAUNCHHPUMPV1LAUNCHREQUEST']._serialized_start=1816
+  _globals['_LAUNCHHPUMPV1LAUNCHREQUEST']._serialized_end=1958
+  _globals['_LAUNCHHPUMPV1LAUNCHRESPONSE']._serialized_start=1960
+  _globals['_LAUNCHHPUMPV1LAUNCHRESPONSE']._serialized_end=2046
+  _globals['_EOAUSEREVMMODIFYREQUEST']._serialized_start=2048
+  _globals['_EOAUSEREVMMODIFYREQUEST']._serialized_end=2099
+  _globals['_EOAUSEREVMMODIFYRESPONSE']._serialized_start=2101
+  _globals['_EOAUSEREVMMODIFYRESPONSE']._serialized_end=2127
+  _globals['_EOA']._serialized_start=2184
+  _globals['_EOA']._serialized_end=3005
 # @@protoc_insertion_point(module_scope)

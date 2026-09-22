@@ -20,6 +20,8 @@ import type { KmsCancelFactorResetResponse } from "./kms";
 import type { KmsCancelFactorResetRequest } from "./kms";
 import type { KmsRequestFactorResetResponse } from "./kms";
 import type { KmsRequestFactorResetRequest } from "./kms";
+import type { KmsGetAccountInfoResponse } from "./kms";
+import type { KmsGetAccountInfoRequest } from "./kms";
 import type { KmsAccountSignMessageResponse } from "./kms";
 import type { KmsAccountSignMessageRequest } from "./kms";
 import type { KmsAccountShardSecretResponse } from "./kms";
@@ -100,6 +102,14 @@ export interface IKmsClient {
      * @generated from protobuf rpc: AccountSignMessage
      */
     accountSignMessage(input: KmsAccountSignMessageRequest, options?: RpcOptions): UnaryCall<KmsAccountSignMessageRequest, KmsAccountSignMessageResponse>;
+    /**
+     * GetAccountInfo is the account-routed read: providers, wallets, factor
+     * types and enclave agents, straight from the instance. No enclave
+     * round-trip.
+     *
+     * @generated from protobuf rpc: GetAccountInfo
+     */
+    getAccountInfo(input: KmsGetAccountInfoRequest, options?: RpcOptions): UnaryCall<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse>;
     /**
      * Locked-out flows: no bot JWT exists; routed by the plaintext
      * subject_hash like LoginOrRegister. Auth lives inside the sealed payload
@@ -241,6 +251,17 @@ export class KmsClient implements IKmsClient, ServiceInfo {
         return stackIntercept<KmsAccountSignMessageRequest, KmsAccountSignMessageResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * GetAccountInfo is the account-routed read: providers, wallets, factor
+     * types and enclave agents, straight from the instance. No enclave
+     * round-trip.
+     *
+     * @generated from protobuf rpc: GetAccountInfo
+     */
+    getAccountInfo(input: KmsGetAccountInfoRequest, options?: RpcOptions): UnaryCall<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse> {
+        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * Locked-out flows: no bot JWT exists; routed by the plaintext
      * subject_hash like LoginOrRegister. Auth lives inside the sealed payload
      * and is enforced by the enclave.
@@ -248,28 +269,28 @@ export class KmsClient implements IKmsClient, ServiceInfo {
      * @generated from protobuf rpc: RequestFactorReset
      */
     requestFactorReset(input: KmsRequestFactorResetRequest, options?: RpcOptions): UnaryCall<KmsRequestFactorResetRequest, KmsRequestFactorResetResponse> {
-        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        const method = this.methods[9], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsRequestFactorResetRequest, KmsRequestFactorResetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: CancelFactorReset
      */
     cancelFactorReset(input: KmsCancelFactorResetRequest, options?: RpcOptions): UnaryCall<KmsCancelFactorResetRequest, KmsCancelFactorResetResponse> {
-        const method = this.methods[9], opt = this._transport.mergeOptions(options);
+        const method = this.methods[10], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsCancelFactorResetRequest, KmsCancelFactorResetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: ExecuteFactorReset
      */
     executeFactorReset(input: KmsExecuteFactorResetRequest, options?: RpcOptions): UnaryCall<KmsExecuteFactorResetRequest, KmsExecuteFactorResetResponse> {
-        const method = this.methods[10], opt = this._transport.mergeOptions(options);
+        const method = this.methods[11], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsExecuteFactorResetRequest, KmsExecuteFactorResetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: RecoverKeys
      */
     recoverKeys(input: KmsRecoverKeysRequest, options?: RpcOptions): UnaryCall<KmsRecoverKeysRequest, KmsRecoverKeysResponse> {
-        const method = this.methods[11], opt = this._transport.mergeOptions(options);
+        const method = this.methods[12], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsRecoverKeysRequest, KmsRecoverKeysResponse>("unary", this._transport, method, opt, input);
     }
     /**
@@ -283,7 +304,7 @@ export class KmsClient implements IKmsClient, ServiceInfo {
      * @generated from protobuf rpc: CompleteAccountHandoff
      */
     completeAccountHandoff(input: KmsCompleteAccountHandoffRequest, options?: RpcOptions): UnaryCall<KmsCompleteAccountHandoffRequest, KmsCompleteAccountHandoffResponse> {
-        const method = this.methods[12], opt = this._transport.mergeOptions(options);
+        const method = this.methods[13], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsCompleteAccountHandoffRequest, KmsCompleteAccountHandoffResponse>("unary", this._transport, method, opt, input);
     }
     /**
@@ -296,21 +317,21 @@ export class KmsClient implements IKmsClient, ServiceInfo {
      * @generated from protobuf rpc: HyperliquidAgentSignatureCreate
      */
     hyperliquidAgentSignatureCreate(input: KmsHyperliquidAgentSignatureCreateRequest, options?: RpcOptions): UnaryCall<KmsHyperliquidAgentSignatureCreateRequest, KmsHyperliquidAgentSignatureCreateResponse> {
-        const method = this.methods[13], opt = this._transport.mergeOptions(options);
+        const method = this.methods[14], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsHyperliquidAgentSignatureCreateRequest, KmsHyperliquidAgentSignatureCreateResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HyperliquidAgentWalletCreate
      */
     hyperliquidAgentWalletCreate(input: KmsHyperliquidAgentWalletCreateRequest, options?: RpcOptions): UnaryCall<KmsHyperliquidAgentWalletCreateRequest, KmsHyperliquidAgentWalletCreateResponse> {
-        const method = this.methods[14], opt = this._transport.mergeOptions(options);
+        const method = this.methods[15], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsHyperliquidAgentWalletCreateRequest, KmsHyperliquidAgentWalletCreateResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: HyperliquidAgentWalletRenew
      */
     hyperliquidAgentWalletRenew(input: KmsHyperliquidAgentWalletRenewRequest, options?: RpcOptions): UnaryCall<KmsHyperliquidAgentWalletRenewRequest, KmsHyperliquidAgentWalletRenewResponse> {
-        const method = this.methods[15], opt = this._transport.mergeOptions(options);
+        const method = this.methods[16], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsHyperliquidAgentWalletRenewRequest, KmsHyperliquidAgentWalletRenewResponse>("unary", this._transport, method, opt, input);
     }
 }

@@ -71,8 +71,8 @@ type KmsClient interface {
 	// canonical action that was signed.
 	AccountSignMessage(ctx context.Context, in *KmsAccountSignMessageRequest, opts ...grpc.CallOption) (*KmsAccountSignMessageResponse, error)
 	// GetAccountInfo is the account-routed read: providers, wallets, factor
-	// types and enclave agents, straight from the instance, plus the bot's
-	// Hyperliquid agent state per wallet. No enclave round-trip.
+	// types and enclave agents, straight from the instance. No enclave
+	// round-trip.
 	GetAccountInfo(ctx context.Context, in *KmsGetAccountInfoRequest, opts ...grpc.CallOption) (*KmsGetAccountInfoResponse, error)
 	// Locked-out flows: no bot JWT exists; routed by the plaintext
 	// subject_hash like LoginOrRegister. Auth lives inside the sealed payload
@@ -309,8 +309,8 @@ type KmsServer interface {
 	// canonical action that was signed.
 	AccountSignMessage(context.Context, *KmsAccountSignMessageRequest) (*KmsAccountSignMessageResponse, error)
 	// GetAccountInfo is the account-routed read: providers, wallets, factor
-	// types and enclave agents, straight from the instance, plus the bot's
-	// Hyperliquid agent state per wallet. No enclave round-trip.
+	// types and enclave agents, straight from the instance. No enclave
+	// round-trip.
 	GetAccountInfo(context.Context, *KmsGetAccountInfoRequest) (*KmsGetAccountInfoResponse, error)
 	// Locked-out flows: no bot JWT exists; routed by the plaintext
 	// subject_hash like LoginOrRegister. Auth lives inside the sealed payload

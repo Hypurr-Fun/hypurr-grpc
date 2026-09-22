@@ -78,6 +78,11 @@ class KmsStub:
                 request_serializer=hypurr_dot_kms__pb2.KmsAccountSignMessageRequest.SerializeToString,
                 response_deserializer=hypurr_dot_kms__pb2.KmsAccountSignMessageResponse.FromString,
                 _registered_method=True)
+        self.GetAccountInfo = channel.unary_unary(
+                '/hypurr.Kms/GetAccountInfo',
+                request_serializer=hypurr_dot_kms__pb2.KmsGetAccountInfoRequest.SerializeToString,
+                response_deserializer=hypurr_dot_kms__pb2.KmsGetAccountInfoResponse.FromString,
+                _registered_method=True)
         self.RequestFactorReset = channel.unary_unary(
                 '/hypurr.Kms/RequestFactorReset',
                 request_serializer=hypurr_dot_kms__pb2.KmsRequestFactorResetRequest.SerializeToString,
@@ -190,6 +195,15 @@ class KmsServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetAccountInfo(self, request, context):
+        """GetAccountInfo is the account-routed read: providers, wallets, factor
+        types and enclave agents, straight from the instance. No enclave
+        round-trip.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def RequestFactorReset(self, request, context):
         """Locked-out flows: no bot JWT exists; routed by the plaintext
         subject_hash like LoginOrRegister. Auth lives inside the sealed payload
@@ -294,6 +308,11 @@ def add_KmsServicer_to_server(servicer, server):
                     servicer.AccountSignMessage,
                     request_deserializer=hypurr_dot_kms__pb2.KmsAccountSignMessageRequest.FromString,
                     response_serializer=hypurr_dot_kms__pb2.KmsAccountSignMessageResponse.SerializeToString,
+            ),
+            'GetAccountInfo': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAccountInfo,
+                    request_deserializer=hypurr_dot_kms__pb2.KmsGetAccountInfoRequest.FromString,
+                    response_serializer=hypurr_dot_kms__pb2.KmsGetAccountInfoResponse.SerializeToString,
             ),
             'RequestFactorReset': grpc.unary_unary_rpc_method_handler(
                     servicer.RequestFactorReset,
@@ -556,6 +575,33 @@ class Kms:
             '/hypurr.Kms/AccountSignMessage',
             hypurr_dot_kms__pb2.KmsAccountSignMessageRequest.SerializeToString,
             hypurr_dot_kms__pb2.KmsAccountSignMessageResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAccountInfo(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Kms/GetAccountInfo',
+            hypurr_dot_kms__pb2.KmsGetAccountInfoRequest.SerializeToString,
+            hypurr_dot_kms__pb2.KmsGetAccountInfoResponse.FromString,
             options,
             channel_credentials,
             insecure,

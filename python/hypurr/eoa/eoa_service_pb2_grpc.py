@@ -4,6 +4,7 @@ import grpc
 import warnings
 
 from hypurr.eoa import eoa_service_pb2 as hypurr_dot_eoa_dot_eoa__service__pb2
+from hypurr import onramp_pb2 as hypurr_dot_onramp__pb2
 
 GRPC_GENERATED_VERSION = '1.81.0'
 GRPC_VERSION = grpc.__version__
@@ -75,6 +76,11 @@ class EOAStub:
                 request_serializer=hypurr_dot_eoa_dot_eoa__service__pb2.HyperliquidSpotTradeRequest.SerializeToString,
                 response_deserializer=hypurr_dot_eoa_dot_eoa__service__pb2.HyperliquidSpotTradeResponse.FromString,
                 _registered_method=True)
+        self.OnrampPurchases = channel.unary_unary(
+                '/eoa.EOA/OnrampPurchases',
+                request_serializer=hypurr_dot_onramp__pb2.OnrampPurchasesRequest.SerializeToString,
+                response_deserializer=hypurr_dot_onramp__pb2.OnrampPurchasesResponse.FromString,
+                _registered_method=True)
 
 
 class EOAServicer:
@@ -131,6 +137,13 @@ class EOAServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def OnrampPurchases(self, request, context):
+        """Onramp — account derived from the session token
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_EOAServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -173,6 +186,11 @@ def add_EOAServicer_to_server(servicer, server):
                     servicer.HyperliquidSpotTrade,
                     request_deserializer=hypurr_dot_eoa_dot_eoa__service__pb2.HyperliquidSpotTradeRequest.FromString,
                     response_serializer=hypurr_dot_eoa_dot_eoa__service__pb2.HyperliquidSpotTradeResponse.SerializeToString,
+            ),
+            'OnrampPurchases': grpc.unary_unary_rpc_method_handler(
+                    servicer.OnrampPurchases,
+                    request_deserializer=hypurr_dot_onramp__pb2.OnrampPurchasesRequest.FromString,
+                    response_serializer=hypurr_dot_onramp__pb2.OnrampPurchasesResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -392,6 +410,33 @@ class EOA:
             '/eoa.EOA/HyperliquidSpotTrade',
             hypurr_dot_eoa_dot_eoa__service__pb2.HyperliquidSpotTradeRequest.SerializeToString,
             hypurr_dot_eoa_dot_eoa__service__pb2.HyperliquidSpotTradeResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def OnrampPurchases(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/eoa.EOA/OnrampPurchases',
+            hypurr_dot_onramp__pb2.OnrampPurchasesRequest.SerializeToString,
+            hypurr_dot_onramp__pb2.OnrampPurchasesResponse.FromString,
             options,
             channel_credentials,
             insecure,

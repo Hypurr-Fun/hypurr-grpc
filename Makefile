@@ -1,75 +1,67 @@
-# Protobuf definitions
-PROTO_FILES := $(shell find hypurr -type f -name '*.proto')
-# Protobuf TypeScript files
-PROTO_GEN_TS_FILES = $(patsubst %.proto, ts/%_pb.js, $(PROTO_FILES))
-# Protobuf Python files
-PROTO_GEN_PY_FILES = $(patsubst %.proto, python/%_pb2.py, $(PROTO_FILES))
-PROTO_GEN_PY_GRPC_FILES = $(patsubst %.proto, python/%_pb2_grpc.py, $(PROTO_FILES))
+# Keep input order stable across filesystems and operating systems.
+PROTO_FILES := $(sort $(shell find hypurr -type f -name '*.proto'))
 
-# Protobuf Go generator
-PROTO_GO_MAKER := protoc --proto_path=. --proto_path=/usr/local/include
-
-# Protobuf TypeScript generator
-PROTO_TS_MAKER := npx protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts
-
-# Protobuf Python generator
-# Use a local venv: the system grpcio-tools may bundle a protoc too old to
-# parse proto3 explicit `optional` fields. `make py-deps` provisions it.
+# protoc and its bundled standard includes are pinned by package.json.
+PROTOC := ./node_modules/.bin/protoc
+GO_PLUGIN := $(CURDIR)/.tools/protoc-gen-go-v1.34.2/protoc-gen-go
+GO_GRPC_PLUGIN := $(CURDIR)/.tools/protoc-gen-go-grpc-v1.4.0/protoc-gen-go-grpc
 PY := .venv/bin/python
-PROTO_PY_MAKER := $(PY) -m grpc_tools.protoc --proto_path=.
 
-GOCMD=go
-GOBUILD=$(GOCMD) build
-GOCLEAN=$(GOCMD) clean
+GO_OUT ?= go
+TS_OUT ?= ts
+PY_OUT ?= python
 
-.PHONY: all build clean golang javascript python py-deps
+.PHONY: all build clean protoclean golang javascript python js-deps py-deps
 
-# Default target
 all: build
-
-# Build everything
 build: golang javascript python
 
-# Compile Protobuf for Go. Always regenerate: checked-in generated files can
-# retain newer mtimes while containing stale output after a merge.
-golang:
-	@mkdir -p go
-	$(PROTO_GO_MAKER) \
-		--go_out=go --go-grpc_out=go \
+# Always regenerate all inputs, including dependants of imported protos.
+# File timestamps are not reliable after a checkout or merge.
+golang: js-deps $(GO_PLUGIN) $(GO_GRPC_PLUGIN)
+	@mkdir -p $(GO_OUT)
+	$(PROTOC) --proto_path=. \
+		--plugin=protoc-gen-go=$(GO_PLUGIN) \
+		--plugin=protoc-gen-go-grpc=$(GO_GRPC_PLUGIN) \
+		--go_out=$(GO_OUT) --go-grpc_out=$(GO_OUT) \
 		--go_opt=paths=source_relative --go-grpc_opt=paths=source_relative \
 		$(PROTO_FILES)
 
-# Compile Protobuf for TypeScript
-javascript: $(PROTO_GEN_TS_FILES)
+javascript: js-deps
+	@mkdir -p $(TS_OUT)
+	$(PROTOC) --proto_path=. \
+		--plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
+		--ts_opt=long_type_number --ts_out=$(TS_OUT) $(PROTO_FILES)
 
-# Compile Protobuf for Python
-python: py-deps $(PROTO_GEN_PY_FILES)
+python: py-deps
+	@mkdir -p $(PY_OUT)
+	$(PY) -m grpc_tools.protoc --proto_path=. \
+		--python_out=$(PY_OUT) --grpc_python_out=$(PY_OUT) $(PROTO_FILES)
 
-# Provision the Python toolchain (modern grpcio-tools) in a local venv
-py-deps: $(PY)
+# Use the npm lockfile for the compiler wrapper and TypeScript plugin tree.
+# Download protoc once before parallel language targets can invoke it.
+js-deps: node_modules/.proto-deps
+node_modules/.proto-deps: package.json package-lock.json
+	npm ci --no-audit --no-fund
+	$(PROTOC) --version
+	@touch $@
+
+# Install versioned Go plugins locally, never selecting binaries from PATH.
+$(GO_PLUGIN):
+	GOBIN=$(dir $(GO_PLUGIN)) go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.34.2
+
+$(GO_GRPC_PLUGIN):
+	GOBIN=$(dir $(GO_GRPC_PLUGIN)) go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.4.0
+
+# Refresh existing virtualenvs when the pinned toolchain changes.
+py-deps: .venv/.proto-deps
+.venv/.proto-deps: requirements-proto.txt $(PY)
+	$(PY) -m pip install --quiet -r requirements-proto.txt
+	@touch $@
+
 $(PY):
 	python3 -m venv .venv
-	$(PY) -m pip install --quiet --upgrade pip 'grpcio-tools>=1.62'
 
-# Generate TypeScript protobuf files
-ts/%_pb.js: %.proto
-	@mkdir -p $(dir $@)
-	$(PROTO_TS_MAKER) \
-		--proto_path=. \
-		--ts_opt=long_type_number \
-		--ts_out=ts \
-		$<
-
-# Generate Python protobuf files
-python/%_pb2.py python/%_pb2_grpc.py: %.proto
-	@mkdir -p $(dir $@)
-	$(PROTO_PY_MAKER) \
-		--python_out=python \
-		--grpc_python_out=python \
-		$<
-
-# Cleanup generated files
 clean: protoclean
-
 protoclean:
 	rm -rf go/ ts/ python/

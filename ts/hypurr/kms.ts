@@ -207,6 +207,101 @@ export interface KmsAccountDisable2FAResponse {
     attestation: Uint8Array;
 }
 /**
+ * @generated from protobuf message hypurr.KmsGetAccountInfoRequest
+ */
+export interface KmsGetAccountInfoRequest {
+    /**
+     * @generated from protobuf field: string instance_jwt = 1
+     */
+    instanceJwt: string;
+}
+/**
+ * @generated from protobuf message hypurr.KmsGetAccountInfoResponse
+ */
+export interface KmsGetAccountInfoResponse {
+    /**
+     * @generated from protobuf field: string account_id = 1
+     */
+    accountId: string;
+    /**
+     * @generated from protobuf field: repeated hypurr.KmsProviderInfo providers = 2
+     */
+    providers: KmsProviderInfo[];
+    /**
+     * @generated from protobuf field: repeated hypurr.KmsWalletInfo wallets = 3
+     */
+    wallets: KmsWalletInfo[];
+    /**
+     * @generated from protobuf field: repeated string two_factor_types = 4
+     */
+    twoFactorTypes: string[];
+    /**
+     * @generated from protobuf field: repeated hypurr.KmsAgentInfo agents = 5
+     */
+    agents: KmsAgentInfo[];
+}
+/**
+ * @generated from protobuf message hypurr.KmsProviderInfo
+ */
+export interface KmsProviderInfo {
+    /**
+     * @generated from protobuf field: string provider_id = 1
+     */
+    providerId: string;
+    /**
+     * @generated from protobuf field: string type = 2
+     */
+    type: string;
+    /**
+     * @generated from protobuf field: int64 added_at = 3
+     */
+    addedAt: number;
+}
+/**
+ * @generated from protobuf message hypurr.KmsWalletInfo
+ */
+export interface KmsWalletInfo {
+    /**
+     * The KMS wallet id, the key_id AccountSignMessage takes.
+     *
+     * @generated from protobuf field: string id = 1
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: string type = 2
+     */
+    type: string;
+    /**
+     * @generated from protobuf field: string address = 3
+     */
+    address: string;
+    /**
+     * @generated from protobuf field: int64 added_at = 4
+     */
+    addedAt: number;
+}
+/**
+ * @generated from protobuf message hypurr.KmsAgentInfo
+ */
+export interface KmsAgentInfo {
+    /**
+     * @generated from protobuf field: string agent_id = 1
+     */
+    agentId: string;
+    /**
+     * @generated from protobuf field: string name = 2
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: int64 expires_at = 3
+     */
+    expiresAt: number;
+    /**
+     * @generated from protobuf field: int64 created_at = 4
+     */
+    createdAt: number;
+}
+/**
  * @generated from protobuf message hypurr.KmsAccountShardSecretRequest
  */
 export interface KmsAccountShardSecretRequest {
@@ -375,6 +470,10 @@ export interface KmsHyperliquidAgentSignatureCreateResponse {
      * @generated from protobuf field: int64 signature_chain_id = 4
      */
     signatureChainId: number;
+    /**
+     * @generated from protobuf field: string hyperliquid_chain = 5
+     */
+    hyperliquidChain: string;
 }
 /**
  * @generated from protobuf message hypurr.KmsEIP712Signature
@@ -1262,6 +1361,337 @@ class KmsAccountDisable2FAResponse$Type extends MessageType<KmsAccountDisable2FA
  */
 export const KmsAccountDisable2FAResponse = new KmsAccountDisable2FAResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class KmsGetAccountInfoRequest$Type extends MessageType<KmsGetAccountInfoRequest> {
+    constructor() {
+        super("hypurr.KmsGetAccountInfoRequest", [
+            { no: 1, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KmsGetAccountInfoRequest>): KmsGetAccountInfoRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instanceJwt = "";
+        if (value !== undefined)
+            reflectionMergePartial<KmsGetAccountInfoRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsGetAccountInfoRequest): KmsGetAccountInfoRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string instance_jwt */ 1:
+                    message.instanceJwt = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsGetAccountInfoRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string instance_jwt = 1; */
+        if (message.instanceJwt !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.instanceJwt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsGetAccountInfoRequest
+ */
+export const KmsGetAccountInfoRequest = new KmsGetAccountInfoRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KmsGetAccountInfoResponse$Type extends MessageType<KmsGetAccountInfoResponse> {
+    constructor() {
+        super("hypurr.KmsGetAccountInfoResponse", [
+            { no: 1, name: "account_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "providers", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => KmsProviderInfo },
+            { no: 3, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => KmsWalletInfo },
+            { no: 4, name: "two_factor_types", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "agents", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => KmsAgentInfo }
+        ]);
+    }
+    create(value?: PartialMessage<KmsGetAccountInfoResponse>): KmsGetAccountInfoResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.accountId = "";
+        message.providers = [];
+        message.wallets = [];
+        message.twoFactorTypes = [];
+        message.agents = [];
+        if (value !== undefined)
+            reflectionMergePartial<KmsGetAccountInfoResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsGetAccountInfoResponse): KmsGetAccountInfoResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string account_id */ 1:
+                    message.accountId = reader.string();
+                    break;
+                case /* repeated hypurr.KmsProviderInfo providers */ 2:
+                    message.providers.push(KmsProviderInfo.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated hypurr.KmsWalletInfo wallets */ 3:
+                    message.wallets.push(KmsWalletInfo.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated string two_factor_types */ 4:
+                    message.twoFactorTypes.push(reader.string());
+                    break;
+                case /* repeated hypurr.KmsAgentInfo agents */ 5:
+                    message.agents.push(KmsAgentInfo.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsGetAccountInfoResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string account_id = 1; */
+        if (message.accountId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.accountId);
+        /* repeated hypurr.KmsProviderInfo providers = 2; */
+        for (let i = 0; i < message.providers.length; i++)
+            KmsProviderInfo.internalBinaryWrite(message.providers[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.KmsWalletInfo wallets = 3; */
+        for (let i = 0; i < message.wallets.length; i++)
+            KmsWalletInfo.internalBinaryWrite(message.wallets[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string two_factor_types = 4; */
+        for (let i = 0; i < message.twoFactorTypes.length; i++)
+            writer.tag(4, WireType.LengthDelimited).string(message.twoFactorTypes[i]);
+        /* repeated hypurr.KmsAgentInfo agents = 5; */
+        for (let i = 0; i < message.agents.length; i++)
+            KmsAgentInfo.internalBinaryWrite(message.agents[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsGetAccountInfoResponse
+ */
+export const KmsGetAccountInfoResponse = new KmsGetAccountInfoResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KmsProviderInfo$Type extends MessageType<KmsProviderInfo> {
+    constructor() {
+        super("hypurr.KmsProviderInfo", [
+            { no: 1, name: "provider_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "added_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KmsProviderInfo>): KmsProviderInfo {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.providerId = "";
+        message.type = "";
+        message.addedAt = 0;
+        if (value !== undefined)
+            reflectionMergePartial<KmsProviderInfo>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsProviderInfo): KmsProviderInfo {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string provider_id */ 1:
+                    message.providerId = reader.string();
+                    break;
+                case /* string type */ 2:
+                    message.type = reader.string();
+                    break;
+                case /* int64 added_at */ 3:
+                    message.addedAt = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsProviderInfo, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string provider_id = 1; */
+        if (message.providerId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.providerId);
+        /* string type = 2; */
+        if (message.type !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.type);
+        /* int64 added_at = 3; */
+        if (message.addedAt !== 0)
+            writer.tag(3, WireType.Varint).int64(message.addedAt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsProviderInfo
+ */
+export const KmsProviderInfo = new KmsProviderInfo$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KmsWalletInfo$Type extends MessageType<KmsWalletInfo> {
+    constructor() {
+        super("hypurr.KmsWalletInfo", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "added_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KmsWalletInfo>): KmsWalletInfo {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = "";
+        message.type = "";
+        message.address = "";
+        message.addedAt = 0;
+        if (value !== undefined)
+            reflectionMergePartial<KmsWalletInfo>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsWalletInfo): KmsWalletInfo {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* string type */ 2:
+                    message.type = reader.string();
+                    break;
+                case /* string address */ 3:
+                    message.address = reader.string();
+                    break;
+                case /* int64 added_at */ 4:
+                    message.addedAt = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsWalletInfo, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* string type = 2; */
+        if (message.type !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.type);
+        /* string address = 3; */
+        if (message.address !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.address);
+        /* int64 added_at = 4; */
+        if (message.addedAt !== 0)
+            writer.tag(4, WireType.Varint).int64(message.addedAt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsWalletInfo
+ */
+export const KmsWalletInfo = new KmsWalletInfo$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KmsAgentInfo$Type extends MessageType<KmsAgentInfo> {
+    constructor() {
+        super("hypurr.KmsAgentInfo", [
+            { no: 1, name: "agent_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KmsAgentInfo>): KmsAgentInfo {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.agentId = "";
+        message.name = "";
+        message.expiresAt = 0;
+        message.createdAt = 0;
+        if (value !== undefined)
+            reflectionMergePartial<KmsAgentInfo>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsAgentInfo): KmsAgentInfo {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string agent_id */ 1:
+                    message.agentId = reader.string();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* int64 expires_at */ 3:
+                    message.expiresAt = reader.int64().toNumber();
+                    break;
+                case /* int64 created_at */ 4:
+                    message.createdAt = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsAgentInfo, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string agent_id = 1; */
+        if (message.agentId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.agentId);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* int64 expires_at = 3; */
+        if (message.expiresAt !== 0)
+            writer.tag(3, WireType.Varint).int64(message.expiresAt);
+        /* int64 created_at = 4; */
+        if (message.createdAt !== 0)
+            writer.tag(4, WireType.Varint).int64(message.createdAt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsAgentInfo
+ */
+export const KmsAgentInfo = new KmsAgentInfo$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class KmsAccountShardSecretRequest$Type extends MessageType<KmsAccountShardSecretRequest> {
     constructor() {
         super("hypurr.KmsAccountShardSecretRequest", [
@@ -1935,7 +2365,8 @@ class KmsHyperliquidAgentSignatureCreateResponse$Type extends MessageType<KmsHyp
             { no: 1, name: "agent_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "agent_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "nonce", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "signature_chain_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 4, name: "signature_chain_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "hyperliquid_chain", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsHyperliquidAgentSignatureCreateResponse>): KmsHyperliquidAgentSignatureCreateResponse {
@@ -1944,6 +2375,7 @@ class KmsHyperliquidAgentSignatureCreateResponse$Type extends MessageType<KmsHyp
         message.agentName = "";
         message.nonce = 0;
         message.signatureChainId = 0;
+        message.hyperliquidChain = "";
         if (value !== undefined)
             reflectionMergePartial<KmsHyperliquidAgentSignatureCreateResponse>(this, message, value);
         return message;
@@ -1964,6 +2396,9 @@ class KmsHyperliquidAgentSignatureCreateResponse$Type extends MessageType<KmsHyp
                     break;
                 case /* int64 signature_chain_id */ 4:
                     message.signatureChainId = reader.int64().toNumber();
+                    break;
+                case /* string hyperliquid_chain */ 5:
+                    message.hyperliquidChain = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1989,6 +2424,9 @@ class KmsHyperliquidAgentSignatureCreateResponse$Type extends MessageType<KmsHyp
         /* int64 signature_chain_id = 4; */
         if (message.signatureChainId !== 0)
             writer.tag(4, WireType.Varint).int64(message.signatureChainId);
+        /* string hyperliquid_chain = 5; */
+        if (message.hyperliquidChain !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.hyperliquidChain);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2286,6 +2724,7 @@ export const Kms = new ServiceType("hypurr.Kms", [
     { name: "AccountDisable2FA", options: {}, I: KmsAccountDisable2FARequest, O: KmsAccountDisable2FAResponse },
     { name: "AccountShardSecret", options: {}, I: KmsAccountShardSecretRequest, O: KmsAccountShardSecretResponse },
     { name: "AccountSignMessage", options: {}, I: KmsAccountSignMessageRequest, O: KmsAccountSignMessageResponse },
+    { name: "GetAccountInfo", options: {}, I: KmsGetAccountInfoRequest, O: KmsGetAccountInfoResponse },
     { name: "RequestFactorReset", options: {}, I: KmsRequestFactorResetRequest, O: KmsRequestFactorResetResponse },
     { name: "CancelFactorReset", options: {}, I: KmsCancelFactorResetRequest, O: KmsCancelFactorResetResponse },
     { name: "ExecuteFactorReset", options: {}, I: KmsExecuteFactorResetRequest, O: KmsExecuteFactorResetResponse },
