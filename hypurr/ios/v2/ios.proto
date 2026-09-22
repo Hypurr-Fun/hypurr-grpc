@@ -5,6 +5,9 @@ option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios/v2;iosv2";
 service IosService {
   rpc Home(HomeRequest) returns (HomeResponse);
   rpc LiveAssetUpdates(LiveAssetUpdatesRequest) returns (stream AssetTicks);
+  rpc Catalog(CatalogRequest) returns (CatalogResponse);
+  rpc AssetDetail(AssetDetailRequest) returns (AssetDetailResponse);
+  rpc AssetDetailLiveUpdates(AssetDetailLiveUpdatesRequest) returns (stream MarketTick);
 }
 
 // ==== Shared ====
@@ -102,6 +105,20 @@ message Market {
   Color color = 12;
 }
 
+// A market with its current price. Used wherever a list of markets is shown.
+message MarketQuote {
+  Market market = 1;
+  // Same format as HomeMarketPrice.price_decimal.
+  string price_decimal = 2;
+  // Change over the last 24 hours, e.g. 6.0 = +6%.
+  double change_percentage = 3;
+  oneof valuation {
+    int64 market_cap_cents = 4;    // spot
+    int64 open_interest_cents = 5; // perp
+    int64 liquidity_cents = 6;     // pool
+  }
+}
+
 enum PositionDirection {
   POSITION_DIRECTION_UNSPECIFIED = 0;
   POSITION_DIRECTION_LONG = 1;
@@ -161,6 +178,150 @@ message AssetTick {
   string occurred_at = 2;   // RFC3339 UTC.
   // Price of the asset's reference market. Same format as HomeMarketPrice.price_decimal.
   string price_decimal = 3;
+}
+
+// ==== Catalog ====
+
+message CatalogRequest {}
+
+message CatalogResponse {
+  // Every asset with a market the app can show. Sorted by the reference
+  // market's 24h notional, largest first.
+  repeated CatalogEntry entries = 1;
+}
+
+message CatalogEntry {
+  Asset asset = 1;
+  // Every market of this asset. The first is the reference market.
+  repeated MarketQuote markets = 2;
+}
+
+// ==== Asset detail ====
+
+message AssetDetailRequest {
+  uint32 asset_id = 1;
+  // The market whose candles, stats and activity to return. Unset = the
+  // reference market. Check presence, not zero: market id 0 is a valid market.
+  optional uint64 market_id = 2;
+  // Candles of the selected market.
+  ChartPeriod chart_period = 3;
+}
+
+message ChartPeriod {
+  ChartInterval interval = 1;
+  // RFC3339 UTC range [start_at, end_at). Both fall on a 15 minute boundary.
+  string start_at = 2;
+  string end_at = 3;
+}
+
+enum ChartInterval {
+  CHART_INTERVAL_UNSPECIFIED = 0;
+  CHART_INTERVAL_15M = 1;
+  CHART_INTERVAL_30M = 2;
+  CHART_INTERVAL_1H = 3;
+  CHART_INTERVAL_2H = 4;
+  CHART_INTERVAL_4H = 5;
+  CHART_INTERVAL_8H = 6;
+  CHART_INTERVAL_12H = 7;
+  CHART_INTERVAL_1D = 8;
+  CHART_INTERVAL_3D = 9;
+  CHART_INTERVAL_1W = 10;
+  CHART_INTERVAL_30D = 11;
+}
+
+message AssetDetailResponse {
+  Asset asset = 1;
+  // Tabs. The first is the reference market.
+  repeated MarketQuote markets = 2;
+  uint64 selected_market_id = 3;
+  // One series, the selected market.
+  Candles candles = 4;
+  MarketStats stats = 5;
+  // The user's activity on the selected market; newest first, at most 10.
+  repeated ActivityItem recent_activity = 6;
+  AssetDetailAbout about = 7;
+}
+
+message Candles {
+  // Effective bucket duration in seconds.
+  int64 candle_interval_seconds = 1;
+  // One series per market, in request order.
+  repeated CandleSeries series = 2;
+}
+
+message CandleSeries {
+  uint64 market_id = 1;
+  // Oldest first; empty when the market has no observations in the range.
+  repeated Candle candles = 2;
+}
+
+message Candle {
+  // Stable, series-unique id: "<market_id>:<bucket_start_rfc3339>".
+  string id = 1;
+  // RFC3339 UTC start of the candle bucket.
+  string occurred_at = 2;
+  // Simple price for price-only consumers. Always equals close_decimal.
+  string price_decimal = 3;
+  // USD OHLC decimal strings; low <= min(open, close), high >= max(open, close).
+  string open_decimal = 4;
+  string high_decimal = 5;
+  string low_decimal = 6;
+  string close_decimal = 7;
+}
+
+message MarketStats {
+  oneof stats {
+    PerpStats perp = 1;
+    SpotStats spot = 2;
+  }
+}
+
+message PerpStats {
+  int64 volume_24h_cents = 1;
+  // Current hourly funding as a decimal fraction, e.g. "0.0000125".
+  string hourly_funding_rate_fraction = 2;
+  // Empty when unknown.
+  string all_time_high_price_decimal = 3;
+  int32 max_leverage = 4;
+  string category = 5;
+  int64 open_interest_cents = 6;
+}
+
+message SpotStats {
+  int64 volume_24h_cents = 1;
+  int64 holder_count = 2;
+  int64 fully_diluted_valuation_cents = 3;
+  // Empty when unknown.
+  string all_time_high_price_decimal = 4;
+  int64 market_cap_cents = 5;
+}
+
+message AssetDetailAbout {
+  string description = 1;
+  repeated AssetDetailAboutLink links = 2;
+}
+
+message AssetDetailAboutLink {
+  AssetDetailAboutLinkType type = 1;
+  string url = 2;
+}
+
+enum AssetDetailAboutLinkType {
+  ASSET_DETAIL_ABOUT_LINK_TYPE_UNSPECIFIED = 0;
+  ASSET_DETAIL_ABOUT_LINK_TYPE_WEBSITE = 1;
+  ASSET_DETAIL_ABOUT_LINK_TYPE_EXPLORER = 2;
+  ASSET_DETAIL_ABOUT_LINK_TYPE_SOCIAL = 3;
+}
+
+// Dedicated price stream for the open asset detail screen.
+message AssetDetailLiveUpdatesRequest {
+  uint64 market_id = 1;
+}
+
+message MarketTick {
+  uint64 market_id = 1;
+  string occurred_at = 2;   // RFC3339 UTC.
+  string price_decimal = 3; // Same format as HomeMarketPrice.price_decimal.
 }
 
 message ActivityTokenAmount {

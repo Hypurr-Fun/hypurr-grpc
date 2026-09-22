@@ -44,6 +44,21 @@ class IosServiceStub:
                 request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.LiveAssetUpdatesRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetTicks.FromString,
                 _registered_method=True)
+        self.Catalog = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/Catalog',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.CatalogRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.CatalogResponse.FromString,
+                _registered_method=True)
+        self.AssetDetail = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/AssetDetail',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetDetailRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetDetailResponse.FromString,
+                _registered_method=True)
+        self.AssetDetailLiveUpdates = channel.unary_stream(
+                '/hypurr.ios.v2.IosService/AssetDetailLiveUpdates',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetDetailLiveUpdatesRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.MarketTick.FromString,
+                _registered_method=True)
 
 
 class IosServiceServicer:
@@ -61,6 +76,24 @@ class IosServiceServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Catalog(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AssetDetail(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AssetDetailLiveUpdates(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_IosServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -73,6 +106,21 @@ def add_IosServiceServicer_to_server(servicer, server):
                     servicer.LiveAssetUpdates,
                     request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.LiveAssetUpdatesRequest.FromString,
                     response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetTicks.SerializeToString,
+            ),
+            'Catalog': grpc.unary_unary_rpc_method_handler(
+                    servicer.Catalog,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.CatalogRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.CatalogResponse.SerializeToString,
+            ),
+            'AssetDetail': grpc.unary_unary_rpc_method_handler(
+                    servicer.AssetDetail,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetDetailRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetDetailResponse.SerializeToString,
+            ),
+            'AssetDetailLiveUpdates': grpc.unary_stream_rpc_method_handler(
+                    servicer.AssetDetailLiveUpdates,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetDetailLiveUpdatesRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.MarketTick.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -129,6 +177,87 @@ class IosService:
             '/hypurr.ios.v2.IosService/LiveAssetUpdates',
             hypurr_dot_ios_dot_v2_dot_ios__pb2.LiveAssetUpdatesRequest.SerializeToString,
             hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetTicks.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Catalog(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/Catalog',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.CatalogRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.CatalogResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AssetDetail(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/AssetDetail',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetDetailRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetDetailResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AssetDetailLiveUpdates(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/AssetDetailLiveUpdates',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetDetailLiveUpdatesRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.MarketTick.FromString,
             options,
             channel_credentials,
             insecure,

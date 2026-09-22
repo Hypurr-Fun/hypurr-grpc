@@ -36,7 +36,7 @@ export interface KmsLoginIntentRequest {
     /**
      * @generated from protobuf field: string id_token = 2
      */
-    idToken: string; // the provider id_token the app is about to log in with
+    idToken: string;
 }
 /**
  * @generated from protobuf message hypurr.KmsLoginIntentResponse
@@ -69,26 +69,19 @@ export interface KmsLoginOrRegisterResponse {
      */
     attestation: Uint8Array;
     /**
-     * Set on the first logins of a legacy bot user whose KMS account the bot
-     * created for them (custodial -> KMS migration). Absent otherwise.
+     * Migrated legacy bot users only, absent otherwise.
      *
      * @generated from protobuf field: hypurr.KmsAccountHandoff handoff = 2
      */
     handoff?: KmsAccountHandoff;
 }
 /**
- * The bot-held half of a migrated account: the user shard and recovery codes
- * the enclave issued when the bot registered the account, each sealed to the
- * enclave-attested device key of THIS login. The app stores them like the
- * ones a normal registration returns. Re-delivered on every login for 7 days
- * after the first delivery, then purged from the bot.
+ * User shard and recovery codes sealed to the device key of this login.
  *
  * @generated from protobuf message hypurr.KmsAccountHandoff
  */
 export interface KmsAccountHandoff {
     /**
-     * Present unless requires_2fa is set.
-     *
      * @generated from protobuf field: bytes user_shard_sealed = 1
      */
     userShardSealed: Uint8Array;
@@ -97,8 +90,7 @@ export interface KmsAccountHandoff {
      */
     recoveryCodesSealed: Uint8Array;
     /**
-     * The account's factor is the bot TOTP: call CompleteAccountHandoff with
-     * the login attestation + code to get the shard and codes.
+     * Set instead of the two above when CompleteAccountHandoff is required.
      *
      * @generated from protobuf field: bool requires_2fa = 3
      */
@@ -109,8 +101,7 @@ export interface KmsAccountHandoff {
  */
 export interface KmsCompleteAccountHandoffRequest {
     /**
-     * The attestation from the KmsLoginOrRegisterResponse that reported
-     * requires_2fa. Must still be within the verifier freshness window.
+     * The login attestation that reported requires_2fa.
      *
      * @generated from protobuf field: bytes attestation = 1
      */
@@ -138,9 +129,6 @@ export interface KmsAddProviderRequest {
      */
     encryptedPayload: Uint8Array;
     /**
-     * Plaintext routing for the instance's uniqueness checks; the enclave
-     * independently verifies them against the sealed payload.
-     *
      * @generated from protobuf field: string added_subject_hash = 2
      */
     addedSubjectHash: string;
@@ -262,11 +250,9 @@ export interface KmsProviderInfo {
  */
 export interface KmsWalletInfo {
     /**
-     * The KMS wallet id, the key_id AccountSignMessage takes.
-     *
      * @generated from protobuf field: string id = 1
      */
-    id: string;
+    id: string; // the key_id of AccountSignMessage
     /**
      * @generated from protobuf field: string type = 2
      */
@@ -332,9 +318,9 @@ export interface KmsRequestFactorResetRequest {
      */
     encryptedPayload: Uint8Array;
     /**
-     * @generated from protobuf field: string subject_hash = 2
+     * @generated from protobuf field: string instance_jwt = 2
      */
-    subjectHash: string;
+    instanceJwt: string;
 }
 /**
  * @generated from protobuf message hypurr.KmsRequestFactorResetResponse
@@ -354,9 +340,9 @@ export interface KmsCancelFactorResetRequest {
      */
     encryptedPayload: Uint8Array;
     /**
-     * @generated from protobuf field: string subject_hash = 2
+     * @generated from protobuf field: string instance_jwt = 2
      */
-    subjectHash: string;
+    instanceJwt: string;
 }
 /**
  * @generated from protobuf message hypurr.KmsCancelFactorResetResponse
@@ -376,9 +362,9 @@ export interface KmsExecuteFactorResetRequest {
      */
     encryptedPayload: Uint8Array;
     /**
-     * @generated from protobuf field: string subject_hash = 2
+     * @generated from protobuf field: string instance_jwt = 2
      */
-    subjectHash: string;
+    instanceJwt: string;
 }
 /**
  * @generated from protobuf message hypurr.KmsExecuteFactorResetResponse
@@ -398,9 +384,9 @@ export interface KmsRecoverKeysRequest {
      */
     encryptedPayload: Uint8Array;
     /**
-     * @generated from protobuf field: string subject_hash = 2
+     * @generated from protobuf field: string instance_jwt = 2
      */
-    subjectHash: string;
+    instanceJwt: string;
 }
 /**
  * @generated from protobuf message hypurr.KmsRecoverKeysResponse
@@ -438,128 +424,48 @@ export interface KmsAccountSignMessageResponse {
     attestation: Uint8Array;
 }
 /**
- * @generated from protobuf message hypurr.KmsHyperliquidAgentSignatureCreateRequest
+ * @generated from protobuf message hypurr.KmsRequestAgentRequest
  */
-export interface KmsHyperliquidAgentSignatureCreateRequest {
+export interface KmsRequestAgentRequest {
     /**
-     * The KMS wallet that will approve the agent.
-     *
-     * @generated from protobuf field: string wallet_address = 1
+     * @generated from protobuf field: repeated string wallet_addresses = 1
      */
-    walletAddress: string;
+    walletAddresses: string[];
 }
 /**
- * @generated from protobuf message hypurr.KmsHyperliquidAgentSignatureCreateResponse
+ * @generated from protobuf message hypurr.KmsRequestAgentResponse
  */
-export interface KmsHyperliquidAgentSignatureCreateResponse {
+export interface KmsRequestAgentResponse {
     /**
-     * @generated from protobuf field: string agent_address = 1
+     * @generated from protobuf field: bytes public_key = 1
      */
-    agentAddress: string;
-    /**
-     * "<name> <wallet> <expires_at>", the expiry is parsed from it.
-     *
-     * @generated from protobuf field: string agent_name = 2
-     */
-    agentName: string;
-    /**
-     * @generated from protobuf field: int64 nonce = 3
-     */
-    nonce: number;
-    /**
-     * @generated from protobuf field: int64 signature_chain_id = 4
-     */
-    signatureChainId: number;
-    /**
-     * @generated from protobuf field: string hyperliquid_chain = 5
-     */
-    hyperliquidChain: string;
+    publicKey: Uint8Array; // 33-byte compressed secp256k1
 }
 /**
- * @generated from protobuf message hypurr.KmsEIP712Signature
+ * @generated from protobuf message hypurr.KmsAccountApproveAgentRequest
  */
-export interface KmsEIP712Signature {
+export interface KmsAccountApproveAgentRequest {
     /**
-     * @generated from protobuf field: string agent_address = 1
+     * @generated from protobuf field: bytes encrypted_payload = 1
      */
-    agentAddress: string;
+    encryptedPayload: Uint8Array;
     /**
-     * @generated from protobuf field: string agent_name = 2
+     * @generated from protobuf field: string instance_jwt = 2
      */
-    agentName: string;
-    /**
-     * @generated from protobuf field: int64 nonce = 3
-     */
-    nonce: number;
-    /**
-     * 65 bytes r||s||v, hex.
-     *
-     * @generated from protobuf field: string signature = 4
-     */
-    signature: string;
-    /**
-     * @generated from protobuf field: int64 chain_id = 5
-     */
-    chainId: number;
+    instanceJwt: string;
 }
 /**
- * @generated from protobuf message hypurr.KmsHyperliquidAgentWalletCreateRequest
+ * @generated from protobuf message hypurr.KmsAccountApproveAgentResponse
  */
-export interface KmsHyperliquidAgentWalletCreateRequest {
+export interface KmsAccountApproveAgentResponse {
     /**
-     * @generated from protobuf oneof: proof
+     * @generated from protobuf field: bytes attestation = 1
      */
-    proof: {
-        oneofKind: "attestation";
-        /**
-         * Web: the AccountSignMessage attestation carrying the approveAgent
-         * action and its signature.
-         *
-         * @generated from protobuf field: bytes attestation = 1
-         */
-        attestation: Uint8Array;
-    } | {
-        oneofKind: "signature";
-        /**
-         * @generated from protobuf field: hypurr.KmsEIP712Signature signature = 2
-         */
-        signature: KmsEIP712Signature;
-    } | {
-        oneofKind: undefined;
-    };
-}
-/**
- * @generated from protobuf message hypurr.KmsHyperliquidAgentWalletCreateResponse
- */
-export interface KmsHyperliquidAgentWalletCreateResponse {
-}
-/**
- * @generated from protobuf message hypurr.KmsHyperliquidAgentWalletRenewRequest
- */
-export interface KmsHyperliquidAgentWalletRenewRequest {
+    attestation: Uint8Array;
     /**
-     * @generated from protobuf oneof: proof
+     * @generated from protobuf field: string agent_id = 2
      */
-    proof: {
-        oneofKind: "attestation";
-        /**
-         * @generated from protobuf field: bytes attestation = 1
-         */
-        attestation: Uint8Array;
-    } | {
-        oneofKind: "signature";
-        /**
-         * @generated from protobuf field: hypurr.KmsEIP712Signature signature = 2
-         */
-        signature: KmsEIP712Signature;
-    } | {
-        oneofKind: undefined;
-    };
-}
-/**
- * @generated from protobuf message hypurr.KmsHyperliquidAgentWalletRenewResponse
- */
-export interface KmsHyperliquidAgentWalletRenewResponse {
+    agentId: string;
 }
 /**
  * @generated from protobuf enum hypurr.KmsLoginIntentKind
@@ -1798,13 +1704,13 @@ class KmsRequestFactorResetRequest$Type extends MessageType<KmsRequestFactorRese
     constructor() {
         super("hypurr.KmsRequestFactorResetRequest", [
             { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "subject_hash", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsRequestFactorResetRequest>): KmsRequestFactorResetRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.encryptedPayload = new Uint8Array(0);
-        message.subjectHash = "";
+        message.instanceJwt = "";
         if (value !== undefined)
             reflectionMergePartial<KmsRequestFactorResetRequest>(this, message, value);
         return message;
@@ -1817,8 +1723,8 @@ class KmsRequestFactorResetRequest$Type extends MessageType<KmsRequestFactorRese
                 case /* bytes encrypted_payload */ 1:
                     message.encryptedPayload = reader.bytes();
                     break;
-                case /* string subject_hash */ 2:
-                    message.subjectHash = reader.string();
+                case /* string instance_jwt */ 2:
+                    message.instanceJwt = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1835,9 +1741,9 @@ class KmsRequestFactorResetRequest$Type extends MessageType<KmsRequestFactorRese
         /* bytes encrypted_payload = 1; */
         if (message.encryptedPayload.length)
             writer.tag(1, WireType.LengthDelimited).bytes(message.encryptedPayload);
-        /* string subject_hash = 2; */
-        if (message.subjectHash !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.subjectHash);
+        /* string instance_jwt = 2; */
+        if (message.instanceJwt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1900,13 +1806,13 @@ class KmsCancelFactorResetRequest$Type extends MessageType<KmsCancelFactorResetR
     constructor() {
         super("hypurr.KmsCancelFactorResetRequest", [
             { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "subject_hash", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsCancelFactorResetRequest>): KmsCancelFactorResetRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.encryptedPayload = new Uint8Array(0);
-        message.subjectHash = "";
+        message.instanceJwt = "";
         if (value !== undefined)
             reflectionMergePartial<KmsCancelFactorResetRequest>(this, message, value);
         return message;
@@ -1919,8 +1825,8 @@ class KmsCancelFactorResetRequest$Type extends MessageType<KmsCancelFactorResetR
                 case /* bytes encrypted_payload */ 1:
                     message.encryptedPayload = reader.bytes();
                     break;
-                case /* string subject_hash */ 2:
-                    message.subjectHash = reader.string();
+                case /* string instance_jwt */ 2:
+                    message.instanceJwt = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1937,9 +1843,9 @@ class KmsCancelFactorResetRequest$Type extends MessageType<KmsCancelFactorResetR
         /* bytes encrypted_payload = 1; */
         if (message.encryptedPayload.length)
             writer.tag(1, WireType.LengthDelimited).bytes(message.encryptedPayload);
-        /* string subject_hash = 2; */
-        if (message.subjectHash !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.subjectHash);
+        /* string instance_jwt = 2; */
+        if (message.instanceJwt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2002,13 +1908,13 @@ class KmsExecuteFactorResetRequest$Type extends MessageType<KmsExecuteFactorRese
     constructor() {
         super("hypurr.KmsExecuteFactorResetRequest", [
             { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "subject_hash", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsExecuteFactorResetRequest>): KmsExecuteFactorResetRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.encryptedPayload = new Uint8Array(0);
-        message.subjectHash = "";
+        message.instanceJwt = "";
         if (value !== undefined)
             reflectionMergePartial<KmsExecuteFactorResetRequest>(this, message, value);
         return message;
@@ -2021,8 +1927,8 @@ class KmsExecuteFactorResetRequest$Type extends MessageType<KmsExecuteFactorRese
                 case /* bytes encrypted_payload */ 1:
                     message.encryptedPayload = reader.bytes();
                     break;
-                case /* string subject_hash */ 2:
-                    message.subjectHash = reader.string();
+                case /* string instance_jwt */ 2:
+                    message.instanceJwt = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2039,9 +1945,9 @@ class KmsExecuteFactorResetRequest$Type extends MessageType<KmsExecuteFactorRese
         /* bytes encrypted_payload = 1; */
         if (message.encryptedPayload.length)
             writer.tag(1, WireType.LengthDelimited).bytes(message.encryptedPayload);
-        /* string subject_hash = 2; */
-        if (message.subjectHash !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.subjectHash);
+        /* string instance_jwt = 2; */
+        if (message.instanceJwt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2104,13 +2010,13 @@ class KmsRecoverKeysRequest$Type extends MessageType<KmsRecoverKeysRequest> {
     constructor() {
         super("hypurr.KmsRecoverKeysRequest", [
             { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "subject_hash", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsRecoverKeysRequest>): KmsRecoverKeysRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.encryptedPayload = new Uint8Array(0);
-        message.subjectHash = "";
+        message.instanceJwt = "";
         if (value !== undefined)
             reflectionMergePartial<KmsRecoverKeysRequest>(this, message, value);
         return message;
@@ -2123,8 +2029,8 @@ class KmsRecoverKeysRequest$Type extends MessageType<KmsRecoverKeysRequest> {
                 case /* bytes encrypted_payload */ 1:
                     message.encryptedPayload = reader.bytes();
                     break;
-                case /* string subject_hash */ 2:
-                    message.subjectHash = reader.string();
+                case /* string instance_jwt */ 2:
+                    message.instanceJwt = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2141,9 +2047,9 @@ class KmsRecoverKeysRequest$Type extends MessageType<KmsRecoverKeysRequest> {
         /* bytes encrypted_payload = 1; */
         if (message.encryptedPayload.length)
             writer.tag(1, WireType.LengthDelimited).bytes(message.encryptedPayload);
-        /* string subject_hash = 2; */
-        if (message.subjectHash !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.subjectHash);
+        /* string instance_jwt = 2; */
+        if (message.instanceJwt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2312,26 +2218,26 @@ class KmsAccountSignMessageResponse$Type extends MessageType<KmsAccountSignMessa
  */
 export const KmsAccountSignMessageResponse = new KmsAccountSignMessageResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class KmsHyperliquidAgentSignatureCreateRequest$Type extends MessageType<KmsHyperliquidAgentSignatureCreateRequest> {
+class KmsRequestAgentRequest$Type extends MessageType<KmsRequestAgentRequest> {
     constructor() {
-        super("hypurr.KmsHyperliquidAgentSignatureCreateRequest", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        super("hypurr.KmsRequestAgentRequest", [
+            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<KmsHyperliquidAgentSignatureCreateRequest>): KmsHyperliquidAgentSignatureCreateRequest {
+    create(value?: PartialMessage<KmsRequestAgentRequest>): KmsRequestAgentRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.walletAddress = "";
+        message.walletAddresses = [];
         if (value !== undefined)
-            reflectionMergePartial<KmsHyperliquidAgentSignatureCreateRequest>(this, message, value);
+            reflectionMergePartial<KmsRequestAgentRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsHyperliquidAgentSignatureCreateRequest): KmsHyperliquidAgentSignatureCreateRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsRequestAgentRequest): KmsRequestAgentRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string wallet_address */ 1:
-                    message.walletAddress = reader.string();
+                case /* repeated string wallet_addresses */ 1:
+                    message.walletAddresses.push(reader.string());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2344,10 +2250,10 @@ class KmsHyperliquidAgentSignatureCreateRequest$Type extends MessageType<KmsHype
         }
         return message;
     }
-    internalBinaryWrite(message: KmsHyperliquidAgentSignatureCreateRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_address = 1; */
-        if (message.walletAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+    internalBinaryWrite(message: KmsRequestAgentRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string wallet_addresses = 1; */
+        for (let i = 0; i < message.walletAddresses.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2355,50 +2261,30 @@ class KmsHyperliquidAgentSignatureCreateRequest$Type extends MessageType<KmsHype
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.KmsHyperliquidAgentSignatureCreateRequest
+ * @generated MessageType for protobuf message hypurr.KmsRequestAgentRequest
  */
-export const KmsHyperliquidAgentSignatureCreateRequest = new KmsHyperliquidAgentSignatureCreateRequest$Type();
+export const KmsRequestAgentRequest = new KmsRequestAgentRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class KmsHyperliquidAgentSignatureCreateResponse$Type extends MessageType<KmsHyperliquidAgentSignatureCreateResponse> {
+class KmsRequestAgentResponse$Type extends MessageType<KmsRequestAgentResponse> {
     constructor() {
-        super("hypurr.KmsHyperliquidAgentSignatureCreateResponse", [
-            { no: 1, name: "agent_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "agent_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "nonce", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "signature_chain_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 5, name: "hyperliquid_chain", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        super("hypurr.KmsRequestAgentResponse", [
+            { no: 1, name: "public_key", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
-    create(value?: PartialMessage<KmsHyperliquidAgentSignatureCreateResponse>): KmsHyperliquidAgentSignatureCreateResponse {
+    create(value?: PartialMessage<KmsRequestAgentResponse>): KmsRequestAgentResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.agentAddress = "";
-        message.agentName = "";
-        message.nonce = 0;
-        message.signatureChainId = 0;
-        message.hyperliquidChain = "";
+        message.publicKey = new Uint8Array(0);
         if (value !== undefined)
-            reflectionMergePartial<KmsHyperliquidAgentSignatureCreateResponse>(this, message, value);
+            reflectionMergePartial<KmsRequestAgentResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsHyperliquidAgentSignatureCreateResponse): KmsHyperliquidAgentSignatureCreateResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsRequestAgentResponse): KmsRequestAgentResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string agent_address */ 1:
-                    message.agentAddress = reader.string();
-                    break;
-                case /* string agent_name */ 2:
-                    message.agentName = reader.string();
-                    break;
-                case /* int64 nonce */ 3:
-                    message.nonce = reader.int64().toNumber();
-                    break;
-                case /* int64 signature_chain_id */ 4:
-                    message.signatureChainId = reader.int64().toNumber();
-                    break;
-                case /* string hyperliquid_chain */ 5:
-                    message.hyperliquidChain = reader.string();
+                case /* bytes public_key */ 1:
+                    message.publicKey = reader.bytes();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2411,22 +2297,10 @@ class KmsHyperliquidAgentSignatureCreateResponse$Type extends MessageType<KmsHyp
         }
         return message;
     }
-    internalBinaryWrite(message: KmsHyperliquidAgentSignatureCreateResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string agent_address = 1; */
-        if (message.agentAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.agentAddress);
-        /* string agent_name = 2; */
-        if (message.agentName !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.agentName);
-        /* int64 nonce = 3; */
-        if (message.nonce !== 0)
-            writer.tag(3, WireType.Varint).int64(message.nonce);
-        /* int64 signature_chain_id = 4; */
-        if (message.signatureChainId !== 0)
-            writer.tag(4, WireType.Varint).int64(message.signatureChainId);
-        /* string hyperliquid_chain = 5; */
-        if (message.hyperliquidChain !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.hyperliquidChain);
+    internalBinaryWrite(message: KmsRequestAgentResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bytes public_key = 1; */
+        if (message.publicKey.length)
+            writer.tag(1, WireType.LengthDelimited).bytes(message.publicKey);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2434,50 +2308,35 @@ class KmsHyperliquidAgentSignatureCreateResponse$Type extends MessageType<KmsHyp
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.KmsHyperliquidAgentSignatureCreateResponse
+ * @generated MessageType for protobuf message hypurr.KmsRequestAgentResponse
  */
-export const KmsHyperliquidAgentSignatureCreateResponse = new KmsHyperliquidAgentSignatureCreateResponse$Type();
+export const KmsRequestAgentResponse = new KmsRequestAgentResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class KmsEIP712Signature$Type extends MessageType<KmsEIP712Signature> {
+class KmsAccountApproveAgentRequest$Type extends MessageType<KmsAccountApproveAgentRequest> {
     constructor() {
-        super("hypurr.KmsEIP712Signature", [
-            { no: 1, name: "agent_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "agent_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "nonce", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "signature", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "chain_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        super("hypurr.KmsAccountApproveAgentRequest", [
+            { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<KmsEIP712Signature>): KmsEIP712Signature {
+    create(value?: PartialMessage<KmsAccountApproveAgentRequest>): KmsAccountApproveAgentRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.agentAddress = "";
-        message.agentName = "";
-        message.nonce = 0;
-        message.signature = "";
-        message.chainId = 0;
+        message.encryptedPayload = new Uint8Array(0);
+        message.instanceJwt = "";
         if (value !== undefined)
-            reflectionMergePartial<KmsEIP712Signature>(this, message, value);
+            reflectionMergePartial<KmsAccountApproveAgentRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsEIP712Signature): KmsEIP712Signature {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsAccountApproveAgentRequest): KmsAccountApproveAgentRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string agent_address */ 1:
-                    message.agentAddress = reader.string();
+                case /* bytes encrypted_payload */ 1:
+                    message.encryptedPayload = reader.bytes();
                     break;
-                case /* string agent_name */ 2:
-                    message.agentName = reader.string();
-                    break;
-                case /* int64 nonce */ 3:
-                    message.nonce = reader.int64().toNumber();
-                    break;
-                case /* string signature */ 4:
-                    message.signature = reader.string();
-                    break;
-                case /* int64 chain_id */ 5:
-                    message.chainId = reader.int64().toNumber();
+                case /* string instance_jwt */ 2:
+                    message.instanceJwt = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2490,22 +2349,13 @@ class KmsEIP712Signature$Type extends MessageType<KmsEIP712Signature> {
         }
         return message;
     }
-    internalBinaryWrite(message: KmsEIP712Signature, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string agent_address = 1; */
-        if (message.agentAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.agentAddress);
-        /* string agent_name = 2; */
-        if (message.agentName !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.agentName);
-        /* int64 nonce = 3; */
-        if (message.nonce !== 0)
-            writer.tag(3, WireType.Varint).int64(message.nonce);
-        /* string signature = 4; */
-        if (message.signature !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.signature);
-        /* int64 chain_id = 5; */
-        if (message.chainId !== 0)
-            writer.tag(5, WireType.Varint).int64(message.chainId);
+    internalBinaryWrite(message: KmsAccountApproveAgentRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bytes encrypted_payload = 1; */
+        if (message.encryptedPayload.length)
+            writer.tag(1, WireType.LengthDelimited).bytes(message.encryptedPayload);
+        /* string instance_jwt = 2; */
+        if (message.instanceJwt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2513,40 +2363,35 @@ class KmsEIP712Signature$Type extends MessageType<KmsEIP712Signature> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.KmsEIP712Signature
+ * @generated MessageType for protobuf message hypurr.KmsAccountApproveAgentRequest
  */
-export const KmsEIP712Signature = new KmsEIP712Signature$Type();
+export const KmsAccountApproveAgentRequest = new KmsAccountApproveAgentRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class KmsHyperliquidAgentWalletCreateRequest$Type extends MessageType<KmsHyperliquidAgentWalletCreateRequest> {
+class KmsAccountApproveAgentResponse$Type extends MessageType<KmsAccountApproveAgentResponse> {
     constructor() {
-        super("hypurr.KmsHyperliquidAgentWalletCreateRequest", [
-            { no: 1, name: "attestation", kind: "scalar", oneof: "proof", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "signature", kind: "message", oneof: "proof", T: () => KmsEIP712Signature }
+        super("hypurr.KmsAccountApproveAgentResponse", [
+            { no: 1, name: "attestation", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 2, name: "agent_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<KmsHyperliquidAgentWalletCreateRequest>): KmsHyperliquidAgentWalletCreateRequest {
+    create(value?: PartialMessage<KmsAccountApproveAgentResponse>): KmsAccountApproveAgentResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.proof = { oneofKind: undefined };
+        message.attestation = new Uint8Array(0);
+        message.agentId = "";
         if (value !== undefined)
-            reflectionMergePartial<KmsHyperliquidAgentWalletCreateRequest>(this, message, value);
+            reflectionMergePartial<KmsAccountApproveAgentResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsHyperliquidAgentWalletCreateRequest): KmsHyperliquidAgentWalletCreateRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsAccountApproveAgentResponse): KmsAccountApproveAgentResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
                 case /* bytes attestation */ 1:
-                    message.proof = {
-                        oneofKind: "attestation",
-                        attestation: reader.bytes()
-                    };
+                    message.attestation = reader.bytes();
                     break;
-                case /* hypurr.KmsEIP712Signature signature */ 2:
-                    message.proof = {
-                        oneofKind: "signature",
-                        signature: KmsEIP712Signature.internalBinaryRead(reader, reader.uint32(), options, (message.proof as any).signature)
-                    };
+                case /* string agent_id */ 2:
+                    message.agentId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2559,13 +2404,13 @@ class KmsHyperliquidAgentWalletCreateRequest$Type extends MessageType<KmsHyperli
         }
         return message;
     }
-    internalBinaryWrite(message: KmsHyperliquidAgentWalletCreateRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: KmsAccountApproveAgentResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* bytes attestation = 1; */
-        if (message.proof.oneofKind === "attestation")
-            writer.tag(1, WireType.LengthDelimited).bytes(message.proof.attestation);
-        /* hypurr.KmsEIP712Signature signature = 2; */
-        if (message.proof.oneofKind === "signature")
-            KmsEIP712Signature.internalBinaryWrite(message.proof.signature, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        if (message.attestation.length)
+            writer.tag(1, WireType.LengthDelimited).bytes(message.attestation);
+        /* string agent_id = 2; */
+        if (message.agentId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.agentId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2573,145 +2418,9 @@ class KmsHyperliquidAgentWalletCreateRequest$Type extends MessageType<KmsHyperli
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.KmsHyperliquidAgentWalletCreateRequest
+ * @generated MessageType for protobuf message hypurr.KmsAccountApproveAgentResponse
  */
-export const KmsHyperliquidAgentWalletCreateRequest = new KmsHyperliquidAgentWalletCreateRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class KmsHyperliquidAgentWalletCreateResponse$Type extends MessageType<KmsHyperliquidAgentWalletCreateResponse> {
-    constructor() {
-        super("hypurr.KmsHyperliquidAgentWalletCreateResponse", []);
-    }
-    create(value?: PartialMessage<KmsHyperliquidAgentWalletCreateResponse>): KmsHyperliquidAgentWalletCreateResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<KmsHyperliquidAgentWalletCreateResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsHyperliquidAgentWalletCreateResponse): KmsHyperliquidAgentWalletCreateResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: KmsHyperliquidAgentWalletCreateResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.KmsHyperliquidAgentWalletCreateResponse
- */
-export const KmsHyperliquidAgentWalletCreateResponse = new KmsHyperliquidAgentWalletCreateResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class KmsHyperliquidAgentWalletRenewRequest$Type extends MessageType<KmsHyperliquidAgentWalletRenewRequest> {
-    constructor() {
-        super("hypurr.KmsHyperliquidAgentWalletRenewRequest", [
-            { no: 1, name: "attestation", kind: "scalar", oneof: "proof", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "signature", kind: "message", oneof: "proof", T: () => KmsEIP712Signature }
-        ]);
-    }
-    create(value?: PartialMessage<KmsHyperliquidAgentWalletRenewRequest>): KmsHyperliquidAgentWalletRenewRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.proof = { oneofKind: undefined };
-        if (value !== undefined)
-            reflectionMergePartial<KmsHyperliquidAgentWalletRenewRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsHyperliquidAgentWalletRenewRequest): KmsHyperliquidAgentWalletRenewRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bytes attestation */ 1:
-                    message.proof = {
-                        oneofKind: "attestation",
-                        attestation: reader.bytes()
-                    };
-                    break;
-                case /* hypurr.KmsEIP712Signature signature */ 2:
-                    message.proof = {
-                        oneofKind: "signature",
-                        signature: KmsEIP712Signature.internalBinaryRead(reader, reader.uint32(), options, (message.proof as any).signature)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: KmsHyperliquidAgentWalletRenewRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bytes attestation = 1; */
-        if (message.proof.oneofKind === "attestation")
-            writer.tag(1, WireType.LengthDelimited).bytes(message.proof.attestation);
-        /* hypurr.KmsEIP712Signature signature = 2; */
-        if (message.proof.oneofKind === "signature")
-            KmsEIP712Signature.internalBinaryWrite(message.proof.signature, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.KmsHyperliquidAgentWalletRenewRequest
- */
-export const KmsHyperliquidAgentWalletRenewRequest = new KmsHyperliquidAgentWalletRenewRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class KmsHyperliquidAgentWalletRenewResponse$Type extends MessageType<KmsHyperliquidAgentWalletRenewResponse> {
-    constructor() {
-        super("hypurr.KmsHyperliquidAgentWalletRenewResponse", []);
-    }
-    create(value?: PartialMessage<KmsHyperliquidAgentWalletRenewResponse>): KmsHyperliquidAgentWalletRenewResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<KmsHyperliquidAgentWalletRenewResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsHyperliquidAgentWalletRenewResponse): KmsHyperliquidAgentWalletRenewResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: KmsHyperliquidAgentWalletRenewResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.KmsHyperliquidAgentWalletRenewResponse
- */
-export const KmsHyperliquidAgentWalletRenewResponse = new KmsHyperliquidAgentWalletRenewResponse$Type();
+export const KmsAccountApproveAgentResponse = new KmsAccountApproveAgentResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Kms
  */
@@ -2724,13 +2433,12 @@ export const Kms = new ServiceType("hypurr.Kms", [
     { name: "AccountDisable2FA", options: {}, I: KmsAccountDisable2FARequest, O: KmsAccountDisable2FAResponse },
     { name: "AccountShardSecret", options: {}, I: KmsAccountShardSecretRequest, O: KmsAccountShardSecretResponse },
     { name: "AccountSignMessage", options: {}, I: KmsAccountSignMessageRequest, O: KmsAccountSignMessageResponse },
+    { name: "AccountApproveAgent", options: {}, I: KmsAccountApproveAgentRequest, O: KmsAccountApproveAgentResponse },
     { name: "GetAccountInfo", options: {}, I: KmsGetAccountInfoRequest, O: KmsGetAccountInfoResponse },
     { name: "RequestFactorReset", options: {}, I: KmsRequestFactorResetRequest, O: KmsRequestFactorResetResponse },
     { name: "CancelFactorReset", options: {}, I: KmsCancelFactorResetRequest, O: KmsCancelFactorResetResponse },
     { name: "ExecuteFactorReset", options: {}, I: KmsExecuteFactorResetRequest, O: KmsExecuteFactorResetResponse },
     { name: "RecoverKeys", options: {}, I: KmsRecoverKeysRequest, O: KmsRecoverKeysResponse },
     { name: "CompleteAccountHandoff", options: {}, I: KmsCompleteAccountHandoffRequest, O: KmsCompleteAccountHandoffResponse },
-    { name: "HyperliquidAgentSignatureCreate", options: {}, I: KmsHyperliquidAgentSignatureCreateRequest, O: KmsHyperliquidAgentSignatureCreateResponse },
-    { name: "HyperliquidAgentWalletCreate", options: {}, I: KmsHyperliquidAgentWalletCreateRequest, O: KmsHyperliquidAgentWalletCreateResponse },
-    { name: "HyperliquidAgentWalletRenew", options: {}, I: KmsHyperliquidAgentWalletRenewRequest, O: KmsHyperliquidAgentWalletRenewResponse }
+    { name: "RequestAgent", options: {}, I: KmsRequestAgentRequest, O: KmsRequestAgentResponse }
 ]);

@@ -4,12 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Kms } from "./kms";
-import type { KmsHyperliquidAgentWalletRenewResponse } from "./kms";
-import type { KmsHyperliquidAgentWalletRenewRequest } from "./kms";
-import type { KmsHyperliquidAgentWalletCreateResponse } from "./kms";
-import type { KmsHyperliquidAgentWalletCreateRequest } from "./kms";
-import type { KmsHyperliquidAgentSignatureCreateResponse } from "./kms";
-import type { KmsHyperliquidAgentSignatureCreateRequest } from "./kms";
+import type { KmsRequestAgentResponse } from "./kms";
+import type { KmsRequestAgentRequest } from "./kms";
 import type { KmsCompleteAccountHandoffResponse } from "./kms";
 import type { KmsCompleteAccountHandoffRequest } from "./kms";
 import type { KmsRecoverKeysResponse } from "./kms";
@@ -22,6 +18,8 @@ import type { KmsRequestFactorResetResponse } from "./kms";
 import type { KmsRequestFactorResetRequest } from "./kms";
 import type { KmsGetAccountInfoResponse } from "./kms";
 import type { KmsGetAccountInfoRequest } from "./kms";
+import type { KmsAccountApproveAgentResponse } from "./kms";
+import type { KmsAccountApproveAgentRequest } from "./kms";
 import type { KmsAccountSignMessageResponse } from "./kms";
 import type { KmsAccountSignMessageRequest } from "./kms";
 import type { KmsAccountShardSecretResponse } from "./kms";
@@ -42,42 +40,26 @@ import type { KmsGetAttestationRequest } from "./kms";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
- * Kms forwards sealed client payloads between the app and the hfun-kms
- * instance. The bot is a dumb pipe: payloads are sealed to the enclave,
- * responses are attestation documents the client verifies against its own
- * pinned trust anchors — nothing here can be read or altered in transit.
+ * Kms forwards sealed payloads between the app and the hfun-kms instance;
+ * the bot cannot read or alter them.
  *
  * @generated from protobuf service hypurr.Kms
  */
 export interface IKmsClient {
     /**
-     * GetAttestation returns a fresh enclave attestation — the start of every
-     * client ceremony (single-use nonce + ephemeral sealing key).
-     *
      * @generated from protobuf rpc: GetAttestation
      */
     getAttestation(input: KmsGetAttestationRequest, options?: RpcOptions): UnaryCall<KmsGetAttestationRequest, KmsGetAttestationResponse>;
     /**
-     * LoginOrRegister forwards a sealed login/register payload. Pre-auth by
-     * nature; on success the bot links the KMS account to an Hfun user using
-     * the verified response, never client input.
-     *
      * @generated from protobuf rpc: LoginOrRegister
      */
     loginOrRegister(input: KmsLoginOrRegisterRequest, options?: RpcOptions): UnaryCall<KmsLoginOrRegisterRequest, KmsLoginOrRegisterResponse>;
     /**
-     * Pre-check before sealing a login: which intent to use for this provider
-     * identity. Authenticated by the provider id_token itself — the bot
-     * verifies it — so it only ever answers about the caller's own identity,
-     * never acts as an account-existence oracle.
-     *
      * @generated from protobuf rpc: LoginIntent
      */
     loginIntent(input: KmsLoginIntentRequest, options?: RpcOptions): UnaryCall<KmsLoginIntentRequest, KmsLoginIntentResponse>;
     /**
-     * Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
-     * metadata); the bot derives the account id from the VERIFIED claims —
-     * never from client input.
+     * Routed by the instance JWT.
      *
      * @generated from protobuf rpc: AddProvider
      */
@@ -95,26 +77,18 @@ export interface IKmsClient {
      */
     accountShardSecret(input: KmsAccountShardSecretRequest, options?: RpcOptions): UnaryCall<KmsAccountShardSecretRequest, KmsAccountShardSecretResponse>;
     /**
-     * AccountSignMessage has the enclave sign one Hypercore action with the
-     * wallet key. The response attestation carries the signature and the
-     * canonical action that was signed.
-     *
      * @generated from protobuf rpc: AccountSignMessage
      */
     accountSignMessage(input: KmsAccountSignMessageRequest, options?: RpcOptions): UnaryCall<KmsAccountSignMessageRequest, KmsAccountSignMessageResponse>;
     /**
-     * GetAccountInfo is the account-routed read: providers, wallets, factor
-     * types and enclave agents, straight from the instance. No enclave
-     * round-trip.
-     *
+     * @generated from protobuf rpc: AccountApproveAgent
+     */
+    accountApproveAgent(input: KmsAccountApproveAgentRequest, options?: RpcOptions): UnaryCall<KmsAccountApproveAgentRequest, KmsAccountApproveAgentResponse>;
+    /**
      * @generated from protobuf rpc: GetAccountInfo
      */
     getAccountInfo(input: KmsGetAccountInfoRequest, options?: RpcOptions): UnaryCall<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse>;
     /**
-     * Locked-out flows: no bot JWT exists; routed by the plaintext
-     * subject_hash like LoginOrRegister. Auth lives inside the sealed payload
-     * and is enforced by the enclave.
-     *
      * @generated from protobuf rpc: RequestFactorReset
      */
     requestFactorReset(input: KmsRequestFactorResetRequest, options?: RpcOptions): UnaryCall<KmsRequestFactorResetRequest, KmsRequestFactorResetResponse>;
@@ -131,40 +105,19 @@ export interface IKmsClient {
      */
     recoverKeys(input: KmsRecoverKeysRequest, options?: RpcOptions): UnaryCall<KmsRecoverKeysRequest, KmsRecoverKeysResponse>;
     /**
-     * Custodial -> KMS migration, users with bot-side TOTP only: when the login
-     * response set handoff.requires_2fa, the app re-sends THAT login
-     * attestation plus the TOTP code to receive the handoff. Stateless: the bot
-     * re-verifies the attestation and seals to the device key attested inside
-     * it, so a replayed attestation yields data only the victim's device can
-     * open.
+     * Bot JWT.
      *
      * @generated from protobuf rpc: CompleteAccountHandoff
      */
     completeAccountHandoff(input: KmsCompleteAccountHandoffRequest, options?: RpcOptions): UnaryCall<KmsCompleteAccountHandoffRequest, KmsCompleteAccountHandoffResponse>;
     /**
-     * Hyperliquid agent for a KMS wallet, same three steps as the telegram EOA
-     * flow. Authenticated with the bot JWT. The bot generates the agent key,
-     * the wallet key signs approveAgent (in the enclave via AccountSignMessage
-     * on web, on the device on iOS), the bot submits it and trades with the
-     * agent key.
-     *
-     * @generated from protobuf rpc: HyperliquidAgentSignatureCreate
+     * @generated from protobuf rpc: RequestAgent
      */
-    hyperliquidAgentSignatureCreate(input: KmsHyperliquidAgentSignatureCreateRequest, options?: RpcOptions): UnaryCall<KmsHyperliquidAgentSignatureCreateRequest, KmsHyperliquidAgentSignatureCreateResponse>;
-    /**
-     * @generated from protobuf rpc: HyperliquidAgentWalletCreate
-     */
-    hyperliquidAgentWalletCreate(input: KmsHyperliquidAgentWalletCreateRequest, options?: RpcOptions): UnaryCall<KmsHyperliquidAgentWalletCreateRequest, KmsHyperliquidAgentWalletCreateResponse>;
-    /**
-     * @generated from protobuf rpc: HyperliquidAgentWalletRenew
-     */
-    hyperliquidAgentWalletRenew(input: KmsHyperliquidAgentWalletRenewRequest, options?: RpcOptions): UnaryCall<KmsHyperliquidAgentWalletRenewRequest, KmsHyperliquidAgentWalletRenewResponse>;
+    requestAgent(input: KmsRequestAgentRequest, options?: RpcOptions): UnaryCall<KmsRequestAgentRequest, KmsRequestAgentResponse>;
 }
 /**
- * Kms forwards sealed client payloads between the app and the hfun-kms
- * instance. The bot is a dumb pipe: payloads are sealed to the enclave,
- * responses are attestation documents the client verifies against its own
- * pinned trust anchors — nothing here can be read or altered in transit.
+ * Kms forwards sealed payloads between the app and the hfun-kms instance;
+ * the bot cannot read or alter them.
  *
  * @generated from protobuf service hypurr.Kms
  */
@@ -175,9 +128,6 @@ export class KmsClient implements IKmsClient, ServiceInfo {
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * GetAttestation returns a fresh enclave attestation — the start of every
-     * client ceremony (single-use nonce + ephemeral sealing key).
-     *
      * @generated from protobuf rpc: GetAttestation
      */
     getAttestation(input: KmsGetAttestationRequest, options?: RpcOptions): UnaryCall<KmsGetAttestationRequest, KmsGetAttestationResponse> {
@@ -185,10 +135,6 @@ export class KmsClient implements IKmsClient, ServiceInfo {
         return stackIntercept<KmsGetAttestationRequest, KmsGetAttestationResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * LoginOrRegister forwards a sealed login/register payload. Pre-auth by
-     * nature; on success the bot links the KMS account to an Hfun user using
-     * the verified response, never client input.
-     *
      * @generated from protobuf rpc: LoginOrRegister
      */
     loginOrRegister(input: KmsLoginOrRegisterRequest, options?: RpcOptions): UnaryCall<KmsLoginOrRegisterRequest, KmsLoginOrRegisterResponse> {
@@ -196,11 +142,6 @@ export class KmsClient implements IKmsClient, ServiceInfo {
         return stackIntercept<KmsLoginOrRegisterRequest, KmsLoginOrRegisterResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * Pre-check before sealing a login: which intent to use for this provider
-     * identity. Authenticated by the provider id_token itself — the bot
-     * verifies it — so it only ever answers about the caller's own identity,
-     * never acts as an account-existence oracle.
-     *
      * @generated from protobuf rpc: LoginIntent
      */
     loginIntent(input: KmsLoginIntentRequest, options?: RpcOptions): UnaryCall<KmsLoginIntentRequest, KmsLoginIntentResponse> {
@@ -208,9 +149,7 @@ export class KmsClient implements IKmsClient, ServiceInfo {
         return stackIntercept<KmsLoginIntentRequest, KmsLoginIntentResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
-     * metadata); the bot derives the account id from the VERIFIED claims —
-     * never from client input.
+     * Routed by the instance JWT.
      *
      * @generated from protobuf rpc: AddProvider
      */
@@ -240,10 +179,6 @@ export class KmsClient implements IKmsClient, ServiceInfo {
         return stackIntercept<KmsAccountShardSecretRequest, KmsAccountShardSecretResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * AccountSignMessage has the enclave sign one Hypercore action with the
-     * wallet key. The response attestation carries the signature and the
-     * canonical action that was signed.
-     *
      * @generated from protobuf rpc: AccountSignMessage
      */
     accountSignMessage(input: KmsAccountSignMessageRequest, options?: RpcOptions): UnaryCall<KmsAccountSignMessageRequest, KmsAccountSignMessageResponse> {
@@ -251,87 +186,61 @@ export class KmsClient implements IKmsClient, ServiceInfo {
         return stackIntercept<KmsAccountSignMessageRequest, KmsAccountSignMessageResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * GetAccountInfo is the account-routed read: providers, wallets, factor
-     * types and enclave agents, straight from the instance. No enclave
-     * round-trip.
-     *
+     * @generated from protobuf rpc: AccountApproveAgent
+     */
+    accountApproveAgent(input: KmsAccountApproveAgentRequest, options?: RpcOptions): UnaryCall<KmsAccountApproveAgentRequest, KmsAccountApproveAgentResponse> {
+        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsAccountApproveAgentRequest, KmsAccountApproveAgentResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: GetAccountInfo
      */
     getAccountInfo(input: KmsGetAccountInfoRequest, options?: RpcOptions): UnaryCall<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse> {
-        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        const method = this.methods[9], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * Locked-out flows: no bot JWT exists; routed by the plaintext
-     * subject_hash like LoginOrRegister. Auth lives inside the sealed payload
-     * and is enforced by the enclave.
-     *
      * @generated from protobuf rpc: RequestFactorReset
      */
     requestFactorReset(input: KmsRequestFactorResetRequest, options?: RpcOptions): UnaryCall<KmsRequestFactorResetRequest, KmsRequestFactorResetResponse> {
-        const method = this.methods[9], opt = this._transport.mergeOptions(options);
+        const method = this.methods[10], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsRequestFactorResetRequest, KmsRequestFactorResetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: CancelFactorReset
      */
     cancelFactorReset(input: KmsCancelFactorResetRequest, options?: RpcOptions): UnaryCall<KmsCancelFactorResetRequest, KmsCancelFactorResetResponse> {
-        const method = this.methods[10], opt = this._transport.mergeOptions(options);
+        const method = this.methods[11], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsCancelFactorResetRequest, KmsCancelFactorResetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: ExecuteFactorReset
      */
     executeFactorReset(input: KmsExecuteFactorResetRequest, options?: RpcOptions): UnaryCall<KmsExecuteFactorResetRequest, KmsExecuteFactorResetResponse> {
-        const method = this.methods[11], opt = this._transport.mergeOptions(options);
+        const method = this.methods[12], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsExecuteFactorResetRequest, KmsExecuteFactorResetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: RecoverKeys
      */
     recoverKeys(input: KmsRecoverKeysRequest, options?: RpcOptions): UnaryCall<KmsRecoverKeysRequest, KmsRecoverKeysResponse> {
-        const method = this.methods[12], opt = this._transport.mergeOptions(options);
+        const method = this.methods[13], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsRecoverKeysRequest, KmsRecoverKeysResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * Custodial -> KMS migration, users with bot-side TOTP only: when the login
-     * response set handoff.requires_2fa, the app re-sends THAT login
-     * attestation plus the TOTP code to receive the handoff. Stateless: the bot
-     * re-verifies the attestation and seals to the device key attested inside
-     * it, so a replayed attestation yields data only the victim's device can
-     * open.
+     * Bot JWT.
      *
      * @generated from protobuf rpc: CompleteAccountHandoff
      */
     completeAccountHandoff(input: KmsCompleteAccountHandoffRequest, options?: RpcOptions): UnaryCall<KmsCompleteAccountHandoffRequest, KmsCompleteAccountHandoffResponse> {
-        const method = this.methods[13], opt = this._transport.mergeOptions(options);
+        const method = this.methods[14], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsCompleteAccountHandoffRequest, KmsCompleteAccountHandoffResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * Hyperliquid agent for a KMS wallet, same three steps as the telegram EOA
-     * flow. Authenticated with the bot JWT. The bot generates the agent key,
-     * the wallet key signs approveAgent (in the enclave via AccountSignMessage
-     * on web, on the device on iOS), the bot submits it and trades with the
-     * agent key.
-     *
-     * @generated from protobuf rpc: HyperliquidAgentSignatureCreate
+     * @generated from protobuf rpc: RequestAgent
      */
-    hyperliquidAgentSignatureCreate(input: KmsHyperliquidAgentSignatureCreateRequest, options?: RpcOptions): UnaryCall<KmsHyperliquidAgentSignatureCreateRequest, KmsHyperliquidAgentSignatureCreateResponse> {
-        const method = this.methods[14], opt = this._transport.mergeOptions(options);
-        return stackIntercept<KmsHyperliquidAgentSignatureCreateRequest, KmsHyperliquidAgentSignatureCreateResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: HyperliquidAgentWalletCreate
-     */
-    hyperliquidAgentWalletCreate(input: KmsHyperliquidAgentWalletCreateRequest, options?: RpcOptions): UnaryCall<KmsHyperliquidAgentWalletCreateRequest, KmsHyperliquidAgentWalletCreateResponse> {
+    requestAgent(input: KmsRequestAgentRequest, options?: RpcOptions): UnaryCall<KmsRequestAgentRequest, KmsRequestAgentResponse> {
         const method = this.methods[15], opt = this._transport.mergeOptions(options);
-        return stackIntercept<KmsHyperliquidAgentWalletCreateRequest, KmsHyperliquidAgentWalletCreateResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: HyperliquidAgentWalletRenew
-     */
-    hyperliquidAgentWalletRenew(input: KmsHyperliquidAgentWalletRenewRequest, options?: RpcOptions): UnaryCall<KmsHyperliquidAgentWalletRenewRequest, KmsHyperliquidAgentWalletRenewResponse> {
-        const method = this.methods[16], opt = this._transport.mergeOptions(options);
-        return stackIntercept<KmsHyperliquidAgentWalletRenewRequest, KmsHyperliquidAgentWalletRenewResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<KmsRequestAgentRequest, KmsRequestAgentResponse>("unary", this._transport, method, opt, input);
     }
 }

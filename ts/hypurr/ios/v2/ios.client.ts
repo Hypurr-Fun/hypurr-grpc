@@ -4,6 +4,12 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { IosService } from "./ios";
+import type { MarketTick } from "./ios";
+import type { AssetDetailLiveUpdatesRequest } from "./ios";
+import type { AssetDetailResponse } from "./ios";
+import type { AssetDetailRequest } from "./ios";
+import type { CatalogResponse } from "./ios";
+import type { CatalogRequest } from "./ios";
 import type { AssetTicks } from "./ios";
 import type { LiveAssetUpdatesRequest } from "./ios";
 import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
@@ -24,6 +30,18 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: LiveAssetUpdates
      */
     liveAssetUpdates(input: LiveAssetUpdatesRequest, options?: RpcOptions): ServerStreamingCall<LiveAssetUpdatesRequest, AssetTicks>;
+    /**
+     * @generated from protobuf rpc: Catalog
+     */
+    catalog(input: CatalogRequest, options?: RpcOptions): UnaryCall<CatalogRequest, CatalogResponse>;
+    /**
+     * @generated from protobuf rpc: AssetDetail
+     */
+    assetDetail(input: AssetDetailRequest, options?: RpcOptions): UnaryCall<AssetDetailRequest, AssetDetailResponse>;
+    /**
+     * @generated from protobuf rpc: AssetDetailLiveUpdates
+     */
+    assetDetailLiveUpdates(input: AssetDetailLiveUpdatesRequest, options?: RpcOptions): ServerStreamingCall<AssetDetailLiveUpdatesRequest, MarketTick>;
 }
 /**
  * @generated from protobuf service hypurr.ios.v2.IosService
@@ -47,5 +65,26 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
     liveAssetUpdates(input: LiveAssetUpdatesRequest, options?: RpcOptions): ServerStreamingCall<LiveAssetUpdatesRequest, AssetTicks> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);
         return stackIntercept<LiveAssetUpdatesRequest, AssetTicks>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: Catalog
+     */
+    catalog(input: CatalogRequest, options?: RpcOptions): UnaryCall<CatalogRequest, CatalogResponse> {
+        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        return stackIntercept<CatalogRequest, CatalogResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: AssetDetail
+     */
+    assetDetail(input: AssetDetailRequest, options?: RpcOptions): UnaryCall<AssetDetailRequest, AssetDetailResponse> {
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        return stackIntercept<AssetDetailRequest, AssetDetailResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: AssetDetailLiveUpdates
+     */
+    assetDetailLiveUpdates(input: AssetDetailLiveUpdatesRequest, options?: RpcOptions): ServerStreamingCall<AssetDetailLiveUpdatesRequest, MarketTick> {
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
+        return stackIntercept<AssetDetailLiveUpdatesRequest, MarketTick>("serverStreaming", this._transport, method, opt, input);
     }
 }

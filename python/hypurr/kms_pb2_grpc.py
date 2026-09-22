@@ -26,10 +26,8 @@ if _version_not_supported:
 
 
 class KmsStub:
-    """Kms forwards sealed client payloads between the app and the hfun-kms
-    instance. The bot is a dumb pipe: payloads are sealed to the enclave,
-    responses are attestation documents the client verifies against its own
-    pinned trust anchors — nothing here can be read or altered in transit.
+    """Kms forwards sealed payloads between the app and the hfun-kms instance;
+    the bot cannot read or alter them.
     """
 
     def __init__(self, channel):
@@ -78,6 +76,11 @@ class KmsStub:
                 request_serializer=hypurr_dot_kms__pb2.KmsAccountSignMessageRequest.SerializeToString,
                 response_deserializer=hypurr_dot_kms__pb2.KmsAccountSignMessageResponse.FromString,
                 _registered_method=True)
+        self.AccountApproveAgent = channel.unary_unary(
+                '/hypurr.Kms/AccountApproveAgent',
+                request_serializer=hypurr_dot_kms__pb2.KmsAccountApproveAgentRequest.SerializeToString,
+                response_deserializer=hypurr_dot_kms__pb2.KmsAccountApproveAgentResponse.FromString,
+                _registered_method=True)
         self.GetAccountInfo = channel.unary_unary(
                 '/hypurr.Kms/GetAccountInfo',
                 request_serializer=hypurr_dot_kms__pb2.KmsGetAccountInfoRequest.SerializeToString,
@@ -108,61 +111,38 @@ class KmsStub:
                 request_serializer=hypurr_dot_kms__pb2.KmsCompleteAccountHandoffRequest.SerializeToString,
                 response_deserializer=hypurr_dot_kms__pb2.KmsCompleteAccountHandoffResponse.FromString,
                 _registered_method=True)
-        self.HyperliquidAgentSignatureCreate = channel.unary_unary(
-                '/hypurr.Kms/HyperliquidAgentSignatureCreate',
-                request_serializer=hypurr_dot_kms__pb2.KmsHyperliquidAgentSignatureCreateRequest.SerializeToString,
-                response_deserializer=hypurr_dot_kms__pb2.KmsHyperliquidAgentSignatureCreateResponse.FromString,
-                _registered_method=True)
-        self.HyperliquidAgentWalletCreate = channel.unary_unary(
-                '/hypurr.Kms/HyperliquidAgentWalletCreate',
-                request_serializer=hypurr_dot_kms__pb2.KmsHyperliquidAgentWalletCreateRequest.SerializeToString,
-                response_deserializer=hypurr_dot_kms__pb2.KmsHyperliquidAgentWalletCreateResponse.FromString,
-                _registered_method=True)
-        self.HyperliquidAgentWalletRenew = channel.unary_unary(
-                '/hypurr.Kms/HyperliquidAgentWalletRenew',
-                request_serializer=hypurr_dot_kms__pb2.KmsHyperliquidAgentWalletRenewRequest.SerializeToString,
-                response_deserializer=hypurr_dot_kms__pb2.KmsHyperliquidAgentWalletRenewResponse.FromString,
+        self.RequestAgent = channel.unary_unary(
+                '/hypurr.Kms/RequestAgent',
+                request_serializer=hypurr_dot_kms__pb2.KmsRequestAgentRequest.SerializeToString,
+                response_deserializer=hypurr_dot_kms__pb2.KmsRequestAgentResponse.FromString,
                 _registered_method=True)
 
 
 class KmsServicer:
-    """Kms forwards sealed client payloads between the app and the hfun-kms
-    instance. The bot is a dumb pipe: payloads are sealed to the enclave,
-    responses are attestation documents the client verifies against its own
-    pinned trust anchors — nothing here can be read or altered in transit.
+    """Kms forwards sealed payloads between the app and the hfun-kms instance;
+    the bot cannot read or alter them.
     """
 
     def GetAttestation(self, request, context):
-        """GetAttestation returns a fresh enclave attestation — the start of every
-        client ceremony (single-use nonce + ephemeral sealing key).
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def LoginOrRegister(self, request, context):
-        """LoginOrRegister forwards a sealed login/register payload. Pre-auth by
-        nature; on success the bot links the KMS account to an Hfun user using
-        the verified response, never client input.
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def LoginIntent(self, request, context):
-        """Pre-check before sealing a login: which intent to use for this provider
-        identity. Authenticated by the provider id_token itself — the bot
-        verifies it — so it only ever answers about the caller's own identity,
-        never acts as an account-existence oracle.
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def AddProvider(self, request, context):
-        """Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
-        metadata); the bot derives the account id from the VERIFIED claims —
-        never from client input.
+        """Routed by the instance JWT.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -187,28 +167,25 @@ class KmsServicer:
         raise NotImplementedError('Method not implemented!')
 
     def AccountSignMessage(self, request, context):
-        """AccountSignMessage has the enclave sign one Hypercore action with the
-        wallet key. The response attestation carries the signature and the
-        canonical action that was signed.
-        """
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AccountApproveAgent(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetAccountInfo(self, request, context):
-        """GetAccountInfo is the account-routed read: providers, wallets, factor
-        types and enclave agents, straight from the instance. No enclave
-        round-trip.
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def RequestFactorReset(self, request, context):
-        """Locked-out flows: no bot JWT exists; routed by the plaintext
-        subject_hash like LoginOrRegister. Auth lives inside the sealed payload
-        and is enforced by the enclave.
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -232,35 +209,13 @@ class KmsServicer:
         raise NotImplementedError('Method not implemented!')
 
     def CompleteAccountHandoff(self, request, context):
-        """Custodial -> KMS migration, users with bot-side TOTP only: when the login
-        response set handoff.requires_2fa, the app re-sends THAT login
-        attestation plus the TOTP code to receive the handoff. Stateless: the bot
-        re-verifies the attestation and seals to the device key attested inside
-        it, so a replayed attestation yields data only the victim's device can
-        open.
+        """Bot JWT.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def HyperliquidAgentSignatureCreate(self, request, context):
-        """Hyperliquid agent for a KMS wallet, same three steps as the telegram EOA
-        flow. Authenticated with the bot JWT. The bot generates the agent key,
-        the wallet key signs approveAgent (in the enclave via AccountSignMessage
-        on web, on the device on iOS), the bot submits it and trades with the
-        agent key.
-        """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def HyperliquidAgentWalletCreate(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def HyperliquidAgentWalletRenew(self, request, context):
+    def RequestAgent(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -309,6 +264,11 @@ def add_KmsServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_kms__pb2.KmsAccountSignMessageRequest.FromString,
                     response_serializer=hypurr_dot_kms__pb2.KmsAccountSignMessageResponse.SerializeToString,
             ),
+            'AccountApproveAgent': grpc.unary_unary_rpc_method_handler(
+                    servicer.AccountApproveAgent,
+                    request_deserializer=hypurr_dot_kms__pb2.KmsAccountApproveAgentRequest.FromString,
+                    response_serializer=hypurr_dot_kms__pb2.KmsAccountApproveAgentResponse.SerializeToString,
+            ),
             'GetAccountInfo': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAccountInfo,
                     request_deserializer=hypurr_dot_kms__pb2.KmsGetAccountInfoRequest.FromString,
@@ -339,20 +299,10 @@ def add_KmsServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_kms__pb2.KmsCompleteAccountHandoffRequest.FromString,
                     response_serializer=hypurr_dot_kms__pb2.KmsCompleteAccountHandoffResponse.SerializeToString,
             ),
-            'HyperliquidAgentSignatureCreate': grpc.unary_unary_rpc_method_handler(
-                    servicer.HyperliquidAgentSignatureCreate,
-                    request_deserializer=hypurr_dot_kms__pb2.KmsHyperliquidAgentSignatureCreateRequest.FromString,
-                    response_serializer=hypurr_dot_kms__pb2.KmsHyperliquidAgentSignatureCreateResponse.SerializeToString,
-            ),
-            'HyperliquidAgentWalletCreate': grpc.unary_unary_rpc_method_handler(
-                    servicer.HyperliquidAgentWalletCreate,
-                    request_deserializer=hypurr_dot_kms__pb2.KmsHyperliquidAgentWalletCreateRequest.FromString,
-                    response_serializer=hypurr_dot_kms__pb2.KmsHyperliquidAgentWalletCreateResponse.SerializeToString,
-            ),
-            'HyperliquidAgentWalletRenew': grpc.unary_unary_rpc_method_handler(
-                    servicer.HyperliquidAgentWalletRenew,
-                    request_deserializer=hypurr_dot_kms__pb2.KmsHyperliquidAgentWalletRenewRequest.FromString,
-                    response_serializer=hypurr_dot_kms__pb2.KmsHyperliquidAgentWalletRenewResponse.SerializeToString,
+            'RequestAgent': grpc.unary_unary_rpc_method_handler(
+                    servicer.RequestAgent,
+                    request_deserializer=hypurr_dot_kms__pb2.KmsRequestAgentRequest.FromString,
+                    response_serializer=hypurr_dot_kms__pb2.KmsRequestAgentResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -363,10 +313,8 @@ def add_KmsServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class Kms:
-    """Kms forwards sealed client payloads between the app and the hfun-kms
-    instance. The bot is a dumb pipe: payloads are sealed to the enclave,
-    responses are attestation documents the client verifies against its own
-    pinned trust anchors — nothing here can be read or altered in transit.
+    """Kms forwards sealed payloads between the app and the hfun-kms instance;
+    the bot cannot read or alter them.
     """
 
     @staticmethod
@@ -586,6 +534,33 @@ class Kms:
             _registered_method=True)
 
     @staticmethod
+    def AccountApproveAgent(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Kms/AccountApproveAgent',
+            hypurr_dot_kms__pb2.KmsAccountApproveAgentRequest.SerializeToString,
+            hypurr_dot_kms__pb2.KmsAccountApproveAgentResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
     def GetAccountInfo(request,
             target,
             options=(),
@@ -748,7 +723,7 @@ class Kms:
             _registered_method=True)
 
     @staticmethod
-    def HyperliquidAgentSignatureCreate(request,
+    def RequestAgent(request,
             target,
             options=(),
             channel_credentials=None,
@@ -761,63 +736,9 @@ class Kms:
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/hypurr.Kms/HyperliquidAgentSignatureCreate',
-            hypurr_dot_kms__pb2.KmsHyperliquidAgentSignatureCreateRequest.SerializeToString,
-            hypurr_dot_kms__pb2.KmsHyperliquidAgentSignatureCreateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def HyperliquidAgentWalletCreate(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/hypurr.Kms/HyperliquidAgentWalletCreate',
-            hypurr_dot_kms__pb2.KmsHyperliquidAgentWalletCreateRequest.SerializeToString,
-            hypurr_dot_kms__pb2.KmsHyperliquidAgentWalletCreateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def HyperliquidAgentWalletRenew(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/hypurr.Kms/HyperliquidAgentWalletRenew',
-            hypurr_dot_kms__pb2.KmsHyperliquidAgentWalletRenewRequest.SerializeToString,
-            hypurr_dot_kms__pb2.KmsHyperliquidAgentWalletRenewResponse.FromString,
+            '/hypurr.Kms/RequestAgent',
+            hypurr_dot_kms__pb2.KmsRequestAgentRequest.SerializeToString,
+            hypurr_dot_kms__pb2.KmsRequestAgentResponse.FromString,
             options,
             channel_credentials,
             insecure,
