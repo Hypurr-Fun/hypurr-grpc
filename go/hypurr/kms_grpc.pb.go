@@ -34,7 +34,7 @@ const (
 	Kms_ExecuteFactorReset_FullMethodName     = "/hypurr.Kms/ExecuteFactorReset"
 	Kms_RecoverKeys_FullMethodName            = "/hypurr.Kms/RecoverKeys"
 	Kms_CompleteAccountHandoff_FullMethodName = "/hypurr.Kms/CompleteAccountHandoff"
-	Kms_AgentKeyCreate_FullMethodName         = "/hypurr.Kms/AgentKeyCreate"
+	Kms_AccountRequestAgent_FullMethodName    = "/hypurr.Kms/AccountRequestAgent"
 )
 
 // KmsClient is the client API for Kms service.
@@ -61,7 +61,7 @@ type KmsClient interface {
 	RecoverKeys(ctx context.Context, in *KmsRecoverKeysRequest, opts ...grpc.CallOption) (*KmsRecoverKeysResponse, error)
 	// Bot JWT.
 	CompleteAccountHandoff(ctx context.Context, in *KmsCompleteAccountHandoffRequest, opts ...grpc.CallOption) (*KmsCompleteAccountHandoffResponse, error)
-	AgentKeyCreate(ctx context.Context, in *KmsAgentKeyCreateRequest, opts ...grpc.CallOption) (*KmsAgentKeyCreateResponse, error)
+	AccountRequestAgent(ctx context.Context, in *KmsAccountRequestAgentRequest, opts ...grpc.CallOption) (*KmsAccountRequestAgentResponse, error)
 }
 
 type kmsClient struct {
@@ -222,10 +222,10 @@ func (c *kmsClient) CompleteAccountHandoff(ctx context.Context, in *KmsCompleteA
 	return out, nil
 }
 
-func (c *kmsClient) AgentKeyCreate(ctx context.Context, in *KmsAgentKeyCreateRequest, opts ...grpc.CallOption) (*KmsAgentKeyCreateResponse, error) {
+func (c *kmsClient) AccountRequestAgent(ctx context.Context, in *KmsAccountRequestAgentRequest, opts ...grpc.CallOption) (*KmsAccountRequestAgentResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(KmsAgentKeyCreateResponse)
-	err := c.cc.Invoke(ctx, Kms_AgentKeyCreate_FullMethodName, in, out, cOpts...)
+	out := new(KmsAccountRequestAgentResponse)
+	err := c.cc.Invoke(ctx, Kms_AccountRequestAgent_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +256,7 @@ type KmsServer interface {
 	RecoverKeys(context.Context, *KmsRecoverKeysRequest) (*KmsRecoverKeysResponse, error)
 	// Bot JWT.
 	CompleteAccountHandoff(context.Context, *KmsCompleteAccountHandoffRequest) (*KmsCompleteAccountHandoffResponse, error)
-	AgentKeyCreate(context.Context, *KmsAgentKeyCreateRequest) (*KmsAgentKeyCreateResponse, error)
+	AccountRequestAgent(context.Context, *KmsAccountRequestAgentRequest) (*KmsAccountRequestAgentResponse, error)
 	mustEmbedUnimplementedKmsServer()
 }
 
@@ -309,8 +309,8 @@ func (UnimplementedKmsServer) RecoverKeys(context.Context, *KmsRecoverKeysReques
 func (UnimplementedKmsServer) CompleteAccountHandoff(context.Context, *KmsCompleteAccountHandoffRequest) (*KmsCompleteAccountHandoffResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CompleteAccountHandoff not implemented")
 }
-func (UnimplementedKmsServer) AgentKeyCreate(context.Context, *KmsAgentKeyCreateRequest) (*KmsAgentKeyCreateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AgentKeyCreate not implemented")
+func (UnimplementedKmsServer) AccountRequestAgent(context.Context, *KmsAccountRequestAgentRequest) (*KmsAccountRequestAgentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AccountRequestAgent not implemented")
 }
 func (UnimplementedKmsServer) mustEmbedUnimplementedKmsServer() {}
 
@@ -595,20 +595,20 @@ func _Kms_CompleteAccountHandoff_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Kms_AgentKeyCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(KmsAgentKeyCreateRequest)
+func _Kms_AccountRequestAgent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KmsAccountRequestAgentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(KmsServer).AgentKeyCreate(ctx, in)
+		return srv.(KmsServer).AccountRequestAgent(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Kms_AgentKeyCreate_FullMethodName,
+		FullMethod: Kms_AccountRequestAgent_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KmsServer).AgentKeyCreate(ctx, req.(*KmsAgentKeyCreateRequest))
+		return srv.(KmsServer).AccountRequestAgent(ctx, req.(*KmsAccountRequestAgentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -681,8 +681,8 @@ var Kms_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Kms_CompleteAccountHandoff_Handler,
 		},
 		{
-			MethodName: "AgentKeyCreate",
-			Handler:    _Kms_AgentKeyCreate_Handler,
+			MethodName: "AccountRequestAgent",
+			Handler:    _Kms_AccountRequestAgent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
