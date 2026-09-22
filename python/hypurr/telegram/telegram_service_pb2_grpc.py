@@ -286,6 +286,11 @@ class TelegramStub:
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusRequest.SerializeToString,
                 response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusResponse.FromString,
                 _registered_method=True)
+        self.UserMessageSend = channel.unary_unary(
+                '/hypurr.Telegram/UserMessageSend',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.UserMessageSendRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.UserMessageSendResponse.FromString,
+                _registered_method=True)
         self.PortfolioAllocatorGet = channel.unary_unary(
                 '/hypurr.Telegram/PortfolioAllocatorGet',
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorGetRequest.SerializeToString,
@@ -689,6 +694,12 @@ class TelegramServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def UserMessageSend(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def PortfolioAllocatorGet(self, request, context):
         """Portfolio
         """
@@ -1051,6 +1062,11 @@ def add_TelegramServicer_to_server(servicer, server):
                     servicer.SupportTicketStatus,
                     request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusRequest.FromString,
                     response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusResponse.SerializeToString,
+            ),
+            'UserMessageSend': grpc.unary_unary_rpc_method_handler(
+                    servicer.UserMessageSend,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.UserMessageSendRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.UserMessageSendResponse.SerializeToString,
             ),
             'PortfolioAllocatorGet': grpc.unary_unary_rpc_method_handler(
                     servicer.PortfolioAllocatorGet,
@@ -2493,6 +2509,33 @@ class Telegram:
             '/hypurr.Telegram/SupportTicketStatus',
             hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusRequest.SerializeToString,
             hypurr_dot_telegram_dot_telegram__service__pb2.SupportTicketStatusResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UserMessageSend(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/UserMessageSend',
+            hypurr_dot_telegram_dot_telegram__service__pb2.UserMessageSendRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.UserMessageSendResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -40,6 +40,8 @@ import type { PortfolioAllocatorListResponse } from "./telegram_service";
 import type { PortfolioAllocatorListRequest } from "./telegram_service";
 import type { PortfolioAllocatorGetResponse } from "./telegram_service";
 import type { PortfolioAllocatorGetRequest } from "./telegram_service";
+import type { UserMessageSendResponse } from "./telegram_service";
+import type { UserMessageSendRequest } from "./telegram_service";
 import type { SupportTicketStatusResponse } from "./telegram_service";
 import type { SupportTicketStatusRequest } from "./telegram_service";
 import type { SupportConversationCloseResponse } from "./telegram_service";
@@ -364,6 +366,10 @@ export interface ITelegramClient {
      * @generated from protobuf rpc: SupportTicketStatus
      */
     supportTicketStatus(input: SupportTicketStatusRequest, options?: RpcOptions): UnaryCall<SupportTicketStatusRequest, SupportTicketStatusResponse>;
+    /**
+     * @generated from protobuf rpc: UserMessageSend
+     */
+    userMessageSend(input: UserMessageSendRequest, options?: RpcOptions): UnaryCall<UserMessageSendRequest, UserMessageSendResponse>;
     /**
      * Portfolio
      *
@@ -817,124 +823,131 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
         return stackIntercept<SupportTicketStatusRequest, SupportTicketStatusResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: UserMessageSend
+     */
+    userMessageSend(input: UserMessageSendRequest, options?: RpcOptions): UnaryCall<UserMessageSendRequest, UserMessageSendResponse> {
+        const method = this.methods[50], opt = this._transport.mergeOptions(options);
+        return stackIntercept<UserMessageSendRequest, UserMessageSendResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * Portfolio
      *
      * @generated from protobuf rpc: PortfolioAllocatorGet
      */
     portfolioAllocatorGet(input: PortfolioAllocatorGetRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorGetRequest, PortfolioAllocatorGetResponse> {
-        const method = this.methods[50], opt = this._transport.mergeOptions(options);
+        const method = this.methods[51], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioAllocatorGetRequest, PortfolioAllocatorGetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioAllocatorList
      */
     portfolioAllocatorList(input: PortfolioAllocatorListRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorListRequest, PortfolioAllocatorListResponse> {
-        const method = this.methods[51], opt = this._transport.mergeOptions(options);
+        const method = this.methods[52], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioAllocatorListRequest, PortfolioAllocatorListResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioAllocatorSourceGet
      */
     portfolioAllocatorSourceGet(input: PortfolioAllocatorSourceGetRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceGetRequest, PortfolioAllocatorSourceGetResponse> {
-        const method = this.methods[52], opt = this._transport.mergeOptions(options);
+        const method = this.methods[53], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioAllocatorSourceGetRequest, PortfolioAllocatorSourceGetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioAllocatorSourceList
      */
     portfolioAllocatorSourceList(input: PortfolioAllocatorSourceListRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceListRequest, PortfolioAllocatorSourceListResponse> {
-        const method = this.methods[53], opt = this._transport.mergeOptions(options);
+        const method = this.methods[54], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioAllocatorSourceListRequest, PortfolioAllocatorSourceListResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioAllocatorCreate
      */
     portfolioAllocatorCreate(input: PortfolioAllocatorCreateRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorCreateRequest, PortfolioAllocatorCreateResponse> {
-        const method = this.methods[54], opt = this._transport.mergeOptions(options);
+        const method = this.methods[55], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioAllocatorCreateRequest, PortfolioAllocatorCreateResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioAllocatorUpdate
      */
     portfolioAllocatorUpdate(input: PortfolioAllocatorUpdateRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorUpdateRequest, PortfolioAllocatorUpdateResponse> {
-        const method = this.methods[55], opt = this._transport.mergeOptions(options);
+        const method = this.methods[56], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioAllocatorUpdateRequest, PortfolioAllocatorUpdateResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioAllocatorDelete
      */
     portfolioAllocatorDelete(input: PortfolioAllocatorDeleteRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorDeleteRequest, PortfolioAllocatorDeleteResponse> {
-        const method = this.methods[56], opt = this._transport.mergeOptions(options);
+        const method = this.methods[57], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioAllocatorDeleteRequest, PortfolioAllocatorDeleteResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioAllocatorSourceCreate
      */
     portfolioAllocatorSourceCreate(input: PortfolioAllocatorSourceCreateRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceCreateRequest, PortfolioAllocatorSourceCreateResponse> {
-        const method = this.methods[57], opt = this._transport.mergeOptions(options);
+        const method = this.methods[58], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioAllocatorSourceCreateRequest, PortfolioAllocatorSourceCreateResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioAllocatorSourceUpdate
      */
     portfolioAllocatorSourceUpdate(input: PortfolioAllocatorSourceUpdateRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceUpdateRequest, PortfolioAllocatorSourceUpdateResponse> {
-        const method = this.methods[58], opt = this._transport.mergeOptions(options);
+        const method = this.methods[59], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioAllocatorSourceUpdateRequest, PortfolioAllocatorSourceUpdateResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioAllocatorSourceDelete
      */
     portfolioAllocatorSourceDelete(input: PortfolioAllocatorSourceDeleteRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceDeleteRequest, PortfolioAllocatorSourceDeleteResponse> {
-        const method = this.methods[59], opt = this._transport.mergeOptions(options);
+        const method = this.methods[60], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioAllocatorSourceDeleteRequest, PortfolioAllocatorSourceDeleteResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioAllocatorSourceAttach
      */
     portfolioAllocatorSourceAttach(input: PortfolioAllocatorSourceAttachRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceAttachRequest, PortfolioAllocatorSourceAttachResponse> {
-        const method = this.methods[60], opt = this._transport.mergeOptions(options);
+        const method = this.methods[61], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioAllocatorSourceAttachRequest, PortfolioAllocatorSourceAttachResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioAllocatorSourceDetach
      */
     portfolioAllocatorSourceDetach(input: PortfolioAllocatorSourceDetachRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceDetachRequest, PortfolioAllocatorSourceDetachResponse> {
-        const method = this.methods[61], opt = this._transport.mergeOptions(options);
+        const method = this.methods[62], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioAllocatorSourceDetachRequest, PortfolioAllocatorSourceDetachResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioSourceList
      */
     portfolioSourceList(input: PortfolioSourceListRequest, options?: RpcOptions): UnaryCall<PortfolioSourceListRequest, PortfolioSourceListResponse> {
-        const method = this.methods[62], opt = this._transport.mergeOptions(options);
+        const method = this.methods[63], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioSourceListRequest, PortfolioSourceListResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioSourceGet
      */
     portfolioSourceGet(input: PortfolioSourceGetRequest, options?: RpcOptions): UnaryCall<PortfolioSourceGetRequest, PortfolioSourceGetResponse> {
-        const method = this.methods[63], opt = this._transport.mergeOptions(options);
+        const method = this.methods[64], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioSourceGetRequest, PortfolioSourceGetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioSourceCreate
      */
     portfolioSourceCreate(input: PortfolioSourceCreateRequest, options?: RpcOptions): UnaryCall<PortfolioSourceCreateRequest, PortfolioSourceCreateResponse> {
-        const method = this.methods[64], opt = this._transport.mergeOptions(options);
+        const method = this.methods[65], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioSourceCreateRequest, PortfolioSourceCreateResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioSourceUpdate
      */
     portfolioSourceUpdate(input: PortfolioSourceUpdateRequest, options?: RpcOptions): UnaryCall<PortfolioSourceUpdateRequest, PortfolioSourceUpdateResponse> {
-        const method = this.methods[65], opt = this._transport.mergeOptions(options);
+        const method = this.methods[66], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioSourceUpdateRequest, PortfolioSourceUpdateResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioSourceDelete
      */
     portfolioSourceDelete(input: PortfolioSourceDeleteRequest, options?: RpcOptions): UnaryCall<PortfolioSourceDeleteRequest, PortfolioSourceDeleteResponse> {
-        const method = this.methods[66], opt = this._transport.mergeOptions(options);
+        const method = this.methods[67], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioSourceDeleteRequest, PortfolioSourceDeleteResponse>("unary", this._transport, method, opt, input);
     }
     /**
@@ -943,7 +956,7 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
      * @generated from protobuf rpc: OnrampPurchases
      */
     onrampPurchases(input: TelegramOnrampPurchasesRequest, options?: RpcOptions): UnaryCall<TelegramOnrampPurchasesRequest, OnrampPurchasesResponse> {
-        const method = this.methods[67], opt = this._transport.mergeOptions(options);
+        const method = this.methods[68], opt = this._transport.mergeOptions(options);
         return stackIntercept<TelegramOnrampPurchasesRequest, OnrampPurchasesResponse>("unary", this._transport, method, opt, input);
     }
 }

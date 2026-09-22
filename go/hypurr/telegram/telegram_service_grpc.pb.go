@@ -70,6 +70,7 @@ const (
 	Telegram_SupportConversationList_FullMethodName           = "/hypurr.Telegram/SupportConversationList"
 	Telegram_SupportConversationClose_FullMethodName          = "/hypurr.Telegram/SupportConversationClose"
 	Telegram_SupportTicketStatus_FullMethodName               = "/hypurr.Telegram/SupportTicketStatus"
+	Telegram_UserMessageSend_FullMethodName                   = "/hypurr.Telegram/UserMessageSend"
 	Telegram_PortfolioAllocatorGet_FullMethodName             = "/hypurr.Telegram/PortfolioAllocatorGet"
 	Telegram_PortfolioAllocatorList_FullMethodName            = "/hypurr.Telegram/PortfolioAllocatorList"
 	Telegram_PortfolioAllocatorSourceGet_FullMethodName       = "/hypurr.Telegram/PortfolioAllocatorSourceGet"
@@ -152,6 +153,7 @@ type TelegramClient interface {
 	SupportConversationList(ctx context.Context, in *SupportConversationListRequest, opts ...grpc.CallOption) (*SupportConversationListResponse, error)
 	SupportConversationClose(ctx context.Context, in *SupportConversationCloseRequest, opts ...grpc.CallOption) (*SupportConversationCloseResponse, error)
 	SupportTicketStatus(ctx context.Context, in *SupportTicketStatusRequest, opts ...grpc.CallOption) (*SupportTicketStatusResponse, error)
+	UserMessageSend(ctx context.Context, in *UserMessageSendRequest, opts ...grpc.CallOption) (*UserMessageSendResponse, error)
 	// Portfolio
 	PortfolioAllocatorGet(ctx context.Context, in *PortfolioAllocatorGetRequest, opts ...grpc.CallOption) (*PortfolioAllocatorGetResponse, error)
 	PortfolioAllocatorList(ctx context.Context, in *PortfolioAllocatorListRequest, opts ...grpc.CallOption) (*PortfolioAllocatorListResponse, error)
@@ -705,6 +707,16 @@ func (c *telegramClient) SupportTicketStatus(ctx context.Context, in *SupportTic
 	return out, nil
 }
 
+func (c *telegramClient) UserMessageSend(ctx context.Context, in *UserMessageSendRequest, opts ...grpc.CallOption) (*UserMessageSendResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserMessageSendResponse)
+	err := c.cc.Invoke(ctx, Telegram_UserMessageSend_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *telegramClient) PortfolioAllocatorGet(ctx context.Context, in *PortfolioAllocatorGetRequest, opts ...grpc.CallOption) (*PortfolioAllocatorGetResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PortfolioAllocatorGetResponse)
@@ -947,6 +959,7 @@ type TelegramServer interface {
 	SupportConversationList(context.Context, *SupportConversationListRequest) (*SupportConversationListResponse, error)
 	SupportConversationClose(context.Context, *SupportConversationCloseRequest) (*SupportConversationCloseResponse, error)
 	SupportTicketStatus(context.Context, *SupportTicketStatusRequest) (*SupportTicketStatusResponse, error)
+	UserMessageSend(context.Context, *UserMessageSendRequest) (*UserMessageSendResponse, error)
 	// Portfolio
 	PortfolioAllocatorGet(context.Context, *PortfolioAllocatorGetRequest) (*PortfolioAllocatorGetResponse, error)
 	PortfolioAllocatorList(context.Context, *PortfolioAllocatorListRequest) (*PortfolioAllocatorListResponse, error)
@@ -1123,6 +1136,9 @@ func (UnimplementedTelegramServer) SupportConversationClose(context.Context, *Su
 }
 func (UnimplementedTelegramServer) SupportTicketStatus(context.Context, *SupportTicketStatusRequest) (*SupportTicketStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SupportTicketStatus not implemented")
+}
+func (UnimplementedTelegramServer) UserMessageSend(context.Context, *UserMessageSendRequest) (*UserMessageSendResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserMessageSend not implemented")
 }
 func (UnimplementedTelegramServer) PortfolioAllocatorGet(context.Context, *PortfolioAllocatorGetRequest) (*PortfolioAllocatorGetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PortfolioAllocatorGet not implemented")
@@ -2094,6 +2110,24 @@ func _Telegram_SupportTicketStatus_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Telegram_UserMessageSend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserMessageSendRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).UserMessageSend(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_UserMessageSend_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).UserMessageSend(ctx, req.(*UserMessageSendRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Telegram_PortfolioAllocatorGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PortfolioAllocatorGetRequest)
 	if err := dec(in); err != nil {
@@ -2620,6 +2654,10 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SupportTicketStatus",
 			Handler:    _Telegram_SupportTicketStatus_Handler,
+		},
+		{
+			MethodName: "UserMessageSend",
+			Handler:    _Telegram_UserMessageSend_Handler,
 		},
 		{
 			MethodName: "PortfolioAllocatorGet",

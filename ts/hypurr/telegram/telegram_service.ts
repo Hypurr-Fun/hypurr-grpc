@@ -1675,6 +1675,45 @@ export interface SupportTicketStatusResponse {
     ticket?: SupportTicket;
 }
 /**
+ * UserMessageSendRequest - sends a message from the bot to the caller's own
+ * Telegram chat. Requires the notify:write scope.
+ *
+ * @generated from protobuf message hypurr.UserMessageSendRequest
+ */
+export interface UserMessageSendRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: string text = 2
+     */
+    text: string; // at most 4096 characters once parsed
+    /**
+     * @generated from protobuf field: hypurr.UserMessageTextFormat format = 3
+     */
+    format: UserMessageTextFormat;
+    /**
+     * @generated from protobuf field: bool silent = 4
+     */
+    silent: boolean; // deliver without a notification sound
+    /**
+     * @generated from protobuf field: bool disable_link_preview = 5
+     */
+    disableLinkPreview: boolean;
+}
+/**
+ * @generated from protobuf message hypurr.UserMessageSendResponse
+ */
+export interface UserMessageSendResponse {
+    /**
+     * @generated from protobuf field: int64 message_id = 1
+     */
+    messageId: number; // Telegram message id
+}
+/**
  * @generated from protobuf message hypurr.PortfolioAllocatorGetRequest
  */
 export interface PortfolioAllocatorGetRequest {
@@ -2330,6 +2369,31 @@ export interface TelegramOnrampPurchasesRequest {
      * @generated from protobuf field: string app = 2
      */
     app: string;
+}
+/**
+ * UserMessageTextFormat selects how UserMessageSendRequest.text is parsed.
+ *
+ * @generated from protobuf enum hypurr.UserMessageTextFormat
+ */
+export enum UserMessageTextFormat {
+    /**
+     * sent as is
+     *
+     * @generated from protobuf enum value: USER_MESSAGE_TEXT_FORMAT_PLAIN = 0;
+     */
+    PLAIN = 0,
+    /**
+     * Telegram HTML: <b> <i> <u> <s> <tg-spoiler> <a href> <code> <pre> <blockquote>
+     *
+     * @generated from protobuf enum value: USER_MESSAGE_TEXT_FORMAT_HTML = 1;
+     */
+    HTML = 1,
+    /**
+     * Telegram MarkdownV2 (reserved characters must be escaped)
+     *
+     * @generated from protobuf enum value: USER_MESSAGE_TEXT_FORMAT_MARKDOWN_V2 = 2;
+     */
+    MARKDOWN_V2 = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TelegramUserRequest$Type extends MessageType<TelegramUserRequest> {
@@ -8909,6 +8973,148 @@ class SupportTicketStatusResponse$Type extends MessageType<SupportTicketStatusRe
  */
 export const SupportTicketStatusResponse = new SupportTicketStatusResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class UserMessageSendRequest$Type extends MessageType<UserMessageSendRequest> {
+    constructor() {
+        super("hypurr.UserMessageSendRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "format", kind: "enum", T: () => ["hypurr.UserMessageTextFormat", UserMessageTextFormat, "USER_MESSAGE_TEXT_FORMAT_"] },
+            { no: 4, name: "silent", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 5, name: "disable_link_preview", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<UserMessageSendRequest>): UserMessageSendRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.authData = {};
+        message.text = "";
+        message.format = 0;
+        message.silent = false;
+        message.disableLinkPreview = false;
+        if (value !== undefined)
+            reflectionMergePartial<UserMessageSendRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UserMessageSendRequest): UserMessageSendRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* string text */ 2:
+                    message.text = reader.string();
+                    break;
+                case /* hypurr.UserMessageTextFormat format */ 3:
+                    message.format = reader.int32();
+                    break;
+                case /* bool silent */ 4:
+                    message.silent = reader.bool();
+                    break;
+                case /* bool disable_link_preview */ 5:
+                    message.disableLinkPreview = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: UserMessageSendRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof UserMessageSendRequest["authData"] | undefined, val: UserMessageSendRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for hypurr.UserMessageSendRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: UserMessageSendRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of globalThis.Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* string text = 2; */
+        if (message.text !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.text);
+        /* hypurr.UserMessageTextFormat format = 3; */
+        if (message.format !== 0)
+            writer.tag(3, WireType.Varint).int32(message.format);
+        /* bool silent = 4; */
+        if (message.silent !== false)
+            writer.tag(4, WireType.Varint).bool(message.silent);
+        /* bool disable_link_preview = 5; */
+        if (message.disableLinkPreview !== false)
+            writer.tag(5, WireType.Varint).bool(message.disableLinkPreview);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UserMessageSendRequest
+ */
+export const UserMessageSendRequest = new UserMessageSendRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UserMessageSendResponse$Type extends MessageType<UserMessageSendResponse> {
+    constructor() {
+        super("hypurr.UserMessageSendResponse", [
+            { no: 1, name: "message_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<UserMessageSendResponse>): UserMessageSendResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.messageId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<UserMessageSendResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UserMessageSendResponse): UserMessageSendResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 message_id */ 1:
+                    message.messageId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UserMessageSendResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 message_id = 1; */
+        if (message.messageId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.messageId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.UserMessageSendResponse
+ */
+export const UserMessageSendResponse = new UserMessageSendResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class PortfolioAllocatorGetRequest$Type extends MessageType<PortfolioAllocatorGetRequest> {
     constructor() {
         super("hypurr.PortfolioAllocatorGetRequest", [
@@ -11496,6 +11702,7 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "SupportConversationList", options: {}, I: SupportConversationListRequest, O: SupportConversationListResponse },
     { name: "SupportConversationClose", options: {}, I: SupportConversationCloseRequest, O: SupportConversationCloseResponse },
     { name: "SupportTicketStatus", options: {}, I: SupportTicketStatusRequest, O: SupportTicketStatusResponse },
+    { name: "UserMessageSend", options: {}, I: UserMessageSendRequest, O: UserMessageSendResponse },
     { name: "PortfolioAllocatorGet", options: {}, I: PortfolioAllocatorGetRequest, O: PortfolioAllocatorGetResponse },
     { name: "PortfolioAllocatorList", options: {}, I: PortfolioAllocatorListRequest, O: PortfolioAllocatorListResponse },
     { name: "PortfolioAllocatorSourceGet", options: {}, I: PortfolioAllocatorSourceGetRequest, O: PortfolioAllocatorSourceGetResponse },

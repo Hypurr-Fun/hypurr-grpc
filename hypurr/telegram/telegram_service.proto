@@ -604,6 +604,27 @@ message SupportTicketStatusResponse {
   SupportTicket ticket = 1;
 }
 
+// UserMessageTextFormat selects how UserMessageSendRequest.text is parsed.
+enum UserMessageTextFormat {
+  USER_MESSAGE_TEXT_FORMAT_PLAIN = 0;        // sent as is
+  USER_MESSAGE_TEXT_FORMAT_HTML = 1;         // Telegram HTML: <b> <i> <u> <s> <tg-spoiler> <a href> <code> <pre> <blockquote>
+  USER_MESSAGE_TEXT_FORMAT_MARKDOWN_V2 = 2;  // Telegram MarkdownV2 (reserved characters must be escaped)
+}
+
+// UserMessageSendRequest - sends a message from the bot to the caller's own
+// Telegram chat. Requires the notify:write scope.
+message UserMessageSendRequest {
+  map<string, string> auth_data = 1;
+  string text = 2;                          // at most 4096 characters once parsed
+  UserMessageTextFormat format = 3;
+  bool silent = 4;                          // deliver without a notification sound
+  bool disable_link_preview = 5;
+}
+
+message UserMessageSendResponse {
+  int64 message_id = 1;                     // Telegram message id
+}
+
 message PortfolioAllocatorGetRequest {
   map<string, string> auth_data = 1;
   int64 wallet_id = 2;
@@ -921,6 +942,7 @@ service Telegram {
   rpc SupportConversationList(SupportConversationListRequest) returns (SupportConversationListResponse);
   rpc SupportConversationClose(SupportConversationCloseRequest) returns (SupportConversationCloseResponse);
   rpc SupportTicketStatus(SupportTicketStatusRequest) returns (SupportTicketStatusResponse);
+  rpc UserMessageSend(UserMessageSendRequest) returns (UserMessageSendResponse);
 
   // Portfolio
   rpc PortfolioAllocatorGet(PortfolioAllocatorGetRequest) returns (PortfolioAllocatorGetResponse) {}
