@@ -14,13 +14,29 @@ message PortfolioAllocator {
   repeated PortfolioSource sources = 8;
 }
 
-// PortfolioSource represents a weight source configuration
+// PortfolioSource is a shared source attached to one allocator: the
+// attachment's name, weight and enabled flag are per allocator, while
+// source_type and config are read from the shared source (source_id), so
+// every allocator attached to it follows the same signal.
 message PortfolioSource {
-  int64 id = 1;
+  int64 id = 1;                     // Attachment id
   int64 allocator_id = 2;
   string name = 3;                  // Unique name within allocator
-  string source_type = 4;           // "copy_trading" or "discretionary"
+  string source_type = 4;           // "copy_trading" or "discretionary" (from the shared source)
   double weight = 5;                // Leverage contribution for this source
-  google.protobuf.Struct config = 6; // Source-specific config (JSONB)
+  google.protobuf.Struct config = 6; // Source-specific config (JSONB, from the shared source)
   bool enabled = 7;
+  int64 source_id = 8;              // PortfolioSharedSource.id
+  int64 wallet_id = 9;              // Wallet of the allocator, when known
+}
+
+// PortfolioSharedSource is a user-owned source definition that any number of
+// the user's allocators can attach. Updating its config moves every attached
+// allocator on its next rebalance.
+message PortfolioSharedSource {
+  int64 id = 1;
+  string name = 2;                   // Unique per user
+  string source_type = 3;            // "copy_trading" or "discretionary"
+  google.protobuf.Struct config = 4; // Source-specific config (JSONB)
+  repeated PortfolioSource attachments = 5; // Allocators this source feeds
 }
