@@ -6,6 +6,20 @@ import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Telegram } from "./telegram_service";
 import type { OnrampPurchasesResponse } from "../onramp";
 import type { TelegramOnrampPurchasesRequest } from "./telegram_service";
+import type { PortfolioSourceDeleteResponse } from "./telegram_service";
+import type { PortfolioSourceDeleteRequest } from "./telegram_service";
+import type { PortfolioSourceUpdateResponse } from "./telegram_service";
+import type { PortfolioSourceUpdateRequest } from "./telegram_service";
+import type { PortfolioSourceCreateResponse } from "./telegram_service";
+import type { PortfolioSourceCreateRequest } from "./telegram_service";
+import type { PortfolioSourceGetResponse } from "./telegram_service";
+import type { PortfolioSourceGetRequest } from "./telegram_service";
+import type { PortfolioSourceListResponse } from "./telegram_service";
+import type { PortfolioSourceListRequest } from "./telegram_service";
+import type { PortfolioAllocatorSourceDetachResponse } from "./telegram_service";
+import type { PortfolioAllocatorSourceDetachRequest } from "./telegram_service";
+import type { PortfolioAllocatorSourceAttachResponse } from "./telegram_service";
+import type { PortfolioAllocatorSourceAttachRequest } from "./telegram_service";
 import type { PortfolioAllocatorSourceDeleteResponse } from "./telegram_service";
 import type { PortfolioAllocatorSourceDeleteRequest } from "./telegram_service";
 import type { PortfolioAllocatorSourceUpdateResponse } from "./telegram_service";
@@ -392,6 +406,34 @@ export interface ITelegramClient {
      * @generated from protobuf rpc: PortfolioAllocatorSourceDelete
      */
     portfolioAllocatorSourceDelete(input: PortfolioAllocatorSourceDeleteRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceDeleteRequest, PortfolioAllocatorSourceDeleteResponse>;
+    /**
+     * @generated from protobuf rpc: PortfolioAllocatorSourceAttach
+     */
+    portfolioAllocatorSourceAttach(input: PortfolioAllocatorSourceAttachRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceAttachRequest, PortfolioAllocatorSourceAttachResponse>;
+    /**
+     * @generated from protobuf rpc: PortfolioAllocatorSourceDetach
+     */
+    portfolioAllocatorSourceDetach(input: PortfolioAllocatorSourceDetachRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceDetachRequest, PortfolioAllocatorSourceDetachResponse>;
+    /**
+     * @generated from protobuf rpc: PortfolioSourceList
+     */
+    portfolioSourceList(input: PortfolioSourceListRequest, options?: RpcOptions): UnaryCall<PortfolioSourceListRequest, PortfolioSourceListResponse>;
+    /**
+     * @generated from protobuf rpc: PortfolioSourceGet
+     */
+    portfolioSourceGet(input: PortfolioSourceGetRequest, options?: RpcOptions): UnaryCall<PortfolioSourceGetRequest, PortfolioSourceGetResponse>;
+    /**
+     * @generated from protobuf rpc: PortfolioSourceCreate
+     */
+    portfolioSourceCreate(input: PortfolioSourceCreateRequest, options?: RpcOptions): UnaryCall<PortfolioSourceCreateRequest, PortfolioSourceCreateResponse>;
+    /**
+     * @generated from protobuf rpc: PortfolioSourceUpdate
+     */
+    portfolioSourceUpdate(input: PortfolioSourceUpdateRequest, options?: RpcOptions): UnaryCall<PortfolioSourceUpdateRequest, PortfolioSourceUpdateResponse>;
+    /**
+     * @generated from protobuf rpc: PortfolioSourceDelete
+     */
+    portfolioSourceDelete(input: PortfolioSourceDeleteRequest, options?: RpcOptions): UnaryCall<PortfolioSourceDeleteRequest, PortfolioSourceDeleteResponse>;
     /**
      * Onramp — purchases across all of the user's wallets
      *
@@ -847,12 +889,61 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
         return stackIntercept<PortfolioAllocatorSourceDeleteRequest, PortfolioAllocatorSourceDeleteResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: PortfolioAllocatorSourceAttach
+     */
+    portfolioAllocatorSourceAttach(input: PortfolioAllocatorSourceAttachRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceAttachRequest, PortfolioAllocatorSourceAttachResponse> {
+        const method = this.methods[60], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PortfolioAllocatorSourceAttachRequest, PortfolioAllocatorSourceAttachResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: PortfolioAllocatorSourceDetach
+     */
+    portfolioAllocatorSourceDetach(input: PortfolioAllocatorSourceDetachRequest, options?: RpcOptions): UnaryCall<PortfolioAllocatorSourceDetachRequest, PortfolioAllocatorSourceDetachResponse> {
+        const method = this.methods[61], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PortfolioAllocatorSourceDetachRequest, PortfolioAllocatorSourceDetachResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: PortfolioSourceList
+     */
+    portfolioSourceList(input: PortfolioSourceListRequest, options?: RpcOptions): UnaryCall<PortfolioSourceListRequest, PortfolioSourceListResponse> {
+        const method = this.methods[62], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PortfolioSourceListRequest, PortfolioSourceListResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: PortfolioSourceGet
+     */
+    portfolioSourceGet(input: PortfolioSourceGetRequest, options?: RpcOptions): UnaryCall<PortfolioSourceGetRequest, PortfolioSourceGetResponse> {
+        const method = this.methods[63], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PortfolioSourceGetRequest, PortfolioSourceGetResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: PortfolioSourceCreate
+     */
+    portfolioSourceCreate(input: PortfolioSourceCreateRequest, options?: RpcOptions): UnaryCall<PortfolioSourceCreateRequest, PortfolioSourceCreateResponse> {
+        const method = this.methods[64], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PortfolioSourceCreateRequest, PortfolioSourceCreateResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: PortfolioSourceUpdate
+     */
+    portfolioSourceUpdate(input: PortfolioSourceUpdateRequest, options?: RpcOptions): UnaryCall<PortfolioSourceUpdateRequest, PortfolioSourceUpdateResponse> {
+        const method = this.methods[65], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PortfolioSourceUpdateRequest, PortfolioSourceUpdateResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: PortfolioSourceDelete
+     */
+    portfolioSourceDelete(input: PortfolioSourceDeleteRequest, options?: RpcOptions): UnaryCall<PortfolioSourceDeleteRequest, PortfolioSourceDeleteResponse> {
+        const method = this.methods[66], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PortfolioSourceDeleteRequest, PortfolioSourceDeleteResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * Onramp — purchases across all of the user's wallets
      *
      * @generated from protobuf rpc: OnrampPurchases
      */
     onrampPurchases(input: TelegramOnrampPurchasesRequest, options?: RpcOptions): UnaryCall<TelegramOnrampPurchasesRequest, OnrampPurchasesResponse> {
-        const method = this.methods[60], opt = this._transport.mergeOptions(options);
+        const method = this.methods[67], opt = this._transport.mergeOptions(options);
         return stackIntercept<TelegramOnrampPurchasesRequest, OnrampPurchasesResponse>("unary", this._transport, method, opt, input);
     }
 }

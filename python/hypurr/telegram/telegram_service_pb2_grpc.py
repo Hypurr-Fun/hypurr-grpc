@@ -336,6 +336,41 @@ class TelegramStub:
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDeleteRequest.SerializeToString,
                 response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDeleteResponse.FromString,
                 _registered_method=True)
+        self.PortfolioAllocatorSourceAttach = channel.unary_unary(
+                '/hypurr.Telegram/PortfolioAllocatorSourceAttach',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceAttachRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceAttachResponse.FromString,
+                _registered_method=True)
+        self.PortfolioAllocatorSourceDetach = channel.unary_unary(
+                '/hypurr.Telegram/PortfolioAllocatorSourceDetach',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDetachRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDetachResponse.FromString,
+                _registered_method=True)
+        self.PortfolioSourceList = channel.unary_unary(
+                '/hypurr.Telegram/PortfolioSourceList',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceListRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceListResponse.FromString,
+                _registered_method=True)
+        self.PortfolioSourceGet = channel.unary_unary(
+                '/hypurr.Telegram/PortfolioSourceGet',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceGetRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceGetResponse.FromString,
+                _registered_method=True)
+        self.PortfolioSourceCreate = channel.unary_unary(
+                '/hypurr.Telegram/PortfolioSourceCreate',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceCreateRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceCreateResponse.FromString,
+                _registered_method=True)
+        self.PortfolioSourceUpdate = channel.unary_unary(
+                '/hypurr.Telegram/PortfolioSourceUpdate',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceUpdateRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceUpdateResponse.FromString,
+                _registered_method=True)
+        self.PortfolioSourceDelete = channel.unary_unary(
+                '/hypurr.Telegram/PortfolioSourceDelete',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceDeleteRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceDeleteResponse.FromString,
+                _registered_method=True)
         self.OnrampPurchases = channel.unary_unary(
                 '/hypurr.Telegram/OnrampPurchases',
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramOnrampPurchasesRequest.SerializeToString,
@@ -715,6 +750,48 @@ class TelegramServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PortfolioAllocatorSourceAttach(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PortfolioAllocatorSourceDetach(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PortfolioSourceList(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PortfolioSourceGet(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PortfolioSourceCreate(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PortfolioSourceUpdate(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PortfolioSourceDelete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def OnrampPurchases(self, request, context):
         """Onramp — purchases across all of the user's wallets
         """
@@ -1024,6 +1101,41 @@ def add_TelegramServicer_to_server(servicer, server):
                     servicer.PortfolioAllocatorSourceDelete,
                     request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDeleteRequest.FromString,
                     response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDeleteResponse.SerializeToString,
+            ),
+            'PortfolioAllocatorSourceAttach': grpc.unary_unary_rpc_method_handler(
+                    servicer.PortfolioAllocatorSourceAttach,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceAttachRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceAttachResponse.SerializeToString,
+            ),
+            'PortfolioAllocatorSourceDetach': grpc.unary_unary_rpc_method_handler(
+                    servicer.PortfolioAllocatorSourceDetach,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDetachRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDetachResponse.SerializeToString,
+            ),
+            'PortfolioSourceList': grpc.unary_unary_rpc_method_handler(
+                    servicer.PortfolioSourceList,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceListRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceListResponse.SerializeToString,
+            ),
+            'PortfolioSourceGet': grpc.unary_unary_rpc_method_handler(
+                    servicer.PortfolioSourceGet,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceGetRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceGetResponse.SerializeToString,
+            ),
+            'PortfolioSourceCreate': grpc.unary_unary_rpc_method_handler(
+                    servicer.PortfolioSourceCreate,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceCreateRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceCreateResponse.SerializeToString,
+            ),
+            'PortfolioSourceUpdate': grpc.unary_unary_rpc_method_handler(
+                    servicer.PortfolioSourceUpdate,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceUpdateRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceUpdateResponse.SerializeToString,
+            ),
+            'PortfolioSourceDelete': grpc.unary_unary_rpc_method_handler(
+                    servicer.PortfolioSourceDelete,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceDeleteRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceDeleteResponse.SerializeToString,
             ),
             'OnrampPurchases': grpc.unary_unary_rpc_method_handler(
                     servicer.OnrampPurchases,
@@ -2651,6 +2763,195 @@ class Telegram:
             '/hypurr.Telegram/PortfolioAllocatorSourceDelete',
             hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDeleteRequest.SerializeToString,
             hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDeleteResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PortfolioAllocatorSourceAttach(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/PortfolioAllocatorSourceAttach',
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceAttachRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceAttachResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PortfolioAllocatorSourceDetach(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/PortfolioAllocatorSourceDetach',
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDetachRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioAllocatorSourceDetachResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PortfolioSourceList(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/PortfolioSourceList',
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceListRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceListResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PortfolioSourceGet(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/PortfolioSourceGet',
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceGetRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceGetResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PortfolioSourceCreate(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/PortfolioSourceCreate',
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceCreateRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceCreateResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PortfolioSourceUpdate(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/PortfolioSourceUpdate',
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceUpdateRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceUpdateResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PortfolioSourceDelete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/PortfolioSourceDelete',
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceDeleteRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceDeleteResponse.FromString,
             options,
             channel_credentials,
             insecure,

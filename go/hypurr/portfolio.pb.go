@@ -124,19 +124,24 @@ func (x *PortfolioAllocator) GetSources() []*PortfolioSource {
 	return nil
 }
 
-// PortfolioSource represents a weight source configuration
+// PortfolioSource is a shared source attached to one allocator: the
+// attachment's name, weight and enabled flag are per allocator, while
+// source_type and config are read from the shared source (source_id), so
+// every allocator attached to it follows the same signal.
 type PortfolioSource struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id          int64            `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id          int64            `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"` // Attachment id
 	AllocatorId int64            `protobuf:"varint,2,opt,name=allocator_id,json=allocatorId,proto3" json:"allocator_id,omitempty"`
 	Name        string           `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`                               // Unique name within allocator
-	SourceType  string           `protobuf:"bytes,4,opt,name=source_type,json=sourceType,proto3" json:"source_type,omitempty"` // "copy_trading" or "discretionary"
+	SourceType  string           `protobuf:"bytes,4,opt,name=source_type,json=sourceType,proto3" json:"source_type,omitempty"` // "copy_trading" or "discretionary" (from the shared source)
 	Weight      float64          `protobuf:"fixed64,5,opt,name=weight,proto3" json:"weight,omitempty"`                         // Leverage contribution for this source
-	Config      *structpb.Struct `protobuf:"bytes,6,opt,name=config,proto3" json:"config,omitempty"`                           // Source-specific config (JSONB)
+	Config      *structpb.Struct `protobuf:"bytes,6,opt,name=config,proto3" json:"config,omitempty"`                           // Source-specific config (JSONB, from the shared source)
 	Enabled     bool             `protobuf:"varint,7,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	SourceId    int64            `protobuf:"varint,8,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"` // PortfolioSharedSource.id
+	WalletId    int64            `protobuf:"varint,9,opt,name=wallet_id,json=walletId,proto3" json:"wallet_id,omitempty"` // Wallet of the allocator, when known
 }
 
 func (x *PortfolioSource) Reset() {
@@ -220,6 +225,102 @@ func (x *PortfolioSource) GetEnabled() bool {
 	return false
 }
 
+func (x *PortfolioSource) GetSourceId() int64 {
+	if x != nil {
+		return x.SourceId
+	}
+	return 0
+}
+
+func (x *PortfolioSource) GetWalletId() int64 {
+	if x != nil {
+		return x.WalletId
+	}
+	return 0
+}
+
+// PortfolioSharedSource is a user-owned source definition that any number of
+// the user's allocators can attach. Updating its config moves every attached
+// allocator on its next rebalance.
+type PortfolioSharedSource struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id          int64              `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name        string             `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                               // Unique per user
+	SourceType  string             `protobuf:"bytes,3,opt,name=source_type,json=sourceType,proto3" json:"source_type,omitempty"` // "copy_trading" or "discretionary"
+	Config      *structpb.Struct   `protobuf:"bytes,4,opt,name=config,proto3" json:"config,omitempty"`                           // Source-specific config (JSONB)
+	Attachments []*PortfolioSource `protobuf:"bytes,5,rep,name=attachments,proto3" json:"attachments,omitempty"`                 // Allocators this source feeds
+}
+
+func (x *PortfolioSharedSource) Reset() {
+	*x = PortfolioSharedSource{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_portfolio_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PortfolioSharedSource) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PortfolioSharedSource) ProtoMessage() {}
+
+func (x *PortfolioSharedSource) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_portfolio_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PortfolioSharedSource.ProtoReflect.Descriptor instead.
+func (*PortfolioSharedSource) Descriptor() ([]byte, []int) {
+	return file_hypurr_portfolio_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *PortfolioSharedSource) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *PortfolioSharedSource) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PortfolioSharedSource) GetSourceType() string {
+	if x != nil {
+		return x.SourceType
+	}
+	return ""
+}
+
+func (x *PortfolioSharedSource) GetConfig() *structpb.Struct {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+func (x *PortfolioSharedSource) GetAttachments() []*PortfolioSource {
+	if x != nil {
+		return x.Attachments
+	}
+	return nil
+}
+
 var File_hypurr_portfolio_proto protoreflect.FileDescriptor
 
 var file_hypurr_portfolio_proto_rawDesc = []byte{
@@ -246,7 +347,7 @@ var file_hypurr_portfolio_proto_rawDesc = []byte{
 	0x31, 0x0a, 0x07, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x73, 0x18, 0x08, 0x20, 0x03, 0x28, 0x0b,
 	0x32, 0x17, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x50, 0x6f, 0x72, 0x74, 0x66, 0x6f,
 	0x6c, 0x69, 0x6f, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x52, 0x07, 0x73, 0x6f, 0x75, 0x72, 0x63,
-	0x65, 0x73, 0x22, 0xdc, 0x01, 0x0a, 0x0f, 0x50, 0x6f, 0x72, 0x74, 0x66, 0x6f, 0x6c, 0x69, 0x6f,
+	0x65, 0x73, 0x22, 0x96, 0x02, 0x0a, 0x0f, 0x50, 0x6f, 0x72, 0x74, 0x66, 0x6f, 0x6c, 0x69, 0x6f,
 	0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x61, 0x6c, 0x6c, 0x6f, 0x63, 0x61,
 	0x74, 0x6f, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x61, 0x6c,
@@ -260,10 +361,26 @@ var file_hypurr_portfolio_proto_rawDesc = []byte{
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72, 0x75, 0x63, 0x74, 0x52,
 	0x06, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x18, 0x0a, 0x07, 0x65, 0x6e, 0x61, 0x62, 0x6c,
 	0x65, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x65, 0x6e, 0x61, 0x62, 0x6c, 0x65,
-	0x64, 0x42, 0x29, 0x5a, 0x27, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
-	0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72,
-	0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x64, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x08,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x49, 0x64, 0x12, 0x1b,
+	0x0a, 0x09, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x09, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x08, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x49, 0x64, 0x22, 0xc8, 0x01, 0x0a, 0x15,
+	0x50, 0x6f, 0x72, 0x74, 0x66, 0x6f, 0x6c, 0x69, 0x6f, 0x53, 0x68, 0x61, 0x72, 0x65, 0x64, 0x53,
+	0x6f, 0x75, 0x72, 0x63, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x73, 0x6f, 0x75,
+	0x72, 0x63, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a,
+	0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x2f, 0x0a, 0x06, 0x63, 0x6f,
+	0x6e, 0x66, 0x69, 0x67, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x67, 0x6f, 0x6f,
+	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72,
+	0x75, 0x63, 0x74, 0x52, 0x06, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x39, 0x0a, 0x0b, 0x61,
+	0x74, 0x74, 0x61, 0x63, 0x68, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x17, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x50, 0x6f, 0x72, 0x74, 0x66, 0x6f,
+	0x6c, 0x69, 0x6f, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x52, 0x0b, 0x61, 0x74, 0x74, 0x61, 0x63,
+	0x68, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x42, 0x29, 0x5a, 0x27, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75,
+	0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72,
+	0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -278,20 +395,23 @@ func file_hypurr_portfolio_proto_rawDescGZIP() []byte {
 	return file_hypurr_portfolio_proto_rawDescData
 }
 
-var file_hypurr_portfolio_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_hypurr_portfolio_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_hypurr_portfolio_proto_goTypes = []any{
-	(*PortfolioAllocator)(nil), // 0: hypurr.PortfolioAllocator
-	(*PortfolioSource)(nil),    // 1: hypurr.PortfolioSource
-	(*structpb.Struct)(nil),    // 2: google.protobuf.Struct
+	(*PortfolioAllocator)(nil),    // 0: hypurr.PortfolioAllocator
+	(*PortfolioSource)(nil),       // 1: hypurr.PortfolioSource
+	(*PortfolioSharedSource)(nil), // 2: hypurr.PortfolioSharedSource
+	(*structpb.Struct)(nil),       // 3: google.protobuf.Struct
 }
 var file_hypurr_portfolio_proto_depIdxs = []int32{
 	1, // 0: hypurr.PortfolioAllocator.sources:type_name -> hypurr.PortfolioSource
-	2, // 1: hypurr.PortfolioSource.config:type_name -> google.protobuf.Struct
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	3, // 1: hypurr.PortfolioSource.config:type_name -> google.protobuf.Struct
+	3, // 2: hypurr.PortfolioSharedSource.config:type_name -> google.protobuf.Struct
+	1, // 3: hypurr.PortfolioSharedSource.attachments:type_name -> hypurr.PortfolioSource
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_hypurr_portfolio_proto_init() }
@@ -324,6 +444,18 @@ func file_hypurr_portfolio_proto_init() {
 				return nil
 			}
 		}
+		file_hypurr_portfolio_proto_msgTypes[2].Exporter = func(v any, i int) any {
+			switch v := v.(*PortfolioSharedSource); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -331,7 +463,7 @@ func file_hypurr_portfolio_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hypurr_portfolio_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -697,16 +697,20 @@ message PortfolioAllocatorSourceUpdateRequest {
   int64 wallet_id = 2;
   string name = 3;                              // identifies the source to update
   google.protobuf.DoubleValue weight = 4;       // new weight
-  google.protobuf.Struct config = 5;            // new config (replaces existing)
+  // Deprecated: use PortfolioSourceUpdate. Replaces the config of the shared
+  // source, so every allocator attached to it moves, not just this wallet's.
+  google.protobuf.Struct config = 5;
   google.protobuf.BoolValue enabled = 6;        // enable/disable source
-  bool allow_while_enabled = 7;                 // permit a weight-only update while the allocator is enabled (picked up on the next rebalance cycle)
+  bool allow_while_enabled = 7;                 // permit a weight/config update while the allocator is enabled (picked up on the next rebalance cycle)
 }
 
 message PortfolioAllocatorSourceUpdateResponse {
   PortfolioSource source = 1;
 }
 
-// PortfolioAllocatorSourceDelete - removes a source from an allocator
+// PortfolioAllocatorSourceDelete - removes a source from an allocator, and
+// deletes the shared source too when no other allocator uses it. Use
+// PortfolioAllocatorSourceDetach to keep the shared source.
 message PortfolioAllocatorSourceDeleteRequest {
   map<string, string> auth_data = 1;
   int64 wallet_id = 2;
@@ -714,6 +718,91 @@ message PortfolioAllocatorSourceDeleteRequest {
 }
 
 message PortfolioAllocatorSourceDeleteResponse {
+}
+
+// PortfolioAllocatorSourceAttach - attaches an existing shared source to an
+// allocator. The allocator must be disabled.
+message PortfolioAllocatorSourceAttachRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  int64 source_id = 3;                // shared source, by id...
+  string source_name = 4;             // ...or by name
+  string name = 5;                    // name within the allocator (default: the shared source's name)
+  double weight = 6;                  // leverage contribution
+}
+
+message PortfolioAllocatorSourceAttachResponse {
+  PortfolioSource source = 1;
+}
+
+// PortfolioAllocatorSourceDetach - removes a source from an allocator and
+// keeps the shared source. The allocator must be disabled.
+message PortfolioAllocatorSourceDetachRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  string name = 3;                    // name within the allocator
+}
+
+message PortfolioAllocatorSourceDetachResponse {
+}
+
+// ============== Shared Portfolio Sources ==============
+// A shared source is identified by source_id or, when that is zero, by name.
+
+message PortfolioSourceListRequest {
+  map<string, string> auth_data = 1;
+}
+
+message PortfolioSourceListResponse {
+  repeated PortfolioSharedSource sources = 1;
+}
+
+message PortfolioSourceGetRequest {
+  map<string, string> auth_data = 1;
+  int64 source_id = 2;
+  string name = 3;
+}
+
+message PortfolioSourceGetResponse {
+  PortfolioSharedSource source = 1;
+}
+
+message PortfolioSourceCreateRequest {
+  map<string, string> auth_data = 1;
+  string name = 2;                    // unique per user
+  string source_type = 3;             // "copy_trading" or "discretionary"
+  google.protobuf.Struct config = 4;  // source-specific config
+}
+
+message PortfolioSourceCreateResponse {
+  PortfolioSharedSource source = 1;
+}
+
+// PortfolioSourceUpdate - updates a shared source; every attached allocator
+// follows it. Without allow_while_enabled, every attached allocator must be
+// disabled. With it, only config may change (the live signal path).
+message PortfolioSourceUpdateRequest {
+  map<string, string> auth_data = 1;
+  int64 source_id = 2;
+  string name = 3;
+  google.protobuf.StringValue source_type = 4;
+  google.protobuf.Struct config = 5;  // new config (replaces existing)
+  bool allow_while_enabled = 6;
+}
+
+message PortfolioSourceUpdateResponse {
+  PortfolioSharedSource source = 1;
+}
+
+// PortfolioSourceDelete - deletes a shared source; fails while any allocator
+// still uses it.
+message PortfolioSourceDeleteRequest {
+  map<string, string> auth_data = 1;
+  int64 source_id = 2;
+  string name = 3;
+}
+
+message PortfolioSourceDeleteResponse {
 }
 
 message AuthorizationCodeTelegramAuthData {
@@ -844,6 +933,13 @@ service Telegram {
   rpc PortfolioAllocatorSourceCreate(PortfolioAllocatorSourceCreateRequest) returns (PortfolioAllocatorSourceCreateResponse) {}
   rpc PortfolioAllocatorSourceUpdate(PortfolioAllocatorSourceUpdateRequest) returns (PortfolioAllocatorSourceUpdateResponse) {}
   rpc PortfolioAllocatorSourceDelete(PortfolioAllocatorSourceDeleteRequest) returns (PortfolioAllocatorSourceDeleteResponse) {}
+  rpc PortfolioAllocatorSourceAttach(PortfolioAllocatorSourceAttachRequest) returns (PortfolioAllocatorSourceAttachResponse) {}
+  rpc PortfolioAllocatorSourceDetach(PortfolioAllocatorSourceDetachRequest) returns (PortfolioAllocatorSourceDetachResponse) {}
+  rpc PortfolioSourceList(PortfolioSourceListRequest) returns (PortfolioSourceListResponse) {}
+  rpc PortfolioSourceGet(PortfolioSourceGetRequest) returns (PortfolioSourceGetResponse) {}
+  rpc PortfolioSourceCreate(PortfolioSourceCreateRequest) returns (PortfolioSourceCreateResponse) {}
+  rpc PortfolioSourceUpdate(PortfolioSourceUpdateRequest) returns (PortfolioSourceUpdateResponse) {}
+  rpc PortfolioSourceDelete(PortfolioSourceDeleteRequest) returns (PortfolioSourceDeleteResponse) {}
 
   // Onramp — purchases across all of the user's wallets
   rpc OnrampPurchases (TelegramOnrampPurchasesRequest) returns (OnrampPurchasesResponse) {}

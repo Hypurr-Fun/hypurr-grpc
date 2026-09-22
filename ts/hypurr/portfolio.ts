@@ -49,7 +49,10 @@ export interface PortfolioAllocator {
     sources: PortfolioSource[];
 }
 /**
- * PortfolioSource represents a weight source configuration
+ * PortfolioSource is a shared source attached to one allocator: the
+ * attachment's name, weight and enabled flag are per allocator, while
+ * source_type and config are read from the shared source (source_id), so
+ * every allocator attached to it follows the same signal.
  *
  * @generated from protobuf message hypurr.PortfolioSource
  */
@@ -57,7 +60,7 @@ export interface PortfolioSource {
     /**
      * @generated from protobuf field: int64 id = 1
      */
-    id: number;
+    id: number; // Attachment id
     /**
      * @generated from protobuf field: int64 allocator_id = 2
      */
@@ -69,7 +72,7 @@ export interface PortfolioSource {
     /**
      * @generated from protobuf field: string source_type = 4
      */
-    sourceType: string; // "copy_trading" or "discretionary"
+    sourceType: string; // "copy_trading" or "discretionary" (from the shared source)
     /**
      * @generated from protobuf field: double weight = 5
      */
@@ -77,11 +80,48 @@ export interface PortfolioSource {
     /**
      * @generated from protobuf field: google.protobuf.Struct config = 6
      */
-    config?: Struct; // Source-specific config (JSONB)
+    config?: Struct; // Source-specific config (JSONB, from the shared source)
     /**
      * @generated from protobuf field: bool enabled = 7
      */
     enabled: boolean;
+    /**
+     * @generated from protobuf field: int64 source_id = 8
+     */
+    sourceId: number; // PortfolioSharedSource.id
+    /**
+     * @generated from protobuf field: int64 wallet_id = 9
+     */
+    walletId: number; // Wallet of the allocator, when known
+}
+/**
+ * PortfolioSharedSource is a user-owned source definition that any number of
+ * the user's allocators can attach. Updating its config moves every attached
+ * allocator on its next rebalance.
+ *
+ * @generated from protobuf message hypurr.PortfolioSharedSource
+ */
+export interface PortfolioSharedSource {
+    /**
+     * @generated from protobuf field: int64 id = 1
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: string name = 2
+     */
+    name: string; // Unique per user
+    /**
+     * @generated from protobuf field: string source_type = 3
+     */
+    sourceType: string; // "copy_trading" or "discretionary"
+    /**
+     * @generated from protobuf field: google.protobuf.Struct config = 4
+     */
+    config?: Struct; // Source-specific config (JSONB)
+    /**
+     * @generated from protobuf field: repeated hypurr.PortfolioSource attachments = 5
+     */
+    attachments: PortfolioSource[]; // Allocators this source feeds
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class PortfolioAllocator$Type extends MessageType<PortfolioAllocator> {
@@ -196,7 +236,9 @@ class PortfolioSource$Type extends MessageType<PortfolioSource> {
             { no: 4, name: "source_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 6, name: "config", kind: "message", T: () => Struct },
-            { no: 7, name: "enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 7, name: "enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 8, name: "source_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 9, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioSource>): PortfolioSource {
@@ -207,6 +249,8 @@ class PortfolioSource$Type extends MessageType<PortfolioSource> {
         message.sourceType = "";
         message.weight = 0;
         message.enabled = false;
+        message.sourceId = 0;
+        message.walletId = 0;
         if (value !== undefined)
             reflectionMergePartial<PortfolioSource>(this, message, value);
         return message;
@@ -236,6 +280,12 @@ class PortfolioSource$Type extends MessageType<PortfolioSource> {
                     break;
                 case /* bool enabled */ 7:
                     message.enabled = reader.bool();
+                    break;
+                case /* int64 source_id */ 8:
+                    message.sourceId = reader.int64().toNumber();
+                    break;
+                case /* int64 wallet_id */ 9:
+                    message.walletId = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -270,6 +320,12 @@ class PortfolioSource$Type extends MessageType<PortfolioSource> {
         /* bool enabled = 7; */
         if (message.enabled !== false)
             writer.tag(7, WireType.Varint).bool(message.enabled);
+        /* int64 source_id = 8; */
+        if (message.sourceId !== 0)
+            writer.tag(8, WireType.Varint).int64(message.sourceId);
+        /* int64 wallet_id = 9; */
+        if (message.walletId !== 0)
+            writer.tag(9, WireType.Varint).int64(message.walletId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -280,3 +336,81 @@ class PortfolioSource$Type extends MessageType<PortfolioSource> {
  * @generated MessageType for protobuf message hypurr.PortfolioSource
  */
 export const PortfolioSource = new PortfolioSource$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioSharedSource$Type extends MessageType<PortfolioSharedSource> {
+    constructor() {
+        super("hypurr.PortfolioSharedSource", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "source_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "config", kind: "message", T: () => Struct },
+            { no: 5, name: "attachments", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioSource }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioSharedSource>): PortfolioSharedSource {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = 0;
+        message.name = "";
+        message.sourceType = "";
+        message.attachments = [];
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioSharedSource>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioSharedSource): PortfolioSharedSource {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* string source_type */ 3:
+                    message.sourceType = reader.string();
+                    break;
+                case /* google.protobuf.Struct config */ 4:
+                    message.config = Struct.internalBinaryRead(reader, reader.uint32(), options, message.config);
+                    break;
+                case /* repeated hypurr.PortfolioSource attachments */ 5:
+                    message.attachments.push(PortfolioSource.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PortfolioSharedSource, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* string source_type = 3; */
+        if (message.sourceType !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.sourceType);
+        /* google.protobuf.Struct config = 4; */
+        if (message.config)
+            Struct.internalBinaryWrite(message.config, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.PortfolioSource attachments = 5; */
+        for (let i = 0; i < message.attachments.length; i++)
+            PortfolioSource.internalBinaryWrite(message.attachments[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioSharedSource
+ */
+export const PortfolioSharedSource = new PortfolioSharedSource$Type();
