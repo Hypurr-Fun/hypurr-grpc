@@ -2,64 +2,29 @@ syntax = "proto3";
 package hypurr;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr";
 
-// Kms forwards sealed client payloads between the app and the hfun-kms
-// instance. The bot is a dumb pipe: payloads are sealed to the enclave,
-// responses are attestation documents the client verifies against its own
-// pinned trust anchors — nothing here can be read or altered in transit.
+// Kms forwards sealed payloads between the app and the hfun-kms instance;
+// the bot cannot read or alter them.
 service Kms {
-  // GetAttestation returns a fresh enclave attestation — the start of every
-  // client ceremony (single-use nonce + ephemeral sealing key).
   rpc GetAttestation(KmsGetAttestationRequest) returns (KmsGetAttestationResponse);
-  // LoginOrRegister forwards a sealed login/register payload. Pre-auth by
-  // nature; on success the bot links the KMS account to an Hfun user using
-  // the verified response, never client input.
   rpc LoginOrRegister(KmsLoginOrRegisterRequest) returns (KmsLoginOrRegisterResponse);
-  // Pre-check before sealing a login: which intent to use for this provider
-  // identity. Authenticated by the provider id_token itself — the bot
-  // verifies it — so it only ever answers about the caller's own identity,
-  // never acts as an account-existence oracle.
   rpc LoginIntent(KmsLoginIntentRequest) returns (KmsLoginIntentResponse);
 
-  // Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
-  // metadata); the bot derives the account id from the VERIFIED claims —
-  // never from client input.
+  // Routed by the instance JWT.
   rpc AddProvider(KmsAddProviderRequest) returns (KmsAddProviderResponse);
   rpc AccountEnable2FA(KmsAccountEnable2FARequest) returns (KmsAccountEnable2FAResponse);
   rpc AccountDisable2FA(KmsAccountDisable2FARequest) returns (KmsAccountDisable2FAResponse);
   rpc AccountShardSecret(KmsAccountShardSecretRequest) returns (KmsAccountShardSecretResponse);
-  // AccountSignMessage has the enclave sign one Hypercore action with the
-  // wallet key. The response attestation carries the signature and the
-  // canonical action that was signed.
   rpc AccountSignMessage(KmsAccountSignMessageRequest) returns (KmsAccountSignMessageResponse);
-  // GetAccountInfo is the account-routed read: providers, wallets, factor
-  // types and enclave agents, straight from the instance. No enclave
-  // round-trip.
+  rpc AccountApproveAgent(KmsAccountApproveAgentRequest) returns (KmsAccountApproveAgentResponse);
   rpc GetAccountInfo(KmsGetAccountInfoRequest) returns (KmsGetAccountInfoResponse);
-
-  // Locked-out flows: no bot JWT exists; routed by the plaintext
-  // subject_hash like LoginOrRegister. Auth lives inside the sealed payload
-  // and is enforced by the enclave.
   rpc RequestFactorReset(KmsRequestFactorResetRequest) returns (KmsRequestFactorResetResponse);
   rpc CancelFactorReset(KmsCancelFactorResetRequest) returns (KmsCancelFactorResetResponse);
   rpc ExecuteFactorReset(KmsExecuteFactorResetRequest) returns (KmsExecuteFactorResetResponse);
   rpc RecoverKeys(KmsRecoverKeysRequest) returns (KmsRecoverKeysResponse);
 
-  // Custodial -> KMS migration, users with bot-side TOTP only: when the login
-  // response set handoff.requires_2fa, the app re-sends THAT login
-  // attestation plus the TOTP code to receive the handoff. Stateless: the bot
-  // re-verifies the attestation and seals to the device key attested inside
-  // it, so a replayed attestation yields data only the victim's device can
-  // open.
+  // Bot JWT.
   rpc CompleteAccountHandoff(KmsCompleteAccountHandoffRequest) returns (KmsCompleteAccountHandoffResponse);
-
-  // Hyperliquid agent for a KMS wallet, same three steps as the telegram EOA
-  // flow. Authenticated with the bot JWT. The bot generates the agent key,
-  // the wallet key signs approveAgent (in the enclave via AccountSignMessage
-  // on web, on the device on iOS), the bot submits it and trades with the
-  // agent key.
-  rpc HyperliquidAgentSignatureCreate(KmsHyperliquidAgentSignatureCreateRequest) returns (KmsHyperliquidAgentSignatureCreateResponse);
-  rpc HyperliquidAgentWalletCreate(KmsHyperliquidAgentWalletCreateRequest) returns (KmsHyperliquidAgentWalletCreateResponse);
-  rpc HyperliquidAgentWalletRenew(KmsHyperliquidAgentWalletRenewRequest) returns (KmsHyperliquidAgentWalletRenewResponse);
+  rpc AgentKeyCreate(KmsAgentKeyCreateRequest) returns (KmsAgentKeyCreateResponse);
 }
 
 message KmsGetAttestationRequest {}
@@ -76,7 +41,7 @@ enum KmsLoginIntentKind {
 
 message KmsLoginIntentRequest {
   string provider = 1; // telegram | google | apple
-  string id_token = 2; // the provider id_token the app is about to log in with
+  string id_token = 2;
 }
 
 message KmsLoginIntentResponse {
@@ -90,28 +55,20 @@ message KmsLoginOrRegisterRequest {
 
 message KmsLoginOrRegisterResponse {
   bytes attestation = 1;
-  // Set on the first logins of a legacy bot user whose KMS account the bot
-  // created for them (custodial -> KMS migration). Absent otherwise.
+  // Migrated legacy bot users only, absent otherwise.
   KmsAccountHandoff handoff = 2;
 }
 
-// The bot-held half of a migrated account: the user shard and recovery codes
-// the enclave issued when the bot registered the account, each sealed to the
-// enclave-attested device key of THIS login. The app stores them like the
-// ones a normal registration returns. Re-delivered on every login for 7 days
-// after the first delivery, then purged from the bot.
+// User shard and recovery codes sealed to the device key of this login.
 message KmsAccountHandoff {
-  // Present unless requires_2fa is set.
   bytes user_shard_sealed = 1;
   bytes recovery_codes_sealed = 2;
-  // The account's factor is the bot TOTP: call CompleteAccountHandoff with
-  // the login attestation + code to get the shard and codes.
+  // Set instead of the two above when CompleteAccountHandoff is required.
   bool requires_2fa = 3;
 }
 
 message KmsCompleteAccountHandoffRequest {
-  // The attestation from the KmsLoginOrRegisterResponse that reported
-  // requires_2fa. Must still be within the verifier freshness window.
+  // The login attestation that reported requires_2fa.
   bytes attestation = 1;
   string two_fa_code = 2;
 }
@@ -122,8 +79,6 @@ message KmsCompleteAccountHandoffResponse {
 
 message KmsAddProviderRequest {
   bytes encrypted_payload = 1;
-  // Plaintext routing for the instance's uniqueness checks; the enclave
-  // independently verifies them against the sealed payload.
   string added_subject_hash = 2;
   string provider_type = 3;
   string instance_jwt = 4;
@@ -170,8 +125,7 @@ message KmsProviderInfo {
 }
 
 message KmsWalletInfo {
-  // The KMS wallet id, the key_id AccountSignMessage takes.
-  string id = 1;
+  string id = 1; // the key_id of AccountSignMessage
   string type = 2;
   string address = 3;
   int64 added_at = 4;
@@ -195,7 +149,7 @@ message KmsAccountShardSecretResponse {
 
 message KmsRequestFactorResetRequest {
   bytes encrypted_payload = 1;
-  string subject_hash = 2;
+  string instance_jwt = 2;
 }
 
 message KmsRequestFactorResetResponse {
@@ -204,7 +158,7 @@ message KmsRequestFactorResetResponse {
 
 message KmsCancelFactorResetRequest {
   bytes encrypted_payload = 1;
-  string subject_hash = 2;
+  string instance_jwt = 2;
 }
 
 message KmsCancelFactorResetResponse {
@@ -213,7 +167,7 @@ message KmsCancelFactorResetResponse {
 
 message KmsExecuteFactorResetRequest {
   bytes encrypted_payload = 1;
-  string subject_hash = 2;
+  string instance_jwt = 2;
 }
 
 message KmsExecuteFactorResetResponse {
@@ -222,7 +176,7 @@ message KmsExecuteFactorResetResponse {
 
 message KmsRecoverKeysRequest {
   bytes encrypted_payload = 1;
-  string subject_hash = 2;
+  string instance_jwt = 2;
 }
 
 message KmsRecoverKeysResponse {
@@ -239,45 +193,20 @@ message KmsAccountSignMessageResponse {
   bytes attestation = 1;
 }
 
-message KmsHyperliquidAgentSignatureCreateRequest {
-  // The KMS wallet that will approve the agent.
-  string wallet_address = 1;
+message KmsAgentKeyCreateRequest {
+  repeated string wallet_addresses = 1;
 }
 
-message KmsHyperliquidAgentSignatureCreateResponse {
-  string agent_address = 1;
-  // "<name> <wallet> <expires_at>", the expiry is parsed from it.
-  string agent_name = 2;
-  int64 nonce = 3;
-  int64 signature_chain_id = 4;
-  string hyperliquid_chain = 5;
+message KmsAgentKeyCreateResponse {
+  bytes public_key = 1; // 33-byte compressed secp256k1
 }
 
-message KmsEIP712Signature {
-  string agent_address = 1;
-  string agent_name = 2;
-  int64 nonce = 3;
-  // 65 bytes r||s||v, hex.
-  string signature = 4;
-  int64 chain_id = 5;
+message KmsAccountApproveAgentRequest {
+  bytes encrypted_payload = 1;
+  string instance_jwt = 2;
 }
 
-message KmsHyperliquidAgentWalletCreateRequest {
-  oneof proof {
-    // Web: the AccountSignMessage attestation carrying the approveAgent
-    // action and its signature.
-    bytes attestation = 1;
-    KmsEIP712Signature signature = 2;
-  }
+message KmsAccountApproveAgentResponse {
+  bytes attestation = 1;
+  string agent_id = 2;
 }
-
-message KmsHyperliquidAgentWalletCreateResponse {}
-
-message KmsHyperliquidAgentWalletRenewRequest {
-  oneof proof {
-    bytes attestation = 1;
-    KmsEIP712Signature signature = 2;
-  }
-}
-
-message KmsHyperliquidAgentWalletRenewResponse {}

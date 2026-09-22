@@ -19,83 +19,49 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Kms_GetAttestation_FullMethodName                  = "/hypurr.Kms/GetAttestation"
-	Kms_LoginOrRegister_FullMethodName                 = "/hypurr.Kms/LoginOrRegister"
-	Kms_LoginIntent_FullMethodName                     = "/hypurr.Kms/LoginIntent"
-	Kms_AddProvider_FullMethodName                     = "/hypurr.Kms/AddProvider"
-	Kms_AccountEnable2FA_FullMethodName                = "/hypurr.Kms/AccountEnable2FA"
-	Kms_AccountDisable2FA_FullMethodName               = "/hypurr.Kms/AccountDisable2FA"
-	Kms_AccountShardSecret_FullMethodName              = "/hypurr.Kms/AccountShardSecret"
-	Kms_AccountSignMessage_FullMethodName              = "/hypurr.Kms/AccountSignMessage"
-	Kms_GetAccountInfo_FullMethodName                  = "/hypurr.Kms/GetAccountInfo"
-	Kms_RequestFactorReset_FullMethodName              = "/hypurr.Kms/RequestFactorReset"
-	Kms_CancelFactorReset_FullMethodName               = "/hypurr.Kms/CancelFactorReset"
-	Kms_ExecuteFactorReset_FullMethodName              = "/hypurr.Kms/ExecuteFactorReset"
-	Kms_RecoverKeys_FullMethodName                     = "/hypurr.Kms/RecoverKeys"
-	Kms_CompleteAccountHandoff_FullMethodName          = "/hypurr.Kms/CompleteAccountHandoff"
-	Kms_HyperliquidAgentSignatureCreate_FullMethodName = "/hypurr.Kms/HyperliquidAgentSignatureCreate"
-	Kms_HyperliquidAgentWalletCreate_FullMethodName    = "/hypurr.Kms/HyperliquidAgentWalletCreate"
-	Kms_HyperliquidAgentWalletRenew_FullMethodName     = "/hypurr.Kms/HyperliquidAgentWalletRenew"
+	Kms_GetAttestation_FullMethodName         = "/hypurr.Kms/GetAttestation"
+	Kms_LoginOrRegister_FullMethodName        = "/hypurr.Kms/LoginOrRegister"
+	Kms_LoginIntent_FullMethodName            = "/hypurr.Kms/LoginIntent"
+	Kms_AddProvider_FullMethodName            = "/hypurr.Kms/AddProvider"
+	Kms_AccountEnable2FA_FullMethodName       = "/hypurr.Kms/AccountEnable2FA"
+	Kms_AccountDisable2FA_FullMethodName      = "/hypurr.Kms/AccountDisable2FA"
+	Kms_AccountShardSecret_FullMethodName     = "/hypurr.Kms/AccountShardSecret"
+	Kms_AccountSignMessage_FullMethodName     = "/hypurr.Kms/AccountSignMessage"
+	Kms_AccountApproveAgent_FullMethodName    = "/hypurr.Kms/AccountApproveAgent"
+	Kms_GetAccountInfo_FullMethodName         = "/hypurr.Kms/GetAccountInfo"
+	Kms_RequestFactorReset_FullMethodName     = "/hypurr.Kms/RequestFactorReset"
+	Kms_CancelFactorReset_FullMethodName      = "/hypurr.Kms/CancelFactorReset"
+	Kms_ExecuteFactorReset_FullMethodName     = "/hypurr.Kms/ExecuteFactorReset"
+	Kms_RecoverKeys_FullMethodName            = "/hypurr.Kms/RecoverKeys"
+	Kms_CompleteAccountHandoff_FullMethodName = "/hypurr.Kms/CompleteAccountHandoff"
+	Kms_AgentKeyCreate_FullMethodName         = "/hypurr.Kms/AgentKeyCreate"
 )
 
 // KmsClient is the client API for Kms service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// Kms forwards sealed client payloads between the app and the hfun-kms
-// instance. The bot is a dumb pipe: payloads are sealed to the enclave,
-// responses are attestation documents the client verifies against its own
-// pinned trust anchors — nothing here can be read or altered in transit.
+// Kms forwards sealed payloads between the app and the hfun-kms instance;
+// the bot cannot read or alter them.
 type KmsClient interface {
-	// GetAttestation returns a fresh enclave attestation — the start of every
-	// client ceremony (single-use nonce + ephemeral sealing key).
 	GetAttestation(ctx context.Context, in *KmsGetAttestationRequest, opts ...grpc.CallOption) (*KmsGetAttestationResponse, error)
-	// LoginOrRegister forwards a sealed login/register payload. Pre-auth by
-	// nature; on success the bot links the KMS account to an Hfun user using
-	// the verified response, never client input.
 	LoginOrRegister(ctx context.Context, in *KmsLoginOrRegisterRequest, opts ...grpc.CallOption) (*KmsLoginOrRegisterResponse, error)
-	// Pre-check before sealing a login: which intent to use for this provider
-	// identity. Authenticated by the provider id_token itself — the bot
-	// verifies it — so it only ever answers about the caller's own identity,
-	// never acts as an account-existence oracle.
 	LoginIntent(ctx context.Context, in *KmsLoginIntentRequest, opts ...grpc.CallOption) (*KmsLoginIntentResponse, error)
-	// Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
-	// metadata); the bot derives the account id from the VERIFIED claims —
-	// never from client input.
+	// Routed by the instance JWT.
 	AddProvider(ctx context.Context, in *KmsAddProviderRequest, opts ...grpc.CallOption) (*KmsAddProviderResponse, error)
 	AccountEnable2FA(ctx context.Context, in *KmsAccountEnable2FARequest, opts ...grpc.CallOption) (*KmsAccountEnable2FAResponse, error)
 	AccountDisable2FA(ctx context.Context, in *KmsAccountDisable2FARequest, opts ...grpc.CallOption) (*KmsAccountDisable2FAResponse, error)
 	AccountShardSecret(ctx context.Context, in *KmsAccountShardSecretRequest, opts ...grpc.CallOption) (*KmsAccountShardSecretResponse, error)
-	// AccountSignMessage has the enclave sign one Hypercore action with the
-	// wallet key. The response attestation carries the signature and the
-	// canonical action that was signed.
 	AccountSignMessage(ctx context.Context, in *KmsAccountSignMessageRequest, opts ...grpc.CallOption) (*KmsAccountSignMessageResponse, error)
-	// GetAccountInfo is the account-routed read: providers, wallets, factor
-	// types and enclave agents, straight from the instance. No enclave
-	// round-trip.
+	AccountApproveAgent(ctx context.Context, in *KmsAccountApproveAgentRequest, opts ...grpc.CallOption) (*KmsAccountApproveAgentResponse, error)
 	GetAccountInfo(ctx context.Context, in *KmsGetAccountInfoRequest, opts ...grpc.CallOption) (*KmsGetAccountInfoResponse, error)
-	// Locked-out flows: no bot JWT exists; routed by the plaintext
-	// subject_hash like LoginOrRegister. Auth lives inside the sealed payload
-	// and is enforced by the enclave.
 	RequestFactorReset(ctx context.Context, in *KmsRequestFactorResetRequest, opts ...grpc.CallOption) (*KmsRequestFactorResetResponse, error)
 	CancelFactorReset(ctx context.Context, in *KmsCancelFactorResetRequest, opts ...grpc.CallOption) (*KmsCancelFactorResetResponse, error)
 	ExecuteFactorReset(ctx context.Context, in *KmsExecuteFactorResetRequest, opts ...grpc.CallOption) (*KmsExecuteFactorResetResponse, error)
 	RecoverKeys(ctx context.Context, in *KmsRecoverKeysRequest, opts ...grpc.CallOption) (*KmsRecoverKeysResponse, error)
-	// Custodial -> KMS migration, users with bot-side TOTP only: when the login
-	// response set handoff.requires_2fa, the app re-sends THAT login
-	// attestation plus the TOTP code to receive the handoff. Stateless: the bot
-	// re-verifies the attestation and seals to the device key attested inside
-	// it, so a replayed attestation yields data only the victim's device can
-	// open.
+	// Bot JWT.
 	CompleteAccountHandoff(ctx context.Context, in *KmsCompleteAccountHandoffRequest, opts ...grpc.CallOption) (*KmsCompleteAccountHandoffResponse, error)
-	// Hyperliquid agent for a KMS wallet, same three steps as the telegram EOA
-	// flow. Authenticated with the bot JWT. The bot generates the agent key,
-	// the wallet key signs approveAgent (in the enclave via AccountSignMessage
-	// on web, on the device on iOS), the bot submits it and trades with the
-	// agent key.
-	HyperliquidAgentSignatureCreate(ctx context.Context, in *KmsHyperliquidAgentSignatureCreateRequest, opts ...grpc.CallOption) (*KmsHyperliquidAgentSignatureCreateResponse, error)
-	HyperliquidAgentWalletCreate(ctx context.Context, in *KmsHyperliquidAgentWalletCreateRequest, opts ...grpc.CallOption) (*KmsHyperliquidAgentWalletCreateResponse, error)
-	HyperliquidAgentWalletRenew(ctx context.Context, in *KmsHyperliquidAgentWalletRenewRequest, opts ...grpc.CallOption) (*KmsHyperliquidAgentWalletRenewResponse, error)
+	AgentKeyCreate(ctx context.Context, in *KmsAgentKeyCreateRequest, opts ...grpc.CallOption) (*KmsAgentKeyCreateResponse, error)
 }
 
 type kmsClient struct {
@@ -186,6 +152,16 @@ func (c *kmsClient) AccountSignMessage(ctx context.Context, in *KmsAccountSignMe
 	return out, nil
 }
 
+func (c *kmsClient) AccountApproveAgent(ctx context.Context, in *KmsAccountApproveAgentRequest, opts ...grpc.CallOption) (*KmsAccountApproveAgentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(KmsAccountApproveAgentResponse)
+	err := c.cc.Invoke(ctx, Kms_AccountApproveAgent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *kmsClient) GetAccountInfo(ctx context.Context, in *KmsGetAccountInfoRequest, opts ...grpc.CallOption) (*KmsGetAccountInfoResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(KmsGetAccountInfoResponse)
@@ -246,30 +222,10 @@ func (c *kmsClient) CompleteAccountHandoff(ctx context.Context, in *KmsCompleteA
 	return out, nil
 }
 
-func (c *kmsClient) HyperliquidAgentSignatureCreate(ctx context.Context, in *KmsHyperliquidAgentSignatureCreateRequest, opts ...grpc.CallOption) (*KmsHyperliquidAgentSignatureCreateResponse, error) {
+func (c *kmsClient) AgentKeyCreate(ctx context.Context, in *KmsAgentKeyCreateRequest, opts ...grpc.CallOption) (*KmsAgentKeyCreateResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(KmsHyperliquidAgentSignatureCreateResponse)
-	err := c.cc.Invoke(ctx, Kms_HyperliquidAgentSignatureCreate_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *kmsClient) HyperliquidAgentWalletCreate(ctx context.Context, in *KmsHyperliquidAgentWalletCreateRequest, opts ...grpc.CallOption) (*KmsHyperliquidAgentWalletCreateResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(KmsHyperliquidAgentWalletCreateResponse)
-	err := c.cc.Invoke(ctx, Kms_HyperliquidAgentWalletCreate_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *kmsClient) HyperliquidAgentWalletRenew(ctx context.Context, in *KmsHyperliquidAgentWalletRenewRequest, opts ...grpc.CallOption) (*KmsHyperliquidAgentWalletRenewResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(KmsHyperliquidAgentWalletRenewResponse)
-	err := c.cc.Invoke(ctx, Kms_HyperliquidAgentWalletRenew_FullMethodName, in, out, cOpts...)
+	out := new(KmsAgentKeyCreateResponse)
+	err := c.cc.Invoke(ctx, Kms_AgentKeyCreate_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -280,60 +236,27 @@ func (c *kmsClient) HyperliquidAgentWalletRenew(ctx context.Context, in *KmsHype
 // All implementations must embed UnimplementedKmsServer
 // for forward compatibility
 //
-// Kms forwards sealed client payloads between the app and the hfun-kms
-// instance. The bot is a dumb pipe: payloads are sealed to the enclave,
-// responses are attestation documents the client verifies against its own
-// pinned trust anchors — nothing here can be read or altered in transit.
+// Kms forwards sealed payloads between the app and the hfun-kms instance;
+// the bot cannot read or alter them.
 type KmsServer interface {
-	// GetAttestation returns a fresh enclave attestation — the start of every
-	// client ceremony (single-use nonce + ephemeral sealing key).
 	GetAttestation(context.Context, *KmsGetAttestationRequest) (*KmsGetAttestationResponse, error)
-	// LoginOrRegister forwards a sealed login/register payload. Pre-auth by
-	// nature; on success the bot links the KMS account to an Hfun user using
-	// the verified response, never client input.
 	LoginOrRegister(context.Context, *KmsLoginOrRegisterRequest) (*KmsLoginOrRegisterResponse, error)
-	// Pre-check before sealing a login: which intent to use for this provider
-	// identity. Authenticated by the provider id_token itself — the bot
-	// verifies it — so it only ever answers about the caller's own identity,
-	// never acts as an account-existence oracle.
 	LoginIntent(context.Context, *KmsLoginIntentRequest) (*KmsLoginIntentResponse, error)
-	// Account-routed mutations. Authenticated with the KMS bot-JWT (bearer
-	// metadata); the bot derives the account id from the VERIFIED claims —
-	// never from client input.
+	// Routed by the instance JWT.
 	AddProvider(context.Context, *KmsAddProviderRequest) (*KmsAddProviderResponse, error)
 	AccountEnable2FA(context.Context, *KmsAccountEnable2FARequest) (*KmsAccountEnable2FAResponse, error)
 	AccountDisable2FA(context.Context, *KmsAccountDisable2FARequest) (*KmsAccountDisable2FAResponse, error)
 	AccountShardSecret(context.Context, *KmsAccountShardSecretRequest) (*KmsAccountShardSecretResponse, error)
-	// AccountSignMessage has the enclave sign one Hypercore action with the
-	// wallet key. The response attestation carries the signature and the
-	// canonical action that was signed.
 	AccountSignMessage(context.Context, *KmsAccountSignMessageRequest) (*KmsAccountSignMessageResponse, error)
-	// GetAccountInfo is the account-routed read: providers, wallets, factor
-	// types and enclave agents, straight from the instance. No enclave
-	// round-trip.
+	AccountApproveAgent(context.Context, *KmsAccountApproveAgentRequest) (*KmsAccountApproveAgentResponse, error)
 	GetAccountInfo(context.Context, *KmsGetAccountInfoRequest) (*KmsGetAccountInfoResponse, error)
-	// Locked-out flows: no bot JWT exists; routed by the plaintext
-	// subject_hash like LoginOrRegister. Auth lives inside the sealed payload
-	// and is enforced by the enclave.
 	RequestFactorReset(context.Context, *KmsRequestFactorResetRequest) (*KmsRequestFactorResetResponse, error)
 	CancelFactorReset(context.Context, *KmsCancelFactorResetRequest) (*KmsCancelFactorResetResponse, error)
 	ExecuteFactorReset(context.Context, *KmsExecuteFactorResetRequest) (*KmsExecuteFactorResetResponse, error)
 	RecoverKeys(context.Context, *KmsRecoverKeysRequest) (*KmsRecoverKeysResponse, error)
-	// Custodial -> KMS migration, users with bot-side TOTP only: when the login
-	// response set handoff.requires_2fa, the app re-sends THAT login
-	// attestation plus the TOTP code to receive the handoff. Stateless: the bot
-	// re-verifies the attestation and seals to the device key attested inside
-	// it, so a replayed attestation yields data only the victim's device can
-	// open.
+	// Bot JWT.
 	CompleteAccountHandoff(context.Context, *KmsCompleteAccountHandoffRequest) (*KmsCompleteAccountHandoffResponse, error)
-	// Hyperliquid agent for a KMS wallet, same three steps as the telegram EOA
-	// flow. Authenticated with the bot JWT. The bot generates the agent key,
-	// the wallet key signs approveAgent (in the enclave via AccountSignMessage
-	// on web, on the device on iOS), the bot submits it and trades with the
-	// agent key.
-	HyperliquidAgentSignatureCreate(context.Context, *KmsHyperliquidAgentSignatureCreateRequest) (*KmsHyperliquidAgentSignatureCreateResponse, error)
-	HyperliquidAgentWalletCreate(context.Context, *KmsHyperliquidAgentWalletCreateRequest) (*KmsHyperliquidAgentWalletCreateResponse, error)
-	HyperliquidAgentWalletRenew(context.Context, *KmsHyperliquidAgentWalletRenewRequest) (*KmsHyperliquidAgentWalletRenewResponse, error)
+	AgentKeyCreate(context.Context, *KmsAgentKeyCreateRequest) (*KmsAgentKeyCreateResponse, error)
 	mustEmbedUnimplementedKmsServer()
 }
 
@@ -365,6 +288,9 @@ func (UnimplementedKmsServer) AccountShardSecret(context.Context, *KmsAccountSha
 func (UnimplementedKmsServer) AccountSignMessage(context.Context, *KmsAccountSignMessageRequest) (*KmsAccountSignMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AccountSignMessage not implemented")
 }
+func (UnimplementedKmsServer) AccountApproveAgent(context.Context, *KmsAccountApproveAgentRequest) (*KmsAccountApproveAgentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AccountApproveAgent not implemented")
+}
 func (UnimplementedKmsServer) GetAccountInfo(context.Context, *KmsGetAccountInfoRequest) (*KmsGetAccountInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccountInfo not implemented")
 }
@@ -383,14 +309,8 @@ func (UnimplementedKmsServer) RecoverKeys(context.Context, *KmsRecoverKeysReques
 func (UnimplementedKmsServer) CompleteAccountHandoff(context.Context, *KmsCompleteAccountHandoffRequest) (*KmsCompleteAccountHandoffResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CompleteAccountHandoff not implemented")
 }
-func (UnimplementedKmsServer) HyperliquidAgentSignatureCreate(context.Context, *KmsHyperliquidAgentSignatureCreateRequest) (*KmsHyperliquidAgentSignatureCreateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidAgentSignatureCreate not implemented")
-}
-func (UnimplementedKmsServer) HyperliquidAgentWalletCreate(context.Context, *KmsHyperliquidAgentWalletCreateRequest) (*KmsHyperliquidAgentWalletCreateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidAgentWalletCreate not implemented")
-}
-func (UnimplementedKmsServer) HyperliquidAgentWalletRenew(context.Context, *KmsHyperliquidAgentWalletRenewRequest) (*KmsHyperliquidAgentWalletRenewResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidAgentWalletRenew not implemented")
+func (UnimplementedKmsServer) AgentKeyCreate(context.Context, *KmsAgentKeyCreateRequest) (*KmsAgentKeyCreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AgentKeyCreate not implemented")
 }
 func (UnimplementedKmsServer) mustEmbedUnimplementedKmsServer() {}
 
@@ -549,6 +469,24 @@ func _Kms_AccountSignMessage_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Kms_AccountApproveAgent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KmsAccountApproveAgentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KmsServer).AccountApproveAgent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Kms_AccountApproveAgent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KmsServer).AccountApproveAgent(ctx, req.(*KmsAccountApproveAgentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Kms_GetAccountInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(KmsGetAccountInfoRequest)
 	if err := dec(in); err != nil {
@@ -657,56 +595,20 @@ func _Kms_CompleteAccountHandoff_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Kms_HyperliquidAgentSignatureCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(KmsHyperliquidAgentSignatureCreateRequest)
+func _Kms_AgentKeyCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KmsAgentKeyCreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(KmsServer).HyperliquidAgentSignatureCreate(ctx, in)
+		return srv.(KmsServer).AgentKeyCreate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Kms_HyperliquidAgentSignatureCreate_FullMethodName,
+		FullMethod: Kms_AgentKeyCreate_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KmsServer).HyperliquidAgentSignatureCreate(ctx, req.(*KmsHyperliquidAgentSignatureCreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Kms_HyperliquidAgentWalletCreate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(KmsHyperliquidAgentWalletCreateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(KmsServer).HyperliquidAgentWalletCreate(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Kms_HyperliquidAgentWalletCreate_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KmsServer).HyperliquidAgentWalletCreate(ctx, req.(*KmsHyperliquidAgentWalletCreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Kms_HyperliquidAgentWalletRenew_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(KmsHyperliquidAgentWalletRenewRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(KmsServer).HyperliquidAgentWalletRenew(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Kms_HyperliquidAgentWalletRenew_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KmsServer).HyperliquidAgentWalletRenew(ctx, req.(*KmsHyperliquidAgentWalletRenewRequest))
+		return srv.(KmsServer).AgentKeyCreate(ctx, req.(*KmsAgentKeyCreateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -751,6 +653,10 @@ var Kms_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Kms_AccountSignMessage_Handler,
 		},
 		{
+			MethodName: "AccountApproveAgent",
+			Handler:    _Kms_AccountApproveAgent_Handler,
+		},
+		{
 			MethodName: "GetAccountInfo",
 			Handler:    _Kms_GetAccountInfo_Handler,
 		},
@@ -775,16 +681,8 @@ var Kms_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Kms_CompleteAccountHandoff_Handler,
 		},
 		{
-			MethodName: "HyperliquidAgentSignatureCreate",
-			Handler:    _Kms_HyperliquidAgentSignatureCreate_Handler,
-		},
-		{
-			MethodName: "HyperliquidAgentWalletCreate",
-			Handler:    _Kms_HyperliquidAgentWalletCreate_Handler,
-		},
-		{
-			MethodName: "HyperliquidAgentWalletRenew",
-			Handler:    _Kms_HyperliquidAgentWalletRenew_Handler,
+			MethodName: "AgentKeyCreate",
+			Handler:    _Kms_AgentKeyCreate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
