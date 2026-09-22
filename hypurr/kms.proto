@@ -24,7 +24,7 @@ service Kms {
 
   // Bot JWT.
   rpc CompleteAccountHandoff(KmsCompleteAccountHandoffRequest) returns (KmsCompleteAccountHandoffResponse);
-  rpc AgentKeyCreate(KmsAgentKeyCreateRequest) returns (KmsAgentKeyCreateResponse);
+  rpc AccountRequestAgent(KmsAccountRequestAgentRequest) returns (KmsAccountRequestAgentResponse);
 }
 
 message KmsGetAttestationRequest {}
@@ -193,11 +193,11 @@ message KmsAccountSignMessageResponse {
   bytes attestation = 1;
 }
 
-message KmsAgentKeyCreateRequest {
+message KmsAccountRequestAgentRequest {
   repeated string wallet_addresses = 1;
 }
 
-message KmsAgentKeyCreateResponse {
+message KmsAccountRequestAgentResponse {
   bytes public_key = 1; // 33-byte compressed secp256k1
 }
 
