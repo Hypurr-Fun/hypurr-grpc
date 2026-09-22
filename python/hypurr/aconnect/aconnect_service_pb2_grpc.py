@@ -5,7 +5,7 @@ import warnings
 
 from hypurr.aconnect import aconnect_service_pb2 as hypurr_dot_aconnect_dot_aconnect__service__pb2
 
-GRPC_GENERATED_VERSION = '1.81.0'
+GRPC_GENERATED_VERSION = '1.80.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -25,7 +25,7 @@ if _version_not_supported:
     )
 
 
-class AConnectStub:
+class AConnectStub(object):
     """Execution service authenticated by the existing hfun JWT bearer token.
     Caller identity and scopes come exclusively from the verified JWT.
     Never retry writes automatically, including UNAVAILABLE/DEADLINE_EXCEEDED.
@@ -49,7 +49,7 @@ class AConnectStub:
                 _registered_method=True)
 
 
-class AConnectServicer:
+class AConnectServicer(object):
     """Execution service authenticated by the existing hfun JWT bearer token.
     Caller identity and scopes come exclusively from the verified JWT.
     Never retry writes automatically, including UNAVAILABLE/DEADLINE_EXCEEDED.
@@ -88,7 +88,7 @@ def add_AConnectServicer_to_server(servicer, server):
 
 
  # This class is part of an EXPERIMENTAL API.
-class AConnect:
+class AConnect(object):
     """Execution service authenticated by the existing hfun JWT bearer token.
     Caller identity and scopes come exclusively from the verified JWT.
     Never retry writes automatically, including UNAVAILABLE/DEADLINE_EXCEEDED.
