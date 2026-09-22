@@ -2526,6 +2526,62 @@ func (x *MarketTick) GetPriceDecimal() string {
 	return ""
 }
 
+type CandlesRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Non-empty, at most 50. One series per market comes back, in this order.
+	MarketIds   []uint64     `protobuf:"varint,1,rep,packed,name=market_ids,json=marketIds,proto3" json:"market_ids,omitempty"`
+	ChartPeriod *ChartPeriod `protobuf:"bytes,2,opt,name=chart_period,json=chartPeriod,proto3" json:"chart_period,omitempty"`
+}
+
+func (x *CandlesRequest) Reset() {
+	*x = CandlesRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[29]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CandlesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CandlesRequest) ProtoMessage() {}
+
+func (x *CandlesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[29]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CandlesRequest.ProtoReflect.Descriptor instead.
+func (*CandlesRequest) Descriptor() ([]byte, []int) {
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *CandlesRequest) GetMarketIds() []uint64 {
+	if x != nil {
+		return x.MarketIds
+	}
+	return nil
+}
+
+func (x *CandlesRequest) GetChartPeriod() *ChartPeriod {
+	if x != nil {
+		return x.ChartPeriod
+	}
+	return nil
+}
+
 type ActivityTokenAmount struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2538,7 +2594,7 @@ type ActivityTokenAmount struct {
 func (x *ActivityTokenAmount) Reset() {
 	*x = ActivityTokenAmount{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[29]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2551,7 +2607,7 @@ func (x *ActivityTokenAmount) String() string {
 func (*ActivityTokenAmount) ProtoMessage() {}
 
 func (x *ActivityTokenAmount) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[29]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2564,7 +2620,7 @@ func (x *ActivityTokenAmount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivityTokenAmount.ProtoReflect.Descriptor instead.
 func (*ActivityTokenAmount) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{29}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *ActivityTokenAmount) GetToken() *Token {
@@ -2594,7 +2650,7 @@ type HfunUser struct {
 func (x *HfunUser) Reset() {
 	*x = HfunUser{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[30]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2607,7 +2663,7 @@ func (x *HfunUser) String() string {
 func (*HfunUser) ProtoMessage() {}
 
 func (x *HfunUser) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[30]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2620,7 +2676,7 @@ func (x *HfunUser) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HfunUser.ProtoReflect.Descriptor instead.
 func (*HfunUser) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{30}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *HfunUser) GetUserId() int64 {
@@ -2659,7 +2715,7 @@ type ActivityParty struct {
 func (x *ActivityParty) Reset() {
 	*x = ActivityParty{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[31]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2672,7 +2728,7 @@ func (x *ActivityParty) String() string {
 func (*ActivityParty) ProtoMessage() {}
 
 func (x *ActivityParty) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[31]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2685,7 +2741,7 @@ func (x *ActivityParty) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivityParty.ProtoReflect.Descriptor instead.
 func (*ActivityParty) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{31}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{32}
 }
 
 func (m *ActivityParty) GetIdentity() isActivityParty_Identity {
@@ -2736,7 +2792,7 @@ type RecentActivitySection struct {
 func (x *RecentActivitySection) Reset() {
 	*x = RecentActivitySection{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[32]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2749,7 +2805,7 @@ func (x *RecentActivitySection) String() string {
 func (*RecentActivitySection) ProtoMessage() {}
 
 func (x *RecentActivitySection) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[32]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2762,7 +2818,7 @@ func (x *RecentActivitySection) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RecentActivitySection.ProtoReflect.Descriptor instead.
 func (*RecentActivitySection) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{32}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *RecentActivitySection) GetItems() []*ActivityItem {
@@ -2798,7 +2854,7 @@ type ActivityItem struct {
 func (x *ActivityItem) Reset() {
 	*x = ActivityItem{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[33]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[34]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2811,7 +2867,7 @@ func (x *ActivityItem) String() string {
 func (*ActivityItem) ProtoMessage() {}
 
 func (x *ActivityItem) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[33]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[34]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2824,7 +2880,7 @@ func (x *ActivityItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivityItem.ProtoReflect.Descriptor instead.
 func (*ActivityItem) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{33}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *ActivityItem) GetId() string {
@@ -3007,7 +3063,7 @@ type DepositActivity struct {
 func (x *DepositActivity) Reset() {
 	*x = DepositActivity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[34]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3020,7 +3076,7 @@ func (x *DepositActivity) String() string {
 func (*DepositActivity) ProtoMessage() {}
 
 func (x *DepositActivity) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[34]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3033,7 +3089,7 @@ func (x *DepositActivity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DepositActivity.ProtoReflect.Descriptor instead.
 func (*DepositActivity) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{34}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *DepositActivity) GetReceived() *ActivityTokenAmount {
@@ -3062,7 +3118,7 @@ type WithdrawActivity struct {
 func (x *WithdrawActivity) Reset() {
 	*x = WithdrawActivity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[35]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[36]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3075,7 +3131,7 @@ func (x *WithdrawActivity) String() string {
 func (*WithdrawActivity) ProtoMessage() {}
 
 func (x *WithdrawActivity) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[35]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[36]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3088,7 +3144,7 @@ func (x *WithdrawActivity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WithdrawActivity.ProtoReflect.Descriptor instead.
 func (*WithdrawActivity) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{35}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *WithdrawActivity) GetSent() *ActivityTokenAmount {
@@ -3118,7 +3174,7 @@ type SendActivity struct {
 func (x *SendActivity) Reset() {
 	*x = SendActivity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[36]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[37]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3131,7 +3187,7 @@ func (x *SendActivity) String() string {
 func (*SendActivity) ProtoMessage() {}
 
 func (x *SendActivity) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[36]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[37]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3144,7 +3200,7 @@ func (x *SendActivity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendActivity.ProtoReflect.Descriptor instead.
 func (*SendActivity) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{36}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *SendActivity) GetRecipient() *ActivityParty {
@@ -3181,7 +3237,7 @@ type ReceiveActivity struct {
 func (x *ReceiveActivity) Reset() {
 	*x = ReceiveActivity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[37]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[38]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3194,7 +3250,7 @@ func (x *ReceiveActivity) String() string {
 func (*ReceiveActivity) ProtoMessage() {}
 
 func (x *ReceiveActivity) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[37]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[38]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3207,7 +3263,7 @@ func (x *ReceiveActivity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReceiveActivity.ProtoReflect.Descriptor instead.
 func (*ReceiveActivity) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{37}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *ReceiveActivity) GetSender() *ActivityParty {
@@ -3243,7 +3299,7 @@ type AccountClassTransferActivity struct {
 func (x *AccountClassTransferActivity) Reset() {
 	*x = AccountClassTransferActivity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[38]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[39]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3256,7 +3312,7 @@ func (x *AccountClassTransferActivity) String() string {
 func (*AccountClassTransferActivity) ProtoMessage() {}
 
 func (x *AccountClassTransferActivity) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[38]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[39]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3269,7 +3325,7 @@ func (x *AccountClassTransferActivity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AccountClassTransferActivity.ProtoReflect.Descriptor instead.
 func (*AccountClassTransferActivity) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{38}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *AccountClassTransferActivity) GetDestination() AccountClass {
@@ -3299,7 +3355,7 @@ type SpotFillActivity struct {
 func (x *SpotFillActivity) Reset() {
 	*x = SpotFillActivity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[39]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[40]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3312,7 +3368,7 @@ func (x *SpotFillActivity) String() string {
 func (*SpotFillActivity) ProtoMessage() {}
 
 func (x *SpotFillActivity) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[39]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[40]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3325,7 +3381,7 @@ func (x *SpotFillActivity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpotFillActivity.ProtoReflect.Descriptor instead.
 func (*SpotFillActivity) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{39}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *SpotFillActivity) GetSide() TradeSide {
@@ -3364,7 +3420,7 @@ type OpenPerpActivity struct {
 func (x *OpenPerpActivity) Reset() {
 	*x = OpenPerpActivity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[40]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[41]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3377,7 +3433,7 @@ func (x *OpenPerpActivity) String() string {
 func (*OpenPerpActivity) ProtoMessage() {}
 
 func (x *OpenPerpActivity) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[40]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[41]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3390,7 +3446,7 @@ func (x *OpenPerpActivity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OpenPerpActivity.ProtoReflect.Descriptor instead.
 func (*OpenPerpActivity) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{40}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *OpenPerpActivity) GetDirection() PositionDirection {
@@ -3446,7 +3502,7 @@ type ClosePerpActivity struct {
 func (x *ClosePerpActivity) Reset() {
 	*x = ClosePerpActivity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[41]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[42]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3459,7 +3515,7 @@ func (x *ClosePerpActivity) String() string {
 func (*ClosePerpActivity) ProtoMessage() {}
 
 func (x *ClosePerpActivity) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[41]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[42]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3472,7 +3528,7 @@ func (x *ClosePerpActivity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClosePerpActivity.ProtoReflect.Descriptor instead.
 func (*ClosePerpActivity) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{41}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *ClosePerpActivity) GetDirection() PositionDirection {
@@ -3545,7 +3601,7 @@ type ExecutionPriceAndFee struct {
 func (x *ExecutionPriceAndFee) Reset() {
 	*x = ExecutionPriceAndFee{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[42]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[43]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3558,7 +3614,7 @@ func (x *ExecutionPriceAndFee) String() string {
 func (*ExecutionPriceAndFee) ProtoMessage() {}
 
 func (x *ExecutionPriceAndFee) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[42]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[43]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3571,7 +3627,7 @@ func (x *ExecutionPriceAndFee) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecutionPriceAndFee.ProtoReflect.Descriptor instead.
 func (*ExecutionPriceAndFee) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{42}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *ExecutionPriceAndFee) GetFillPriceDecimal() string {
@@ -3601,7 +3657,7 @@ type LiquidationActivity struct {
 func (x *LiquidationActivity) Reset() {
 	*x = LiquidationActivity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[43]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[44]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3614,7 +3670,7 @@ func (x *LiquidationActivity) String() string {
 func (*LiquidationActivity) ProtoMessage() {}
 
 func (x *LiquidationActivity) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[43]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[44]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3627,7 +3683,7 @@ func (x *LiquidationActivity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LiquidationActivity.ProtoReflect.Descriptor instead.
 func (*LiquidationActivity) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{43}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *LiquidationActivity) GetMarket() *Market {
@@ -3662,7 +3718,7 @@ type GenesisAllocationActivity struct {
 func (x *GenesisAllocationActivity) Reset() {
 	*x = GenesisAllocationActivity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[44]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[45]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3675,7 +3731,7 @@ func (x *GenesisAllocationActivity) String() string {
 func (*GenesisAllocationActivity) ProtoMessage() {}
 
 func (x *GenesisAllocationActivity) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[44]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[45]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3688,7 +3744,7 @@ func (x *GenesisAllocationActivity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GenesisAllocationActivity.ProtoReflect.Descriptor instead.
 func (*GenesisAllocationActivity) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{44}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *GenesisAllocationActivity) GetReceived() *ActivityTokenAmount {
@@ -3710,7 +3766,7 @@ type SwapActivity struct {
 func (x *SwapActivity) Reset() {
 	*x = SwapActivity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[45]
+		mi := &file_hypurr_ios_v2_ios_proto_msgTypes[46]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3723,7 +3779,7 @@ func (x *SwapActivity) String() string {
 func (*SwapActivity) ProtoMessage() {}
 
 func (x *SwapActivity) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[45]
+	mi := &file_hypurr_ios_v2_ios_proto_msgTypes[46]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3736,7 +3792,7 @@ func (x *SwapActivity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SwapActivity.ProtoReflect.Descriptor instead.
 func (*SwapActivity) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{45}
+	return file_hypurr_ios_v2_ios_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *SwapActivity) GetSent() *ActivityTokenAmount {
@@ -4048,7 +4104,14 @@ var file_hypurr_ios_v2_ios_proto_rawDesc = []byte{
 	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x6f, 0x63, 0x63, 0x75, 0x72, 0x72, 0x65, 0x64,
 	0x41, 0x74, 0x12, 0x23, 0x0a, 0x0d, 0x70, 0x72, 0x69, 0x63, 0x65, 0x5f, 0x64, 0x65, 0x63, 0x69,
 	0x6d, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x70, 0x72, 0x69, 0x63, 0x65,
-	0x44, 0x65, 0x63, 0x69, 0x6d, 0x61, 0x6c, 0x22, 0x6c, 0x0a, 0x13, 0x41, 0x63, 0x74, 0x69, 0x76,
+	0x44, 0x65, 0x63, 0x69, 0x6d, 0x61, 0x6c, 0x22, 0x6e, 0x0a, 0x0e, 0x43, 0x61, 0x6e, 0x64, 0x6c,
+	0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x6d, 0x61, 0x72,
+	0x6b, 0x65, 0x74, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x04, 0x52, 0x09, 0x6d,
+	0x61, 0x72, 0x6b, 0x65, 0x74, 0x49, 0x64, 0x73, 0x12, 0x3d, 0x0a, 0x0c, 0x63, 0x68, 0x61, 0x72,
+	0x74, 0x5f, 0x70, 0x65, 0x72, 0x69, 0x6f, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a,
+	0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x69, 0x6f, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x43,
+	0x68, 0x61, 0x72, 0x74, 0x50, 0x65, 0x72, 0x69, 0x6f, 0x64, 0x52, 0x0b, 0x63, 0x68, 0x61, 0x72,
+	0x74, 0x50, 0x65, 0x72, 0x69, 0x6f, 0x64, 0x22, 0x6c, 0x0a, 0x13, 0x41, 0x63, 0x74, 0x69, 0x76,
 	0x69, 0x74, 0x79, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x2a,
 	0x0a, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e,
 	0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x69, 0x6f, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x6f,
@@ -4325,7 +4388,7 @@ var file_hypurr_ios_v2_ios_proto_rawDesc = []byte{
 	0x49, 0x44, 0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10,
 	0x00, 0x12, 0x12, 0x0a, 0x0e, 0x54, 0x52, 0x41, 0x44, 0x45, 0x5f, 0x53, 0x49, 0x44, 0x45, 0x5f,
 	0x42, 0x55, 0x59, 0x10, 0x01, 0x12, 0x13, 0x0a, 0x0f, 0x54, 0x52, 0x41, 0x44, 0x45, 0x5f, 0x53,
-	0x49, 0x44, 0x45, 0x5f, 0x53, 0x45, 0x4c, 0x4c, 0x10, 0x02, 0x32, 0xab, 0x03, 0x0a, 0x0a, 0x49,
+	0x49, 0x44, 0x45, 0x5f, 0x53, 0x45, 0x4c, 0x4c, 0x10, 0x02, 0x32, 0xed, 0x03, 0x0a, 0x0a, 0x49,
 	0x6f, 0x73, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3f, 0x0a, 0x04, 0x48, 0x6f, 0x6d,
 	0x65, 0x12, 0x1a, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x69, 0x6f, 0x73, 0x2e, 0x76,
 	0x32, 0x2e, 0x48, 0x6f, 0x6d, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e,
@@ -4352,11 +4415,15 @@ var file_hypurr_ios_v2_ios_proto_rawDesc = []byte{
 	0x73, 0x65, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x4c, 0x69, 0x76, 0x65, 0x55, 0x70, 0x64,
 	0x61, 0x74, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x19, 0x2e, 0x68, 0x79,
 	0x70, 0x75, 0x72, 0x72, 0x2e, 0x69, 0x6f, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x4d, 0x61, 0x72, 0x6b,
-	0x65, 0x74, 0x54, 0x69, 0x63, 0x6b, 0x30, 0x01, 0x42, 0x36, 0x5a, 0x34, 0x67, 0x69, 0x74, 0x6c,
-	0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79,
-	0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70,
-	0x75, 0x72, 0x72, 0x2f, 0x69, 0x6f, 0x73, 0x2f, 0x76, 0x32, 0x3b, 0x69, 0x6f, 0x73, 0x76, 0x32,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x74, 0x54, 0x69, 0x63, 0x6b, 0x30, 0x01, 0x12, 0x40, 0x0a, 0x07, 0x43, 0x61, 0x6e, 0x64,
+	0x6c, 0x65, 0x73, 0x12, 0x1d, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x69, 0x6f, 0x73,
+	0x2e, 0x76, 0x32, 0x2e, 0x43, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x16, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x69, 0x6f, 0x73, 0x2e,
+	0x76, 0x32, 0x2e, 0x43, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x73, 0x42, 0x36, 0x5a, 0x34, 0x67, 0x69,
+	0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f,
+	0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68,
+	0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x69, 0x6f, 0x73, 0x2f, 0x76, 0x32, 0x3b, 0x69, 0x6f, 0x73,
+	0x76, 0x32, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4372,7 +4439,7 @@ func file_hypurr_ios_v2_ios_proto_rawDescGZIP() []byte {
 }
 
 var file_hypurr_ios_v2_ios_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
-var file_hypurr_ios_v2_ios_proto_msgTypes = make([]protoimpl.MessageInfo, 46)
+var file_hypurr_ios_v2_ios_proto_msgTypes = make([]protoimpl.MessageInfo, 47)
 var file_hypurr_ios_v2_ios_proto_goTypes = []any{
 	(AssetClass)(0),                       // 0: hypurr.ios.v2.AssetClass
 	(TokenRepresentation)(0),              // 1: hypurr.ios.v2.TokenRepresentation
@@ -4411,23 +4478,24 @@ var file_hypurr_ios_v2_ios_proto_goTypes = []any{
 	(*AssetDetailAboutLink)(nil),          // 34: hypurr.ios.v2.AssetDetailAboutLink
 	(*AssetDetailLiveUpdatesRequest)(nil), // 35: hypurr.ios.v2.AssetDetailLiveUpdatesRequest
 	(*MarketTick)(nil),                    // 36: hypurr.ios.v2.MarketTick
-	(*ActivityTokenAmount)(nil),           // 37: hypurr.ios.v2.ActivityTokenAmount
-	(*HfunUser)(nil),                      // 38: hypurr.ios.v2.HfunUser
-	(*ActivityParty)(nil),                 // 39: hypurr.ios.v2.ActivityParty
-	(*RecentActivitySection)(nil),         // 40: hypurr.ios.v2.RecentActivitySection
-	(*ActivityItem)(nil),                  // 41: hypurr.ios.v2.ActivityItem
-	(*DepositActivity)(nil),               // 42: hypurr.ios.v2.DepositActivity
-	(*WithdrawActivity)(nil),              // 43: hypurr.ios.v2.WithdrawActivity
-	(*SendActivity)(nil),                  // 44: hypurr.ios.v2.SendActivity
-	(*ReceiveActivity)(nil),               // 45: hypurr.ios.v2.ReceiveActivity
-	(*AccountClassTransferActivity)(nil),  // 46: hypurr.ios.v2.AccountClassTransferActivity
-	(*SpotFillActivity)(nil),              // 47: hypurr.ios.v2.SpotFillActivity
-	(*OpenPerpActivity)(nil),              // 48: hypurr.ios.v2.OpenPerpActivity
-	(*ClosePerpActivity)(nil),             // 49: hypurr.ios.v2.ClosePerpActivity
-	(*ExecutionPriceAndFee)(nil),          // 50: hypurr.ios.v2.ExecutionPriceAndFee
-	(*LiquidationActivity)(nil),           // 51: hypurr.ios.v2.LiquidationActivity
-	(*GenesisAllocationActivity)(nil),     // 52: hypurr.ios.v2.GenesisAllocationActivity
-	(*SwapActivity)(nil),                  // 53: hypurr.ios.v2.SwapActivity
+	(*CandlesRequest)(nil),                // 37: hypurr.ios.v2.CandlesRequest
+	(*ActivityTokenAmount)(nil),           // 38: hypurr.ios.v2.ActivityTokenAmount
+	(*HfunUser)(nil),                      // 39: hypurr.ios.v2.HfunUser
+	(*ActivityParty)(nil),                 // 40: hypurr.ios.v2.ActivityParty
+	(*RecentActivitySection)(nil),         // 41: hypurr.ios.v2.RecentActivitySection
+	(*ActivityItem)(nil),                  // 42: hypurr.ios.v2.ActivityItem
+	(*DepositActivity)(nil),               // 43: hypurr.ios.v2.DepositActivity
+	(*WithdrawActivity)(nil),              // 44: hypurr.ios.v2.WithdrawActivity
+	(*SendActivity)(nil),                  // 45: hypurr.ios.v2.SendActivity
+	(*ReceiveActivity)(nil),               // 46: hypurr.ios.v2.ReceiveActivity
+	(*AccountClassTransferActivity)(nil),  // 47: hypurr.ios.v2.AccountClassTransferActivity
+	(*SpotFillActivity)(nil),              // 48: hypurr.ios.v2.SpotFillActivity
+	(*OpenPerpActivity)(nil),              // 49: hypurr.ios.v2.OpenPerpActivity
+	(*ClosePerpActivity)(nil),             // 50: hypurr.ios.v2.ClosePerpActivity
+	(*ExecutionPriceAndFee)(nil),          // 51: hypurr.ios.v2.ExecutionPriceAndFee
+	(*LiquidationActivity)(nil),           // 52: hypurr.ios.v2.LiquidationActivity
+	(*GenesisAllocationActivity)(nil),     // 53: hypurr.ios.v2.GenesisAllocationActivity
+	(*SwapActivity)(nil),                  // 54: hypurr.ios.v2.SwapActivity
 }
 var file_hypurr_ios_v2_ios_proto_depIdxs = []int32{
 	8,  // 0: hypurr.ios.v2.Asset.color:type_name -> hypurr.ios.v2.Color
@@ -4441,7 +4509,7 @@ var file_hypurr_ios_v2_ios_proto_depIdxs = []int32{
 	10, // 8: hypurr.ios.v2.Market.quote:type_name -> hypurr.ios.v2.Token
 	8,  // 9: hypurr.ios.v2.Market.color:type_name -> hypurr.ios.v2.Color
 	11, // 10: hypurr.ios.v2.MarketQuote.market:type_name -> hypurr.ios.v2.Market
-	40, // 11: hypurr.ios.v2.HomeResponse.recent_activity:type_name -> hypurr.ios.v2.RecentActivitySection
+	41, // 11: hypurr.ios.v2.HomeResponse.recent_activity:type_name -> hypurr.ios.v2.RecentActivitySection
 	15, // 12: hypurr.ios.v2.HomeResponse.market_categories:type_name -> hypurr.ios.v2.HomeMarketCategory
 	16, // 13: hypurr.ios.v2.HomeMarketCategory.assets:type_name -> hypurr.ios.v2.HomeMarketPrice
 	9,  // 14: hypurr.ios.v2.HomeMarketPrice.asset:type_name -> hypurr.ios.v2.Asset
@@ -4456,7 +4524,7 @@ var file_hypurr_ios_v2_ios_proto_depIdxs = []int32{
 	12, // 23: hypurr.ios.v2.AssetDetailResponse.markets:type_name -> hypurr.ios.v2.MarketQuote
 	27, // 24: hypurr.ios.v2.AssetDetailResponse.candles:type_name -> hypurr.ios.v2.Candles
 	30, // 25: hypurr.ios.v2.AssetDetailResponse.stats:type_name -> hypurr.ios.v2.MarketStats
-	41, // 26: hypurr.ios.v2.AssetDetailResponse.recent_activity:type_name -> hypurr.ios.v2.ActivityItem
+	42, // 26: hypurr.ios.v2.AssetDetailResponse.recent_activity:type_name -> hypurr.ios.v2.ActivityItem
 	33, // 27: hypurr.ios.v2.AssetDetailResponse.about:type_name -> hypurr.ios.v2.AssetDetailAbout
 	28, // 28: hypurr.ios.v2.Candles.series:type_name -> hypurr.ios.v2.CandleSeries
 	29, // 29: hypurr.ios.v2.CandleSeries.candles:type_name -> hypurr.ios.v2.Candle
@@ -4464,53 +4532,56 @@ var file_hypurr_ios_v2_ios_proto_depIdxs = []int32{
 	32, // 31: hypurr.ios.v2.MarketStats.spot:type_name -> hypurr.ios.v2.SpotStats
 	34, // 32: hypurr.ios.v2.AssetDetailAbout.links:type_name -> hypurr.ios.v2.AssetDetailAboutLink
 	5,  // 33: hypurr.ios.v2.AssetDetailAboutLink.type:type_name -> hypurr.ios.v2.AssetDetailAboutLinkType
-	10, // 34: hypurr.ios.v2.ActivityTokenAmount.token:type_name -> hypurr.ios.v2.Token
-	38, // 35: hypurr.ios.v2.ActivityParty.hfun_user:type_name -> hypurr.ios.v2.HfunUser
-	41, // 36: hypurr.ios.v2.RecentActivitySection.items:type_name -> hypurr.ios.v2.ActivityItem
-	42, // 37: hypurr.ios.v2.ActivityItem.deposit:type_name -> hypurr.ios.v2.DepositActivity
-	43, // 38: hypurr.ios.v2.ActivityItem.withdraw:type_name -> hypurr.ios.v2.WithdrawActivity
-	44, // 39: hypurr.ios.v2.ActivityItem.send:type_name -> hypurr.ios.v2.SendActivity
-	45, // 40: hypurr.ios.v2.ActivityItem.receive:type_name -> hypurr.ios.v2.ReceiveActivity
-	46, // 41: hypurr.ios.v2.ActivityItem.account_class_transfer:type_name -> hypurr.ios.v2.AccountClassTransferActivity
-	47, // 42: hypurr.ios.v2.ActivityItem.spot_fill:type_name -> hypurr.ios.v2.SpotFillActivity
-	48, // 43: hypurr.ios.v2.ActivityItem.open_perp:type_name -> hypurr.ios.v2.OpenPerpActivity
-	49, // 44: hypurr.ios.v2.ActivityItem.close_perp:type_name -> hypurr.ios.v2.ClosePerpActivity
-	51, // 45: hypurr.ios.v2.ActivityItem.liquidation:type_name -> hypurr.ios.v2.LiquidationActivity
-	52, // 46: hypurr.ios.v2.ActivityItem.genesis_allocation:type_name -> hypurr.ios.v2.GenesisAllocationActivity
-	53, // 47: hypurr.ios.v2.ActivityItem.swap:type_name -> hypurr.ios.v2.SwapActivity
-	37, // 48: hypurr.ios.v2.DepositActivity.received:type_name -> hypurr.ios.v2.ActivityTokenAmount
-	37, // 49: hypurr.ios.v2.WithdrawActivity.sent:type_name -> hypurr.ios.v2.ActivityTokenAmount
-	39, // 50: hypurr.ios.v2.SendActivity.recipient:type_name -> hypurr.ios.v2.ActivityParty
-	37, // 51: hypurr.ios.v2.SendActivity.sent:type_name -> hypurr.ios.v2.ActivityTokenAmount
-	39, // 52: hypurr.ios.v2.ReceiveActivity.sender:type_name -> hypurr.ios.v2.ActivityParty
-	37, // 53: hypurr.ios.v2.ReceiveActivity.received:type_name -> hypurr.ios.v2.ActivityTokenAmount
-	6,  // 54: hypurr.ios.v2.AccountClassTransferActivity.destination:type_name -> hypurr.ios.v2.AccountClass
-	7,  // 55: hypurr.ios.v2.SpotFillActivity.side:type_name -> hypurr.ios.v2.TradeSide
-	37, // 56: hypurr.ios.v2.SpotFillActivity.filled:type_name -> hypurr.ios.v2.ActivityTokenAmount
-	3,  // 57: hypurr.ios.v2.OpenPerpActivity.direction:type_name -> hypurr.ios.v2.PositionDirection
-	11, // 58: hypurr.ios.v2.OpenPerpActivity.market:type_name -> hypurr.ios.v2.Market
-	3,  // 59: hypurr.ios.v2.ClosePerpActivity.direction:type_name -> hypurr.ios.v2.PositionDirection
-	11, // 60: hypurr.ios.v2.ClosePerpActivity.market:type_name -> hypurr.ios.v2.Market
-	50, // 61: hypurr.ios.v2.ClosePerpActivity.execution:type_name -> hypurr.ios.v2.ExecutionPriceAndFee
-	11, // 62: hypurr.ios.v2.LiquidationActivity.market:type_name -> hypurr.ios.v2.Market
-	37, // 63: hypurr.ios.v2.GenesisAllocationActivity.received:type_name -> hypurr.ios.v2.ActivityTokenAmount
-	37, // 64: hypurr.ios.v2.SwapActivity.sent:type_name -> hypurr.ios.v2.ActivityTokenAmount
-	37, // 65: hypurr.ios.v2.SwapActivity.received:type_name -> hypurr.ios.v2.ActivityTokenAmount
-	13, // 66: hypurr.ios.v2.IosService.Home:input_type -> hypurr.ios.v2.HomeRequest
-	18, // 67: hypurr.ios.v2.IosService.LiveAssetUpdates:input_type -> hypurr.ios.v2.LiveAssetUpdatesRequest
-	21, // 68: hypurr.ios.v2.IosService.Catalog:input_type -> hypurr.ios.v2.CatalogRequest
-	24, // 69: hypurr.ios.v2.IosService.AssetDetail:input_type -> hypurr.ios.v2.AssetDetailRequest
-	35, // 70: hypurr.ios.v2.IosService.AssetDetailLiveUpdates:input_type -> hypurr.ios.v2.AssetDetailLiveUpdatesRequest
-	14, // 71: hypurr.ios.v2.IosService.Home:output_type -> hypurr.ios.v2.HomeResponse
-	19, // 72: hypurr.ios.v2.IosService.LiveAssetUpdates:output_type -> hypurr.ios.v2.AssetTicks
-	22, // 73: hypurr.ios.v2.IosService.Catalog:output_type -> hypurr.ios.v2.CatalogResponse
-	26, // 74: hypurr.ios.v2.IosService.AssetDetail:output_type -> hypurr.ios.v2.AssetDetailResponse
-	36, // 75: hypurr.ios.v2.IosService.AssetDetailLiveUpdates:output_type -> hypurr.ios.v2.MarketTick
-	71, // [71:76] is the sub-list for method output_type
-	66, // [66:71] is the sub-list for method input_type
-	66, // [66:66] is the sub-list for extension type_name
-	66, // [66:66] is the sub-list for extension extendee
-	0,  // [0:66] is the sub-list for field type_name
+	25, // 34: hypurr.ios.v2.CandlesRequest.chart_period:type_name -> hypurr.ios.v2.ChartPeriod
+	10, // 35: hypurr.ios.v2.ActivityTokenAmount.token:type_name -> hypurr.ios.v2.Token
+	39, // 36: hypurr.ios.v2.ActivityParty.hfun_user:type_name -> hypurr.ios.v2.HfunUser
+	42, // 37: hypurr.ios.v2.RecentActivitySection.items:type_name -> hypurr.ios.v2.ActivityItem
+	43, // 38: hypurr.ios.v2.ActivityItem.deposit:type_name -> hypurr.ios.v2.DepositActivity
+	44, // 39: hypurr.ios.v2.ActivityItem.withdraw:type_name -> hypurr.ios.v2.WithdrawActivity
+	45, // 40: hypurr.ios.v2.ActivityItem.send:type_name -> hypurr.ios.v2.SendActivity
+	46, // 41: hypurr.ios.v2.ActivityItem.receive:type_name -> hypurr.ios.v2.ReceiveActivity
+	47, // 42: hypurr.ios.v2.ActivityItem.account_class_transfer:type_name -> hypurr.ios.v2.AccountClassTransferActivity
+	48, // 43: hypurr.ios.v2.ActivityItem.spot_fill:type_name -> hypurr.ios.v2.SpotFillActivity
+	49, // 44: hypurr.ios.v2.ActivityItem.open_perp:type_name -> hypurr.ios.v2.OpenPerpActivity
+	50, // 45: hypurr.ios.v2.ActivityItem.close_perp:type_name -> hypurr.ios.v2.ClosePerpActivity
+	52, // 46: hypurr.ios.v2.ActivityItem.liquidation:type_name -> hypurr.ios.v2.LiquidationActivity
+	53, // 47: hypurr.ios.v2.ActivityItem.genesis_allocation:type_name -> hypurr.ios.v2.GenesisAllocationActivity
+	54, // 48: hypurr.ios.v2.ActivityItem.swap:type_name -> hypurr.ios.v2.SwapActivity
+	38, // 49: hypurr.ios.v2.DepositActivity.received:type_name -> hypurr.ios.v2.ActivityTokenAmount
+	38, // 50: hypurr.ios.v2.WithdrawActivity.sent:type_name -> hypurr.ios.v2.ActivityTokenAmount
+	40, // 51: hypurr.ios.v2.SendActivity.recipient:type_name -> hypurr.ios.v2.ActivityParty
+	38, // 52: hypurr.ios.v2.SendActivity.sent:type_name -> hypurr.ios.v2.ActivityTokenAmount
+	40, // 53: hypurr.ios.v2.ReceiveActivity.sender:type_name -> hypurr.ios.v2.ActivityParty
+	38, // 54: hypurr.ios.v2.ReceiveActivity.received:type_name -> hypurr.ios.v2.ActivityTokenAmount
+	6,  // 55: hypurr.ios.v2.AccountClassTransferActivity.destination:type_name -> hypurr.ios.v2.AccountClass
+	7,  // 56: hypurr.ios.v2.SpotFillActivity.side:type_name -> hypurr.ios.v2.TradeSide
+	38, // 57: hypurr.ios.v2.SpotFillActivity.filled:type_name -> hypurr.ios.v2.ActivityTokenAmount
+	3,  // 58: hypurr.ios.v2.OpenPerpActivity.direction:type_name -> hypurr.ios.v2.PositionDirection
+	11, // 59: hypurr.ios.v2.OpenPerpActivity.market:type_name -> hypurr.ios.v2.Market
+	3,  // 60: hypurr.ios.v2.ClosePerpActivity.direction:type_name -> hypurr.ios.v2.PositionDirection
+	11, // 61: hypurr.ios.v2.ClosePerpActivity.market:type_name -> hypurr.ios.v2.Market
+	51, // 62: hypurr.ios.v2.ClosePerpActivity.execution:type_name -> hypurr.ios.v2.ExecutionPriceAndFee
+	11, // 63: hypurr.ios.v2.LiquidationActivity.market:type_name -> hypurr.ios.v2.Market
+	38, // 64: hypurr.ios.v2.GenesisAllocationActivity.received:type_name -> hypurr.ios.v2.ActivityTokenAmount
+	38, // 65: hypurr.ios.v2.SwapActivity.sent:type_name -> hypurr.ios.v2.ActivityTokenAmount
+	38, // 66: hypurr.ios.v2.SwapActivity.received:type_name -> hypurr.ios.v2.ActivityTokenAmount
+	13, // 67: hypurr.ios.v2.IosService.Home:input_type -> hypurr.ios.v2.HomeRequest
+	18, // 68: hypurr.ios.v2.IosService.LiveAssetUpdates:input_type -> hypurr.ios.v2.LiveAssetUpdatesRequest
+	21, // 69: hypurr.ios.v2.IosService.Catalog:input_type -> hypurr.ios.v2.CatalogRequest
+	24, // 70: hypurr.ios.v2.IosService.AssetDetail:input_type -> hypurr.ios.v2.AssetDetailRequest
+	35, // 71: hypurr.ios.v2.IosService.AssetDetailLiveUpdates:input_type -> hypurr.ios.v2.AssetDetailLiveUpdatesRequest
+	37, // 72: hypurr.ios.v2.IosService.Candles:input_type -> hypurr.ios.v2.CandlesRequest
+	14, // 73: hypurr.ios.v2.IosService.Home:output_type -> hypurr.ios.v2.HomeResponse
+	19, // 74: hypurr.ios.v2.IosService.LiveAssetUpdates:output_type -> hypurr.ios.v2.AssetTicks
+	22, // 75: hypurr.ios.v2.IosService.Catalog:output_type -> hypurr.ios.v2.CatalogResponse
+	26, // 76: hypurr.ios.v2.IosService.AssetDetail:output_type -> hypurr.ios.v2.AssetDetailResponse
+	36, // 77: hypurr.ios.v2.IosService.AssetDetailLiveUpdates:output_type -> hypurr.ios.v2.MarketTick
+	27, // 78: hypurr.ios.v2.IosService.Candles:output_type -> hypurr.ios.v2.Candles
+	73, // [73:79] is the sub-list for method output_type
+	67, // [67:73] is the sub-list for method input_type
+	67, // [67:67] is the sub-list for extension type_name
+	67, // [67:67] is the sub-list for extension extendee
+	0,  // [0:67] is the sub-list for field type_name
 }
 
 func init() { file_hypurr_ios_v2_ios_proto_init() }
@@ -4868,7 +4939,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[29].Exporter = func(v any, i int) any {
-			switch v := v.(*ActivityTokenAmount); i {
+			switch v := v.(*CandlesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4880,7 +4951,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[30].Exporter = func(v any, i int) any {
-			switch v := v.(*HfunUser); i {
+			switch v := v.(*ActivityTokenAmount); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4892,7 +4963,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[31].Exporter = func(v any, i int) any {
-			switch v := v.(*ActivityParty); i {
+			switch v := v.(*HfunUser); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4904,7 +4975,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[32].Exporter = func(v any, i int) any {
-			switch v := v.(*RecentActivitySection); i {
+			switch v := v.(*ActivityParty); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4916,7 +4987,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[33].Exporter = func(v any, i int) any {
-			switch v := v.(*ActivityItem); i {
+			switch v := v.(*RecentActivitySection); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4928,7 +4999,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[34].Exporter = func(v any, i int) any {
-			switch v := v.(*DepositActivity); i {
+			switch v := v.(*ActivityItem); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4940,7 +5011,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[35].Exporter = func(v any, i int) any {
-			switch v := v.(*WithdrawActivity); i {
+			switch v := v.(*DepositActivity); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4952,7 +5023,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[36].Exporter = func(v any, i int) any {
-			switch v := v.(*SendActivity); i {
+			switch v := v.(*WithdrawActivity); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4964,7 +5035,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[37].Exporter = func(v any, i int) any {
-			switch v := v.(*ReceiveActivity); i {
+			switch v := v.(*SendActivity); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4976,7 +5047,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[38].Exporter = func(v any, i int) any {
-			switch v := v.(*AccountClassTransferActivity); i {
+			switch v := v.(*ReceiveActivity); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4988,7 +5059,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[39].Exporter = func(v any, i int) any {
-			switch v := v.(*SpotFillActivity); i {
+			switch v := v.(*AccountClassTransferActivity); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5000,7 +5071,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[40].Exporter = func(v any, i int) any {
-			switch v := v.(*OpenPerpActivity); i {
+			switch v := v.(*SpotFillActivity); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5012,7 +5083,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[41].Exporter = func(v any, i int) any {
-			switch v := v.(*ClosePerpActivity); i {
+			switch v := v.(*OpenPerpActivity); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5024,7 +5095,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[42].Exporter = func(v any, i int) any {
-			switch v := v.(*ExecutionPriceAndFee); i {
+			switch v := v.(*ClosePerpActivity); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5036,7 +5107,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[43].Exporter = func(v any, i int) any {
-			switch v := v.(*LiquidationActivity); i {
+			switch v := v.(*ExecutionPriceAndFee); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5048,7 +5119,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[44].Exporter = func(v any, i int) any {
-			switch v := v.(*GenesisAllocationActivity); i {
+			switch v := v.(*LiquidationActivity); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5060,6 +5131,18 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			}
 		}
 		file_hypurr_ios_v2_ios_proto_msgTypes[45].Exporter = func(v any, i int) any {
+			switch v := v.(*GenesisAllocationActivity); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_ios_v2_ios_proto_msgTypes[46].Exporter = func(v any, i int) any {
 			switch v := v.(*SwapActivity); i {
 			case 0:
 				return &v.state
@@ -5083,11 +5166,11 @@ func file_hypurr_ios_v2_ios_proto_init() {
 		(*MarketStats_Perp)(nil),
 		(*MarketStats_Spot)(nil),
 	}
-	file_hypurr_ios_v2_ios_proto_msgTypes[31].OneofWrappers = []any{
+	file_hypurr_ios_v2_ios_proto_msgTypes[32].OneofWrappers = []any{
 		(*ActivityParty_HfunUser)(nil),
 		(*ActivityParty_WalletAddress)(nil),
 	}
-	file_hypurr_ios_v2_ios_proto_msgTypes[33].OneofWrappers = []any{
+	file_hypurr_ios_v2_ios_proto_msgTypes[34].OneofWrappers = []any{
 		(*ActivityItem_Deposit)(nil),
 		(*ActivityItem_Withdraw)(nil),
 		(*ActivityItem_Send)(nil),
@@ -5100,7 +5183,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 		(*ActivityItem_GenesisAllocation)(nil),
 		(*ActivityItem_Swap)(nil),
 	}
-	file_hypurr_ios_v2_ios_proto_msgTypes[41].OneofWrappers = []any{
+	file_hypurr_ios_v2_ios_proto_msgTypes[42].OneofWrappers = []any{
 		(*ClosePerpActivity_RealizedPnlCents)(nil),
 		(*ClosePerpActivity_Execution)(nil),
 	}
@@ -5110,7 +5193,7 @@ func file_hypurr_ios_v2_ios_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hypurr_ios_v2_ios_proto_rawDesc,
 			NumEnums:      8,
-			NumMessages:   46,
+			NumMessages:   47,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

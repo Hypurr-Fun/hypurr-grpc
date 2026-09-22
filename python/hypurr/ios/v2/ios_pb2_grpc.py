@@ -59,6 +59,11 @@ class IosServiceStub:
                 request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetDetailLiveUpdatesRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.MarketTick.FromString,
                 _registered_method=True)
+        self.Candles = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/Candles',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.CandlesRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.Candles.FromString,
+                _registered_method=True)
 
 
 class IosServiceServicer:
@@ -94,6 +99,12 @@ class IosServiceServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Candles(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_IosServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -121,6 +132,11 @@ def add_IosServiceServicer_to_server(servicer, server):
                     servicer.AssetDetailLiveUpdates,
                     request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetDetailLiveUpdatesRequest.FromString,
                     response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.MarketTick.SerializeToString,
+            ),
+            'Candles': grpc.unary_unary_rpc_method_handler(
+                    servicer.Candles,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.CandlesRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.Candles.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -258,6 +274,33 @@ class IosService:
             '/hypurr.ios.v2.IosService/AssetDetailLiveUpdates',
             hypurr_dot_ios_dot_v2_dot_ios__pb2.AssetDetailLiveUpdatesRequest.SerializeToString,
             hypurr_dot_ios_dot_v2_dot_ios__pb2.MarketTick.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Candles(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/Candles',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.CandlesRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.Candles.FromString,
             options,
             channel_credentials,
             insecure,

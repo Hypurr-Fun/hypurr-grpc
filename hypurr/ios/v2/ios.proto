@@ -8,6 +8,7 @@ service IosService {
   rpc Catalog(CatalogRequest) returns (CatalogResponse);
   rpc AssetDetail(AssetDetailRequest) returns (AssetDetailResponse);
   rpc AssetDetailLiveUpdates(AssetDetailLiveUpdatesRequest) returns (stream MarketTick);
+  rpc Candles(CandlesRequest) returns (.hypurr.ios.v2.Candles);
 }
 
 // ==== Shared ====
@@ -322,6 +323,14 @@ message MarketTick {
   uint64 market_id = 1;
   string occurred_at = 2;   // RFC3339 UTC.
   string price_decimal = 3; // Same format as HomeMarketPrice.price_decimal.
+}
+
+// ==== Candles ====
+
+message CandlesRequest {
+  // Non-empty, at most 50. One series per market comes back, in this order.
+  repeated uint64 market_ids = 1;
+  ChartPeriod chart_period = 2;
 }
 
 message ActivityTokenAmount {

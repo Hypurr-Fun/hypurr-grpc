@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { IosService } from "./ios";
+import type { Candles } from "./ios";
+import type { CandlesRequest } from "./ios";
 import type { MarketTick } from "./ios";
 import type { AssetDetailLiveUpdatesRequest } from "./ios";
 import type { AssetDetailResponse } from "./ios";
@@ -42,6 +44,10 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: AssetDetailLiveUpdates
      */
     assetDetailLiveUpdates(input: AssetDetailLiveUpdatesRequest, options?: RpcOptions): ServerStreamingCall<AssetDetailLiveUpdatesRequest, MarketTick>;
+    /**
+     * @generated from protobuf rpc: Candles
+     */
+    candles(input: CandlesRequest, options?: RpcOptions): UnaryCall<CandlesRequest, Candles>;
 }
 /**
  * @generated from protobuf service hypurr.ios.v2.IosService
@@ -86,5 +92,12 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
     assetDetailLiveUpdates(input: AssetDetailLiveUpdatesRequest, options?: RpcOptions): ServerStreamingCall<AssetDetailLiveUpdatesRequest, MarketTick> {
         const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<AssetDetailLiveUpdatesRequest, MarketTick>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: Candles
+     */
+    candles(input: CandlesRequest, options?: RpcOptions): UnaryCall<CandlesRequest, Candles> {
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
+        return stackIntercept<CandlesRequest, Candles>("unary", this._transport, method, opt, input);
     }
 }

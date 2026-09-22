@@ -702,6 +702,23 @@ export interface MarketTick {
      */
     priceDecimal: string; // Same format as HomeMarketPrice.price_decimal.
 }
+// ==== Candles ====
+
+/**
+ * @generated from protobuf message hypurr.ios.v2.CandlesRequest
+ */
+export interface CandlesRequest {
+    /**
+     * Non-empty, at most 50. One series per market comes back, in this order.
+     *
+     * @generated from protobuf field: repeated uint64 market_ids = 1
+     */
+    marketIds: number[];
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.ChartPeriod chart_period = 2
+     */
+    chartPeriod?: ChartPeriod;
+}
 /**
  * @generated from protobuf message hypurr.ios.v2.ActivityTokenAmount
  */
@@ -3212,6 +3229,68 @@ class MarketTick$Type extends MessageType<MarketTick> {
  */
 export const MarketTick = new MarketTick$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class CandlesRequest$Type extends MessageType<CandlesRequest> {
+    constructor() {
+        super("hypurr.ios.v2.CandlesRequest", [
+            { no: 1, name: "market_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "chart_period", kind: "message", T: () => ChartPeriod }
+        ]);
+    }
+    create(value?: PartialMessage<CandlesRequest>): CandlesRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.marketIds = [];
+        if (value !== undefined)
+            reflectionMergePartial<CandlesRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CandlesRequest): CandlesRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated uint64 market_ids */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.marketIds.push(reader.uint64().toNumber());
+                    else
+                        message.marketIds.push(reader.uint64().toNumber());
+                    break;
+                case /* hypurr.ios.v2.ChartPeriod chart_period */ 2:
+                    message.chartPeriod = ChartPeriod.internalBinaryRead(reader, reader.uint32(), options, message.chartPeriod);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CandlesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated uint64 market_ids = 1; */
+        if (message.marketIds.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.marketIds.length; i++)
+                writer.uint64(message.marketIds[i]);
+            writer.join();
+        }
+        /* hypurr.ios.v2.ChartPeriod chart_period = 2; */
+        if (message.chartPeriod)
+            ChartPeriod.internalBinaryWrite(message.chartPeriod, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.CandlesRequest
+ */
+export const CandlesRequest = new CandlesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class ActivityTokenAmount$Type extends MessageType<ActivityTokenAmount> {
     constructor() {
         super("hypurr.ios.v2.ActivityTokenAmount", [
@@ -4333,5 +4412,6 @@ export const IosService = new ServiceType("hypurr.ios.v2.IosService", [
     { name: "LiveAssetUpdates", serverStreaming: true, options: {}, I: LiveAssetUpdatesRequest, O: AssetTicks },
     { name: "Catalog", options: {}, I: CatalogRequest, O: CatalogResponse },
     { name: "AssetDetail", options: {}, I: AssetDetailRequest, O: AssetDetailResponse },
-    { name: "AssetDetailLiveUpdates", serverStreaming: true, options: {}, I: AssetDetailLiveUpdatesRequest, O: MarketTick }
+    { name: "AssetDetailLiveUpdates", serverStreaming: true, options: {}, I: AssetDetailLiveUpdatesRequest, O: MarketTick },
+    { name: "Candles", options: {}, I: CandlesRequest, O: Candles }
 ]);

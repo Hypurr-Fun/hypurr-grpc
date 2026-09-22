@@ -24,6 +24,7 @@ const (
 	IosService_Catalog_FullMethodName                = "/hypurr.ios.v2.IosService/Catalog"
 	IosService_AssetDetail_FullMethodName            = "/hypurr.ios.v2.IosService/AssetDetail"
 	IosService_AssetDetailLiveUpdates_FullMethodName = "/hypurr.ios.v2.IosService/AssetDetailLiveUpdates"
+	IosService_Candles_FullMethodName                = "/hypurr.ios.v2.IosService/Candles"
 )
 
 // IosServiceClient is the client API for IosService service.
@@ -35,6 +36,7 @@ type IosServiceClient interface {
 	Catalog(ctx context.Context, in *CatalogRequest, opts ...grpc.CallOption) (*CatalogResponse, error)
 	AssetDetail(ctx context.Context, in *AssetDetailRequest, opts ...grpc.CallOption) (*AssetDetailResponse, error)
 	AssetDetailLiveUpdates(ctx context.Context, in *AssetDetailLiveUpdatesRequest, opts ...grpc.CallOption) (IosService_AssetDetailLiveUpdatesClient, error)
+	Candles(ctx context.Context, in *CandlesRequest, opts ...grpc.CallOption) (*Candles, error)
 }
 
 type iosServiceClient struct {
@@ -141,6 +143,16 @@ func (x *iosServiceAssetDetailLiveUpdatesClient) Recv() (*MarketTick, error) {
 	return m, nil
 }
 
+func (c *iosServiceClient) Candles(ctx context.Context, in *CandlesRequest, opts ...grpc.CallOption) (*Candles, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Candles)
+	err := c.cc.Invoke(ctx, IosService_Candles_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IosServiceServer is the server API for IosService service.
 // All implementations must embed UnimplementedIosServiceServer
 // for forward compatibility
@@ -150,6 +162,7 @@ type IosServiceServer interface {
 	Catalog(context.Context, *CatalogRequest) (*CatalogResponse, error)
 	AssetDetail(context.Context, *AssetDetailRequest) (*AssetDetailResponse, error)
 	AssetDetailLiveUpdates(*AssetDetailLiveUpdatesRequest, IosService_AssetDetailLiveUpdatesServer) error
+	Candles(context.Context, *CandlesRequest) (*Candles, error)
 	mustEmbedUnimplementedIosServiceServer()
 }
 
@@ -171,6 +184,9 @@ func (UnimplementedIosServiceServer) AssetDetail(context.Context, *AssetDetailRe
 }
 func (UnimplementedIosServiceServer) AssetDetailLiveUpdates(*AssetDetailLiveUpdatesRequest, IosService_AssetDetailLiveUpdatesServer) error {
 	return status.Errorf(codes.Unimplemented, "method AssetDetailLiveUpdates not implemented")
+}
+func (UnimplementedIosServiceServer) Candles(context.Context, *CandlesRequest) (*Candles, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Candles not implemented")
 }
 func (UnimplementedIosServiceServer) mustEmbedUnimplementedIosServiceServer() {}
 
@@ -281,6 +297,24 @@ func (x *iosServiceAssetDetailLiveUpdatesServer) Send(m *MarketTick) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _IosService_Candles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CandlesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IosServiceServer).Candles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IosService_Candles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IosServiceServer).Candles(ctx, req.(*CandlesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IosService_ServiceDesc is the grpc.ServiceDesc for IosService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -299,6 +333,10 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AssetDetail",
 			Handler:    _IosService_AssetDetail_Handler,
+		},
+		{
+			MethodName: "Candles",
+			Handler:    _IosService_Candles_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
