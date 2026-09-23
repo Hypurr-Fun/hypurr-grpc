@@ -826,6 +826,58 @@ message PortfolioSourceDeleteRequest {
 message PortfolioSourceDeleteResponse {
 }
 
+// ============== Portfolio backtest ==============
+
+// PortfolioBacktest replays the recorded weights of the user's sources on
+// hourly closes. By default, before a source went live its pushed backtest
+// series is used and live_since marks the switch so the two are never
+// mistaken for one another; mode can pick live or backtest weights only.
+// Each leg reports how its live weights track its backtest series.
+message PortfolioBacktestRequest {
+  map<string, string> auth_data = 1;
+  repeated PortfolioBacktestLeg legs = 2;       // sources to combine; empty = the wallet's allocator
+  int64 wallet_id = 3;                          // with no legs: its allocator's enabled attachments
+  int64 from_ts = 4;                            // unix seconds; 0 = earliest common history
+  int64 to_ts = 5;                              // unix seconds; 0 = now
+  google.protobuf.DoubleValue cost_bps = 6;     // per unit of turnover; unset = 4.5
+  PortfolioBacktestMode mode = 7;               // default blended: backtest series until live
+  int64 benchmark_pair_id = 8;                  // 0 = BTC
+  PortfolioBacktestResolution resolution = 9;
+}
+
+message PortfolioBacktestResponse {
+  PortfolioBacktestSeries portfolio = 1;
+  PortfolioBacktestStats stats = 2;
+  repeated PortfolioBacktestLegResult legs = 3;
+  PortfolioBacktestSeries benchmark = 4;        // buy and hold, weight 1
+  int64 live_since = 5;                         // unix seconds: from here every leg is live; 0 = never
+  repeated string warnings = 6;
+  int64 benchmark_pair_id = 7;
+}
+
+// PortfolioSourceBacktestPush stores a research series for one of the user's
+// sources, tagged backtest. Each snapshot is complete (a pair left out is
+// flat). With replace, backtest rows of the source between the first and last
+// snapshot are deleted first; with clear, all of them are. Push long series
+// in chunks of consecutive ranges.
+message PortfolioSourceBacktestPushRequest {
+  map<string, string> auth_data = 1;
+  int64 source_id = 2;
+  string name = 3;                              // used when source_id is 0
+  string tag = 4;                               // provenance, e.g. "pure_momentum.ipynb@be69ada"
+  repeated PortfolioWeightSnapshot snapshots = 5;
+  bool replace = 6;
+  bool clear = 7;
+}
+
+message PortfolioSourceBacktestPushResponse {
+  int64 source_id = 1;
+  int64 snapshots = 2;
+  int64 rows = 3;
+  int64 from_ts = 4;                            // unix milliseconds
+  int64 to_ts = 5;
+}
+
 message AuthorizationCodeTelegramAuthData {
   map<string, string> auth_data = 1;
 }
@@ -962,6 +1014,8 @@ service Telegram {
   rpc PortfolioSourceCreate(PortfolioSourceCreateRequest) returns (PortfolioSourceCreateResponse) {}
   rpc PortfolioSourceUpdate(PortfolioSourceUpdateRequest) returns (PortfolioSourceUpdateResponse) {}
   rpc PortfolioSourceDelete(PortfolioSourceDeleteRequest) returns (PortfolioSourceDeleteResponse) {}
+  rpc PortfolioBacktest(PortfolioBacktestRequest) returns (PortfolioBacktestResponse) {}
+  rpc PortfolioSourceBacktestPush(PortfolioSourceBacktestPushRequest) returns (PortfolioSourceBacktestPushResponse) {}
 
   // Onramp — purchases across all of the user's wallets
   rpc OnrampPurchases (TelegramOnrampPurchasesRequest) returns (OnrampPurchasesResponse) {}

@@ -123,6 +123,330 @@ export interface PortfolioSharedSource {
      */
     attachments: PortfolioSource[]; // Allocators this source feeds
 }
+/**
+ * PortfolioWeightSnapshot is a complete target: every pair the source holds at
+ * ts. A pair missing from weights is flat.
+ *
+ * @generated from protobuf message hypurr.PortfolioWeightSnapshot
+ */
+export interface PortfolioWeightSnapshot {
+    /**
+     * @generated from protobuf field: int64 ts = 1
+     */
+    ts: number; // unix milliseconds
+    /**
+     * @generated from protobuf field: map<int64, double> weights = 2
+     */
+    weights: {
+        [key: string]: number;
+    }; // pair_id -> signed fraction of portfolio margin
+}
+/**
+ * PortfolioBacktestLeg is one source of a simulated portfolio: its unscaled
+ * weights times weight, like an allocator attachment.
+ *
+ * @generated from protobuf message hypurr.PortfolioBacktestLeg
+ */
+export interface PortfolioBacktestLeg {
+    /**
+     * @generated from protobuf field: int64 source_id = 1
+     */
+    sourceId: number; // PortfolioSharedSource.id
+    /**
+     * @generated from protobuf field: double weight = 2
+     */
+    weight: number; // multiplier (attachment weight); 0 = 1
+}
+/**
+ * PortfolioBacktestSeries is columnar: every array has one value per ts.
+ * Returns compound hourly; costs are charged on the turnover of the combined
+ * book, so offsetting trades between legs net out.
+ *
+ * @generated from protobuf message hypurr.PortfolioBacktestSeries
+ */
+export interface PortfolioBacktestSeries {
+    /**
+     * @generated from protobuf field: repeated int64 ts = 1
+     */
+    ts: number[]; // unix seconds, end of each period
+    /**
+     * @generated from protobuf field: repeated double equity = 2
+     */
+    equity: number[]; // growth of 1, net of costs
+    /**
+     * @generated from protobuf field: repeated double drawdown = 3
+     */
+    drawdown: number[]; // equity / running max - 1 (<= 0)
+    /**
+     * @generated from protobuf field: repeated double gross = 4
+     */
+    gross: number[]; // sum |weight| at the end of the period
+    /**
+     * @generated from protobuf field: repeated double net = 5
+     */
+    net: number[]; // sum weight at the end of the period
+    /**
+     * @generated from protobuf field: repeated double turnover = 6
+     */
+    turnover: number[]; // sum |weight change| during the period
+}
+/**
+ * @generated from protobuf message hypurr.PortfolioBacktestMonthlyReturn
+ */
+export interface PortfolioBacktestMonthlyReturn {
+    /**
+     * @generated from protobuf field: int32 year = 1
+     */
+    year: number;
+    /**
+     * @generated from protobuf field: int32 month = 2
+     */
+    month: number; // 1-12
+    /**
+     * @generated from protobuf field: double ret = 3
+     */
+    ret: number;
+}
+/**
+ * PortfolioBacktestStats are computed on daily returns; annualised with 365
+ * days (perps trade every day).
+ *
+ * @generated from protobuf message hypurr.PortfolioBacktestStats
+ */
+export interface PortfolioBacktestStats {
+    /**
+     * @generated from protobuf field: double total_return = 1
+     */
+    totalReturn: number;
+    /**
+     * @generated from protobuf field: double annualized_return = 2
+     */
+    annualizedReturn: number;
+    /**
+     * @generated from protobuf field: double annualized_volatility = 3
+     */
+    annualizedVolatility: number;
+    /**
+     * @generated from protobuf field: double sharpe = 4
+     */
+    sharpe: number;
+    /**
+     * @generated from protobuf field: double sortino = 5
+     */
+    sortino: number;
+    /**
+     * @generated from protobuf field: double max_drawdown = 6
+     */
+    maxDrawdown: number; // <= 0
+    /**
+     * @generated from protobuf field: int64 max_drawdown_days = 7
+     */
+    maxDrawdownDays: number; // longest time under water, days
+    /**
+     * @generated from protobuf field: double calmar = 8
+     */
+    calmar: number;
+    /**
+     * @generated from protobuf field: double beta = 9
+     */
+    beta: number; // vs the benchmark
+    /**
+     * @generated from protobuf field: double alpha = 10
+     */
+    alpha: number; // annualised, vs the benchmark
+    /**
+     * @generated from protobuf field: double var_95 = 11
+     */
+    var95: number; // 1-day historical VaR, a loss is negative
+    /**
+     * @generated from protobuf field: double best_day = 12
+     */
+    bestDay: number;
+    /**
+     * @generated from protobuf field: double worst_day = 13
+     */
+    worstDay: number;
+    /**
+     * @generated from protobuf field: double positive_days = 14
+     */
+    positiveDays: number; // fraction of days with a positive return
+    /**
+     * @generated from protobuf field: double avg_gross = 15
+     */
+    avgGross: number; // mean sum |weight|
+    /**
+     * @generated from protobuf field: double avg_daily_turnover = 16
+     */
+    avgDailyTurnover: number;
+    /**
+     * @generated from protobuf field: double total_costs = 17
+     */
+    totalCosts: number; // sum of cost fractions charged
+    /**
+     * @generated from protobuf field: int64 days = 18
+     */
+    days: number;
+    /**
+     * @generated from protobuf field: repeated hypurr.PortfolioBacktestMonthlyReturn monthly = 19
+     */
+    monthly: PortfolioBacktestMonthlyReturn[];
+}
+/**
+ * PortfolioBacktestTracking compares a source's live weights with its backtest
+ * series over the hours both exist: does live follow the research?
+ *
+ * @generated from protobuf message hypurr.PortfolioBacktestTracking
+ */
+export interface PortfolioBacktestTracking {
+    /**
+     * @generated from protobuf field: int64 from = 1
+     */
+    from: number; // unix seconds, first boundary of the overlap
+    /**
+     * @generated from protobuf field: int64 to = 2
+     */
+    to: number;
+    /**
+     * @generated from protobuf field: int64 hours = 3
+     */
+    hours: number; // boundaries where both have a target
+    /**
+     * @generated from protobuf field: double mean_abs_weight_diff = 4
+     */
+    meanAbsWeightDiff: number; // mean sum |live - backtest| per boundary
+    /**
+     * @generated from protobuf field: double live_return = 5
+     */
+    liveReturn: number; // compounded over the overlap, net of costs
+    /**
+     * @generated from protobuf field: double backtest_return = 6
+     */
+    backtestReturn: number;
+    /**
+     * @generated from protobuf field: double correlation = 7
+     */
+    correlation: number; // of daily returns
+    /**
+     * @generated from protobuf field: double tracking_error = 8
+     */
+    trackingError: number; // annualised std of daily return differences
+}
+/**
+ * PortfolioBacktestLegResult is one source replayed on its own (weight 1).
+ *
+ * @generated from protobuf message hypurr.PortfolioBacktestLegResult
+ */
+export interface PortfolioBacktestLegResult {
+    /**
+     * @generated from protobuf field: int64 source_id = 1
+     */
+    sourceId: number;
+    /**
+     * @generated from protobuf field: string name = 2
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: double weight = 3
+     */
+    weight: number;
+    /**
+     * @generated from protobuf field: int64 backtest_from = 4
+     */
+    backtestFrom: number; // unix seconds; 0 when the source has no backtest series
+    /**
+     * @generated from protobuf field: int64 backtest_to = 5
+     */
+    backtestTo: number;
+    /**
+     * @generated from protobuf field: int64 live_from = 6
+     */
+    liveFrom: number; // unix seconds; 0 when the source has no live history
+    /**
+     * @generated from protobuf field: int64 live_to = 7
+     */
+    liveTo: number;
+    /**
+     * @generated from protobuf field: hypurr.PortfolioBacktestSeries series = 8
+     */
+    series?: PortfolioBacktestSeries;
+    /**
+     * @generated from protobuf field: hypurr.PortfolioBacktestStats stats = 9
+     */
+    stats?: PortfolioBacktestStats;
+    /**
+     * @generated from protobuf field: hypurr.PortfolioBacktestTracking tracking = 10
+     */
+    tracking?: PortfolioBacktestTracking; // unset when live and backtest never overlap
+}
+// ============== Weight history & backtest ==============
+
+/**
+ * PortfolioWeightKind tells a recorded weight apart from a research series.
+ *
+ * @generated from protobuf enum hypurr.PortfolioWeightKind
+ */
+export enum PortfolioWeightKind {
+    /**
+     * @generated from protobuf enum value: PORTFOLIO_WEIGHT_KIND_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * recorded by the portfolio runner from the live source
+     *
+     * @generated from protobuf enum value: PORTFOLIO_WEIGHT_KIND_LIVE = 1;
+     */
+    LIVE = 1,
+    /**
+     * pushed by the source's author, generated by a backtest
+     *
+     * @generated from protobuf enum value: PORTFOLIO_WEIGHT_KIND_BACKTEST = 2;
+     */
+    BACKTEST = 2
+}
+/**
+ * PortfolioBacktestMode picks which recorded weights a backtest replays.
+ *
+ * @generated from protobuf enum hypurr.PortfolioBacktestMode
+ */
+export enum PortfolioBacktestMode {
+    /**
+     * backtest series until a source went live, live weights after
+     *
+     * @generated from protobuf enum value: PORTFOLIO_BACKTEST_MODE_BLENDED = 0;
+     */
+    BLENDED = 0,
+    /**
+     * live weights only
+     *
+     * @generated from protobuf enum value: PORTFOLIO_BACKTEST_MODE_LIVE = 1;
+     */
+    LIVE = 1,
+    /**
+     * backtest series only, also over the live period (to compare)
+     *
+     * @generated from protobuf enum value: PORTFOLIO_BACKTEST_MODE_BACKTEST = 2;
+     */
+    BACKTEST = 2
+}
+/**
+ * @generated from protobuf enum hypurr.PortfolioBacktestResolution
+ */
+export enum PortfolioBacktestResolution {
+    /**
+     * hourly up to 90 days, daily beyond
+     *
+     * @generated from protobuf enum value: PORTFOLIO_BACKTEST_RESOLUTION_AUTO = 0;
+     */
+    AUTO = 0,
+    /**
+     * @generated from protobuf enum value: PORTFOLIO_BACKTEST_RESOLUTION_HOUR = 1;
+     */
+    HOUR = 1,
+    /**
+     * @generated from protobuf enum value: PORTFOLIO_BACKTEST_RESOLUTION_DAY = 2;
+     */
+    DAY = 2
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class PortfolioAllocator$Type extends MessageType<PortfolioAllocator> {
     constructor() {
@@ -414,3 +738,737 @@ class PortfolioSharedSource$Type extends MessageType<PortfolioSharedSource> {
  * @generated MessageType for protobuf message hypurr.PortfolioSharedSource
  */
 export const PortfolioSharedSource = new PortfolioSharedSource$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioWeightSnapshot$Type extends MessageType<PortfolioWeightSnapshot> {
+    constructor() {
+        super("hypurr.PortfolioWeightSnapshot", [
+            { no: 1, name: "ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "weights", kind: "map", K: 3 /*ScalarType.INT64*/, V: { kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ } }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioWeightSnapshot>): PortfolioWeightSnapshot {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.ts = 0;
+        message.weights = {};
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioWeightSnapshot>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioWeightSnapshot): PortfolioWeightSnapshot {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 ts */ 1:
+                    message.ts = reader.int64().toNumber();
+                    break;
+                case /* map<int64, double> weights */ 2:
+                    this.binaryReadMap2(message.weights, reader, options);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap2(map: PortfolioWeightSnapshot["weights"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PortfolioWeightSnapshot["weights"] | undefined, val: PortfolioWeightSnapshot["weights"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.int64().toString();
+                    break;
+                case 2:
+                    val = reader.double();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for hypurr.PortfolioWeightSnapshot.weights");
+            }
+        }
+        map[key ?? "0"] = val ?? 0;
+    }
+    internalBinaryWrite(message: PortfolioWeightSnapshot, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 ts = 1; */
+        if (message.ts !== 0)
+            writer.tag(1, WireType.Varint).int64(message.ts);
+        /* map<int64, double> weights = 2; */
+        for (let k of globalThis.Object.keys(message.weights))
+            writer.tag(2, WireType.LengthDelimited).fork().tag(1, WireType.Varint).int64(k).tag(2, WireType.Bit64).double(message.weights[k]).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioWeightSnapshot
+ */
+export const PortfolioWeightSnapshot = new PortfolioWeightSnapshot$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioBacktestLeg$Type extends MessageType<PortfolioBacktestLeg> {
+    constructor() {
+        super("hypurr.PortfolioBacktestLeg", [
+            { no: 1, name: "source_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioBacktestLeg>): PortfolioBacktestLeg {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.sourceId = 0;
+        message.weight = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioBacktestLeg>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioBacktestLeg): PortfolioBacktestLeg {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 source_id */ 1:
+                    message.sourceId = reader.int64().toNumber();
+                    break;
+                case /* double weight */ 2:
+                    message.weight = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PortfolioBacktestLeg, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 source_id = 1; */
+        if (message.sourceId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.sourceId);
+        /* double weight = 2; */
+        if (message.weight !== 0)
+            writer.tag(2, WireType.Bit64).double(message.weight);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioBacktestLeg
+ */
+export const PortfolioBacktestLeg = new PortfolioBacktestLeg$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioBacktestSeries$Type extends MessageType<PortfolioBacktestSeries> {
+    constructor() {
+        super("hypurr.PortfolioBacktestSeries", [
+            { no: 1, name: "ts", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "equity", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "drawdown", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "gross", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "net", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "turnover", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioBacktestSeries>): PortfolioBacktestSeries {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.ts = [];
+        message.equity = [];
+        message.drawdown = [];
+        message.gross = [];
+        message.net = [];
+        message.turnover = [];
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioBacktestSeries>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioBacktestSeries): PortfolioBacktestSeries {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated int64 ts */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.ts.push(reader.int64().toNumber());
+                    else
+                        message.ts.push(reader.int64().toNumber());
+                    break;
+                case /* repeated double equity */ 2:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.equity.push(reader.double());
+                    else
+                        message.equity.push(reader.double());
+                    break;
+                case /* repeated double drawdown */ 3:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.drawdown.push(reader.double());
+                    else
+                        message.drawdown.push(reader.double());
+                    break;
+                case /* repeated double gross */ 4:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.gross.push(reader.double());
+                    else
+                        message.gross.push(reader.double());
+                    break;
+                case /* repeated double net */ 5:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.net.push(reader.double());
+                    else
+                        message.net.push(reader.double());
+                    break;
+                case /* repeated double turnover */ 6:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.turnover.push(reader.double());
+                    else
+                        message.turnover.push(reader.double());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PortfolioBacktestSeries, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated int64 ts = 1; */
+        if (message.ts.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.ts.length; i++)
+                writer.int64(message.ts[i]);
+            writer.join();
+        }
+        /* repeated double equity = 2; */
+        if (message.equity.length) {
+            writer.tag(2, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.equity.length; i++)
+                writer.double(message.equity[i]);
+            writer.join();
+        }
+        /* repeated double drawdown = 3; */
+        if (message.drawdown.length) {
+            writer.tag(3, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.drawdown.length; i++)
+                writer.double(message.drawdown[i]);
+            writer.join();
+        }
+        /* repeated double gross = 4; */
+        if (message.gross.length) {
+            writer.tag(4, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.gross.length; i++)
+                writer.double(message.gross[i]);
+            writer.join();
+        }
+        /* repeated double net = 5; */
+        if (message.net.length) {
+            writer.tag(5, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.net.length; i++)
+                writer.double(message.net[i]);
+            writer.join();
+        }
+        /* repeated double turnover = 6; */
+        if (message.turnover.length) {
+            writer.tag(6, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.turnover.length; i++)
+                writer.double(message.turnover[i]);
+            writer.join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioBacktestSeries
+ */
+export const PortfolioBacktestSeries = new PortfolioBacktestSeries$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioBacktestMonthlyReturn$Type extends MessageType<PortfolioBacktestMonthlyReturn> {
+    constructor() {
+        super("hypurr.PortfolioBacktestMonthlyReturn", [
+            { no: 1, name: "year", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "month", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 3, name: "ret", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioBacktestMonthlyReturn>): PortfolioBacktestMonthlyReturn {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.year = 0;
+        message.month = 0;
+        message.ret = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioBacktestMonthlyReturn>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioBacktestMonthlyReturn): PortfolioBacktestMonthlyReturn {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 year */ 1:
+                    message.year = reader.int32();
+                    break;
+                case /* int32 month */ 2:
+                    message.month = reader.int32();
+                    break;
+                case /* double ret */ 3:
+                    message.ret = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PortfolioBacktestMonthlyReturn, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 year = 1; */
+        if (message.year !== 0)
+            writer.tag(1, WireType.Varint).int32(message.year);
+        /* int32 month = 2; */
+        if (message.month !== 0)
+            writer.tag(2, WireType.Varint).int32(message.month);
+        /* double ret = 3; */
+        if (message.ret !== 0)
+            writer.tag(3, WireType.Bit64).double(message.ret);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioBacktestMonthlyReturn
+ */
+export const PortfolioBacktestMonthlyReturn = new PortfolioBacktestMonthlyReturn$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioBacktestStats$Type extends MessageType<PortfolioBacktestStats> {
+    constructor() {
+        super("hypurr.PortfolioBacktestStats", [
+            { no: 1, name: "total_return", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 2, name: "annualized_return", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "annualized_volatility", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "sharpe", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "sortino", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "max_drawdown", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "max_drawdown_days", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 8, name: "calmar", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "beta", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "alpha", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "var_95", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 12, name: "best_day", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 13, name: "worst_day", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 14, name: "positive_days", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 15, name: "avg_gross", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 16, name: "avg_daily_turnover", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 17, name: "total_costs", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 18, name: "days", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 19, name: "monthly", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioBacktestMonthlyReturn }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioBacktestStats>): PortfolioBacktestStats {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.totalReturn = 0;
+        message.annualizedReturn = 0;
+        message.annualizedVolatility = 0;
+        message.sharpe = 0;
+        message.sortino = 0;
+        message.maxDrawdown = 0;
+        message.maxDrawdownDays = 0;
+        message.calmar = 0;
+        message.beta = 0;
+        message.alpha = 0;
+        message.var95 = 0;
+        message.bestDay = 0;
+        message.worstDay = 0;
+        message.positiveDays = 0;
+        message.avgGross = 0;
+        message.avgDailyTurnover = 0;
+        message.totalCosts = 0;
+        message.days = 0;
+        message.monthly = [];
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioBacktestStats>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioBacktestStats): PortfolioBacktestStats {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* double total_return */ 1:
+                    message.totalReturn = reader.double();
+                    break;
+                case /* double annualized_return */ 2:
+                    message.annualizedReturn = reader.double();
+                    break;
+                case /* double annualized_volatility */ 3:
+                    message.annualizedVolatility = reader.double();
+                    break;
+                case /* double sharpe */ 4:
+                    message.sharpe = reader.double();
+                    break;
+                case /* double sortino */ 5:
+                    message.sortino = reader.double();
+                    break;
+                case /* double max_drawdown */ 6:
+                    message.maxDrawdown = reader.double();
+                    break;
+                case /* int64 max_drawdown_days */ 7:
+                    message.maxDrawdownDays = reader.int64().toNumber();
+                    break;
+                case /* double calmar */ 8:
+                    message.calmar = reader.double();
+                    break;
+                case /* double beta */ 9:
+                    message.beta = reader.double();
+                    break;
+                case /* double alpha */ 10:
+                    message.alpha = reader.double();
+                    break;
+                case /* double var_95 */ 11:
+                    message.var95 = reader.double();
+                    break;
+                case /* double best_day */ 12:
+                    message.bestDay = reader.double();
+                    break;
+                case /* double worst_day */ 13:
+                    message.worstDay = reader.double();
+                    break;
+                case /* double positive_days */ 14:
+                    message.positiveDays = reader.double();
+                    break;
+                case /* double avg_gross */ 15:
+                    message.avgGross = reader.double();
+                    break;
+                case /* double avg_daily_turnover */ 16:
+                    message.avgDailyTurnover = reader.double();
+                    break;
+                case /* double total_costs */ 17:
+                    message.totalCosts = reader.double();
+                    break;
+                case /* int64 days */ 18:
+                    message.days = reader.int64().toNumber();
+                    break;
+                case /* repeated hypurr.PortfolioBacktestMonthlyReturn monthly */ 19:
+                    message.monthly.push(PortfolioBacktestMonthlyReturn.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PortfolioBacktestStats, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* double total_return = 1; */
+        if (message.totalReturn !== 0)
+            writer.tag(1, WireType.Bit64).double(message.totalReturn);
+        /* double annualized_return = 2; */
+        if (message.annualizedReturn !== 0)
+            writer.tag(2, WireType.Bit64).double(message.annualizedReturn);
+        /* double annualized_volatility = 3; */
+        if (message.annualizedVolatility !== 0)
+            writer.tag(3, WireType.Bit64).double(message.annualizedVolatility);
+        /* double sharpe = 4; */
+        if (message.sharpe !== 0)
+            writer.tag(4, WireType.Bit64).double(message.sharpe);
+        /* double sortino = 5; */
+        if (message.sortino !== 0)
+            writer.tag(5, WireType.Bit64).double(message.sortino);
+        /* double max_drawdown = 6; */
+        if (message.maxDrawdown !== 0)
+            writer.tag(6, WireType.Bit64).double(message.maxDrawdown);
+        /* int64 max_drawdown_days = 7; */
+        if (message.maxDrawdownDays !== 0)
+            writer.tag(7, WireType.Varint).int64(message.maxDrawdownDays);
+        /* double calmar = 8; */
+        if (message.calmar !== 0)
+            writer.tag(8, WireType.Bit64).double(message.calmar);
+        /* double beta = 9; */
+        if (message.beta !== 0)
+            writer.tag(9, WireType.Bit64).double(message.beta);
+        /* double alpha = 10; */
+        if (message.alpha !== 0)
+            writer.tag(10, WireType.Bit64).double(message.alpha);
+        /* double var_95 = 11; */
+        if (message.var95 !== 0)
+            writer.tag(11, WireType.Bit64).double(message.var95);
+        /* double best_day = 12; */
+        if (message.bestDay !== 0)
+            writer.tag(12, WireType.Bit64).double(message.bestDay);
+        /* double worst_day = 13; */
+        if (message.worstDay !== 0)
+            writer.tag(13, WireType.Bit64).double(message.worstDay);
+        /* double positive_days = 14; */
+        if (message.positiveDays !== 0)
+            writer.tag(14, WireType.Bit64).double(message.positiveDays);
+        /* double avg_gross = 15; */
+        if (message.avgGross !== 0)
+            writer.tag(15, WireType.Bit64).double(message.avgGross);
+        /* double avg_daily_turnover = 16; */
+        if (message.avgDailyTurnover !== 0)
+            writer.tag(16, WireType.Bit64).double(message.avgDailyTurnover);
+        /* double total_costs = 17; */
+        if (message.totalCosts !== 0)
+            writer.tag(17, WireType.Bit64).double(message.totalCosts);
+        /* int64 days = 18; */
+        if (message.days !== 0)
+            writer.tag(18, WireType.Varint).int64(message.days);
+        /* repeated hypurr.PortfolioBacktestMonthlyReturn monthly = 19; */
+        for (let i = 0; i < message.monthly.length; i++)
+            PortfolioBacktestMonthlyReturn.internalBinaryWrite(message.monthly[i], writer.tag(19, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioBacktestStats
+ */
+export const PortfolioBacktestStats = new PortfolioBacktestStats$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioBacktestTracking$Type extends MessageType<PortfolioBacktestTracking> {
+    constructor() {
+        super("hypurr.PortfolioBacktestTracking", [
+            { no: 1, name: "from", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "to", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "hours", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "mean_abs_weight_diff", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "live_return", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "backtest_return", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "correlation", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "tracking_error", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioBacktestTracking>): PortfolioBacktestTracking {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.from = 0;
+        message.to = 0;
+        message.hours = 0;
+        message.meanAbsWeightDiff = 0;
+        message.liveReturn = 0;
+        message.backtestReturn = 0;
+        message.correlation = 0;
+        message.trackingError = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioBacktestTracking>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioBacktestTracking): PortfolioBacktestTracking {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 from */ 1:
+                    message.from = reader.int64().toNumber();
+                    break;
+                case /* int64 to */ 2:
+                    message.to = reader.int64().toNumber();
+                    break;
+                case /* int64 hours */ 3:
+                    message.hours = reader.int64().toNumber();
+                    break;
+                case /* double mean_abs_weight_diff */ 4:
+                    message.meanAbsWeightDiff = reader.double();
+                    break;
+                case /* double live_return */ 5:
+                    message.liveReturn = reader.double();
+                    break;
+                case /* double backtest_return */ 6:
+                    message.backtestReturn = reader.double();
+                    break;
+                case /* double correlation */ 7:
+                    message.correlation = reader.double();
+                    break;
+                case /* double tracking_error */ 8:
+                    message.trackingError = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PortfolioBacktestTracking, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 from = 1; */
+        if (message.from !== 0)
+            writer.tag(1, WireType.Varint).int64(message.from);
+        /* int64 to = 2; */
+        if (message.to !== 0)
+            writer.tag(2, WireType.Varint).int64(message.to);
+        /* int64 hours = 3; */
+        if (message.hours !== 0)
+            writer.tag(3, WireType.Varint).int64(message.hours);
+        /* double mean_abs_weight_diff = 4; */
+        if (message.meanAbsWeightDiff !== 0)
+            writer.tag(4, WireType.Bit64).double(message.meanAbsWeightDiff);
+        /* double live_return = 5; */
+        if (message.liveReturn !== 0)
+            writer.tag(5, WireType.Bit64).double(message.liveReturn);
+        /* double backtest_return = 6; */
+        if (message.backtestReturn !== 0)
+            writer.tag(6, WireType.Bit64).double(message.backtestReturn);
+        /* double correlation = 7; */
+        if (message.correlation !== 0)
+            writer.tag(7, WireType.Bit64).double(message.correlation);
+        /* double tracking_error = 8; */
+        if (message.trackingError !== 0)
+            writer.tag(8, WireType.Bit64).double(message.trackingError);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioBacktestTracking
+ */
+export const PortfolioBacktestTracking = new PortfolioBacktestTracking$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioBacktestLegResult$Type extends MessageType<PortfolioBacktestLegResult> {
+    constructor() {
+        super("hypurr.PortfolioBacktestLegResult", [
+            { no: 1, name: "source_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "backtest_from", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "backtest_to", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "live_from", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "live_to", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 8, name: "series", kind: "message", T: () => PortfolioBacktestSeries },
+            { no: 9, name: "stats", kind: "message", T: () => PortfolioBacktestStats },
+            { no: 10, name: "tracking", kind: "message", T: () => PortfolioBacktestTracking }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioBacktestLegResult>): PortfolioBacktestLegResult {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.sourceId = 0;
+        message.name = "";
+        message.weight = 0;
+        message.backtestFrom = 0;
+        message.backtestTo = 0;
+        message.liveFrom = 0;
+        message.liveTo = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioBacktestLegResult>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioBacktestLegResult): PortfolioBacktestLegResult {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 source_id */ 1:
+                    message.sourceId = reader.int64().toNumber();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* double weight */ 3:
+                    message.weight = reader.double();
+                    break;
+                case /* int64 backtest_from */ 4:
+                    message.backtestFrom = reader.int64().toNumber();
+                    break;
+                case /* int64 backtest_to */ 5:
+                    message.backtestTo = reader.int64().toNumber();
+                    break;
+                case /* int64 live_from */ 6:
+                    message.liveFrom = reader.int64().toNumber();
+                    break;
+                case /* int64 live_to */ 7:
+                    message.liveTo = reader.int64().toNumber();
+                    break;
+                case /* hypurr.PortfolioBacktestSeries series */ 8:
+                    message.series = PortfolioBacktestSeries.internalBinaryRead(reader, reader.uint32(), options, message.series);
+                    break;
+                case /* hypurr.PortfolioBacktestStats stats */ 9:
+                    message.stats = PortfolioBacktestStats.internalBinaryRead(reader, reader.uint32(), options, message.stats);
+                    break;
+                case /* hypurr.PortfolioBacktestTracking tracking */ 10:
+                    message.tracking = PortfolioBacktestTracking.internalBinaryRead(reader, reader.uint32(), options, message.tracking);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PortfolioBacktestLegResult, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 source_id = 1; */
+        if (message.sourceId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.sourceId);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* double weight = 3; */
+        if (message.weight !== 0)
+            writer.tag(3, WireType.Bit64).double(message.weight);
+        /* int64 backtest_from = 4; */
+        if (message.backtestFrom !== 0)
+            writer.tag(4, WireType.Varint).int64(message.backtestFrom);
+        /* int64 backtest_to = 5; */
+        if (message.backtestTo !== 0)
+            writer.tag(5, WireType.Varint).int64(message.backtestTo);
+        /* int64 live_from = 6; */
+        if (message.liveFrom !== 0)
+            writer.tag(6, WireType.Varint).int64(message.liveFrom);
+        /* int64 live_to = 7; */
+        if (message.liveTo !== 0)
+            writer.tag(7, WireType.Varint).int64(message.liveTo);
+        /* hypurr.PortfolioBacktestSeries series = 8; */
+        if (message.series)
+            PortfolioBacktestSeries.internalBinaryWrite(message.series, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.PortfolioBacktestStats stats = 9; */
+        if (message.stats)
+            PortfolioBacktestStats.internalBinaryWrite(message.stats, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.PortfolioBacktestTracking tracking = 10; */
+        if (message.tracking)
+            PortfolioBacktestTracking.internalBinaryWrite(message.tracking, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioBacktestLegResult
+ */
+export const PortfolioBacktestLegResult = new PortfolioBacktestLegResult$Type();

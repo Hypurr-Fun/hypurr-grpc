@@ -376,6 +376,16 @@ class TelegramStub:
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceDeleteRequest.SerializeToString,
                 response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceDeleteResponse.FromString,
                 _registered_method=True)
+        self.PortfolioBacktest = channel.unary_unary(
+                '/hypurr.Telegram/PortfolioBacktest',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioBacktestRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioBacktestResponse.FromString,
+                _registered_method=True)
+        self.PortfolioSourceBacktestPush = channel.unary_unary(
+                '/hypurr.Telegram/PortfolioSourceBacktestPush',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceBacktestPushRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceBacktestPushResponse.FromString,
+                _registered_method=True)
         self.OnrampPurchases = channel.unary_unary(
                 '/hypurr.Telegram/OnrampPurchases',
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.TelegramOnrampPurchasesRequest.SerializeToString,
@@ -803,6 +813,18 @@ class TelegramServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PortfolioBacktest(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def PortfolioSourceBacktestPush(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def OnrampPurchases(self, request, context):
         """Onramp — purchases across all of the user's wallets
         """
@@ -1152,6 +1174,16 @@ def add_TelegramServicer_to_server(servicer, server):
                     servicer.PortfolioSourceDelete,
                     request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceDeleteRequest.FromString,
                     response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceDeleteResponse.SerializeToString,
+            ),
+            'PortfolioBacktest': grpc.unary_unary_rpc_method_handler(
+                    servicer.PortfolioBacktest,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioBacktestRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioBacktestResponse.SerializeToString,
+            ),
+            'PortfolioSourceBacktestPush': grpc.unary_unary_rpc_method_handler(
+                    servicer.PortfolioSourceBacktestPush,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceBacktestPushRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceBacktestPushResponse.SerializeToString,
             ),
             'OnrampPurchases': grpc.unary_unary_rpc_method_handler(
                     servicer.OnrampPurchases,
@@ -2995,6 +3027,60 @@ class Telegram:
             '/hypurr.Telegram/PortfolioSourceDelete',
             hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceDeleteRequest.SerializeToString,
             hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceDeleteResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PortfolioBacktest(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/PortfolioBacktest',
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioBacktestRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioBacktestResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PortfolioSourceBacktestPush(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/PortfolioSourceBacktestPush',
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceBacktestPushRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.PortfolioSourceBacktestPushResponse.FromString,
             options,
             channel_credentials,
             insecure,

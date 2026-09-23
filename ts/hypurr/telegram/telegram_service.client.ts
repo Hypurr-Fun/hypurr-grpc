@@ -6,6 +6,10 @@ import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Telegram } from "./telegram_service";
 import type { OnrampPurchasesResponse } from "../onramp";
 import type { TelegramOnrampPurchasesRequest } from "./telegram_service";
+import type { PortfolioSourceBacktestPushResponse } from "./telegram_service";
+import type { PortfolioSourceBacktestPushRequest } from "./telegram_service";
+import type { PortfolioBacktestResponse } from "./telegram_service";
+import type { PortfolioBacktestRequest } from "./telegram_service";
 import type { PortfolioSourceDeleteResponse } from "./telegram_service";
 import type { PortfolioSourceDeleteRequest } from "./telegram_service";
 import type { PortfolioSourceUpdateResponse } from "./telegram_service";
@@ -440,6 +444,14 @@ export interface ITelegramClient {
      * @generated from protobuf rpc: PortfolioSourceDelete
      */
     portfolioSourceDelete(input: PortfolioSourceDeleteRequest, options?: RpcOptions): UnaryCall<PortfolioSourceDeleteRequest, PortfolioSourceDeleteResponse>;
+    /**
+     * @generated from protobuf rpc: PortfolioBacktest
+     */
+    portfolioBacktest(input: PortfolioBacktestRequest, options?: RpcOptions): UnaryCall<PortfolioBacktestRequest, PortfolioBacktestResponse>;
+    /**
+     * @generated from protobuf rpc: PortfolioSourceBacktestPush
+     */
+    portfolioSourceBacktestPush(input: PortfolioSourceBacktestPushRequest, options?: RpcOptions): UnaryCall<PortfolioSourceBacktestPushRequest, PortfolioSourceBacktestPushResponse>;
     /**
      * Onramp — purchases across all of the user's wallets
      *
@@ -951,12 +963,26 @@ export class TelegramClient implements ITelegramClient, ServiceInfo {
         return stackIntercept<PortfolioSourceDeleteRequest, PortfolioSourceDeleteResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: PortfolioBacktest
+     */
+    portfolioBacktest(input: PortfolioBacktestRequest, options?: RpcOptions): UnaryCall<PortfolioBacktestRequest, PortfolioBacktestResponse> {
+        const method = this.methods[68], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PortfolioBacktestRequest, PortfolioBacktestResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: PortfolioSourceBacktestPush
+     */
+    portfolioSourceBacktestPush(input: PortfolioSourceBacktestPushRequest, options?: RpcOptions): UnaryCall<PortfolioSourceBacktestPushRequest, PortfolioSourceBacktestPushResponse> {
+        const method = this.methods[69], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PortfolioSourceBacktestPushRequest, PortfolioSourceBacktestPushResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * Onramp — purchases across all of the user's wallets
      *
      * @generated from protobuf rpc: OnrampPurchases
      */
     onrampPurchases(input: TelegramOnrampPurchasesRequest, options?: RpcOptions): UnaryCall<TelegramOnrampPurchasesRequest, OnrampPurchasesResponse> {
-        const method = this.methods[68], opt = this._transport.mergeOptions(options);
+        const method = this.methods[70], opt = this._transport.mergeOptions(options);
         return stackIntercept<TelegramOnrampPurchasesRequest, OnrampPurchasesResponse>("unary", this._transport, method, opt, input);
     }
 }

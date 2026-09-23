@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16hypurr/portfolio.proto\x12\x06hypurr\x1a\x1cgoogle/protobuf/struct.proto\"\xd2\x01\n\x12PortfolioAllocator\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12\x16\n\x0etotal_leverage\x18\x04 \x01(\x01\x12\x1a\n\x12rebalance_interval\x18\x05 \x01(\x03\x12\x19\n\x11min_rebalance_pct\x18\x06 \x01(\x01\x12\x0f\n\x07\x65nabled\x18\x07 \x01(\x08\x12(\n\x07sources\x18\x08 \x03(\x0b\x32\x17.hypurr.PortfolioSource\"\xc6\x01\n\x0fPortfolioSource\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x14\n\x0c\x61llocator_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x13\n\x0bsource_type\x18\x04 \x01(\t\x12\x0e\n\x06weight\x18\x05 \x01(\x01\x12\'\n\x06\x63onfig\x18\x06 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x0f\n\x07\x65nabled\x18\x07 \x01(\x08\x12\x11\n\tsource_id\x18\x08 \x01(\x03\x12\x11\n\twallet_id\x18\t \x01(\x03\"\x9d\x01\n\x15PortfolioSharedSource\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0bsource_type\x18\x03 \x01(\t\x12\'\n\x06\x63onfig\x18\x04 \x01(\x0b\x32\x17.google.protobuf.Struct\x12,\n\x0b\x61ttachments\x18\x05 \x03(\x0b\x32\x17.hypurr.PortfolioSourceB)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16hypurr/portfolio.proto\x12\x06hypurr\x1a\x1cgoogle/protobuf/struct.proto\"\xd2\x01\n\x12PortfolioAllocator\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x13\n\x0btelegram_id\x18\x02 \x01(\x03\x12\x11\n\twallet_id\x18\x03 \x01(\x03\x12\x16\n\x0etotal_leverage\x18\x04 \x01(\x01\x12\x1a\n\x12rebalance_interval\x18\x05 \x01(\x03\x12\x19\n\x11min_rebalance_pct\x18\x06 \x01(\x01\x12\x0f\n\x07\x65nabled\x18\x07 \x01(\x08\x12(\n\x07sources\x18\x08 \x03(\x0b\x32\x17.hypurr.PortfolioSource\"\xc6\x01\n\x0fPortfolioSource\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x14\n\x0c\x61llocator_id\x18\x02 \x01(\x03\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x13\n\x0bsource_type\x18\x04 \x01(\t\x12\x0e\n\x06weight\x18\x05 \x01(\x01\x12\'\n\x06\x63onfig\x18\x06 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x0f\n\x07\x65nabled\x18\x07 \x01(\x08\x12\x11\n\tsource_id\x18\x08 \x01(\x03\x12\x11\n\twallet_id\x18\t \x01(\x03\"\x9d\x01\n\x15PortfolioSharedSource\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0bsource_type\x18\x03 \x01(\t\x12\'\n\x06\x63onfig\x18\x04 \x01(\x0b\x32\x17.google.protobuf.Struct\x12,\n\x0b\x61ttachments\x18\x05 \x03(\x0b\x32\x17.hypurr.PortfolioSource\"\x94\x01\n\x17PortfolioWeightSnapshot\x12\n\n\x02ts\x18\x01 \x01(\x03\x12=\n\x07weights\x18\x02 \x03(\x0b\x32,.hypurr.PortfolioWeightSnapshot.WeightsEntry\x1a.\n\x0cWeightsEntry\x12\x0b\n\x03key\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\"9\n\x14PortfolioBacktestLeg\x12\x11\n\tsource_id\x18\x01 \x01(\x03\x12\x0e\n\x06weight\x18\x02 \x01(\x01\"u\n\x17PortfolioBacktestSeries\x12\n\n\x02ts\x18\x01 \x03(\x03\x12\x0e\n\x06\x65quity\x18\x02 \x03(\x01\x12\x10\n\x08\x64rawdown\x18\x03 \x03(\x01\x12\r\n\x05gross\x18\x04 \x03(\x01\x12\x0b\n\x03net\x18\x05 \x03(\x01\x12\x10\n\x08turnover\x18\x06 \x03(\x01\"J\n\x1ePortfolioBacktestMonthlyReturn\x12\x0c\n\x04year\x18\x01 \x01(\x05\x12\r\n\x05month\x18\x02 \x01(\x05\x12\x0b\n\x03ret\x18\x03 \x01(\x01\"\xbe\x03\n\x16PortfolioBacktestStats\x12\x14\n\x0ctotal_return\x18\x01 \x01(\x01\x12\x19\n\x11\x61nnualized_return\x18\x02 \x01(\x01\x12\x1d\n\x15\x61nnualized_volatility\x18\x03 \x01(\x01\x12\x0e\n\x06sharpe\x18\x04 \x01(\x01\x12\x0f\n\x07sortino\x18\x05 \x01(\x01\x12\x14\n\x0cmax_drawdown\x18\x06 \x01(\x01\x12\x19\n\x11max_drawdown_days\x18\x07 \x01(\x03\x12\x0e\n\x06\x63\x61lmar\x18\x08 \x01(\x01\x12\x0c\n\x04\x62\x65ta\x18\t \x01(\x01\x12\r\n\x05\x61lpha\x18\n \x01(\x01\x12\x0e\n\x06var_95\x18\x0b \x01(\x01\x12\x10\n\x08\x62\x65st_day\x18\x0c \x01(\x01\x12\x11\n\tworst_day\x18\r \x01(\x01\x12\x15\n\rpositive_days\x18\x0e \x01(\x01\x12\x11\n\tavg_gross\x18\x0f \x01(\x01\x12\x1a\n\x12\x61vg_daily_turnover\x18\x10 \x01(\x01\x12\x13\n\x0btotal_costs\x18\x11 \x01(\x01\x12\x0c\n\x04\x64\x61ys\x18\x12 \x01(\x03\x12\x37\n\x07monthly\x18\x13 \x03(\x0b\x32&.hypurr.PortfolioBacktestMonthlyReturn\"\xbd\x01\n\x19PortfolioBacktestTracking\x12\x0c\n\x04\x66rom\x18\x01 \x01(\x03\x12\n\n\x02to\x18\x02 \x01(\x03\x12\r\n\x05hours\x18\x03 \x01(\x03\x12\x1c\n\x14mean_abs_weight_diff\x18\x04 \x01(\x01\x12\x13\n\x0blive_return\x18\x05 \x01(\x01\x12\x17\n\x0f\x62\x61\x63ktest_return\x18\x06 \x01(\x01\x12\x13\n\x0b\x63orrelation\x18\x07 \x01(\x01\x12\x16\n\x0etracking_error\x18\x08 \x01(\x01\"\xb2\x02\n\x1aPortfolioBacktestLegResult\x12\x11\n\tsource_id\x18\x01 \x01(\x03\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06weight\x18\x03 \x01(\x01\x12\x15\n\rbacktest_from\x18\x04 \x01(\x03\x12\x13\n\x0b\x62\x61\x63ktest_to\x18\x05 \x01(\x03\x12\x11\n\tlive_from\x18\x06 \x01(\x03\x12\x0f\n\x07live_to\x18\x07 \x01(\x03\x12/\n\x06series\x18\x08 \x01(\x0b\x32\x1f.hypurr.PortfolioBacktestSeries\x12-\n\x05stats\x18\t \x01(\x0b\x32\x1e.hypurr.PortfolioBacktestStats\x12\x33\n\x08tracking\x18\n \x01(\x0b\x32!.hypurr.PortfolioBacktestTracking*\x80\x01\n\x13PortfolioWeightKind\x12%\n!PORTFOLIO_WEIGHT_KIND_UNSPECIFIED\x10\x00\x12\x1e\n\x1aPORTFOLIO_WEIGHT_KIND_LIVE\x10\x01\x12\"\n\x1ePORTFOLIO_WEIGHT_KIND_BACKTEST\x10\x02*\x84\x01\n\x15PortfolioBacktestMode\x12#\n\x1fPORTFOLIO_BACKTEST_MODE_BLENDED\x10\x00\x12 \n\x1cPORTFOLIO_BACKTEST_MODE_LIVE\x10\x01\x12$\n PORTFOLIO_BACKTEST_MODE_BACKTEST\x10\x02*\x94\x01\n\x1bPortfolioBacktestResolution\x12&\n\"PORTFOLIO_BACKTEST_RESOLUTION_AUTO\x10\x00\x12&\n\"PORTFOLIO_BACKTEST_RESOLUTION_HOUR\x10\x01\x12%\n!PORTFOLIO_BACKTEST_RESOLUTION_DAY\x10\x02\x42)Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurrb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,10 +33,34 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'hypurr.portfolio_pb2', _glo
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z\'gitlab.com/hypurr/hypurr-grpc/go/hypurr'
+  _globals['_PORTFOLIOWEIGHTSNAPSHOT_WEIGHTSENTRY']._loaded_options = None
+  _globals['_PORTFOLIOWEIGHTSNAPSHOT_WEIGHTSENTRY']._serialized_options = b'8\001'
+  _globals['_PORTFOLIOWEIGHTKIND']._serialized_start=1994
+  _globals['_PORTFOLIOWEIGHTKIND']._serialized_end=2122
+  _globals['_PORTFOLIOBACKTESTMODE']._serialized_start=2125
+  _globals['_PORTFOLIOBACKTESTMODE']._serialized_end=2257
+  _globals['_PORTFOLIOBACKTESTRESOLUTION']._serialized_start=2260
+  _globals['_PORTFOLIOBACKTESTRESOLUTION']._serialized_end=2408
   _globals['_PORTFOLIOALLOCATOR']._serialized_start=65
   _globals['_PORTFOLIOALLOCATOR']._serialized_end=275
   _globals['_PORTFOLIOSOURCE']._serialized_start=278
   _globals['_PORTFOLIOSOURCE']._serialized_end=476
   _globals['_PORTFOLIOSHAREDSOURCE']._serialized_start=479
   _globals['_PORTFOLIOSHAREDSOURCE']._serialized_end=636
+  _globals['_PORTFOLIOWEIGHTSNAPSHOT']._serialized_start=639
+  _globals['_PORTFOLIOWEIGHTSNAPSHOT']._serialized_end=787
+  _globals['_PORTFOLIOWEIGHTSNAPSHOT_WEIGHTSENTRY']._serialized_start=741
+  _globals['_PORTFOLIOWEIGHTSNAPSHOT_WEIGHTSENTRY']._serialized_end=787
+  _globals['_PORTFOLIOBACKTESTLEG']._serialized_start=789
+  _globals['_PORTFOLIOBACKTESTLEG']._serialized_end=846
+  _globals['_PORTFOLIOBACKTESTSERIES']._serialized_start=848
+  _globals['_PORTFOLIOBACKTESTSERIES']._serialized_end=965
+  _globals['_PORTFOLIOBACKTESTMONTHLYRETURN']._serialized_start=967
+  _globals['_PORTFOLIOBACKTESTMONTHLYRETURN']._serialized_end=1041
+  _globals['_PORTFOLIOBACKTESTSTATS']._serialized_start=1044
+  _globals['_PORTFOLIOBACKTESTSTATS']._serialized_end=1490
+  _globals['_PORTFOLIOBACKTESTTRACKING']._serialized_start=1493
+  _globals['_PORTFOLIOBACKTESTTRACKING']._serialized_end=1682
+  _globals['_PORTFOLIOBACKTESTLEGRESULT']._serialized_start=1685
+  _globals['_PORTFOLIOBACKTESTLEGRESULT']._serialized_end=1991
 # @@protoc_insertion_point(module_scope)
