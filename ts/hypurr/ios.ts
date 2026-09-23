@@ -1011,7 +1011,8 @@ export interface HistoricalPriceCandlesRequest {
      */
     assetIds: number[];
     /**
-     * RFC3339 UTC range: [start_at, end_at).
+     * RFC3339 UTC range: [start_at, end_at). Candles are on the interval grid:
+     * the first is the one that contains start_at.
      *
      * @generated from protobuf field: string start_at = 2
      */

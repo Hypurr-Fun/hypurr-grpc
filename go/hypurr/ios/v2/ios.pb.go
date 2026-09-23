@@ -1688,6 +1688,7 @@ type ChartPeriod struct {
 
 	Interval ChartInterval `protobuf:"varint,1,opt,name=interval,proto3,enum=hypurr.ios.v2.ChartInterval" json:"interval,omitempty"`
 	// RFC3339 UTC range [start_at, end_at). Both fall on a 15 minute boundary.
+	// Candles are on the interval grid: the first is the one that contains start_at.
 	StartAt string `protobuf:"bytes,2,opt,name=start_at,json=startAt,proto3" json:"start_at,omitempty"`
 	EndAt   string `protobuf:"bytes,3,opt,name=end_at,json=endAt,proto3" json:"end_at,omitempty"`
 }

@@ -450,7 +450,8 @@ enum HistoricalChartInterval {
 message HistoricalPriceCandlesRequest {
   // Non-empty; asset ids use the Hyperliquid convention (see AssetDetailRequest).
   repeated uint64 asset_ids = 1;
-  // RFC3339 UTC range: [start_at, end_at).
+  // RFC3339 UTC range: [start_at, end_at). Candles are on the interval grid:
+  // the first is the one that contains start_at.
   string start_at = 2;
   string end_at = 3;
   HistoricalChartInterval interval = 4;

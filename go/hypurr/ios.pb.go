@@ -3275,7 +3275,8 @@ type HistoricalPriceCandlesRequest struct {
 
 	// Non-empty; asset ids use the Hyperliquid convention (see AssetDetailRequest).
 	AssetIds []uint64 `protobuf:"varint,1,rep,packed,name=asset_ids,json=assetIds,proto3" json:"asset_ids,omitempty"`
-	// RFC3339 UTC range: [start_at, end_at).
+	// RFC3339 UTC range: [start_at, end_at). Candles are on the interval grid:
+	// the first is the one that contains start_at.
 	StartAt  string                  `protobuf:"bytes,2,opt,name=start_at,json=startAt,proto3" json:"start_at,omitempty"`
 	EndAt    string                  `protobuf:"bytes,3,opt,name=end_at,json=endAt,proto3" json:"end_at,omitempty"`
 	Interval HistoricalChartInterval `protobuf:"varint,4,opt,name=interval,proto3,enum=hypurr.HistoricalChartInterval" json:"interval,omitempty"`

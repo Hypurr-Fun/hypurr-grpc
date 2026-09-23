@@ -444,6 +444,7 @@ export interface ChartPeriod {
     interval: ChartInterval;
     /**
      * RFC3339 UTC range [start_at, end_at). Both fall on a 15 minute boundary.
+     * Candles are on the interval grid: the first is the one that contains start_at.
      *
      * @generated from protobuf field: string start_at = 2
      */
