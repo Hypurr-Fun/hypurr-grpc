@@ -9,6 +9,7 @@ service IosService {
   rpc AssetDetail(AssetDetailRequest) returns (AssetDetailResponse);
   rpc AssetDetailLiveUpdates(AssetDetailLiveUpdatesRequest) returns (stream MarketTick);
   rpc Candles(CandlesRequest) returns (.hypurr.ios.v2.Candles);
+  rpc UserStream(UserStreamRequest) returns (stream UserSnapshot);
 }
 
 // ==== Shared ====
@@ -163,6 +164,129 @@ message AssetPricePoint {
   string price_decimal = 2; // Same format as HomeMarketPrice.price_decimal.
 }
 
+message ActivityTokenAmount {
+  Token token = 1;
+  string quantity_decimal = 2;
+}
+
+message HfunUser {
+  int64 user_id = 1;
+  string handle = 2;
+  string avatar_url = 3;
+}
+
+message ActivityParty {
+  oneof identity {
+    HfunUser hfun_user = 1; // Only with a verified wallet-to-user link.
+    string wallet_address = 2;
+  }
+}
+
+message RecentActivitySection {
+  repeated ActivityItem items = 1; // At most three, newest first.
+}
+
+message ActivityItem {
+  string id = 1;
+  string occurred_at = 2; // RFC3339 UTC.
+  oneof activity {
+    DepositActivity deposit = 10;
+    WithdrawActivity withdraw = 11;
+    SendActivity send = 12;
+    ReceiveActivity receive = 13;
+    AccountClassTransferActivity account_class_transfer = 14;
+    SpotFillActivity spot_fill = 15;
+    OpenPerpActivity open_perp = 16;
+    ClosePerpActivity close_perp = 17;
+    LiquidationActivity liquidation = 19;
+    GenesisAllocationActivity genesis_allocation = 20;
+    SwapActivity swap = 21;
+  }
+}
+
+message DepositActivity {
+  ActivityTokenAmount received = 1;
+  int64 usd_value_cents = 2;
+}
+
+message WithdrawActivity {
+  ActivityTokenAmount sent = 1;
+  int64 usd_value_cents = 2;
+}
+
+message SendActivity {
+  ActivityParty recipient = 1;
+  ActivityTokenAmount sent = 2;
+  int64 usd_value_cents = 3;
+}
+
+message ReceiveActivity {
+  ActivityParty sender = 1;
+  ActivityTokenAmount received = 2;
+  int64 usd_value_cents = 3;
+}
+
+enum AccountClass {
+  ACCOUNT_CLASS_UNSPECIFIED = 0;
+  ACCOUNT_CLASS_SPOT = 1;
+  ACCOUNT_CLASS_PERPS = 2;
+}
+
+message AccountClassTransferActivity {
+  AccountClass destination = 1;
+  string usdc_amount_decimal = 2;
+}
+
+enum TradeSide {
+  TRADE_SIDE_UNSPECIFIED = 0;
+  TRADE_SIDE_BUY = 1;
+  TRADE_SIDE_SELL = 2;
+}
+
+message SpotFillActivity {
+  TradeSide side = 1;
+  ActivityTokenAmount filled = 2;
+  int64 usd_value_cents = 3;
+}
+
+message OpenPerpActivity {
+  PositionDirection direction = 1;
+  Market market = 2;
+  string size_decimal = 3;
+  string fill_price_decimal = 4;
+  int64 fee_cents = 5;
+}
+
+message ClosePerpActivity {
+  PositionDirection direction = 1;
+  Market market = 2;
+  string size_decimal = 3;
+  oneof result {
+    int64 realized_pnl_cents = 4; // Signed; only when supplied upstream.
+    ExecutionPriceAndFee execution = 5;
+  }
+}
+
+message ExecutionPriceAndFee {
+  string fill_price_decimal = 1;
+  int64 fee_cents = 2;
+}
+
+message LiquidationActivity {
+  Market market = 1;
+  string size_decimal = 2;   // Contracts liquidated.
+  int64 usd_value_cents = 3; // Notional of the liquidated size.
+}
+
+message GenesisAllocationActivity {
+  ActivityTokenAmount received = 1;
+}
+
+message SwapActivity {
+  ActivityTokenAmount sent = 1;
+  ActivityTokenAmount received = 2;
+}
+
 // ==== Live prices ====
 
 message LiveAssetUpdatesRequest {
@@ -315,6 +439,8 @@ enum AssetDetailAboutLinkType {
   ASSET_DETAIL_ABOUT_LINK_TYPE_SOCIAL = 3;
 }
 
+// ==== Asset detail live updates ====
+
 // Dedicated price stream for the open asset detail screen.
 message AssetDetailLiveUpdatesRequest {
   uint64 market_id = 1;
@@ -334,125 +460,96 @@ message CandlesRequest {
   ChartPeriod chart_period = 2;
 }
 
-message ActivityTokenAmount {
-  Token token = 1;
-  string quantity_decimal = 2;
+// ==== UserStream ====
+
+message UserStreamRequest {}
+
+message UserSnapshot {
+  // RFC3339 UTC time at which this internally consistent snapshot was calculated.
+  string as_of = 1;
+  // Aggregate across every authenticated wallet.
+  PortfolioValue all_wallets_value = 2;
+  // Wallet selector display order.
+  repeated UserWallet wallets = 3;
 }
 
-message HfunUser {
-  int64 user_id = 1;
-  string handle = 2;
-  string avatar_url = 3;
+message UserWallet {
+  WalletReference wallet = 1;
+  PortfolioValue value = 2;
+  // Empty arrays mean this wallet has no current holdings or positions.
+  // Display order: market value, largest first.
+  repeated SpotHolding spot_holdings = 3;
+  // Display order: notional value, largest first.
+  repeated OpenPerpPosition perp_positions = 4;
 }
 
-message ActivityParty {
-  oneof identity {
-    HfunUser hfun_user = 1; // Only with a verified wallet-to-user link.
-    string wallet_address = 2;
-  }
+message WalletReference {
+  string wallet_id = 1;
+  string name = 2;
 }
 
-message RecentActivitySection {
-  repeated ActivityItem items = 1; // At most three, newest first.
+message PortfolioValue {
+  int64 total_balance_cents = 1;
+  int64 change_cents = 2;       // Signed; current product-defined period.
+  double change_percentage = 3; // Signed; same period as change_cents.
 }
 
-message ActivityItem {
-  string id = 1;
-  string occurred_at = 2; // RFC3339 UTC.
-  oneof activity {
-    DepositActivity deposit = 10;
-    WithdrawActivity withdraw = 11;
-    SendActivity send = 12;
-    ReceiveActivity receive = 13;
-    AccountClassTransferActivity account_class_transfer = 14;
-    SpotFillActivity spot_fill = 15;
-    OpenPerpActivity open_perp = 16;
-    ClosePerpActivity close_perp = 17;
-    LiquidationActivity liquidation = 19;
-    GenesisAllocationActivity genesis_allocation = 20;
-    SwapActivity swap = 21;
-  }
+message SpotHolding {
+  // "<wallet_id>:<token ref>".
+  string position_id = 1;
+  Token token = 2;
+  string quantity_decimal = 3;
+  // 0 when the token has no price.
+  int64 market_value_cents = 4;
+  // Absent when the token has no price or no cost basis.
+  SpotPositionDetails position_details = 5;
 }
 
-message DepositActivity {
-  ActivityTokenAmount received = 1;
-  int64 usd_value_cents = 2;
-}
-
-message WithdrawActivity {
-  ActivityTokenAmount sent = 1;
-  int64 usd_value_cents = 2;
-}
-
-message SendActivity {
-  ActivityParty recipient = 1;
-  ActivityTokenAmount sent = 2;
-  int64 usd_value_cents = 3;
-}
-
-message ReceiveActivity {
-  ActivityParty sender = 1;
-  ActivityTokenAmount received = 2;
-  int64 usd_value_cents = 3;
-}
-
-enum AccountClass {
-  ACCOUNT_CLASS_UNSPECIFIED = 0;
-  ACCOUNT_CLASS_SPOT = 1;
-  ACCOUNT_CLASS_PERPS = 2;
-}
-
-message AccountClassTransferActivity {
-  AccountClass destination = 1;
-  string usdc_amount_decimal = 2;
-}
-
-enum TradeSide {
-  TRADE_SIDE_UNSPECIFIED = 0;
-  TRADE_SIDE_BUY = 1;
-  TRADE_SIDE_SELL = 2;
-}
-
-message SpotFillActivity {
-  TradeSide side = 1;
-  ActivityTokenAmount filled = 2;
-  int64 usd_value_cents = 3;
-}
-
-message OpenPerpActivity {
-  PositionDirection direction = 1;
+message OpenPerpPosition {
+  // "<wallet_id>:<market_id>".
+  string position_id = 1;
   Market market = 2;
-  string size_decimal = 3;
-  string fill_price_decimal = 4;
-  int64 fee_cents = 5;
+  int32 leverage = 3;
+  PositionDirection direction = 4;
+  int64 unrealized_pnl_cents = 5; // Signed.
+  double roe_percent = 6;         // Signed.
+  // Presence means iOS shows a liquidation warning.
+  PerpLiquidationWarning liquidation_warning = 7;
+  // Present for every current open perp position.
+  PerpPositionDetails position_details = 8;
 }
 
-message ClosePerpActivity {
-  PositionDirection direction = 1;
-  Market market = 2;
-  string size_decimal = 3;
-  oneof result {
-    int64 realized_pnl_cents = 4; // Signed; only when supplied upstream.
-    ExecutionPriceAndFee execution = 5;
-  }
+message SpotPositionDetails {
+  int64 unrealized_pnl_cents = 1; // Signed.
+  string average_cost_price_decimal = 2;
+  double roe_percent = 3; // Signed.
+  double portfolio_share_percent = 4;
 }
 
-message ExecutionPriceAndFee {
-  string fill_price_decimal = 1;
-  int64 fee_cents = 2;
+message PerpPositionDetails {
+  int64 funding_cents = 1; // Signed net funding value.
+  string mark_price_decimal = 2;
+  string entry_price_decimal = 3;
+  string liquidation_price_decimal = 4;
+  string size_decimal = 5; // Base-asset quantity.
+  int64 notional_value_cents = 6; // Current USD notional.
+  int64 margin_cents = 7; // Margin shown for this position.
+  PerpMarginMode margin_mode = 8;
+  // Absent when the position has no take-profit or stop-loss order.
+  PerpAutoClose auto_close = 9;
 }
 
-message LiquidationActivity {
-  Market market = 1;
-  string size_decimal = 2;   // Contracts liquidated.
-  int64 usd_value_cents = 3; // Notional of the liquidated size.
+enum PerpMarginMode {
+  PERP_MARGIN_MODE_UNSPECIFIED = 0;
+  PERP_MARGIN_MODE_ISOLATED = 1;
+  PERP_MARGIN_MODE_CROSS = 2;
 }
 
-message GenesisAllocationActivity {
-  ActivityTokenAmount received = 1;
+message PerpAutoClose {
+  string take_profit_price_decimal = 1;
+  string stop_loss_price_decimal = 2;
 }
 
-message SwapActivity {
-  ActivityTokenAmount sent = 1;
-  ActivityTokenAmount received = 2;
+message PerpLiquidationWarning {
+  double distance_percentage = 1;
 }

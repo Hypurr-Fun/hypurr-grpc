@@ -25,6 +25,7 @@ const (
 	IosService_AssetDetail_FullMethodName            = "/hypurr.ios.v2.IosService/AssetDetail"
 	IosService_AssetDetailLiveUpdates_FullMethodName = "/hypurr.ios.v2.IosService/AssetDetailLiveUpdates"
 	IosService_Candles_FullMethodName                = "/hypurr.ios.v2.IosService/Candles"
+	IosService_UserStream_FullMethodName             = "/hypurr.ios.v2.IosService/UserStream"
 )
 
 // IosServiceClient is the client API for IosService service.
@@ -37,6 +38,7 @@ type IosServiceClient interface {
 	AssetDetail(ctx context.Context, in *AssetDetailRequest, opts ...grpc.CallOption) (*AssetDetailResponse, error)
 	AssetDetailLiveUpdates(ctx context.Context, in *AssetDetailLiveUpdatesRequest, opts ...grpc.CallOption) (IosService_AssetDetailLiveUpdatesClient, error)
 	Candles(ctx context.Context, in *CandlesRequest, opts ...grpc.CallOption) (*Candles, error)
+	UserStream(ctx context.Context, in *UserStreamRequest, opts ...grpc.CallOption) (IosService_UserStreamClient, error)
 }
 
 type iosServiceClient struct {
@@ -153,6 +155,39 @@ func (c *iosServiceClient) Candles(ctx context.Context, in *CandlesRequest, opts
 	return out, nil
 }
 
+func (c *iosServiceClient) UserStream(ctx context.Context, in *UserStreamRequest, opts ...grpc.CallOption) (IosService_UserStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &IosService_ServiceDesc.Streams[2], IosService_UserStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &iosServiceUserStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type IosService_UserStreamClient interface {
+	Recv() (*UserSnapshot, error)
+	grpc.ClientStream
+}
+
+type iosServiceUserStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *iosServiceUserStreamClient) Recv() (*UserSnapshot, error) {
+	m := new(UserSnapshot)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // IosServiceServer is the server API for IosService service.
 // All implementations must embed UnimplementedIosServiceServer
 // for forward compatibility
@@ -163,6 +198,7 @@ type IosServiceServer interface {
 	AssetDetail(context.Context, *AssetDetailRequest) (*AssetDetailResponse, error)
 	AssetDetailLiveUpdates(*AssetDetailLiveUpdatesRequest, IosService_AssetDetailLiveUpdatesServer) error
 	Candles(context.Context, *CandlesRequest) (*Candles, error)
+	UserStream(*UserStreamRequest, IosService_UserStreamServer) error
 	mustEmbedUnimplementedIosServiceServer()
 }
 
@@ -187,6 +223,9 @@ func (UnimplementedIosServiceServer) AssetDetailLiveUpdates(*AssetDetailLiveUpda
 }
 func (UnimplementedIosServiceServer) Candles(context.Context, *CandlesRequest) (*Candles, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Candles not implemented")
+}
+func (UnimplementedIosServiceServer) UserStream(*UserStreamRequest, IosService_UserStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method UserStream not implemented")
 }
 func (UnimplementedIosServiceServer) mustEmbedUnimplementedIosServiceServer() {}
 
@@ -315,6 +354,27 @@ func _IosService_Candles_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IosService_UserStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(UserStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(IosServiceServer).UserStream(m, &iosServiceUserStreamServer{ServerStream: stream})
+}
+
+type IosService_UserStreamServer interface {
+	Send(*UserSnapshot) error
+	grpc.ServerStream
+}
+
+type iosServiceUserStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *iosServiceUserStreamServer) Send(m *UserSnapshot) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // IosService_ServiceDesc is the grpc.ServiceDesc for IosService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -348,6 +408,11 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "AssetDetailLiveUpdates",
 			Handler:       _IosService_AssetDetailLiveUpdates_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "UserStream",
+			Handler:       _IosService_UserStream_Handler,
 			ServerStreams: true,
 		},
 	},
