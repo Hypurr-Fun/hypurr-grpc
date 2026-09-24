@@ -90,6 +90,7 @@ const (
 	Telegram_PortfolioSourceDelete_FullMethodName             = "/hypurr.Telegram/PortfolioSourceDelete"
 	Telegram_PortfolioBacktest_FullMethodName                 = "/hypurr.Telegram/PortfolioBacktest"
 	Telegram_PortfolioSourceBacktestPush_FullMethodName       = "/hypurr.Telegram/PortfolioSourceBacktestPush"
+	Telegram_PortfolioOptimize_FullMethodName                 = "/hypurr.Telegram/PortfolioOptimize"
 	Telegram_OnrampPurchases_FullMethodName                   = "/hypurr.Telegram/OnrampPurchases"
 )
 
@@ -176,6 +177,7 @@ type TelegramClient interface {
 	PortfolioSourceDelete(ctx context.Context, in *PortfolioSourceDeleteRequest, opts ...grpc.CallOption) (*PortfolioSourceDeleteResponse, error)
 	PortfolioBacktest(ctx context.Context, in *PortfolioBacktestRequest, opts ...grpc.CallOption) (*PortfolioBacktestResponse, error)
 	PortfolioSourceBacktestPush(ctx context.Context, in *PortfolioSourceBacktestPushRequest, opts ...grpc.CallOption) (*PortfolioSourceBacktestPushResponse, error)
+	PortfolioOptimize(ctx context.Context, in *PortfolioOptimizeRequest, opts ...grpc.CallOption) (*PortfolioOptimizeResponse, error)
 	// Onramp — purchases across all of the user's wallets
 	OnrampPurchases(ctx context.Context, in *TelegramOnrampPurchasesRequest, opts ...grpc.CallOption) (*hypurr.OnrampPurchasesResponse, error)
 }
@@ -911,6 +913,16 @@ func (c *telegramClient) PortfolioSourceBacktestPush(ctx context.Context, in *Po
 	return out, nil
 }
 
+func (c *telegramClient) PortfolioOptimize(ctx context.Context, in *PortfolioOptimizeRequest, opts ...grpc.CallOption) (*PortfolioOptimizeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PortfolioOptimizeResponse)
+	err := c.cc.Invoke(ctx, Telegram_PortfolioOptimize_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *telegramClient) OnrampPurchases(ctx context.Context, in *TelegramOnrampPurchasesRequest, opts ...grpc.CallOption) (*hypurr.OnrampPurchasesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(hypurr.OnrampPurchasesResponse)
@@ -1004,6 +1016,7 @@ type TelegramServer interface {
 	PortfolioSourceDelete(context.Context, *PortfolioSourceDeleteRequest) (*PortfolioSourceDeleteResponse, error)
 	PortfolioBacktest(context.Context, *PortfolioBacktestRequest) (*PortfolioBacktestResponse, error)
 	PortfolioSourceBacktestPush(context.Context, *PortfolioSourceBacktestPushRequest) (*PortfolioSourceBacktestPushResponse, error)
+	PortfolioOptimize(context.Context, *PortfolioOptimizeRequest) (*PortfolioOptimizeResponse, error)
 	// Onramp — purchases across all of the user's wallets
 	OnrampPurchases(context.Context, *TelegramOnrampPurchasesRequest) (*hypurr.OnrampPurchasesResponse, error)
 	mustEmbedUnimplementedTelegramServer()
@@ -1222,6 +1235,9 @@ func (UnimplementedTelegramServer) PortfolioBacktest(context.Context, *Portfolio
 }
 func (UnimplementedTelegramServer) PortfolioSourceBacktestPush(context.Context, *PortfolioSourceBacktestPushRequest) (*PortfolioSourceBacktestPushResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PortfolioSourceBacktestPush not implemented")
+}
+func (UnimplementedTelegramServer) PortfolioOptimize(context.Context, *PortfolioOptimizeRequest) (*PortfolioOptimizeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PortfolioOptimize not implemented")
 }
 func (UnimplementedTelegramServer) OnrampPurchases(context.Context, *TelegramOnrampPurchasesRequest) (*hypurr.OnrampPurchasesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnrampPurchases not implemented")
@@ -2502,6 +2518,24 @@ func _Telegram_PortfolioSourceBacktestPush_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Telegram_PortfolioOptimize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PortfolioOptimizeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).PortfolioOptimize(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_PortfolioOptimize_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).PortfolioOptimize(ctx, req.(*PortfolioOptimizeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Telegram_OnrampPurchases_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TelegramOnrampPurchasesRequest)
 	if err := dec(in); err != nil {
@@ -2802,6 +2836,10 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PortfolioSourceBacktestPush",
 			Handler:    _Telegram_PortfolioSourceBacktestPush_Handler,
+		},
+		{
+			MethodName: "PortfolioOptimize",
+			Handler:    _Telegram_PortfolioOptimize_Handler,
 		},
 		{
 			MethodName: "OnrampPurchases",

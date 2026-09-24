@@ -170,6 +170,56 @@ func (PortfolioBacktestResolution) EnumDescriptor() ([]byte, []int) {
 	return file_hypurr_portfolio_proto_rawDescGZIP(), []int{2}
 }
 
+type PortfolioOptimizeMethod int32
+
+const (
+	// Each source's weight inversely proportional to its volatility: every
+	// source takes the same stand-alone risk. Ignores correlations.
+	PortfolioOptimizeMethod_PORTFOLIO_OPTIMIZE_METHOD_EQUAL_RISK PortfolioOptimizeMethod = 0
+	// Equal risk contribution: each source contributes the same share of the
+	// portfolio's variance, correlations included.
+	PortfolioOptimizeMethod_PORTFOLIO_OPTIMIZE_METHOD_RISK_PARITY PortfolioOptimizeMethod = 1
+)
+
+// Enum value maps for PortfolioOptimizeMethod.
+var (
+	PortfolioOptimizeMethod_name = map[int32]string{
+		0: "PORTFOLIO_OPTIMIZE_METHOD_EQUAL_RISK",
+		1: "PORTFOLIO_OPTIMIZE_METHOD_RISK_PARITY",
+	}
+	PortfolioOptimizeMethod_value = map[string]int32{
+		"PORTFOLIO_OPTIMIZE_METHOD_EQUAL_RISK":  0,
+		"PORTFOLIO_OPTIMIZE_METHOD_RISK_PARITY": 1,
+	}
+)
+
+func (x PortfolioOptimizeMethod) Enum() *PortfolioOptimizeMethod {
+	p := new(PortfolioOptimizeMethod)
+	*p = x
+	return p
+}
+
+func (x PortfolioOptimizeMethod) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (PortfolioOptimizeMethod) Descriptor() protoreflect.EnumDescriptor {
+	return file_hypurr_portfolio_proto_enumTypes[3].Descriptor()
+}
+
+func (PortfolioOptimizeMethod) Type() protoreflect.EnumType {
+	return &file_hypurr_portfolio_proto_enumTypes[3]
+}
+
+func (x PortfolioOptimizeMethod) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use PortfolioOptimizeMethod.Descriptor instead.
+func (PortfolioOptimizeMethod) EnumDescriptor() ([]byte, []int) {
+	return file_hypurr_portfolio_proto_rawDescGZIP(), []int{3}
+}
+
 type PortfolioAllocator struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1155,6 +1205,102 @@ func (x *PortfolioBacktestLegResult) GetTracking() *PortfolioBacktestTracking {
 	return nil
 }
 
+// PortfolioOptimizeWeight is one source's suggested weight and what it rests on.
+type PortfolioOptimizeWeight struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SourceId         int64   `protobuf:"varint,1,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
+	Name             string  `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Weight           float64 `protobuf:"fixed64,3,opt,name=weight,proto3" json:"weight,omitempty"`                                             // suggested multiplier (attachment weight)
+	Volatility       float64 `protobuf:"fixed64,4,opt,name=volatility,proto3" json:"volatility,omitempty"`                                     // annualised, of the source alone at weight 1
+	Sharpe           float64 `protobuf:"fixed64,5,opt,name=sharpe,proto3" json:"sharpe,omitempty"`                                             // of the source alone, over the same history
+	RiskContribution float64 `protobuf:"fixed64,6,opt,name=risk_contribution,json=riskContribution,proto3" json:"risk_contribution,omitempty"` // share of portfolio variance at the suggested weights
+	Bound            bool    `protobuf:"varint,7,opt,name=bound,proto3" json:"bound,omitempty"`                                                // clipped by min/max weight or the leverage cap
+}
+
+func (x *PortfolioOptimizeWeight) Reset() {
+	*x = PortfolioOptimizeWeight{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_portfolio_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PortfolioOptimizeWeight) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PortfolioOptimizeWeight) ProtoMessage() {}
+
+func (x *PortfolioOptimizeWeight) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_portfolio_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PortfolioOptimizeWeight.ProtoReflect.Descriptor instead.
+func (*PortfolioOptimizeWeight) Descriptor() ([]byte, []int) {
+	return file_hypurr_portfolio_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *PortfolioOptimizeWeight) GetSourceId() int64 {
+	if x != nil {
+		return x.SourceId
+	}
+	return 0
+}
+
+func (x *PortfolioOptimizeWeight) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PortfolioOptimizeWeight) GetWeight() float64 {
+	if x != nil {
+		return x.Weight
+	}
+	return 0
+}
+
+func (x *PortfolioOptimizeWeight) GetVolatility() float64 {
+	if x != nil {
+		return x.Volatility
+	}
+	return 0
+}
+
+func (x *PortfolioOptimizeWeight) GetSharpe() float64 {
+	if x != nil {
+		return x.Sharpe
+	}
+	return 0
+}
+
+func (x *PortfolioOptimizeWeight) GetRiskContribution() float64 {
+	if x != nil {
+		return x.RiskContribution
+	}
+	return 0
+}
+
+func (x *PortfolioOptimizeWeight) GetBound() bool {
+	if x != nil {
+		return x.Bound
+	}
+	return false
+}
+
 var File_hypurr_portfolio_proto protoreflect.FileDescriptor
 
 var file_hypurr_portfolio_proto_rawDesc = []byte{
@@ -1327,7 +1473,21 @@ var file_hypurr_portfolio_proto_rawDesc = []byte{
 	0x08, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x69, 0x6e, 0x67, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x0b, 0x32,
 	0x21, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x50, 0x6f, 0x72, 0x74, 0x66, 0x6f, 0x6c,
 	0x69, 0x6f, 0x42, 0x61, 0x63, 0x6b, 0x74, 0x65, 0x73, 0x74, 0x54, 0x72, 0x61, 0x63, 0x6b, 0x69,
-	0x6e, 0x67, 0x52, 0x08, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x69, 0x6e, 0x67, 0x2a, 0x80, 0x01, 0x0a,
+	0x6e, 0x67, 0x52, 0x08, 0x74, 0x72, 0x61, 0x63, 0x6b, 0x69, 0x6e, 0x67, 0x22, 0xdd, 0x01, 0x0a,
+	0x17, 0x50, 0x6f, 0x72, 0x74, 0x66, 0x6f, 0x6c, 0x69, 0x6f, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69,
+	0x7a, 0x65, 0x57, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x6f, 0x75, 0x72,
+	0x63, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x73, 0x6f, 0x75,
+	0x72, 0x63, 0x65, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x77, 0x65, 0x69,
+	0x67, 0x68, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x77, 0x65, 0x69, 0x67, 0x68,
+	0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x76, 0x6f, 0x6c, 0x61, 0x74, 0x69, 0x6c, 0x69, 0x74, 0x79, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x76, 0x6f, 0x6c, 0x61, 0x74, 0x69, 0x6c, 0x69, 0x74,
+	0x79, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x68, 0x61, 0x72, 0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x01, 0x52, 0x06, 0x73, 0x68, 0x61, 0x72, 0x70, 0x65, 0x12, 0x2b, 0x0a, 0x11, 0x72, 0x69, 0x73,
+	0x6b, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x06,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x10, 0x72, 0x69, 0x73, 0x6b, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x69,
+	0x62, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x62, 0x6f, 0x75, 0x6e, 0x64, 0x18,
+	0x07, 0x20, 0x01, 0x28, 0x08, 0x52, 0x05, 0x62, 0x6f, 0x75, 0x6e, 0x64, 0x2a, 0x80, 0x01, 0x0a,
 	0x13, 0x50, 0x6f, 0x72, 0x74, 0x66, 0x6f, 0x6c, 0x69, 0x6f, 0x57, 0x65, 0x69, 0x67, 0x68, 0x74,
 	0x4b, 0x69, 0x6e, 0x64, 0x12, 0x25, 0x0a, 0x21, 0x50, 0x4f, 0x52, 0x54, 0x46, 0x4f, 0x4c, 0x49,
 	0x4f, 0x5f, 0x57, 0x45, 0x49, 0x47, 0x48, 0x54, 0x5f, 0x4b, 0x49, 0x4e, 0x44, 0x5f, 0x55, 0x4e,
@@ -1353,7 +1513,14 @@ var file_hypurr_portfolio_proto_rawDesc = []byte{
 	0x54, 0x45, 0x53, 0x54, 0x5f, 0x52, 0x45, 0x53, 0x4f, 0x4c, 0x55, 0x54, 0x49, 0x4f, 0x4e, 0x5f,
 	0x48, 0x4f, 0x55, 0x52, 0x10, 0x01, 0x12, 0x25, 0x0a, 0x21, 0x50, 0x4f, 0x52, 0x54, 0x46, 0x4f,
 	0x4c, 0x49, 0x4f, 0x5f, 0x42, 0x41, 0x43, 0x4b, 0x54, 0x45, 0x53, 0x54, 0x5f, 0x52, 0x45, 0x53,
-	0x4f, 0x4c, 0x55, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x44, 0x41, 0x59, 0x10, 0x02, 0x42, 0x29, 0x5a,
+	0x4f, 0x4c, 0x55, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x44, 0x41, 0x59, 0x10, 0x02, 0x2a, 0x6e, 0x0a,
+	0x17, 0x50, 0x6f, 0x72, 0x74, 0x66, 0x6f, 0x6c, 0x69, 0x6f, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69,
+	0x7a, 0x65, 0x4d, 0x65, 0x74, 0x68, 0x6f, 0x64, 0x12, 0x28, 0x0a, 0x24, 0x50, 0x4f, 0x52, 0x54,
+	0x46, 0x4f, 0x4c, 0x49, 0x4f, 0x5f, 0x4f, 0x50, 0x54, 0x49, 0x4d, 0x49, 0x5a, 0x45, 0x5f, 0x4d,
+	0x45, 0x54, 0x48, 0x4f, 0x44, 0x5f, 0x45, 0x51, 0x55, 0x41, 0x4c, 0x5f, 0x52, 0x49, 0x53, 0x4b,
+	0x10, 0x00, 0x12, 0x29, 0x0a, 0x25, 0x50, 0x4f, 0x52, 0x54, 0x46, 0x4f, 0x4c, 0x49, 0x4f, 0x5f,
+	0x4f, 0x50, 0x54, 0x49, 0x4d, 0x49, 0x5a, 0x45, 0x5f, 0x4d, 0x45, 0x54, 0x48, 0x4f, 0x44, 0x5f,
+	0x52, 0x49, 0x53, 0x4b, 0x5f, 0x50, 0x41, 0x52, 0x49, 0x54, 0x59, 0x10, 0x01, 0x42, 0x29, 0x5a,
 	0x27, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75,
 	0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67,
 	0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
@@ -1371,35 +1538,37 @@ func file_hypurr_portfolio_proto_rawDescGZIP() []byte {
 	return file_hypurr_portfolio_proto_rawDescData
 }
 
-var file_hypurr_portfolio_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_hypurr_portfolio_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_hypurr_portfolio_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_hypurr_portfolio_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_hypurr_portfolio_proto_goTypes = []any{
 	(PortfolioWeightKind)(0),               // 0: hypurr.PortfolioWeightKind
 	(PortfolioBacktestMode)(0),             // 1: hypurr.PortfolioBacktestMode
 	(PortfolioBacktestResolution)(0),       // 2: hypurr.PortfolioBacktestResolution
-	(*PortfolioAllocator)(nil),             // 3: hypurr.PortfolioAllocator
-	(*PortfolioSource)(nil),                // 4: hypurr.PortfolioSource
-	(*PortfolioSharedSource)(nil),          // 5: hypurr.PortfolioSharedSource
-	(*PortfolioWeightSnapshot)(nil),        // 6: hypurr.PortfolioWeightSnapshot
-	(*PortfolioBacktestLeg)(nil),           // 7: hypurr.PortfolioBacktestLeg
-	(*PortfolioBacktestSeries)(nil),        // 8: hypurr.PortfolioBacktestSeries
-	(*PortfolioBacktestMonthlyReturn)(nil), // 9: hypurr.PortfolioBacktestMonthlyReturn
-	(*PortfolioBacktestStats)(nil),         // 10: hypurr.PortfolioBacktestStats
-	(*PortfolioBacktestTracking)(nil),      // 11: hypurr.PortfolioBacktestTracking
-	(*PortfolioBacktestLegResult)(nil),     // 12: hypurr.PortfolioBacktestLegResult
-	nil,                                    // 13: hypurr.PortfolioWeightSnapshot.WeightsEntry
-	(*structpb.Struct)(nil),                // 14: google.protobuf.Struct
+	(PortfolioOptimizeMethod)(0),           // 3: hypurr.PortfolioOptimizeMethod
+	(*PortfolioAllocator)(nil),             // 4: hypurr.PortfolioAllocator
+	(*PortfolioSource)(nil),                // 5: hypurr.PortfolioSource
+	(*PortfolioSharedSource)(nil),          // 6: hypurr.PortfolioSharedSource
+	(*PortfolioWeightSnapshot)(nil),        // 7: hypurr.PortfolioWeightSnapshot
+	(*PortfolioBacktestLeg)(nil),           // 8: hypurr.PortfolioBacktestLeg
+	(*PortfolioBacktestSeries)(nil),        // 9: hypurr.PortfolioBacktestSeries
+	(*PortfolioBacktestMonthlyReturn)(nil), // 10: hypurr.PortfolioBacktestMonthlyReturn
+	(*PortfolioBacktestStats)(nil),         // 11: hypurr.PortfolioBacktestStats
+	(*PortfolioBacktestTracking)(nil),      // 12: hypurr.PortfolioBacktestTracking
+	(*PortfolioBacktestLegResult)(nil),     // 13: hypurr.PortfolioBacktestLegResult
+	(*PortfolioOptimizeWeight)(nil),        // 14: hypurr.PortfolioOptimizeWeight
+	nil,                                    // 15: hypurr.PortfolioWeightSnapshot.WeightsEntry
+	(*structpb.Struct)(nil),                // 16: google.protobuf.Struct
 }
 var file_hypurr_portfolio_proto_depIdxs = []int32{
-	4,  // 0: hypurr.PortfolioAllocator.sources:type_name -> hypurr.PortfolioSource
-	14, // 1: hypurr.PortfolioSource.config:type_name -> google.protobuf.Struct
-	14, // 2: hypurr.PortfolioSharedSource.config:type_name -> google.protobuf.Struct
-	4,  // 3: hypurr.PortfolioSharedSource.attachments:type_name -> hypurr.PortfolioSource
-	13, // 4: hypurr.PortfolioWeightSnapshot.weights:type_name -> hypurr.PortfolioWeightSnapshot.WeightsEntry
-	9,  // 5: hypurr.PortfolioBacktestStats.monthly:type_name -> hypurr.PortfolioBacktestMonthlyReturn
-	8,  // 6: hypurr.PortfolioBacktestLegResult.series:type_name -> hypurr.PortfolioBacktestSeries
-	10, // 7: hypurr.PortfolioBacktestLegResult.stats:type_name -> hypurr.PortfolioBacktestStats
-	11, // 8: hypurr.PortfolioBacktestLegResult.tracking:type_name -> hypurr.PortfolioBacktestTracking
+	5,  // 0: hypurr.PortfolioAllocator.sources:type_name -> hypurr.PortfolioSource
+	16, // 1: hypurr.PortfolioSource.config:type_name -> google.protobuf.Struct
+	16, // 2: hypurr.PortfolioSharedSource.config:type_name -> google.protobuf.Struct
+	5,  // 3: hypurr.PortfolioSharedSource.attachments:type_name -> hypurr.PortfolioSource
+	15, // 4: hypurr.PortfolioWeightSnapshot.weights:type_name -> hypurr.PortfolioWeightSnapshot.WeightsEntry
+	10, // 5: hypurr.PortfolioBacktestStats.monthly:type_name -> hypurr.PortfolioBacktestMonthlyReturn
+	9,  // 6: hypurr.PortfolioBacktestLegResult.series:type_name -> hypurr.PortfolioBacktestSeries
+	11, // 7: hypurr.PortfolioBacktestLegResult.stats:type_name -> hypurr.PortfolioBacktestStats
+	12, // 8: hypurr.PortfolioBacktestLegResult.tracking:type_name -> hypurr.PortfolioBacktestTracking
 	9,  // [9:9] is the sub-list for method output_type
 	9,  // [9:9] is the sub-list for method input_type
 	9,  // [9:9] is the sub-list for extension type_name
@@ -1533,14 +1702,26 @@ func file_hypurr_portfolio_proto_init() {
 				return nil
 			}
 		}
+		file_hypurr_portfolio_proto_msgTypes[10].Exporter = func(v any, i int) any {
+			switch v := v.(*PortfolioOptimizeWeight); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hypurr_portfolio_proto_rawDesc,
-			NumEnums:      3,
-			NumMessages:   11,
+			NumEnums:      4,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

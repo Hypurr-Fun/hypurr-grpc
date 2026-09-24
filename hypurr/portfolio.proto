@@ -145,3 +145,25 @@ message PortfolioBacktestLegResult {
   PortfolioBacktestStats stats = 9;
   PortfolioBacktestTracking tracking = 10; // unset when live and backtest never overlap
 }
+
+// ============== Weight optimizer ==============
+
+enum PortfolioOptimizeMethod {
+  // Each source's weight inversely proportional to its volatility: every
+  // source takes the same stand-alone risk. Ignores correlations.
+  PORTFOLIO_OPTIMIZE_METHOD_EQUAL_RISK = 0;
+  // Equal risk contribution: each source contributes the same share of the
+  // portfolio's variance, correlations included.
+  PORTFOLIO_OPTIMIZE_METHOD_RISK_PARITY = 1;
+}
+
+// PortfolioOptimizeWeight is one source's suggested weight and what it rests on.
+message PortfolioOptimizeWeight {
+  int64 source_id = 1;
+  string name = 2;
+  double weight = 3;              // suggested multiplier (attachment weight)
+  double volatility = 4;          // annualised, of the source alone at weight 1
+  double sharpe = 5;              // of the source alone, over the same history
+  double risk_contribution = 6;   // share of portfolio variance at the suggested weights
+  bool bound = 7;                 // clipped by min/max weight or the leverage cap
+}

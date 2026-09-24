@@ -878,6 +878,32 @@ message PortfolioSourceBacktestPushResponse {
   int64 to_ts = 5;
 }
 
+// PortfolioOptimize suggests weights for a set of the user's sources from
+// their replayed daily returns (net of costs, the blended history the backtest
+// shows): sized by risk, scaled to target_vol, then bounded. It changes
+// nothing; the weights are applied like any other scenario.
+message PortfolioOptimizeRequest {
+  map<string, string> auth_data = 1;
+  repeated PortfolioBacktestLeg legs = 2;       // sources; their weights are ignored
+  int64 from_ts = 3;                            // unix seconds; 0 = earliest common history
+  google.protobuf.DoubleValue cost_bps = 4;     // unset = 4.5
+  PortfolioOptimizeMethod method = 5;
+  double target_vol = 6;                        // annualised portfolio vol; 0 = 0.20
+  double max_leverage = 7;                      // cap on the sum of weights; 0 = none
+  double min_weight = 8;                        // per source; 0 = none
+  double max_weight = 9;                        // per source; 0 = none
+  int64 halflife_days = 10;                     // of the vol/correlation estimates; 0 = 60
+}
+
+message PortfolioOptimizeResponse {
+  repeated PortfolioOptimizeWeight weights = 1;
+  double expected_vol = 2;                      // annualised, at the suggested weights
+  int64 from_ts = 3;                            // history the estimates used, unix seconds
+  int64 to_ts = 4;
+  int64 days = 5;
+  repeated string warnings = 6;
+}
+
 message AuthorizationCodeTelegramAuthData {
   map<string, string> auth_data = 1;
 }
@@ -1016,6 +1042,7 @@ service Telegram {
   rpc PortfolioSourceDelete(PortfolioSourceDeleteRequest) returns (PortfolioSourceDeleteResponse) {}
   rpc PortfolioBacktest(PortfolioBacktestRequest) returns (PortfolioBacktestResponse) {}
   rpc PortfolioSourceBacktestPush(PortfolioSourceBacktestPushRequest) returns (PortfolioSourceBacktestPushResponse) {}
+  rpc PortfolioOptimize(PortfolioOptimizeRequest) returns (PortfolioOptimizeResponse) {}
 
   // Onramp — purchases across all of the user's wallets
   rpc OnrampPurchases (TelegramOnrampPurchasesRequest) returns (OnrampPurchasesResponse) {}

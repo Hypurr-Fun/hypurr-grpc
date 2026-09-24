@@ -378,6 +378,41 @@ export interface PortfolioBacktestLegResult {
      */
     tracking?: PortfolioBacktestTracking; // unset when live and backtest never overlap
 }
+/**
+ * PortfolioOptimizeWeight is one source's suggested weight and what it rests on.
+ *
+ * @generated from protobuf message hypurr.PortfolioOptimizeWeight
+ */
+export interface PortfolioOptimizeWeight {
+    /**
+     * @generated from protobuf field: int64 source_id = 1
+     */
+    sourceId: number;
+    /**
+     * @generated from protobuf field: string name = 2
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: double weight = 3
+     */
+    weight: number; // suggested multiplier (attachment weight)
+    /**
+     * @generated from protobuf field: double volatility = 4
+     */
+    volatility: number; // annualised, of the source alone at weight 1
+    /**
+     * @generated from protobuf field: double sharpe = 5
+     */
+    sharpe: number; // of the source alone, over the same history
+    /**
+     * @generated from protobuf field: double risk_contribution = 6
+     */
+    riskContribution: number; // share of portfolio variance at the suggested weights
+    /**
+     * @generated from protobuf field: bool bound = 7
+     */
+    bound: boolean; // clipped by min/max weight or the leverage cap
+}
 // ============== Weight history & backtest ==============
 
 /**
@@ -446,6 +481,27 @@ export enum PortfolioBacktestResolution {
      * @generated from protobuf enum value: PORTFOLIO_BACKTEST_RESOLUTION_DAY = 2;
      */
     DAY = 2
+}
+// ============== Weight optimizer ==============
+
+/**
+ * @generated from protobuf enum hypurr.PortfolioOptimizeMethod
+ */
+export enum PortfolioOptimizeMethod {
+    /**
+     * Each source's weight inversely proportional to its volatility: every
+     * source takes the same stand-alone risk. Ignores correlations.
+     *
+     * @generated from protobuf enum value: PORTFOLIO_OPTIMIZE_METHOD_EQUAL_RISK = 0;
+     */
+    EQUAL_RISK = 0,
+    /**
+     * Equal risk contribution: each source contributes the same share of the
+     * portfolio's variance, correlations included.
+     *
+     * @generated from protobuf enum value: PORTFOLIO_OPTIMIZE_METHOD_RISK_PARITY = 1;
+     */
+    RISK_PARITY = 1
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class PortfolioAllocator$Type extends MessageType<PortfolioAllocator> {
@@ -1472,3 +1528,98 @@ class PortfolioBacktestLegResult$Type extends MessageType<PortfolioBacktestLegRe
  * @generated MessageType for protobuf message hypurr.PortfolioBacktestLegResult
  */
 export const PortfolioBacktestLegResult = new PortfolioBacktestLegResult$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioOptimizeWeight$Type extends MessageType<PortfolioOptimizeWeight> {
+    constructor() {
+        super("hypurr.PortfolioOptimizeWeight", [
+            { no: 1, name: "source_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "volatility", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "sharpe", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "risk_contribution", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "bound", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioOptimizeWeight>): PortfolioOptimizeWeight {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.sourceId = 0;
+        message.name = "";
+        message.weight = 0;
+        message.volatility = 0;
+        message.sharpe = 0;
+        message.riskContribution = 0;
+        message.bound = false;
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioOptimizeWeight>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioOptimizeWeight): PortfolioOptimizeWeight {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 source_id */ 1:
+                    message.sourceId = reader.int64().toNumber();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* double weight */ 3:
+                    message.weight = reader.double();
+                    break;
+                case /* double volatility */ 4:
+                    message.volatility = reader.double();
+                    break;
+                case /* double sharpe */ 5:
+                    message.sharpe = reader.double();
+                    break;
+                case /* double risk_contribution */ 6:
+                    message.riskContribution = reader.double();
+                    break;
+                case /* bool bound */ 7:
+                    message.bound = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PortfolioOptimizeWeight, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 source_id = 1; */
+        if (message.sourceId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.sourceId);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* double weight = 3; */
+        if (message.weight !== 0)
+            writer.tag(3, WireType.Bit64).double(message.weight);
+        /* double volatility = 4; */
+        if (message.volatility !== 0)
+            writer.tag(4, WireType.Bit64).double(message.volatility);
+        /* double sharpe = 5; */
+        if (message.sharpe !== 0)
+            writer.tag(5, WireType.Bit64).double(message.sharpe);
+        /* double risk_contribution = 6; */
+        if (message.riskContribution !== 0)
+            writer.tag(6, WireType.Bit64).double(message.riskContribution);
+        /* bool bound = 7; */
+        if (message.bound !== false)
+            writer.tag(7, WireType.Varint).bool(message.bound);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioOptimizeWeight
+ */
+export const PortfolioOptimizeWeight = new PortfolioOptimizeWeight$Type();

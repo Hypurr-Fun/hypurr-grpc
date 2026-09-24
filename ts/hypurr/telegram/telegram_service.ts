@@ -14,6 +14,8 @@ import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { PortfolioOptimizeWeight } from "../portfolio";
+import { PortfolioOptimizeMethod } from "../portfolio";
 import { PortfolioWeightSnapshot } from "../portfolio";
 import { PortfolioBacktestLegResult } from "../portfolio";
 import { PortfolioBacktestStats } from "../portfolio";
@@ -2408,6 +2410,87 @@ export interface PortfolioSourceBacktestPushResponse {
      * @generated from protobuf field: int64 to_ts = 5
      */
     toTs: number;
+}
+/**
+ * PortfolioOptimize suggests weights for a set of the user's sources from
+ * their replayed daily returns (net of costs, the blended history the backtest
+ * shows): sized by risk, scaled to target_vol, then bounded. It changes
+ * nothing; the weights are applied like any other scenario.
+ *
+ * @generated from protobuf message hypurr.PortfolioOptimizeRequest
+ */
+export interface PortfolioOptimizeRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: repeated hypurr.PortfolioBacktestLeg legs = 2
+     */
+    legs: PortfolioBacktestLeg[]; // sources; their weights are ignored
+    /**
+     * @generated from protobuf field: int64 from_ts = 3
+     */
+    fromTs: number; // unix seconds; 0 = earliest common history
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue cost_bps = 4
+     */
+    costBps?: DoubleValue; // unset = 4.5
+    /**
+     * @generated from protobuf field: hypurr.PortfolioOptimizeMethod method = 5
+     */
+    method: PortfolioOptimizeMethod;
+    /**
+     * @generated from protobuf field: double target_vol = 6
+     */
+    targetVol: number; // annualised portfolio vol; 0 = 0.20
+    /**
+     * @generated from protobuf field: double max_leverage = 7
+     */
+    maxLeverage: number; // cap on the sum of weights; 0 = none
+    /**
+     * @generated from protobuf field: double min_weight = 8
+     */
+    minWeight: number; // per source; 0 = none
+    /**
+     * @generated from protobuf field: double max_weight = 9
+     */
+    maxWeight: number; // per source; 0 = none
+    /**
+     * @generated from protobuf field: int64 halflife_days = 10
+     */
+    halflifeDays: number; // of the vol/correlation estimates; 0 = 60
+}
+/**
+ * @generated from protobuf message hypurr.PortfolioOptimizeResponse
+ */
+export interface PortfolioOptimizeResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.PortfolioOptimizeWeight weights = 1
+     */
+    weights: PortfolioOptimizeWeight[];
+    /**
+     * @generated from protobuf field: double expected_vol = 2
+     */
+    expectedVol: number; // annualised, at the suggested weights
+    /**
+     * @generated from protobuf field: int64 from_ts = 3
+     */
+    fromTs: number; // history the estimates used, unix seconds
+    /**
+     * @generated from protobuf field: int64 to_ts = 4
+     */
+    toTs: number;
+    /**
+     * @generated from protobuf field: int64 days = 5
+     */
+    days: number;
+    /**
+     * @generated from protobuf field: repeated string warnings = 6
+     */
+    warnings: string[];
 }
 /**
  * @generated from protobuf message hypurr.AuthorizationCodeTelegramAuthData
@@ -11854,6 +11937,227 @@ class PortfolioSourceBacktestPushResponse$Type extends MessageType<PortfolioSour
  */
 export const PortfolioSourceBacktestPushResponse = new PortfolioSourceBacktestPushResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest> {
+    constructor() {
+        super("hypurr.PortfolioOptimizeRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "legs", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioBacktestLeg },
+            { no: 3, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "cost_bps", kind: "message", T: () => DoubleValue },
+            { no: 5, name: "method", kind: "enum", T: () => ["hypurr.PortfolioOptimizeMethod", PortfolioOptimizeMethod, "PORTFOLIO_OPTIMIZE_METHOD_"] },
+            { no: 6, name: "target_vol", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "max_leverage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "min_weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "max_weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "halflife_days", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioOptimizeRequest>): PortfolioOptimizeRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.authData = {};
+        message.legs = [];
+        message.fromTs = 0;
+        message.method = 0;
+        message.targetVol = 0;
+        message.maxLeverage = 0;
+        message.minWeight = 0;
+        message.maxWeight = 0;
+        message.halflifeDays = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioOptimizeRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioOptimizeRequest): PortfolioOptimizeRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* repeated hypurr.PortfolioBacktestLeg legs */ 2:
+                    message.legs.push(PortfolioBacktestLeg.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* int64 from_ts */ 3:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.DoubleValue cost_bps */ 4:
+                    message.costBps = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.costBps);
+                    break;
+                case /* hypurr.PortfolioOptimizeMethod method */ 5:
+                    message.method = reader.int32();
+                    break;
+                case /* double target_vol */ 6:
+                    message.targetVol = reader.double();
+                    break;
+                case /* double max_leverage */ 7:
+                    message.maxLeverage = reader.double();
+                    break;
+                case /* double min_weight */ 8:
+                    message.minWeight = reader.double();
+                    break;
+                case /* double max_weight */ 9:
+                    message.maxWeight = reader.double();
+                    break;
+                case /* int64 halflife_days */ 10:
+                    message.halflifeDays = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: PortfolioOptimizeRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PortfolioOptimizeRequest["authData"] | undefined, val: PortfolioOptimizeRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for hypurr.PortfolioOptimizeRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: PortfolioOptimizeRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of globalThis.Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* repeated hypurr.PortfolioBacktestLeg legs = 2; */
+        for (let i = 0; i < message.legs.length; i++)
+            PortfolioBacktestLeg.internalBinaryWrite(message.legs[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* int64 from_ts = 3; */
+        if (message.fromTs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.fromTs);
+        /* google.protobuf.DoubleValue cost_bps = 4; */
+        if (message.costBps)
+            DoubleValue.internalBinaryWrite(message.costBps, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.PortfolioOptimizeMethod method = 5; */
+        if (message.method !== 0)
+            writer.tag(5, WireType.Varint).int32(message.method);
+        /* double target_vol = 6; */
+        if (message.targetVol !== 0)
+            writer.tag(6, WireType.Bit64).double(message.targetVol);
+        /* double max_leverage = 7; */
+        if (message.maxLeverage !== 0)
+            writer.tag(7, WireType.Bit64).double(message.maxLeverage);
+        /* double min_weight = 8; */
+        if (message.minWeight !== 0)
+            writer.tag(8, WireType.Bit64).double(message.minWeight);
+        /* double max_weight = 9; */
+        if (message.maxWeight !== 0)
+            writer.tag(9, WireType.Bit64).double(message.maxWeight);
+        /* int64 halflife_days = 10; */
+        if (message.halflifeDays !== 0)
+            writer.tag(10, WireType.Varint).int64(message.halflifeDays);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioOptimizeRequest
+ */
+export const PortfolioOptimizeRequest = new PortfolioOptimizeRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioOptimizeResponse$Type extends MessageType<PortfolioOptimizeResponse> {
+    constructor() {
+        super("hypurr.PortfolioOptimizeResponse", [
+            { no: 1, name: "weights", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioOptimizeWeight },
+            { no: 2, name: "expected_vol", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "days", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "warnings", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioOptimizeResponse>): PortfolioOptimizeResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.weights = [];
+        message.expectedVol = 0;
+        message.fromTs = 0;
+        message.toTs = 0;
+        message.days = 0;
+        message.warnings = [];
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioOptimizeResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioOptimizeResponse): PortfolioOptimizeResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.PortfolioOptimizeWeight weights */ 1:
+                    message.weights.push(PortfolioOptimizeWeight.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* double expected_vol */ 2:
+                    message.expectedVol = reader.double();
+                    break;
+                case /* int64 from_ts */ 3:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 4:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                case /* int64 days */ 5:
+                    message.days = reader.int64().toNumber();
+                    break;
+                case /* repeated string warnings */ 6:
+                    message.warnings.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PortfolioOptimizeResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.PortfolioOptimizeWeight weights = 1; */
+        for (let i = 0; i < message.weights.length; i++)
+            PortfolioOptimizeWeight.internalBinaryWrite(message.weights[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* double expected_vol = 2; */
+        if (message.expectedVol !== 0)
+            writer.tag(2, WireType.Bit64).double(message.expectedVol);
+        /* int64 from_ts = 3; */
+        if (message.fromTs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 4; */
+        if (message.toTs !== 0)
+            writer.tag(4, WireType.Varint).int64(message.toTs);
+        /* int64 days = 5; */
+        if (message.days !== 0)
+            writer.tag(5, WireType.Varint).int64(message.days);
+        /* repeated string warnings = 6; */
+        for (let i = 0; i < message.warnings.length; i++)
+            writer.tag(6, WireType.LengthDelimited).string(message.warnings[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioOptimizeResponse
+ */
+export const PortfolioOptimizeResponse = new PortfolioOptimizeResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class AuthorizationCodeTelegramAuthData$Type extends MessageType<AuthorizationCodeTelegramAuthData> {
     constructor() {
         super("hypurr.AuthorizationCodeTelegramAuthData", [
@@ -12287,5 +12591,6 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "PortfolioSourceDelete", options: {}, I: PortfolioSourceDeleteRequest, O: PortfolioSourceDeleteResponse },
     { name: "PortfolioBacktest", options: {}, I: PortfolioBacktestRequest, O: PortfolioBacktestResponse },
     { name: "PortfolioSourceBacktestPush", options: {}, I: PortfolioSourceBacktestPushRequest, O: PortfolioSourceBacktestPushResponse },
+    { name: "PortfolioOptimize", options: {}, I: PortfolioOptimizeRequest, O: PortfolioOptimizeResponse },
     { name: "OnrampPurchases", options: {}, I: TelegramOnrampPurchasesRequest, O: OnrampPurchasesResponse }
 ]);
