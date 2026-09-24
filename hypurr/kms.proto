@@ -186,7 +186,6 @@ message KmsRecoverKeysResponse {
 message KmsAccountSignMessageRequest {
   bytes encrypted_payload = 1;
   string instance_jwt = 2;
-  string key_id = 4;
 }
 
 message KmsAccountSignMessageResponse {
