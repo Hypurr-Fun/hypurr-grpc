@@ -412,6 +412,28 @@ export interface PortfolioOptimizeWeight {
      * @generated from protobuf field: bool bound = 7
      */
     bound: boolean; // clipped by min/max weight or the leverage cap
+    /**
+     * The Sharpe evidence (all annualised), filled for every method:
+     *
+     * @generated from protobuf field: double research_sharpe = 8
+     */
+    researchSharpe: number; // replay of the pushed research series, before live
+    /**
+     * @generated from protobuf field: double research_years = 9
+     */
+    researchYears: number;
+    /**
+     * @generated from protobuf field: double live_sharpe = 10
+     */
+    liveSharpe: number; // replay of the recorded live weights
+    /**
+     * @generated from protobuf field: double live_years = 11
+     */
+    liveYears: number;
+    /**
+     * @generated from protobuf field: double posterior_sharpe = 12
+     */
+    posteriorSharpe: number; // what posterior_sharpe sizes on
 }
 // ============== Weight history & backtest ==============
 
@@ -501,7 +523,15 @@ export enum PortfolioOptimizeMethod {
      *
      * @generated from protobuf enum value: PORTFOLIO_OPTIMIZE_METHOD_RISK_PARITY = 1;
      */
-    RISK_PARITY = 1
+    RISK_PARITY = 1,
+    /**
+     * Mean-variance (Kelly) on each source's posterior Sharpe: a sceptical prior
+     * at zero, updated by its research Sharpe (haircut and down-weighted) and its
+     * live Sharpe; correlations shrunk. Scaled to the target vol, no shorting.
+     *
+     * @generated from protobuf enum value: PORTFOLIO_OPTIMIZE_METHOD_POSTERIOR_SHARPE = 2;
+     */
+    POSTERIOR_SHARPE = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class PortfolioAllocator$Type extends MessageType<PortfolioAllocator> {
@@ -1538,7 +1568,12 @@ class PortfolioOptimizeWeight$Type extends MessageType<PortfolioOptimizeWeight> 
             { no: 4, name: "volatility", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 5, name: "sharpe", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 6, name: "risk_contribution", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 7, name: "bound", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 7, name: "bound", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 8, name: "research_sharpe", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "research_years", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "live_sharpe", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "live_years", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 12, name: "posterior_sharpe", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioOptimizeWeight>): PortfolioOptimizeWeight {
@@ -1550,6 +1585,11 @@ class PortfolioOptimizeWeight$Type extends MessageType<PortfolioOptimizeWeight> 
         message.sharpe = 0;
         message.riskContribution = 0;
         message.bound = false;
+        message.researchSharpe = 0;
+        message.researchYears = 0;
+        message.liveSharpe = 0;
+        message.liveYears = 0;
+        message.posteriorSharpe = 0;
         if (value !== undefined)
             reflectionMergePartial<PortfolioOptimizeWeight>(this, message, value);
         return message;
@@ -1579,6 +1619,21 @@ class PortfolioOptimizeWeight$Type extends MessageType<PortfolioOptimizeWeight> 
                     break;
                 case /* bool bound */ 7:
                     message.bound = reader.bool();
+                    break;
+                case /* double research_sharpe */ 8:
+                    message.researchSharpe = reader.double();
+                    break;
+                case /* double research_years */ 9:
+                    message.researchYears = reader.double();
+                    break;
+                case /* double live_sharpe */ 10:
+                    message.liveSharpe = reader.double();
+                    break;
+                case /* double live_years */ 11:
+                    message.liveYears = reader.double();
+                    break;
+                case /* double posterior_sharpe */ 12:
+                    message.posteriorSharpe = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1613,6 +1668,21 @@ class PortfolioOptimizeWeight$Type extends MessageType<PortfolioOptimizeWeight> 
         /* bool bound = 7; */
         if (message.bound !== false)
             writer.tag(7, WireType.Varint).bool(message.bound);
+        /* double research_sharpe = 8; */
+        if (message.researchSharpe !== 0)
+            writer.tag(8, WireType.Bit64).double(message.researchSharpe);
+        /* double research_years = 9; */
+        if (message.researchYears !== 0)
+            writer.tag(9, WireType.Bit64).double(message.researchYears);
+        /* double live_sharpe = 10; */
+        if (message.liveSharpe !== 0)
+            writer.tag(10, WireType.Bit64).double(message.liveSharpe);
+        /* double live_years = 11; */
+        if (message.liveYears !== 0)
+            writer.tag(11, WireType.Bit64).double(message.liveYears);
+        /* double posterior_sharpe = 12; */
+        if (message.posteriorSharpe !== 0)
+            writer.tag(12, WireType.Bit64).double(message.posteriorSharpe);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

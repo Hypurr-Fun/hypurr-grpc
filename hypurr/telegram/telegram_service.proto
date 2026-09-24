@@ -893,6 +893,11 @@ message PortfolioOptimizeRequest {
   double min_weight = 8;                        // per source; 0 = none
   double max_weight = 9;                        // per source; 0 = none
   int64 halflife_days = 10;                     // of the vol/correlation estimates; 0 = 60
+  // Posterior Sharpe prior, 0 = default:
+  double research_haircut = 11;                 // research Sharpe multiplier; 0 = 0.5
+  double research_weight = 12;                  // live years one research year is worth; 0 = 0.25
+  double prior_sharpe_sd = 13;                  // sd of the zero-mean prior on annual Sharpe; 0 = 1.0
+  double correlation_shrink = 14;               // towards zero, in [0, 1]; 0 = 0.5
 }
 
 message PortfolioOptimizeResponse {

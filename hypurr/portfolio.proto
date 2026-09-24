@@ -155,6 +155,10 @@ enum PortfolioOptimizeMethod {
   // Equal risk contribution: each source contributes the same share of the
   // portfolio's variance, correlations included.
   PORTFOLIO_OPTIMIZE_METHOD_RISK_PARITY = 1;
+  // Mean-variance (Kelly) on each source's posterior Sharpe: a sceptical prior
+  // at zero, updated by its research Sharpe (haircut and down-weighted) and its
+  // live Sharpe; correlations shrunk. Scaled to the target vol, no shorting.
+  PORTFOLIO_OPTIMIZE_METHOD_POSTERIOR_SHARPE = 2;
 }
 
 // PortfolioOptimizeWeight is one source's suggested weight and what it rests on.
@@ -166,4 +170,10 @@ message PortfolioOptimizeWeight {
   double sharpe = 5;              // of the source alone, over the same history
   double risk_contribution = 6;   // share of portfolio variance at the suggested weights
   bool bound = 7;                 // clipped by min/max weight or the leverage cap
+  // The Sharpe evidence (all annualised), filled for every method:
+  double research_sharpe = 8;     // replay of the pushed research series, before live
+  double research_years = 9;
+  double live_sharpe = 10;        // replay of the recorded live weights
+  double live_years = 11;
+  double posterior_sharpe = 12;   // what posterior_sharpe sizes on
 }

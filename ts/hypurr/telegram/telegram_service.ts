@@ -2462,6 +2462,24 @@ export interface PortfolioOptimizeRequest {
      * @generated from protobuf field: int64 halflife_days = 10
      */
     halflifeDays: number; // of the vol/correlation estimates; 0 = 60
+    /**
+     * Posterior Sharpe prior, 0 = default:
+     *
+     * @generated from protobuf field: double research_haircut = 11
+     */
+    researchHaircut: number; // research Sharpe multiplier; 0 = 0.5
+    /**
+     * @generated from protobuf field: double research_weight = 12
+     */
+    researchWeight: number; // live years one research year is worth; 0 = 0.25
+    /**
+     * @generated from protobuf field: double prior_sharpe_sd = 13
+     */
+    priorSharpeSd: number; // sd of the zero-mean prior on annual Sharpe; 0 = 1.0
+    /**
+     * @generated from protobuf field: double correlation_shrink = 14
+     */
+    correlationShrink: number; // towards zero, in [0, 1]; 0 = 0.5
 }
 /**
  * @generated from protobuf message hypurr.PortfolioOptimizeResponse
@@ -11949,7 +11967,11 @@ class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest
             { no: 7, name: "max_leverage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 8, name: "min_weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 9, name: "max_weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 10, name: "halflife_days", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 10, name: "halflife_days", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 11, name: "research_haircut", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 12, name: "research_weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 13, name: "prior_sharpe_sd", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 14, name: "correlation_shrink", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioOptimizeRequest>): PortfolioOptimizeRequest {
@@ -11963,6 +11985,10 @@ class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest
         message.minWeight = 0;
         message.maxWeight = 0;
         message.halflifeDays = 0;
+        message.researchHaircut = 0;
+        message.researchWeight = 0;
+        message.priorSharpeSd = 0;
+        message.correlationShrink = 0;
         if (value !== undefined)
             reflectionMergePartial<PortfolioOptimizeRequest>(this, message, value);
         return message;
@@ -12001,6 +12027,18 @@ class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest
                     break;
                 case /* int64 halflife_days */ 10:
                     message.halflifeDays = reader.int64().toNumber();
+                    break;
+                case /* double research_haircut */ 11:
+                    message.researchHaircut = reader.double();
+                    break;
+                case /* double research_weight */ 12:
+                    message.researchWeight = reader.double();
+                    break;
+                case /* double prior_sharpe_sd */ 13:
+                    message.priorSharpeSd = reader.double();
+                    break;
+                case /* double correlation_shrink */ 14:
+                    message.correlationShrink = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -12060,6 +12098,18 @@ class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest
         /* int64 halflife_days = 10; */
         if (message.halflifeDays !== 0)
             writer.tag(10, WireType.Varint).int64(message.halflifeDays);
+        /* double research_haircut = 11; */
+        if (message.researchHaircut !== 0)
+            writer.tag(11, WireType.Bit64).double(message.researchHaircut);
+        /* double research_weight = 12; */
+        if (message.researchWeight !== 0)
+            writer.tag(12, WireType.Bit64).double(message.researchWeight);
+        /* double prior_sharpe_sd = 13; */
+        if (message.priorSharpeSd !== 0)
+            writer.tag(13, WireType.Bit64).double(message.priorSharpeSd);
+        /* double correlation_shrink = 14; */
+        if (message.correlationShrink !== 0)
+            writer.tag(14, WireType.Bit64).double(message.correlationShrink);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
