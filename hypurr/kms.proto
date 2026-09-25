@@ -16,6 +16,7 @@ service Kms {
   rpc AccountShardSecret(KmsAccountShardSecretRequest) returns (KmsAccountShardSecretResponse);
   rpc AccountSignMessage(KmsAccountSignMessageRequest) returns (KmsAccountSignMessageResponse);
   rpc AccountApproveAgent(KmsAccountApproveAgentRequest) returns (KmsAccountApproveAgentResponse);
+  rpc AccountRevokeAgent(KmsAccountRevokeAgentRequest) returns (KmsAccountRevokeAgentResponse);
   rpc GetAccountInfo(KmsGetAccountInfoRequest) returns (KmsGetAccountInfoResponse);
   rpc RequestFactorReset(KmsRequestFactorResetRequest) returns (KmsRequestFactorResetResponse);
   rpc CancelFactorReset(KmsCancelFactorResetRequest) returns (KmsCancelFactorResetResponse);
@@ -208,4 +209,13 @@ message KmsAccountApproveAgentRequest {
 message KmsAccountApproveAgentResponse {
   bytes attestation = 1;
   string agent_id = 2;
+}
+
+message KmsAccountRevokeAgentRequest {
+  bytes encrypted_payload = 1;
+  string instance_jwt = 2;
+}
+
+message KmsAccountRevokeAgentResponse {
+  bytes attestation = 1;
 }
