@@ -668,6 +668,7 @@ message PortfolioAllocatorCreateRequest {
   int64 wallet_id = 2;
   int64 rebalance_interval = 3;     // seconds between rebalances (default 300)
   double min_rebalance_pct = 4;     // minimum deviation to trigger rebalance (default 0.05)
+  string rebalance_mode = 5;        // "absolute" (default), "gross" or "relative"; see PortfolioAllocator
 }
 
 message PortfolioAllocatorCreateResponse {
@@ -681,6 +682,7 @@ message PortfolioAllocatorUpdateRequest {
   google.protobuf.BoolValue enabled = 3;
   google.protobuf.Int64Value rebalance_interval = 4;
   google.protobuf.DoubleValue min_rebalance_pct = 5;
+  google.protobuf.StringValue rebalance_mode = 6;   // "absolute", "gross" or "relative"
 }
 
 message PortfolioAllocatorUpdateResponse {
@@ -843,6 +845,14 @@ message PortfolioBacktestRequest {
   PortfolioBacktestMode mode = 7;               // default blended: backtest series until live
   int64 benchmark_pair_id = 8;                  // 0 = BTC
   PortfolioBacktestResolution resolution = 9;
+  // Unset: the book is on target at every hour (price drift rebalanced for
+  // free). Set (0 allowed): held weights drift with prices and a pair trades
+  // back to target only when its deviation reaches this, as the allocator does.
+  google.protobuf.DoubleValue min_rebalance_pct = 10;
+  string rebalance_mode = 11;                   // "" = absolute; see PortfolioAllocator
+  // Optional thresholds to replay the portfolio with (e.g. 0, 0.005, 0.01,
+  // 0.02, 0.05): one sweep point each, plus a recommendation.
+  repeated double rebalance_sweep = 12;
 }
 
 message PortfolioBacktestResponse {
@@ -853,6 +863,11 @@ message PortfolioBacktestResponse {
   int64 live_since = 5;                         // unix seconds: from here every leg is live; 0 = never
   repeated string warnings = 6;
   int64 benchmark_pair_id = 7;
+  repeated PortfolioRebalanceSweepPoint rebalance_sweep = 8;
+  // The largest swept threshold within 0.05 Sharpe of the best, among those
+  // whose tracking error stays under 10 % of the target book's volatility;
+  // 0 when no sweep ran.
+  double recommended_min_rebalance_pct = 9;
 }
 
 // PortfolioSourceBacktestPush stores a research series for one of the user's

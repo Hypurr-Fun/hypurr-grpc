@@ -12,6 +12,11 @@ message PortfolioAllocator {
   double min_rebalance_pct = 6;     // Minimum weight deviation to trigger rebalance (e.g., 0.05 = 5%)
   bool enabled = 7;
   repeated PortfolioSource sources = 8;
+  // How a pair's |current - target| weight gap is compared with
+  // min_rebalance_pct: "absolute" (the gap itself, default), "gross" (gap /
+  // target gross exposure) or "relative" (gap / |pair target|). Exits always
+  // trade whatever the mode.
+  string rebalance_mode = 9;
 }
 
 // PortfolioSource is a shared source attached to one allocator: the
@@ -117,6 +122,25 @@ message PortfolioBacktestStats {
   double total_costs = 17;       // sum of cost fractions charged
   int64 days = 18;
   repeated PortfolioBacktestMonthlyReturn monthly = 19;
+  // Set when the backtest simulated a rebalance threshold (min_rebalance_pct
+  // in the request); 0 otherwise.
+  double trades_per_day = 20;        // pair trades per day
+  double tracking_error = 21;        // annualised sd of daily return vs the always-on-target book
+  double avg_rebalance_gap = 22;     // mean sum |held - target| after trading
+}
+
+// PortfolioRebalanceSweepPoint is the portfolio replayed with one rebalance
+// threshold: held weights drift with prices and a pair trades back to target
+// only when its deviation reaches the threshold (exits always trade).
+message PortfolioRebalanceSweepPoint {
+  double min_rebalance_pct = 1;
+  double sharpe = 2;
+  double annualized_return = 3;
+  double max_drawdown = 4;
+  double avg_daily_turnover = 5;
+  double trades_per_day = 6;
+  double tracking_error = 7;         // annualised, vs the always-on-target book
+  double total_costs = 8;
 }
 
 // PortfolioBacktestTracking compares a source's live weights with its backtest

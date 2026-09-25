@@ -17,6 +17,7 @@ import { MessageType } from "@protobuf-ts/runtime";
 import { PortfolioOptimizeWeight } from "../portfolio";
 import { PortfolioOptimizeMethod } from "../portfolio";
 import { PortfolioWeightSnapshot } from "../portfolio";
+import { PortfolioRebalanceSweepPoint } from "../portfolio";
 import { PortfolioBacktestLegResult } from "../portfolio";
 import { PortfolioBacktestStats } from "../portfolio";
 import { PortfolioBacktestSeries } from "../portfolio";
@@ -1846,6 +1847,10 @@ export interface PortfolioAllocatorCreateRequest {
      * @generated from protobuf field: double min_rebalance_pct = 4
      */
     minRebalancePct: number; // minimum deviation to trigger rebalance (default 0.05)
+    /**
+     * @generated from protobuf field: string rebalance_mode = 5
+     */
+    rebalanceMode: string; // "absolute" (default), "gross" or "relative"; see PortfolioAllocator
 }
 /**
  * @generated from protobuf message hypurr.PortfolioAllocatorCreateResponse
@@ -1884,6 +1889,10 @@ export interface PortfolioAllocatorUpdateRequest {
      * @generated from protobuf field: google.protobuf.DoubleValue min_rebalance_pct = 5
      */
     minRebalancePct?: DoubleValue;
+    /**
+     * @generated from protobuf field: google.protobuf.StringValue rebalance_mode = 6
+     */
+    rebalanceMode?: StringValue; // "absolute", "gross" or "relative"
 }
 /**
  * @generated from protobuf message hypurr.PortfolioAllocatorUpdateResponse
@@ -2311,6 +2320,25 @@ export interface PortfolioBacktestRequest {
      * @generated from protobuf field: hypurr.PortfolioBacktestResolution resolution = 9
      */
     resolution: PortfolioBacktestResolution;
+    /**
+     * Unset: the book is on target at every hour (price drift rebalanced for
+     * free). Set (0 allowed): held weights drift with prices and a pair trades
+     * back to target only when its deviation reaches this, as the allocator does.
+     *
+     * @generated from protobuf field: google.protobuf.DoubleValue min_rebalance_pct = 10
+     */
+    minRebalancePct?: DoubleValue;
+    /**
+     * @generated from protobuf field: string rebalance_mode = 11
+     */
+    rebalanceMode: string; // "" = absolute; see PortfolioAllocator
+    /**
+     * Optional thresholds to replay the portfolio with (e.g. 0, 0.005, 0.01,
+     * 0.02, 0.05): one sweep point each, plus a recommendation.
+     *
+     * @generated from protobuf field: repeated double rebalance_sweep = 12
+     */
+    rebalanceSweep: number[];
 }
 /**
  * @generated from protobuf message hypurr.PortfolioBacktestResponse
@@ -2344,6 +2372,18 @@ export interface PortfolioBacktestResponse {
      * @generated from protobuf field: int64 benchmark_pair_id = 7
      */
     benchmarkPairId: number;
+    /**
+     * @generated from protobuf field: repeated hypurr.PortfolioRebalanceSweepPoint rebalance_sweep = 8
+     */
+    rebalanceSweep: PortfolioRebalanceSweepPoint[];
+    /**
+     * The largest swept threshold within 0.05 Sharpe of the best, among those
+     * whose tracking error stays under 10 % of the target book's volatility;
+     * 0 when no sweep ran.
+     *
+     * @generated from protobuf field: double recommended_min_rebalance_pct = 9
+     */
+    recommendedMinRebalancePct: number;
 }
 /**
  * PortfolioSourceBacktestPush stores a research series for one of the user's
@@ -9857,7 +9897,8 @@ class PortfolioAllocatorCreateRequest$Type extends MessageType<PortfolioAllocato
             { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
             { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "rebalance_interval", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "min_rebalance_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 4, name: "min_rebalance_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "rebalance_mode", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioAllocatorCreateRequest>): PortfolioAllocatorCreateRequest {
@@ -9866,6 +9907,7 @@ class PortfolioAllocatorCreateRequest$Type extends MessageType<PortfolioAllocato
         message.walletId = 0;
         message.rebalanceInterval = 0;
         message.minRebalancePct = 0;
+        message.rebalanceMode = "";
         if (value !== undefined)
             reflectionMergePartial<PortfolioAllocatorCreateRequest>(this, message, value);
         return message;
@@ -9886,6 +9928,9 @@ class PortfolioAllocatorCreateRequest$Type extends MessageType<PortfolioAllocato
                     break;
                 case /* double min_rebalance_pct */ 4:
                     message.minRebalancePct = reader.double();
+                    break;
+                case /* string rebalance_mode */ 5:
+                    message.rebalanceMode = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -9927,6 +9972,9 @@ class PortfolioAllocatorCreateRequest$Type extends MessageType<PortfolioAllocato
         /* double min_rebalance_pct = 4; */
         if (message.minRebalancePct !== 0)
             writer.tag(4, WireType.Bit64).double(message.minRebalancePct);
+        /* string rebalance_mode = 5; */
+        if (message.rebalanceMode !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.rebalanceMode);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -9991,7 +10039,8 @@ class PortfolioAllocatorUpdateRequest$Type extends MessageType<PortfolioAllocato
             { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "enabled", kind: "message", T: () => BoolValue },
             { no: 4, name: "rebalance_interval", kind: "message", T: () => Int64Value },
-            { no: 5, name: "min_rebalance_pct", kind: "message", T: () => DoubleValue }
+            { no: 5, name: "min_rebalance_pct", kind: "message", T: () => DoubleValue },
+            { no: 6, name: "rebalance_mode", kind: "message", T: () => StringValue }
         ]);
     }
     create(value?: PartialMessage<PortfolioAllocatorUpdateRequest>): PortfolioAllocatorUpdateRequest {
@@ -10021,6 +10070,9 @@ class PortfolioAllocatorUpdateRequest$Type extends MessageType<PortfolioAllocato
                     break;
                 case /* google.protobuf.DoubleValue min_rebalance_pct */ 5:
                     message.minRebalancePct = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.minRebalancePct);
+                    break;
+                case /* google.protobuf.StringValue rebalance_mode */ 6:
+                    message.rebalanceMode = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.rebalanceMode);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -10065,6 +10117,9 @@ class PortfolioAllocatorUpdateRequest$Type extends MessageType<PortfolioAllocato
         /* google.protobuf.DoubleValue min_rebalance_pct = 5; */
         if (message.minRebalancePct)
             DoubleValue.internalBinaryWrite(message.minRebalancePct, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.StringValue rebalance_mode = 6; */
+        if (message.rebalanceMode)
+            StringValue.internalBinaryWrite(message.rebalanceMode, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -11558,7 +11613,10 @@ class PortfolioBacktestRequest$Type extends MessageType<PortfolioBacktestRequest
             { no: 6, name: "cost_bps", kind: "message", T: () => DoubleValue },
             { no: 7, name: "mode", kind: "enum", T: () => ["hypurr.PortfolioBacktestMode", PortfolioBacktestMode, "PORTFOLIO_BACKTEST_MODE_"] },
             { no: 8, name: "benchmark_pair_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 9, name: "resolution", kind: "enum", T: () => ["hypurr.PortfolioBacktestResolution", PortfolioBacktestResolution, "PORTFOLIO_BACKTEST_RESOLUTION_"] }
+            { no: 9, name: "resolution", kind: "enum", T: () => ["hypurr.PortfolioBacktestResolution", PortfolioBacktestResolution, "PORTFOLIO_BACKTEST_RESOLUTION_"] },
+            { no: 10, name: "min_rebalance_pct", kind: "message", T: () => DoubleValue },
+            { no: 11, name: "rebalance_mode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 12, name: "rebalance_sweep", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioBacktestRequest>): PortfolioBacktestRequest {
@@ -11571,6 +11629,8 @@ class PortfolioBacktestRequest$Type extends MessageType<PortfolioBacktestRequest
         message.mode = 0;
         message.benchmarkPairId = 0;
         message.resolution = 0;
+        message.rebalanceMode = "";
+        message.rebalanceSweep = [];
         if (value !== undefined)
             reflectionMergePartial<PortfolioBacktestRequest>(this, message, value);
         return message;
@@ -11606,6 +11666,19 @@ class PortfolioBacktestRequest$Type extends MessageType<PortfolioBacktestRequest
                     break;
                 case /* hypurr.PortfolioBacktestResolution resolution */ 9:
                     message.resolution = reader.int32();
+                    break;
+                case /* google.protobuf.DoubleValue min_rebalance_pct */ 10:
+                    message.minRebalancePct = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.minRebalancePct);
+                    break;
+                case /* string rebalance_mode */ 11:
+                    message.rebalanceMode = reader.string();
+                    break;
+                case /* repeated double rebalance_sweep */ 12:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.rebalanceSweep.push(reader.double());
+                    else
+                        message.rebalanceSweep.push(reader.double());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -11662,6 +11735,19 @@ class PortfolioBacktestRequest$Type extends MessageType<PortfolioBacktestRequest
         /* hypurr.PortfolioBacktestResolution resolution = 9; */
         if (message.resolution !== 0)
             writer.tag(9, WireType.Varint).int32(message.resolution);
+        /* google.protobuf.DoubleValue min_rebalance_pct = 10; */
+        if (message.minRebalancePct)
+            DoubleValue.internalBinaryWrite(message.minRebalancePct, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* string rebalance_mode = 11; */
+        if (message.rebalanceMode !== "")
+            writer.tag(11, WireType.LengthDelimited).string(message.rebalanceMode);
+        /* repeated double rebalance_sweep = 12; */
+        if (message.rebalanceSweep.length) {
+            writer.tag(12, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.rebalanceSweep.length; i++)
+                writer.double(message.rebalanceSweep[i]);
+            writer.join();
+        }
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -11682,7 +11768,9 @@ class PortfolioBacktestResponse$Type extends MessageType<PortfolioBacktestRespon
             { no: 4, name: "benchmark", kind: "message", T: () => PortfolioBacktestSeries },
             { no: 5, name: "live_since", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 6, name: "warnings", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "benchmark_pair_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 7, name: "benchmark_pair_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 8, name: "rebalance_sweep", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioRebalanceSweepPoint },
+            { no: 9, name: "recommended_min_rebalance_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioBacktestResponse>): PortfolioBacktestResponse {
@@ -11691,6 +11779,8 @@ class PortfolioBacktestResponse$Type extends MessageType<PortfolioBacktestRespon
         message.liveSince = 0;
         message.warnings = [];
         message.benchmarkPairId = 0;
+        message.rebalanceSweep = [];
+        message.recommendedMinRebalancePct = 0;
         if (value !== undefined)
             reflectionMergePartial<PortfolioBacktestResponse>(this, message, value);
         return message;
@@ -11720,6 +11810,12 @@ class PortfolioBacktestResponse$Type extends MessageType<PortfolioBacktestRespon
                     break;
                 case /* int64 benchmark_pair_id */ 7:
                     message.benchmarkPairId = reader.int64().toNumber();
+                    break;
+                case /* repeated hypurr.PortfolioRebalanceSweepPoint rebalance_sweep */ 8:
+                    message.rebalanceSweep.push(PortfolioRebalanceSweepPoint.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* double recommended_min_rebalance_pct */ 9:
+                    message.recommendedMinRebalancePct = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -11754,6 +11850,12 @@ class PortfolioBacktestResponse$Type extends MessageType<PortfolioBacktestRespon
         /* int64 benchmark_pair_id = 7; */
         if (message.benchmarkPairId !== 0)
             writer.tag(7, WireType.Varint).int64(message.benchmarkPairId);
+        /* repeated hypurr.PortfolioRebalanceSweepPoint rebalance_sweep = 8; */
+        for (let i = 0; i < message.rebalanceSweep.length; i++)
+            PortfolioRebalanceSweepPoint.internalBinaryWrite(message.rebalanceSweep[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* double recommended_min_rebalance_pct = 9; */
+        if (message.recommendedMinRebalancePct !== 0)
+            writer.tag(9, WireType.Bit64).double(message.recommendedMinRebalancePct);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

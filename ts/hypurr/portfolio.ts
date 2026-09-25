@@ -47,6 +47,15 @@ export interface PortfolioAllocator {
      * @generated from protobuf field: repeated hypurr.PortfolioSource sources = 8
      */
     sources: PortfolioSource[];
+    /**
+     * How a pair's |current - target| weight gap is compared with
+     * min_rebalance_pct: "absolute" (the gap itself, default), "gross" (gap /
+     * target gross exposure) or "relative" (gap / |pair target|). Exits always
+     * trade whatever the mode.
+     *
+     * @generated from protobuf field: string rebalance_mode = 9
+     */
+    rebalanceMode: string;
 }
 /**
  * PortfolioSource is a shared source attached to one allocator: the
@@ -290,6 +299,62 @@ export interface PortfolioBacktestStats {
      * @generated from protobuf field: repeated hypurr.PortfolioBacktestMonthlyReturn monthly = 19
      */
     monthly: PortfolioBacktestMonthlyReturn[];
+    /**
+     * Set when the backtest simulated a rebalance threshold (min_rebalance_pct
+     * in the request); 0 otherwise.
+     *
+     * @generated from protobuf field: double trades_per_day = 20
+     */
+    tradesPerDay: number; // pair trades per day
+    /**
+     * @generated from protobuf field: double tracking_error = 21
+     */
+    trackingError: number; // annualised sd of daily return vs the always-on-target book
+    /**
+     * @generated from protobuf field: double avg_rebalance_gap = 22
+     */
+    avgRebalanceGap: number; // mean sum |held - target| after trading
+}
+/**
+ * PortfolioRebalanceSweepPoint is the portfolio replayed with one rebalance
+ * threshold: held weights drift with prices and a pair trades back to target
+ * only when its deviation reaches the threshold (exits always trade).
+ *
+ * @generated from protobuf message hypurr.PortfolioRebalanceSweepPoint
+ */
+export interface PortfolioRebalanceSweepPoint {
+    /**
+     * @generated from protobuf field: double min_rebalance_pct = 1
+     */
+    minRebalancePct: number;
+    /**
+     * @generated from protobuf field: double sharpe = 2
+     */
+    sharpe: number;
+    /**
+     * @generated from protobuf field: double annualized_return = 3
+     */
+    annualizedReturn: number;
+    /**
+     * @generated from protobuf field: double max_drawdown = 4
+     */
+    maxDrawdown: number;
+    /**
+     * @generated from protobuf field: double avg_daily_turnover = 5
+     */
+    avgDailyTurnover: number;
+    /**
+     * @generated from protobuf field: double trades_per_day = 6
+     */
+    tradesPerDay: number;
+    /**
+     * @generated from protobuf field: double tracking_error = 7
+     */
+    trackingError: number; // annualised, vs the always-on-target book
+    /**
+     * @generated from protobuf field: double total_costs = 8
+     */
+    totalCosts: number;
 }
 /**
  * PortfolioBacktestTracking compares a source's live weights with its backtest
@@ -544,7 +609,8 @@ class PortfolioAllocator$Type extends MessageType<PortfolioAllocator> {
             { no: 5, name: "rebalance_interval", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 6, name: "min_rebalance_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 7, name: "enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 8, name: "sources", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioSource }
+            { no: 8, name: "sources", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioSource },
+            { no: 9, name: "rebalance_mode", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioAllocator>): PortfolioAllocator {
@@ -557,6 +623,7 @@ class PortfolioAllocator$Type extends MessageType<PortfolioAllocator> {
         message.minRebalancePct = 0;
         message.enabled = false;
         message.sources = [];
+        message.rebalanceMode = "";
         if (value !== undefined)
             reflectionMergePartial<PortfolioAllocator>(this, message, value);
         return message;
@@ -589,6 +656,9 @@ class PortfolioAllocator$Type extends MessageType<PortfolioAllocator> {
                     break;
                 case /* repeated hypurr.PortfolioSource sources */ 8:
                     message.sources.push(PortfolioSource.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string rebalance_mode */ 9:
+                    message.rebalanceMode = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -626,6 +696,9 @@ class PortfolioAllocator$Type extends MessageType<PortfolioAllocator> {
         /* repeated hypurr.PortfolioSource sources = 8; */
         for (let i = 0; i < message.sources.length; i++)
             PortfolioSource.internalBinaryWrite(message.sources[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* string rebalance_mode = 9; */
+        if (message.rebalanceMode !== "")
+            writer.tag(9, WireType.LengthDelimited).string(message.rebalanceMode);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1170,7 +1243,10 @@ class PortfolioBacktestStats$Type extends MessageType<PortfolioBacktestStats> {
             { no: 16, name: "avg_daily_turnover", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 17, name: "total_costs", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 18, name: "days", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 19, name: "monthly", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioBacktestMonthlyReturn }
+            { no: 19, name: "monthly", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioBacktestMonthlyReturn },
+            { no: 20, name: "trades_per_day", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 21, name: "tracking_error", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 22, name: "avg_rebalance_gap", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioBacktestStats>): PortfolioBacktestStats {
@@ -1194,6 +1270,9 @@ class PortfolioBacktestStats$Type extends MessageType<PortfolioBacktestStats> {
         message.totalCosts = 0;
         message.days = 0;
         message.monthly = [];
+        message.tradesPerDay = 0;
+        message.trackingError = 0;
+        message.avgRebalanceGap = 0;
         if (value !== undefined)
             reflectionMergePartial<PortfolioBacktestStats>(this, message, value);
         return message;
@@ -1259,6 +1338,15 @@ class PortfolioBacktestStats$Type extends MessageType<PortfolioBacktestStats> {
                     break;
                 case /* repeated hypurr.PortfolioBacktestMonthlyReturn monthly */ 19:
                     message.monthly.push(PortfolioBacktestMonthlyReturn.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* double trades_per_day */ 20:
+                    message.tradesPerDay = reader.double();
+                    break;
+                case /* double tracking_error */ 21:
+                    message.trackingError = reader.double();
+                    break;
+                case /* double avg_rebalance_gap */ 22:
+                    message.avgRebalanceGap = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1329,6 +1417,15 @@ class PortfolioBacktestStats$Type extends MessageType<PortfolioBacktestStats> {
         /* repeated hypurr.PortfolioBacktestMonthlyReturn monthly = 19; */
         for (let i = 0; i < message.monthly.length; i++)
             PortfolioBacktestMonthlyReturn.internalBinaryWrite(message.monthly[i], writer.tag(19, WireType.LengthDelimited).fork(), options).join();
+        /* double trades_per_day = 20; */
+        if (message.tradesPerDay !== 0)
+            writer.tag(20, WireType.Bit64).double(message.tradesPerDay);
+        /* double tracking_error = 21; */
+        if (message.trackingError !== 0)
+            writer.tag(21, WireType.Bit64).double(message.trackingError);
+        /* double avg_rebalance_gap = 22; */
+        if (message.avgRebalanceGap !== 0)
+            writer.tag(22, WireType.Bit64).double(message.avgRebalanceGap);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1339,6 +1436,109 @@ class PortfolioBacktestStats$Type extends MessageType<PortfolioBacktestStats> {
  * @generated MessageType for protobuf message hypurr.PortfolioBacktestStats
  */
 export const PortfolioBacktestStats = new PortfolioBacktestStats$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioRebalanceSweepPoint$Type extends MessageType<PortfolioRebalanceSweepPoint> {
+    constructor() {
+        super("hypurr.PortfolioRebalanceSweepPoint", [
+            { no: 1, name: "min_rebalance_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 2, name: "sharpe", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "annualized_return", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "max_drawdown", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "avg_daily_turnover", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "trades_per_day", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "tracking_error", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "total_costs", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioRebalanceSweepPoint>): PortfolioRebalanceSweepPoint {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.minRebalancePct = 0;
+        message.sharpe = 0;
+        message.annualizedReturn = 0;
+        message.maxDrawdown = 0;
+        message.avgDailyTurnover = 0;
+        message.tradesPerDay = 0;
+        message.trackingError = 0;
+        message.totalCosts = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioRebalanceSweepPoint>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioRebalanceSweepPoint): PortfolioRebalanceSweepPoint {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* double min_rebalance_pct */ 1:
+                    message.minRebalancePct = reader.double();
+                    break;
+                case /* double sharpe */ 2:
+                    message.sharpe = reader.double();
+                    break;
+                case /* double annualized_return */ 3:
+                    message.annualizedReturn = reader.double();
+                    break;
+                case /* double max_drawdown */ 4:
+                    message.maxDrawdown = reader.double();
+                    break;
+                case /* double avg_daily_turnover */ 5:
+                    message.avgDailyTurnover = reader.double();
+                    break;
+                case /* double trades_per_day */ 6:
+                    message.tradesPerDay = reader.double();
+                    break;
+                case /* double tracking_error */ 7:
+                    message.trackingError = reader.double();
+                    break;
+                case /* double total_costs */ 8:
+                    message.totalCosts = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PortfolioRebalanceSweepPoint, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* double min_rebalance_pct = 1; */
+        if (message.minRebalancePct !== 0)
+            writer.tag(1, WireType.Bit64).double(message.minRebalancePct);
+        /* double sharpe = 2; */
+        if (message.sharpe !== 0)
+            writer.tag(2, WireType.Bit64).double(message.sharpe);
+        /* double annualized_return = 3; */
+        if (message.annualizedReturn !== 0)
+            writer.tag(3, WireType.Bit64).double(message.annualizedReturn);
+        /* double max_drawdown = 4; */
+        if (message.maxDrawdown !== 0)
+            writer.tag(4, WireType.Bit64).double(message.maxDrawdown);
+        /* double avg_daily_turnover = 5; */
+        if (message.avgDailyTurnover !== 0)
+            writer.tag(5, WireType.Bit64).double(message.avgDailyTurnover);
+        /* double trades_per_day = 6; */
+        if (message.tradesPerDay !== 0)
+            writer.tag(6, WireType.Bit64).double(message.tradesPerDay);
+        /* double tracking_error = 7; */
+        if (message.trackingError !== 0)
+            writer.tag(7, WireType.Bit64).double(message.trackingError);
+        /* double total_costs = 8; */
+        if (message.totalCosts !== 0)
+            writer.tag(8, WireType.Bit64).double(message.totalCosts);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioRebalanceSweepPoint
+ */
+export const PortfolioRebalanceSweepPoint = new PortfolioRebalanceSweepPoint$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PortfolioBacktestTracking$Type extends MessageType<PortfolioBacktestTracking> {
     constructor() {
