@@ -1317,6 +1317,274 @@ export interface PerpLiquidationWarning {
      */
     distancePercentage: number;
 }
+// ==== Open orders ====
+
+/**
+ * @generated from protobuf message hypurr.ios.v2.OpenOrdersRequest
+ */
+export interface OpenOrdersRequest {
+    /**
+     * @generated from protobuf field: uint64 market_id = 1
+     */
+    marketId: number;
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.OpenOrdersResponse
+ */
+export interface OpenOrdersResponse {
+    /**
+     * Display order. Limit and trigger orders: closest to the current price
+     * first. TWAPs: soonest completion first.
+     *
+     * @generated from protobuf field: repeated hypurr.ios.v2.OpenOrder orders = 1
+     */
+    orders: OpenOrder[];
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.OpenOrder
+ */
+export interface OpenOrder {
+    /**
+     * "<wallet_id>:<oid>" for a Hyperliquid order, "twap:<session_id>" for a
+     * TWAP run by the bot.
+     *
+     * @generated from protobuf field: string id = 1
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.WalletReference wallet = 2
+     */
+    wallet?: WalletReference;
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.Market market = 3
+     */
+    market?: Market;
+    /**
+     * @generated from protobuf oneof: order
+     */
+    order: {
+        oneofKind: "spot";
+        /**
+         * @generated from protobuf field: hypurr.ios.v2.SpotOrder spot = 10
+         */
+        spot: SpotOrder;
+    } | {
+        oneofKind: "perp";
+        /**
+         * @generated from protobuf field: hypurr.ios.v2.PerpOrder perp = 11
+         */
+        perp: PerpOrder;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.SpotOrder
+ */
+export interface SpotOrder {
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.TradeSide side = 1
+     */
+    side: TradeSide;
+    /**
+     * @generated from protobuf oneof: execution
+     */
+    execution: {
+        oneofKind: "limit";
+        /**
+         * @generated from protobuf field: hypurr.ios.v2.LimitOrder limit = 2
+         */
+        limit: LimitOrder;
+    } | {
+        oneofKind: "twap";
+        /**
+         * @generated from protobuf field: hypurr.ios.v2.TwapOrder twap = 3
+         */
+        twap: TwapOrder;
+    } | {
+        oneofKind: "recurringBuy";
+        /**
+         * Always a buy. Not sent yet: the backend does not exist.
+         *
+         * @generated from protobuf field: hypurr.ios.v2.RecurringBuy recurring_buy = 4
+         */
+        recurringBuy: RecurringBuy;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.PerpOrder
+ */
+export interface PerpOrder {
+    /**
+     * The position the order opens or grows, or closes when reduce_only.
+     *
+     * @generated from protobuf field: hypurr.ios.v2.PositionDirection side = 1
+     */
+    side: PositionDirection;
+    /**
+     * @generated from protobuf field: bool reduce_only = 2
+     */
+    reduceOnly: boolean;
+    /**
+     * @generated from protobuf oneof: execution
+     */
+    execution: {
+        oneofKind: "limit";
+        /**
+         * @generated from protobuf field: hypurr.ios.v2.LimitOrder limit = 3
+         */
+        limit: LimitOrder;
+    } | {
+        oneofKind: "twap";
+        /**
+         * @generated from protobuf field: hypurr.ios.v2.TwapOrder twap = 4
+         */
+        twap: TwapOrder;
+    } | {
+        oneofKind: "trigger";
+        /**
+         * @generated from protobuf field: hypurr.ios.v2.TriggerOrder trigger = 5
+         */
+        trigger: TriggerOrder;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.LimitOrder
+ */
+export interface LimitOrder {
+    /**
+     * @generated from protobuf field: string quantity_decimal = 1
+     */
+    quantityDecimal: string;
+    /**
+     * @generated from protobuf field: string filled_quantity_decimal = 2
+     */
+    filledQuantityDecimal: string;
+    /**
+     * @generated from protobuf field: string price_decimal = 3
+     */
+    priceDecimal: string;
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.TimeInForce time_in_force = 4
+     */
+    timeInForce: TimeInForce;
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.TwapOrder
+ */
+export interface TwapOrder {
+    /**
+     * 0 for a TWAP given in quantity, not notional.
+     *
+     * @generated from protobuf field: int64 total_value_cents = 1
+     */
+    totalValueCents: number;
+    /**
+     * @generated from protobuf field: int64 executed_value_cents = 2
+     */
+    executedValueCents: number;
+    /**
+     * @generated from protobuf field: string average_fill_price_decimal = 3
+     */
+    averageFillPriceDecimal: string;
+    /**
+     * @generated from protobuf field: string started_at = 4
+     */
+    startedAt: string; // RFC3339 UTC
+    /**
+     * @generated from protobuf field: int64 duration_seconds = 5
+     */
+    durationSeconds: number;
+    /**
+     * @generated from protobuf field: int64 remaining_duration_seconds = 6
+     */
+    remainingDurationSeconds: number;
+    /**
+     * @generated from protobuf field: repeated hypurr.ios.v2.TwapFill fills = 7
+     */
+    fills: TwapFill[]; // Newest first, at most 30.
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.TwapFill
+ */
+export interface TwapFill {
+    /**
+     * @generated from protobuf field: string quantity_decimal = 1
+     */
+    quantityDecimal: string;
+    /**
+     * @generated from protobuf field: string price_decimal = 2
+     */
+    priceDecimal: string;
+    /**
+     * @generated from protobuf field: int64 value_cents = 3
+     */
+    valueCents: number;
+    /**
+     * @generated from protobuf field: string filled_at = 4
+     */
+    filledAt: string; // RFC3339 UTC
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.TriggerOrder
+ */
+export interface TriggerOrder {
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.TriggerKind kind = 1
+     */
+    kind: TriggerKind;
+    /**
+     * @generated from protobuf field: string trigger_price_decimal = 2
+     */
+    triggerPriceDecimal: string;
+    /**
+     * Empty when the order closes the whole position ("Auto close").
+     *
+     * @generated from protobuf field: string quantity_decimal = 3
+     */
+    quantityDecimal: string;
+    /**
+     * Empty for a market trigger.
+     *
+     * @generated from protobuf field: string limit_price_decimal = 4
+     */
+    limitPriceDecimal: string;
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.RecurringBuy
+ */
+export interface RecurringBuy {
+    /**
+     * USD/USDC amount for one scheduled purchase.
+     *
+     * @generated from protobuf field: int64 amount_cents = 1
+     */
+    amountCents: number;
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.RecurringBuyInterval interval = 2
+     */
+    interval: RecurringBuyInterval;
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.RecurringBuyStatus status = 3
+     */
+    status: RecurringBuyStatus;
+    /**
+     * RFC3339 UTC date that fixes the weekly/biweekly weekday or monthly day.
+     *
+     * @generated from protobuf field: string schedule_anchor_at = 4
+     */
+    scheduleAnchorAt: string;
+    /**
+     * RFC3339 UTC; supports e.g. "Sep 2 skipped · not enough USDC".
+     *
+     * @generated from protobuf field: string last_attempted_at = 5
+     */
+    lastAttemptedAt: string;
+}
 /**
  * @generated from protobuf enum hypurr.ios.v2.AssetClass
  */
@@ -1545,6 +1813,86 @@ export enum PerpMarginMode {
      * @generated from protobuf enum value: PERP_MARGIN_MODE_CROSS = 2;
      */
     CROSS = 2
+}
+/**
+ * @generated from protobuf enum hypurr.ios.v2.TimeInForce
+ */
+export enum TimeInForce {
+    /**
+     * @generated from protobuf enum value: TIME_IN_FORCE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: TIME_IN_FORCE_GOOD_TILL_CANCEL = 1;
+     */
+    GOOD_TILL_CANCEL = 1,
+    /**
+     * @generated from protobuf enum value: TIME_IN_FORCE_IMMEDIATE_OR_CANCEL = 2;
+     */
+    IMMEDIATE_OR_CANCEL = 2,
+    /**
+     * @generated from protobuf enum value: TIME_IN_FORCE_ADD_LIQUIDITY_ONLY = 3;
+     */
+    ADD_LIQUIDITY_ONLY = 3
+}
+/**
+ * @generated from protobuf enum hypurr.ios.v2.TriggerKind
+ */
+export enum TriggerKind {
+    /**
+     * @generated from protobuf enum value: TRIGGER_KIND_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: TRIGGER_KIND_TAKE_PROFIT = 1;
+     */
+    TAKE_PROFIT = 1,
+    /**
+     * @generated from protobuf enum value: TRIGGER_KIND_STOP_LOSS = 2;
+     */
+    STOP_LOSS = 2
+}
+/**
+ * @generated from protobuf enum hypurr.ios.v2.RecurringBuyInterval
+ */
+export enum RecurringBuyInterval {
+    /**
+     * @generated from protobuf enum value: RECURRING_BUY_INTERVAL_DAILY = 0;
+     */
+    DAILY = 0,
+    /**
+     * @generated from protobuf enum value: RECURRING_BUY_INTERVAL_WEEKLY = 1;
+     */
+    WEEKLY = 1,
+    /**
+     * @generated from protobuf enum value: RECURRING_BUY_INTERVAL_EVERY_TWO_WEEKS = 2;
+     */
+    EVERY_TWO_WEEKS = 2,
+    /**
+     * @generated from protobuf enum value: RECURRING_BUY_INTERVAL_MONTHLY = 3;
+     */
+    MONTHLY = 3
+}
+/**
+ * @generated from protobuf enum hypurr.ios.v2.RecurringBuyStatus
+ */
+export enum RecurringBuyStatus {
+    /**
+     * @generated from protobuf enum value: RECURRING_BUY_STATUS_ACTIVE = 0;
+     */
+    ACTIVE = 0,
+    /**
+     * @generated from protobuf enum value: RECURRING_BUY_STATUS_PAUSED = 1;
+     */
+    PAUSED = 1,
+    /**
+     * @generated from protobuf enum value: RECURRING_BUY_STATUS_SKIPPED = 2;
+     */
+    SKIPPED = 2,
+    /**
+     * @generated from protobuf enum value: RECURRING_BUY_STATUS_NOT_ENOUGH_FUNDS = 3;
+     */
+    NOT_ENOUGH_FUNDS = 3
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class Color$Type extends MessageType<Color> {
@@ -5417,6 +5765,733 @@ class PerpLiquidationWarning$Type extends MessageType<PerpLiquidationWarning> {
  * @generated MessageType for protobuf message hypurr.ios.v2.PerpLiquidationWarning
  */
 export const PerpLiquidationWarning = new PerpLiquidationWarning$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OpenOrdersRequest$Type extends MessageType<OpenOrdersRequest> {
+    constructor() {
+        super("hypurr.ios.v2.OpenOrdersRequest", [
+            { no: 1, name: "market_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<OpenOrdersRequest>): OpenOrdersRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.marketId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<OpenOrdersRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OpenOrdersRequest): OpenOrdersRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 market_id */ 1:
+                    message.marketId = reader.uint64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OpenOrdersRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 market_id = 1; */
+        if (message.marketId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.marketId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.OpenOrdersRequest
+ */
+export const OpenOrdersRequest = new OpenOrdersRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OpenOrdersResponse$Type extends MessageType<OpenOrdersResponse> {
+    constructor() {
+        super("hypurr.ios.v2.OpenOrdersResponse", [
+            { no: 1, name: "orders", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => OpenOrder }
+        ]);
+    }
+    create(value?: PartialMessage<OpenOrdersResponse>): OpenOrdersResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.orders = [];
+        if (value !== undefined)
+            reflectionMergePartial<OpenOrdersResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OpenOrdersResponse): OpenOrdersResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.ios.v2.OpenOrder orders */ 1:
+                    message.orders.push(OpenOrder.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OpenOrdersResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.ios.v2.OpenOrder orders = 1; */
+        for (let i = 0; i < message.orders.length; i++)
+            OpenOrder.internalBinaryWrite(message.orders[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.OpenOrdersResponse
+ */
+export const OpenOrdersResponse = new OpenOrdersResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OpenOrder$Type extends MessageType<OpenOrder> {
+    constructor() {
+        super("hypurr.ios.v2.OpenOrder", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "wallet", kind: "message", T: () => WalletReference },
+            { no: 3, name: "market", kind: "message", T: () => Market },
+            { no: 10, name: "spot", kind: "message", oneof: "order", T: () => SpotOrder },
+            { no: 11, name: "perp", kind: "message", oneof: "order", T: () => PerpOrder }
+        ]);
+    }
+    create(value?: PartialMessage<OpenOrder>): OpenOrder {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = "";
+        message.order = { oneofKind: undefined };
+        if (value !== undefined)
+            reflectionMergePartial<OpenOrder>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OpenOrder): OpenOrder {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* hypurr.ios.v2.WalletReference wallet */ 2:
+                    message.wallet = WalletReference.internalBinaryRead(reader, reader.uint32(), options, message.wallet);
+                    break;
+                case /* hypurr.ios.v2.Market market */ 3:
+                    message.market = Market.internalBinaryRead(reader, reader.uint32(), options, message.market);
+                    break;
+                case /* hypurr.ios.v2.SpotOrder spot */ 10:
+                    message.order = {
+                        oneofKind: "spot",
+                        spot: SpotOrder.internalBinaryRead(reader, reader.uint32(), options, (message.order as any).spot)
+                    };
+                    break;
+                case /* hypurr.ios.v2.PerpOrder perp */ 11:
+                    message.order = {
+                        oneofKind: "perp",
+                        perp: PerpOrder.internalBinaryRead(reader, reader.uint32(), options, (message.order as any).perp)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OpenOrder, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* hypurr.ios.v2.WalletReference wallet = 2; */
+        if (message.wallet)
+            WalletReference.internalBinaryWrite(message.wallet, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.v2.Market market = 3; */
+        if (message.market)
+            Market.internalBinaryWrite(message.market, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.v2.SpotOrder spot = 10; */
+        if (message.order.oneofKind === "spot")
+            SpotOrder.internalBinaryWrite(message.order.spot, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.v2.PerpOrder perp = 11; */
+        if (message.order.oneofKind === "perp")
+            PerpOrder.internalBinaryWrite(message.order.perp, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.OpenOrder
+ */
+export const OpenOrder = new OpenOrder$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SpotOrder$Type extends MessageType<SpotOrder> {
+    constructor() {
+        super("hypurr.ios.v2.SpotOrder", [
+            { no: 1, name: "side", kind: "enum", T: () => ["hypurr.ios.v2.TradeSide", TradeSide, "TRADE_SIDE_"] },
+            { no: 2, name: "limit", kind: "message", oneof: "execution", T: () => LimitOrder },
+            { no: 3, name: "twap", kind: "message", oneof: "execution", T: () => TwapOrder },
+            { no: 4, name: "recurring_buy", kind: "message", oneof: "execution", T: () => RecurringBuy }
+        ]);
+    }
+    create(value?: PartialMessage<SpotOrder>): SpotOrder {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.side = 0;
+        message.execution = { oneofKind: undefined };
+        if (value !== undefined)
+            reflectionMergePartial<SpotOrder>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SpotOrder): SpotOrder {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.ios.v2.TradeSide side */ 1:
+                    message.side = reader.int32();
+                    break;
+                case /* hypurr.ios.v2.LimitOrder limit */ 2:
+                    message.execution = {
+                        oneofKind: "limit",
+                        limit: LimitOrder.internalBinaryRead(reader, reader.uint32(), options, (message.execution as any).limit)
+                    };
+                    break;
+                case /* hypurr.ios.v2.TwapOrder twap */ 3:
+                    message.execution = {
+                        oneofKind: "twap",
+                        twap: TwapOrder.internalBinaryRead(reader, reader.uint32(), options, (message.execution as any).twap)
+                    };
+                    break;
+                case /* hypurr.ios.v2.RecurringBuy recurring_buy */ 4:
+                    message.execution = {
+                        oneofKind: "recurringBuy",
+                        recurringBuy: RecurringBuy.internalBinaryRead(reader, reader.uint32(), options, (message.execution as any).recurringBuy)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SpotOrder, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.ios.v2.TradeSide side = 1; */
+        if (message.side !== 0)
+            writer.tag(1, WireType.Varint).int32(message.side);
+        /* hypurr.ios.v2.LimitOrder limit = 2; */
+        if (message.execution.oneofKind === "limit")
+            LimitOrder.internalBinaryWrite(message.execution.limit, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.v2.TwapOrder twap = 3; */
+        if (message.execution.oneofKind === "twap")
+            TwapOrder.internalBinaryWrite(message.execution.twap, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.v2.RecurringBuy recurring_buy = 4; */
+        if (message.execution.oneofKind === "recurringBuy")
+            RecurringBuy.internalBinaryWrite(message.execution.recurringBuy, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.SpotOrder
+ */
+export const SpotOrder = new SpotOrder$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PerpOrder$Type extends MessageType<PerpOrder> {
+    constructor() {
+        super("hypurr.ios.v2.PerpOrder", [
+            { no: 1, name: "side", kind: "enum", T: () => ["hypurr.ios.v2.PositionDirection", PositionDirection, "POSITION_DIRECTION_"] },
+            { no: 2, name: "reduce_only", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 3, name: "limit", kind: "message", oneof: "execution", T: () => LimitOrder },
+            { no: 4, name: "twap", kind: "message", oneof: "execution", T: () => TwapOrder },
+            { no: 5, name: "trigger", kind: "message", oneof: "execution", T: () => TriggerOrder }
+        ]);
+    }
+    create(value?: PartialMessage<PerpOrder>): PerpOrder {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.side = 0;
+        message.reduceOnly = false;
+        message.execution = { oneofKind: undefined };
+        if (value !== undefined)
+            reflectionMergePartial<PerpOrder>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerpOrder): PerpOrder {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.ios.v2.PositionDirection side */ 1:
+                    message.side = reader.int32();
+                    break;
+                case /* bool reduce_only */ 2:
+                    message.reduceOnly = reader.bool();
+                    break;
+                case /* hypurr.ios.v2.LimitOrder limit */ 3:
+                    message.execution = {
+                        oneofKind: "limit",
+                        limit: LimitOrder.internalBinaryRead(reader, reader.uint32(), options, (message.execution as any).limit)
+                    };
+                    break;
+                case /* hypurr.ios.v2.TwapOrder twap */ 4:
+                    message.execution = {
+                        oneofKind: "twap",
+                        twap: TwapOrder.internalBinaryRead(reader, reader.uint32(), options, (message.execution as any).twap)
+                    };
+                    break;
+                case /* hypurr.ios.v2.TriggerOrder trigger */ 5:
+                    message.execution = {
+                        oneofKind: "trigger",
+                        trigger: TriggerOrder.internalBinaryRead(reader, reader.uint32(), options, (message.execution as any).trigger)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PerpOrder, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.ios.v2.PositionDirection side = 1; */
+        if (message.side !== 0)
+            writer.tag(1, WireType.Varint).int32(message.side);
+        /* bool reduce_only = 2; */
+        if (message.reduceOnly !== false)
+            writer.tag(2, WireType.Varint).bool(message.reduceOnly);
+        /* hypurr.ios.v2.LimitOrder limit = 3; */
+        if (message.execution.oneofKind === "limit")
+            LimitOrder.internalBinaryWrite(message.execution.limit, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.v2.TwapOrder twap = 4; */
+        if (message.execution.oneofKind === "twap")
+            TwapOrder.internalBinaryWrite(message.execution.twap, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.v2.TriggerOrder trigger = 5; */
+        if (message.execution.oneofKind === "trigger")
+            TriggerOrder.internalBinaryWrite(message.execution.trigger, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.PerpOrder
+ */
+export const PerpOrder = new PerpOrder$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LimitOrder$Type extends MessageType<LimitOrder> {
+    constructor() {
+        super("hypurr.ios.v2.LimitOrder", [
+            { no: 1, name: "quantity_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "filled_quantity_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "time_in_force", kind: "enum", T: () => ["hypurr.ios.v2.TimeInForce", TimeInForce, "TIME_IN_FORCE_"] }
+        ]);
+    }
+    create(value?: PartialMessage<LimitOrder>): LimitOrder {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.quantityDecimal = "";
+        message.filledQuantityDecimal = "";
+        message.priceDecimal = "";
+        message.timeInForce = 0;
+        if (value !== undefined)
+            reflectionMergePartial<LimitOrder>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LimitOrder): LimitOrder {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string quantity_decimal */ 1:
+                    message.quantityDecimal = reader.string();
+                    break;
+                case /* string filled_quantity_decimal */ 2:
+                    message.filledQuantityDecimal = reader.string();
+                    break;
+                case /* string price_decimal */ 3:
+                    message.priceDecimal = reader.string();
+                    break;
+                case /* hypurr.ios.v2.TimeInForce time_in_force */ 4:
+                    message.timeInForce = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: LimitOrder, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string quantity_decimal = 1; */
+        if (message.quantityDecimal !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.quantityDecimal);
+        /* string filled_quantity_decimal = 2; */
+        if (message.filledQuantityDecimal !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.filledQuantityDecimal);
+        /* string price_decimal = 3; */
+        if (message.priceDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.priceDecimal);
+        /* hypurr.ios.v2.TimeInForce time_in_force = 4; */
+        if (message.timeInForce !== 0)
+            writer.tag(4, WireType.Varint).int32(message.timeInForce);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.LimitOrder
+ */
+export const LimitOrder = new LimitOrder$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TwapOrder$Type extends MessageType<TwapOrder> {
+    constructor() {
+        super("hypurr.ios.v2.TwapOrder", [
+            { no: 1, name: "total_value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "executed_value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "average_fill_price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "started_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "duration_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "remaining_duration_seconds", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "fills", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => TwapFill }
+        ]);
+    }
+    create(value?: PartialMessage<TwapOrder>): TwapOrder {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.totalValueCents = 0;
+        message.executedValueCents = 0;
+        message.averageFillPriceDecimal = "";
+        message.startedAt = "";
+        message.durationSeconds = 0;
+        message.remainingDurationSeconds = 0;
+        message.fills = [];
+        if (value !== undefined)
+            reflectionMergePartial<TwapOrder>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TwapOrder): TwapOrder {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 total_value_cents */ 1:
+                    message.totalValueCents = reader.int64().toNumber();
+                    break;
+                case /* int64 executed_value_cents */ 2:
+                    message.executedValueCents = reader.int64().toNumber();
+                    break;
+                case /* string average_fill_price_decimal */ 3:
+                    message.averageFillPriceDecimal = reader.string();
+                    break;
+                case /* string started_at */ 4:
+                    message.startedAt = reader.string();
+                    break;
+                case /* int64 duration_seconds */ 5:
+                    message.durationSeconds = reader.int64().toNumber();
+                    break;
+                case /* int64 remaining_duration_seconds */ 6:
+                    message.remainingDurationSeconds = reader.int64().toNumber();
+                    break;
+                case /* repeated hypurr.ios.v2.TwapFill fills */ 7:
+                    message.fills.push(TwapFill.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TwapOrder, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 total_value_cents = 1; */
+        if (message.totalValueCents !== 0)
+            writer.tag(1, WireType.Varint).int64(message.totalValueCents);
+        /* int64 executed_value_cents = 2; */
+        if (message.executedValueCents !== 0)
+            writer.tag(2, WireType.Varint).int64(message.executedValueCents);
+        /* string average_fill_price_decimal = 3; */
+        if (message.averageFillPriceDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.averageFillPriceDecimal);
+        /* string started_at = 4; */
+        if (message.startedAt !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.startedAt);
+        /* int64 duration_seconds = 5; */
+        if (message.durationSeconds !== 0)
+            writer.tag(5, WireType.Varint).int64(message.durationSeconds);
+        /* int64 remaining_duration_seconds = 6; */
+        if (message.remainingDurationSeconds !== 0)
+            writer.tag(6, WireType.Varint).int64(message.remainingDurationSeconds);
+        /* repeated hypurr.ios.v2.TwapFill fills = 7; */
+        for (let i = 0; i < message.fills.length; i++)
+            TwapFill.internalBinaryWrite(message.fills[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.TwapOrder
+ */
+export const TwapOrder = new TwapOrder$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TwapFill$Type extends MessageType<TwapFill> {
+    constructor() {
+        super("hypurr.ios.v2.TwapFill", [
+            { no: 1, name: "quantity_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "value_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "filled_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TwapFill>): TwapFill {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.quantityDecimal = "";
+        message.priceDecimal = "";
+        message.valueCents = 0;
+        message.filledAt = "";
+        if (value !== undefined)
+            reflectionMergePartial<TwapFill>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TwapFill): TwapFill {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string quantity_decimal */ 1:
+                    message.quantityDecimal = reader.string();
+                    break;
+                case /* string price_decimal */ 2:
+                    message.priceDecimal = reader.string();
+                    break;
+                case /* int64 value_cents */ 3:
+                    message.valueCents = reader.int64().toNumber();
+                    break;
+                case /* string filled_at */ 4:
+                    message.filledAt = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TwapFill, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string quantity_decimal = 1; */
+        if (message.quantityDecimal !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.quantityDecimal);
+        /* string price_decimal = 2; */
+        if (message.priceDecimal !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.priceDecimal);
+        /* int64 value_cents = 3; */
+        if (message.valueCents !== 0)
+            writer.tag(3, WireType.Varint).int64(message.valueCents);
+        /* string filled_at = 4; */
+        if (message.filledAt !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.filledAt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.TwapFill
+ */
+export const TwapFill = new TwapFill$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TriggerOrder$Type extends MessageType<TriggerOrder> {
+    constructor() {
+        super("hypurr.ios.v2.TriggerOrder", [
+            { no: 1, name: "kind", kind: "enum", T: () => ["hypurr.ios.v2.TriggerKind", TriggerKind, "TRIGGER_KIND_"] },
+            { no: 2, name: "trigger_price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "quantity_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "limit_price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TriggerOrder>): TriggerOrder {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.kind = 0;
+        message.triggerPriceDecimal = "";
+        message.quantityDecimal = "";
+        message.limitPriceDecimal = "";
+        if (value !== undefined)
+            reflectionMergePartial<TriggerOrder>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TriggerOrder): TriggerOrder {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.ios.v2.TriggerKind kind */ 1:
+                    message.kind = reader.int32();
+                    break;
+                case /* string trigger_price_decimal */ 2:
+                    message.triggerPriceDecimal = reader.string();
+                    break;
+                case /* string quantity_decimal */ 3:
+                    message.quantityDecimal = reader.string();
+                    break;
+                case /* string limit_price_decimal */ 4:
+                    message.limitPriceDecimal = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TriggerOrder, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.ios.v2.TriggerKind kind = 1; */
+        if (message.kind !== 0)
+            writer.tag(1, WireType.Varint).int32(message.kind);
+        /* string trigger_price_decimal = 2; */
+        if (message.triggerPriceDecimal !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.triggerPriceDecimal);
+        /* string quantity_decimal = 3; */
+        if (message.quantityDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.quantityDecimal);
+        /* string limit_price_decimal = 4; */
+        if (message.limitPriceDecimal !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.limitPriceDecimal);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.TriggerOrder
+ */
+export const TriggerOrder = new TriggerOrder$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RecurringBuy$Type extends MessageType<RecurringBuy> {
+    constructor() {
+        super("hypurr.ios.v2.RecurringBuy", [
+            { no: 1, name: "amount_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "interval", kind: "enum", T: () => ["hypurr.ios.v2.RecurringBuyInterval", RecurringBuyInterval, "RECURRING_BUY_INTERVAL_"] },
+            { no: 3, name: "status", kind: "enum", T: () => ["hypurr.ios.v2.RecurringBuyStatus", RecurringBuyStatus, "RECURRING_BUY_STATUS_"] },
+            { no: 4, name: "schedule_anchor_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "last_attempted_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<RecurringBuy>): RecurringBuy {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.amountCents = 0;
+        message.interval = 0;
+        message.status = 0;
+        message.scheduleAnchorAt = "";
+        message.lastAttemptedAt = "";
+        if (value !== undefined)
+            reflectionMergePartial<RecurringBuy>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RecurringBuy): RecurringBuy {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 amount_cents */ 1:
+                    message.amountCents = reader.int64().toNumber();
+                    break;
+                case /* hypurr.ios.v2.RecurringBuyInterval interval */ 2:
+                    message.interval = reader.int32();
+                    break;
+                case /* hypurr.ios.v2.RecurringBuyStatus status */ 3:
+                    message.status = reader.int32();
+                    break;
+                case /* string schedule_anchor_at */ 4:
+                    message.scheduleAnchorAt = reader.string();
+                    break;
+                case /* string last_attempted_at */ 5:
+                    message.lastAttemptedAt = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RecurringBuy, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 amount_cents = 1; */
+        if (message.amountCents !== 0)
+            writer.tag(1, WireType.Varint).int64(message.amountCents);
+        /* hypurr.ios.v2.RecurringBuyInterval interval = 2; */
+        if (message.interval !== 0)
+            writer.tag(2, WireType.Varint).int32(message.interval);
+        /* hypurr.ios.v2.RecurringBuyStatus status = 3; */
+        if (message.status !== 0)
+            writer.tag(3, WireType.Varint).int32(message.status);
+        /* string schedule_anchor_at = 4; */
+        if (message.scheduleAnchorAt !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.scheduleAnchorAt);
+        /* string last_attempted_at = 5; */
+        if (message.lastAttemptedAt !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.lastAttemptedAt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.RecurringBuy
+ */
+export const RecurringBuy = new RecurringBuy$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.ios.v2.IosService
  */
@@ -5427,5 +6502,6 @@ export const IosService = new ServiceType("hypurr.ios.v2.IosService", [
     { name: "AssetDetail", options: {}, I: AssetDetailRequest, O: AssetDetailResponse },
     { name: "AssetDetailLiveUpdates", serverStreaming: true, options: {}, I: AssetDetailLiveUpdatesRequest, O: MarketTick },
     { name: "Candles", options: {}, I: CandlesRequest, O: Candles },
-    { name: "UserStream", serverStreaming: true, options: {}, I: UserStreamRequest, O: UserSnapshot }
+    { name: "UserStream", serverStreaming: true, options: {}, I: UserStreamRequest, O: UserSnapshot },
+    { name: "OpenOrders", options: {}, I: OpenOrdersRequest, O: OpenOrdersResponse }
 ]);

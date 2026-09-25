@@ -26,6 +26,7 @@ const (
 	IosService_AssetDetailLiveUpdates_FullMethodName = "/hypurr.ios.v2.IosService/AssetDetailLiveUpdates"
 	IosService_Candles_FullMethodName                = "/hypurr.ios.v2.IosService/Candles"
 	IosService_UserStream_FullMethodName             = "/hypurr.ios.v2.IosService/UserStream"
+	IosService_OpenOrders_FullMethodName             = "/hypurr.ios.v2.IosService/OpenOrders"
 )
 
 // IosServiceClient is the client API for IosService service.
@@ -39,6 +40,7 @@ type IosServiceClient interface {
 	AssetDetailLiveUpdates(ctx context.Context, in *AssetDetailLiveUpdatesRequest, opts ...grpc.CallOption) (IosService_AssetDetailLiveUpdatesClient, error)
 	Candles(ctx context.Context, in *CandlesRequest, opts ...grpc.CallOption) (*Candles, error)
 	UserStream(ctx context.Context, in *UserStreamRequest, opts ...grpc.CallOption) (IosService_UserStreamClient, error)
+	OpenOrders(ctx context.Context, in *OpenOrdersRequest, opts ...grpc.CallOption) (*OpenOrdersResponse, error)
 }
 
 type iosServiceClient struct {
@@ -188,6 +190,16 @@ func (x *iosServiceUserStreamClient) Recv() (*UserSnapshot, error) {
 	return m, nil
 }
 
+func (c *iosServiceClient) OpenOrders(ctx context.Context, in *OpenOrdersRequest, opts ...grpc.CallOption) (*OpenOrdersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(OpenOrdersResponse)
+	err := c.cc.Invoke(ctx, IosService_OpenOrders_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IosServiceServer is the server API for IosService service.
 // All implementations must embed UnimplementedIosServiceServer
 // for forward compatibility
@@ -199,6 +211,7 @@ type IosServiceServer interface {
 	AssetDetailLiveUpdates(*AssetDetailLiveUpdatesRequest, IosService_AssetDetailLiveUpdatesServer) error
 	Candles(context.Context, *CandlesRequest) (*Candles, error)
 	UserStream(*UserStreamRequest, IosService_UserStreamServer) error
+	OpenOrders(context.Context, *OpenOrdersRequest) (*OpenOrdersResponse, error)
 	mustEmbedUnimplementedIosServiceServer()
 }
 
@@ -226,6 +239,9 @@ func (UnimplementedIosServiceServer) Candles(context.Context, *CandlesRequest) (
 }
 func (UnimplementedIosServiceServer) UserStream(*UserStreamRequest, IosService_UserStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method UserStream not implemented")
+}
+func (UnimplementedIosServiceServer) OpenOrders(context.Context, *OpenOrdersRequest) (*OpenOrdersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OpenOrders not implemented")
 }
 func (UnimplementedIosServiceServer) mustEmbedUnimplementedIosServiceServer() {}
 
@@ -375,6 +391,24 @@ func (x *iosServiceUserStreamServer) Send(m *UserSnapshot) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _IosService_OpenOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OpenOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IosServiceServer).OpenOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IosService_OpenOrders_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IosServiceServer).OpenOrders(ctx, req.(*OpenOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IosService_ServiceDesc is the grpc.ServiceDesc for IosService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -397,6 +431,10 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Candles",
 			Handler:    _IosService_Candles_Handler,
+		},
+		{
+			MethodName: "OpenOrders",
+			Handler:    _IosService_OpenOrders_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

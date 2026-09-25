@@ -10,6 +10,7 @@ service IosService {
   rpc AssetDetailLiveUpdates(AssetDetailLiveUpdatesRequest) returns (stream MarketTick);
   rpc Candles(CandlesRequest) returns (.hypurr.ios.v2.Candles);
   rpc UserStream(UserStreamRequest) returns (stream UserSnapshot);
+  rpc OpenOrders(OpenOrdersRequest) returns (OpenOrdersResponse);
 }
 
 // ==== Shared ====
@@ -552,4 +553,121 @@ message PerpAutoClose {
 
 message PerpLiquidationWarning {
   double distance_percentage = 1;
+}
+
+// ==== Open orders ====
+
+message OpenOrdersRequest {
+  uint64 market_id = 1;
+}
+
+message OpenOrdersResponse {
+  // Display order. Limit and trigger orders: closest to the current price
+  // first. TWAPs: soonest completion first.
+  repeated OpenOrder orders = 1;
+}
+
+message OpenOrder {
+  // "<wallet_id>:<oid>" for a Hyperliquid order, "twap:<session_id>" for a
+  // TWAP run by the bot.
+  string id = 1;
+  WalletReference wallet = 2;
+  Market market = 3;
+  oneof order {
+    SpotOrder spot = 10;
+    PerpOrder perp = 11;
+  }
+}
+
+message SpotOrder {
+  TradeSide side = 1;
+  oneof execution {
+    LimitOrder limit = 2;
+    TwapOrder twap = 3;
+    // Always a buy. Not sent yet: the backend does not exist.
+    RecurringBuy recurring_buy = 4;
+  }
+}
+
+message PerpOrder {
+  // The position the order opens or grows, or closes when reduce_only.
+  PositionDirection side = 1;
+  bool reduce_only = 2;
+  oneof execution {
+    LimitOrder limit = 3;
+    TwapOrder twap = 4;
+    TriggerOrder trigger = 5;
+  }
+}
+
+message LimitOrder {
+  string quantity_decimal = 1;
+  string filled_quantity_decimal = 2;
+  string price_decimal = 3;
+  TimeInForce time_in_force = 4;
+}
+
+enum TimeInForce {
+  TIME_IN_FORCE_UNSPECIFIED = 0;
+  TIME_IN_FORCE_GOOD_TILL_CANCEL = 1;
+  TIME_IN_FORCE_IMMEDIATE_OR_CANCEL = 2;
+  TIME_IN_FORCE_ADD_LIQUIDITY_ONLY = 3;
+}
+
+message TwapOrder {
+  // 0 for a TWAP given in quantity, not notional.
+  int64 total_value_cents = 1;
+  int64 executed_value_cents = 2;
+  string average_fill_price_decimal = 3;
+  string started_at = 4; // RFC3339 UTC
+  int64 duration_seconds = 5;
+  int64 remaining_duration_seconds = 6;
+  repeated TwapFill fills = 7; // Newest first, at most 30.
+}
+
+message TwapFill {
+  string quantity_decimal = 1;
+  string price_decimal = 2;
+  int64 value_cents = 3;
+  string filled_at = 4; // RFC3339 UTC
+}
+
+message TriggerOrder {
+  TriggerKind kind = 1;
+  string trigger_price_decimal = 2;
+  // Empty when the order closes the whole position ("Auto close").
+  string quantity_decimal = 3;
+  // Empty for a market trigger.
+  string limit_price_decimal = 4;
+}
+
+enum TriggerKind {
+  TRIGGER_KIND_UNSPECIFIED = 0;
+  TRIGGER_KIND_TAKE_PROFIT = 1;
+  TRIGGER_KIND_STOP_LOSS = 2;
+}
+
+message RecurringBuy {
+  // USD/USDC amount for one scheduled purchase.
+  int64 amount_cents = 1;
+  RecurringBuyInterval interval = 2;
+  RecurringBuyStatus status = 3;
+  // RFC3339 UTC date that fixes the weekly/biweekly weekday or monthly day.
+  string schedule_anchor_at = 4;
+  // RFC3339 UTC; supports e.g. "Sep 2 skipped · not enough USDC".
+  string last_attempted_at = 5;
+}
+
+enum RecurringBuyInterval {
+  RECURRING_BUY_INTERVAL_DAILY = 0;
+  RECURRING_BUY_INTERVAL_WEEKLY = 1;
+  RECURRING_BUY_INTERVAL_EVERY_TWO_WEEKS = 2;
+  RECURRING_BUY_INTERVAL_MONTHLY = 3;
+}
+
+enum RecurringBuyStatus {
+  RECURRING_BUY_STATUS_ACTIVE = 0;
+  RECURRING_BUY_STATUS_PAUSED = 1;
+  RECURRING_BUY_STATUS_SKIPPED = 2;
+  RECURRING_BUY_STATUS_NOT_ENOUGH_FUNDS = 3;
 }
