@@ -2520,6 +2520,25 @@ export interface PortfolioOptimizeRequest {
      * @generated from protobuf field: double correlation_shrink = 14
      */
     correlationShrink: number; // towards zero, in [0, 1]; 0 = 0.5
+    /**
+     * Rescale the suggested weights to sum to this leverage; 0 = as optimised.
+     * The threshold sweep runs on the final weights, so set it here rather
+     * than rescaling afterwards (an absolute threshold depends on the scale).
+     *
+     * @generated from protobuf field: double target_leverage = 15
+     */
+    targetLeverage: number;
+    /**
+     * Optional: replay the suggested portfolio at each of these rebalance
+     * thresholds (see PortfolioBacktestRequest.rebalance_sweep).
+     *
+     * @generated from protobuf field: repeated double rebalance_sweep = 16
+     */
+    rebalanceSweep: number[];
+    /**
+     * @generated from protobuf field: string rebalance_mode = 17
+     */
+    rebalanceMode: string; // "" = absolute
 }
 /**
  * @generated from protobuf message hypurr.PortfolioOptimizeResponse
@@ -2549,6 +2568,17 @@ export interface PortfolioOptimizeResponse {
      * @generated from protobuf field: repeated string warnings = 6
      */
     warnings: string[];
+    /**
+     * With rebalance_sweep: the suggested portfolio at each threshold, and the
+     * recommended one (as in PortfolioBacktestResponse); 0 when no sweep ran.
+     *
+     * @generated from protobuf field: repeated hypurr.PortfolioRebalanceSweepPoint rebalance_sweep = 7
+     */
+    rebalanceSweep: PortfolioRebalanceSweepPoint[];
+    /**
+     * @generated from protobuf field: double recommended_min_rebalance_pct = 8
+     */
+    recommendedMinRebalancePct: number;
 }
 /**
  * @generated from protobuf message hypurr.AuthorizationCodeTelegramAuthData
@@ -12073,7 +12103,10 @@ class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest
             { no: 11, name: "research_haircut", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 12, name: "research_weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 13, name: "prior_sharpe_sd", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 14, name: "correlation_shrink", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 14, name: "correlation_shrink", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 15, name: "target_leverage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 16, name: "rebalance_sweep", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 17, name: "rebalance_mode", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioOptimizeRequest>): PortfolioOptimizeRequest {
@@ -12091,6 +12124,9 @@ class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest
         message.researchWeight = 0;
         message.priorSharpeSd = 0;
         message.correlationShrink = 0;
+        message.targetLeverage = 0;
+        message.rebalanceSweep = [];
+        message.rebalanceMode = "";
         if (value !== undefined)
             reflectionMergePartial<PortfolioOptimizeRequest>(this, message, value);
         return message;
@@ -12141,6 +12177,19 @@ class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest
                     break;
                 case /* double correlation_shrink */ 14:
                     message.correlationShrink = reader.double();
+                    break;
+                case /* double target_leverage */ 15:
+                    message.targetLeverage = reader.double();
+                    break;
+                case /* repeated double rebalance_sweep */ 16:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.rebalanceSweep.push(reader.double());
+                    else
+                        message.rebalanceSweep.push(reader.double());
+                    break;
+                case /* string rebalance_mode */ 17:
+                    message.rebalanceMode = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -12212,6 +12261,19 @@ class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest
         /* double correlation_shrink = 14; */
         if (message.correlationShrink !== 0)
             writer.tag(14, WireType.Bit64).double(message.correlationShrink);
+        /* double target_leverage = 15; */
+        if (message.targetLeverage !== 0)
+            writer.tag(15, WireType.Bit64).double(message.targetLeverage);
+        /* repeated double rebalance_sweep = 16; */
+        if (message.rebalanceSweep.length) {
+            writer.tag(16, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.rebalanceSweep.length; i++)
+                writer.double(message.rebalanceSweep[i]);
+            writer.join();
+        }
+        /* string rebalance_mode = 17; */
+        if (message.rebalanceMode !== "")
+            writer.tag(17, WireType.LengthDelimited).string(message.rebalanceMode);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -12231,7 +12293,9 @@ class PortfolioOptimizeResponse$Type extends MessageType<PortfolioOptimizeRespon
             { no: 3, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 5, name: "days", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 6, name: "warnings", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 6, name: "warnings", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "rebalance_sweep", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioRebalanceSweepPoint },
+            { no: 8, name: "recommended_min_rebalance_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioOptimizeResponse>): PortfolioOptimizeResponse {
@@ -12242,6 +12306,8 @@ class PortfolioOptimizeResponse$Type extends MessageType<PortfolioOptimizeRespon
         message.toTs = 0;
         message.days = 0;
         message.warnings = [];
+        message.rebalanceSweep = [];
+        message.recommendedMinRebalancePct = 0;
         if (value !== undefined)
             reflectionMergePartial<PortfolioOptimizeResponse>(this, message, value);
         return message;
@@ -12268,6 +12334,12 @@ class PortfolioOptimizeResponse$Type extends MessageType<PortfolioOptimizeRespon
                     break;
                 case /* repeated string warnings */ 6:
                     message.warnings.push(reader.string());
+                    break;
+                case /* repeated hypurr.PortfolioRebalanceSweepPoint rebalance_sweep */ 7:
+                    message.rebalanceSweep.push(PortfolioRebalanceSweepPoint.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* double recommended_min_rebalance_pct */ 8:
+                    message.recommendedMinRebalancePct = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -12299,6 +12371,12 @@ class PortfolioOptimizeResponse$Type extends MessageType<PortfolioOptimizeRespon
         /* repeated string warnings = 6; */
         for (let i = 0; i < message.warnings.length; i++)
             writer.tag(6, WireType.LengthDelimited).string(message.warnings[i]);
+        /* repeated hypurr.PortfolioRebalanceSweepPoint rebalance_sweep = 7; */
+        for (let i = 0; i < message.rebalanceSweep.length; i++)
+            PortfolioRebalanceSweepPoint.internalBinaryWrite(message.rebalanceSweep[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* double recommended_min_rebalance_pct = 8; */
+        if (message.recommendedMinRebalancePct !== 0)
+            writer.tag(8, WireType.Bit64).double(message.recommendedMinRebalancePct);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
