@@ -28,6 +28,7 @@ const (
 	Kms_AccountShardSecret_FullMethodName     = "/hypurr.Kms/AccountShardSecret"
 	Kms_AccountSignMessage_FullMethodName     = "/hypurr.Kms/AccountSignMessage"
 	Kms_AccountApproveAgent_FullMethodName    = "/hypurr.Kms/AccountApproveAgent"
+	Kms_AccountRevokeAgent_FullMethodName     = "/hypurr.Kms/AccountRevokeAgent"
 	Kms_GetAccountInfo_FullMethodName         = "/hypurr.Kms/GetAccountInfo"
 	Kms_RequestFactorReset_FullMethodName     = "/hypurr.Kms/RequestFactorReset"
 	Kms_CancelFactorReset_FullMethodName      = "/hypurr.Kms/CancelFactorReset"
@@ -54,6 +55,7 @@ type KmsClient interface {
 	AccountShardSecret(ctx context.Context, in *KmsAccountShardSecretRequest, opts ...grpc.CallOption) (*KmsAccountShardSecretResponse, error)
 	AccountSignMessage(ctx context.Context, in *KmsAccountSignMessageRequest, opts ...grpc.CallOption) (*KmsAccountSignMessageResponse, error)
 	AccountApproveAgent(ctx context.Context, in *KmsAccountApproveAgentRequest, opts ...grpc.CallOption) (*KmsAccountApproveAgentResponse, error)
+	AccountRevokeAgent(ctx context.Context, in *KmsAccountRevokeAgentRequest, opts ...grpc.CallOption) (*KmsAccountRevokeAgentResponse, error)
 	GetAccountInfo(ctx context.Context, in *KmsGetAccountInfoRequest, opts ...grpc.CallOption) (*KmsGetAccountInfoResponse, error)
 	RequestFactorReset(ctx context.Context, in *KmsRequestFactorResetRequest, opts ...grpc.CallOption) (*KmsRequestFactorResetResponse, error)
 	CancelFactorReset(ctx context.Context, in *KmsCancelFactorResetRequest, opts ...grpc.CallOption) (*KmsCancelFactorResetResponse, error)
@@ -162,6 +164,16 @@ func (c *kmsClient) AccountApproveAgent(ctx context.Context, in *KmsAccountAppro
 	return out, nil
 }
 
+func (c *kmsClient) AccountRevokeAgent(ctx context.Context, in *KmsAccountRevokeAgentRequest, opts ...grpc.CallOption) (*KmsAccountRevokeAgentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(KmsAccountRevokeAgentResponse)
+	err := c.cc.Invoke(ctx, Kms_AccountRevokeAgent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *kmsClient) GetAccountInfo(ctx context.Context, in *KmsGetAccountInfoRequest, opts ...grpc.CallOption) (*KmsGetAccountInfoResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(KmsGetAccountInfoResponse)
@@ -249,6 +261,7 @@ type KmsServer interface {
 	AccountShardSecret(context.Context, *KmsAccountShardSecretRequest) (*KmsAccountShardSecretResponse, error)
 	AccountSignMessage(context.Context, *KmsAccountSignMessageRequest) (*KmsAccountSignMessageResponse, error)
 	AccountApproveAgent(context.Context, *KmsAccountApproveAgentRequest) (*KmsAccountApproveAgentResponse, error)
+	AccountRevokeAgent(context.Context, *KmsAccountRevokeAgentRequest) (*KmsAccountRevokeAgentResponse, error)
 	GetAccountInfo(context.Context, *KmsGetAccountInfoRequest) (*KmsGetAccountInfoResponse, error)
 	RequestFactorReset(context.Context, *KmsRequestFactorResetRequest) (*KmsRequestFactorResetResponse, error)
 	CancelFactorReset(context.Context, *KmsCancelFactorResetRequest) (*KmsCancelFactorResetResponse, error)
@@ -290,6 +303,9 @@ func (UnimplementedKmsServer) AccountSignMessage(context.Context, *KmsAccountSig
 }
 func (UnimplementedKmsServer) AccountApproveAgent(context.Context, *KmsAccountApproveAgentRequest) (*KmsAccountApproveAgentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AccountApproveAgent not implemented")
+}
+func (UnimplementedKmsServer) AccountRevokeAgent(context.Context, *KmsAccountRevokeAgentRequest) (*KmsAccountRevokeAgentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AccountRevokeAgent not implemented")
 }
 func (UnimplementedKmsServer) GetAccountInfo(context.Context, *KmsGetAccountInfoRequest) (*KmsGetAccountInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccountInfo not implemented")
@@ -487,6 +503,24 @@ func _Kms_AccountApproveAgent_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Kms_AccountRevokeAgent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KmsAccountRevokeAgentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KmsServer).AccountRevokeAgent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Kms_AccountRevokeAgent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KmsServer).AccountRevokeAgent(ctx, req.(*KmsAccountRevokeAgentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Kms_GetAccountInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(KmsGetAccountInfoRequest)
 	if err := dec(in); err != nil {
@@ -655,6 +689,10 @@ var Kms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AccountApproveAgent",
 			Handler:    _Kms_AccountApproveAgent_Handler,
+		},
+		{
+			MethodName: "AccountRevokeAgent",
+			Handler:    _Kms_AccountRevokeAgent_Handler,
 		},
 		{
 			MethodName: "GetAccountInfo",
