@@ -853,6 +853,9 @@ message PortfolioBacktestRequest {
   // Optional thresholds to replay the portfolio with (e.g. 0, 0.005, 0.01,
   // 0.02, 0.05): one sweep point each, plus a recommendation.
   repeated double rebalance_sweep = 12;
+  // Pairs left out of every leg's targets, as if the sources never traded
+  // them; the rest of each target is kept as is (not rescaled).
+  repeated int64 exclude_pair_ids = 13;
 }
 
 message PortfolioBacktestResponse {
@@ -868,6 +871,9 @@ message PortfolioBacktestResponse {
   // whose tracking error stays under 10 % of the target book's volatility;
   // 0 when no sweep ran.
   double recommended_min_rebalance_pct = 9;
+  // Every pair the legs' weights hold over the range, excluded ones included
+  // (flagged), measured on the combined book before exclusion.
+  repeated PortfolioBacktestPair pairs = 10;
 }
 
 // PortfolioSourceBacktestPush stores a research series for one of the user's
@@ -921,6 +927,8 @@ message PortfolioOptimizeRequest {
   // thresholds (see PortfolioBacktestRequest.rebalance_sweep).
   repeated double rebalance_sweep = 16;
   string rebalance_mode = 17;                   // "" = absolute
+  // Pairs left out of every source's targets (see PortfolioBacktestRequest).
+  repeated int64 exclude_pair_ids = 18;
 }
 
 message PortfolioOptimizeResponse {

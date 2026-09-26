@@ -143,6 +143,18 @@ message PortfolioRebalanceSweepPoint {
   double total_costs = 8;
 }
 
+// PortfolioBacktestPair is one pair of a backtest's combined book, before any
+// exclusion, put back on target every hour.
+message PortfolioBacktestPair {
+  int64 pair_id = 1;
+  double avg_weight = 2;             // mean signed weight over the range's boundaries
+  double avg_abs_weight = 3;         // mean |weight|
+  double contribution = 4;           // sum of hourly weight x price return, before costs
+  double avg_daily_turnover = 5;     // sum |weight change| per day
+  int64 hours = 6;                   // boundaries where it was held
+  bool excluded = 7;                 // left out of this backtest (exclude_pair_ids)
+}
+
 // PortfolioBacktestTracking compares a source's live weights with its backtest
 // series over the hours both exist: does live follow the research?
 message PortfolioBacktestTracking {

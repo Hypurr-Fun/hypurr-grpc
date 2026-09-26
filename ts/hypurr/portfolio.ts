@@ -357,6 +357,42 @@ export interface PortfolioRebalanceSweepPoint {
     totalCosts: number;
 }
 /**
+ * PortfolioBacktestPair is one pair of a backtest's combined book, before any
+ * exclusion, put back on target every hour.
+ *
+ * @generated from protobuf message hypurr.PortfolioBacktestPair
+ */
+export interface PortfolioBacktestPair {
+    /**
+     * @generated from protobuf field: int64 pair_id = 1
+     */
+    pairId: number;
+    /**
+     * @generated from protobuf field: double avg_weight = 2
+     */
+    avgWeight: number; // mean signed weight over the range's boundaries
+    /**
+     * @generated from protobuf field: double avg_abs_weight = 3
+     */
+    avgAbsWeight: number; // mean |weight|
+    /**
+     * @generated from protobuf field: double contribution = 4
+     */
+    contribution: number; // sum of hourly weight x price return, before costs
+    /**
+     * @generated from protobuf field: double avg_daily_turnover = 5
+     */
+    avgDailyTurnover: number; // sum |weight change| per day
+    /**
+     * @generated from protobuf field: int64 hours = 6
+     */
+    hours: number; // boundaries where it was held
+    /**
+     * @generated from protobuf field: bool excluded = 7
+     */
+    excluded: boolean; // left out of this backtest (exclude_pair_ids)
+}
+/**
  * PortfolioBacktestTracking compares a source's live weights with its backtest
  * series over the hours both exist: does live follow the research?
  *
@@ -1539,6 +1575,101 @@ class PortfolioRebalanceSweepPoint$Type extends MessageType<PortfolioRebalanceSw
  * @generated MessageType for protobuf message hypurr.PortfolioRebalanceSweepPoint
  */
 export const PortfolioRebalanceSweepPoint = new PortfolioRebalanceSweepPoint$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortfolioBacktestPair$Type extends MessageType<PortfolioBacktestPair> {
+    constructor() {
+        super("hypurr.PortfolioBacktestPair", [
+            { no: 1, name: "pair_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "avg_weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "avg_abs_weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "contribution", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "avg_daily_turnover", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "hours", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "excluded", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PortfolioBacktestPair>): PortfolioBacktestPair {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.pairId = 0;
+        message.avgWeight = 0;
+        message.avgAbsWeight = 0;
+        message.contribution = 0;
+        message.avgDailyTurnover = 0;
+        message.hours = 0;
+        message.excluded = false;
+        if (value !== undefined)
+            reflectionMergePartial<PortfolioBacktestPair>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PortfolioBacktestPair): PortfolioBacktestPair {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 pair_id */ 1:
+                    message.pairId = reader.int64().toNumber();
+                    break;
+                case /* double avg_weight */ 2:
+                    message.avgWeight = reader.double();
+                    break;
+                case /* double avg_abs_weight */ 3:
+                    message.avgAbsWeight = reader.double();
+                    break;
+                case /* double contribution */ 4:
+                    message.contribution = reader.double();
+                    break;
+                case /* double avg_daily_turnover */ 5:
+                    message.avgDailyTurnover = reader.double();
+                    break;
+                case /* int64 hours */ 6:
+                    message.hours = reader.int64().toNumber();
+                    break;
+                case /* bool excluded */ 7:
+                    message.excluded = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PortfolioBacktestPair, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 pair_id = 1; */
+        if (message.pairId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.pairId);
+        /* double avg_weight = 2; */
+        if (message.avgWeight !== 0)
+            writer.tag(2, WireType.Bit64).double(message.avgWeight);
+        /* double avg_abs_weight = 3; */
+        if (message.avgAbsWeight !== 0)
+            writer.tag(3, WireType.Bit64).double(message.avgAbsWeight);
+        /* double contribution = 4; */
+        if (message.contribution !== 0)
+            writer.tag(4, WireType.Bit64).double(message.contribution);
+        /* double avg_daily_turnover = 5; */
+        if (message.avgDailyTurnover !== 0)
+            writer.tag(5, WireType.Bit64).double(message.avgDailyTurnover);
+        /* int64 hours = 6; */
+        if (message.hours !== 0)
+            writer.tag(6, WireType.Varint).int64(message.hours);
+        /* bool excluded = 7; */
+        if (message.excluded !== false)
+            writer.tag(7, WireType.Varint).bool(message.excluded);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.PortfolioBacktestPair
+ */
+export const PortfolioBacktestPair = new PortfolioBacktestPair$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PortfolioBacktestTracking$Type extends MessageType<PortfolioBacktestTracking> {
     constructor() {

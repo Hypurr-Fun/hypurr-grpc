@@ -17,6 +17,7 @@ import { MessageType } from "@protobuf-ts/runtime";
 import { PortfolioOptimizeWeight } from "../portfolio";
 import { PortfolioOptimizeMethod } from "../portfolio";
 import { PortfolioWeightSnapshot } from "../portfolio";
+import { PortfolioBacktestPair } from "../portfolio";
 import { PortfolioRebalanceSweepPoint } from "../portfolio";
 import { PortfolioBacktestLegResult } from "../portfolio";
 import { PortfolioBacktestStats } from "../portfolio";
@@ -2339,6 +2340,13 @@ export interface PortfolioBacktestRequest {
      * @generated from protobuf field: repeated double rebalance_sweep = 12
      */
     rebalanceSweep: number[];
+    /**
+     * Pairs left out of every leg's targets, as if the sources never traded
+     * them; the rest of each target is kept as is (not rescaled).
+     *
+     * @generated from protobuf field: repeated int64 exclude_pair_ids = 13
+     */
+    excludePairIds: number[];
 }
 /**
  * @generated from protobuf message hypurr.PortfolioBacktestResponse
@@ -2384,6 +2392,13 @@ export interface PortfolioBacktestResponse {
      * @generated from protobuf field: double recommended_min_rebalance_pct = 9
      */
     recommendedMinRebalancePct: number;
+    /**
+     * Every pair the legs' weights hold over the range, excluded ones included
+     * (flagged), measured on the combined book before exclusion.
+     *
+     * @generated from protobuf field: repeated hypurr.PortfolioBacktestPair pairs = 10
+     */
+    pairs: PortfolioBacktestPair[];
 }
 /**
  * PortfolioSourceBacktestPush stores a research series for one of the user's
@@ -2539,6 +2554,12 @@ export interface PortfolioOptimizeRequest {
      * @generated from protobuf field: string rebalance_mode = 17
      */
     rebalanceMode: string; // "" = absolute
+    /**
+     * Pairs left out of every source's targets (see PortfolioBacktestRequest).
+     *
+     * @generated from protobuf field: repeated int64 exclude_pair_ids = 18
+     */
+    excludePairIds: number[];
 }
 /**
  * @generated from protobuf message hypurr.PortfolioOptimizeResponse
@@ -11646,7 +11667,8 @@ class PortfolioBacktestRequest$Type extends MessageType<PortfolioBacktestRequest
             { no: 9, name: "resolution", kind: "enum", T: () => ["hypurr.PortfolioBacktestResolution", PortfolioBacktestResolution, "PORTFOLIO_BACKTEST_RESOLUTION_"] },
             { no: 10, name: "min_rebalance_pct", kind: "message", T: () => DoubleValue },
             { no: 11, name: "rebalance_mode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 12, name: "rebalance_sweep", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 12, name: "rebalance_sweep", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 13, name: "exclude_pair_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioBacktestRequest>): PortfolioBacktestRequest {
@@ -11661,6 +11683,7 @@ class PortfolioBacktestRequest$Type extends MessageType<PortfolioBacktestRequest
         message.resolution = 0;
         message.rebalanceMode = "";
         message.rebalanceSweep = [];
+        message.excludePairIds = [];
         if (value !== undefined)
             reflectionMergePartial<PortfolioBacktestRequest>(this, message, value);
         return message;
@@ -11709,6 +11732,13 @@ class PortfolioBacktestRequest$Type extends MessageType<PortfolioBacktestRequest
                             message.rebalanceSweep.push(reader.double());
                     else
                         message.rebalanceSweep.push(reader.double());
+                    break;
+                case /* repeated int64 exclude_pair_ids */ 13:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.excludePairIds.push(reader.int64().toNumber());
+                    else
+                        message.excludePairIds.push(reader.int64().toNumber());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -11778,6 +11808,13 @@ class PortfolioBacktestRequest$Type extends MessageType<PortfolioBacktestRequest
                 writer.double(message.rebalanceSweep[i]);
             writer.join();
         }
+        /* repeated int64 exclude_pair_ids = 13; */
+        if (message.excludePairIds.length) {
+            writer.tag(13, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.excludePairIds.length; i++)
+                writer.int64(message.excludePairIds[i]);
+            writer.join();
+        }
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -11800,7 +11837,8 @@ class PortfolioBacktestResponse$Type extends MessageType<PortfolioBacktestRespon
             { no: 6, name: "warnings", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "benchmark_pair_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 8, name: "rebalance_sweep", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioRebalanceSweepPoint },
-            { no: 9, name: "recommended_min_rebalance_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 9, name: "recommended_min_rebalance_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "pairs", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioBacktestPair }
         ]);
     }
     create(value?: PartialMessage<PortfolioBacktestResponse>): PortfolioBacktestResponse {
@@ -11811,6 +11849,7 @@ class PortfolioBacktestResponse$Type extends MessageType<PortfolioBacktestRespon
         message.benchmarkPairId = 0;
         message.rebalanceSweep = [];
         message.recommendedMinRebalancePct = 0;
+        message.pairs = [];
         if (value !== undefined)
             reflectionMergePartial<PortfolioBacktestResponse>(this, message, value);
         return message;
@@ -11846,6 +11885,9 @@ class PortfolioBacktestResponse$Type extends MessageType<PortfolioBacktestRespon
                     break;
                 case /* double recommended_min_rebalance_pct */ 9:
                     message.recommendedMinRebalancePct = reader.double();
+                    break;
+                case /* repeated hypurr.PortfolioBacktestPair pairs */ 10:
+                    message.pairs.push(PortfolioBacktestPair.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -11886,6 +11928,9 @@ class PortfolioBacktestResponse$Type extends MessageType<PortfolioBacktestRespon
         /* double recommended_min_rebalance_pct = 9; */
         if (message.recommendedMinRebalancePct !== 0)
             writer.tag(9, WireType.Bit64).double(message.recommendedMinRebalancePct);
+        /* repeated hypurr.PortfolioBacktestPair pairs = 10; */
+        for (let i = 0; i < message.pairs.length; i++)
+            PortfolioBacktestPair.internalBinaryWrite(message.pairs[i], writer.tag(10, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -12106,7 +12151,8 @@ class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest
             { no: 14, name: "correlation_shrink", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 15, name: "target_leverage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 16, name: "rebalance_sweep", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 17, name: "rebalance_mode", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 17, name: "rebalance_mode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 18, name: "exclude_pair_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioOptimizeRequest>): PortfolioOptimizeRequest {
@@ -12127,6 +12173,7 @@ class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest
         message.targetLeverage = 0;
         message.rebalanceSweep = [];
         message.rebalanceMode = "";
+        message.excludePairIds = [];
         if (value !== undefined)
             reflectionMergePartial<PortfolioOptimizeRequest>(this, message, value);
         return message;
@@ -12190,6 +12237,13 @@ class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest
                     break;
                 case /* string rebalance_mode */ 17:
                     message.rebalanceMode = reader.string();
+                    break;
+                case /* repeated int64 exclude_pair_ids */ 18:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.excludePairIds.push(reader.int64().toNumber());
+                    else
+                        message.excludePairIds.push(reader.int64().toNumber());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -12274,6 +12328,13 @@ class PortfolioOptimizeRequest$Type extends MessageType<PortfolioOptimizeRequest
         /* string rebalance_mode = 17; */
         if (message.rebalanceMode !== "")
             writer.tag(17, WireType.LengthDelimited).string(message.rebalanceMode);
+        /* repeated int64 exclude_pair_ids = 18; */
+        if (message.excludePairIds.length) {
+            writer.tag(18, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.excludePairIds.length; i++)
+                writer.int64(message.excludePairIds[i]);
+            writer.join();
+        }
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
