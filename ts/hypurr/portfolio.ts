@@ -56,6 +56,18 @@ export interface PortfolioAllocator {
      * @generated from protobuf field: string rebalance_mode = 9
      */
     rebalanceMode: string;
+    /**
+     * Liquidity caps on the combined target: a pair holds at most this share of
+     * its open interest / 24h notional volume (the tighter), the trimmed weight
+     * going to the same side's other pairs. 0 = off.
+     *
+     * @generated from protobuf field: double liquidity_cap_oi_pct = 10
+     */
+    liquidityCapOiPct: number;
+    /**
+     * @generated from protobuf field: double liquidity_cap_volume_pct = 11
+     */
+    liquidityCapVolumePct: number;
 }
 /**
  * PortfolioSource is a shared source attached to one allocator: the
@@ -314,6 +326,17 @@ export interface PortfolioBacktestStats {
      * @generated from protobuf field: double avg_rebalance_gap = 22
      */
     avgRebalanceGap: number; // mean sum |held - target| after trading
+    /**
+     * Set when the backtest simulated liquidity caps (margin_usd and a cap in
+     * the request); 0 otherwise.
+     *
+     * @generated from protobuf field: double avg_capped_weight = 23
+     */
+    avgCappedWeight: number; // mean sum |target - capped| per hour
+    /**
+     * @generated from protobuf field: double min_cap_scale = 24
+     */
+    minCapScale: number; // smallest scale applied when a side did not fit (1 = never)
 }
 /**
  * PortfolioRebalanceSweepPoint is the portfolio replayed with one rebalance
@@ -646,7 +669,9 @@ class PortfolioAllocator$Type extends MessageType<PortfolioAllocator> {
             { no: 6, name: "min_rebalance_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 7, name: "enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 8, name: "sources", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioSource },
-            { no: 9, name: "rebalance_mode", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 9, name: "rebalance_mode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "liquidity_cap_oi_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "liquidity_cap_volume_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioAllocator>): PortfolioAllocator {
@@ -660,6 +685,8 @@ class PortfolioAllocator$Type extends MessageType<PortfolioAllocator> {
         message.enabled = false;
         message.sources = [];
         message.rebalanceMode = "";
+        message.liquidityCapOiPct = 0;
+        message.liquidityCapVolumePct = 0;
         if (value !== undefined)
             reflectionMergePartial<PortfolioAllocator>(this, message, value);
         return message;
@@ -695,6 +722,12 @@ class PortfolioAllocator$Type extends MessageType<PortfolioAllocator> {
                     break;
                 case /* string rebalance_mode */ 9:
                     message.rebalanceMode = reader.string();
+                    break;
+                case /* double liquidity_cap_oi_pct */ 10:
+                    message.liquidityCapOiPct = reader.double();
+                    break;
+                case /* double liquidity_cap_volume_pct */ 11:
+                    message.liquidityCapVolumePct = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -735,6 +768,12 @@ class PortfolioAllocator$Type extends MessageType<PortfolioAllocator> {
         /* string rebalance_mode = 9; */
         if (message.rebalanceMode !== "")
             writer.tag(9, WireType.LengthDelimited).string(message.rebalanceMode);
+        /* double liquidity_cap_oi_pct = 10; */
+        if (message.liquidityCapOiPct !== 0)
+            writer.tag(10, WireType.Bit64).double(message.liquidityCapOiPct);
+        /* double liquidity_cap_volume_pct = 11; */
+        if (message.liquidityCapVolumePct !== 0)
+            writer.tag(11, WireType.Bit64).double(message.liquidityCapVolumePct);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1282,7 +1321,9 @@ class PortfolioBacktestStats$Type extends MessageType<PortfolioBacktestStats> {
             { no: 19, name: "monthly", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PortfolioBacktestMonthlyReturn },
             { no: 20, name: "trades_per_day", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 21, name: "tracking_error", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 22, name: "avg_rebalance_gap", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 22, name: "avg_rebalance_gap", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 23, name: "avg_capped_weight", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 24, name: "min_cap_scale", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioBacktestStats>): PortfolioBacktestStats {
@@ -1309,6 +1350,8 @@ class PortfolioBacktestStats$Type extends MessageType<PortfolioBacktestStats> {
         message.tradesPerDay = 0;
         message.trackingError = 0;
         message.avgRebalanceGap = 0;
+        message.avgCappedWeight = 0;
+        message.minCapScale = 0;
         if (value !== undefined)
             reflectionMergePartial<PortfolioBacktestStats>(this, message, value);
         return message;
@@ -1383,6 +1426,12 @@ class PortfolioBacktestStats$Type extends MessageType<PortfolioBacktestStats> {
                     break;
                 case /* double avg_rebalance_gap */ 22:
                     message.avgRebalanceGap = reader.double();
+                    break;
+                case /* double avg_capped_weight */ 23:
+                    message.avgCappedWeight = reader.double();
+                    break;
+                case /* double min_cap_scale */ 24:
+                    message.minCapScale = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1462,6 +1511,12 @@ class PortfolioBacktestStats$Type extends MessageType<PortfolioBacktestStats> {
         /* double avg_rebalance_gap = 22; */
         if (message.avgRebalanceGap !== 0)
             writer.tag(22, WireType.Bit64).double(message.avgRebalanceGap);
+        /* double avg_capped_weight = 23; */
+        if (message.avgCappedWeight !== 0)
+            writer.tag(23, WireType.Bit64).double(message.avgCappedWeight);
+        /* double min_cap_scale = 24; */
+        if (message.minCapScale !== 0)
+            writer.tag(24, WireType.Bit64).double(message.minCapScale);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

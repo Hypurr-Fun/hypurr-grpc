@@ -1894,6 +1894,14 @@ export interface PortfolioAllocatorUpdateRequest {
      * @generated from protobuf field: google.protobuf.StringValue rebalance_mode = 6
      */
     rebalanceMode?: StringValue; // "absolute", "gross" or "relative"
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue liquidity_cap_oi_pct = 7
+     */
+    liquidityCapOiPct?: DoubleValue; // 0 = off; see PortfolioAllocator
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue liquidity_cap_volume_pct = 8
+     */
+    liquidityCapVolumePct?: DoubleValue; // 0 = off
 }
 /**
  * @generated from protobuf message hypurr.PortfolioAllocatorUpdateResponse
@@ -2347,6 +2355,23 @@ export interface PortfolioBacktestRequest {
      * @generated from protobuf field: repeated int64 exclude_pair_ids = 13
      */
     excludePairIds: number[];
+    /**
+     * Liquidity caps: the account equity at the start (USD) and the caps. The
+     * caps are applied against margin_usd x the simulated equity at each hour,
+     * using the pairs' current open interest and 24h volume (no liquidity
+     * history is stored yet), so a warning says so. Both needed together.
+     *
+     * @generated from protobuf field: double margin_usd = 14
+     */
+    marginUsd: number;
+    /**
+     * @generated from protobuf field: double liquidity_cap_oi_pct = 15
+     */
+    liquidityCapOiPct: number;
+    /**
+     * @generated from protobuf field: double liquidity_cap_volume_pct = 16
+     */
+    liquidityCapVolumePct: number;
 }
 /**
  * @generated from protobuf message hypurr.PortfolioBacktestResponse
@@ -10091,7 +10116,9 @@ class PortfolioAllocatorUpdateRequest$Type extends MessageType<PortfolioAllocato
             { no: 3, name: "enabled", kind: "message", T: () => BoolValue },
             { no: 4, name: "rebalance_interval", kind: "message", T: () => Int64Value },
             { no: 5, name: "min_rebalance_pct", kind: "message", T: () => DoubleValue },
-            { no: 6, name: "rebalance_mode", kind: "message", T: () => StringValue }
+            { no: 6, name: "rebalance_mode", kind: "message", T: () => StringValue },
+            { no: 7, name: "liquidity_cap_oi_pct", kind: "message", T: () => DoubleValue },
+            { no: 8, name: "liquidity_cap_volume_pct", kind: "message", T: () => DoubleValue }
         ]);
     }
     create(value?: PartialMessage<PortfolioAllocatorUpdateRequest>): PortfolioAllocatorUpdateRequest {
@@ -10124,6 +10151,12 @@ class PortfolioAllocatorUpdateRequest$Type extends MessageType<PortfolioAllocato
                     break;
                 case /* google.protobuf.StringValue rebalance_mode */ 6:
                     message.rebalanceMode = StringValue.internalBinaryRead(reader, reader.uint32(), options, message.rebalanceMode);
+                    break;
+                case /* google.protobuf.DoubleValue liquidity_cap_oi_pct */ 7:
+                    message.liquidityCapOiPct = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.liquidityCapOiPct);
+                    break;
+                case /* google.protobuf.DoubleValue liquidity_cap_volume_pct */ 8:
+                    message.liquidityCapVolumePct = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.liquidityCapVolumePct);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -10171,6 +10204,12 @@ class PortfolioAllocatorUpdateRequest$Type extends MessageType<PortfolioAllocato
         /* google.protobuf.StringValue rebalance_mode = 6; */
         if (message.rebalanceMode)
             StringValue.internalBinaryWrite(message.rebalanceMode, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue liquidity_cap_oi_pct = 7; */
+        if (message.liquidityCapOiPct)
+            DoubleValue.internalBinaryWrite(message.liquidityCapOiPct, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue liquidity_cap_volume_pct = 8; */
+        if (message.liquidityCapVolumePct)
+            DoubleValue.internalBinaryWrite(message.liquidityCapVolumePct, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -11668,7 +11707,10 @@ class PortfolioBacktestRequest$Type extends MessageType<PortfolioBacktestRequest
             { no: 10, name: "min_rebalance_pct", kind: "message", T: () => DoubleValue },
             { no: 11, name: "rebalance_mode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 12, name: "rebalance_sweep", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 13, name: "exclude_pair_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 13, name: "exclude_pair_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 14, name: "margin_usd", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 15, name: "liquidity_cap_oi_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 16, name: "liquidity_cap_volume_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioBacktestRequest>): PortfolioBacktestRequest {
@@ -11684,6 +11726,9 @@ class PortfolioBacktestRequest$Type extends MessageType<PortfolioBacktestRequest
         message.rebalanceMode = "";
         message.rebalanceSweep = [];
         message.excludePairIds = [];
+        message.marginUsd = 0;
+        message.liquidityCapOiPct = 0;
+        message.liquidityCapVolumePct = 0;
         if (value !== undefined)
             reflectionMergePartial<PortfolioBacktestRequest>(this, message, value);
         return message;
@@ -11739,6 +11784,15 @@ class PortfolioBacktestRequest$Type extends MessageType<PortfolioBacktestRequest
                             message.excludePairIds.push(reader.int64().toNumber());
                     else
                         message.excludePairIds.push(reader.int64().toNumber());
+                    break;
+                case /* double margin_usd */ 14:
+                    message.marginUsd = reader.double();
+                    break;
+                case /* double liquidity_cap_oi_pct */ 15:
+                    message.liquidityCapOiPct = reader.double();
+                    break;
+                case /* double liquidity_cap_volume_pct */ 16:
+                    message.liquidityCapVolumePct = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -11815,6 +11869,15 @@ class PortfolioBacktestRequest$Type extends MessageType<PortfolioBacktestRequest
                 writer.int64(message.excludePairIds[i]);
             writer.join();
         }
+        /* double margin_usd = 14; */
+        if (message.marginUsd !== 0)
+            writer.tag(14, WireType.Bit64).double(message.marginUsd);
+        /* double liquidity_cap_oi_pct = 15; */
+        if (message.liquidityCapOiPct !== 0)
+            writer.tag(15, WireType.Bit64).double(message.liquidityCapOiPct);
+        /* double liquidity_cap_volume_pct = 16; */
+        if (message.liquidityCapVolumePct !== 0)
+            writer.tag(16, WireType.Bit64).double(message.liquidityCapVolumePct);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

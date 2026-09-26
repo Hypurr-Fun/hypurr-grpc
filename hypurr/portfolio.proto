@@ -17,6 +17,11 @@ message PortfolioAllocator {
   // target gross exposure) or "relative" (gap / |pair target|). Exits always
   // trade whatever the mode.
   string rebalance_mode = 9;
+  // Liquidity caps on the combined target: a pair holds at most this share of
+  // its open interest / 24h notional volume (the tighter), the trimmed weight
+  // going to the same side's other pairs. 0 = off.
+  double liquidity_cap_oi_pct = 10;
+  double liquidity_cap_volume_pct = 11;
 }
 
 // PortfolioSource is a shared source attached to one allocator: the
@@ -127,6 +132,10 @@ message PortfolioBacktestStats {
   double trades_per_day = 20;        // pair trades per day
   double tracking_error = 21;        // annualised sd of daily return vs the always-on-target book
   double avg_rebalance_gap = 22;     // mean sum |held - target| after trading
+  // Set when the backtest simulated liquidity caps (margin_usd and a cap in
+  // the request); 0 otherwise.
+  double avg_capped_weight = 23;     // mean sum |target - capped| per hour
+  double min_cap_scale = 24;         // smallest scale applied when a side did not fit (1 = never)
 }
 
 // PortfolioRebalanceSweepPoint is the portfolio replayed with one rebalance

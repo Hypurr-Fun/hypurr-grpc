@@ -683,6 +683,8 @@ message PortfolioAllocatorUpdateRequest {
   google.protobuf.Int64Value rebalance_interval = 4;
   google.protobuf.DoubleValue min_rebalance_pct = 5;
   google.protobuf.StringValue rebalance_mode = 6;   // "absolute", "gross" or "relative"
+  google.protobuf.DoubleValue liquidity_cap_oi_pct = 7;       // 0 = off; see PortfolioAllocator
+  google.protobuf.DoubleValue liquidity_cap_volume_pct = 8;   // 0 = off
 }
 
 message PortfolioAllocatorUpdateResponse {
@@ -856,6 +858,13 @@ message PortfolioBacktestRequest {
   // Pairs left out of every leg's targets, as if the sources never traded
   // them; the rest of each target is kept as is (not rescaled).
   repeated int64 exclude_pair_ids = 13;
+  // Liquidity caps: the account equity at the start (USD) and the caps. The
+  // caps are applied against margin_usd x the simulated equity at each hour,
+  // using the pairs' current open interest and 24h volume (no liquidity
+  // history is stored yet), so a warning says so. Both needed together.
+  double margin_usd = 14;
+  double liquidity_cap_oi_pct = 15;
+  double liquidity_cap_volume_pct = 16;
 }
 
 message PortfolioBacktestResponse {
