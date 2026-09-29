@@ -74,6 +74,16 @@ class IosServiceStub:
                 request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.OpenOrdersRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.OpenOrdersResponse.FromString,
                 _registered_method=True)
+        self.Markets = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/Markets',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.MarketsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.MarketsResponse.FromString,
+                _registered_method=True)
+        self.Watchlist = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/Watchlist',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistResponse.FromString,
+                _registered_method=True)
 
 
 class IosServiceServicer:
@@ -104,7 +114,8 @@ class IosServiceServicer:
         raise NotImplementedError('Method not implemented!')
 
     def AssetDetailLiveUpdates(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """TODO: not market tick but needs candle
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -122,6 +133,18 @@ class IosServiceServicer:
         raise NotImplementedError('Method not implemented!')
 
     def OpenOrders(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Markets(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Watchlist(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -169,6 +192,16 @@ def add_IosServiceServicer_to_server(servicer, server):
                     servicer.OpenOrders,
                     request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.OpenOrdersRequest.FromString,
                     response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.OpenOrdersResponse.SerializeToString,
+            ),
+            'Markets': grpc.unary_unary_rpc_method_handler(
+                    servicer.Markets,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.MarketsRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.MarketsResponse.SerializeToString,
+            ),
+            'Watchlist': grpc.unary_unary_rpc_method_handler(
+                    servicer.Watchlist,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -387,6 +420,60 @@ class IosService:
             '/hypurr.ios.v2.IosService/OpenOrders',
             hypurr_dot_ios_dot_v2_dot_ios__pb2.OpenOrdersRequest.SerializeToString,
             hypurr_dot_ios_dot_v2_dot_ios__pb2.OpenOrdersResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Markets(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/Markets',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.MarketsRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.MarketsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Watchlist(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/Watchlist',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistResponse.FromString,
             options,
             channel_credentials,
             insecure,

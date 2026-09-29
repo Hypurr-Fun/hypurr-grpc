@@ -11,6 +11,8 @@ service IosService {
   rpc Candles(CandlesRequest) returns (.hypurr.ios.v2.Candles);
   rpc UserStream(UserStreamRequest) returns (stream UserSnapshot);
   rpc OpenOrders(OpenOrdersRequest) returns (OpenOrdersResponse);
+  rpc Markets(MarketsRequest) returns (MarketsResponse);
+  rpc Watchlist(WatchlistRequest) returns (WatchlistResponse);
 }
 
 // ==== Shared ====
@@ -670,4 +672,72 @@ enum RecurringBuyStatus {
   RECURRING_BUY_STATUS_PAUSED = 1;
   RECURRING_BUY_STATUS_SKIPPED = 2;
   RECURRING_BUY_STATUS_NOT_ENOUGH_FUNDS = 3;
+}
+
+// ==== Markets ====
+
+// Shared by Markets and Watchlist.
+message MarketWithCandles {
+  Market market = 1;
+  // Live price, same format as MarketQuote.price_decimal.
+  string price_decimal = 2;
+  // Live price against the first candle's open, e.g. 6.0 = +6%.
+  double period_change_percentage = 3;
+  // Oldest first; empty when the range has no observations.
+  repeated Candle candles = 4;
+}
+
+message MarketsRequest {
+  ChartPeriod chart_period = 1;
+  // Exactly one selection is required.
+  oneof selected_market {
+    MarketsSpotSelection spot = 2;
+    MarketsPerpSelection perp = 3;
+  }
+}
+
+message MarketsSpotSelection {
+  MarketsSpotFilter filter = 1;
+}
+
+enum MarketsSpotFilter {
+  MARKETS_SPOT_FILTER_ALL = 0;
+  MARKETS_SPOT_FILTER_TRENDING = 1;
+  MARKETS_SPOT_FILTER_GAINERS = 2;
+  MARKETS_SPOT_FILTER_LOSERS = 3;
+  MARKETS_SPOT_FILTER_NEW = 4;
+}
+
+message MarketsPerpSelection {
+  MarketsPerpFilter filter = 1;
+}
+
+enum MarketsPerpFilter {
+  MARKETS_PERP_FILTER_ALL = 0;
+  MARKETS_PERP_FILTER_CRYPTO = 1;
+  MARKETS_PERP_FILTER_STOCKS = 2;
+  MARKETS_PERP_FILTER_INDICES = 3;
+  MARKETS_PERP_FILTER_COMMODITIES = 4;
+}
+
+message MarketsResponse {
+  // Complete selected list, already filtered and in display order.
+  repeated MarketWithCandles items = 1;
+  // Effective candle bucket duration in seconds.
+  int64 candle_interval_seconds = 2;
+}
+
+// ==== Watchlist ====
+
+message WatchlistRequest {
+  // Watchlist membership comes from the authenticated user.
+  ChartPeriod chart_period = 1;
+}
+
+message WatchlistResponse {
+  // Spot markets first, then perps; newest first in each. Empty when the
+  // user has no saved markets.
+  repeated MarketWithCandles items = 1;
+  // Effective candle bucket duration in seconds.
+  int64 candle_interval_seconds = 2;
 }

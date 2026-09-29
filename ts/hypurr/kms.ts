@@ -409,10 +409,6 @@ export interface KmsAccountSignMessageRequest {
      * @generated from protobuf field: string instance_jwt = 2
      */
     instanceJwt: string;
-    /**
-     * @generated from protobuf field: string key_id = 4
-     */
-    keyId: string;
 }
 /**
  * @generated from protobuf message hypurr.KmsAccountSignMessageResponse
@@ -466,6 +462,28 @@ export interface KmsAccountApproveAgentResponse {
      * @generated from protobuf field: string agent_id = 2
      */
     agentId: string;
+}
+/**
+ * @generated from protobuf message hypurr.KmsAccountRevokeAgentRequest
+ */
+export interface KmsAccountRevokeAgentRequest {
+    /**
+     * @generated from protobuf field: bytes encrypted_payload = 1
+     */
+    encryptedPayload: Uint8Array;
+    /**
+     * @generated from protobuf field: string instance_jwt = 2
+     */
+    instanceJwt: string;
+}
+/**
+ * @generated from protobuf message hypurr.KmsAccountRevokeAgentResponse
+ */
+export interface KmsAccountRevokeAgentResponse {
+    /**
+     * @generated from protobuf field: bytes attestation = 1
+     */
+    attestation: Uint8Array;
 }
 /**
  * @generated from protobuf enum hypurr.KmsLoginIntentKind
@@ -2112,15 +2130,13 @@ class KmsAccountSignMessageRequest$Type extends MessageType<KmsAccountSignMessag
     constructor() {
         super("hypurr.KmsAccountSignMessageRequest", [
             { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "key_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsAccountSignMessageRequest>): KmsAccountSignMessageRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.encryptedPayload = new Uint8Array(0);
         message.instanceJwt = "";
-        message.keyId = "";
         if (value !== undefined)
             reflectionMergePartial<KmsAccountSignMessageRequest>(this, message, value);
         return message;
@@ -2135,9 +2151,6 @@ class KmsAccountSignMessageRequest$Type extends MessageType<KmsAccountSignMessag
                     break;
                 case /* string instance_jwt */ 2:
                     message.instanceJwt = reader.string();
-                    break;
-                case /* string key_id */ 4:
-                    message.keyId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2157,9 +2170,6 @@ class KmsAccountSignMessageRequest$Type extends MessageType<KmsAccountSignMessag
         /* string instance_jwt = 2; */
         if (message.instanceJwt !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
-        /* string key_id = 4; */
-        if (message.keyId !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.keyId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2421,6 +2431,108 @@ class KmsAccountApproveAgentResponse$Type extends MessageType<KmsAccountApproveA
  * @generated MessageType for protobuf message hypurr.KmsAccountApproveAgentResponse
  */
 export const KmsAccountApproveAgentResponse = new KmsAccountApproveAgentResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KmsAccountRevokeAgentRequest$Type extends MessageType<KmsAccountRevokeAgentRequest> {
+    constructor() {
+        super("hypurr.KmsAccountRevokeAgentRequest", [
+            { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KmsAccountRevokeAgentRequest>): KmsAccountRevokeAgentRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.encryptedPayload = new Uint8Array(0);
+        message.instanceJwt = "";
+        if (value !== undefined)
+            reflectionMergePartial<KmsAccountRevokeAgentRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsAccountRevokeAgentRequest): KmsAccountRevokeAgentRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bytes encrypted_payload */ 1:
+                    message.encryptedPayload = reader.bytes();
+                    break;
+                case /* string instance_jwt */ 2:
+                    message.instanceJwt = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsAccountRevokeAgentRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bytes encrypted_payload = 1; */
+        if (message.encryptedPayload.length)
+            writer.tag(1, WireType.LengthDelimited).bytes(message.encryptedPayload);
+        /* string instance_jwt = 2; */
+        if (message.instanceJwt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsAccountRevokeAgentRequest
+ */
+export const KmsAccountRevokeAgentRequest = new KmsAccountRevokeAgentRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KmsAccountRevokeAgentResponse$Type extends MessageType<KmsAccountRevokeAgentResponse> {
+    constructor() {
+        super("hypurr.KmsAccountRevokeAgentResponse", [
+            { no: 1, name: "attestation", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KmsAccountRevokeAgentResponse>): KmsAccountRevokeAgentResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.attestation = new Uint8Array(0);
+        if (value !== undefined)
+            reflectionMergePartial<KmsAccountRevokeAgentResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsAccountRevokeAgentResponse): KmsAccountRevokeAgentResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bytes attestation */ 1:
+                    message.attestation = reader.bytes();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsAccountRevokeAgentResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bytes attestation = 1; */
+        if (message.attestation.length)
+            writer.tag(1, WireType.LengthDelimited).bytes(message.attestation);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsAccountRevokeAgentResponse
+ */
+export const KmsAccountRevokeAgentResponse = new KmsAccountRevokeAgentResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.Kms
  */
@@ -2434,6 +2546,7 @@ export const Kms = new ServiceType("hypurr.Kms", [
     { name: "AccountShardSecret", options: {}, I: KmsAccountShardSecretRequest, O: KmsAccountShardSecretResponse },
     { name: "AccountSignMessage", options: {}, I: KmsAccountSignMessageRequest, O: KmsAccountSignMessageResponse },
     { name: "AccountApproveAgent", options: {}, I: KmsAccountApproveAgentRequest, O: KmsAccountApproveAgentResponse },
+    { name: "AccountRevokeAgent", options: {}, I: KmsAccountRevokeAgentRequest, O: KmsAccountRevokeAgentResponse },
     { name: "GetAccountInfo", options: {}, I: KmsGetAccountInfoRequest, O: KmsGetAccountInfoResponse },
     { name: "RequestFactorReset", options: {}, I: KmsRequestFactorResetRequest, O: KmsRequestFactorResetResponse },
     { name: "CancelFactorReset", options: {}, I: KmsCancelFactorResetRequest, O: KmsCancelFactorResetResponse },

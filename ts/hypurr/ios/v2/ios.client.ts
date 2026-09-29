@@ -4,6 +4,10 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { IosService } from "./ios";
+import type { WatchlistResponse } from "./ios";
+import type { WatchlistRequest } from "./ios";
+import type { MarketsResponse } from "./ios";
+import type { MarketsRequest } from "./ios";
 import type { OpenOrdersResponse } from "./ios";
 import type { OpenOrdersRequest } from "./ios";
 import type { UserSnapshot } from "./ios";
@@ -45,6 +49,8 @@ export interface IIosServiceClient {
      */
     assetDetail(input: AssetDetailRequest, options?: RpcOptions): UnaryCall<AssetDetailRequest, AssetDetailResponse>;
     /**
+     * TODO: not market tick but needs candle
+     *
      * @generated from protobuf rpc: AssetDetailLiveUpdates
      */
     assetDetailLiveUpdates(input: AssetDetailLiveUpdatesRequest, options?: RpcOptions): ServerStreamingCall<AssetDetailLiveUpdatesRequest, MarketTick>;
@@ -60,6 +66,14 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: OpenOrders
      */
     openOrders(input: OpenOrdersRequest, options?: RpcOptions): UnaryCall<OpenOrdersRequest, OpenOrdersResponse>;
+    /**
+     * @generated from protobuf rpc: Markets
+     */
+    markets(input: MarketsRequest, options?: RpcOptions): UnaryCall<MarketsRequest, MarketsResponse>;
+    /**
+     * @generated from protobuf rpc: Watchlist
+     */
+    watchlist(input: WatchlistRequest, options?: RpcOptions): UnaryCall<WatchlistRequest, WatchlistResponse>;
 }
 /**
  * @generated from protobuf service hypurr.ios.v2.IosService
@@ -99,6 +113,8 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
         return stackIntercept<AssetDetailRequest, AssetDetailResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * TODO: not market tick but needs candle
+     *
      * @generated from protobuf rpc: AssetDetailLiveUpdates
      */
     assetDetailLiveUpdates(input: AssetDetailLiveUpdatesRequest, options?: RpcOptions): ServerStreamingCall<AssetDetailLiveUpdatesRequest, MarketTick> {
@@ -125,5 +141,19 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
     openOrders(input: OpenOrdersRequest, options?: RpcOptions): UnaryCall<OpenOrdersRequest, OpenOrdersResponse> {
         const method = this.methods[7], opt = this._transport.mergeOptions(options);
         return stackIntercept<OpenOrdersRequest, OpenOrdersResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: Markets
+     */
+    markets(input: MarketsRequest, options?: RpcOptions): UnaryCall<MarketsRequest, MarketsResponse> {
+        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        return stackIntercept<MarketsRequest, MarketsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: Watchlist
+     */
+    watchlist(input: WatchlistRequest, options?: RpcOptions): UnaryCall<WatchlistRequest, WatchlistResponse> {
+        const method = this.methods[9], opt = this._transport.mergeOptions(options);
+        return stackIntercept<WatchlistRequest, WatchlistResponse>("unary", this._transport, method, opt, input);
     }
 }

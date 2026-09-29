@@ -18,6 +18,8 @@ import type { KmsRequestFactorResetResponse } from "./kms";
 import type { KmsRequestFactorResetRequest } from "./kms";
 import type { KmsGetAccountInfoResponse } from "./kms";
 import type { KmsGetAccountInfoRequest } from "./kms";
+import type { KmsAccountRevokeAgentResponse } from "./kms";
+import type { KmsAccountRevokeAgentRequest } from "./kms";
 import type { KmsAccountApproveAgentResponse } from "./kms";
 import type { KmsAccountApproveAgentRequest } from "./kms";
 import type { KmsAccountSignMessageResponse } from "./kms";
@@ -84,6 +86,10 @@ export interface IKmsClient {
      * @generated from protobuf rpc: AccountApproveAgent
      */
     accountApproveAgent(input: KmsAccountApproveAgentRequest, options?: RpcOptions): UnaryCall<KmsAccountApproveAgentRequest, KmsAccountApproveAgentResponse>;
+    /**
+     * @generated from protobuf rpc: AccountRevokeAgent
+     */
+    accountRevokeAgent(input: KmsAccountRevokeAgentRequest, options?: RpcOptions): UnaryCall<KmsAccountRevokeAgentRequest, KmsAccountRevokeAgentResponse>;
     /**
      * @generated from protobuf rpc: GetAccountInfo
      */
@@ -193,38 +199,45 @@ export class KmsClient implements IKmsClient, ServiceInfo {
         return stackIntercept<KmsAccountApproveAgentRequest, KmsAccountApproveAgentResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: AccountRevokeAgent
+     */
+    accountRevokeAgent(input: KmsAccountRevokeAgentRequest, options?: RpcOptions): UnaryCall<KmsAccountRevokeAgentRequest, KmsAccountRevokeAgentResponse> {
+        const method = this.methods[9], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsAccountRevokeAgentRequest, KmsAccountRevokeAgentResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: GetAccountInfo
      */
     getAccountInfo(input: KmsGetAccountInfoRequest, options?: RpcOptions): UnaryCall<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse> {
-        const method = this.methods[9], opt = this._transport.mergeOptions(options);
+        const method = this.methods[10], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: RequestFactorReset
      */
     requestFactorReset(input: KmsRequestFactorResetRequest, options?: RpcOptions): UnaryCall<KmsRequestFactorResetRequest, KmsRequestFactorResetResponse> {
-        const method = this.methods[10], opt = this._transport.mergeOptions(options);
+        const method = this.methods[11], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsRequestFactorResetRequest, KmsRequestFactorResetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: CancelFactorReset
      */
     cancelFactorReset(input: KmsCancelFactorResetRequest, options?: RpcOptions): UnaryCall<KmsCancelFactorResetRequest, KmsCancelFactorResetResponse> {
-        const method = this.methods[11], opt = this._transport.mergeOptions(options);
+        const method = this.methods[12], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsCancelFactorResetRequest, KmsCancelFactorResetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: ExecuteFactorReset
      */
     executeFactorReset(input: KmsExecuteFactorResetRequest, options?: RpcOptions): UnaryCall<KmsExecuteFactorResetRequest, KmsExecuteFactorResetResponse> {
-        const method = this.methods[12], opt = this._transport.mergeOptions(options);
+        const method = this.methods[13], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsExecuteFactorResetRequest, KmsExecuteFactorResetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: RecoverKeys
      */
     recoverKeys(input: KmsRecoverKeysRequest, options?: RpcOptions): UnaryCall<KmsRecoverKeysRequest, KmsRecoverKeysResponse> {
-        const method = this.methods[13], opt = this._transport.mergeOptions(options);
+        const method = this.methods[14], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsRecoverKeysRequest, KmsRecoverKeysResponse>("unary", this._transport, method, opt, input);
     }
     /**
@@ -233,14 +246,14 @@ export class KmsClient implements IKmsClient, ServiceInfo {
      * @generated from protobuf rpc: CompleteAccountHandoff
      */
     completeAccountHandoff(input: KmsCompleteAccountHandoffRequest, options?: RpcOptions): UnaryCall<KmsCompleteAccountHandoffRequest, KmsCompleteAccountHandoffResponse> {
-        const method = this.methods[14], opt = this._transport.mergeOptions(options);
+        const method = this.methods[15], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsCompleteAccountHandoffRequest, KmsCompleteAccountHandoffResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: RequestAgent
      */
     requestAgent(input: KmsRequestAgentRequest, options?: RpcOptions): UnaryCall<KmsRequestAgentRequest, KmsRequestAgentResponse> {
-        const method = this.methods[15], opt = this._transport.mergeOptions(options);
+        const method = this.methods[16], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsRequestAgentRequest, KmsRequestAgentResponse>("unary", this._transport, method, opt, input);
     }
 }

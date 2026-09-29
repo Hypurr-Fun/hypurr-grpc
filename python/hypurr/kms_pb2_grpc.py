@@ -81,6 +81,11 @@ class KmsStub:
                 request_serializer=hypurr_dot_kms__pb2.KmsAccountApproveAgentRequest.SerializeToString,
                 response_deserializer=hypurr_dot_kms__pb2.KmsAccountApproveAgentResponse.FromString,
                 _registered_method=True)
+        self.AccountRevokeAgent = channel.unary_unary(
+                '/hypurr.Kms/AccountRevokeAgent',
+                request_serializer=hypurr_dot_kms__pb2.KmsAccountRevokeAgentRequest.SerializeToString,
+                response_deserializer=hypurr_dot_kms__pb2.KmsAccountRevokeAgentResponse.FromString,
+                _registered_method=True)
         self.GetAccountInfo = channel.unary_unary(
                 '/hypurr.Kms/GetAccountInfo',
                 request_serializer=hypurr_dot_kms__pb2.KmsGetAccountInfoRequest.SerializeToString,
@@ -178,6 +183,12 @@ class KmsServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def AccountRevokeAgent(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetAccountInfo(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -268,6 +279,11 @@ def add_KmsServicer_to_server(servicer, server):
                     servicer.AccountApproveAgent,
                     request_deserializer=hypurr_dot_kms__pb2.KmsAccountApproveAgentRequest.FromString,
                     response_serializer=hypurr_dot_kms__pb2.KmsAccountApproveAgentResponse.SerializeToString,
+            ),
+            'AccountRevokeAgent': grpc.unary_unary_rpc_method_handler(
+                    servicer.AccountRevokeAgent,
+                    request_deserializer=hypurr_dot_kms__pb2.KmsAccountRevokeAgentRequest.FromString,
+                    response_serializer=hypurr_dot_kms__pb2.KmsAccountRevokeAgentResponse.SerializeToString,
             ),
             'GetAccountInfo': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAccountInfo,
@@ -550,6 +566,33 @@ class Kms:
             '/hypurr.Kms/AccountApproveAgent',
             hypurr_dot_kms__pb2.KmsAccountApproveAgentRequest.SerializeToString,
             hypurr_dot_kms__pb2.KmsAccountApproveAgentResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AccountRevokeAgent(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Kms/AccountRevokeAgent',
+            hypurr_dot_kms__pb2.KmsAccountRevokeAgentRequest.SerializeToString,
+            hypurr_dot_kms__pb2.KmsAccountRevokeAgentResponse.FromString,
             options,
             channel_credentials,
             insecure,
