@@ -49,7 +49,7 @@ export interface IIosServiceClient {
      */
     assetDetail(input: AssetDetailRequest, options?: RpcOptions): UnaryCall<AssetDetailRequest, AssetDetailResponse>;
     /**
-     * TODO: not market tick but needs candle
+     * TODO: not market tick but needs candle live
      *
      * @generated from protobuf rpc: AssetDetailLiveUpdates
      */
@@ -113,7 +113,7 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
         return stackIntercept<AssetDetailRequest, AssetDetailResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * TODO: not market tick but needs candle
+     * TODO: not market tick but needs candle live
      *
      * @generated from protobuf rpc: AssetDetailLiveUpdates
      */

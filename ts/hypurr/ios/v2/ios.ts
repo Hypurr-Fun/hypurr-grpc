@@ -302,7 +302,7 @@ export interface HomeMarketCategory {
  */
 export interface HomeMarketPrice {
     /**
-     * The price is the one of the asset's reference market.
+     * Price and history are the ones of market.
      *
      * @generated from protobuf field: hypurr.ios.v2.Asset asset = 1
      */
@@ -321,6 +321,14 @@ export interface HomeMarketPrice {
      * @generated from protobuf field: repeated hypurr.ios.v2.AssetPricePoint history = 3
      */
     history: AssetPricePoint[];
+    /**
+     * The market this row shows and trades: the perp the user holds a position
+     * in, else the book of a token the user holds, else the asset's reference
+     * market.
+     *
+     * @generated from protobuf field: hypurr.ios.v2.Market market = 4
+     */
+    market?: Market;
 }
 /**
  * @generated from protobuf message hypurr.ios.v2.AssetPricePoint
@@ -2737,7 +2745,8 @@ class HomeMarketPrice$Type extends MessageType<HomeMarketPrice> {
         super("hypurr.ios.v2.HomeMarketPrice", [
             { no: 1, name: "asset", kind: "message", T: () => Asset },
             { no: 2, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "history", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => AssetPricePoint }
+            { no: 3, name: "history", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => AssetPricePoint },
+            { no: 4, name: "market", kind: "message", T: () => Market }
         ]);
     }
     create(value?: PartialMessage<HomeMarketPrice>): HomeMarketPrice {
@@ -2762,6 +2771,9 @@ class HomeMarketPrice$Type extends MessageType<HomeMarketPrice> {
                 case /* repeated hypurr.ios.v2.AssetPricePoint history */ 3:
                     message.history.push(AssetPricePoint.internalBinaryRead(reader, reader.uint32(), options));
                     break;
+                case /* hypurr.ios.v2.Market market */ 4:
+                    message.market = Market.internalBinaryRead(reader, reader.uint32(), options, message.market);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2783,6 +2795,9 @@ class HomeMarketPrice$Type extends MessageType<HomeMarketPrice> {
         /* repeated hypurr.ios.v2.AssetPricePoint history = 3; */
         for (let i = 0; i < message.history.length; i++)
             AssetPricePoint.internalBinaryWrite(message.history[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.v2.Market market = 4; */
+        if (message.market)
+            Market.internalBinaryWrite(message.market, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

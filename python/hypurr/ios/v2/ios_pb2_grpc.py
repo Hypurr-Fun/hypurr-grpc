@@ -114,7 +114,7 @@ class IosServiceServicer:
         raise NotImplementedError('Method not implemented!')
 
     def AssetDetailLiveUpdates(self, request, context):
-        """TODO: not market tick but needs candle
+        """TODO: not market tick but needs candle live
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
