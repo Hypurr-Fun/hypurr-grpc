@@ -54,6 +54,7 @@ const (
 	Telegram_HyperliquidWalletImport_FullMethodName           = "/hypurr.Telegram/HyperliquidWalletImport"
 	Telegram_HyperliquidWalletDelete_FullMethodName           = "/hypurr.Telegram/HyperliquidWalletDelete"
 	Telegram_HyperliquidWalletSetPublic_FullMethodName        = "/hypurr.Telegram/HyperliquidWalletSetPublic"
+	Telegram_HyperliquidWalletSetArchived_FullMethodName      = "/hypurr.Telegram/HyperliquidWalletSetArchived"
 	Telegram_HyperliquidAgentSignatureCreate_FullMethodName   = "/hypurr.Telegram/HyperliquidAgentSignatureCreate"
 	Telegram_HyperliquidAgentWalletCreate_FullMethodName      = "/hypurr.Telegram/HyperliquidAgentWalletCreate"
 	Telegram_HyperliquidAgentWalletRenew_FullMethodName       = "/hypurr.Telegram/HyperliquidAgentWalletRenew"
@@ -138,6 +139,7 @@ type TelegramClient interface {
 	HyperliquidWalletImport(ctx context.Context, in *HyperliquidWalletImportRequest, opts ...grpc.CallOption) (*HyperliquidWalletImportResponse, error)
 	HyperliquidWalletDelete(ctx context.Context, in *HyperliquidWalletDeleteRequest, opts ...grpc.CallOption) (*HyperliquidWalletDeleteResponse, error)
 	HyperliquidWalletSetPublic(ctx context.Context, in *HyperliquidWalletSetPublicRequest, opts ...grpc.CallOption) (*HyperliquidWalletSetPublicResponse, error)
+	HyperliquidWalletSetArchived(ctx context.Context, in *HyperliquidWalletSetArchivedRequest, opts ...grpc.CallOption) (*HyperliquidWalletSetArchivedResponse, error)
 	HyperliquidAgentSignatureCreate(ctx context.Context, in *HyperliquidAgentSignatureCreateRequest, opts ...grpc.CallOption) (*HyperliquidAgentSignatureCreateResponse, error)
 	HyperliquidAgentWalletCreate(ctx context.Context, in *HyperliquidAgentWalletCreateRequest, opts ...grpc.CallOption) (*HyperliquidAgentWalletCreateResponse, error)
 	HyperliquidAgentWalletRenew(ctx context.Context, in *HyperliquidAgentWalletRenewRequest, opts ...grpc.CallOption) (*HyperliquidAgentWalletRenewResponse, error)
@@ -524,6 +526,16 @@ func (c *telegramClient) HyperliquidWalletSetPublic(ctx context.Context, in *Hyp
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HyperliquidWalletSetPublicResponse)
 	err := c.cc.Invoke(ctx, Telegram_HyperliquidWalletSetPublic_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *telegramClient) HyperliquidWalletSetArchived(ctx context.Context, in *HyperliquidWalletSetArchivedRequest, opts ...grpc.CallOption) (*HyperliquidWalletSetArchivedResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HyperliquidWalletSetArchivedResponse)
+	err := c.cc.Invoke(ctx, Telegram_HyperliquidWalletSetArchived_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -977,6 +989,7 @@ type TelegramServer interface {
 	HyperliquidWalletImport(context.Context, *HyperliquidWalletImportRequest) (*HyperliquidWalletImportResponse, error)
 	HyperliquidWalletDelete(context.Context, *HyperliquidWalletDeleteRequest) (*HyperliquidWalletDeleteResponse, error)
 	HyperliquidWalletSetPublic(context.Context, *HyperliquidWalletSetPublicRequest) (*HyperliquidWalletSetPublicResponse, error)
+	HyperliquidWalletSetArchived(context.Context, *HyperliquidWalletSetArchivedRequest) (*HyperliquidWalletSetArchivedResponse, error)
 	HyperliquidAgentSignatureCreate(context.Context, *HyperliquidAgentSignatureCreateRequest) (*HyperliquidAgentSignatureCreateResponse, error)
 	HyperliquidAgentWalletCreate(context.Context, *HyperliquidAgentWalletCreateRequest) (*HyperliquidAgentWalletCreateResponse, error)
 	HyperliquidAgentWalletRenew(context.Context, *HyperliquidAgentWalletRenewRequest) (*HyperliquidAgentWalletRenewResponse, error)
@@ -1127,6 +1140,9 @@ func (UnimplementedTelegramServer) HyperliquidWalletDelete(context.Context, *Hyp
 }
 func (UnimplementedTelegramServer) HyperliquidWalletSetPublic(context.Context, *HyperliquidWalletSetPublicRequest) (*HyperliquidWalletSetPublicResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidWalletSetPublic not implemented")
+}
+func (UnimplementedTelegramServer) HyperliquidWalletSetArchived(context.Context, *HyperliquidWalletSetArchivedRequest) (*HyperliquidWalletSetArchivedResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidWalletSetArchived not implemented")
 }
 func (UnimplementedTelegramServer) HyperliquidAgentSignatureCreate(context.Context, *HyperliquidAgentSignatureCreateRequest) (*HyperliquidAgentSignatureCreateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HyperliquidAgentSignatureCreate not implemented")
@@ -1863,6 +1879,24 @@ func _Telegram_HyperliquidWalletSetPublic_Handler(srv interface{}, ctx context.C
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TelegramServer).HyperliquidWalletSetPublic(ctx, req.(*HyperliquidWalletSetPublicRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Telegram_HyperliquidWalletSetArchived_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HyperliquidWalletSetArchivedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TelegramServer).HyperliquidWalletSetArchived(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Telegram_HyperliquidWalletSetArchived_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TelegramServer).HyperliquidWalletSetArchived(ctx, req.(*HyperliquidWalletSetArchivedRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2696,6 +2730,10 @@ var Telegram_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HyperliquidWalletSetPublic",
 			Handler:    _Telegram_HyperliquidWalletSetPublic_Handler,
+		},
+		{
+			MethodName: "HyperliquidWalletSetArchived",
+			Handler:    _Telegram_HyperliquidWalletSetArchived_Handler,
 		},
 		{
 			MethodName: "HyperliquidAgentSignatureCreate",

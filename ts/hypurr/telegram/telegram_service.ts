@@ -1386,6 +1386,34 @@ export interface HyperliquidWalletSetPublicResponse {
     wallet?: HyperliquidWallet;
 }
 /**
+ * @generated from protobuf message hypurr.HyperliquidWalletSetArchivedRequest
+ */
+export interface HyperliquidWalletSetArchivedRequest {
+    /**
+     * @generated from protobuf field: map<string, string> auth_data = 1
+     */
+    authData: {
+        [key: string]: string;
+    };
+    /**
+     * @generated from protobuf field: int64 wallet_id = 2
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: bool archived = 3
+     */
+    archived: boolean;
+}
+/**
+ * @generated from protobuf message hypurr.HyperliquidWalletSetArchivedResponse
+ */
+export interface HyperliquidWalletSetArchivedResponse {
+    /**
+     * @generated from protobuf field: hypurr.HyperliquidWallet wallet = 1
+     */
+    wallet?: HyperliquidWallet;
+}
+/**
  * @generated from protobuf message hypurr.HyperliquidAgentSignatureCreateRequest
  */
 export interface HyperliquidAgentSignatureCreateRequest {
@@ -8085,6 +8113,131 @@ class HyperliquidWalletSetPublicResponse$Type extends MessageType<HyperliquidWal
  */
 export const HyperliquidWalletSetPublicResponse = new HyperliquidWalletSetPublicResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidWalletSetArchivedRequest$Type extends MessageType<HyperliquidWalletSetArchivedRequest> {
+    constructor() {
+        super("hypurr.HyperliquidWalletSetArchivedRequest", [
+            { no: 1, name: "auth_data", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "archived", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidWalletSetArchivedRequest>): HyperliquidWalletSetArchivedRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.authData = {};
+        message.walletId = 0;
+        message.archived = false;
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidWalletSetArchivedRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidWalletSetArchivedRequest): HyperliquidWalletSetArchivedRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, string> auth_data */ 1:
+                    this.binaryReadMap1(message.authData, reader, options);
+                    break;
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* bool archived */ 3:
+                    message.archived = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: HyperliquidWalletSetArchivedRequest["authData"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof HyperliquidWalletSetArchivedRequest["authData"] | undefined, val: HyperliquidWalletSetArchivedRequest["authData"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for hypurr.HyperliquidWalletSetArchivedRequest.auth_data");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
+    internalBinaryWrite(message: HyperliquidWalletSetArchivedRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, string> auth_data = 1; */
+        for (let k of globalThis.Object.keys(message.authData))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.authData[k]).join();
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* bool archived = 3; */
+        if (message.archived !== false)
+            writer.tag(3, WireType.Varint).bool(message.archived);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidWalletSetArchivedRequest
+ */
+export const HyperliquidWalletSetArchivedRequest = new HyperliquidWalletSetArchivedRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidWalletSetArchivedResponse$Type extends MessageType<HyperliquidWalletSetArchivedResponse> {
+    constructor() {
+        super("hypurr.HyperliquidWalletSetArchivedResponse", [
+            { no: 1, name: "wallet", kind: "message", T: () => HyperliquidWallet }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidWalletSetArchivedResponse>): HyperliquidWalletSetArchivedResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidWalletSetArchivedResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidWalletSetArchivedResponse): HyperliquidWalletSetArchivedResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.HyperliquidWallet wallet */ 1:
+                    message.wallet = HyperliquidWallet.internalBinaryRead(reader, reader.uint32(), options, message.wallet);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidWalletSetArchivedResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.HyperliquidWallet wallet = 1; */
+        if (message.wallet)
+            HyperliquidWallet.internalBinaryWrite(message.wallet, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidWalletSetArchivedResponse
+ */
+export const HyperliquidWalletSetArchivedResponse = new HyperliquidWalletSetArchivedResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidAgentSignatureCreateRequest$Type extends MessageType<HyperliquidAgentSignatureCreateRequest> {
     constructor() {
         super("hypurr.HyperliquidAgentSignatureCreateRequest", [
@@ -12909,6 +13062,7 @@ export const Telegram = new ServiceType("hypurr.Telegram", [
     { name: "HyperliquidWalletImport", options: {}, I: HyperliquidWalletImportRequest, O: HyperliquidWalletImportResponse },
     { name: "HyperliquidWalletDelete", options: {}, I: HyperliquidWalletDeleteRequest, O: HyperliquidWalletDeleteResponse },
     { name: "HyperliquidWalletSetPublic", options: {}, I: HyperliquidWalletSetPublicRequest, O: HyperliquidWalletSetPublicResponse },
+    { name: "HyperliquidWalletSetArchived", options: {}, I: HyperliquidWalletSetArchivedRequest, O: HyperliquidWalletSetArchivedResponse },
     { name: "HyperliquidAgentSignatureCreate", options: {}, I: HyperliquidAgentSignatureCreateRequest, O: HyperliquidAgentSignatureCreateResponse },
     { name: "HyperliquidAgentWalletCreate", options: {}, I: HyperliquidAgentWalletCreateRequest, O: HyperliquidAgentWalletCreateResponse },
     { name: "HyperliquidAgentWalletRenew", options: {}, I: HyperliquidAgentWalletRenewRequest, O: HyperliquidAgentWalletRenewResponse },

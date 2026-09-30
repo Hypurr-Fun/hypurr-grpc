@@ -26,6 +26,8 @@ message HyperliquidWallet {
   bool is_subaccount = 16;
   double perp_balance = 17;
   repeated HyperliquidWalletPosition positions = 18;
+  // Hidden from the wallet list; the wallet stays usable.
+  bool archived = 19;
 }
 
 message HyperliquidWalletMovement {

@@ -92,6 +92,12 @@ export interface HyperliquidWallet {
      * @generated from protobuf field: repeated hypurr.HyperliquidWalletPosition positions = 18
      */
     positions: HyperliquidWalletPosition[];
+    /**
+     * Hidden from the wallet list; the wallet stays usable.
+     *
+     * @generated from protobuf field: bool archived = 19
+     */
+    archived: boolean;
 }
 /**
  * @generated from protobuf message hypurr.HyperliquidWalletMovement
@@ -430,7 +436,8 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
             { no: 15, name: "agent_ethereum_address", kind: "message", T: () => StringValue },
             { no: 16, name: "is_subaccount", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 17, name: "perp_balance", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 18, name: "positions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HyperliquidWalletPosition }
+            { no: 18, name: "positions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HyperliquidWalletPosition },
+            { no: 19, name: "archived", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<HyperliquidWallet>): HyperliquidWallet {
@@ -450,6 +457,7 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
         message.isSubaccount = false;
         message.perpBalance = 0;
         message.positions = [];
+        message.archived = false;
         if (value !== undefined)
             reflectionMergePartial<HyperliquidWallet>(this, message, value);
         return message;
@@ -512,6 +520,9 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
                     break;
                 case /* repeated hypurr.HyperliquidWalletPosition positions */ 18:
                     message.positions.push(HyperliquidWalletPosition.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* bool archived */ 19:
+                    message.archived = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -579,6 +590,9 @@ class HyperliquidWallet$Type extends MessageType<HyperliquidWallet> {
         /* repeated hypurr.HyperliquidWalletPosition positions = 18; */
         for (let i = 0; i < message.positions.length; i++)
             HyperliquidWalletPosition.internalBinaryWrite(message.positions[i], writer.tag(18, WireType.LengthDelimited).fork(), options).join();
+        /* bool archived = 19; */
+        if (message.archived !== false)
+            writer.tag(19, WireType.Varint).bool(message.archived);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

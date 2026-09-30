@@ -206,6 +206,11 @@ class TelegramStub:
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSetPublicRequest.SerializeToString,
                 response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSetPublicResponse.FromString,
                 _registered_method=True)
+        self.HyperliquidWalletSetArchived = channel.unary_unary(
+                '/hypurr.Telegram/HyperliquidWalletSetArchived',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSetArchivedRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSetArchivedResponse.FromString,
+                _registered_method=True)
         self.HyperliquidAgentSignatureCreate = channel.unary_unary(
                 '/hypurr.Telegram/HyperliquidAgentSignatureCreate',
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidAgentSignatureCreateRequest.SerializeToString,
@@ -606,6 +611,12 @@ class TelegramServicer:
         raise NotImplementedError('Method not implemented!')
 
     def HyperliquidWalletSetPublic(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def HyperliquidWalletSetArchived(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -1015,6 +1026,11 @@ def add_TelegramServicer_to_server(servicer, server):
                     servicer.HyperliquidWalletSetPublic,
                     request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSetPublicRequest.FromString,
                     response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSetPublicResponse.SerializeToString,
+            ),
+            'HyperliquidWalletSetArchived': grpc.unary_unary_rpc_method_handler(
+                    servicer.HyperliquidWalletSetArchived,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSetArchivedRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSetArchivedResponse.SerializeToString,
             ),
             'HyperliquidAgentSignatureCreate': grpc.unary_unary_rpc_method_handler(
                     servicer.HyperliquidAgentSignatureCreate,
@@ -2125,6 +2141,33 @@ class Telegram:
             '/hypurr.Telegram/HyperliquidWalletSetPublic',
             hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSetPublicRequest.SerializeToString,
             hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSetPublicResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def HyperliquidWalletSetArchived(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/HyperliquidWalletSetArchived',
+            hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSetArchivedRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletSetArchivedResponse.FromString,
             options,
             channel_credentials,
             insecure,

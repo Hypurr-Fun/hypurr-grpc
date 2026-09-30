@@ -487,6 +487,16 @@ message HyperliquidWalletSetPublicResponse {
   HyperliquidWallet wallet = 1;
 }
 
+message HyperliquidWalletSetArchivedRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  bool archived = 3;
+}
+
+message HyperliquidWalletSetArchivedResponse {
+  HyperliquidWallet wallet = 1;
+}
+
 message HyperliquidAgentSignatureCreateRequest {
   map<string, string> auth_data = 1;
   string address = 2;
@@ -1049,6 +1059,7 @@ service Telegram {
   rpc HyperliquidWalletImport (HyperliquidWalletImportRequest) returns (HyperliquidWalletImportResponse) {}
   rpc HyperliquidWalletDelete (HyperliquidWalletDeleteRequest) returns (HyperliquidWalletDeleteResponse) {}
   rpc HyperliquidWalletSetPublic (HyperliquidWalletSetPublicRequest) returns (HyperliquidWalletSetPublicResponse) {}
+  rpc HyperliquidWalletSetArchived (HyperliquidWalletSetArchivedRequest) returns (HyperliquidWalletSetArchivedResponse) {}
   rpc HyperliquidAgentSignatureCreate (HyperliquidAgentSignatureCreateRequest) returns (HyperliquidAgentSignatureCreateResponse) {}
   rpc HyperliquidAgentWalletCreate (HyperliquidAgentWalletCreateRequest) returns (HyperliquidAgentWalletCreateResponse) {}
   rpc HyperliquidAgentWalletRenew (HyperliquidAgentWalletRenewRequest) returns (HyperliquidAgentWalletRenewResponse) {}
