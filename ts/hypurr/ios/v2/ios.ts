@@ -848,7 +848,13 @@ export interface AssetDetailResponse {
     /**
      * @generated from protobuf field: hypurr.ios.v2.AssetDetailAbout about = 7
      */
-    about?: AssetDetailAbout; // TODO: add the open orders here.
+    about?: AssetDetailAbout;
+    /**
+     * The user's open orders on the selected market, in OpenOrders order.
+     *
+     * @generated from protobuf field: repeated hypurr.ios.v2.OpenOrder open_orders = 8
+     */
+    openOrders: OpenOrder[];
 }
 /**
  * @generated from protobuf message hypurr.ios.v2.Candles
@@ -1032,36 +1038,6 @@ export interface AssetDetailAboutLink {
      */
     url: string;
 }
-// ==== Asset detail live updates ====
-
-/**
- * Dedicated price stream for the open asset detail screen.
- *
- * @generated from protobuf message hypurr.ios.v2.AssetDetailLiveUpdatesRequest
- */
-export interface AssetDetailLiveUpdatesRequest {
-    /**
-     * @generated from protobuf field: uint64 market_id = 1
-     */
-    marketId: number;
-}
-/**
- * @generated from protobuf message hypurr.ios.v2.MarketTick
- */
-export interface MarketTick {
-    /**
-     * @generated from protobuf field: uint64 market_id = 1
-     */
-    marketId: number;
-    /**
-     * @generated from protobuf field: string occurred_at = 2
-     */
-    occurredAt: string; // RFC3339 UTC.
-    /**
-     * @generated from protobuf field: string price_decimal = 3
-     */
-    priceDecimal: string; // Same format as HomeMarketPrice.price_decimal.
-}
 // ==== Candles ====
 
 /**
@@ -1078,6 +1054,19 @@ export interface CandlesRequest {
      * @generated from protobuf field: hypurr.ios.v2.ChartPeriod chart_period = 2
      */
     chartPeriod?: ChartPeriod;
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.CandlesStreamRequest
+ */
+export interface CandlesStreamRequest {
+    /**
+     * @generated from protobuf field: uint64 market_id = 1
+     */
+    marketId: number;
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.ChartInterval interval = 2
+     */
+    interval: ChartInterval;
 }
 // ==== UserStream ====
 
@@ -4415,7 +4404,8 @@ class AssetDetailResponse$Type extends MessageType<AssetDetailResponse> {
             { no: 4, name: "candles", kind: "message", T: () => Candles },
             { no: 5, name: "stats", kind: "message", T: () => MarketStats },
             { no: 6, name: "recent_activity", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ActivityItem },
-            { no: 7, name: "about", kind: "message", T: () => AssetDetailAbout }
+            { no: 7, name: "about", kind: "message", T: () => AssetDetailAbout },
+            { no: 8, name: "open_orders", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => OpenOrder }
         ]);
     }
     create(value?: PartialMessage<AssetDetailResponse>): AssetDetailResponse {
@@ -4423,6 +4413,7 @@ class AssetDetailResponse$Type extends MessageType<AssetDetailResponse> {
         message.markets = [];
         message.selectedMarketId = 0;
         message.recentActivity = [];
+        message.openOrders = [];
         if (value !== undefined)
             reflectionMergePartial<AssetDetailResponse>(this, message, value);
         return message;
@@ -4452,6 +4443,9 @@ class AssetDetailResponse$Type extends MessageType<AssetDetailResponse> {
                     break;
                 case /* hypurr.ios.v2.AssetDetailAbout about */ 7:
                     message.about = AssetDetailAbout.internalBinaryRead(reader, reader.uint32(), options, message.about);
+                    break;
+                case /* repeated hypurr.ios.v2.OpenOrder open_orders */ 8:
+                    message.openOrders.push(OpenOrder.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4486,6 +4480,9 @@ class AssetDetailResponse$Type extends MessageType<AssetDetailResponse> {
         /* hypurr.ios.v2.AssetDetailAbout about = 7; */
         if (message.about)
             AssetDetailAbout.internalBinaryWrite(message.about, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.ios.v2.OpenOrder open_orders = 8; */
+        for (let i = 0; i < message.openOrders.length; i++)
+            OpenOrder.internalBinaryWrite(message.openOrders[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5038,116 +5035,6 @@ class AssetDetailAboutLink$Type extends MessageType<AssetDetailAboutLink> {
  */
 export const AssetDetailAboutLink = new AssetDetailAboutLink$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class AssetDetailLiveUpdatesRequest$Type extends MessageType<AssetDetailLiveUpdatesRequest> {
-    constructor() {
-        super("hypurr.ios.v2.AssetDetailLiveUpdatesRequest", [
-            { no: 1, name: "market_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
-        ]);
-    }
-    create(value?: PartialMessage<AssetDetailLiveUpdatesRequest>): AssetDetailLiveUpdatesRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.marketId = 0;
-        if (value !== undefined)
-            reflectionMergePartial<AssetDetailLiveUpdatesRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AssetDetailLiveUpdatesRequest): AssetDetailLiveUpdatesRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* uint64 market_id */ 1:
-                    message.marketId = reader.uint64().toNumber();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: AssetDetailLiveUpdatesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint64 market_id = 1; */
-        if (message.marketId !== 0)
-            writer.tag(1, WireType.Varint).uint64(message.marketId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.ios.v2.AssetDetailLiveUpdatesRequest
- */
-export const AssetDetailLiveUpdatesRequest = new AssetDetailLiveUpdatesRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class MarketTick$Type extends MessageType<MarketTick> {
-    constructor() {
-        super("hypurr.ios.v2.MarketTick", [
-            { no: 1, name: "market_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<MarketTick>): MarketTick {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.marketId = 0;
-        message.occurredAt = "";
-        message.priceDecimal = "";
-        if (value !== undefined)
-            reflectionMergePartial<MarketTick>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MarketTick): MarketTick {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* uint64 market_id */ 1:
-                    message.marketId = reader.uint64().toNumber();
-                    break;
-                case /* string occurred_at */ 2:
-                    message.occurredAt = reader.string();
-                    break;
-                case /* string price_decimal */ 3:
-                    message.priceDecimal = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: MarketTick, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint64 market_id = 1; */
-        if (message.marketId !== 0)
-            writer.tag(1, WireType.Varint).uint64(message.marketId);
-        /* string occurred_at = 2; */
-        if (message.occurredAt !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.occurredAt);
-        /* string price_decimal = 3; */
-        if (message.priceDecimal !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.priceDecimal);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message hypurr.ios.v2.MarketTick
- */
-export const MarketTick = new MarketTick$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class CandlesRequest$Type extends MessageType<CandlesRequest> {
     constructor() {
         super("hypurr.ios.v2.CandlesRequest", [
@@ -5209,6 +5096,61 @@ class CandlesRequest$Type extends MessageType<CandlesRequest> {
  * @generated MessageType for protobuf message hypurr.ios.v2.CandlesRequest
  */
 export const CandlesRequest = new CandlesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CandlesStreamRequest$Type extends MessageType<CandlesStreamRequest> {
+    constructor() {
+        super("hypurr.ios.v2.CandlesStreamRequest", [
+            { no: 1, name: "market_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "interval", kind: "enum", T: () => ["hypurr.ios.v2.ChartInterval", ChartInterval] }
+        ]);
+    }
+    create(value?: PartialMessage<CandlesStreamRequest>): CandlesStreamRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.marketId = 0;
+        message.interval = 0;
+        if (value !== undefined)
+            reflectionMergePartial<CandlesStreamRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CandlesStreamRequest): CandlesStreamRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 market_id */ 1:
+                    message.marketId = reader.uint64().toNumber();
+                    break;
+                case /* hypurr.ios.v2.ChartInterval interval */ 2:
+                    message.interval = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CandlesStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 market_id = 1; */
+        if (message.marketId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.marketId);
+        /* hypurr.ios.v2.ChartInterval interval = 2; */
+        if (message.interval !== 0)
+            writer.tag(2, WireType.Varint).int32(message.interval);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.CandlesStreamRequest
+ */
+export const CandlesStreamRequest = new CandlesStreamRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class UserStreamRequest$Type extends MessageType<UserStreamRequest> {
     constructor() {
@@ -7078,8 +7020,8 @@ export const IosService = new ServiceType("hypurr.ios.v2.IosService", [
     { name: "LiveAssetUpdates", serverStreaming: true, options: {}, I: LiveAssetUpdatesRequest, O: AssetTicks },
     { name: "Catalog", options: {}, I: CatalogRequest, O: CatalogResponse },
     { name: "AssetDetail", options: {}, I: AssetDetailRequest, O: AssetDetailResponse },
-    { name: "AssetDetailLiveUpdates", serverStreaming: true, options: {}, I: AssetDetailLiveUpdatesRequest, O: MarketTick },
     { name: "Candles", options: {}, I: CandlesRequest, O: Candles },
+    { name: "CandlesStream", serverStreaming: true, options: {}, I: CandlesStreamRequest, O: Candle },
     { name: "UserStream", serverStreaming: true, options: {}, I: UserStreamRequest, O: UserSnapshot },
     { name: "OpenOrders", options: {}, I: OpenOrdersRequest, O: OpenOrdersResponse },
     { name: "Markets", options: {}, I: MarketsRequest, O: MarketsResponse },

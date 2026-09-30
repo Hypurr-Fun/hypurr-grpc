@@ -19,16 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	IosService_Home_FullMethodName                   = "/hypurr.ios.v2.IosService/Home"
-	IosService_LiveAssetUpdates_FullMethodName       = "/hypurr.ios.v2.IosService/LiveAssetUpdates"
-	IosService_Catalog_FullMethodName                = "/hypurr.ios.v2.IosService/Catalog"
-	IosService_AssetDetail_FullMethodName            = "/hypurr.ios.v2.IosService/AssetDetail"
-	IosService_AssetDetailLiveUpdates_FullMethodName = "/hypurr.ios.v2.IosService/AssetDetailLiveUpdates"
-	IosService_Candles_FullMethodName                = "/hypurr.ios.v2.IosService/Candles"
-	IosService_UserStream_FullMethodName             = "/hypurr.ios.v2.IosService/UserStream"
-	IosService_OpenOrders_FullMethodName             = "/hypurr.ios.v2.IosService/OpenOrders"
-	IosService_Markets_FullMethodName                = "/hypurr.ios.v2.IosService/Markets"
-	IosService_Watchlist_FullMethodName              = "/hypurr.ios.v2.IosService/Watchlist"
+	IosService_Home_FullMethodName             = "/hypurr.ios.v2.IosService/Home"
+	IosService_LiveAssetUpdates_FullMethodName = "/hypurr.ios.v2.IosService/LiveAssetUpdates"
+	IosService_Catalog_FullMethodName          = "/hypurr.ios.v2.IosService/Catalog"
+	IosService_AssetDetail_FullMethodName      = "/hypurr.ios.v2.IosService/AssetDetail"
+	IosService_Candles_FullMethodName          = "/hypurr.ios.v2.IosService/Candles"
+	IosService_CandlesStream_FullMethodName    = "/hypurr.ios.v2.IosService/CandlesStream"
+	IosService_UserStream_FullMethodName       = "/hypurr.ios.v2.IosService/UserStream"
+	IosService_OpenOrders_FullMethodName       = "/hypurr.ios.v2.IosService/OpenOrders"
+	IosService_Markets_FullMethodName          = "/hypurr.ios.v2.IosService/Markets"
+	IosService_Watchlist_FullMethodName        = "/hypurr.ios.v2.IosService/Watchlist"
 )
 
 // IosServiceClient is the client API for IosService service.
@@ -39,9 +39,8 @@ type IosServiceClient interface {
 	LiveAssetUpdates(ctx context.Context, in *LiveAssetUpdatesRequest, opts ...grpc.CallOption) (IosService_LiveAssetUpdatesClient, error)
 	Catalog(ctx context.Context, in *CatalogRequest, opts ...grpc.CallOption) (*CatalogResponse, error)
 	AssetDetail(ctx context.Context, in *AssetDetailRequest, opts ...grpc.CallOption) (*AssetDetailResponse, error)
-	// TODO: not market tick but needs candle live
-	AssetDetailLiveUpdates(ctx context.Context, in *AssetDetailLiveUpdatesRequest, opts ...grpc.CallOption) (IosService_AssetDetailLiveUpdatesClient, error)
 	Candles(ctx context.Context, in *CandlesRequest, opts ...grpc.CallOption) (*Candles, error)
+	CandlesStream(ctx context.Context, in *CandlesStreamRequest, opts ...grpc.CallOption) (IosService_CandlesStreamClient, error)
 	UserStream(ctx context.Context, in *UserStreamRequest, opts ...grpc.CallOption) (IosService_UserStreamClient, error)
 	OpenOrders(ctx context.Context, in *OpenOrdersRequest, opts ...grpc.CallOption) (*OpenOrdersResponse, error)
 	Markets(ctx context.Context, in *MarketsRequest, opts ...grpc.CallOption) (*MarketsResponse, error)
@@ -119,13 +118,23 @@ func (c *iosServiceClient) AssetDetail(ctx context.Context, in *AssetDetailReque
 	return out, nil
 }
 
-func (c *iosServiceClient) AssetDetailLiveUpdates(ctx context.Context, in *AssetDetailLiveUpdatesRequest, opts ...grpc.CallOption) (IosService_AssetDetailLiveUpdatesClient, error) {
+func (c *iosServiceClient) Candles(ctx context.Context, in *CandlesRequest, opts ...grpc.CallOption) (*Candles, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &IosService_ServiceDesc.Streams[1], IosService_AssetDetailLiveUpdates_FullMethodName, cOpts...)
+	out := new(Candles)
+	err := c.cc.Invoke(ctx, IosService_Candles_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &iosServiceAssetDetailLiveUpdatesClient{ClientStream: stream}
+	return out, nil
+}
+
+func (c *iosServiceClient) CandlesStream(ctx context.Context, in *CandlesStreamRequest, opts ...grpc.CallOption) (IosService_CandlesStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &IosService_ServiceDesc.Streams[1], IosService_CandlesStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &iosServiceCandlesStreamClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -135,31 +144,21 @@ func (c *iosServiceClient) AssetDetailLiveUpdates(ctx context.Context, in *Asset
 	return x, nil
 }
 
-type IosService_AssetDetailLiveUpdatesClient interface {
-	Recv() (*MarketTick, error)
+type IosService_CandlesStreamClient interface {
+	Recv() (*Candle, error)
 	grpc.ClientStream
 }
 
-type iosServiceAssetDetailLiveUpdatesClient struct {
+type iosServiceCandlesStreamClient struct {
 	grpc.ClientStream
 }
 
-func (x *iosServiceAssetDetailLiveUpdatesClient) Recv() (*MarketTick, error) {
-	m := new(MarketTick)
+func (x *iosServiceCandlesStreamClient) Recv() (*Candle, error) {
+	m := new(Candle)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
-}
-
-func (c *iosServiceClient) Candles(ctx context.Context, in *CandlesRequest, opts ...grpc.CallOption) (*Candles, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Candles)
-	err := c.cc.Invoke(ctx, IosService_Candles_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *iosServiceClient) UserStream(ctx context.Context, in *UserStreamRequest, opts ...grpc.CallOption) (IosService_UserStreamClient, error) {
@@ -233,9 +232,8 @@ type IosServiceServer interface {
 	LiveAssetUpdates(*LiveAssetUpdatesRequest, IosService_LiveAssetUpdatesServer) error
 	Catalog(context.Context, *CatalogRequest) (*CatalogResponse, error)
 	AssetDetail(context.Context, *AssetDetailRequest) (*AssetDetailResponse, error)
-	// TODO: not market tick but needs candle live
-	AssetDetailLiveUpdates(*AssetDetailLiveUpdatesRequest, IosService_AssetDetailLiveUpdatesServer) error
 	Candles(context.Context, *CandlesRequest) (*Candles, error)
+	CandlesStream(*CandlesStreamRequest, IosService_CandlesStreamServer) error
 	UserStream(*UserStreamRequest, IosService_UserStreamServer) error
 	OpenOrders(context.Context, *OpenOrdersRequest) (*OpenOrdersResponse, error)
 	Markets(context.Context, *MarketsRequest) (*MarketsResponse, error)
@@ -259,11 +257,11 @@ func (UnimplementedIosServiceServer) Catalog(context.Context, *CatalogRequest) (
 func (UnimplementedIosServiceServer) AssetDetail(context.Context, *AssetDetailRequest) (*AssetDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AssetDetail not implemented")
 }
-func (UnimplementedIosServiceServer) AssetDetailLiveUpdates(*AssetDetailLiveUpdatesRequest, IosService_AssetDetailLiveUpdatesServer) error {
-	return status.Errorf(codes.Unimplemented, "method AssetDetailLiveUpdates not implemented")
-}
 func (UnimplementedIosServiceServer) Candles(context.Context, *CandlesRequest) (*Candles, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Candles not implemented")
+}
+func (UnimplementedIosServiceServer) CandlesStream(*CandlesStreamRequest, IosService_CandlesStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method CandlesStream not implemented")
 }
 func (UnimplementedIosServiceServer) UserStream(*UserStreamRequest, IosService_UserStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method UserStream not implemented")
@@ -365,27 +363,6 @@ func _IosService_AssetDetail_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _IosService_AssetDetailLiveUpdates_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(AssetDetailLiveUpdatesRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(IosServiceServer).AssetDetailLiveUpdates(m, &iosServiceAssetDetailLiveUpdatesServer{ServerStream: stream})
-}
-
-type IosService_AssetDetailLiveUpdatesServer interface {
-	Send(*MarketTick) error
-	grpc.ServerStream
-}
-
-type iosServiceAssetDetailLiveUpdatesServer struct {
-	grpc.ServerStream
-}
-
-func (x *iosServiceAssetDetailLiveUpdatesServer) Send(m *MarketTick) error {
-	return x.ServerStream.SendMsg(m)
-}
-
 func _IosService_Candles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CandlesRequest)
 	if err := dec(in); err != nil {
@@ -402,6 +379,27 @@ func _IosService_Candles_Handler(srv interface{}, ctx context.Context, dec func(
 		return srv.(IosServiceServer).Candles(ctx, req.(*CandlesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
+}
+
+func _IosService_CandlesStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(CandlesStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(IosServiceServer).CandlesStream(m, &iosServiceCandlesStreamServer{ServerStream: stream})
+}
+
+type IosService_CandlesStreamServer interface {
+	Send(*Candle) error
+	grpc.ServerStream
+}
+
+type iosServiceCandlesStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *iosServiceCandlesStreamServer) Send(m *Candle) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _IosService_UserStream_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -522,8 +520,8 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 		{
-			StreamName:    "AssetDetailLiveUpdates",
-			Handler:       _IosService_AssetDetailLiveUpdates_Handler,
+			StreamName:    "CandlesStream",
+			Handler:       _IosService_CandlesStream_Handler,
 			ServerStreams: true,
 		},
 		{

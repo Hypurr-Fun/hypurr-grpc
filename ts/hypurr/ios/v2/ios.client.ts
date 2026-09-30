@@ -12,10 +12,10 @@ import type { OpenOrdersResponse } from "./ios";
 import type { OpenOrdersRequest } from "./ios";
 import type { UserSnapshot } from "./ios";
 import type { UserStreamRequest } from "./ios";
+import type { Candle } from "./ios";
+import type { CandlesStreamRequest } from "./ios";
 import type { Candles } from "./ios";
 import type { CandlesRequest } from "./ios";
-import type { MarketTick } from "./ios";
-import type { AssetDetailLiveUpdatesRequest } from "./ios";
 import type { AssetDetailResponse } from "./ios";
 import type { AssetDetailRequest } from "./ios";
 import type { CatalogResponse } from "./ios";
@@ -49,15 +49,13 @@ export interface IIosServiceClient {
      */
     assetDetail(input: AssetDetailRequest, options?: RpcOptions): UnaryCall<AssetDetailRequest, AssetDetailResponse>;
     /**
-     * TODO: not market tick but needs candle live
-     *
-     * @generated from protobuf rpc: AssetDetailLiveUpdates
-     */
-    assetDetailLiveUpdates(input: AssetDetailLiveUpdatesRequest, options?: RpcOptions): ServerStreamingCall<AssetDetailLiveUpdatesRequest, MarketTick>;
-    /**
      * @generated from protobuf rpc: Candles
      */
     candles(input: CandlesRequest, options?: RpcOptions): UnaryCall<CandlesRequest, Candles>;
+    /**
+     * @generated from protobuf rpc: CandlesStream
+     */
+    candlesStream(input: CandlesStreamRequest, options?: RpcOptions): ServerStreamingCall<CandlesStreamRequest, Candle>;
     /**
      * @generated from protobuf rpc: UserStream
      */
@@ -113,20 +111,18 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
         return stackIntercept<AssetDetailRequest, AssetDetailResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * TODO: not market tick but needs candle live
-     *
-     * @generated from protobuf rpc: AssetDetailLiveUpdates
-     */
-    assetDetailLiveUpdates(input: AssetDetailLiveUpdatesRequest, options?: RpcOptions): ServerStreamingCall<AssetDetailLiveUpdatesRequest, MarketTick> {
-        const method = this.methods[4], opt = this._transport.mergeOptions(options);
-        return stackIntercept<AssetDetailLiveUpdatesRequest, MarketTick>("serverStreaming", this._transport, method, opt, input);
-    }
-    /**
      * @generated from protobuf rpc: Candles
      */
     candles(input: CandlesRequest, options?: RpcOptions): UnaryCall<CandlesRequest, Candles> {
-        const method = this.methods[5], opt = this._transport.mergeOptions(options);
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<CandlesRequest, Candles>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: CandlesStream
+     */
+    candlesStream(input: CandlesStreamRequest, options?: RpcOptions): ServerStreamingCall<CandlesStreamRequest, Candle> {
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
+        return stackIntercept<CandlesStreamRequest, Candle>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: UserStream

@@ -159,6 +159,11 @@ class HyperCoreStub:
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCResponse.FromString,
                 _registered_method=True)
+        self.OHLCStream = channel.stream_stream(
+                '/hypercore.HyperCore/OHLCStream',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCStreamRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCStreamResponse.FromString,
+                _registered_method=True)
         self.HighLow = channel.unary_unary(
                 '/hypercore.HyperCore/HighLow',
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowRequest.SerializeToString,
@@ -325,6 +330,12 @@ class HyperCoreServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def OHLCStream(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def HighLow(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -464,6 +475,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     servicer.OHLC,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCResponse.SerializeToString,
+            ),
+            'OHLCStream': grpc.stream_stream_rpc_method_handler(
+                    servicer.OHLCStream,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCStreamRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCStreamResponse.SerializeToString,
             ),
             'HighLow': grpc.unary_unary_rpc_method_handler(
                     servicer.HighLow,
@@ -1151,6 +1167,33 @@ class HyperCore:
             '/hypercore.HyperCore/OHLC',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def OHLCStream(request_iterator,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.stream_stream(
+            request_iterator,
+            target,
+            '/hypercore.HyperCore/OHLCStream',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCStreamRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCStreamResponse.FromString,
             options,
             channel_credentials,
             insecure,

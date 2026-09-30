@@ -1754,6 +1754,57 @@ export interface OHLCResponse {
     series: OHLCSeries[]; // request order
 }
 /**
+ * Each request replaces the whole subscription.
+ *
+ * @generated from protobuf message hypercore.OHLCStreamRequest
+ */
+export interface OHLCStreamRequest {
+    /**
+     * @generated from protobuf field: repeated hypercore.OHLCPair pairs = 1
+     */
+    pairs: OHLCPair[];
+}
+/**
+ * @generated from protobuf message hypercore.OHLCPair
+ */
+export interface OHLCPair {
+    /**
+     * @generated from protobuf field: int64 instrument_id = 1
+     */
+    instrumentId: number;
+    /**
+     * @generated from protobuf field: hypercore.OHLCInterval interval = 2
+     */
+    interval: OHLCInterval;
+}
+/**
+ * One message per tick: the subscribed pairs whose open candle changed.
+ * After a request, it also carries the open candle of each added pair.
+ * Like the HL candle ws, a window opens at its first trade and a window
+ * with no trade is not sent.
+ *
+ * @generated from protobuf message hypercore.OHLCStreamResponse
+ */
+export interface OHLCStreamResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.OHLCUpdate updates = 1
+     */
+    updates: OHLCUpdate[];
+}
+/**
+ * @generated from protobuf message hypercore.OHLCUpdate
+ */
+export interface OHLCUpdate {
+    /**
+     * @generated from protobuf field: hypercore.OHLCPair pair = 1
+     */
+    pair?: OHLCPair;
+    /**
+     * @generated from protobuf field: hypercore.OHLC candle = 2
+     */
+    candle?: OHLC; // same fields and units as OHLC
+}
+/**
  * @generated from protobuf message hypercore.HighLowRequest
  */
 export interface HighLowRequest {
@@ -7880,6 +7931,208 @@ class OHLCResponse$Type extends MessageType<OHLCResponse> {
  */
 export const OHLCResponse = new OHLCResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class OHLCStreamRequest$Type extends MessageType<OHLCStreamRequest> {
+    constructor() {
+        super("hypercore.OHLCStreamRequest", [
+            { no: 1, name: "pairs", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => OHLCPair }
+        ]);
+    }
+    create(value?: PartialMessage<OHLCStreamRequest>): OHLCStreamRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.pairs = [];
+        if (value !== undefined)
+            reflectionMergePartial<OHLCStreamRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OHLCStreamRequest): OHLCStreamRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.OHLCPair pairs */ 1:
+                    message.pairs.push(OHLCPair.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OHLCStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.OHLCPair pairs = 1; */
+        for (let i = 0; i < message.pairs.length; i++)
+            OHLCPair.internalBinaryWrite(message.pairs[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.OHLCStreamRequest
+ */
+export const OHLCStreamRequest = new OHLCStreamRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OHLCPair$Type extends MessageType<OHLCPair> {
+    constructor() {
+        super("hypercore.OHLCPair", [
+            { no: 1, name: "instrument_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "interval", kind: "enum", T: () => ["hypercore.OHLCInterval", OHLCInterval] }
+        ]);
+    }
+    create(value?: PartialMessage<OHLCPair>): OHLCPair {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrumentId = 0;
+        message.interval = 0;
+        if (value !== undefined)
+            reflectionMergePartial<OHLCPair>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OHLCPair): OHLCPair {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 instrument_id */ 1:
+                    message.instrumentId = reader.int64().toNumber();
+                    break;
+                case /* hypercore.OHLCInterval interval */ 2:
+                    message.interval = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OHLCPair, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 instrument_id = 1; */
+        if (message.instrumentId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.instrumentId);
+        /* hypercore.OHLCInterval interval = 2; */
+        if (message.interval !== 0)
+            writer.tag(2, WireType.Varint).int32(message.interval);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.OHLCPair
+ */
+export const OHLCPair = new OHLCPair$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OHLCStreamResponse$Type extends MessageType<OHLCStreamResponse> {
+    constructor() {
+        super("hypercore.OHLCStreamResponse", [
+            { no: 1, name: "updates", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => OHLCUpdate }
+        ]);
+    }
+    create(value?: PartialMessage<OHLCStreamResponse>): OHLCStreamResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.updates = [];
+        if (value !== undefined)
+            reflectionMergePartial<OHLCStreamResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OHLCStreamResponse): OHLCStreamResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.OHLCUpdate updates */ 1:
+                    message.updates.push(OHLCUpdate.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OHLCStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.OHLCUpdate updates = 1; */
+        for (let i = 0; i < message.updates.length; i++)
+            OHLCUpdate.internalBinaryWrite(message.updates[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.OHLCStreamResponse
+ */
+export const OHLCStreamResponse = new OHLCStreamResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OHLCUpdate$Type extends MessageType<OHLCUpdate> {
+    constructor() {
+        super("hypercore.OHLCUpdate", [
+            { no: 1, name: "pair", kind: "message", T: () => OHLCPair },
+            { no: 2, name: "candle", kind: "message", T: () => OHLC }
+        ]);
+    }
+    create(value?: PartialMessage<OHLCUpdate>): OHLCUpdate {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<OHLCUpdate>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OHLCUpdate): OHLCUpdate {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypercore.OHLCPair pair */ 1:
+                    message.pair = OHLCPair.internalBinaryRead(reader, reader.uint32(), options, message.pair);
+                    break;
+                case /* hypercore.OHLC candle */ 2:
+                    message.candle = OHLC.internalBinaryRead(reader, reader.uint32(), options, message.candle);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OHLCUpdate, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypercore.OHLCPair pair = 1; */
+        if (message.pair)
+            OHLCPair.internalBinaryWrite(message.pair, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* hypercore.OHLC candle = 2; */
+        if (message.candle)
+            OHLC.internalBinaryWrite(message.candle, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.OHLCUpdate
+ */
+export const OHLCUpdate = new OHLCUpdate$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class HighLowRequest$Type extends MessageType<HighLowRequest> {
     constructor() {
         super("hypercore.HighLowRequest", [
@@ -8338,6 +8591,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "DirtyWallets", options: {}, I: DirtyWalletsRequest, O: DirtyWalletsResponse },
     { name: "WalletTrades", options: {}, I: WalletTradesRequest, O: WalletTradesResponse },
     { name: "OHLC", options: {}, I: OHLCRequest, O: OHLCResponse },
+    { name: "OHLCStream", serverStreaming: true, clientStreaming: true, options: {}, I: OHLCStreamRequest, O: OHLCStreamResponse },
     { name: "HighLow", options: {}, I: HighLowRequest, O: HighLowResponse },
     { name: "PnlRank", options: {}, I: PnlRankRequest, O: PnlRankResponse }
 ]);

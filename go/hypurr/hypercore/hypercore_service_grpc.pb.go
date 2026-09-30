@@ -44,6 +44,7 @@ const (
 	HyperCore_DirtyWallets_FullMethodName                      = "/hypercore.HyperCore/DirtyWallets"
 	HyperCore_WalletTrades_FullMethodName                      = "/hypercore.HyperCore/WalletTrades"
 	HyperCore_OHLC_FullMethodName                              = "/hypercore.HyperCore/OHLC"
+	HyperCore_OHLCStream_FullMethodName                        = "/hypercore.HyperCore/OHLCStream"
 	HyperCore_HighLow_FullMethodName                           = "/hypercore.HyperCore/HighLow"
 	HyperCore_PnlRank_FullMethodName                           = "/hypercore.HyperCore/PnlRank"
 )
@@ -78,6 +79,7 @@ type HyperCoreClient interface {
 	DirtyWallets(ctx context.Context, in *DirtyWalletsRequest, opts ...grpc.CallOption) (*DirtyWalletsResponse, error)
 	WalletTrades(ctx context.Context, in *WalletTradesRequest, opts ...grpc.CallOption) (*WalletTradesResponse, error)
 	OHLC(ctx context.Context, in *OHLCRequest, opts ...grpc.CallOption) (*OHLCResponse, error)
+	OHLCStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_OHLCStreamClient, error)
 	HighLow(ctx context.Context, in *HighLowRequest, opts ...grpc.CallOption) (*HighLowResponse, error)
 	PnlRank(ctx context.Context, in *PnlRankRequest, opts ...grpc.CallOption) (*PnlRankResponse, error)
 }
@@ -454,6 +456,38 @@ func (c *hyperCoreClient) OHLC(ctx context.Context, in *OHLCRequest, opts ...grp
 	return out, nil
 }
 
+func (c *hyperCoreClient) OHLCStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_OHLCStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[5], HyperCore_OHLCStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &hyperCoreOHLCStreamClient{ClientStream: stream}
+	return x, nil
+}
+
+type HyperCore_OHLCStreamClient interface {
+	Send(*OHLCStreamRequest) error
+	Recv() (*OHLCStreamResponse, error)
+	grpc.ClientStream
+}
+
+type hyperCoreOHLCStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *hyperCoreOHLCStreamClient) Send(m *OHLCStreamRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *hyperCoreOHLCStreamClient) Recv() (*OHLCStreamResponse, error) {
+	m := new(OHLCStreamResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *hyperCoreClient) HighLow(ctx context.Context, in *HighLowRequest, opts ...grpc.CallOption) (*HighLowResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HighLowResponse)
@@ -504,6 +538,7 @@ type HyperCoreServer interface {
 	DirtyWallets(context.Context, *DirtyWalletsRequest) (*DirtyWalletsResponse, error)
 	WalletTrades(context.Context, *WalletTradesRequest) (*WalletTradesResponse, error)
 	OHLC(context.Context, *OHLCRequest) (*OHLCResponse, error)
+	OHLCStream(HyperCore_OHLCStreamServer) error
 	HighLow(context.Context, *HighLowRequest) (*HighLowResponse, error)
 	PnlRank(context.Context, *PnlRankRequest) (*PnlRankResponse, error)
 	mustEmbedUnimplementedHyperCoreServer()
@@ -587,6 +622,9 @@ func (UnimplementedHyperCoreServer) WalletTrades(context.Context, *WalletTradesR
 }
 func (UnimplementedHyperCoreServer) OHLC(context.Context, *OHLCRequest) (*OHLCResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OHLC not implemented")
+}
+func (UnimplementedHyperCoreServer) OHLCStream(HyperCore_OHLCStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method OHLCStream not implemented")
 }
 func (UnimplementedHyperCoreServer) HighLow(context.Context, *HighLowRequest) (*HighLowResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HighLow not implemented")
@@ -1077,6 +1115,32 @@ func _HyperCore_OHLC_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_OHLCStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(HyperCoreServer).OHLCStream(&hyperCoreOHLCStreamServer{ServerStream: stream})
+}
+
+type HyperCore_OHLCStreamServer interface {
+	Send(*OHLCStreamResponse) error
+	Recv() (*OHLCStreamRequest, error)
+	grpc.ServerStream
+}
+
+type hyperCoreOHLCStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *hyperCoreOHLCStreamServer) Send(m *OHLCStreamResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *hyperCoreOHLCStreamServer) Recv() (*OHLCStreamRequest, error) {
+	m := new(OHLCStreamRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func _HyperCore_HighLow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HighLowRequest)
 	if err := dec(in); err != nil {
@@ -1235,6 +1299,12 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 			StreamName:    "WalletEventsStream",
 			Handler:       _HyperCore_WalletEventsStream_Handler,
 			ServerStreams: true,
+		},
+		{
+			StreamName:    "OHLCStream",
+			Handler:       _HyperCore_OHLCStream_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
 		},
 	},
 	Metadata: "hypurr/hypercore/hypercore_service.proto",

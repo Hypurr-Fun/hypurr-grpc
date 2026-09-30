@@ -727,6 +727,29 @@ message OHLCResponse {
   repeated OHLCSeries series = 1; // request order
 }
 
+// Each request replaces the whole subscription.
+message OHLCStreamRequest {
+  repeated OHLCPair pairs = 1;
+}
+
+message OHLCPair {
+  int64        instrument_id = 1;
+  OHLCInterval interval      = 2;
+}
+
+// One message per tick: the subscribed pairs whose open candle changed.
+// After a request, it also carries the open candle of each added pair.
+// Like the HL candle ws, a window opens at its first trade and a window
+// with no trade is not sent.
+message OHLCStreamResponse {
+  repeated OHLCUpdate updates = 1;
+}
+
+message OHLCUpdate {
+  OHLCPair pair   = 1;
+  OHLC     candle = 2; // same fields and units as OHLC
+}
+
 message HighLowRequest {
   int64 instrument_id = 1; // same convention as CandlesRequest.instrument_id
   int64 from_ts       = 2; // inclusive, unix seconds; 0 = earliest
@@ -810,6 +833,7 @@ service HyperCore {
   rpc DirtyWallets(DirtyWalletsRequest) returns (DirtyWalletsResponse) {}
   rpc WalletTrades(WalletTradesRequest) returns (WalletTradesResponse) {}
   rpc OHLC(OHLCRequest) returns (OHLCResponse) {}
+  rpc OHLCStream(stream OHLCStreamRequest) returns (stream OHLCStreamResponse) {}
   rpc HighLow(HighLowRequest) returns (HighLowResponse) {}
   rpc PnlRank(PnlRankRequest) returns (PnlRankResponse) {}
 }
