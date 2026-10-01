@@ -13,6 +13,8 @@ service IosService {
   rpc OpenOrders(OpenOrdersRequest) returns (OpenOrdersResponse);
   rpc Markets(MarketsRequest) returns (MarketsResponse);
   rpc Watchlist(WatchlistRequest) returns (WatchlistResponse);
+  rpc AddToWatchlist(AddToWatchlistRequest) returns (WatchlistMutationResponse);
+  rpc RemoveFromWatchlist(RemoveFromWatchlistRequest) returns (WatchlistMutationResponse);
 }
 
 // ==== Shared ====
@@ -733,9 +735,26 @@ message WatchlistRequest {
 }
 
 message WatchlistResponse {
-  // Spot markets first, then perps; newest first in each. Empty when the
+  // Spot markets first, then perps; 24h volume desc in each. Empty when the
   // user has no saved markets.
   repeated MarketWithCandles items = 1;
   // Effective candle bucket duration in seconds.
   int64 candle_interval_seconds = 2;
+}
+
+message AddToWatchlistRequest {
+  // Fails with NotFound when the market is unknown. Adding a saved market
+  // changes nothing.
+  uint64 market_id = 1;
+}
+
+message RemoveFromWatchlistRequest {
+  // Removing a market that is not saved changes nothing.
+  uint64 market_id = 1;
+}
+
+// Shared by AddToWatchlist and RemoveFromWatchlist.
+message WatchlistMutationResponse {
+  // The saved markets after the change, in Watchlist order.
+  repeated uint64 market_ids = 1;
 }

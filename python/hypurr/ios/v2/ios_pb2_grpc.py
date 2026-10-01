@@ -84,6 +84,16 @@ class IosServiceStub:
                 request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistResponse.FromString,
                 _registered_method=True)
+        self.AddToWatchlist = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/AddToWatchlist',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.AddToWatchlistRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistMutationResponse.FromString,
+                _registered_method=True)
+        self.RemoveFromWatchlist = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/RemoveFromWatchlist',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.RemoveFromWatchlistRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistMutationResponse.FromString,
+                _registered_method=True)
 
 
 class IosServiceServicer:
@@ -149,6 +159,18 @@ class IosServiceServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def AddToWatchlist(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RemoveFromWatchlist(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_IosServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -201,6 +223,16 @@ def add_IosServiceServicer_to_server(servicer, server):
                     servicer.Watchlist,
                     request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistRequest.FromString,
                     response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistResponse.SerializeToString,
+            ),
+            'AddToWatchlist': grpc.unary_unary_rpc_method_handler(
+                    servicer.AddToWatchlist,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.AddToWatchlistRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistMutationResponse.SerializeToString,
+            ),
+            'RemoveFromWatchlist': grpc.unary_unary_rpc_method_handler(
+                    servicer.RemoveFromWatchlist,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.RemoveFromWatchlistRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistMutationResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -473,6 +505,60 @@ class IosService:
             '/hypurr.ios.v2.IosService/Watchlist',
             hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistRequest.SerializeToString,
             hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AddToWatchlist(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/AddToWatchlist',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.AddToWatchlistRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistMutationResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def RemoveFromWatchlist(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/RemoveFromWatchlist',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.RemoveFromWatchlistRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistMutationResponse.FromString,
             options,
             channel_credentials,
             insecure,

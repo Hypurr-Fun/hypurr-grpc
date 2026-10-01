@@ -4,6 +4,9 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { IosService } from "./ios";
+import type { RemoveFromWatchlistRequest } from "./ios";
+import type { WatchlistMutationResponse } from "./ios";
+import type { AddToWatchlistRequest } from "./ios";
 import type { WatchlistResponse } from "./ios";
 import type { WatchlistRequest } from "./ios";
 import type { MarketsResponse } from "./ios";
@@ -72,6 +75,14 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: Watchlist
      */
     watchlist(input: WatchlistRequest, options?: RpcOptions): UnaryCall<WatchlistRequest, WatchlistResponse>;
+    /**
+     * @generated from protobuf rpc: AddToWatchlist
+     */
+    addToWatchlist(input: AddToWatchlistRequest, options?: RpcOptions): UnaryCall<AddToWatchlistRequest, WatchlistMutationResponse>;
+    /**
+     * @generated from protobuf rpc: RemoveFromWatchlist
+     */
+    removeFromWatchlist(input: RemoveFromWatchlistRequest, options?: RpcOptions): UnaryCall<RemoveFromWatchlistRequest, WatchlistMutationResponse>;
 }
 /**
  * @generated from protobuf service hypurr.ios.v2.IosService
@@ -151,5 +162,19 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
     watchlist(input: WatchlistRequest, options?: RpcOptions): UnaryCall<WatchlistRequest, WatchlistResponse> {
         const method = this.methods[9], opt = this._transport.mergeOptions(options);
         return stackIntercept<WatchlistRequest, WatchlistResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: AddToWatchlist
+     */
+    addToWatchlist(input: AddToWatchlistRequest, options?: RpcOptions): UnaryCall<AddToWatchlistRequest, WatchlistMutationResponse> {
+        const method = this.methods[10], opt = this._transport.mergeOptions(options);
+        return stackIntercept<AddToWatchlistRequest, WatchlistMutationResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: RemoveFromWatchlist
+     */
+    removeFromWatchlist(input: RemoveFromWatchlistRequest, options?: RpcOptions): UnaryCall<RemoveFromWatchlistRequest, WatchlistMutationResponse> {
+        const method = this.methods[11], opt = this._transport.mergeOptions(options);
+        return stackIntercept<RemoveFromWatchlistRequest, WatchlistMutationResponse>("unary", this._transport, method, opt, input);
     }
 }

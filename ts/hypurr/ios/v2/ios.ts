@@ -1695,7 +1695,7 @@ export interface WatchlistRequest {
  */
 export interface WatchlistResponse {
     /**
-     * Spot markets first, then perps; newest first in each. Empty when the
+     * Spot markets first, then perps; 24h volume desc in each. Empty when the
      * user has no saved markets.
      *
      * @generated from protobuf field: repeated hypurr.ios.v2.MarketWithCandles items = 1
@@ -1707,6 +1707,42 @@ export interface WatchlistResponse {
      * @generated from protobuf field: int64 candle_interval_seconds = 2
      */
     candleIntervalSeconds: number;
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.AddToWatchlistRequest
+ */
+export interface AddToWatchlistRequest {
+    /**
+     * Fails with NotFound when the market is unknown. Adding a saved market
+     * changes nothing.
+     *
+     * @generated from protobuf field: uint64 market_id = 1
+     */
+    marketId: number;
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.RemoveFromWatchlistRequest
+ */
+export interface RemoveFromWatchlistRequest {
+    /**
+     * Removing a market that is not saved changes nothing.
+     *
+     * @generated from protobuf field: uint64 market_id = 1
+     */
+    marketId: number;
+}
+/**
+ * Shared by AddToWatchlist and RemoveFromWatchlist.
+ *
+ * @generated from protobuf message hypurr.ios.v2.WatchlistMutationResponse
+ */
+export interface WatchlistMutationResponse {
+    /**
+     * The saved markets after the change, in Watchlist order.
+     *
+     * @generated from protobuf field: repeated uint64 market_ids = 1
+     */
+    marketIds: number[];
 }
 /**
  * @generated from protobuf enum hypurr.ios.v2.AssetClass
@@ -7012,6 +7048,155 @@ class WatchlistResponse$Type extends MessageType<WatchlistResponse> {
  * @generated MessageType for protobuf message hypurr.ios.v2.WatchlistResponse
  */
 export const WatchlistResponse = new WatchlistResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AddToWatchlistRequest$Type extends MessageType<AddToWatchlistRequest> {
+    constructor() {
+        super("hypurr.ios.v2.AddToWatchlistRequest", [
+            { no: 1, name: "market_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AddToWatchlistRequest>): AddToWatchlistRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.marketId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<AddToWatchlistRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AddToWatchlistRequest): AddToWatchlistRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 market_id */ 1:
+                    message.marketId = reader.uint64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AddToWatchlistRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 market_id = 1; */
+        if (message.marketId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.marketId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.AddToWatchlistRequest
+ */
+export const AddToWatchlistRequest = new AddToWatchlistRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RemoveFromWatchlistRequest$Type extends MessageType<RemoveFromWatchlistRequest> {
+    constructor() {
+        super("hypurr.ios.v2.RemoveFromWatchlistRequest", [
+            { no: 1, name: "market_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<RemoveFromWatchlistRequest>): RemoveFromWatchlistRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.marketId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<RemoveFromWatchlistRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RemoveFromWatchlistRequest): RemoveFromWatchlistRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 market_id */ 1:
+                    message.marketId = reader.uint64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RemoveFromWatchlistRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 market_id = 1; */
+        if (message.marketId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.marketId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.RemoveFromWatchlistRequest
+ */
+export const RemoveFromWatchlistRequest = new RemoveFromWatchlistRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WatchlistMutationResponse$Type extends MessageType<WatchlistMutationResponse> {
+    constructor() {
+        super("hypurr.ios.v2.WatchlistMutationResponse", [
+            { no: 1, name: "market_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WatchlistMutationResponse>): WatchlistMutationResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.marketIds = [];
+        if (value !== undefined)
+            reflectionMergePartial<WatchlistMutationResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WatchlistMutationResponse): WatchlistMutationResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated uint64 market_ids */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.marketIds.push(reader.uint64().toNumber());
+                    else
+                        message.marketIds.push(reader.uint64().toNumber());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WatchlistMutationResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated uint64 market_ids = 1; */
+        if (message.marketIds.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.marketIds.length; i++)
+                writer.uint64(message.marketIds[i]);
+            writer.join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.WatchlistMutationResponse
+ */
+export const WatchlistMutationResponse = new WatchlistMutationResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.ios.v2.IosService
  */
@@ -7025,5 +7210,7 @@ export const IosService = new ServiceType("hypurr.ios.v2.IosService", [
     { name: "UserStream", serverStreaming: true, options: {}, I: UserStreamRequest, O: UserSnapshot },
     { name: "OpenOrders", options: {}, I: OpenOrdersRequest, O: OpenOrdersResponse },
     { name: "Markets", options: {}, I: MarketsRequest, O: MarketsResponse },
-    { name: "Watchlist", options: {}, I: WatchlistRequest, O: WatchlistResponse }
+    { name: "Watchlist", options: {}, I: WatchlistRequest, O: WatchlistResponse },
+    { name: "AddToWatchlist", options: {}, I: AddToWatchlistRequest, O: WatchlistMutationResponse },
+    { name: "RemoveFromWatchlist", options: {}, I: RemoveFromWatchlistRequest, O: WatchlistMutationResponse }
 ]);

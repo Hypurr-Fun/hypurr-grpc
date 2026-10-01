@@ -19,16 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	IosService_Home_FullMethodName             = "/hypurr.ios.v2.IosService/Home"
-	IosService_LiveAssetUpdates_FullMethodName = "/hypurr.ios.v2.IosService/LiveAssetUpdates"
-	IosService_Catalog_FullMethodName          = "/hypurr.ios.v2.IosService/Catalog"
-	IosService_AssetDetail_FullMethodName      = "/hypurr.ios.v2.IosService/AssetDetail"
-	IosService_Candles_FullMethodName          = "/hypurr.ios.v2.IosService/Candles"
-	IosService_CandlesStream_FullMethodName    = "/hypurr.ios.v2.IosService/CandlesStream"
-	IosService_UserStream_FullMethodName       = "/hypurr.ios.v2.IosService/UserStream"
-	IosService_OpenOrders_FullMethodName       = "/hypurr.ios.v2.IosService/OpenOrders"
-	IosService_Markets_FullMethodName          = "/hypurr.ios.v2.IosService/Markets"
-	IosService_Watchlist_FullMethodName        = "/hypurr.ios.v2.IosService/Watchlist"
+	IosService_Home_FullMethodName                = "/hypurr.ios.v2.IosService/Home"
+	IosService_LiveAssetUpdates_FullMethodName    = "/hypurr.ios.v2.IosService/LiveAssetUpdates"
+	IosService_Catalog_FullMethodName             = "/hypurr.ios.v2.IosService/Catalog"
+	IosService_AssetDetail_FullMethodName         = "/hypurr.ios.v2.IosService/AssetDetail"
+	IosService_Candles_FullMethodName             = "/hypurr.ios.v2.IosService/Candles"
+	IosService_CandlesStream_FullMethodName       = "/hypurr.ios.v2.IosService/CandlesStream"
+	IosService_UserStream_FullMethodName          = "/hypurr.ios.v2.IosService/UserStream"
+	IosService_OpenOrders_FullMethodName          = "/hypurr.ios.v2.IosService/OpenOrders"
+	IosService_Markets_FullMethodName             = "/hypurr.ios.v2.IosService/Markets"
+	IosService_Watchlist_FullMethodName           = "/hypurr.ios.v2.IosService/Watchlist"
+	IosService_AddToWatchlist_FullMethodName      = "/hypurr.ios.v2.IosService/AddToWatchlist"
+	IosService_RemoveFromWatchlist_FullMethodName = "/hypurr.ios.v2.IosService/RemoveFromWatchlist"
 )
 
 // IosServiceClient is the client API for IosService service.
@@ -45,6 +47,8 @@ type IosServiceClient interface {
 	OpenOrders(ctx context.Context, in *OpenOrdersRequest, opts ...grpc.CallOption) (*OpenOrdersResponse, error)
 	Markets(ctx context.Context, in *MarketsRequest, opts ...grpc.CallOption) (*MarketsResponse, error)
 	Watchlist(ctx context.Context, in *WatchlistRequest, opts ...grpc.CallOption) (*WatchlistResponse, error)
+	AddToWatchlist(ctx context.Context, in *AddToWatchlistRequest, opts ...grpc.CallOption) (*WatchlistMutationResponse, error)
+	RemoveFromWatchlist(ctx context.Context, in *RemoveFromWatchlistRequest, opts ...grpc.CallOption) (*WatchlistMutationResponse, error)
 }
 
 type iosServiceClient struct {
@@ -224,6 +228,26 @@ func (c *iosServiceClient) Watchlist(ctx context.Context, in *WatchlistRequest, 
 	return out, nil
 }
 
+func (c *iosServiceClient) AddToWatchlist(ctx context.Context, in *AddToWatchlistRequest, opts ...grpc.CallOption) (*WatchlistMutationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WatchlistMutationResponse)
+	err := c.cc.Invoke(ctx, IosService_AddToWatchlist_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iosServiceClient) RemoveFromWatchlist(ctx context.Context, in *RemoveFromWatchlistRequest, opts ...grpc.CallOption) (*WatchlistMutationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WatchlistMutationResponse)
+	err := c.cc.Invoke(ctx, IosService_RemoveFromWatchlist_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IosServiceServer is the server API for IosService service.
 // All implementations must embed UnimplementedIosServiceServer
 // for forward compatibility
@@ -238,6 +262,8 @@ type IosServiceServer interface {
 	OpenOrders(context.Context, *OpenOrdersRequest) (*OpenOrdersResponse, error)
 	Markets(context.Context, *MarketsRequest) (*MarketsResponse, error)
 	Watchlist(context.Context, *WatchlistRequest) (*WatchlistResponse, error)
+	AddToWatchlist(context.Context, *AddToWatchlistRequest) (*WatchlistMutationResponse, error)
+	RemoveFromWatchlist(context.Context, *RemoveFromWatchlistRequest) (*WatchlistMutationResponse, error)
 	mustEmbedUnimplementedIosServiceServer()
 }
 
@@ -274,6 +300,12 @@ func (UnimplementedIosServiceServer) Markets(context.Context, *MarketsRequest) (
 }
 func (UnimplementedIosServiceServer) Watchlist(context.Context, *WatchlistRequest) (*WatchlistResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Watchlist not implemented")
+}
+func (UnimplementedIosServiceServer) AddToWatchlist(context.Context, *AddToWatchlistRequest) (*WatchlistMutationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddToWatchlist not implemented")
+}
+func (UnimplementedIosServiceServer) RemoveFromWatchlist(context.Context, *RemoveFromWatchlistRequest) (*WatchlistMutationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveFromWatchlist not implemented")
 }
 func (UnimplementedIosServiceServer) mustEmbedUnimplementedIosServiceServer() {}
 
@@ -477,6 +509,42 @@ func _IosService_Watchlist_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IosService_AddToWatchlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddToWatchlistRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IosServiceServer).AddToWatchlist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IosService_AddToWatchlist_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IosServiceServer).AddToWatchlist(ctx, req.(*AddToWatchlistRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IosService_RemoveFromWatchlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveFromWatchlistRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IosServiceServer).RemoveFromWatchlist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IosService_RemoveFromWatchlist_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IosServiceServer).RemoveFromWatchlist(ctx, req.(*RemoveFromWatchlistRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IosService_ServiceDesc is the grpc.ServiceDesc for IosService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -511,6 +579,14 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Watchlist",
 			Handler:    _IosService_Watchlist_Handler,
+		},
+		{
+			MethodName: "AddToWatchlist",
+			Handler:    _IosService_AddToWatchlist_Handler,
+		},
+		{
+			MethodName: "RemoveFromWatchlist",
+			Handler:    _IosService_RemoveFromWatchlist_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
