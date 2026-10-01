@@ -94,6 +94,26 @@ class IosServiceStub:
                 request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.RemoveFromWatchlistRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistMutationResponse.FromString,
                 _registered_method=True)
+        self.PriceAlerts = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/PriceAlerts',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertsResponse.FromString,
+                _registered_method=True)
+        self.CreatePriceAlert = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/CreatePriceAlert',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.CreatePriceAlertRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertResponse.FromString,
+                _registered_method=True)
+        self.UpdatePriceAlert = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/UpdatePriceAlert',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.UpdatePriceAlertRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertResponse.FromString,
+                _registered_method=True)
+        self.DeletePriceAlert = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/DeletePriceAlert',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.DeletePriceAlertRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertsResponse.FromString,
+                _registered_method=True)
 
 
 class IosServiceServicer:
@@ -171,6 +191,30 @@ class IosServiceServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PriceAlerts(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CreatePriceAlert(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdatePriceAlert(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeletePriceAlert(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_IosServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -233,6 +277,26 @@ def add_IosServiceServicer_to_server(servicer, server):
                     servicer.RemoveFromWatchlist,
                     request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.RemoveFromWatchlistRequest.FromString,
                     response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistMutationResponse.SerializeToString,
+            ),
+            'PriceAlerts': grpc.unary_unary_rpc_method_handler(
+                    servicer.PriceAlerts,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertsRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertsResponse.SerializeToString,
+            ),
+            'CreatePriceAlert': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreatePriceAlert,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.CreatePriceAlertRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertResponse.SerializeToString,
+            ),
+            'UpdatePriceAlert': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdatePriceAlert,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.UpdatePriceAlertRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertResponse.SerializeToString,
+            ),
+            'DeletePriceAlert': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeletePriceAlert,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.DeletePriceAlertRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -559,6 +623,114 @@ class IosService:
             '/hypurr.ios.v2.IosService/RemoveFromWatchlist',
             hypurr_dot_ios_dot_v2_dot_ios__pb2.RemoveFromWatchlistRequest.SerializeToString,
             hypurr_dot_ios_dot_v2_dot_ios__pb2.WatchlistMutationResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PriceAlerts(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/PriceAlerts',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertsRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CreatePriceAlert(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/CreatePriceAlert',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.CreatePriceAlertRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UpdatePriceAlert(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/UpdatePriceAlert',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.UpdatePriceAlertRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DeletePriceAlert(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/DeletePriceAlert',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.DeletePriceAlertRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertsResponse.FromString,
             options,
             channel_credentials,
             insecure,

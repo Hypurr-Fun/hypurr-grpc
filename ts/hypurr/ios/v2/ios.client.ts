@@ -4,6 +4,12 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { IosService } from "./ios";
+import type { DeletePriceAlertRequest } from "./ios";
+import type { UpdatePriceAlertRequest } from "./ios";
+import type { PriceAlertResponse } from "./ios";
+import type { CreatePriceAlertRequest } from "./ios";
+import type { PriceAlertsResponse } from "./ios";
+import type { PriceAlertsRequest } from "./ios";
 import type { RemoveFromWatchlistRequest } from "./ios";
 import type { WatchlistMutationResponse } from "./ios";
 import type { AddToWatchlistRequest } from "./ios";
@@ -83,6 +89,22 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: RemoveFromWatchlist
      */
     removeFromWatchlist(input: RemoveFromWatchlistRequest, options?: RpcOptions): UnaryCall<RemoveFromWatchlistRequest, WatchlistMutationResponse>;
+    /**
+     * @generated from protobuf rpc: PriceAlerts
+     */
+    priceAlerts(input: PriceAlertsRequest, options?: RpcOptions): UnaryCall<PriceAlertsRequest, PriceAlertsResponse>;
+    /**
+     * @generated from protobuf rpc: CreatePriceAlert
+     */
+    createPriceAlert(input: CreatePriceAlertRequest, options?: RpcOptions): UnaryCall<CreatePriceAlertRequest, PriceAlertResponse>;
+    /**
+     * @generated from protobuf rpc: UpdatePriceAlert
+     */
+    updatePriceAlert(input: UpdatePriceAlertRequest, options?: RpcOptions): UnaryCall<UpdatePriceAlertRequest, PriceAlertResponse>;
+    /**
+     * @generated from protobuf rpc: DeletePriceAlert
+     */
+    deletePriceAlert(input: DeletePriceAlertRequest, options?: RpcOptions): UnaryCall<DeletePriceAlertRequest, PriceAlertsResponse>;
 }
 /**
  * @generated from protobuf service hypurr.ios.v2.IosService
@@ -176,5 +198,33 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
     removeFromWatchlist(input: RemoveFromWatchlistRequest, options?: RpcOptions): UnaryCall<RemoveFromWatchlistRequest, WatchlistMutationResponse> {
         const method = this.methods[11], opt = this._transport.mergeOptions(options);
         return stackIntercept<RemoveFromWatchlistRequest, WatchlistMutationResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: PriceAlerts
+     */
+    priceAlerts(input: PriceAlertsRequest, options?: RpcOptions): UnaryCall<PriceAlertsRequest, PriceAlertsResponse> {
+        const method = this.methods[12], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PriceAlertsRequest, PriceAlertsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: CreatePriceAlert
+     */
+    createPriceAlert(input: CreatePriceAlertRequest, options?: RpcOptions): UnaryCall<CreatePriceAlertRequest, PriceAlertResponse> {
+        const method = this.methods[13], opt = this._transport.mergeOptions(options);
+        return stackIntercept<CreatePriceAlertRequest, PriceAlertResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: UpdatePriceAlert
+     */
+    updatePriceAlert(input: UpdatePriceAlertRequest, options?: RpcOptions): UnaryCall<UpdatePriceAlertRequest, PriceAlertResponse> {
+        const method = this.methods[14], opt = this._transport.mergeOptions(options);
+        return stackIntercept<UpdatePriceAlertRequest, PriceAlertResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: DeletePriceAlert
+     */
+    deletePriceAlert(input: DeletePriceAlertRequest, options?: RpcOptions): UnaryCall<DeletePriceAlertRequest, PriceAlertsResponse> {
+        const method = this.methods[15], opt = this._transport.mergeOptions(options);
+        return stackIntercept<DeletePriceAlertRequest, PriceAlertsResponse>("unary", this._transport, method, opt, input);
     }
 }

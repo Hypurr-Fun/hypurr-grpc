@@ -31,6 +31,10 @@ const (
 	IosService_Watchlist_FullMethodName           = "/hypurr.ios.v2.IosService/Watchlist"
 	IosService_AddToWatchlist_FullMethodName      = "/hypurr.ios.v2.IosService/AddToWatchlist"
 	IosService_RemoveFromWatchlist_FullMethodName = "/hypurr.ios.v2.IosService/RemoveFromWatchlist"
+	IosService_PriceAlerts_FullMethodName         = "/hypurr.ios.v2.IosService/PriceAlerts"
+	IosService_CreatePriceAlert_FullMethodName    = "/hypurr.ios.v2.IosService/CreatePriceAlert"
+	IosService_UpdatePriceAlert_FullMethodName    = "/hypurr.ios.v2.IosService/UpdatePriceAlert"
+	IosService_DeletePriceAlert_FullMethodName    = "/hypurr.ios.v2.IosService/DeletePriceAlert"
 )
 
 // IosServiceClient is the client API for IosService service.
@@ -49,6 +53,10 @@ type IosServiceClient interface {
 	Watchlist(ctx context.Context, in *WatchlistRequest, opts ...grpc.CallOption) (*WatchlistResponse, error)
 	AddToWatchlist(ctx context.Context, in *AddToWatchlistRequest, opts ...grpc.CallOption) (*WatchlistMutationResponse, error)
 	RemoveFromWatchlist(ctx context.Context, in *RemoveFromWatchlistRequest, opts ...grpc.CallOption) (*WatchlistMutationResponse, error)
+	PriceAlerts(ctx context.Context, in *PriceAlertsRequest, opts ...grpc.CallOption) (*PriceAlertsResponse, error)
+	CreatePriceAlert(ctx context.Context, in *CreatePriceAlertRequest, opts ...grpc.CallOption) (*PriceAlertResponse, error)
+	UpdatePriceAlert(ctx context.Context, in *UpdatePriceAlertRequest, opts ...grpc.CallOption) (*PriceAlertResponse, error)
+	DeletePriceAlert(ctx context.Context, in *DeletePriceAlertRequest, opts ...grpc.CallOption) (*PriceAlertsResponse, error)
 }
 
 type iosServiceClient struct {
@@ -248,6 +256,46 @@ func (c *iosServiceClient) RemoveFromWatchlist(ctx context.Context, in *RemoveFr
 	return out, nil
 }
 
+func (c *iosServiceClient) PriceAlerts(ctx context.Context, in *PriceAlertsRequest, opts ...grpc.CallOption) (*PriceAlertsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PriceAlertsResponse)
+	err := c.cc.Invoke(ctx, IosService_PriceAlerts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iosServiceClient) CreatePriceAlert(ctx context.Context, in *CreatePriceAlertRequest, opts ...grpc.CallOption) (*PriceAlertResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PriceAlertResponse)
+	err := c.cc.Invoke(ctx, IosService_CreatePriceAlert_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iosServiceClient) UpdatePriceAlert(ctx context.Context, in *UpdatePriceAlertRequest, opts ...grpc.CallOption) (*PriceAlertResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PriceAlertResponse)
+	err := c.cc.Invoke(ctx, IosService_UpdatePriceAlert_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iosServiceClient) DeletePriceAlert(ctx context.Context, in *DeletePriceAlertRequest, opts ...grpc.CallOption) (*PriceAlertsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PriceAlertsResponse)
+	err := c.cc.Invoke(ctx, IosService_DeletePriceAlert_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IosServiceServer is the server API for IosService service.
 // All implementations must embed UnimplementedIosServiceServer
 // for forward compatibility
@@ -264,6 +312,10 @@ type IosServiceServer interface {
 	Watchlist(context.Context, *WatchlistRequest) (*WatchlistResponse, error)
 	AddToWatchlist(context.Context, *AddToWatchlistRequest) (*WatchlistMutationResponse, error)
 	RemoveFromWatchlist(context.Context, *RemoveFromWatchlistRequest) (*WatchlistMutationResponse, error)
+	PriceAlerts(context.Context, *PriceAlertsRequest) (*PriceAlertsResponse, error)
+	CreatePriceAlert(context.Context, *CreatePriceAlertRequest) (*PriceAlertResponse, error)
+	UpdatePriceAlert(context.Context, *UpdatePriceAlertRequest) (*PriceAlertResponse, error)
+	DeletePriceAlert(context.Context, *DeletePriceAlertRequest) (*PriceAlertsResponse, error)
 	mustEmbedUnimplementedIosServiceServer()
 }
 
@@ -306,6 +358,18 @@ func (UnimplementedIosServiceServer) AddToWatchlist(context.Context, *AddToWatch
 }
 func (UnimplementedIosServiceServer) RemoveFromWatchlist(context.Context, *RemoveFromWatchlistRequest) (*WatchlistMutationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveFromWatchlist not implemented")
+}
+func (UnimplementedIosServiceServer) PriceAlerts(context.Context, *PriceAlertsRequest) (*PriceAlertsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PriceAlerts not implemented")
+}
+func (UnimplementedIosServiceServer) CreatePriceAlert(context.Context, *CreatePriceAlertRequest) (*PriceAlertResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePriceAlert not implemented")
+}
+func (UnimplementedIosServiceServer) UpdatePriceAlert(context.Context, *UpdatePriceAlertRequest) (*PriceAlertResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePriceAlert not implemented")
+}
+func (UnimplementedIosServiceServer) DeletePriceAlert(context.Context, *DeletePriceAlertRequest) (*PriceAlertsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePriceAlert not implemented")
 }
 func (UnimplementedIosServiceServer) mustEmbedUnimplementedIosServiceServer() {}
 
@@ -545,6 +609,78 @@ func _IosService_RemoveFromWatchlist_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IosService_PriceAlerts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PriceAlertsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IosServiceServer).PriceAlerts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IosService_PriceAlerts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IosServiceServer).PriceAlerts(ctx, req.(*PriceAlertsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IosService_CreatePriceAlert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePriceAlertRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IosServiceServer).CreatePriceAlert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IosService_CreatePriceAlert_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IosServiceServer).CreatePriceAlert(ctx, req.(*CreatePriceAlertRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IosService_UpdatePriceAlert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatePriceAlertRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IosServiceServer).UpdatePriceAlert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IosService_UpdatePriceAlert_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IosServiceServer).UpdatePriceAlert(ctx, req.(*UpdatePriceAlertRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IosService_DeletePriceAlert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePriceAlertRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IosServiceServer).DeletePriceAlert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IosService_DeletePriceAlert_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IosServiceServer).DeletePriceAlert(ctx, req.(*DeletePriceAlertRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IosService_ServiceDesc is the grpc.ServiceDesc for IosService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -587,6 +723,22 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveFromWatchlist",
 			Handler:    _IosService_RemoveFromWatchlist_Handler,
+		},
+		{
+			MethodName: "PriceAlerts",
+			Handler:    _IosService_PriceAlerts_Handler,
+		},
+		{
+			MethodName: "CreatePriceAlert",
+			Handler:    _IosService_CreatePriceAlert_Handler,
+		},
+		{
+			MethodName: "UpdatePriceAlert",
+			Handler:    _IosService_UpdatePriceAlert_Handler,
+		},
+		{
+			MethodName: "DeletePriceAlert",
+			Handler:    _IosService_DeletePriceAlert_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

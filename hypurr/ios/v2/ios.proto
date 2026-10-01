@@ -15,6 +15,10 @@ service IosService {
   rpc Watchlist(WatchlistRequest) returns (WatchlistResponse);
   rpc AddToWatchlist(AddToWatchlistRequest) returns (WatchlistMutationResponse);
   rpc RemoveFromWatchlist(RemoveFromWatchlistRequest) returns (WatchlistMutationResponse);
+  rpc PriceAlerts(PriceAlertsRequest) returns (PriceAlertsResponse);
+  rpc CreatePriceAlert(CreatePriceAlertRequest) returns (PriceAlertResponse);
+  rpc UpdatePriceAlert(UpdatePriceAlertRequest) returns (PriceAlertResponse);
+  rpc DeletePriceAlert(DeletePriceAlertRequest) returns (PriceAlertsResponse);
 }
 
 // ==== Shared ====
@@ -757,4 +761,77 @@ message RemoveFromWatchlistRequest {
 message WatchlistMutationResponse {
   // The saved markets after the change, in Watchlist order.
   repeated uint64 market_ids = 1;
+}
+
+// ==== Price alerts ====
+
+message PriceAlertsRequest {
+  // V2 Market.market_id. Zero is a valid market ID.
+  uint64 market_id = 1;
+}
+
+message PriceAlertsResponse {
+  // All configured alerts for this market, including disabled alerts.
+  // Response order is display order; empty means no configured alerts.
+  repeated PriceAlert alerts = 1;
+}
+
+message PriceAlert {
+  // Stable, opaque ID. Market association cannot be edited.
+  string id = 1;
+  PriceAlertDirection direction = 2;
+  // Positive base-10 decimal string; preserves sub-cent precision.
+  string target_price_decimal = 3;
+  PriceAlertFrequency frequency = 4;
+  bool is_enabled = 5;
+  string created_at = 6; // RFC3339 UTC; assigned by the server.
+  // Absent until the alert has triggered; independent of is_enabled.
+  PriceAlertTrigger last_triggered = 7;
+  // IANA time zone used for the once-a-day calendar-day limit.
+  string time_zone = 8;
+}
+
+enum PriceAlertDirection {
+  PRICE_ALERT_DIRECTION_UNSPECIFIED = 0;
+  PRICE_ALERT_DIRECTION_ABOVE = 1;
+  PRICE_ALERT_DIRECTION_BELOW = 2;
+}
+
+enum PriceAlertFrequency {
+  PRICE_ALERT_FREQUENCY_UNSPECIFIED = 0;
+  PRICE_ALERT_FREQUENCY_ONE_TIME = 1;
+  PRICE_ALERT_FREQUENCY_EVERY_TIME = 2;
+  PRICE_ALERT_FREQUENCY_ONCE_A_DAY = 3;
+}
+
+message PriceAlertTrigger {
+  string occurred_at = 1; // RFC3339 UTC.
+  string price_decimal = 2; // Observed market price, not target price.
+}
+
+message CreatePriceAlertRequest {
+  uint64 market_id = 1;
+  PriceAlertDirection direction = 2;
+  string target_price_decimal = 3;
+  PriceAlertFrequency frequency = 4;
+  // IANA identifier from the device, e.g. "Europe/Warsaw".
+  string time_zone = 5;
+  // Newly created alerts are enabled.
+}
+
+message UpdatePriceAlertRequest {
+  string id = 1;
+  PriceAlertDirection direction = 2;
+  string target_price_decimal = 3;
+  PriceAlertFrequency frequency = 4;
+  bool is_enabled = 5;
+  string time_zone = 6; // IANA identifier, e.g. "Europe/Warsaw".
+}
+
+message PriceAlertResponse {
+  PriceAlert alert = 1;
+}
+
+message DeletePriceAlertRequest {
+  string id = 1;
 }

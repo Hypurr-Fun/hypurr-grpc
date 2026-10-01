@@ -1744,6 +1744,163 @@ export interface WatchlistMutationResponse {
      */
     marketIds: number[];
 }
+// ==== Price alerts ====
+
+/**
+ * @generated from protobuf message hypurr.ios.v2.PriceAlertsRequest
+ */
+export interface PriceAlertsRequest {
+    /**
+     * V2 Market.market_id. Zero is a valid market ID.
+     *
+     * @generated from protobuf field: uint64 market_id = 1
+     */
+    marketId: number;
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.PriceAlertsResponse
+ */
+export interface PriceAlertsResponse {
+    /**
+     * All configured alerts for this market, including disabled alerts.
+     * Response order is display order; empty means no configured alerts.
+     *
+     * @generated from protobuf field: repeated hypurr.ios.v2.PriceAlert alerts = 1
+     */
+    alerts: PriceAlert[];
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.PriceAlert
+ */
+export interface PriceAlert {
+    /**
+     * Stable, opaque ID. Market association cannot be edited.
+     *
+     * @generated from protobuf field: string id = 1
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.PriceAlertDirection direction = 2
+     */
+    direction: PriceAlertDirection;
+    /**
+     * Positive base-10 decimal string; preserves sub-cent precision.
+     *
+     * @generated from protobuf field: string target_price_decimal = 3
+     */
+    targetPriceDecimal: string;
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.PriceAlertFrequency frequency = 4
+     */
+    frequency: PriceAlertFrequency;
+    /**
+     * @generated from protobuf field: bool is_enabled = 5
+     */
+    isEnabled: boolean;
+    /**
+     * @generated from protobuf field: string created_at = 6
+     */
+    createdAt: string; // RFC3339 UTC; assigned by the server.
+    /**
+     * Absent until the alert has triggered; independent of is_enabled.
+     *
+     * @generated from protobuf field: hypurr.ios.v2.PriceAlertTrigger last_triggered = 7
+     */
+    lastTriggered?: PriceAlertTrigger;
+    /**
+     * IANA time zone used for the once-a-day calendar-day limit.
+     *
+     * @generated from protobuf field: string time_zone = 8
+     */
+    timeZone: string;
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.PriceAlertTrigger
+ */
+export interface PriceAlertTrigger {
+    /**
+     * @generated from protobuf field: string occurred_at = 1
+     */
+    occurredAt: string; // RFC3339 UTC.
+    /**
+     * @generated from protobuf field: string price_decimal = 2
+     */
+    priceDecimal: string; // Observed market price, not target price.
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.CreatePriceAlertRequest
+ */
+export interface CreatePriceAlertRequest {
+    /**
+     * @generated from protobuf field: uint64 market_id = 1
+     */
+    marketId: number;
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.PriceAlertDirection direction = 2
+     */
+    direction: PriceAlertDirection;
+    /**
+     * @generated from protobuf field: string target_price_decimal = 3
+     */
+    targetPriceDecimal: string;
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.PriceAlertFrequency frequency = 4
+     */
+    frequency: PriceAlertFrequency;
+    /**
+     * IANA identifier from the device, e.g. "Europe/Warsaw".
+     *
+     * @generated from protobuf field: string time_zone = 5
+     */
+    timeZone: string; // Newly created alerts are enabled.
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.UpdatePriceAlertRequest
+ */
+export interface UpdatePriceAlertRequest {
+    /**
+     * @generated from protobuf field: string id = 1
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.PriceAlertDirection direction = 2
+     */
+    direction: PriceAlertDirection;
+    /**
+     * @generated from protobuf field: string target_price_decimal = 3
+     */
+    targetPriceDecimal: string;
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.PriceAlertFrequency frequency = 4
+     */
+    frequency: PriceAlertFrequency;
+    /**
+     * @generated from protobuf field: bool is_enabled = 5
+     */
+    isEnabled: boolean;
+    /**
+     * @generated from protobuf field: string time_zone = 6
+     */
+    timeZone: string; // IANA identifier, e.g. "Europe/Warsaw".
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.PriceAlertResponse
+ */
+export interface PriceAlertResponse {
+    /**
+     * @generated from protobuf field: hypurr.ios.v2.PriceAlert alert = 1
+     */
+    alert?: PriceAlert;
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.DeletePriceAlertRequest
+ */
+export interface DeletePriceAlertRequest {
+    /**
+     * @generated from protobuf field: string id = 1
+     */
+    id: string;
+}
 /**
  * @generated from protobuf enum hypurr.ios.v2.AssetClass
  */
@@ -2102,6 +2259,44 @@ export enum MarketsPerpFilter {
      * @generated from protobuf enum value: MARKETS_PERP_FILTER_COMMODITIES = 4;
      */
     COMMODITIES = 4
+}
+/**
+ * @generated from protobuf enum hypurr.ios.v2.PriceAlertDirection
+ */
+export enum PriceAlertDirection {
+    /**
+     * @generated from protobuf enum value: PRICE_ALERT_DIRECTION_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: PRICE_ALERT_DIRECTION_ABOVE = 1;
+     */
+    ABOVE = 1,
+    /**
+     * @generated from protobuf enum value: PRICE_ALERT_DIRECTION_BELOW = 2;
+     */
+    BELOW = 2
+}
+/**
+ * @generated from protobuf enum hypurr.ios.v2.PriceAlertFrequency
+ */
+export enum PriceAlertFrequency {
+    /**
+     * @generated from protobuf enum value: PRICE_ALERT_FREQUENCY_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: PRICE_ALERT_FREQUENCY_ONE_TIME = 1;
+     */
+    ONE_TIME = 1,
+    /**
+     * @generated from protobuf enum value: PRICE_ALERT_FREQUENCY_EVERY_TIME = 2;
+     */
+    EVERY_TIME = 2,
+    /**
+     * @generated from protobuf enum value: PRICE_ALERT_FREQUENCY_ONCE_A_DAY = 3;
+     */
+    ONCE_A_DAY = 3
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class Color$Type extends MessageType<Color> {
@@ -7197,6 +7392,516 @@ class WatchlistMutationResponse$Type extends MessageType<WatchlistMutationRespon
  * @generated MessageType for protobuf message hypurr.ios.v2.WatchlistMutationResponse
  */
 export const WatchlistMutationResponse = new WatchlistMutationResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PriceAlertsRequest$Type extends MessageType<PriceAlertsRequest> {
+    constructor() {
+        super("hypurr.ios.v2.PriceAlertsRequest", [
+            { no: 1, name: "market_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PriceAlertsRequest>): PriceAlertsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.marketId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PriceAlertsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PriceAlertsRequest): PriceAlertsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 market_id */ 1:
+                    message.marketId = reader.uint64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PriceAlertsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 market_id = 1; */
+        if (message.marketId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.marketId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.PriceAlertsRequest
+ */
+export const PriceAlertsRequest = new PriceAlertsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PriceAlertsResponse$Type extends MessageType<PriceAlertsResponse> {
+    constructor() {
+        super("hypurr.ios.v2.PriceAlertsResponse", [
+            { no: 1, name: "alerts", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PriceAlert }
+        ]);
+    }
+    create(value?: PartialMessage<PriceAlertsResponse>): PriceAlertsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.alerts = [];
+        if (value !== undefined)
+            reflectionMergePartial<PriceAlertsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PriceAlertsResponse): PriceAlertsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.ios.v2.PriceAlert alerts */ 1:
+                    message.alerts.push(PriceAlert.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PriceAlertsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.ios.v2.PriceAlert alerts = 1; */
+        for (let i = 0; i < message.alerts.length; i++)
+            PriceAlert.internalBinaryWrite(message.alerts[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.PriceAlertsResponse
+ */
+export const PriceAlertsResponse = new PriceAlertsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PriceAlert$Type extends MessageType<PriceAlert> {
+    constructor() {
+        super("hypurr.ios.v2.PriceAlert", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "direction", kind: "enum", T: () => ["hypurr.ios.v2.PriceAlertDirection", PriceAlertDirection, "PRICE_ALERT_DIRECTION_"] },
+            { no: 3, name: "target_price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "frequency", kind: "enum", T: () => ["hypurr.ios.v2.PriceAlertFrequency", PriceAlertFrequency, "PRICE_ALERT_FREQUENCY_"] },
+            { no: 5, name: "is_enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 6, name: "created_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "last_triggered", kind: "message", T: () => PriceAlertTrigger },
+            { no: 8, name: "time_zone", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PriceAlert>): PriceAlert {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = "";
+        message.direction = 0;
+        message.targetPriceDecimal = "";
+        message.frequency = 0;
+        message.isEnabled = false;
+        message.createdAt = "";
+        message.timeZone = "";
+        if (value !== undefined)
+            reflectionMergePartial<PriceAlert>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PriceAlert): PriceAlert {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* hypurr.ios.v2.PriceAlertDirection direction */ 2:
+                    message.direction = reader.int32();
+                    break;
+                case /* string target_price_decimal */ 3:
+                    message.targetPriceDecimal = reader.string();
+                    break;
+                case /* hypurr.ios.v2.PriceAlertFrequency frequency */ 4:
+                    message.frequency = reader.int32();
+                    break;
+                case /* bool is_enabled */ 5:
+                    message.isEnabled = reader.bool();
+                    break;
+                case /* string created_at */ 6:
+                    message.createdAt = reader.string();
+                    break;
+                case /* hypurr.ios.v2.PriceAlertTrigger last_triggered */ 7:
+                    message.lastTriggered = PriceAlertTrigger.internalBinaryRead(reader, reader.uint32(), options, message.lastTriggered);
+                    break;
+                case /* string time_zone */ 8:
+                    message.timeZone = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PriceAlert, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* hypurr.ios.v2.PriceAlertDirection direction = 2; */
+        if (message.direction !== 0)
+            writer.tag(2, WireType.Varint).int32(message.direction);
+        /* string target_price_decimal = 3; */
+        if (message.targetPriceDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.targetPriceDecimal);
+        /* hypurr.ios.v2.PriceAlertFrequency frequency = 4; */
+        if (message.frequency !== 0)
+            writer.tag(4, WireType.Varint).int32(message.frequency);
+        /* bool is_enabled = 5; */
+        if (message.isEnabled !== false)
+            writer.tag(5, WireType.Varint).bool(message.isEnabled);
+        /* string created_at = 6; */
+        if (message.createdAt !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.createdAt);
+        /* hypurr.ios.v2.PriceAlertTrigger last_triggered = 7; */
+        if (message.lastTriggered)
+            PriceAlertTrigger.internalBinaryWrite(message.lastTriggered, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* string time_zone = 8; */
+        if (message.timeZone !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.timeZone);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.PriceAlert
+ */
+export const PriceAlert = new PriceAlert$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PriceAlertTrigger$Type extends MessageType<PriceAlertTrigger> {
+    constructor() {
+        super("hypurr.ios.v2.PriceAlertTrigger", [
+            { no: 1, name: "occurred_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PriceAlertTrigger>): PriceAlertTrigger {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.occurredAt = "";
+        message.priceDecimal = "";
+        if (value !== undefined)
+            reflectionMergePartial<PriceAlertTrigger>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PriceAlertTrigger): PriceAlertTrigger {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string occurred_at */ 1:
+                    message.occurredAt = reader.string();
+                    break;
+                case /* string price_decimal */ 2:
+                    message.priceDecimal = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PriceAlertTrigger, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string occurred_at = 1; */
+        if (message.occurredAt !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.occurredAt);
+        /* string price_decimal = 2; */
+        if (message.priceDecimal !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.priceDecimal);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.PriceAlertTrigger
+ */
+export const PriceAlertTrigger = new PriceAlertTrigger$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreatePriceAlertRequest$Type extends MessageType<CreatePriceAlertRequest> {
+    constructor() {
+        super("hypurr.ios.v2.CreatePriceAlertRequest", [
+            { no: 1, name: "market_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "direction", kind: "enum", T: () => ["hypurr.ios.v2.PriceAlertDirection", PriceAlertDirection, "PRICE_ALERT_DIRECTION_"] },
+            { no: 3, name: "target_price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "frequency", kind: "enum", T: () => ["hypurr.ios.v2.PriceAlertFrequency", PriceAlertFrequency, "PRICE_ALERT_FREQUENCY_"] },
+            { no: 5, name: "time_zone", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CreatePriceAlertRequest>): CreatePriceAlertRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.marketId = 0;
+        message.direction = 0;
+        message.targetPriceDecimal = "";
+        message.frequency = 0;
+        message.timeZone = "";
+        if (value !== undefined)
+            reflectionMergePartial<CreatePriceAlertRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePriceAlertRequest): CreatePriceAlertRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 market_id */ 1:
+                    message.marketId = reader.uint64().toNumber();
+                    break;
+                case /* hypurr.ios.v2.PriceAlertDirection direction */ 2:
+                    message.direction = reader.int32();
+                    break;
+                case /* string target_price_decimal */ 3:
+                    message.targetPriceDecimal = reader.string();
+                    break;
+                case /* hypurr.ios.v2.PriceAlertFrequency frequency */ 4:
+                    message.frequency = reader.int32();
+                    break;
+                case /* string time_zone */ 5:
+                    message.timeZone = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CreatePriceAlertRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 market_id = 1; */
+        if (message.marketId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.marketId);
+        /* hypurr.ios.v2.PriceAlertDirection direction = 2; */
+        if (message.direction !== 0)
+            writer.tag(2, WireType.Varint).int32(message.direction);
+        /* string target_price_decimal = 3; */
+        if (message.targetPriceDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.targetPriceDecimal);
+        /* hypurr.ios.v2.PriceAlertFrequency frequency = 4; */
+        if (message.frequency !== 0)
+            writer.tag(4, WireType.Varint).int32(message.frequency);
+        /* string time_zone = 5; */
+        if (message.timeZone !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.timeZone);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.CreatePriceAlertRequest
+ */
+export const CreatePriceAlertRequest = new CreatePriceAlertRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UpdatePriceAlertRequest$Type extends MessageType<UpdatePriceAlertRequest> {
+    constructor() {
+        super("hypurr.ios.v2.UpdatePriceAlertRequest", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "direction", kind: "enum", T: () => ["hypurr.ios.v2.PriceAlertDirection", PriceAlertDirection, "PRICE_ALERT_DIRECTION_"] },
+            { no: 3, name: "target_price_decimal", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "frequency", kind: "enum", T: () => ["hypurr.ios.v2.PriceAlertFrequency", PriceAlertFrequency, "PRICE_ALERT_FREQUENCY_"] },
+            { no: 5, name: "is_enabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 6, name: "time_zone", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<UpdatePriceAlertRequest>): UpdatePriceAlertRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = "";
+        message.direction = 0;
+        message.targetPriceDecimal = "";
+        message.frequency = 0;
+        message.isEnabled = false;
+        message.timeZone = "";
+        if (value !== undefined)
+            reflectionMergePartial<UpdatePriceAlertRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UpdatePriceAlertRequest): UpdatePriceAlertRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* hypurr.ios.v2.PriceAlertDirection direction */ 2:
+                    message.direction = reader.int32();
+                    break;
+                case /* string target_price_decimal */ 3:
+                    message.targetPriceDecimal = reader.string();
+                    break;
+                case /* hypurr.ios.v2.PriceAlertFrequency frequency */ 4:
+                    message.frequency = reader.int32();
+                    break;
+                case /* bool is_enabled */ 5:
+                    message.isEnabled = reader.bool();
+                    break;
+                case /* string time_zone */ 6:
+                    message.timeZone = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UpdatePriceAlertRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* hypurr.ios.v2.PriceAlertDirection direction = 2; */
+        if (message.direction !== 0)
+            writer.tag(2, WireType.Varint).int32(message.direction);
+        /* string target_price_decimal = 3; */
+        if (message.targetPriceDecimal !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.targetPriceDecimal);
+        /* hypurr.ios.v2.PriceAlertFrequency frequency = 4; */
+        if (message.frequency !== 0)
+            writer.tag(4, WireType.Varint).int32(message.frequency);
+        /* bool is_enabled = 5; */
+        if (message.isEnabled !== false)
+            writer.tag(5, WireType.Varint).bool(message.isEnabled);
+        /* string time_zone = 6; */
+        if (message.timeZone !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.timeZone);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.UpdatePriceAlertRequest
+ */
+export const UpdatePriceAlertRequest = new UpdatePriceAlertRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PriceAlertResponse$Type extends MessageType<PriceAlertResponse> {
+    constructor() {
+        super("hypurr.ios.v2.PriceAlertResponse", [
+            { no: 1, name: "alert", kind: "message", T: () => PriceAlert }
+        ]);
+    }
+    create(value?: PartialMessage<PriceAlertResponse>): PriceAlertResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<PriceAlertResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PriceAlertResponse): PriceAlertResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.ios.v2.PriceAlert alert */ 1:
+                    message.alert = PriceAlert.internalBinaryRead(reader, reader.uint32(), options, message.alert);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PriceAlertResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.ios.v2.PriceAlert alert = 1; */
+        if (message.alert)
+            PriceAlert.internalBinaryWrite(message.alert, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.PriceAlertResponse
+ */
+export const PriceAlertResponse = new PriceAlertResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DeletePriceAlertRequest$Type extends MessageType<DeletePriceAlertRequest> {
+    constructor() {
+        super("hypurr.ios.v2.DeletePriceAlertRequest", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<DeletePriceAlertRequest>): DeletePriceAlertRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = "";
+        if (value !== undefined)
+            reflectionMergePartial<DeletePriceAlertRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeletePriceAlertRequest): DeletePriceAlertRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: DeletePriceAlertRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.DeletePriceAlertRequest
+ */
+export const DeletePriceAlertRequest = new DeletePriceAlertRequest$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.ios.v2.IosService
  */
@@ -7212,5 +7917,9 @@ export const IosService = new ServiceType("hypurr.ios.v2.IosService", [
     { name: "Markets", options: {}, I: MarketsRequest, O: MarketsResponse },
     { name: "Watchlist", options: {}, I: WatchlistRequest, O: WatchlistResponse },
     { name: "AddToWatchlist", options: {}, I: AddToWatchlistRequest, O: WatchlistMutationResponse },
-    { name: "RemoveFromWatchlist", options: {}, I: RemoveFromWatchlistRequest, O: WatchlistMutationResponse }
+    { name: "RemoveFromWatchlist", options: {}, I: RemoveFromWatchlistRequest, O: WatchlistMutationResponse },
+    { name: "PriceAlerts", options: {}, I: PriceAlertsRequest, O: PriceAlertsResponse },
+    { name: "CreatePriceAlert", options: {}, I: CreatePriceAlertRequest, O: PriceAlertResponse },
+    { name: "UpdatePriceAlert", options: {}, I: UpdatePriceAlertRequest, O: PriceAlertResponse },
+    { name: "DeletePriceAlert", options: {}, I: DeletePriceAlertRequest, O: PriceAlertsResponse }
 ]);
