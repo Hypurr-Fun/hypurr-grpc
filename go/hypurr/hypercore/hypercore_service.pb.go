@@ -4164,7 +4164,7 @@ type PerformanceBucket struct {
 	RealizedPnl   float64 `protobuf:"fixed64,2,opt,name=realized_pnl,json=realizedPnl,proto3" json:"realized_pnl,omitempty"`       // realized within this bucket (closed trades)
 	UnrealizedPnl float64 `protobuf:"fixed64,3,opt,name=unrealized_pnl,json=unrealizedPnl,proto3" json:"unrealized_pnl,omitempty"` // absolute MTM unrealized of open positions at bucket close
 	PeriodPnl     float64 `protobuf:"fixed64,4,opt,name=period_pnl,json=periodPnl,proto3" json:"period_pnl,omitempty"`             // this bucket's total contribution = realized_pnl + Δunrealized
-	CumPnl        float64 `protobuf:"fixed64,5,opt,name=cum_pnl,json=cumPnl,proto3" json:"cum_pnl,omitempty"`                      // cumulative total PnL (realized+unrealized) through bucket close
+	CumPnl        float64 `protobuf:"fixed64,5,opt,name=cum_pnl,json=cumPnl,proto3" json:"cum_pnl,omitempty"`                      // cumulative window PnL through bucket close: realized + unrealized - unrealized at window start
 	// --- Win rate ---
 	Wins       int32   `protobuf:"varint,6,opt,name=wins,proto3" json:"wins,omitempty"`                                  // closed trades resolved in bucket with pnl > 0
 	Losses     int32   `protobuf:"varint,7,opt,name=losses,proto3" json:"losses,omitempty"`                              // closed trades resolved in bucket with pnl <= 0
@@ -4283,7 +4283,7 @@ type PerformanceSummary struct {
 
 	RealizedPnl   float64 `protobuf:"fixed64,1,opt,name=realized_pnl,json=realizedPnl,proto3" json:"realized_pnl,omitempty"`
 	UnrealizedPnl float64 `protobuf:"fixed64,2,opt,name=unrealized_pnl,json=unrealizedPnl,proto3" json:"unrealized_pnl,omitempty"`
-	TotalPnl      float64 `protobuf:"fixed64,3,opt,name=total_pnl,json=totalPnl,proto3" json:"total_pnl,omitempty"` // realized + unrealized
+	TotalPnl      float64 `protobuf:"fixed64,3,opt,name=total_pnl,json=totalPnl,proto3" json:"total_pnl,omitempty"` // realized + unrealized - unrealized at from_ts (window PnL)
 	Wins          int32   `protobuf:"varint,4,opt,name=wins,proto3" json:"wins,omitempty"`
 	Losses        int32   `protobuf:"varint,5,opt,name=losses,proto3" json:"losses,omitempty"`
 	WinRate       float64 `protobuf:"fixed64,6,opt,name=win_rate,json=winRate,proto3" json:"win_rate,omitempty"` // wins / (wins + losses), [0,1]
@@ -4371,7 +4371,7 @@ type InstrumentPerformance struct {
 	InstrumentId  uint64  `protobuf:"varint,1,opt,name=instrument_id,json=instrumentId,proto3" json:"instrument_id,omitempty"` // app convention: perp = index, spot = index + 10000
 	RealizedPnl   float64 `protobuf:"fixed64,2,opt,name=realized_pnl,json=realizedPnl,proto3" json:"realized_pnl,omitempty"`
 	UnrealizedPnl float64 `protobuf:"fixed64,3,opt,name=unrealized_pnl,json=unrealizedPnl,proto3" json:"unrealized_pnl,omitempty"`
-	TotalPnl      float64 `protobuf:"fixed64,4,opt,name=total_pnl,json=totalPnl,proto3" json:"total_pnl,omitempty"`
+	TotalPnl      float64 `protobuf:"fixed64,4,opt,name=total_pnl,json=totalPnl,proto3" json:"total_pnl,omitempty"` // realized + unrealized - unrealized at from_ts (window PnL)
 	Wins          int32   `protobuf:"varint,5,opt,name=wins,proto3" json:"wins,omitempty"`
 	Losses        int32   `protobuf:"varint,6,opt,name=losses,proto3" json:"losses,omitempty"`
 	WinRate       float64 `protobuf:"fixed64,7,opt,name=win_rate,json=winRate,proto3" json:"win_rate,omitempty"` // [0,1]

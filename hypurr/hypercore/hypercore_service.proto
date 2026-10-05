@@ -459,7 +459,7 @@ message PerformanceBucket {
   double realized_pnl = 2; // realized within this bucket (closed trades)
   double unrealized_pnl = 3; // absolute MTM unrealized of open positions at bucket close
   double period_pnl = 4; // this bucket's total contribution = realized_pnl + Δunrealized
-  double cum_pnl = 5; // cumulative total PnL (realized+unrealized) through bucket close
+  double cum_pnl = 5; // cumulative window PnL through bucket close: realized + unrealized - unrealized at window start
 
   // --- Win rate ---
   int32  wins = 6; // closed trades resolved in bucket with pnl > 0
@@ -474,7 +474,7 @@ message PerformanceBucket {
 message PerformanceSummary {
   double realized_pnl = 1;
   double unrealized_pnl = 2;
-  double total_pnl = 3; // realized + unrealized
+  double total_pnl = 3; // realized + unrealized - unrealized at from_ts (window PnL)
   int32  wins = 4;
   int32  losses = 5;
   double win_rate = 6; // wins / (wins + losses), [0,1]
@@ -484,7 +484,7 @@ message InstrumentPerformance {
   uint64 instrument_id = 1; // app convention: perp = index, spot = index + 10000
   double realized_pnl = 2;
   double unrealized_pnl = 3;
-  double total_pnl = 4;
+  double total_pnl = 4; // realized + unrealized - unrealized at from_ts (window PnL)
   int32  wins = 5;
   int32  losses = 6;
   double win_rate = 7; // [0,1]

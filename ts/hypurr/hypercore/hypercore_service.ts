@@ -1057,7 +1057,7 @@ export interface PerformanceBucket {
     /**
      * @generated from protobuf field: double cum_pnl = 5
      */
-    cumPnl: number; // cumulative total PnL (realized+unrealized) through bucket close
+    cumPnl: number; // cumulative window PnL through bucket close: realized + unrealized - unrealized at window start
     /**
      * --- Win rate ---
      *
@@ -1098,7 +1098,7 @@ export interface PerformanceSummary {
     /**
      * @generated from protobuf field: double total_pnl = 3
      */
-    totalPnl: number; // realized + unrealized
+    totalPnl: number; // realized + unrealized - unrealized at from_ts (window PnL)
     /**
      * @generated from protobuf field: int32 wins = 4
      */
@@ -1131,7 +1131,7 @@ export interface InstrumentPerformance {
     /**
      * @generated from protobuf field: double total_pnl = 4
      */
-    totalPnl: number;
+    totalPnl: number; // realized + unrealized - unrealized at from_ts (window PnL)
     /**
      * @generated from protobuf field: int32 wins = 5
      */
