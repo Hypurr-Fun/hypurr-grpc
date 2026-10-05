@@ -1072,6 +1072,14 @@ export interface PerformanceBucket {
      * @generated from protobuf field: double cum_win_rate = 8
      */
     cumWinRate: number; // cumulative win rate through this bucket, [0,1]
+    /**
+     * @generated from protobuf field: double volume = 9
+     */
+    volume: number; // USDC quote notional of fills in the bucket
+    /**
+     * @generated from protobuf field: double funding = 10
+     */
+    funding: number; // net funding in the bucket; positive = received
 }
 /**
  * Aggregate over the requested window (from_ts..to_ts; 0/0 = all-time).
@@ -5695,7 +5703,9 @@ class PerformanceBucket$Type extends MessageType<PerformanceBucket> {
             { no: 5, name: "cum_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 6, name: "wins", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 7, name: "losses", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 8, name: "cum_win_rate", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 8, name: "cum_win_rate", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "volume", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "funding", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<PerformanceBucket>): PerformanceBucket {
@@ -5708,6 +5718,8 @@ class PerformanceBucket$Type extends MessageType<PerformanceBucket> {
         message.wins = 0;
         message.losses = 0;
         message.cumWinRate = 0;
+        message.volume = 0;
+        message.funding = 0;
         if (value !== undefined)
             reflectionMergePartial<PerformanceBucket>(this, message, value);
         return message;
@@ -5740,6 +5752,12 @@ class PerformanceBucket$Type extends MessageType<PerformanceBucket> {
                     break;
                 case /* double cum_win_rate */ 8:
                     message.cumWinRate = reader.double();
+                    break;
+                case /* double volume */ 9:
+                    message.volume = reader.double();
+                    break;
+                case /* double funding */ 10:
+                    message.funding = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5777,6 +5795,12 @@ class PerformanceBucket$Type extends MessageType<PerformanceBucket> {
         /* double cum_win_rate = 8; */
         if (message.cumWinRate !== 0)
             writer.tag(8, WireType.Bit64).double(message.cumWinRate);
+        /* double volume = 9; */
+        if (message.volume !== 0)
+            writer.tag(9, WireType.Bit64).double(message.volume);
+        /* double funding = 10; */
+        if (message.funding !== 0)
+            writer.tag(10, WireType.Bit64).double(message.funding);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

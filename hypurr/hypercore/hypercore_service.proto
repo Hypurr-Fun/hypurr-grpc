@@ -465,6 +465,9 @@ message PerformanceBucket {
   int32  wins = 6; // closed trades resolved in bucket with pnl > 0
   int32  losses = 7; // closed trades resolved in bucket with pnl <= 0
   double cum_win_rate = 8; // cumulative win rate through this bucket, [0,1]
+
+  double volume = 9; // USDC quote notional of fills in the bucket
+  double funding = 10; // net funding in the bucket; positive = received
 }
 
 // Aggregate over the requested window (from_ts..to_ts; 0/0 = all-time).
