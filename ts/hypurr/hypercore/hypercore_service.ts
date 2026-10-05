@@ -1136,6 +1136,14 @@ export interface InstrumentPerformance {
      * @generated from protobuf field: double win_rate = 7
      */
     winRate: number; // [0,1]
+    /**
+     * @generated from protobuf field: double volume = 8
+     */
+    volume: number; // USDC quote notional of fills in the window
+    /**
+     * @generated from protobuf field: double funding = 9
+     */
+    funding: number; // net funding in the window; positive = received
 }
 /**
  * ----- RPC 1: aggregates (totals + per-instrument list) -----
@@ -5876,7 +5884,9 @@ class InstrumentPerformance$Type extends MessageType<InstrumentPerformance> {
             { no: 4, name: "total_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 5, name: "wins", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 6, name: "losses", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 7, name: "win_rate", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 7, name: "win_rate", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "volume", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "funding", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<InstrumentPerformance>): InstrumentPerformance {
@@ -5888,6 +5898,8 @@ class InstrumentPerformance$Type extends MessageType<InstrumentPerformance> {
         message.wins = 0;
         message.losses = 0;
         message.winRate = 0;
+        message.volume = 0;
+        message.funding = 0;
         if (value !== undefined)
             reflectionMergePartial<InstrumentPerformance>(this, message, value);
         return message;
@@ -5917,6 +5929,12 @@ class InstrumentPerformance$Type extends MessageType<InstrumentPerformance> {
                     break;
                 case /* double win_rate */ 7:
                     message.winRate = reader.double();
+                    break;
+                case /* double volume */ 8:
+                    message.volume = reader.double();
+                    break;
+                case /* double funding */ 9:
+                    message.funding = reader.double();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5951,6 +5969,12 @@ class InstrumentPerformance$Type extends MessageType<InstrumentPerformance> {
         /* double win_rate = 7; */
         if (message.winRate !== 0)
             writer.tag(7, WireType.Bit64).double(message.winRate);
+        /* double volume = 8; */
+        if (message.volume !== 0)
+            writer.tag(8, WireType.Bit64).double(message.volume);
+        /* double funding = 9; */
+        if (message.funding !== 0)
+            writer.tag(9, WireType.Bit64).double(message.funding);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

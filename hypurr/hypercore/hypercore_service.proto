@@ -485,6 +485,8 @@ message InstrumentPerformance {
   int32  wins = 5;
   int32  losses = 6;
   double win_rate = 7; // [0,1]
+  double volume = 8; // USDC quote notional of fills in the window
+  double funding = 9; // net funding in the window; positive = received
 }
 
 // ----- RPC 1: aggregates (totals + per-instrument list) -----
