@@ -520,8 +520,8 @@ message OpenPerpPosition {
   PositionDirection direction = 4;
   int64 unrealized_pnl_cents = 5; // Signed.
   double roe_percent = 6;         // Signed.
-  // Presence means iOS shows a liquidation warning.
-  PerpLiquidationWarning liquidation_warning = 7;
+  // Always present for every open perp position.
+  PerpLiquidationDistance liquidation_distance = 7;
   // Present for every current open perp position.
   PerpPositionDetails position_details = 8;
 }
@@ -557,8 +557,17 @@ message PerpAutoClose {
   string stop_loss_price_decimal = 2;
 }
 
-message PerpLiquidationWarning {
+enum PerpLiquidationWarningLevel {
+  PERP_LIQUIDATION_WARNING_LEVEL_UNSPECIFIED = 0;
+  PERP_LIQUIDATION_WARNING_LEVEL_WARNING = 1;
+  PERP_LIQUIDATION_WARNING_LEVEL_CRITICAL = 2;
+}
+
+message PerpLiquidationDistance {
+  // Percentage points: 5.4 means 5.4%.
   double distance_percentage = 1;
+  // Absent means no warning. When present, must be WARNING or CRITICAL.
+  optional PerpLiquidationWarningLevel warning_level = 2;
 }
 
 // ==== Open orders ====

@@ -1216,11 +1216,11 @@ export interface OpenPerpPosition {
      */
     roePercent: number; // Signed.
     /**
-     * Presence means iOS shows a liquidation warning.
+     * Always present for every open perp position.
      *
-     * @generated from protobuf field: hypurr.ios.v2.PerpLiquidationWarning liquidation_warning = 7
+     * @generated from protobuf field: hypurr.ios.v2.PerpLiquidationDistance liquidation_distance = 7
      */
-    liquidationWarning?: PerpLiquidationWarning;
+    liquidationDistance?: PerpLiquidationDistance;
     /**
      * Present for every current open perp position.
      *
@@ -1306,13 +1306,21 @@ export interface PerpAutoClose {
     stopLossPriceDecimal: string;
 }
 /**
- * @generated from protobuf message hypurr.ios.v2.PerpLiquidationWarning
+ * @generated from protobuf message hypurr.ios.v2.PerpLiquidationDistance
  */
-export interface PerpLiquidationWarning {
+export interface PerpLiquidationDistance {
     /**
+     * Percentage points: 5.4 means 5.4%.
+     *
      * @generated from protobuf field: double distance_percentage = 1
      */
     distancePercentage: number;
+    /**
+     * Absent means no warning. When present, must be WARNING or CRITICAL.
+     *
+     * @generated from protobuf field: optional hypurr.ios.v2.PerpLiquidationWarningLevel warning_level = 2
+     */
+    warningLevel?: PerpLiquidationWarningLevel;
 }
 // ==== Open orders ====
 
@@ -2129,6 +2137,23 @@ export enum PerpMarginMode {
      * @generated from protobuf enum value: PERP_MARGIN_MODE_CROSS = 2;
      */
     CROSS = 2
+}
+/**
+ * @generated from protobuf enum hypurr.ios.v2.PerpLiquidationWarningLevel
+ */
+export enum PerpLiquidationWarningLevel {
+    /**
+     * @generated from protobuf enum value: PERP_LIQUIDATION_WARNING_LEVEL_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: PERP_LIQUIDATION_WARNING_LEVEL_WARNING = 1;
+     */
+    WARNING = 1,
+    /**
+     * @generated from protobuf enum value: PERP_LIQUIDATION_WARNING_LEVEL_CRITICAL = 2;
+     */
+    CRITICAL = 2
 }
 /**
  * @generated from protobuf enum hypurr.ios.v2.TimeInForce
@@ -5756,7 +5781,7 @@ class OpenPerpPosition$Type extends MessageType<OpenPerpPosition> {
             { no: 4, name: "direction", kind: "enum", T: () => ["hypurr.ios.v2.PositionDirection", PositionDirection, "POSITION_DIRECTION_"] },
             { no: 5, name: "unrealized_pnl_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 6, name: "roe_percent", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 7, name: "liquidation_warning", kind: "message", T: () => PerpLiquidationWarning },
+            { no: 7, name: "liquidation_distance", kind: "message", T: () => PerpLiquidationDistance },
             { no: 8, name: "position_details", kind: "message", T: () => PerpPositionDetails }
         ]);
     }
@@ -5794,8 +5819,8 @@ class OpenPerpPosition$Type extends MessageType<OpenPerpPosition> {
                 case /* double roe_percent */ 6:
                     message.roePercent = reader.double();
                     break;
-                case /* hypurr.ios.v2.PerpLiquidationWarning liquidation_warning */ 7:
-                    message.liquidationWarning = PerpLiquidationWarning.internalBinaryRead(reader, reader.uint32(), options, message.liquidationWarning);
+                case /* hypurr.ios.v2.PerpLiquidationDistance liquidation_distance */ 7:
+                    message.liquidationDistance = PerpLiquidationDistance.internalBinaryRead(reader, reader.uint32(), options, message.liquidationDistance);
                     break;
                 case /* hypurr.ios.v2.PerpPositionDetails position_details */ 8:
                     message.positionDetails = PerpPositionDetails.internalBinaryRead(reader, reader.uint32(), options, message.positionDetails);
@@ -5830,9 +5855,9 @@ class OpenPerpPosition$Type extends MessageType<OpenPerpPosition> {
         /* double roe_percent = 6; */
         if (message.roePercent !== 0)
             writer.tag(6, WireType.Bit64).double(message.roePercent);
-        /* hypurr.ios.v2.PerpLiquidationWarning liquidation_warning = 7; */
-        if (message.liquidationWarning)
-            PerpLiquidationWarning.internalBinaryWrite(message.liquidationWarning, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.v2.PerpLiquidationDistance liquidation_distance = 7; */
+        if (message.liquidationDistance)
+            PerpLiquidationDistance.internalBinaryWrite(message.liquidationDistance, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         /* hypurr.ios.v2.PerpPositionDetails position_details = 8; */
         if (message.positionDetails)
             PerpPositionDetails.internalBinaryWrite(message.positionDetails, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
@@ -6083,26 +6108,30 @@ class PerpAutoClose$Type extends MessageType<PerpAutoClose> {
  */
 export const PerpAutoClose = new PerpAutoClose$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PerpLiquidationWarning$Type extends MessageType<PerpLiquidationWarning> {
+class PerpLiquidationDistance$Type extends MessageType<PerpLiquidationDistance> {
     constructor() {
-        super("hypurr.ios.v2.PerpLiquidationWarning", [
-            { no: 1, name: "distance_percentage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        super("hypurr.ios.v2.PerpLiquidationDistance", [
+            { no: 1, name: "distance_percentage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 2, name: "warning_level", kind: "enum", opt: true, T: () => ["hypurr.ios.v2.PerpLiquidationWarningLevel", PerpLiquidationWarningLevel, "PERP_LIQUIDATION_WARNING_LEVEL_"] }
         ]);
     }
-    create(value?: PartialMessage<PerpLiquidationWarning>): PerpLiquidationWarning {
+    create(value?: PartialMessage<PerpLiquidationDistance>): PerpLiquidationDistance {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.distancePercentage = 0;
         if (value !== undefined)
-            reflectionMergePartial<PerpLiquidationWarning>(this, message, value);
+            reflectionMergePartial<PerpLiquidationDistance>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerpLiquidationWarning): PerpLiquidationWarning {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PerpLiquidationDistance): PerpLiquidationDistance {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
                 case /* double distance_percentage */ 1:
                     message.distancePercentage = reader.double();
+                    break;
+                case /* optional hypurr.ios.v2.PerpLiquidationWarningLevel warning_level */ 2:
+                    message.warningLevel = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -6115,10 +6144,13 @@ class PerpLiquidationWarning$Type extends MessageType<PerpLiquidationWarning> {
         }
         return message;
     }
-    internalBinaryWrite(message: PerpLiquidationWarning, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PerpLiquidationDistance, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* double distance_percentage = 1; */
         if (message.distancePercentage !== 0)
             writer.tag(1, WireType.Bit64).double(message.distancePercentage);
+        /* optional hypurr.ios.v2.PerpLiquidationWarningLevel warning_level = 2; */
+        if (message.warningLevel !== undefined)
+            writer.tag(2, WireType.Varint).int32(message.warningLevel);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -6126,9 +6158,9 @@ class PerpLiquidationWarning$Type extends MessageType<PerpLiquidationWarning> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.ios.v2.PerpLiquidationWarning
+ * @generated MessageType for protobuf message hypurr.ios.v2.PerpLiquidationDistance
  */
-export const PerpLiquidationWarning = new PerpLiquidationWarning$Type();
+export const PerpLiquidationDistance = new PerpLiquidationDistance$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class OpenOrdersRequest$Type extends MessageType<OpenOrdersRequest> {
     constructor() {
