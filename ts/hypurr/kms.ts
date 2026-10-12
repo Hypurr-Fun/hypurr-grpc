@@ -34,9 +34,6 @@ export interface KmsLoginIntentRequest {
      */
     provider: string; // telegram | google | apple
     /**
-     * The identity's subject, never the raw id_token: whoever reads an id_token
-     * could seal a login with it.
-     *
      * @generated from protobuf field: string provider_subject = 2
      */
     providerSubject: string;

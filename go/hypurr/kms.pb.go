@@ -159,9 +159,7 @@ type KmsLoginIntentRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Provider string `protobuf:"bytes,1,opt,name=provider,proto3" json:"provider,omitempty"` // telegram | google | apple
-	// The identity's subject, never the raw id_token: whoever reads an id_token
-	// could seal a login with it.
+	Provider        string `protobuf:"bytes,1,opt,name=provider,proto3" json:"provider,omitempty"` // telegram | google | apple
 	ProviderSubject string `protobuf:"bytes,2,opt,name=provider_subject,json=providerSubject,proto3" json:"provider_subject,omitempty"`
 }
 
