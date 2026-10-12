@@ -43,6 +43,7 @@ const (
 	HyperCore_WalletsByMetricPercentile_FullMethodName         = "/hypercore.HyperCore/WalletsByMetricPercentile"
 	HyperCore_DirtyWallets_FullMethodName                      = "/hypercore.HyperCore/DirtyWallets"
 	HyperCore_WalletTrades_FullMethodName                      = "/hypercore.HyperCore/WalletTrades"
+	HyperCore_ClosedPositions_FullMethodName                   = "/hypercore.HyperCore/ClosedPositions"
 	HyperCore_OHLC_FullMethodName                              = "/hypercore.HyperCore/OHLC"
 	HyperCore_OHLCStream_FullMethodName                        = "/hypercore.HyperCore/OHLCStream"
 	HyperCore_HighLow_FullMethodName                           = "/hypercore.HyperCore/HighLow"
@@ -78,6 +79,7 @@ type HyperCoreClient interface {
 	WalletsByMetricPercentile(ctx context.Context, in *WalletsByMetricPercentileRequest, opts ...grpc.CallOption) (*WalletsByMetricPercentileResponse, error)
 	DirtyWallets(ctx context.Context, in *DirtyWalletsRequest, opts ...grpc.CallOption) (*DirtyWalletsResponse, error)
 	WalletTrades(ctx context.Context, in *WalletTradesRequest, opts ...grpc.CallOption) (*WalletTradesResponse, error)
+	ClosedPositions(ctx context.Context, in *ClosedPositionsRequest, opts ...grpc.CallOption) (*ClosedPositionsResponse, error)
 	OHLC(ctx context.Context, in *OHLCRequest, opts ...grpc.CallOption) (*OHLCResponse, error)
 	OHLCStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_OHLCStreamClient, error)
 	HighLow(ctx context.Context, in *HighLowRequest, opts ...grpc.CallOption) (*HighLowResponse, error)
@@ -446,6 +448,16 @@ func (c *hyperCoreClient) WalletTrades(ctx context.Context, in *WalletTradesRequ
 	return out, nil
 }
 
+func (c *hyperCoreClient) ClosedPositions(ctx context.Context, in *ClosedPositionsRequest, opts ...grpc.CallOption) (*ClosedPositionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ClosedPositionsResponse)
+	err := c.cc.Invoke(ctx, HyperCore_ClosedPositions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *hyperCoreClient) OHLC(ctx context.Context, in *OHLCRequest, opts ...grpc.CallOption) (*OHLCResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(OHLCResponse)
@@ -537,6 +549,7 @@ type HyperCoreServer interface {
 	WalletsByMetricPercentile(context.Context, *WalletsByMetricPercentileRequest) (*WalletsByMetricPercentileResponse, error)
 	DirtyWallets(context.Context, *DirtyWalletsRequest) (*DirtyWalletsResponse, error)
 	WalletTrades(context.Context, *WalletTradesRequest) (*WalletTradesResponse, error)
+	ClosedPositions(context.Context, *ClosedPositionsRequest) (*ClosedPositionsResponse, error)
 	OHLC(context.Context, *OHLCRequest) (*OHLCResponse, error)
 	OHLCStream(HyperCore_OHLCStreamServer) error
 	HighLow(context.Context, *HighLowRequest) (*HighLowResponse, error)
@@ -619,6 +632,9 @@ func (UnimplementedHyperCoreServer) DirtyWallets(context.Context, *DirtyWalletsR
 }
 func (UnimplementedHyperCoreServer) WalletTrades(context.Context, *WalletTradesRequest) (*WalletTradesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletTrades not implemented")
+}
+func (UnimplementedHyperCoreServer) ClosedPositions(context.Context, *ClosedPositionsRequest) (*ClosedPositionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClosedPositions not implemented")
 }
 func (UnimplementedHyperCoreServer) OHLC(context.Context, *OHLCRequest) (*OHLCResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OHLC not implemented")
@@ -1097,6 +1113,24 @@ func _HyperCore_WalletTrades_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_ClosedPositions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClosedPositionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).ClosedPositions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_ClosedPositions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).ClosedPositions(ctx, req.(*ClosedPositionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _HyperCore_OHLC_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OHLCRequest)
 	if err := dec(in); err != nil {
@@ -1259,6 +1293,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WalletTrades",
 			Handler:    _HyperCore_WalletTrades_Handler,
+		},
+		{
+			MethodName: "ClosedPositions",
+			Handler:    _HyperCore_ClosedPositions_Handler,
 		},
 		{
 			MethodName: "OHLC",

@@ -12,6 +12,8 @@ import type { OHLCStreamResponse } from "./hypercore_service";
 import type { OHLCStreamRequest } from "./hypercore_service";
 import type { OHLCResponse } from "./hypercore_service";
 import type { OHLCRequest } from "./hypercore_service";
+import type { ClosedPositionsResponse } from "./hypercore_service";
+import type { ClosedPositionsRequest } from "./hypercore_service";
 import type { WalletTradesResponse } from "./hypercore_service";
 import type { WalletTradesRequest } from "./hypercore_service";
 import type { DirtyWalletsResponse } from "./hypercore_service";
@@ -166,6 +168,10 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: WalletTrades
      */
     walletTrades(input: WalletTradesRequest, options?: RpcOptions): UnaryCall<WalletTradesRequest, WalletTradesResponse>;
+    /**
+     * @generated from protobuf rpc: ClosedPositions
+     */
+    closedPositions(input: ClosedPositionsRequest, options?: RpcOptions): UnaryCall<ClosedPositionsRequest, ClosedPositionsResponse>;
     /**
      * @generated from protobuf rpc: OHLC
      */
@@ -363,31 +369,38 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
         return stackIntercept<WalletTradesRequest, WalletTradesResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: ClosedPositions
+     */
+    closedPositions(input: ClosedPositionsRequest, options?: RpcOptions): UnaryCall<ClosedPositionsRequest, ClosedPositionsResponse> {
+        const method = this.methods[24], opt = this._transport.mergeOptions(options);
+        return stackIntercept<ClosedPositionsRequest, ClosedPositionsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: OHLC
      */
     oHLC(input: OHLCRequest, options?: RpcOptions): UnaryCall<OHLCRequest, OHLCResponse> {
-        const method = this.methods[24], opt = this._transport.mergeOptions(options);
+        const method = this.methods[25], opt = this._transport.mergeOptions(options);
         return stackIntercept<OHLCRequest, OHLCResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: OHLCStream
      */
     oHLCStream(options?: RpcOptions): DuplexStreamingCall<OHLCStreamRequest, OHLCStreamResponse> {
-        const method = this.methods[25], opt = this._transport.mergeOptions(options);
+        const method = this.methods[26], opt = this._transport.mergeOptions(options);
         return stackIntercept<OHLCStreamRequest, OHLCStreamResponse>("duplex", this._transport, method, opt);
     }
     /**
      * @generated from protobuf rpc: HighLow
      */
     highLow(input: HighLowRequest, options?: RpcOptions): UnaryCall<HighLowRequest, HighLowResponse> {
-        const method = this.methods[26], opt = this._transport.mergeOptions(options);
+        const method = this.methods[27], opt = this._transport.mergeOptions(options);
         return stackIntercept<HighLowRequest, HighLowResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PnlRank
      */
     pnlRank(input: PnlRankRequest, options?: RpcOptions): UnaryCall<PnlRankRequest, PnlRankResponse> {
-        const method = this.methods[27], opt = this._transport.mergeOptions(options);
+        const method = this.methods[28], opt = this._transport.mergeOptions(options);
         return stackIntercept<PnlRankRequest, PnlRankResponse>("unary", this._transport, method, opt, input);
     }
 }

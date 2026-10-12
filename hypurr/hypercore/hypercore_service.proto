@@ -691,6 +691,37 @@ message WalletTradesResponse {
   string next_page_token                = 3; // empty when exhausted
 }
 
+enum ClosedPositionKind {
+  CLOSED_POSITION_KIND_ALL  = 0; // perp + spot merged
+  CLOSED_POSITION_KIND_SPOT = 1;
+  CLOSED_POSITION_KIND_PERP = 2;
+}
+
+message ClosedPositionsRequest {
+  repeated string wallet_addresses = 1; // merged into one list
+  ClosedPositionKind kind          = 2;
+  int64  from_ts          = 3; // inclusive, unix seconds; 0 = earliest
+  int64  to_ts            = 4; // inclusive, unix seconds; 0 = now
+  int32  page_size        = 5; // max 500; 0 = 500
+  string page_token       = 6; // from previous response; empty = first page
+}
+
+message ClosedPosition {
+  string position_id    = 1; // stable across calls
+  uint64 instrument_id  = 2; // perp = index, spot = index + 10000
+  int64  closed_at      = 3; // unix seconds
+  double realized_pnl   = 4; // USDC, after fees
+  bool   long           = 5; // perp only
+  double return_percent = 6; // spot only, signed
+  bool   realized_known = 7; // false: cum_pnl missing (pre-2025-05-25 or a fill gap); realized_pnl and return_percent are 0
+  string wallet_address = 8;
+}
+
+message ClosedPositionsResponse {
+  repeated ClosedPosition positions = 1; // closed_at descending
+  string next_page_token            = 2; // empty when exhausted
+}
+
 // Numbering matches hypurr.HistoricalChartInterval in ios.proto; convert by cast.
 // 30D is a fixed 30-day step, not a calendar month.
 enum OHLCInterval {
@@ -837,6 +868,7 @@ service HyperCore {
   rpc WalletsByMetricPercentile(WalletsByMetricPercentileRequest) returns (WalletsByMetricPercentileResponse) {}
   rpc DirtyWallets(DirtyWalletsRequest) returns (DirtyWalletsResponse) {}
   rpc WalletTrades(WalletTradesRequest) returns (WalletTradesResponse) {}
+  rpc ClosedPositions(ClosedPositionsRequest) returns (ClosedPositionsResponse) {}
   rpc OHLC(OHLCRequest) returns (OHLCResponse) {}
   rpc OHLCStream(stream OHLCStreamRequest) returns (stream OHLCStreamResponse) {}
   rpc HighLow(HighLowRequest) returns (HighLowResponse) {}

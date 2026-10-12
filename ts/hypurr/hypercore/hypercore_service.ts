@@ -1702,6 +1702,85 @@ export interface WalletTradesResponse {
     nextPageToken: string; // empty when exhausted
 }
 /**
+ * @generated from protobuf message hypercore.ClosedPositionsRequest
+ */
+export interface ClosedPositionsRequest {
+    /**
+     * @generated from protobuf field: repeated string wallet_addresses = 1
+     */
+    walletAddresses: string[]; // merged into one list
+    /**
+     * @generated from protobuf field: hypercore.ClosedPositionKind kind = 2
+     */
+    kind: ClosedPositionKind;
+    /**
+     * @generated from protobuf field: int64 from_ts = 3
+     */
+    fromTs: number; // inclusive, unix seconds; 0 = earliest
+    /**
+     * @generated from protobuf field: int64 to_ts = 4
+     */
+    toTs: number; // inclusive, unix seconds; 0 = now
+    /**
+     * @generated from protobuf field: int32 page_size = 5
+     */
+    pageSize: number; // max 500; 0 = 500
+    /**
+     * @generated from protobuf field: string page_token = 6
+     */
+    pageToken: string; // from previous response; empty = first page
+}
+/**
+ * @generated from protobuf message hypercore.ClosedPosition
+ */
+export interface ClosedPosition {
+    /**
+     * @generated from protobuf field: string position_id = 1
+     */
+    positionId: string; // stable across calls
+    /**
+     * @generated from protobuf field: uint64 instrument_id = 2
+     */
+    instrumentId: number; // perp = index, spot = index + 10000
+    /**
+     * @generated from protobuf field: int64 closed_at = 3
+     */
+    closedAt: number; // unix seconds
+    /**
+     * @generated from protobuf field: double realized_pnl = 4
+     */
+    realizedPnl: number; // USDC, after fees
+    /**
+     * @generated from protobuf field: bool long = 5
+     */
+    long: boolean; // perp only
+    /**
+     * @generated from protobuf field: double return_percent = 6
+     */
+    returnPercent: number; // spot only, signed
+    /**
+     * @generated from protobuf field: bool realized_known = 7
+     */
+    realizedKnown: boolean; // false: cum_pnl missing (pre-2025-05-25 or a fill gap); realized_pnl and return_percent are 0
+    /**
+     * @generated from protobuf field: string wallet_address = 8
+     */
+    walletAddress: string;
+}
+/**
+ * @generated from protobuf message hypercore.ClosedPositionsResponse
+ */
+export interface ClosedPositionsResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.ClosedPosition positions = 1
+     */
+    positions: ClosedPosition[]; // closed_at descending
+    /**
+     * @generated from protobuf field: string next_page_token = 2
+     */
+    nextPageToken: string; // empty when exhausted
+}
+/**
  * @generated from protobuf message hypercore.OHLCRequest
  */
 export interface OHLCRequest {
@@ -2241,6 +2320,25 @@ export enum WalletTradeType {
      * @generated from protobuf enum value: WALLET_TRADE_TYPE_SPOT = 2;
      */
     SPOT = 2
+}
+/**
+ * @generated from protobuf enum hypercore.ClosedPositionKind
+ */
+export enum ClosedPositionKind {
+    /**
+     * perp + spot merged
+     *
+     * @generated from protobuf enum value: CLOSED_POSITION_KIND_ALL = 0;
+     */
+    ALL = 0,
+    /**
+     * @generated from protobuf enum value: CLOSED_POSITION_KIND_SPOT = 1;
+     */
+    SPOT = 1,
+    /**
+     * @generated from protobuf enum value: CLOSED_POSITION_KIND_PERP = 2;
+     */
+    PERP = 2
 }
 /**
  * Numbering matches hypurr.HistoricalChartInterval in ios.proto; convert by cast.
@@ -7719,6 +7817,251 @@ class WalletTradesResponse$Type extends MessageType<WalletTradesResponse> {
  */
 export const WalletTradesResponse = new WalletTradesResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class ClosedPositionsRequest$Type extends MessageType<ClosedPositionsRequest> {
+    constructor() {
+        super("hypercore.ClosedPositionsRequest", [
+            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "kind", kind: "enum", T: () => ["hypercore.ClosedPositionKind", ClosedPositionKind, "CLOSED_POSITION_KIND_"] },
+            { no: 3, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ClosedPositionsRequest>): ClosedPositionsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddresses = [];
+        message.kind = 0;
+        message.fromTs = 0;
+        message.toTs = 0;
+        message.pageSize = 0;
+        message.pageToken = "";
+        if (value !== undefined)
+            reflectionMergePartial<ClosedPositionsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ClosedPositionsRequest): ClosedPositionsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string wallet_addresses */ 1:
+                    message.walletAddresses.push(reader.string());
+                    break;
+                case /* hypercore.ClosedPositionKind kind */ 2:
+                    message.kind = reader.int32();
+                    break;
+                case /* int64 from_ts */ 3:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 4:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                case /* int32 page_size */ 5:
+                    message.pageSize = reader.int32();
+                    break;
+                case /* string page_token */ 6:
+                    message.pageToken = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ClosedPositionsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string wallet_addresses = 1; */
+        for (let i = 0; i < message.walletAddresses.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
+        /* hypercore.ClosedPositionKind kind = 2; */
+        if (message.kind !== 0)
+            writer.tag(2, WireType.Varint).int32(message.kind);
+        /* int64 from_ts = 3; */
+        if (message.fromTs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 4; */
+        if (message.toTs !== 0)
+            writer.tag(4, WireType.Varint).int64(message.toTs);
+        /* int32 page_size = 5; */
+        if (message.pageSize !== 0)
+            writer.tag(5, WireType.Varint).int32(message.pageSize);
+        /* string page_token = 6; */
+        if (message.pageToken !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.pageToken);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.ClosedPositionsRequest
+ */
+export const ClosedPositionsRequest = new ClosedPositionsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ClosedPosition$Type extends MessageType<ClosedPosition> {
+    constructor() {
+        super("hypercore.ClosedPosition", [
+            { no: 1, name: "position_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "closed_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "realized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "long", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 6, name: "return_percent", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "realized_known", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 8, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ClosedPosition>): ClosedPosition {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.positionId = "";
+        message.instrumentId = 0;
+        message.closedAt = 0;
+        message.realizedPnl = 0;
+        message.long = false;
+        message.returnPercent = 0;
+        message.realizedKnown = false;
+        message.walletAddress = "";
+        if (value !== undefined)
+            reflectionMergePartial<ClosedPosition>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ClosedPosition): ClosedPosition {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string position_id */ 1:
+                    message.positionId = reader.string();
+                    break;
+                case /* uint64 instrument_id */ 2:
+                    message.instrumentId = reader.uint64().toNumber();
+                    break;
+                case /* int64 closed_at */ 3:
+                    message.closedAt = reader.int64().toNumber();
+                    break;
+                case /* double realized_pnl */ 4:
+                    message.realizedPnl = reader.double();
+                    break;
+                case /* bool long */ 5:
+                    message.long = reader.bool();
+                    break;
+                case /* double return_percent */ 6:
+                    message.returnPercent = reader.double();
+                    break;
+                case /* bool realized_known */ 7:
+                    message.realizedKnown = reader.bool();
+                    break;
+                case /* string wallet_address */ 8:
+                    message.walletAddress = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ClosedPosition, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string position_id = 1; */
+        if (message.positionId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.positionId);
+        /* uint64 instrument_id = 2; */
+        if (message.instrumentId !== 0)
+            writer.tag(2, WireType.Varint).uint64(message.instrumentId);
+        /* int64 closed_at = 3; */
+        if (message.closedAt !== 0)
+            writer.tag(3, WireType.Varint).int64(message.closedAt);
+        /* double realized_pnl = 4; */
+        if (message.realizedPnl !== 0)
+            writer.tag(4, WireType.Bit64).double(message.realizedPnl);
+        /* bool long = 5; */
+        if (message.long !== false)
+            writer.tag(5, WireType.Varint).bool(message.long);
+        /* double return_percent = 6; */
+        if (message.returnPercent !== 0)
+            writer.tag(6, WireType.Bit64).double(message.returnPercent);
+        /* bool realized_known = 7; */
+        if (message.realizedKnown !== false)
+            writer.tag(7, WireType.Varint).bool(message.realizedKnown);
+        /* string wallet_address = 8; */
+        if (message.walletAddress !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.walletAddress);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.ClosedPosition
+ */
+export const ClosedPosition = new ClosedPosition$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ClosedPositionsResponse$Type extends MessageType<ClosedPositionsResponse> {
+    constructor() {
+        super("hypercore.ClosedPositionsResponse", [
+            { no: 1, name: "positions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ClosedPosition },
+            { no: 2, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ClosedPositionsResponse>): ClosedPositionsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.positions = [];
+        message.nextPageToken = "";
+        if (value !== undefined)
+            reflectionMergePartial<ClosedPositionsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ClosedPositionsResponse): ClosedPositionsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.ClosedPosition positions */ 1:
+                    message.positions.push(ClosedPosition.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string next_page_token */ 2:
+                    message.nextPageToken = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ClosedPositionsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.ClosedPosition positions = 1; */
+        for (let i = 0; i < message.positions.length; i++)
+            ClosedPosition.internalBinaryWrite(message.positions[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string next_page_token = 2; */
+        if (message.nextPageToken !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.nextPageToken);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.ClosedPositionsResponse
+ */
+export const ClosedPositionsResponse = new ClosedPositionsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class OHLCRequest$Type extends MessageType<OHLCRequest> {
     constructor() {
         super("hypercore.OHLCRequest", [
@@ -8638,6 +8981,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletsByMetricPercentile", options: {}, I: WalletsByMetricPercentileRequest, O: WalletsByMetricPercentileResponse },
     { name: "DirtyWallets", options: {}, I: DirtyWalletsRequest, O: DirtyWalletsResponse },
     { name: "WalletTrades", options: {}, I: WalletTradesRequest, O: WalletTradesResponse },
+    { name: "ClosedPositions", options: {}, I: ClosedPositionsRequest, O: ClosedPositionsResponse },
     { name: "OHLC", options: {}, I: OHLCRequest, O: OHLCResponse },
     { name: "OHLCStream", serverStreaming: true, clientStreaming: true, options: {}, I: OHLCStreamRequest, O: OHLCStreamResponse },
     { name: "HighLow", options: {}, I: HighLowRequest, O: HighLowResponse },

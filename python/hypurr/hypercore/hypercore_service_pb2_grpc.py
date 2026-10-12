@@ -154,6 +154,11 @@ class HyperCoreStub:
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.FromString,
                 _registered_method=True)
+        self.ClosedPositions = channel.unary_unary(
+                '/hypercore.HyperCore/ClosedPositions',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ClosedPositionsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ClosedPositionsResponse.FromString,
+                _registered_method=True)
         self.OHLC = channel.unary_unary(
                 '/hypercore.HyperCore/OHLC',
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OHLCRequest.SerializeToString,
@@ -324,6 +329,12 @@ class HyperCoreServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ClosedPositions(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def OHLC(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -470,6 +481,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     servicer.WalletTrades,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.SerializeToString,
+            ),
+            'ClosedPositions': grpc.unary_unary_rpc_method_handler(
+                    servicer.ClosedPositions,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ClosedPositionsRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.ClosedPositionsResponse.SerializeToString,
             ),
             'OHLC': grpc.unary_unary_rpc_method_handler(
                     servicer.OHLC,
@@ -1140,6 +1156,33 @@ class HyperCore:
             '/hypercore.HyperCore/WalletTrades',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ClosedPositions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/ClosedPositions',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.ClosedPositionsRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.ClosedPositionsResponse.FromString,
             options,
             channel_credentials,
             insecure,
