@@ -2085,7 +2085,11 @@ export enum WalletTag {
     /**
      * @generated from protobuf enum value: WALLET_TAG_HIGH_WIN_RATE_XYZ = 11;
      */
-    HIGH_WIN_RATE_XYZ = 11
+    HIGH_WIN_RATE_XYZ = 11,
+    /**
+     * @generated from protobuf enum value: WALLET_TAG_FOMO = 12;
+     */
+    FOMO = 12
 }
 /**
  * @generated from protobuf enum hypercore.TradeDirOverride
