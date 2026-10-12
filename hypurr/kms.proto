@@ -42,7 +42,7 @@ enum KmsLoginIntentKind {
 
 message KmsLoginIntentRequest {
   string provider = 1; // telegram | google | apple
-  string id_token = 2;
+  string provider_subject = 2;
 }
 
 message KmsLoginIntentResponse {

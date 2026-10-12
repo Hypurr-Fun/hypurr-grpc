@@ -34,9 +34,12 @@ export interface KmsLoginIntentRequest {
      */
     provider: string; // telegram | google | apple
     /**
-     * @generated from protobuf field: string id_token = 2
+     * The identity's subject, never the raw id_token: whoever reads an id_token
+     * could seal a login with it.
+     *
+     * @generated from protobuf field: string provider_subject = 2
      */
-    idToken: string;
+    providerSubject: string;
 }
 /**
  * @generated from protobuf message hypurr.KmsLoginIntentResponse
@@ -592,13 +595,13 @@ class KmsLoginIntentRequest$Type extends MessageType<KmsLoginIntentRequest> {
     constructor() {
         super("hypurr.KmsLoginIntentRequest", [
             { no: 1, name: "provider", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "id_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "provider_subject", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsLoginIntentRequest>): KmsLoginIntentRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.provider = "";
-        message.idToken = "";
+        message.providerSubject = "";
         if (value !== undefined)
             reflectionMergePartial<KmsLoginIntentRequest>(this, message, value);
         return message;
@@ -611,8 +614,8 @@ class KmsLoginIntentRequest$Type extends MessageType<KmsLoginIntentRequest> {
                 case /* string provider */ 1:
                     message.provider = reader.string();
                     break;
-                case /* string id_token */ 2:
-                    message.idToken = reader.string();
+                case /* string provider_subject */ 2:
+                    message.providerSubject = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -629,9 +632,9 @@ class KmsLoginIntentRequest$Type extends MessageType<KmsLoginIntentRequest> {
         /* string provider = 1; */
         if (message.provider !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.provider);
-        /* string id_token = 2; */
-        if (message.idToken !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.idToken);
+        /* string provider_subject = 2; */
+        if (message.providerSubject !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.providerSubject);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
