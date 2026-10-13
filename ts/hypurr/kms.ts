@@ -286,6 +286,10 @@ export interface KmsAgentInfo {
      * @generated from protobuf field: int64 created_at = 4
      */
     createdAt: number;
+    /**
+     * @generated from protobuf field: int64 daily_spend_cap_usd = 5
+     */
+    dailySpendCapUsd: number; // most the bot may trade in USD over any 24 hours
 }
 /**
  * @generated from protobuf message hypurr.KmsAccountShardSecretRequest
@@ -1551,7 +1555,8 @@ class KmsAgentInfo$Type extends MessageType<KmsAgentInfo> {
             { no: 1, name: "agent_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 4, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "daily_spend_cap_usd", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<KmsAgentInfo>): KmsAgentInfo {
@@ -1560,6 +1565,7 @@ class KmsAgentInfo$Type extends MessageType<KmsAgentInfo> {
         message.name = "";
         message.expiresAt = 0;
         message.createdAt = 0;
+        message.dailySpendCapUsd = 0;
         if (value !== undefined)
             reflectionMergePartial<KmsAgentInfo>(this, message, value);
         return message;
@@ -1580,6 +1586,9 @@ class KmsAgentInfo$Type extends MessageType<KmsAgentInfo> {
                     break;
                 case /* int64 created_at */ 4:
                     message.createdAt = reader.int64().toNumber();
+                    break;
+                case /* int64 daily_spend_cap_usd */ 5:
+                    message.dailySpendCapUsd = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1605,6 +1614,9 @@ class KmsAgentInfo$Type extends MessageType<KmsAgentInfo> {
         /* int64 created_at = 4; */
         if (message.createdAt !== 0)
             writer.tag(4, WireType.Varint).int64(message.createdAt);
+        /* int64 daily_spend_cap_usd = 5; */
+        if (message.dailySpendCapUsd !== 0)
+            writer.tag(5, WireType.Varint).int64(message.dailySpendCapUsd);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
