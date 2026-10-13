@@ -482,15 +482,17 @@ message PerformanceSummary {
 }
 
 message InstrumentPerformance {
-  uint64 instrument_id = 1; // app convention: perp = index, spot = index + 10000
-  double realized_pnl = 2;
-  double unrealized_pnl = 3;
-  double total_pnl = 4; // realized + unrealized - unrealized at from_ts (window PnL)
-  int32  wins = 5;
-  int32  losses = 6;
-  double win_rate = 7; // [0,1]
-  double volume = 8; // USDC quote notional of fills in the window
-  double funding = 9; // net funding in the window; positive = received
+  optional uint64 perp_market_id = 1; // perp index (builder dexes at 100k+)
+  optional uint64 spot_token_id = 2; // token index + 10000
+  optional uint64 outcome_id = 3; // 100M + outcome encoding
+  double realized_pnl = 4;
+  double unrealized_pnl = 5;
+  double total_pnl = 6; // realized + unrealized - unrealized at from_ts (window PnL)
+  int32  wins = 7;
+  int32  losses = 8;
+  double win_rate = 9; // [0,1]
+  double volume = 10; // USDC quote notional of fills in the window
+  double funding = 11; // net funding in the window; positive = received
 }
 
 // ----- RPC 1: aggregates (totals + per-instrument list) -----
@@ -812,6 +814,7 @@ message PnlClassFilter {
 
 message PnlAssetFilter {
   repeated int64 asset_ids = 1; // instrument ids: perp index (builder dexes at 100k+), 100M+ outcomes
+  repeated int64 spot_token_ids = 2; // token index + 10000
 }
 
 enum PnlRankPeriod {

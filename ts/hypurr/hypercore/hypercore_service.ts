@@ -1117,39 +1117,47 @@ export interface PerformanceSummary {
  */
 export interface InstrumentPerformance {
     /**
-     * @generated from protobuf field: uint64 instrument_id = 1
+     * @generated from protobuf field: optional uint64 perp_market_id = 1
      */
-    instrumentId: number; // app convention: perp = index, spot = index + 10000
+    perpMarketId?: number; // perp index (builder dexes at 100k+)
     /**
-     * @generated from protobuf field: double realized_pnl = 2
+     * @generated from protobuf field: optional uint64 spot_token_id = 2
+     */
+    spotTokenId?: number; // token index + 10000
+    /**
+     * @generated from protobuf field: optional uint64 outcome_id = 3
+     */
+    outcomeId?: number; // 100M + outcome encoding
+    /**
+     * @generated from protobuf field: double realized_pnl = 4
      */
     realizedPnl: number;
     /**
-     * @generated from protobuf field: double unrealized_pnl = 3
+     * @generated from protobuf field: double unrealized_pnl = 5
      */
     unrealizedPnl: number;
     /**
-     * @generated from protobuf field: double total_pnl = 4
+     * @generated from protobuf field: double total_pnl = 6
      */
     totalPnl: number; // realized + unrealized - unrealized at from_ts (window PnL)
     /**
-     * @generated from protobuf field: int32 wins = 5
+     * @generated from protobuf field: int32 wins = 7
      */
     wins: number;
     /**
-     * @generated from protobuf field: int32 losses = 6
+     * @generated from protobuf field: int32 losses = 8
      */
     losses: number;
     /**
-     * @generated from protobuf field: double win_rate = 7
+     * @generated from protobuf field: double win_rate = 9
      */
     winRate: number; // [0,1]
     /**
-     * @generated from protobuf field: double volume = 8
+     * @generated from protobuf field: double volume = 10
      */
     volume: number; // USDC quote notional of fills in the window
     /**
-     * @generated from protobuf field: double funding = 9
+     * @generated from protobuf field: double funding = 11
      */
     funding: number; // net funding in the window; positive = received
 }
@@ -1946,6 +1954,10 @@ export interface PnlAssetFilter {
      * @generated from protobuf field: repeated int64 asset_ids = 1
      */
     assetIds: number[]; // instrument ids: perp index (builder dexes at 100k+), 100M+ outcomes
+    /**
+     * @generated from protobuf field: repeated int64 spot_token_ids = 2
+     */
+    spotTokenIds: number[]; // token index + 10000
 }
 /**
  * @generated from protobuf message hypercore.PnlRankRequest
@@ -6004,20 +6016,21 @@ export const PerformanceSummary = new PerformanceSummary$Type();
 class InstrumentPerformance$Type extends MessageType<InstrumentPerformance> {
     constructor() {
         super("hypercore.InstrumentPerformance", [
-            { no: 1, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "realized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 3, name: "unrealized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 4, name: "total_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 5, name: "wins", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "losses", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 7, name: "win_rate", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 8, name: "volume", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 9, name: "funding", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 1, name: "perp_market_id", kind: "scalar", opt: true, T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "spot_token_id", kind: "scalar", opt: true, T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "outcome_id", kind: "scalar", opt: true, T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "realized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "unrealized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "total_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "wins", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 8, name: "losses", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 9, name: "win_rate", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "volume", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "funding", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<InstrumentPerformance>): InstrumentPerformance {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.instrumentId = 0;
         message.realizedPnl = 0;
         message.unrealizedPnl = 0;
         message.totalPnl = 0;
@@ -6035,31 +6048,37 @@ class InstrumentPerformance$Type extends MessageType<InstrumentPerformance> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* uint64 instrument_id */ 1:
-                    message.instrumentId = reader.uint64().toNumber();
+                case /* optional uint64 perp_market_id */ 1:
+                    message.perpMarketId = reader.uint64().toNumber();
                     break;
-                case /* double realized_pnl */ 2:
+                case /* optional uint64 spot_token_id */ 2:
+                    message.spotTokenId = reader.uint64().toNumber();
+                    break;
+                case /* optional uint64 outcome_id */ 3:
+                    message.outcomeId = reader.uint64().toNumber();
+                    break;
+                case /* double realized_pnl */ 4:
                     message.realizedPnl = reader.double();
                     break;
-                case /* double unrealized_pnl */ 3:
+                case /* double unrealized_pnl */ 5:
                     message.unrealizedPnl = reader.double();
                     break;
-                case /* double total_pnl */ 4:
+                case /* double total_pnl */ 6:
                     message.totalPnl = reader.double();
                     break;
-                case /* int32 wins */ 5:
+                case /* int32 wins */ 7:
                     message.wins = reader.int32();
                     break;
-                case /* int32 losses */ 6:
+                case /* int32 losses */ 8:
                     message.losses = reader.int32();
                     break;
-                case /* double win_rate */ 7:
+                case /* double win_rate */ 9:
                     message.winRate = reader.double();
                     break;
-                case /* double volume */ 8:
+                case /* double volume */ 10:
                     message.volume = reader.double();
                     break;
-                case /* double funding */ 9:
+                case /* double funding */ 11:
                     message.funding = reader.double();
                     break;
                 default:
@@ -6074,33 +6093,39 @@ class InstrumentPerformance$Type extends MessageType<InstrumentPerformance> {
         return message;
     }
     internalBinaryWrite(message: InstrumentPerformance, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint64 instrument_id = 1; */
-        if (message.instrumentId !== 0)
-            writer.tag(1, WireType.Varint).uint64(message.instrumentId);
-        /* double realized_pnl = 2; */
+        /* optional uint64 perp_market_id = 1; */
+        if (message.perpMarketId !== undefined)
+            writer.tag(1, WireType.Varint).uint64(message.perpMarketId);
+        /* optional uint64 spot_token_id = 2; */
+        if (message.spotTokenId !== undefined)
+            writer.tag(2, WireType.Varint).uint64(message.spotTokenId);
+        /* optional uint64 outcome_id = 3; */
+        if (message.outcomeId !== undefined)
+            writer.tag(3, WireType.Varint).uint64(message.outcomeId);
+        /* double realized_pnl = 4; */
         if (message.realizedPnl !== 0)
-            writer.tag(2, WireType.Bit64).double(message.realizedPnl);
-        /* double unrealized_pnl = 3; */
+            writer.tag(4, WireType.Bit64).double(message.realizedPnl);
+        /* double unrealized_pnl = 5; */
         if (message.unrealizedPnl !== 0)
-            writer.tag(3, WireType.Bit64).double(message.unrealizedPnl);
-        /* double total_pnl = 4; */
+            writer.tag(5, WireType.Bit64).double(message.unrealizedPnl);
+        /* double total_pnl = 6; */
         if (message.totalPnl !== 0)
-            writer.tag(4, WireType.Bit64).double(message.totalPnl);
-        /* int32 wins = 5; */
+            writer.tag(6, WireType.Bit64).double(message.totalPnl);
+        /* int32 wins = 7; */
         if (message.wins !== 0)
-            writer.tag(5, WireType.Varint).int32(message.wins);
-        /* int32 losses = 6; */
+            writer.tag(7, WireType.Varint).int32(message.wins);
+        /* int32 losses = 8; */
         if (message.losses !== 0)
-            writer.tag(6, WireType.Varint).int32(message.losses);
-        /* double win_rate = 7; */
+            writer.tag(8, WireType.Varint).int32(message.losses);
+        /* double win_rate = 9; */
         if (message.winRate !== 0)
-            writer.tag(7, WireType.Bit64).double(message.winRate);
-        /* double volume = 8; */
+            writer.tag(9, WireType.Bit64).double(message.winRate);
+        /* double volume = 10; */
         if (message.volume !== 0)
-            writer.tag(8, WireType.Bit64).double(message.volume);
-        /* double funding = 9; */
+            writer.tag(10, WireType.Bit64).double(message.volume);
+        /* double funding = 11; */
         if (message.funding !== 0)
-            writer.tag(9, WireType.Bit64).double(message.funding);
+            writer.tag(11, WireType.Bit64).double(message.funding);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -8704,12 +8729,14 @@ export const PnlClassFilter = new PnlClassFilter$Type();
 class PnlAssetFilter$Type extends MessageType<PnlAssetFilter> {
     constructor() {
         super("hypercore.PnlAssetFilter", [
-            { no: 1, name: "asset_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 1, name: "asset_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "spot_token_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<PnlAssetFilter>): PnlAssetFilter {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.assetIds = [];
+        message.spotTokenIds = [];
         if (value !== undefined)
             reflectionMergePartial<PnlAssetFilter>(this, message, value);
         return message;
@@ -8725,6 +8752,13 @@ class PnlAssetFilter$Type extends MessageType<PnlAssetFilter> {
                             message.assetIds.push(reader.int64().toNumber());
                     else
                         message.assetIds.push(reader.int64().toNumber());
+                    break;
+                case /* repeated int64 spot_token_ids */ 2:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.spotTokenIds.push(reader.int64().toNumber());
+                    else
+                        message.spotTokenIds.push(reader.int64().toNumber());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -8743,6 +8777,13 @@ class PnlAssetFilter$Type extends MessageType<PnlAssetFilter> {
             writer.tag(1, WireType.LengthDelimited).fork();
             for (let i = 0; i < message.assetIds.length; i++)
                 writer.int64(message.assetIds[i]);
+            writer.join();
+        }
+        /* repeated int64 spot_token_ids = 2; */
+        if (message.spotTokenIds.length) {
+            writer.tag(2, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.spotTokenIds.length; i++)
+                writer.int64(message.spotTokenIds[i]);
             writer.join();
         }
         let u = options.writeUnknownFields;
