@@ -19,22 +19,24 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	IosService_Home_FullMethodName                = "/hypurr.ios.v2.IosService/Home"
-	IosService_LiveAssetUpdates_FullMethodName    = "/hypurr.ios.v2.IosService/LiveAssetUpdates"
-	IosService_Catalog_FullMethodName             = "/hypurr.ios.v2.IosService/Catalog"
-	IosService_AssetDetail_FullMethodName         = "/hypurr.ios.v2.IosService/AssetDetail"
-	IosService_Candles_FullMethodName             = "/hypurr.ios.v2.IosService/Candles"
-	IosService_CandlesStream_FullMethodName       = "/hypurr.ios.v2.IosService/CandlesStream"
-	IosService_UserStream_FullMethodName          = "/hypurr.ios.v2.IosService/UserStream"
-	IosService_OpenOrders_FullMethodName          = "/hypurr.ios.v2.IosService/OpenOrders"
-	IosService_Markets_FullMethodName             = "/hypurr.ios.v2.IosService/Markets"
-	IosService_Watchlist_FullMethodName           = "/hypurr.ios.v2.IosService/Watchlist"
-	IosService_AddToWatchlist_FullMethodName      = "/hypurr.ios.v2.IosService/AddToWatchlist"
-	IosService_RemoveFromWatchlist_FullMethodName = "/hypurr.ios.v2.IosService/RemoveFromWatchlist"
-	IosService_PriceAlerts_FullMethodName         = "/hypurr.ios.v2.IosService/PriceAlerts"
-	IosService_CreatePriceAlert_FullMethodName    = "/hypurr.ios.v2.IosService/CreatePriceAlert"
-	IosService_UpdatePriceAlert_FullMethodName    = "/hypurr.ios.v2.IosService/UpdatePriceAlert"
-	IosService_DeletePriceAlert_FullMethodName    = "/hypurr.ios.v2.IosService/DeletePriceAlert"
+	IosService_Home_FullMethodName                  = "/hypurr.ios.v2.IosService/Home"
+	IosService_LiveAssetUpdates_FullMethodName      = "/hypurr.ios.v2.IosService/LiveAssetUpdates"
+	IosService_Catalog_FullMethodName               = "/hypurr.ios.v2.IosService/Catalog"
+	IosService_AssetDetail_FullMethodName           = "/hypurr.ios.v2.IosService/AssetDetail"
+	IosService_Candles_FullMethodName               = "/hypurr.ios.v2.IosService/Candles"
+	IosService_CandlesStream_FullMethodName         = "/hypurr.ios.v2.IosService/CandlesStream"
+	IosService_UserStream_FullMethodName            = "/hypurr.ios.v2.IosService/UserStream"
+	IosService_OpenOrders_FullMethodName            = "/hypurr.ios.v2.IosService/OpenOrders"
+	IosService_Markets_FullMethodName               = "/hypurr.ios.v2.IosService/Markets"
+	IosService_Watchlist_FullMethodName             = "/hypurr.ios.v2.IosService/Watchlist"
+	IosService_AddToWatchlist_FullMethodName        = "/hypurr.ios.v2.IosService/AddToWatchlist"
+	IosService_RemoveFromWatchlist_FullMethodName   = "/hypurr.ios.v2.IosService/RemoveFromWatchlist"
+	IosService_PriceAlerts_FullMethodName           = "/hypurr.ios.v2.IosService/PriceAlerts"
+	IosService_CreatePriceAlert_FullMethodName      = "/hypurr.ios.v2.IosService/CreatePriceAlert"
+	IosService_UpdatePriceAlert_FullMethodName      = "/hypurr.ios.v2.IosService/UpdatePriceAlert"
+	IosService_DeletePriceAlert_FullMethodName      = "/hypurr.ios.v2.IosService/DeletePriceAlert"
+	IosService_PortfolioDashboard_FullMethodName    = "/hypurr.ios.v2.IosService/PortfolioDashboard"
+	IosService_ClosedPositionHistory_FullMethodName = "/hypurr.ios.v2.IosService/ClosedPositionHistory"
 )
 
 // IosServiceClient is the client API for IosService service.
@@ -57,6 +59,8 @@ type IosServiceClient interface {
 	CreatePriceAlert(ctx context.Context, in *CreatePriceAlertRequest, opts ...grpc.CallOption) (*PriceAlertResponse, error)
 	UpdatePriceAlert(ctx context.Context, in *UpdatePriceAlertRequest, opts ...grpc.CallOption) (*PriceAlertResponse, error)
 	DeletePriceAlert(ctx context.Context, in *DeletePriceAlertRequest, opts ...grpc.CallOption) (*PriceAlertsResponse, error)
+	PortfolioDashboard(ctx context.Context, in *PortfolioDashboardRequest, opts ...grpc.CallOption) (*PortfolioDashboardResponse, error)
+	ClosedPositionHistory(ctx context.Context, in *ClosedPositionHistoryRequest, opts ...grpc.CallOption) (*ClosedPositionHistoryResponse, error)
 }
 
 type iosServiceClient struct {
@@ -296,6 +300,26 @@ func (c *iosServiceClient) DeletePriceAlert(ctx context.Context, in *DeletePrice
 	return out, nil
 }
 
+func (c *iosServiceClient) PortfolioDashboard(ctx context.Context, in *PortfolioDashboardRequest, opts ...grpc.CallOption) (*PortfolioDashboardResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PortfolioDashboardResponse)
+	err := c.cc.Invoke(ctx, IosService_PortfolioDashboard_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iosServiceClient) ClosedPositionHistory(ctx context.Context, in *ClosedPositionHistoryRequest, opts ...grpc.CallOption) (*ClosedPositionHistoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ClosedPositionHistoryResponse)
+	err := c.cc.Invoke(ctx, IosService_ClosedPositionHistory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IosServiceServer is the server API for IosService service.
 // All implementations must embed UnimplementedIosServiceServer
 // for forward compatibility
@@ -316,6 +340,8 @@ type IosServiceServer interface {
 	CreatePriceAlert(context.Context, *CreatePriceAlertRequest) (*PriceAlertResponse, error)
 	UpdatePriceAlert(context.Context, *UpdatePriceAlertRequest) (*PriceAlertResponse, error)
 	DeletePriceAlert(context.Context, *DeletePriceAlertRequest) (*PriceAlertsResponse, error)
+	PortfolioDashboard(context.Context, *PortfolioDashboardRequest) (*PortfolioDashboardResponse, error)
+	ClosedPositionHistory(context.Context, *ClosedPositionHistoryRequest) (*ClosedPositionHistoryResponse, error)
 	mustEmbedUnimplementedIosServiceServer()
 }
 
@@ -370,6 +396,12 @@ func (UnimplementedIosServiceServer) UpdatePriceAlert(context.Context, *UpdatePr
 }
 func (UnimplementedIosServiceServer) DeletePriceAlert(context.Context, *DeletePriceAlertRequest) (*PriceAlertsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePriceAlert not implemented")
+}
+func (UnimplementedIosServiceServer) PortfolioDashboard(context.Context, *PortfolioDashboardRequest) (*PortfolioDashboardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PortfolioDashboard not implemented")
+}
+func (UnimplementedIosServiceServer) ClosedPositionHistory(context.Context, *ClosedPositionHistoryRequest) (*ClosedPositionHistoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClosedPositionHistory not implemented")
 }
 func (UnimplementedIosServiceServer) mustEmbedUnimplementedIosServiceServer() {}
 
@@ -681,6 +713,42 @@ func _IosService_DeletePriceAlert_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IosService_PortfolioDashboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PortfolioDashboardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IosServiceServer).PortfolioDashboard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IosService_PortfolioDashboard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IosServiceServer).PortfolioDashboard(ctx, req.(*PortfolioDashboardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IosService_ClosedPositionHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClosedPositionHistoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IosServiceServer).ClosedPositionHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IosService_ClosedPositionHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IosServiceServer).ClosedPositionHistory(ctx, req.(*ClosedPositionHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IosService_ServiceDesc is the grpc.ServiceDesc for IosService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -739,6 +807,14 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeletePriceAlert",
 			Handler:    _IosService_DeletePriceAlert_Handler,
+		},
+		{
+			MethodName: "PortfolioDashboard",
+			Handler:    _IosService_PortfolioDashboard_Handler,
+		},
+		{
+			MethodName: "ClosedPositionHistory",
+			Handler:    _IosService_ClosedPositionHistory_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

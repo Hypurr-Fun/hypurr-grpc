@@ -114,6 +114,16 @@ class IosServiceStub:
                 request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.DeletePriceAlertRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertsResponse.FromString,
                 _registered_method=True)
+        self.PortfolioDashboard = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/PortfolioDashboard',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PortfolioDashboardRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PortfolioDashboardResponse.FromString,
+                _registered_method=True)
+        self.ClosedPositionHistory = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/ClosedPositionHistory',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.ClosedPositionHistoryRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.ClosedPositionHistoryResponse.FromString,
+                _registered_method=True)
 
 
 class IosServiceServicer:
@@ -215,6 +225,18 @@ class IosServiceServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PortfolioDashboard(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ClosedPositionHistory(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_IosServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -297,6 +319,16 @@ def add_IosServiceServicer_to_server(servicer, server):
                     servicer.DeletePriceAlert,
                     request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.DeletePriceAlertRequest.FromString,
                     response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertsResponse.SerializeToString,
+            ),
+            'PortfolioDashboard': grpc.unary_unary_rpc_method_handler(
+                    servicer.PortfolioDashboard,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PortfolioDashboardRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.PortfolioDashboardResponse.SerializeToString,
+            ),
+            'ClosedPositionHistory': grpc.unary_unary_rpc_method_handler(
+                    servicer.ClosedPositionHistory,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.ClosedPositionHistoryRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.ClosedPositionHistoryResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -731,6 +763,60 @@ class IosService:
             '/hypurr.ios.v2.IosService/DeletePriceAlert',
             hypurr_dot_ios_dot_v2_dot_ios__pb2.DeletePriceAlertRequest.SerializeToString,
             hypurr_dot_ios_dot_v2_dot_ios__pb2.PriceAlertsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PortfolioDashboard(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/PortfolioDashboard',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.PortfolioDashboardRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.PortfolioDashboardResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ClosedPositionHistory(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/ClosedPositionHistory',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.ClosedPositionHistoryRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.ClosedPositionHistoryResponse.FromString,
             options,
             channel_credentials,
             insecure,

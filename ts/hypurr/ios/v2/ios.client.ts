@@ -4,6 +4,10 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { IosService } from "./ios";
+import type { ClosedPositionHistoryResponse } from "./ios";
+import type { ClosedPositionHistoryRequest } from "./ios";
+import type { PortfolioDashboardResponse } from "./ios";
+import type { PortfolioDashboardRequest } from "./ios";
 import type { DeletePriceAlertRequest } from "./ios";
 import type { UpdatePriceAlertRequest } from "./ios";
 import type { PriceAlertResponse } from "./ios";
@@ -105,6 +109,14 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: DeletePriceAlert
      */
     deletePriceAlert(input: DeletePriceAlertRequest, options?: RpcOptions): UnaryCall<DeletePriceAlertRequest, PriceAlertsResponse>;
+    /**
+     * @generated from protobuf rpc: PortfolioDashboard
+     */
+    portfolioDashboard(input: PortfolioDashboardRequest, options?: RpcOptions): UnaryCall<PortfolioDashboardRequest, PortfolioDashboardResponse>;
+    /**
+     * @generated from protobuf rpc: ClosedPositionHistory
+     */
+    closedPositionHistory(input: ClosedPositionHistoryRequest, options?: RpcOptions): UnaryCall<ClosedPositionHistoryRequest, ClosedPositionHistoryResponse>;
 }
 /**
  * @generated from protobuf service hypurr.ios.v2.IosService
@@ -226,5 +238,19 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
     deletePriceAlert(input: DeletePriceAlertRequest, options?: RpcOptions): UnaryCall<DeletePriceAlertRequest, PriceAlertsResponse> {
         const method = this.methods[15], opt = this._transport.mergeOptions(options);
         return stackIntercept<DeletePriceAlertRequest, PriceAlertsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: PortfolioDashboard
+     */
+    portfolioDashboard(input: PortfolioDashboardRequest, options?: RpcOptions): UnaryCall<PortfolioDashboardRequest, PortfolioDashboardResponse> {
+        const method = this.methods[16], opt = this._transport.mergeOptions(options);
+        return stackIntercept<PortfolioDashboardRequest, PortfolioDashboardResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: ClosedPositionHistory
+     */
+    closedPositionHistory(input: ClosedPositionHistoryRequest, options?: RpcOptions): UnaryCall<ClosedPositionHistoryRequest, ClosedPositionHistoryResponse> {
+        const method = this.methods[17], opt = this._transport.mergeOptions(options);
+        return stackIntercept<ClosedPositionHistoryRequest, ClosedPositionHistoryResponse>("unary", this._transport, method, opt, input);
     }
 }
