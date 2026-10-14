@@ -718,6 +718,7 @@ message ClosedPosition {
   double return_percent = 6; // spot only, signed
   bool   realized_known = 7; // false: cum_pnl missing (pre-2025-05-25 or a fill gap); realized_pnl and return_percent are 0
   string wallet_address = 8;
+  optional double cost_basis = 9; // Spot cost in USD. Absent when unknown.
 }
 
 message ClosedPositionsResponse {

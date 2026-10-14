@@ -1774,6 +1774,10 @@ export interface ClosedPosition {
      * @generated from protobuf field: string wallet_address = 8
      */
     walletAddress: string;
+    /**
+     * @generated from protobuf field: optional double cost_basis = 9
+     */
+    costBasis?: number; // Spot cost in USD. Absent when unknown.
 }
 /**
  * @generated from protobuf message hypercore.ClosedPositionsResponse
@@ -7943,7 +7947,8 @@ class ClosedPosition$Type extends MessageType<ClosedPosition> {
             { no: 5, name: "long", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 6, name: "return_percent", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 7, name: "realized_known", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 8, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 8, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "cost_basis", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<ClosedPosition>): ClosedPosition {
@@ -7989,6 +7994,9 @@ class ClosedPosition$Type extends MessageType<ClosedPosition> {
                 case /* string wallet_address */ 8:
                     message.walletAddress = reader.string();
                     break;
+                case /* optional double cost_basis */ 9:
+                    message.costBasis = reader.double();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -8025,6 +8033,9 @@ class ClosedPosition$Type extends MessageType<ClosedPosition> {
         /* string wallet_address = 8; */
         if (message.walletAddress !== "")
             writer.tag(8, WireType.LengthDelimited).string(message.walletAddress);
+        /* optional double cost_basis = 9; */
+        if (message.costBasis !== undefined)
+            writer.tag(9, WireType.Bit64).double(message.costBasis);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
