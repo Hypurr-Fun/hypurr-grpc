@@ -465,7 +465,7 @@ export interface WalletFillEvent {
     /**
      * Stored totals through this fill. Full closes and flips retain the completed position's final totals.
      * The next fill starts a new total when position continuity and source order establish the boundary.
-     * Each absent total has unknown coverage. The consumer keeps spot activity totals null.
+     * Each absent total has unknown coverage.
      *
      * @generated from protobuf field: google.protobuf.DoubleValue cum_pnl = 12
      */
@@ -504,6 +504,10 @@ export interface WalletFillEvent {
      * @generated from protobuf field: string cloid = 20
      */
     cloid: string; // Client order id of this wallet's side; empty when the order had none.
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue cum_cost = 21
+     */
+    cumCost?: DoubleValue; // Stored spot cost in quote-asset units. Absent when unknown.
 }
 /**
  * @generated from protobuf enum hypercore.WalletFillEvent.Market
@@ -3745,7 +3749,8 @@ class WalletFillEvent$Type extends MessageType<WalletFillEvent> {
             { no: 17, name: "is_buy", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 18, name: "action", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 19, name: "liquidated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 20, name: "cloid", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 20, name: "cloid", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 21, name: "cum_cost", kind: "message", T: () => DoubleValue }
         ]);
     }
     create(value?: PartialMessage<WalletFillEvent>): WalletFillEvent {
@@ -3831,6 +3836,9 @@ class WalletFillEvent$Type extends MessageType<WalletFillEvent> {
                 case /* string cloid */ 20:
                     message.cloid = reader.string();
                     break;
+                case /* google.protobuf.DoubleValue cum_cost */ 21:
+                    message.cumCost = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.cumCost);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -3903,6 +3911,9 @@ class WalletFillEvent$Type extends MessageType<WalletFillEvent> {
         /* string cloid = 20; */
         if (message.cloid !== "")
             writer.tag(20, WireType.LengthDelimited).string(message.cloid);
+        /* google.protobuf.DoubleValue cum_cost = 21; */
+        if (message.cumCost)
+            DoubleValue.internalBinaryWrite(message.cumCost, writer.tag(21, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

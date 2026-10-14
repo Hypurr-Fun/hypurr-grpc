@@ -289,7 +289,7 @@ export interface KmsAgentInfo {
     /**
      * @generated from protobuf field: int64 daily_spend_cap_usd = 5
      */
-    dailySpendCapUsd: number; // most the bot may trade in USD over any 24 hours
+    dailySpendCapUsd: number;
 }
 /**
  * @generated from protobuf message hypurr.KmsAccountShardSecretRequest

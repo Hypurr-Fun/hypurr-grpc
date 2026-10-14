@@ -1126,7 +1126,7 @@ type KmsAgentInfo struct {
 	Name             string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	ExpiresAt        int64  `protobuf:"varint,3,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	CreatedAt        int64  `protobuf:"varint,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	DailySpendCapUsd int64  `protobuf:"varint,5,opt,name=daily_spend_cap_usd,json=dailySpendCapUsd,proto3" json:"daily_spend_cap_usd,omitempty"` // most the bot may trade in USD over any 24 hours
+	DailySpendCapUsd int64  `protobuf:"varint,5,opt,name=daily_spend_cap_usd,json=dailySpendCapUsd,proto3" json:"daily_spend_cap_usd,omitempty"`
 }
 
 func (x *KmsAgentInfo) Reset() {
