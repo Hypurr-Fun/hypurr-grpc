@@ -104,8 +104,8 @@ message Alert {
 }
 
 message ListAlertsRequest {
-  int64 market_id = 1; // 0: any
-  int64 wallet_id = 2; // 0: any
+  optional int64 market_id = 1; // unset: any market (0 is the BTC perp)
+  optional int64 wallet_id = 2; // unset: any wallet
 }
 
 message ListAlertsResponse {

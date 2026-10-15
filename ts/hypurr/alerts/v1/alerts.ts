@@ -183,13 +183,13 @@ export interface Alert {
  */
 export interface ListAlertsRequest {
     /**
-     * @generated from protobuf field: int64 market_id = 1
+     * @generated from protobuf field: optional int64 market_id = 1
      */
-    marketId: number; // 0: any
+    marketId?: number; // unset: any market (0 is the BTC perp)
     /**
-     * @generated from protobuf field: int64 wallet_id = 2
+     * @generated from protobuf field: optional int64 wallet_id = 2
      */
-    walletId: number; // 0: any
+    walletId?: number; // unset: any wallet
 }
 /**
  * @generated from protobuf message hypurr.alerts.v1.ListAlertsResponse
@@ -939,14 +939,12 @@ export const Alert = new Alert$Type();
 class ListAlertsRequest$Type extends MessageType<ListAlertsRequest> {
     constructor() {
         super("hypurr.alerts.v1.ListAlertsRequest", [
-            { no: 1, name: "market_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 1, name: "market_id", kind: "scalar", opt: true, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "wallet_id", kind: "scalar", opt: true, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<ListAlertsRequest>): ListAlertsRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.marketId = 0;
-        message.walletId = 0;
         if (value !== undefined)
             reflectionMergePartial<ListAlertsRequest>(this, message, value);
         return message;
@@ -956,10 +954,10 @@ class ListAlertsRequest$Type extends MessageType<ListAlertsRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* int64 market_id */ 1:
+                case /* optional int64 market_id */ 1:
                     message.marketId = reader.int64().toNumber();
                     break;
-                case /* int64 wallet_id */ 2:
+                case /* optional int64 wallet_id */ 2:
                     message.walletId = reader.int64().toNumber();
                     break;
                 default:
@@ -974,11 +972,11 @@ class ListAlertsRequest$Type extends MessageType<ListAlertsRequest> {
         return message;
     }
     internalBinaryWrite(message: ListAlertsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 market_id = 1; */
-        if (message.marketId !== 0)
+        /* optional int64 market_id = 1; */
+        if (message.marketId !== undefined)
             writer.tag(1, WireType.Varint).int64(message.marketId);
-        /* int64 wallet_id = 2; */
-        if (message.walletId !== 0)
+        /* optional int64 wallet_id = 2; */
+        if (message.walletId !== undefined)
             writer.tag(2, WireType.Varint).int64(message.walletId);
         let u = options.writeUnknownFields;
         if (u !== false)
