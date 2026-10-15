@@ -64,6 +64,16 @@ class HyperCoreStub:
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationsRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationSnapshot.FromString,
                 _registered_method=True)
+        self.TPSL = channel.unary_unary(
+                '/hypercore.HyperCore/TPSL',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.TPSLRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.TPSLResponse.FromString,
+                _registered_method=True)
+        self.TPSLStream = channel.unary_stream(
+                '/hypercore.HyperCore/TPSLStream',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.TPSLRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.TPSLSnapshot.FromString,
+                _registered_method=True)
         self.OrderBookDepth = channel.unary_unary(
                 '/hypercore.HyperCore/OrderBookDepth',
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.OrderBookDepthRequest.SerializeToString,
@@ -216,6 +226,19 @@ class HyperCoreServicer:
 
     def LiquidationsStream(self, request, context):
         """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def TPSL(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def TPSLStream(self, request, context):
+        """Uses instrument_id. Bands follow the live mark. Totals refresh only when a new state snapshot is stored.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -391,6 +414,16 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     servicer.LiquidationsStream,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationsRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationSnapshot.SerializeToString,
+            ),
+            'TPSL': grpc.unary_unary_rpc_method_handler(
+                    servicer.TPSL,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.TPSLRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.TPSLResponse.SerializeToString,
+            ),
+            'TPSLStream': grpc.unary_stream_rpc_method_handler(
+                    servicer.TPSLStream,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.TPSLRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.TPSLSnapshot.SerializeToString,
             ),
             'OrderBookDepth': grpc.unary_unary_rpc_method_handler(
                     servicer.OrderBookDepth,
@@ -670,6 +703,60 @@ class HyperCore:
             '/hypercore.HyperCore/LiquidationsStream',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationsRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.LiquidationSnapshot.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def TPSL(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/TPSL',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.TPSLRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.TPSLResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def TPSLStream(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(
+            request,
+            target,
+            '/hypercore.HyperCore/TPSLStream',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.TPSLRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.TPSLSnapshot.FromString,
             options,
             channel_credentials,
             insecure,

@@ -25,6 +25,8 @@ const (
 	HyperCore_AggregatedWalletLiquidations_FullMethodName      = "/hypercore.HyperCore/AggregatedWalletLiquidations"
 	HyperCore_Liquidations_FullMethodName                      = "/hypercore.HyperCore/Liquidations"
 	HyperCore_LiquidationsStream_FullMethodName                = "/hypercore.HyperCore/LiquidationsStream"
+	HyperCore_TPSL_FullMethodName                              = "/hypercore.HyperCore/TPSL"
+	HyperCore_TPSLStream_FullMethodName                        = "/hypercore.HyperCore/TPSLStream"
 	HyperCore_OrderBookDepth_FullMethodName                    = "/hypercore.HyperCore/OrderBookDepth"
 	HyperCore_WalletBalancesStream_FullMethodName              = "/hypercore.HyperCore/WalletBalancesStream"
 	HyperCore_WalletTradesStream_FullMethodName                = "/hypercore.HyperCore/WalletTradesStream"
@@ -60,6 +62,9 @@ type HyperCoreClient interface {
 	AggregatedWalletLiquidations(ctx context.Context, in *AggregatedWalletLiquidationsRequest, opts ...grpc.CallOption) (*AggregatedWalletLiquidationsResponse, error)
 	Liquidations(ctx context.Context, in *LiquidationsRequest, opts ...grpc.CallOption) (*LiquidationsResponse, error)
 	LiquidationsStream(ctx context.Context, in *LiquidationsRequest, opts ...grpc.CallOption) (HyperCore_LiquidationsStreamClient, error)
+	TPSL(ctx context.Context, in *TPSLRequest, opts ...grpc.CallOption) (*TPSLResponse, error)
+	// Uses instrument_id. Bands follow the live mark. Totals refresh only when a new state snapshot is stored.
+	TPSLStream(ctx context.Context, in *TPSLRequest, opts ...grpc.CallOption) (HyperCore_TPSLStreamClient, error)
 	OrderBookDepth(ctx context.Context, in *OrderBookDepthRequest, opts ...grpc.CallOption) (*OrderBookDepthResponse, error)
 	WalletBalancesStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_WalletBalancesStreamClient, error)
 	WalletTradesStream(ctx context.Context, in *WalletTradesStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletTradesStreamClient, error)
@@ -200,6 +205,49 @@ func (x *hyperCoreLiquidationsStreamClient) Recv() (*LiquidationSnapshot, error)
 	return m, nil
 }
 
+func (c *hyperCoreClient) TPSL(ctx context.Context, in *TPSLRequest, opts ...grpc.CallOption) (*TPSLResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TPSLResponse)
+	err := c.cc.Invoke(ctx, HyperCore_TPSL_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hyperCoreClient) TPSLStream(ctx context.Context, in *TPSLRequest, opts ...grpc.CallOption) (HyperCore_TPSLStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[2], HyperCore_TPSLStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &hyperCoreTPSLStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type HyperCore_TPSLStreamClient interface {
+	Recv() (*TPSLSnapshot, error)
+	grpc.ClientStream
+}
+
+type hyperCoreTPSLStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *hyperCoreTPSLStreamClient) Recv() (*TPSLSnapshot, error) {
+	m := new(TPSLSnapshot)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *hyperCoreClient) OrderBookDepth(ctx context.Context, in *OrderBookDepthRequest, opts ...grpc.CallOption) (*OrderBookDepthResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(OrderBookDepthResponse)
@@ -212,7 +260,7 @@ func (c *hyperCoreClient) OrderBookDepth(ctx context.Context, in *OrderBookDepth
 
 func (c *hyperCoreClient) WalletBalancesStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_WalletBalancesStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[2], HyperCore_WalletBalancesStream_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[3], HyperCore_WalletBalancesStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -244,7 +292,7 @@ func (x *hyperCoreWalletBalancesStreamClient) Recv() (*WalletBalancesStreamRespo
 
 func (c *hyperCoreClient) WalletTradesStream(ctx context.Context, in *WalletTradesStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletTradesStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[3], HyperCore_WalletTradesStream_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[4], HyperCore_WalletTradesStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -277,7 +325,7 @@ func (x *hyperCoreWalletTradesStreamClient) Recv() (*WalletTradesStreamResponse,
 
 func (c *hyperCoreClient) WalletEventsStream(ctx context.Context, in *WalletEventsStreamRequest, opts ...grpc.CallOption) (HyperCore_WalletEventsStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[4], HyperCore_WalletEventsStream_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[5], HyperCore_WalletEventsStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -470,7 +518,7 @@ func (c *hyperCoreClient) OHLC(ctx context.Context, in *OHLCRequest, opts ...grp
 
 func (c *hyperCoreClient) OHLCStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_OHLCStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[5], HyperCore_OHLCStream_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[6], HyperCore_OHLCStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -530,6 +578,9 @@ type HyperCoreServer interface {
 	AggregatedWalletLiquidations(context.Context, *AggregatedWalletLiquidationsRequest) (*AggregatedWalletLiquidationsResponse, error)
 	Liquidations(context.Context, *LiquidationsRequest) (*LiquidationsResponse, error)
 	LiquidationsStream(*LiquidationsRequest, HyperCore_LiquidationsStreamServer) error
+	TPSL(context.Context, *TPSLRequest) (*TPSLResponse, error)
+	// Uses instrument_id. Bands follow the live mark. Totals refresh only when a new state snapshot is stored.
+	TPSLStream(*TPSLRequest, HyperCore_TPSLStreamServer) error
 	OrderBookDepth(context.Context, *OrderBookDepthRequest) (*OrderBookDepthResponse, error)
 	WalletBalancesStream(HyperCore_WalletBalancesStreamServer) error
 	WalletTradesStream(*WalletTradesStreamRequest, HyperCore_WalletTradesStreamServer) error
@@ -578,6 +629,12 @@ func (UnimplementedHyperCoreServer) Liquidations(context.Context, *LiquidationsR
 }
 func (UnimplementedHyperCoreServer) LiquidationsStream(*LiquidationsRequest, HyperCore_LiquidationsStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method LiquidationsStream not implemented")
+}
+func (UnimplementedHyperCoreServer) TPSL(context.Context, *TPSLRequest) (*TPSLResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TPSL not implemented")
+}
+func (UnimplementedHyperCoreServer) TPSLStream(*TPSLRequest, HyperCore_TPSLStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method TPSLStream not implemented")
 }
 func (UnimplementedHyperCoreServer) OrderBookDepth(context.Context, *OrderBookDepthRequest) (*OrderBookDepthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OrderBookDepth not implemented")
@@ -772,6 +829,45 @@ type hyperCoreLiquidationsStreamServer struct {
 }
 
 func (x *hyperCoreLiquidationsStreamServer) Send(m *LiquidationSnapshot) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _HyperCore_TPSL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TPSLRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).TPSL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_TPSL_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).TPSL(ctx, req.(*TPSLRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HyperCore_TPSLStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(TPSLRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HyperCoreServer).TPSLStream(m, &hyperCoreTPSLStreamServer{ServerStream: stream})
+}
+
+type HyperCore_TPSLStreamServer interface {
+	Send(*TPSLSnapshot) error
+	grpc.ServerStream
+}
+
+type hyperCoreTPSLStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *hyperCoreTPSLStreamServer) Send(m *TPSLSnapshot) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -1235,6 +1331,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _HyperCore_Liquidations_Handler,
 		},
 		{
+			MethodName: "TPSL",
+			Handler:    _HyperCore_TPSL_Handler,
+		},
+		{
 			MethodName: "OrderBookDepth",
 			Handler:    _HyperCore_OrderBookDepth_Handler,
 		},
@@ -1320,6 +1420,11 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "LiquidationsStream",
 			Handler:       _HyperCore_LiquidationsStream_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "TPSLStream",
+			Handler:       _HyperCore_TPSLStream_Handler,
 			ServerStreams: true,
 		},
 		{

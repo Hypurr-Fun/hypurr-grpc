@@ -400,6 +400,32 @@ message LiquidationBand {
   uint32 count = 3;
 }
 
+// Return stored snapshots in the requested range. Snapshot intervals depend on state sync.
+message TPSLRequest {
+  uint64 instrument_id = 1;
+  int64 from_ts = 2; // Unix seconds, inclusive.
+  int64 to_ts = 3; // Unix seconds, exclusive.
+}
+
+message TPSLResponse {
+  repeated TPSLSnapshot snapshots = 1; // Ordered by timestamp, then block.
+}
+
+message TPSLSnapshot {
+  int64 snapshot_ts = 1; // Unix seconds rounded down to the minute.
+  int64 snapshot_block = 2;
+  double mark_price = 3;
+  repeated TPSLBand bands = 4; // Ordered by bucket, kind, and side.
+}
+
+message TPSLBand {
+  int32 bucket = 1; // Signed 0.1%-of-mark band. Negative means below mark. Absolute value 1 touches mark.
+  string kind = 2; // "sl" or "tp".
+  string side = 3; // "A" means sell. "B" means buy.
+  double notional = 4; // Sum of effective base size multiplied by trigger price, in quote units.
+  uint32 count = 5;
+}
+
 // Sampling step for order-book depth: only snapshots whose timestamp is a
 // multiple of the step are returned (alignment is relative to the unix epoch;
 // 1 month = 30 days). Snapshots are stored once per minute, so 1M returns
@@ -855,6 +881,9 @@ service HyperCore {
   rpc AggregatedWalletLiquidations(AggregatedWalletLiquidationsRequest) returns (AggregatedWalletLiquidationsResponse) {}
   rpc Liquidations(LiquidationsRequest) returns (LiquidationsResponse) {}
   rpc LiquidationsStream(LiquidationsRequest) returns (stream LiquidationSnapshot) {}
+  rpc TPSL(TPSLRequest) returns (TPSLResponse) {}
+  // Uses instrument_id. Bands follow the live mark. Totals refresh only when a new state snapshot is stored.
+  rpc TPSLStream(TPSLRequest) returns (stream TPSLSnapshot) {}
   rpc OrderBookDepth(OrderBookDepthRequest) returns (OrderBookDepthResponse) {}
   rpc WalletBalancesStream(stream WalletBalancesStreamRequest) returns (stream WalletBalancesStreamResponse) {}
   rpc WalletTradesStream(WalletTradesStreamRequest) returns (stream WalletTradesStreamResponse) {}

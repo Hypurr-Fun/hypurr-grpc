@@ -970,6 +970,80 @@ export interface LiquidationBand {
     count: number;
 }
 /**
+ * Return stored snapshots in the requested range. Snapshot intervals depend on state sync.
+ *
+ * @generated from protobuf message hypercore.TPSLRequest
+ */
+export interface TPSLRequest {
+    /**
+     * @generated from protobuf field: uint64 instrument_id = 1
+     */
+    instrumentId: number;
+    /**
+     * @generated from protobuf field: int64 from_ts = 2
+     */
+    fromTs: number; // Unix seconds, inclusive.
+    /**
+     * @generated from protobuf field: int64 to_ts = 3
+     */
+    toTs: number; // Unix seconds, exclusive.
+}
+/**
+ * @generated from protobuf message hypercore.TPSLResponse
+ */
+export interface TPSLResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.TPSLSnapshot snapshots = 1
+     */
+    snapshots: TPSLSnapshot[]; // Ordered by timestamp, then block.
+}
+/**
+ * @generated from protobuf message hypercore.TPSLSnapshot
+ */
+export interface TPSLSnapshot {
+    /**
+     * @generated from protobuf field: int64 snapshot_ts = 1
+     */
+    snapshotTs: number; // Unix seconds rounded down to the minute.
+    /**
+     * @generated from protobuf field: int64 snapshot_block = 2
+     */
+    snapshotBlock: number;
+    /**
+     * @generated from protobuf field: double mark_price = 3
+     */
+    markPrice: number;
+    /**
+     * @generated from protobuf field: repeated hypercore.TPSLBand bands = 4
+     */
+    bands: TPSLBand[]; // Ordered by bucket, kind, and side.
+}
+/**
+ * @generated from protobuf message hypercore.TPSLBand
+ */
+export interface TPSLBand {
+    /**
+     * @generated from protobuf field: int32 bucket = 1
+     */
+    bucket: number; // Signed 0.1%-of-mark band. Negative means below mark. Absolute value 1 touches mark.
+    /**
+     * @generated from protobuf field: string kind = 2
+     */
+    kind: string; // "sl" or "tp".
+    /**
+     * @generated from protobuf field: string side = 3
+     */
+    side: string; // "A" means sell. "B" means buy.
+    /**
+     * @generated from protobuf field: double notional = 4
+     */
+    notional: number; // Sum of effective base size multiplied by trigger price, in quote units.
+    /**
+     * @generated from protobuf field: uint32 count = 5
+     */
+    count: number;
+}
+/**
  * @generated from protobuf message hypercore.OrderBookDepthRequest
  */
 export interface OrderBookDepthRequest {
@@ -5578,6 +5652,266 @@ class LiquidationBand$Type extends MessageType<LiquidationBand> {
  */
 export const LiquidationBand = new LiquidationBand$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class TPSLRequest$Type extends MessageType<TPSLRequest> {
+    constructor() {
+        super("hypercore.TPSLRequest", [
+            { no: 1, name: "instrument_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TPSLRequest>): TPSLRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrumentId = 0;
+        message.fromTs = 0;
+        message.toTs = 0;
+        if (value !== undefined)
+            reflectionMergePartial<TPSLRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TPSLRequest): TPSLRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 instrument_id */ 1:
+                    message.instrumentId = reader.uint64().toNumber();
+                    break;
+                case /* int64 from_ts */ 2:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 3:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TPSLRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 instrument_id = 1; */
+        if (message.instrumentId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.instrumentId);
+        /* int64 from_ts = 2; */
+        if (message.fromTs !== 0)
+            writer.tag(2, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 3; */
+        if (message.toTs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.toTs);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.TPSLRequest
+ */
+export const TPSLRequest = new TPSLRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TPSLResponse$Type extends MessageType<TPSLResponse> {
+    constructor() {
+        super("hypercore.TPSLResponse", [
+            { no: 1, name: "snapshots", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => TPSLSnapshot }
+        ]);
+    }
+    create(value?: PartialMessage<TPSLResponse>): TPSLResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.snapshots = [];
+        if (value !== undefined)
+            reflectionMergePartial<TPSLResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TPSLResponse): TPSLResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.TPSLSnapshot snapshots */ 1:
+                    message.snapshots.push(TPSLSnapshot.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TPSLResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.TPSLSnapshot snapshots = 1; */
+        for (let i = 0; i < message.snapshots.length; i++)
+            TPSLSnapshot.internalBinaryWrite(message.snapshots[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.TPSLResponse
+ */
+export const TPSLResponse = new TPSLResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TPSLSnapshot$Type extends MessageType<TPSLSnapshot> {
+    constructor() {
+        super("hypercore.TPSLSnapshot", [
+            { no: 1, name: "snapshot_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "snapshot_block", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "mark_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "bands", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => TPSLBand }
+        ]);
+    }
+    create(value?: PartialMessage<TPSLSnapshot>): TPSLSnapshot {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.snapshotTs = 0;
+        message.snapshotBlock = 0;
+        message.markPrice = 0;
+        message.bands = [];
+        if (value !== undefined)
+            reflectionMergePartial<TPSLSnapshot>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TPSLSnapshot): TPSLSnapshot {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 snapshot_ts */ 1:
+                    message.snapshotTs = reader.int64().toNumber();
+                    break;
+                case /* int64 snapshot_block */ 2:
+                    message.snapshotBlock = reader.int64().toNumber();
+                    break;
+                case /* double mark_price */ 3:
+                    message.markPrice = reader.double();
+                    break;
+                case /* repeated hypercore.TPSLBand bands */ 4:
+                    message.bands.push(TPSLBand.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TPSLSnapshot, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 snapshot_ts = 1; */
+        if (message.snapshotTs !== 0)
+            writer.tag(1, WireType.Varint).int64(message.snapshotTs);
+        /* int64 snapshot_block = 2; */
+        if (message.snapshotBlock !== 0)
+            writer.tag(2, WireType.Varint).int64(message.snapshotBlock);
+        /* double mark_price = 3; */
+        if (message.markPrice !== 0)
+            writer.tag(3, WireType.Bit64).double(message.markPrice);
+        /* repeated hypercore.TPSLBand bands = 4; */
+        for (let i = 0; i < message.bands.length; i++)
+            TPSLBand.internalBinaryWrite(message.bands[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.TPSLSnapshot
+ */
+export const TPSLSnapshot = new TPSLSnapshot$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TPSLBand$Type extends MessageType<TPSLBand> {
+    constructor() {
+        super("hypercore.TPSLBand", [
+            { no: 1, name: "bucket", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "kind", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "side", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "count", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TPSLBand>): TPSLBand {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.bucket = 0;
+        message.kind = "";
+        message.side = "";
+        message.notional = 0;
+        message.count = 0;
+        if (value !== undefined)
+            reflectionMergePartial<TPSLBand>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TPSLBand): TPSLBand {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 bucket */ 1:
+                    message.bucket = reader.int32();
+                    break;
+                case /* string kind */ 2:
+                    message.kind = reader.string();
+                    break;
+                case /* string side */ 3:
+                    message.side = reader.string();
+                    break;
+                case /* double notional */ 4:
+                    message.notional = reader.double();
+                    break;
+                case /* uint32 count */ 5:
+                    message.count = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TPSLBand, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 bucket = 1; */
+        if (message.bucket !== 0)
+            writer.tag(1, WireType.Varint).int32(message.bucket);
+        /* string kind = 2; */
+        if (message.kind !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.kind);
+        /* string side = 3; */
+        if (message.side !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.side);
+        /* double notional = 4; */
+        if (message.notional !== 0)
+            writer.tag(4, WireType.Bit64).double(message.notional);
+        /* uint32 count = 5; */
+        if (message.count !== 0)
+            writer.tag(5, WireType.Varint).uint32(message.count);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.TPSLBand
+ */
+export const TPSLBand = new TPSLBand$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class OrderBookDepthRequest$Type extends MessageType<OrderBookDepthRequest> {
     constructor() {
         super("hypercore.OrderBookDepthRequest", [
@@ -9030,6 +9364,8 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "AggregatedWalletLiquidations", options: {}, I: AggregatedWalletLiquidationsRequest, O: AggregatedWalletLiquidationsResponse },
     { name: "Liquidations", options: {}, I: LiquidationsRequest, O: LiquidationsResponse },
     { name: "LiquidationsStream", serverStreaming: true, options: {}, I: LiquidationsRequest, O: LiquidationSnapshot },
+    { name: "TPSL", options: {}, I: TPSLRequest, O: TPSLResponse },
+    { name: "TPSLStream", serverStreaming: true, options: {}, I: TPSLRequest, O: TPSLSnapshot },
     { name: "OrderBookDepth", options: {}, I: OrderBookDepthRequest, O: OrderBookDepthResponse },
     { name: "WalletBalancesStream", serverStreaming: true, clientStreaming: true, options: {}, I: WalletBalancesStreamRequest, O: WalletBalancesStreamResponse },
     { name: "WalletTradesStream", serverStreaming: true, options: {}, I: WalletTradesStreamRequest, O: WalletTradesStreamResponse },
