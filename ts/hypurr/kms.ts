@@ -479,6 +479,10 @@ export interface KmsAccountRevokeAgentRequest {
      * @generated from protobuf field: string instance_jwt = 2
      */
     instanceJwt: string;
+    /**
+     * @generated from protobuf field: string agent_id = 3
+     */
+    agentId: string; // in clear, so the bot can retire the agent's Hyperliquid key first
 }
 /**
  * @generated from protobuf message hypurr.KmsAccountRevokeAgentResponse
@@ -2448,13 +2452,15 @@ class KmsAccountRevokeAgentRequest$Type extends MessageType<KmsAccountRevokeAgen
     constructor() {
         super("hypurr.KmsAccountRevokeAgentRequest", [
             { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "agent_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsAccountRevokeAgentRequest>): KmsAccountRevokeAgentRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.encryptedPayload = new Uint8Array(0);
         message.instanceJwt = "";
+        message.agentId = "";
         if (value !== undefined)
             reflectionMergePartial<KmsAccountRevokeAgentRequest>(this, message, value);
         return message;
@@ -2469,6 +2475,9 @@ class KmsAccountRevokeAgentRequest$Type extends MessageType<KmsAccountRevokeAgen
                     break;
                 case /* string instance_jwt */ 2:
                     message.instanceJwt = reader.string();
+                    break;
+                case /* string agent_id */ 3:
+                    message.agentId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2488,6 +2497,9 @@ class KmsAccountRevokeAgentRequest$Type extends MessageType<KmsAccountRevokeAgen
         /* string instance_jwt = 2; */
         if (message.instanceJwt !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
+        /* string agent_id = 3; */
+        if (message.agentId !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.agentId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
