@@ -32,6 +32,7 @@ message TelegramUser {
   repeated TelegramChatWalletPack packs = 23;
   string picture_file_id = 24;
   repeated TelegramUserAddressBookEntry address_book = 25;
+  int64 hfun_user_id = 26; // 0 when the Telegram user has no Hfun account yet
 }
 
 message TelegramUserSettings {

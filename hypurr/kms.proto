@@ -215,6 +215,7 @@ message KmsAccountApproveAgentResponse {
 message KmsAccountRevokeAgentRequest {
   bytes encrypted_payload = 1;
   string instance_jwt = 2;
+  string agent_id = 3;
 }
 
 message KmsAccountRevokeAgentResponse {

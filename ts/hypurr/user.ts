@@ -120,6 +120,10 @@ export interface TelegramUser {
      * @generated from protobuf field: repeated hypurr.TelegramUserAddressBookEntry address_book = 25
      */
     addressBook: TelegramUserAddressBookEntry[];
+    /**
+     * @generated from protobuf field: int64 hfun_user_id = 26
+     */
+    hfunUserId: number; // 0 when the Telegram user has no Hfun account yet
 }
 /**
  * @generated from protobuf message hypurr.TelegramUserSettings
@@ -274,7 +278,8 @@ class TelegramUser$Type extends MessageType<TelegramUser> {
             { no: 22, name: "labels", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => HyperliquidWalletLabel },
             { no: 23, name: "packs", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => TelegramChatWalletPack },
             { no: 24, name: "picture_file_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 25, name: "address_book", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => TelegramUserAddressBookEntry }
+            { no: 25, name: "address_book", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => TelegramUserAddressBookEntry },
+            { no: 26, name: "hfun_user_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<TelegramUser>): TelegramUser {
@@ -299,6 +304,7 @@ class TelegramUser$Type extends MessageType<TelegramUser> {
         message.packs = [];
         message.pictureFileId = "";
         message.addressBook = [];
+        message.hfunUserId = 0;
         if (value !== undefined)
             reflectionMergePartial<TelegramUser>(this, message, value);
         return message;
@@ -382,6 +388,9 @@ class TelegramUser$Type extends MessageType<TelegramUser> {
                     break;
                 case /* repeated hypurr.TelegramUserAddressBookEntry address_book */ 25:
                     message.addressBook.push(TelegramUserAddressBookEntry.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* int64 hfun_user_id */ 26:
+                    message.hfunUserId = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -470,6 +479,9 @@ class TelegramUser$Type extends MessageType<TelegramUser> {
         /* repeated hypurr.TelegramUserAddressBookEntry address_book = 25; */
         for (let i = 0; i < message.addressBook.length; i++)
             TelegramUserAddressBookEntry.internalBinaryWrite(message.addressBook[i], writer.tag(25, WireType.LengthDelimited).fork(), options).join();
+        /* int64 hfun_user_id = 26; */
+        if (message.hfunUserId !== 0)
+            writer.tag(26, WireType.Varint).int64(message.hfunUserId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

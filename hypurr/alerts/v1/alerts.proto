@@ -1,0 +1,166 @@
+syntax = "proto3";
+package hypurr.alerts.v1;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/alerts/v1;alertsv1";
+
+// AlertService manages the caller's alerts and lists the notifications they
+// produced. Authenticated with the caller's JWT (Authorization metadata):
+// reads need settings:read, changes settings:write.
+//
+// Every alert type is one AlertRule variant; adding a type adds a variant.
+// Clients show an alert they do not know by its summary.
+service AlertService {
+  rpc ListAlerts(ListAlertsRequest) returns (ListAlertsResponse);
+  rpc CreateAlert(CreateAlertRequest) returns (AlertResponse);
+  rpc UpdateAlert(UpdateAlertRequest) returns (AlertResponse);
+  rpc DeleteAlert(DeleteAlertRequest) returns (DeleteAlertResponse);
+  rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse);
+}
+
+// --- rules ---
+
+message AlertRule {
+  oneof rule {
+    PriceRule price = 1;
+    PriceChangeRule price_change = 2;
+    DrawdownRule drawdown = 3;
+    OrderActivityRule order_activity = 4;
+  }
+}
+
+enum PriceDirection {
+  PRICE_DIRECTION_UNSPECIFIED = 0;
+  PRICE_DIRECTION_ABOVE = 1;
+  PRICE_DIRECTION_BELOW = 2;
+}
+
+// The mid price of a market is above or below a target.
+message PriceRule {
+  int64 market_id = 1;            // perp or USDC-quoted spot pair id
+  PriceDirection direction = 2;
+  string target_price_decimal = 3; // e.g. "45.5"
+}
+
+enum ChangeDirection {
+  CHANGE_DIRECTION_UNSPECIFIED = 0;
+  CHANGE_DIRECTION_UP = 1;
+  CHANGE_DIRECTION_DOWN = 2;
+  CHANGE_DIRECTION_EITHER = 3;
+}
+
+// The mid price of a market moved at least percent within the last
+// window_minutes.
+message PriceChangeRule {
+  int64 market_id = 1;
+  ChangeDirection direction = 2;
+  double percent = 3;        // e.g. 5 for 5%
+  int32 window_minutes = 4;  // 5 to 1440
+}
+
+// The account value of one of the caller's wallets fell at least percent
+// from its peak since the alert was armed (or last fired).
+message DrawdownRule {
+  int64 wallet_id = 1;
+  double percent = 2;
+}
+
+enum OrderActivityEvent {
+  ORDER_ACTIVITY_EVENT_UNSPECIFIED = 0;
+  ORDER_ACTIVITY_EVENT_FILL = 1;            // orders filled (TWAP slices excluded)
+  ORDER_ACTIVITY_EVENT_TWAP_FINISHED = 2;
+  ORDER_ACTIVITY_EVENT_SCALE_FINISHED = 3;
+}
+
+// Trading activity on one of the caller's wallets.
+message OrderActivityRule {
+  int64 wallet_id = 1;
+  repeated OrderActivityEvent events = 2; // empty means all
+  double min_notional_usd = 3;            // fills smaller than this are not notified
+}
+
+// --- alerts ---
+
+enum AlertFrequency {
+  ALERT_FREQUENCY_UNSPECIFIED = 0;
+  ALERT_FREQUENCY_ONE_TIME = 1;   // disabled once it fires
+  ALERT_FREQUENCY_EVERY_TIME = 2; // fires each time the condition starts holding
+  ALERT_FREQUENCY_ONCE_A_DAY = 3; // at most once a day in time_zone
+}
+
+message AlertTrigger {
+  int64 occurred_at_ms = 1;
+  double value = 2; // the price, the change or drawdown in percent, or the fill notional
+}
+
+message Alert {
+  int64 id = 1;
+  AlertRule rule = 2;
+  // Order activity alerts fire on every event and ignore the frequency.
+  AlertFrequency frequency = 3;
+  bool enabled = 4;
+  string time_zone = 5; // IANA zone for ONCE_A_DAY
+  int64 created_at_ms = 6;
+  AlertTrigger last_triggered = 7; // unset until it fires
+  string summary = 8;              // e.g. "HYPE above 45"
+}
+
+message ListAlertsRequest {
+  optional int64 market_id = 1; // unset: any market (0 is the BTC perp)
+  optional int64 wallet_id = 2; // unset: any wallet
+}
+
+message ListAlertsResponse {
+  repeated Alert alerts = 1; // newest first
+}
+
+message CreateAlertRequest {
+  AlertRule rule = 1;
+  AlertFrequency frequency = 2; // unspecified: ONE_TIME
+  string time_zone = 3;         // empty: UTC
+}
+
+message UpdateAlertRequest {
+  int64 id = 1;
+  AlertRule rule = 2;                    // unset keeps the rule; the type cannot change
+  AlertFrequency frequency = 3;          // unspecified keeps it
+  optional bool enabled = 4;             // unset keeps it; true re-arms
+  string time_zone = 5;                  // empty keeps it
+}
+
+message AlertResponse {
+  Alert alert = 1;
+}
+
+message DeleteAlertRequest {
+  int64 id = 1;
+}
+
+message DeleteAlertResponse {}
+
+// --- notifications ---
+
+enum NotificationStatus {
+  NOTIFICATION_STATUS_UNSPECIFIED = 0;
+  NOTIFICATION_STATUS_PENDING = 1;
+  NOTIFICATION_STATUS_DELIVERED = 2;
+  NOTIFICATION_STATUS_FAILED = 3;
+}
+
+message Notification {
+  int64 id = 1;
+  string kind = 2; // price_alert, price_change, drawdown, order_activity, liquidation, ...
+  string title = 3;
+  string body = 4;
+  map<string, string> data = 5;
+  int64 created_at_ms = 6;
+  int64 delivered_at_ms = 7;
+  repeated string channels = 8; // push, telegram
+  NotificationStatus status = 9;
+}
+
+message ListNotificationsRequest {
+  int32 limit = 1; // 1 to 100, default 20
+}
+
+message ListNotificationsResponse {
+  repeated Notification notifications = 1; // newest first
+}
