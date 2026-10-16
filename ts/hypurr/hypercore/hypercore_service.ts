@@ -1282,17 +1282,17 @@ export interface WalletPerformanceResponse {
  */
 export interface WalletPerformanceSeriesRequest {
     /**
-     * @generated from protobuf field: string wallet_address = 1
+     * @generated from protobuf field: repeated hypercore.WalletPerformanceSeriesQuery wallets = 1
      */
-    walletAddress: string;
+    wallets: WalletPerformanceSeriesQuery[]; // 1-100 unique wallets
     /**
      * @generated from protobuf field: int64 from_ts = 2
      */
-    fromTs: number;
+    fromTs: number; // 0 = all-time
     /**
      * @generated from protobuf field: int64 to_ts = 3
      */
-    toTs: number;
+    toTs: number; // 0 = now, fixed value for pages
     /**
      * @generated from protobuf field: hypercore.MetricInterval interval = 4
      */
@@ -1300,16 +1300,33 @@ export interface WalletPerformanceSeriesRequest {
     /**
      * @generated from protobuf field: optional uint64 instrument_id = 5
      */
-    instrumentId?: number; // unset = whole account; set = filter to instrument
+    instrumentId?: number; // unset = whole account
+    /**
+     * @generated from protobuf field: uint32 page_size = 6
+     */
+    pageSize: number; // intervals per wallet, default 100
+}
+/**
+ * @generated from protobuf message hypercore.WalletPerformanceSeriesQuery
+ */
+export interface WalletPerformanceSeriesQuery {
+    /**
+     * @generated from protobuf field: string wallet_address = 1
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: optional int64 after_ts = 2
+     */
+    afterTs?: number; // resume after this interval
 }
 /**
  * @generated from protobuf message hypercore.WalletPerformanceSeriesResponse
  */
 export interface WalletPerformanceSeriesResponse {
     /**
-     * @generated from protobuf field: string wallet_address = 1
+     * @generated from protobuf field: repeated hypercore.WalletPerformanceSeriesResult wallets = 1
      */
-    walletAddress: string;
+    wallets: WalletPerformanceSeriesResult[]; // request order
     /**
      * @generated from protobuf field: hypercore.MetricInterval interval = 2
      */
@@ -1317,11 +1334,24 @@ export interface WalletPerformanceSeriesResponse {
     /**
      * @generated from protobuf field: optional uint64 instrument_id = 3
      */
-    instrumentId?: number; // echoes the filter
+    instrumentId?: number; // requested filter
+}
+/**
+ * @generated from protobuf message hypercore.WalletPerformanceSeriesResult
+ */
+export interface WalletPerformanceSeriesResult {
     /**
-     * @generated from protobuf field: repeated hypercore.PerformanceBucket buckets = 4
+     * @generated from protobuf field: string wallet_address = 1
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: repeated hypercore.PerformanceBucket buckets = 2
      */
     buckets: PerformanceBucket[]; // ascending by ts
+    /**
+     * @generated from protobuf field: optional int64 next_after_ts = 3
+     */
+    nextAfterTs?: number; // absent when complete
 }
 /**
  * One time bucket of aggregated positioning for wallets carrying a given tag,
@@ -6614,19 +6644,21 @@ export const WalletPerformanceResponse = new WalletPerformanceResponse$Type();
 class WalletPerformanceSeriesRequest$Type extends MessageType<WalletPerformanceSeriesRequest> {
     constructor() {
         super("hypercore.WalletPerformanceSeriesRequest", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletPerformanceSeriesQuery },
             { no: 2, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "interval", kind: "enum", T: () => ["hypercore.MetricInterval", MetricInterval, "METRIC_INTERVAL_"] },
-            { no: 5, name: "instrument_id", kind: "scalar", opt: true, T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 5, name: "instrument_id", kind: "scalar", opt: true, T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "page_size", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
         ]);
     }
     create(value?: PartialMessage<WalletPerformanceSeriesRequest>): WalletPerformanceSeriesRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.walletAddress = "";
+        message.wallets = [];
         message.fromTs = 0;
         message.toTs = 0;
         message.interval = 0;
+        message.pageSize = 0;
         if (value !== undefined)
             reflectionMergePartial<WalletPerformanceSeriesRequest>(this, message, value);
         return message;
@@ -6636,8 +6668,8 @@ class WalletPerformanceSeriesRequest$Type extends MessageType<WalletPerformanceS
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string wallet_address */ 1:
-                    message.walletAddress = reader.string();
+                case /* repeated hypercore.WalletPerformanceSeriesQuery wallets */ 1:
+                    message.wallets.push(WalletPerformanceSeriesQuery.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* int64 from_ts */ 2:
                     message.fromTs = reader.int64().toNumber();
@@ -6651,6 +6683,9 @@ class WalletPerformanceSeriesRequest$Type extends MessageType<WalletPerformanceS
                 case /* optional uint64 instrument_id */ 5:
                     message.instrumentId = reader.uint64().toNumber();
                     break;
+                case /* uint32 page_size */ 6:
+                    message.pageSize = reader.uint32();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -6663,9 +6698,9 @@ class WalletPerformanceSeriesRequest$Type extends MessageType<WalletPerformanceS
         return message;
     }
     internalBinaryWrite(message: WalletPerformanceSeriesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_address = 1; */
-        if (message.walletAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* repeated hypercore.WalletPerformanceSeriesQuery wallets = 1; */
+        for (let i = 0; i < message.wallets.length; i++)
+            WalletPerformanceSeriesQuery.internalBinaryWrite(message.wallets[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* int64 from_ts = 2; */
         if (message.fromTs !== 0)
             writer.tag(2, WireType.Varint).int64(message.fromTs);
@@ -6678,6 +6713,9 @@ class WalletPerformanceSeriesRequest$Type extends MessageType<WalletPerformanceS
         /* optional uint64 instrument_id = 5; */
         if (message.instrumentId !== undefined)
             writer.tag(5, WireType.Varint).uint64(message.instrumentId);
+        /* uint32 page_size = 6; */
+        if (message.pageSize !== 0)
+            writer.tag(6, WireType.Varint).uint32(message.pageSize);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -6689,20 +6727,72 @@ class WalletPerformanceSeriesRequest$Type extends MessageType<WalletPerformanceS
  */
 export const WalletPerformanceSeriesRequest = new WalletPerformanceSeriesRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class WalletPerformanceSeriesQuery$Type extends MessageType<WalletPerformanceSeriesQuery> {
+    constructor() {
+        super("hypercore.WalletPerformanceSeriesQuery", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "after_ts", kind: "scalar", opt: true, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPerformanceSeriesQuery>): WalletPerformanceSeriesQuery {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        if (value !== undefined)
+            reflectionMergePartial<WalletPerformanceSeriesQuery>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPerformanceSeriesQuery): WalletPerformanceSeriesQuery {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* optional int64 after_ts */ 2:
+                    message.afterTs = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPerformanceSeriesQuery, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* optional int64 after_ts = 2; */
+        if (message.afterTs !== undefined)
+            writer.tag(2, WireType.Varint).int64(message.afterTs);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletPerformanceSeriesQuery
+ */
+export const WalletPerformanceSeriesQuery = new WalletPerformanceSeriesQuery$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class WalletPerformanceSeriesResponse$Type extends MessageType<WalletPerformanceSeriesResponse> {
     constructor() {
         super("hypercore.WalletPerformanceSeriesResponse", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletPerformanceSeriesResult },
             { no: 2, name: "interval", kind: "enum", T: () => ["hypercore.MetricInterval", MetricInterval, "METRIC_INTERVAL_"] },
-            { no: 3, name: "instrument_id", kind: "scalar", opt: true, T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 4, name: "buckets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PerformanceBucket }
+            { no: 3, name: "instrument_id", kind: "scalar", opt: true, T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<WalletPerformanceSeriesResponse>): WalletPerformanceSeriesResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.walletAddress = "";
+        message.wallets = [];
         message.interval = 0;
-        message.buckets = [];
         if (value !== undefined)
             reflectionMergePartial<WalletPerformanceSeriesResponse>(this, message, value);
         return message;
@@ -6712,17 +6802,14 @@ class WalletPerformanceSeriesResponse$Type extends MessageType<WalletPerformance
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string wallet_address */ 1:
-                    message.walletAddress = reader.string();
+                case /* repeated hypercore.WalletPerformanceSeriesResult wallets */ 1:
+                    message.wallets.push(WalletPerformanceSeriesResult.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* hypercore.MetricInterval interval */ 2:
                     message.interval = reader.int32();
                     break;
                 case /* optional uint64 instrument_id */ 3:
                     message.instrumentId = reader.uint64().toNumber();
-                    break;
-                case /* repeated hypercore.PerformanceBucket buckets */ 4:
-                    message.buckets.push(PerformanceBucket.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -6736,18 +6823,15 @@ class WalletPerformanceSeriesResponse$Type extends MessageType<WalletPerformance
         return message;
     }
     internalBinaryWrite(message: WalletPerformanceSeriesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_address = 1; */
-        if (message.walletAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* repeated hypercore.WalletPerformanceSeriesResult wallets = 1; */
+        for (let i = 0; i < message.wallets.length; i++)
+            WalletPerformanceSeriesResult.internalBinaryWrite(message.wallets[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* hypercore.MetricInterval interval = 2; */
         if (message.interval !== 0)
             writer.tag(2, WireType.Varint).int32(message.interval);
         /* optional uint64 instrument_id = 3; */
         if (message.instrumentId !== undefined)
             writer.tag(3, WireType.Varint).uint64(message.instrumentId);
-        /* repeated hypercore.PerformanceBucket buckets = 4; */
-        for (let i = 0; i < message.buckets.length; i++)
-            PerformanceBucket.internalBinaryWrite(message.buckets[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -6758,6 +6842,68 @@ class WalletPerformanceSeriesResponse$Type extends MessageType<WalletPerformance
  * @generated MessageType for protobuf message hypercore.WalletPerformanceSeriesResponse
  */
 export const WalletPerformanceSeriesResponse = new WalletPerformanceSeriesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletPerformanceSeriesResult$Type extends MessageType<WalletPerformanceSeriesResult> {
+    constructor() {
+        super("hypercore.WalletPerformanceSeriesResult", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "buckets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PerformanceBucket },
+            { no: 3, name: "next_after_ts", kind: "scalar", opt: true, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPerformanceSeriesResult>): WalletPerformanceSeriesResult {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        message.buckets = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletPerformanceSeriesResult>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPerformanceSeriesResult): WalletPerformanceSeriesResult {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* repeated hypercore.PerformanceBucket buckets */ 2:
+                    message.buckets.push(PerformanceBucket.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* optional int64 next_after_ts */ 3:
+                    message.nextAfterTs = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPerformanceSeriesResult, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* repeated hypercore.PerformanceBucket buckets = 2; */
+        for (let i = 0; i < message.buckets.length; i++)
+            PerformanceBucket.internalBinaryWrite(message.buckets[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* optional int64 next_after_ts = 3; */
+        if (message.nextAfterTs !== undefined)
+            writer.tag(3, WireType.Varint).int64(message.nextAfterTs);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletPerformanceSeriesResult
+ */
+export const WalletPerformanceSeriesResult = new WalletPerformanceSeriesResult$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PositioningBucket$Type extends MessageType<PositioningBucket> {
     constructor() {

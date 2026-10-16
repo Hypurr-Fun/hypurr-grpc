@@ -536,17 +536,29 @@ message WalletPerformanceResponse {
 
 // ----- RPC 2: time series (calendar + graphs) -----
 message WalletPerformanceSeriesRequest {
-  string wallet_address = 1;
-  int64  from_ts = 2;
-  int64  to_ts = 3;
-  MetricInterval interval = 4;            // default DAY
-  optional uint64 instrument_id = 5;        // unset = whole account; set = filter to instrument
+  repeated WalletPerformanceSeriesQuery wallets = 1; // 1-100 unique wallets
+  int64 from_ts = 2; // 0 = all-time
+  int64 to_ts = 3; // 0 = now, fixed value for pages
+  MetricInterval interval = 4; // default DAY
+  optional uint64 instrument_id = 5; // unset = whole account
+  uint32 page_size = 6; // intervals per wallet, default 100
 }
-message WalletPerformanceSeriesResponse {
+
+message WalletPerformanceSeriesQuery {
   string wallet_address = 1;
+  optional int64 after_ts = 2; // resume after this interval
+}
+
+message WalletPerformanceSeriesResponse {
+  repeated WalletPerformanceSeriesResult wallets = 1; // request order
   MetricInterval interval = 2;
-  optional uint64 instrument_id = 3;   // echoes the filter
-  repeated PerformanceBucket buckets = 4;   // ascending by ts
+  optional uint64 instrument_id = 3; // requested filter
+}
+
+message WalletPerformanceSeriesResult {
+  string wallet_address = 1;
+  repeated PerformanceBucket buckets = 2; // ascending by ts
+  optional int64 next_after_ts = 3; // absent when complete
 }
 
 // One time bucket of aggregated positioning for wallets carrying a given tag,

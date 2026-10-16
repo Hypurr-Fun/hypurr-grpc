@@ -2019,7 +2019,7 @@ type KmsAccountRevokeAgentRequest struct {
 
 	EncryptedPayload []byte `protobuf:"bytes,1,opt,name=encrypted_payload,json=encryptedPayload,proto3" json:"encrypted_payload,omitempty"`
 	InstanceJwt      string `protobuf:"bytes,2,opt,name=instance_jwt,json=instanceJwt,proto3" json:"instance_jwt,omitempty"`
-	AgentId          string `protobuf:"bytes,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"` // in clear, so the bot can retire the agent's Hyperliquid key first
+	AgentId          string `protobuf:"bytes,3,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
 }
 
 func (x *KmsAccountRevokeAgentRequest) Reset() {

@@ -482,7 +482,7 @@ export interface KmsAccountRevokeAgentRequest {
     /**
      * @generated from protobuf field: string agent_id = 3
      */
-    agentId: string; // in clear, so the bot can retire the agent's Hyperliquid key first
+    agentId: string;
 }
 /**
  * @generated from protobuf message hypurr.KmsAccountRevokeAgentResponse
