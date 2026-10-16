@@ -74,6 +74,18 @@ export interface KmsLoginOrRegisterResponse {
      * @generated from protobuf field: hypurr.KmsAccountHandoff handoff = 2
      */
     handoff?: KmsAccountHandoff;
+    /**
+     * The bot's session for this login, bound to the x-hypurr-device-id
+     * request metadata: a short-lived bearer token for the bot's other
+     * services and the token that refreshes it.
+     *
+     * @generated from protobuf field: string bot_access_token = 3
+     */
+    botAccessToken: string;
+    /**
+     * @generated from protobuf field: string bot_refresh_token = 4
+     */
+    botRefreshToken: string;
 }
 /**
  * User shard and recovery codes sealed to the device key of this login.
@@ -757,12 +769,16 @@ class KmsLoginOrRegisterResponse$Type extends MessageType<KmsLoginOrRegisterResp
     constructor() {
         super("hypurr.KmsLoginOrRegisterResponse", [
             { no: 1, name: "attestation", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "handoff", kind: "message", T: () => KmsAccountHandoff }
+            { no: 2, name: "handoff", kind: "message", T: () => KmsAccountHandoff },
+            { no: 3, name: "bot_access_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "bot_refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsLoginOrRegisterResponse>): KmsLoginOrRegisterResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.attestation = new Uint8Array(0);
+        message.botAccessToken = "";
+        message.botRefreshToken = "";
         if (value !== undefined)
             reflectionMergePartial<KmsLoginOrRegisterResponse>(this, message, value);
         return message;
@@ -777,6 +793,12 @@ class KmsLoginOrRegisterResponse$Type extends MessageType<KmsLoginOrRegisterResp
                     break;
                 case /* hypurr.KmsAccountHandoff handoff */ 2:
                     message.handoff = KmsAccountHandoff.internalBinaryRead(reader, reader.uint32(), options, message.handoff);
+                    break;
+                case /* string bot_access_token */ 3:
+                    message.botAccessToken = reader.string();
+                    break;
+                case /* string bot_refresh_token */ 4:
+                    message.botRefreshToken = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -796,6 +818,12 @@ class KmsLoginOrRegisterResponse$Type extends MessageType<KmsLoginOrRegisterResp
         /* hypurr.KmsAccountHandoff handoff = 2; */
         if (message.handoff)
             KmsAccountHandoff.internalBinaryWrite(message.handoff, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string bot_access_token = 3; */
+        if (message.botAccessToken !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.botAccessToken);
+        /* string bot_refresh_token = 4; */
+        if (message.botRefreshToken !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.botRefreshToken);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
