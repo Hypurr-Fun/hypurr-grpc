@@ -184,6 +184,11 @@ class HyperCoreStub:
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowResponse.FromString,
                 _registered_method=True)
+        self.InstrumentStats = channel.unary_unary(
+                '/hypercore.HyperCore/InstrumentStats',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.InstrumentStatsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.InstrumentStatsResponse.FromString,
+                _registered_method=True)
         self.PnlRank = channel.unary_unary(
                 '/hypercore.HyperCore/PnlRank',
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankRequest.SerializeToString,
@@ -376,6 +381,12 @@ class HyperCoreServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def InstrumentStats(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def PnlRank(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -534,6 +545,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     servicer.HighLow,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowResponse.SerializeToString,
+            ),
+            'InstrumentStats': grpc.unary_unary_rpc_method_handler(
+                    servicer.InstrumentStats,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.InstrumentStatsRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.InstrumentStatsResponse.SerializeToString,
             ),
             'PnlRank': grpc.unary_unary_rpc_method_handler(
                     servicer.PnlRank,
@@ -1351,6 +1367,33 @@ class HyperCore:
             '/hypercore.HyperCore/HighLow',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.HighLowResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def InstrumentStats(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/InstrumentStats',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.InstrumentStatsRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.InstrumentStatsResponse.FromString,
             options,
             channel_credentials,
             insecure,

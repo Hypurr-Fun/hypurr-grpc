@@ -6,6 +6,8 @@ import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
 import type { PnlRankResponse } from "./hypercore_service";
 import type { PnlRankRequest } from "./hypercore_service";
+import type { InstrumentStatsResponse } from "./hypercore_service";
+import type { InstrumentStatsRequest } from "./hypercore_service";
 import type { HighLowResponse } from "./hypercore_service";
 import type { HighLowRequest } from "./hypercore_service";
 import type { OHLCStreamResponse } from "./hypercore_service";
@@ -197,6 +199,10 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: HighLow
      */
     highLow(input: HighLowRequest, options?: RpcOptions): UnaryCall<HighLowRequest, HighLowResponse>;
+    /**
+     * @generated from protobuf rpc: InstrumentStats
+     */
+    instrumentStats(input: InstrumentStatsRequest, options?: RpcOptions): UnaryCall<InstrumentStatsRequest, InstrumentStatsResponse>;
     /**
      * @generated from protobuf rpc: PnlRank
      */
@@ -426,10 +432,17 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
         return stackIntercept<HighLowRequest, HighLowResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: InstrumentStats
+     */
+    instrumentStats(input: InstrumentStatsRequest, options?: RpcOptions): UnaryCall<InstrumentStatsRequest, InstrumentStatsResponse> {
+        const method = this.methods[30], opt = this._transport.mergeOptions(options);
+        return stackIntercept<InstrumentStatsRequest, InstrumentStatsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: PnlRank
      */
     pnlRank(input: PnlRankRequest, options?: RpcOptions): UnaryCall<PnlRankRequest, PnlRankResponse> {
-        const method = this.methods[30], opt = this._transport.mergeOptions(options);
+        const method = this.methods[31], opt = this._transport.mergeOptions(options);
         return stackIntercept<PnlRankRequest, PnlRankResponse>("unary", this._transport, method, opt, input);
     }
 }

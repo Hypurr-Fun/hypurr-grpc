@@ -840,6 +840,41 @@ message HighLowResponse {
   double low  = 2; // min traded price in range; 0 = no trades
 }
 
+// ----- Per-perp market stats (open interest, taker flow, liquidations) -----
+
+// Perps only. Built from hourly rows, so the interval must be 1H or coarser,
+// and an hour is served about one minute after it closes (no open bucket).
+message InstrumentStatsRequest {
+  repeated int64 instrument_ids = 1; // non-empty, max 100; same convention as OHLCRequest.instrument_ids, perps only
+  OHLCInterval   interval       = 2; // OHLC_INTERVAL_1H or coarser
+  int64          from_ts        = 3; // inclusive, unix seconds; 0 = earliest
+  int64          to_ts          = 4; // inclusive, unix seconds; 0 = now
+}
+
+message InstrumentStats {
+  int64 open_time = 1; // bucket start, unix seconds; same grid as OHLC
+  // Open interest in coins and mark in USDC at the end of the bucket's last
+  // sampled hour. Unset when no hour in the bucket has a sample.
+  google.protobuf.DoubleValue open_interest = 2;
+  google.protobuf.DoubleValue mark          = 3;
+  double taker_buy_base  = 4;  // coins bought by takers
+  double taker_sell_base = 5;  // coins sold by takers
+  double taker_buy_usd   = 6;  // USDC notional bought by takers
+  double taker_sell_usd  = 7;  // USDC notional sold by takers
+  double liq_buy_usd     = 8;  // USDC notional of liquidations whose taker bought (shorts liquidated)
+  double liq_sell_usd    = 9;  // USDC notional of liquidations whose taker sold (longs liquidated)
+  uint32 fills           = 10; // trade count
+}
+
+message InstrumentStatsSeries {
+  int64                    instrument_id = 1;
+  repeated InstrumentStats stats         = 2; // open_time ascending; buckets with no stored hour are omitted
+}
+
+message InstrumentStatsResponse {
+  repeated InstrumentStatsSeries series = 1; // request order
+}
+
 // ----- Top-1000 wallets by PnL over a time frame -----
 enum PnlClass {
   PNL_CLASS_UNSPECIFIED = 0;
@@ -919,6 +954,7 @@ service HyperCore {
   rpc OHLC(OHLCRequest) returns (OHLCResponse) {}
   rpc OHLCStream(stream OHLCStreamRequest) returns (stream OHLCStreamResponse) {}
   rpc HighLow(HighLowRequest) returns (HighLowResponse) {}
+  rpc InstrumentStats(InstrumentStatsRequest) returns (InstrumentStatsResponse) {}
   rpc PnlRank(PnlRankRequest) returns (PnlRankResponse) {}
 }
 
