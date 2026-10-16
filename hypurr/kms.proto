@@ -58,6 +58,8 @@ message KmsLoginOrRegisterResponse {
   bytes attestation = 1;
   // Migrated legacy bot users only, absent otherwise.
   KmsAccountHandoff handoff = 2;
+  string bot_access_token = 3;
+  string bot_refresh_token = 4;
 }
 
 // User shard and recovery codes sealed to the device key of this login.
