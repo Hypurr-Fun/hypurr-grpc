@@ -161,6 +161,21 @@ class TelegramStub:
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCancelRequest.SerializeToString,
                 response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCancelResponse.FromString,
                 _registered_method=True)
+        self.HyperliquidWickCreate = channel.unary_unary(
+                '/hypurr.Telegram/HyperliquidWickCreate',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWickCreateRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWickCreateResponse.FromString,
+                _registered_method=True)
+        self.HyperliquidWickCancel = channel.unary_unary(
+                '/hypurr.Telegram/HyperliquidWickCancel',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWickCancelRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWickCancelResponse.FromString,
+                _registered_method=True)
+        self.HyperliquidWalletWickSessions = channel.unary_unary(
+                '/hypurr.Telegram/HyperliquidWalletWickSessions',
+                request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletWickSessionsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletWickSessionsResponse.FromString,
+                _registered_method=True)
         self.HyperliquidSpotSniperConfigs = channel.unary_unary(
                 '/hypurr.Telegram/HyperliquidSpotSniperConfigs',
                 request_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidSpotSniperConfigsRequest.SerializeToString,
@@ -557,6 +572,24 @@ class TelegramServicer:
         raise NotImplementedError('Method not implemented!')
 
     def HyperliquidScaleCancel(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def HyperliquidWickCreate(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def HyperliquidWickCancel(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def HyperliquidWalletWickSessions(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -981,6 +1014,21 @@ def add_TelegramServicer_to_server(servicer, server):
                     servicer.HyperliquidScaleCancel,
                     request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCancelRequest.FromString,
                     response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCancelResponse.SerializeToString,
+            ),
+            'HyperliquidWickCreate': grpc.unary_unary_rpc_method_handler(
+                    servicer.HyperliquidWickCreate,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWickCreateRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWickCreateResponse.SerializeToString,
+            ),
+            'HyperliquidWickCancel': grpc.unary_unary_rpc_method_handler(
+                    servicer.HyperliquidWickCancel,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWickCancelRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWickCancelResponse.SerializeToString,
+            ),
+            'HyperliquidWalletWickSessions': grpc.unary_unary_rpc_method_handler(
+                    servicer.HyperliquidWalletWickSessions,
+                    request_deserializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletWickSessionsRequest.FromString,
+                    response_serializer=hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletWickSessionsResponse.SerializeToString,
             ),
             'HyperliquidSpotSniperConfigs': grpc.unary_unary_rpc_method_handler(
                     servicer.HyperliquidSpotSniperConfigs,
@@ -1898,6 +1946,87 @@ class Telegram:
             '/hypurr.Telegram/HyperliquidScaleCancel',
             hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCancelRequest.SerializeToString,
             hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidScaleCancelResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def HyperliquidWickCreate(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/HyperliquidWickCreate',
+            hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWickCreateRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWickCreateResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def HyperliquidWickCancel(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/HyperliquidWickCancel',
+            hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWickCancelRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWickCancelResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def HyperliquidWalletWickSessions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Telegram/HyperliquidWalletWickSessions',
+            hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletWickSessionsRequest.SerializeToString,
+            hypurr_dot_telegram_dot_telegram__service__pb2.HyperliquidWalletWickSessionsResponse.FromString,
             options,
             channel_credentials,
             insecure,

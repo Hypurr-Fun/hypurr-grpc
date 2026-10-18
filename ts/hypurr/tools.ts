@@ -210,6 +210,99 @@ export interface HyperliquidWalletTwapSession {
     reduceOnly: boolean;
 }
 /**
+ * A wick session keeps a limit order of a fixed size a distance from a
+ * moving average, on one or both sides, re-pricing it as the average moves
+ * and re-arming it after each fill until the target is filled.
+ *
+ * @generated from protobuf message hypurr.HyperliquidWalletWickSession
+ */
+export interface HyperliquidWalletWickSession {
+    /**
+     * @generated from protobuf field: int64 id = 1
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: int64 wallet_id = 2
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value spot_pair_id = 3
+     */
+    spotPairId?: Int64Value;
+    /**
+     * @generated from protobuf field: google.protobuf.Int64Value perp_pair_id = 4
+     */
+    perpPairId?: Int64Value;
+    /**
+     * @generated from protobuf field: string side = 5
+     */
+    side: string; // buy, sell or both
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue order_quantity = 6
+     */
+    orderQuantity?: DoubleValue; // per order, base units
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue order_notional = 7
+     */
+    orderNotional?: DoubleValue; // per order, USD
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue target_quantity = 8
+     */
+    targetQuantity?: DoubleValue; // total across sides, base units
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue target_notional = 9
+     */
+    targetNotional?: DoubleValue; // total across sides, USD
+    /**
+     * @generated from protobuf field: double distance = 10
+     */
+    distance: number; // fraction from the average: 0.03 = 3%
+    /**
+     * @generated from protobuf field: string ma_type = 11
+     */
+    maType: string; // sma or ema
+    /**
+     * @generated from protobuf field: string ma_interval = 12
+     */
+    maInterval: string; // candle interval: 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 8h, 12h, 1d
+    /**
+     * @generated from protobuf field: int32 ma_period = 13
+     */
+    maPeriod: number; // candles in the average, 2 to 1000
+    /**
+     * @generated from protobuf field: double tolerance = 14
+     */
+    tolerance: number; // re-price past this drift, fraction: 0.001 = 0.1%
+    /**
+     * @generated from protobuf field: bool reduce_only = 15
+     */
+    reduceOnly: boolean;
+    /**
+     * @generated from protobuf field: double filled_quantity = 16
+     */
+    filledQuantity: number;
+    /**
+     * @generated from protobuf field: double filled_cost = 17
+     */
+    filledCost: number;
+    /**
+     * @generated from protobuf field: string state = 18
+     */
+    state: string; // pending, running or ended
+    /**
+     * @generated from protobuf field: int64 start_time = 19
+     */
+    startTime: number; // Unix ms
+    /**
+     * @generated from protobuf field: int64 end_time = 20
+     */
+    endTime: number; // Unix ms
+    /**
+     * @generated from protobuf field: string summary = 21
+     */
+    summary: string; // e.g. "Buy HYPE 3% under EMA 20 (15m)"
+}
+/**
  * @generated from protobuf message hypurr.HyperliquidWalletScaleSession
  */
 export interface HyperliquidWalletScaleSession {
@@ -756,6 +849,207 @@ class HyperliquidWalletTwapSession$Type extends MessageType<HyperliquidWalletTwa
  * @generated MessageType for protobuf message hypurr.HyperliquidWalletTwapSession
  */
 export const HyperliquidWalletTwapSession = new HyperliquidWalletTwapSession$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HyperliquidWalletWickSession$Type extends MessageType<HyperliquidWalletWickSession> {
+    constructor() {
+        super("hypurr.HyperliquidWalletWickSession", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "spot_pair_id", kind: "message", T: () => Int64Value },
+            { no: 4, name: "perp_pair_id", kind: "message", T: () => Int64Value },
+            { no: 5, name: "side", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "order_quantity", kind: "message", T: () => DoubleValue },
+            { no: 7, name: "order_notional", kind: "message", T: () => DoubleValue },
+            { no: 8, name: "target_quantity", kind: "message", T: () => DoubleValue },
+            { no: 9, name: "target_notional", kind: "message", T: () => DoubleValue },
+            { no: 10, name: "distance", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "ma_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 12, name: "ma_interval", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 13, name: "ma_period", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 14, name: "tolerance", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 15, name: "reduce_only", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 16, name: "filled_quantity", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 17, name: "filled_cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 18, name: "state", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 19, name: "start_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 20, name: "end_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 21, name: "summary", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<HyperliquidWalletWickSession>): HyperliquidWalletWickSession {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = 0;
+        message.walletId = 0;
+        message.side = "";
+        message.distance = 0;
+        message.maType = "";
+        message.maInterval = "";
+        message.maPeriod = 0;
+        message.tolerance = 0;
+        message.reduceOnly = false;
+        message.filledQuantity = 0;
+        message.filledCost = 0;
+        message.state = "";
+        message.startTime = 0;
+        message.endTime = 0;
+        message.summary = "";
+        if (value !== undefined)
+            reflectionMergePartial<HyperliquidWalletWickSession>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HyperliquidWalletWickSession): HyperliquidWalletWickSession {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* int64 wallet_id */ 2:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.Int64Value spot_pair_id */ 3:
+                    message.spotPairId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.spotPairId);
+                    break;
+                case /* google.protobuf.Int64Value perp_pair_id */ 4:
+                    message.perpPairId = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.perpPairId);
+                    break;
+                case /* string side */ 5:
+                    message.side = reader.string();
+                    break;
+                case /* google.protobuf.DoubleValue order_quantity */ 6:
+                    message.orderQuantity = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.orderQuantity);
+                    break;
+                case /* google.protobuf.DoubleValue order_notional */ 7:
+                    message.orderNotional = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.orderNotional);
+                    break;
+                case /* google.protobuf.DoubleValue target_quantity */ 8:
+                    message.targetQuantity = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.targetQuantity);
+                    break;
+                case /* google.protobuf.DoubleValue target_notional */ 9:
+                    message.targetNotional = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.targetNotional);
+                    break;
+                case /* double distance */ 10:
+                    message.distance = reader.double();
+                    break;
+                case /* string ma_type */ 11:
+                    message.maType = reader.string();
+                    break;
+                case /* string ma_interval */ 12:
+                    message.maInterval = reader.string();
+                    break;
+                case /* int32 ma_period */ 13:
+                    message.maPeriod = reader.int32();
+                    break;
+                case /* double tolerance */ 14:
+                    message.tolerance = reader.double();
+                    break;
+                case /* bool reduce_only */ 15:
+                    message.reduceOnly = reader.bool();
+                    break;
+                case /* double filled_quantity */ 16:
+                    message.filledQuantity = reader.double();
+                    break;
+                case /* double filled_cost */ 17:
+                    message.filledCost = reader.double();
+                    break;
+                case /* string state */ 18:
+                    message.state = reader.string();
+                    break;
+                case /* int64 start_time */ 19:
+                    message.startTime = reader.int64().toNumber();
+                    break;
+                case /* int64 end_time */ 20:
+                    message.endTime = reader.int64().toNumber();
+                    break;
+                case /* string summary */ 21:
+                    message.summary = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: HyperliquidWalletWickSession, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* int64 wallet_id = 2; */
+        if (message.walletId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.walletId);
+        /* google.protobuf.Int64Value spot_pair_id = 3; */
+        if (message.spotPairId)
+            Int64Value.internalBinaryWrite(message.spotPairId, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Int64Value perp_pair_id = 4; */
+        if (message.perpPairId)
+            Int64Value.internalBinaryWrite(message.perpPairId, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* string side = 5; */
+        if (message.side !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.side);
+        /* google.protobuf.DoubleValue order_quantity = 6; */
+        if (message.orderQuantity)
+            DoubleValue.internalBinaryWrite(message.orderQuantity, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue order_notional = 7; */
+        if (message.orderNotional)
+            DoubleValue.internalBinaryWrite(message.orderNotional, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue target_quantity = 8; */
+        if (message.targetQuantity)
+            DoubleValue.internalBinaryWrite(message.targetQuantity, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue target_notional = 9; */
+        if (message.targetNotional)
+            DoubleValue.internalBinaryWrite(message.targetNotional, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+        /* double distance = 10; */
+        if (message.distance !== 0)
+            writer.tag(10, WireType.Bit64).double(message.distance);
+        /* string ma_type = 11; */
+        if (message.maType !== "")
+            writer.tag(11, WireType.LengthDelimited).string(message.maType);
+        /* string ma_interval = 12; */
+        if (message.maInterval !== "")
+            writer.tag(12, WireType.LengthDelimited).string(message.maInterval);
+        /* int32 ma_period = 13; */
+        if (message.maPeriod !== 0)
+            writer.tag(13, WireType.Varint).int32(message.maPeriod);
+        /* double tolerance = 14; */
+        if (message.tolerance !== 0)
+            writer.tag(14, WireType.Bit64).double(message.tolerance);
+        /* bool reduce_only = 15; */
+        if (message.reduceOnly !== false)
+            writer.tag(15, WireType.Varint).bool(message.reduceOnly);
+        /* double filled_quantity = 16; */
+        if (message.filledQuantity !== 0)
+            writer.tag(16, WireType.Bit64).double(message.filledQuantity);
+        /* double filled_cost = 17; */
+        if (message.filledCost !== 0)
+            writer.tag(17, WireType.Bit64).double(message.filledCost);
+        /* string state = 18; */
+        if (message.state !== "")
+            writer.tag(18, WireType.LengthDelimited).string(message.state);
+        /* int64 start_time = 19; */
+        if (message.startTime !== 0)
+            writer.tag(19, WireType.Varint).int64(message.startTime);
+        /* int64 end_time = 20; */
+        if (message.endTime !== 0)
+            writer.tag(20, WireType.Varint).int64(message.endTime);
+        /* string summary = 21; */
+        if (message.summary !== "")
+            writer.tag(21, WireType.LengthDelimited).string(message.summary);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.HyperliquidWalletWickSession
+ */
+export const HyperliquidWalletWickSession = new HyperliquidWalletWickSession$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class HyperliquidWalletScaleSession$Type extends MessageType<HyperliquidWalletScaleSession> {
     constructor() {

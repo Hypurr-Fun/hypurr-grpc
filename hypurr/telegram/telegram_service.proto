@@ -205,6 +205,42 @@ message HyperliquidScaleCancelRequest {
 message HyperliquidScaleCancelResponse {
 }
 
+// Creates and starts a wick session; see HyperliquidWalletWickSession.
+// Exactly one of spot_pair_id / perp_pair_id, of order_quantity /
+// order_notional and of target_quantity / target_notional.
+message HyperliquidWickCreateRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  google.protobuf.Int64Value spot_pair_id = 3;
+  google.protobuf.Int64Value perp_pair_id = 4;
+  string side = 5;
+  google.protobuf.DoubleValue order_quantity = 6;
+  google.protobuf.DoubleValue order_notional = 7;
+  google.protobuf.DoubleValue target_quantity = 8;
+  google.protobuf.DoubleValue target_notional = 9;
+  double distance = 10;
+  string ma_type = 11;
+  string ma_interval = 12;
+  int32 ma_period = 13;
+  google.protobuf.DoubleValue tolerance = 14; // unset: 0.001
+  bool reduce_only = 15;
+}
+
+message HyperliquidWickCreateResponse {
+  HyperliquidWalletWickSession session = 1;
+}
+
+// Stops a running session (its orders are cancelled) or deletes one that is
+// not running.
+message HyperliquidWickCancelRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  int64 wick_session_id = 3;
+}
+
+message HyperliquidWickCancelResponse {
+}
+
 message HyperliquidLaunchTradeRequest {
   map<string, string> auth_data = 1;
   int64 launch_id = 2;
@@ -327,6 +363,16 @@ message HyperliquidWalletScaleSessionsRequest {
 
 message HyperliquidWalletScaleSessionsResponse {
   repeated HyperliquidWalletScaleSession sessions = 1;
+}
+
+message HyperliquidWalletWickSessionsRequest {
+  map<string, string> auth_data = 1;
+  int64 wallet_id = 2;
+  google.protobuf.BoolValue enabled = 3; // true: not ended; false: ended; unset: all
+}
+
+message HyperliquidWalletWickSessionsResponse {
+  repeated HyperliquidWalletWickSession sessions = 1; // newest first
 }
 
 message LaunchHyperliquidLaunchRequest {
@@ -1048,6 +1094,9 @@ service Telegram {
   rpc HyperliquidScaleCreate (HyperliquidScaleCreateRequest) returns (HyperliquidScaleCreateResponse) {}
   rpc HyperliquidScaleModify (HyperliquidScaleModifyRequest) returns (HyperliquidScaleModifyResponse) {}
   rpc HyperliquidScaleCancel (HyperliquidScaleCancelRequest) returns (HyperliquidScaleCancelResponse) {}
+  rpc HyperliquidWickCreate (HyperliquidWickCreateRequest) returns (HyperliquidWickCreateResponse) {}
+  rpc HyperliquidWickCancel (HyperliquidWickCancelRequest) returns (HyperliquidWickCancelResponse) {}
+  rpc HyperliquidWalletWickSessions (HyperliquidWalletWickSessionsRequest) returns (HyperliquidWalletWickSessionsResponse) {}
 
   rpc HyperliquidSpotSniperConfigs (HyperliquidSpotSniperConfigsRequest) returns (HyperliquidSpotSniperConfigsResponse) {}
   rpc CreateHyperliquidSpotSniperConfig (CreateHyperliquidSpotSniperConfigRequest) returns (CreateHyperliquidSpotSniperConfigResponse) {}
