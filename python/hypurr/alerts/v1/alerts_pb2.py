@@ -22,9 +22,10 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dhypurr/alerts/v1/alerts.proto\x12\x10hypurr.alerts.v1\"\xef\x01\n\tAlertRule\x12,\n\x05price\x18\x01 \x01(\x0b\x32\x1b.hypurr.alerts.v1.PriceRuleH\x00\x12\x39\n\x0cprice_change\x18\x02 \x01(\x0b\x32!.hypurr.alerts.v1.PriceChangeRuleH\x00\x12\x32\n\x08\x64rawdown\x18\x03 \x01(\x0b\x32\x1e.hypurr.alerts.v1.DrawdownRuleH\x00\x12=\n\x0eorder_activity\x18\x04 \x01(\x0b\x32#.hypurr.alerts.v1.OrderActivityRuleH\x00\x42\x06\n\x04rule\"q\n\tPriceRule\x12\x11\n\tmarket_id\x18\x01 \x01(\x03\x12\x33\n\tdirection\x18\x02 \x01(\x0e\x32 .hypurr.alerts.v1.PriceDirection\x12\x1c\n\x14target_price_decimal\x18\x03 \x01(\t\"\x83\x01\n\x0fPriceChangeRule\x12\x11\n\tmarket_id\x18\x01 \x01(\x03\x12\x34\n\tdirection\x18\x02 \x01(\x0e\x32!.hypurr.alerts.v1.ChangeDirection\x12\x0f\n\x07percent\x18\x03 \x01(\x01\x12\x16\n\x0ewindow_minutes\x18\x04 \x01(\x05\"2\n\x0c\x44rawdownRule\x12\x11\n\twallet_id\x18\x01 \x01(\x03\x12\x0f\n\x07percent\x18\x02 \x01(\x01\"v\n\x11OrderActivityRule\x12\x11\n\twallet_id\x18\x01 \x01(\x03\x12\x34\n\x06\x65vents\x18\x02 \x03(\x0e\x32$.hypurr.alerts.v1.OrderActivityEvent\x12\x18\n\x10min_notional_usd\x18\x03 \x01(\x01\"5\n\x0c\x41lertTrigger\x12\x16\n\x0eoccurred_at_ms\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x01\"\xf7\x01\n\x05\x41lert\x12\n\n\x02id\x18\x01 \x01(\x03\x12)\n\x04rule\x18\x02 \x01(\x0b\x32\x1b.hypurr.alerts.v1.AlertRule\x12\x33\n\tfrequency\x18\x03 \x01(\x0e\x32 .hypurr.alerts.v1.AlertFrequency\x12\x0f\n\x07\x65nabled\x18\x04 \x01(\x08\x12\x11\n\ttime_zone\x18\x05 \x01(\t\x12\x15\n\rcreated_at_ms\x18\x06 \x01(\x03\x12\x36\n\x0elast_triggered\x18\x07 \x01(\x0b\x32\x1e.hypurr.alerts.v1.AlertTrigger\x12\x0f\n\x07summary\x18\x08 \x01(\t\"_\n\x11ListAlertsRequest\x12\x16\n\tmarket_id\x18\x01 \x01(\x03H\x00\x88\x01\x01\x12\x16\n\twallet_id\x18\x02 \x01(\x03H\x01\x88\x01\x01\x42\x0c\n\n_market_idB\x0c\n\n_wallet_id\"=\n\x12ListAlertsResponse\x12\'\n\x06\x61lerts\x18\x01 \x03(\x0b\x32\x17.hypurr.alerts.v1.Alert\"\x87\x01\n\x12\x43reateAlertRequest\x12)\n\x04rule\x18\x01 \x01(\x0b\x32\x1b.hypurr.alerts.v1.AlertRule\x12\x33\n\tfrequency\x18\x02 \x01(\x0e\x32 .hypurr.alerts.v1.AlertFrequency\x12\x11\n\ttime_zone\x18\x03 \x01(\t\"\xb5\x01\n\x12UpdateAlertRequest\x12\n\n\x02id\x18\x01 \x01(\x03\x12)\n\x04rule\x18\x02 \x01(\x0b\x32\x1b.hypurr.alerts.v1.AlertRule\x12\x33\n\tfrequency\x18\x03 \x01(\x0e\x32 .hypurr.alerts.v1.AlertFrequency\x12\x14\n\x07\x65nabled\x18\x04 \x01(\x08H\x00\x88\x01\x01\x12\x11\n\ttime_zone\x18\x05 \x01(\tB\n\n\x08_enabled\"7\n\rAlertResponse\x12&\n\x05\x61lert\x18\x01 \x01(\x0b\x32\x17.hypurr.alerts.v1.Alert\" \n\x12\x44\x65leteAlertRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"\x15\n\x13\x44\x65leteAlertResponse\"\xa2\x02\n\x0cNotification\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04kind\x18\x02 \x01(\t\x12\r\n\x05title\x18\x03 \x01(\t\x12\x0c\n\x04\x62ody\x18\x04 \x01(\t\x12\x36\n\x04\x64\x61ta\x18\x05 \x03(\x0b\x32(.hypurr.alerts.v1.Notification.DataEntry\x12\x15\n\rcreated_at_ms\x18\x06 \x01(\x03\x12\x17\n\x0f\x64\x65livered_at_ms\x18\x07 \x01(\x03\x12\x10\n\x08\x63hannels\x18\x08 \x03(\t\x12\x34\n\x06status\x18\t \x01(\x0e\x32$.hypurr.alerts.v1.NotificationStatus\x1a+\n\tDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\")\n\x18ListNotificationsRequest\x12\r\n\x05limit\x18\x01 \x01(\x05\"R\n\x19ListNotificationsResponse\x12\x35\n\rnotifications\x18\x01 \x03(\x0b\x32\x1e.hypurr.alerts.v1.Notification*g\n\x0ePriceDirection\x12\x1f\n\x1bPRICE_DIRECTION_UNSPECIFIED\x10\x00\x12\x19\n\x15PRICE_DIRECTION_ABOVE\x10\x01\x12\x19\n\x15PRICE_DIRECTION_BELOW\x10\x02*\x84\x01\n\x0f\x43hangeDirection\x12 \n\x1c\x43HANGE_DIRECTION_UNSPECIFIED\x10\x00\x12\x17\n\x13\x43HANGE_DIRECTION_UP\x10\x01\x12\x19\n\x15\x43HANGE_DIRECTION_DOWN\x10\x02\x12\x1b\n\x17\x43HANGE_DIRECTION_EITHER\x10\x03*\xaa\x01\n\x12OrderActivityEvent\x12$\n ORDER_ACTIVITY_EVENT_UNSPECIFIED\x10\x00\x12\x1d\n\x19ORDER_ACTIVITY_EVENT_FILL\x10\x01\x12&\n\"ORDER_ACTIVITY_EVENT_TWAP_FINISHED\x10\x02\x12\'\n#ORDER_ACTIVITY_EVENT_SCALE_FINISHED\x10\x03*\x8f\x01\n\x0e\x41lertFrequency\x12\x1f\n\x1b\x41LERT_FREQUENCY_UNSPECIFIED\x10\x00\x12\x1c\n\x18\x41LERT_FREQUENCY_ONE_TIME\x10\x01\x12\x1e\n\x1a\x41LERT_FREQUENCY_EVERY_TIME\x10\x02\x12\x1e\n\x1a\x41LERT_FREQUENCY_ONCE_A_DAY\x10\x03*\x9d\x01\n\x12NotificationStatus\x12#\n\x1fNOTIFICATION_STATUS_UNSPECIFIED\x10\x00\x12\x1f\n\x1bNOTIFICATION_STATUS_PENDING\x10\x01\x12!\n\x1dNOTIFICATION_STATUS_DELIVERED\x10\x02\x12\x1e\n\x1aNOTIFICATION_STATUS_FAILED\x10\x03\x32\xdd\x03\n\x0c\x41lertService\x12W\n\nListAlerts\x12#.hypurr.alerts.v1.ListAlertsRequest\x1a$.hypurr.alerts.v1.ListAlertsResponse\x12T\n\x0b\x43reateAlert\x12$.hypurr.alerts.v1.CreateAlertRequest\x1a\x1f.hypurr.alerts.v1.AlertResponse\x12T\n\x0bUpdateAlert\x12$.hypurr.alerts.v1.UpdateAlertRequest\x1a\x1f.hypurr.alerts.v1.AlertResponse\x12Z\n\x0b\x44\x65leteAlert\x12$.hypurr.alerts.v1.DeleteAlertRequest\x1a%.hypurr.alerts.v1.DeleteAlertResponse\x12l\n\x11ListNotifications\x12*.hypurr.alerts.v1.ListNotificationsRequest\x1a+.hypurr.alerts.v1.ListNotificationsResponseB<Z:gitlab.com/hypurr/hypurr-grpc/go/hypurr/alerts/v1;alertsv1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dhypurr/alerts/v1/alerts.proto\x12\x10hypurr.alerts.v1\x1a\x1cgoogle/protobuf/struct.proto\"\x9f\x02\n\tAlertRule\x12,\n\x05price\x18\x01 \x01(\x0b\x32\x1b.hypurr.alerts.v1.PriceRuleH\x00\x12\x39\n\x0cprice_change\x18\x02 \x01(\x0b\x32!.hypurr.alerts.v1.PriceChangeRuleH\x00\x12\x32\n\x08\x64rawdown\x18\x03 \x01(\x0b\x32\x1e.hypurr.alerts.v1.DrawdownRuleH\x00\x12=\n\x0eorder_activity\x18\x04 \x01(\x0b\x32#.hypurr.alerts.v1.OrderActivityRuleH\x00\x12.\n\x06script\x18\x05 \x01(\x0b\x32\x1c.hypurr.alerts.v1.ScriptRuleH\x00\x42\x06\n\x04rule\"q\n\tPriceRule\x12\x11\n\tmarket_id\x18\x01 \x01(\x03\x12\x33\n\tdirection\x18\x02 \x01(\x0e\x32 .hypurr.alerts.v1.PriceDirection\x12\x1c\n\x14target_price_decimal\x18\x03 \x01(\t\"\x83\x01\n\x0fPriceChangeRule\x12\x11\n\tmarket_id\x18\x01 \x01(\x03\x12\x34\n\tdirection\x18\x02 \x01(\x0e\x32!.hypurr.alerts.v1.ChangeDirection\x12\x0f\n\x07percent\x18\x03 \x01(\x01\x12\x16\n\x0ewindow_minutes\x18\x04 \x01(\x05\"2\n\x0c\x44rawdownRule\x12\x11\n\twallet_id\x18\x01 \x01(\x03\x12\x0f\n\x07percent\x18\x02 \x01(\x01\"v\n\x11OrderActivityRule\x12\x11\n\twallet_id\x18\x01 \x01(\x03\x12\x34\n\x06\x65vents\x18\x02 \x03(\x0e\x32$.hypurr.alerts.v1.OrderActivityEvent\x12\x18\n\x10min_notional_usd\x18\x03 \x01(\x01\"{\n\nScriptRule\x12\x11\n\tmarket_id\x18\x01 \x01(\x03\x12\x11\n\tscript_id\x18\x02 \x01(\t\x12\x10\n\x08interval\x18\x03 \x01(\t\x12\'\n\x06inputs\x18\x04 \x01(\x0b\x32\x17.google.protobuf.Struct\x12\x0c\n\x04keys\x18\x05 \x03(\t\"5\n\x0c\x41lertTrigger\x12\x16\n\x0eoccurred_at_ms\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x01\"\xf7\x01\n\x05\x41lert\x12\n\n\x02id\x18\x01 \x01(\x03\x12)\n\x04rule\x18\x02 \x01(\x0b\x32\x1b.hypurr.alerts.v1.AlertRule\x12\x33\n\tfrequency\x18\x03 \x01(\x0e\x32 .hypurr.alerts.v1.AlertFrequency\x12\x0f\n\x07\x65nabled\x18\x04 \x01(\x08\x12\x11\n\ttime_zone\x18\x05 \x01(\t\x12\x15\n\rcreated_at_ms\x18\x06 \x01(\x03\x12\x36\n\x0elast_triggered\x18\x07 \x01(\x0b\x32\x1e.hypurr.alerts.v1.AlertTrigger\x12\x0f\n\x07summary\x18\x08 \x01(\t\"_\n\x11ListAlertsRequest\x12\x16\n\tmarket_id\x18\x01 \x01(\x03H\x00\x88\x01\x01\x12\x16\n\twallet_id\x18\x02 \x01(\x03H\x01\x88\x01\x01\x42\x0c\n\n_market_idB\x0c\n\n_wallet_id\"=\n\x12ListAlertsResponse\x12\'\n\x06\x61lerts\x18\x01 \x03(\x0b\x32\x17.hypurr.alerts.v1.Alert\"\x87\x01\n\x12\x43reateAlertRequest\x12)\n\x04rule\x18\x01 \x01(\x0b\x32\x1b.hypurr.alerts.v1.AlertRule\x12\x33\n\tfrequency\x18\x02 \x01(\x0e\x32 .hypurr.alerts.v1.AlertFrequency\x12\x11\n\ttime_zone\x18\x03 \x01(\t\"\xb5\x01\n\x12UpdateAlertRequest\x12\n\n\x02id\x18\x01 \x01(\x03\x12)\n\x04rule\x18\x02 \x01(\x0b\x32\x1b.hypurr.alerts.v1.AlertRule\x12\x33\n\tfrequency\x18\x03 \x01(\x0e\x32 .hypurr.alerts.v1.AlertFrequency\x12\x14\n\x07\x65nabled\x18\x04 \x01(\x08H\x00\x88\x01\x01\x12\x11\n\ttime_zone\x18\x05 \x01(\tB\n\n\x08_enabled\"7\n\rAlertResponse\x12&\n\x05\x61lert\x18\x01 \x01(\x0b\x32\x17.hypurr.alerts.v1.Alert\" \n\x12\x44\x65leteAlertRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"\x15\n\x13\x44\x65leteAlertResponse\"\xa2\x02\n\x0cNotification\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04kind\x18\x02 \x01(\t\x12\r\n\x05title\x18\x03 \x01(\t\x12\x0c\n\x04\x62ody\x18\x04 \x01(\t\x12\x36\n\x04\x64\x61ta\x18\x05 \x03(\x0b\x32(.hypurr.alerts.v1.Notification.DataEntry\x12\x15\n\rcreated_at_ms\x18\x06 \x01(\x03\x12\x17\n\x0f\x64\x65livered_at_ms\x18\x07 \x01(\x03\x12\x10\n\x08\x63hannels\x18\x08 \x03(\t\x12\x34\n\x06status\x18\t \x01(\x0e\x32$.hypurr.alerts.v1.NotificationStatus\x1a+\n\tDataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\")\n\x18ListNotificationsRequest\x12\r\n\x05limit\x18\x01 \x01(\x05\"R\n\x19ListNotificationsResponse\x12\x35\n\rnotifications\x18\x01 \x03(\x0b\x32\x1e.hypurr.alerts.v1.Notification*g\n\x0ePriceDirection\x12\x1f\n\x1bPRICE_DIRECTION_UNSPECIFIED\x10\x00\x12\x19\n\x15PRICE_DIRECTION_ABOVE\x10\x01\x12\x19\n\x15PRICE_DIRECTION_BELOW\x10\x02*\x84\x01\n\x0f\x43hangeDirection\x12 \n\x1c\x43HANGE_DIRECTION_UNSPECIFIED\x10\x00\x12\x17\n\x13\x43HANGE_DIRECTION_UP\x10\x01\x12\x19\n\x15\x43HANGE_DIRECTION_DOWN\x10\x02\x12\x1b\n\x17\x43HANGE_DIRECTION_EITHER\x10\x03*\xaa\x01\n\x12OrderActivityEvent\x12$\n ORDER_ACTIVITY_EVENT_UNSPECIFIED\x10\x00\x12\x1d\n\x19ORDER_ACTIVITY_EVENT_FILL\x10\x01\x12&\n\"ORDER_ACTIVITY_EVENT_TWAP_FINISHED\x10\x02\x12\'\n#ORDER_ACTIVITY_EVENT_SCALE_FINISHED\x10\x03*\x8f\x01\n\x0e\x41lertFrequency\x12\x1f\n\x1b\x41LERT_FREQUENCY_UNSPECIFIED\x10\x00\x12\x1c\n\x18\x41LERT_FREQUENCY_ONE_TIME\x10\x01\x12\x1e\n\x1a\x41LERT_FREQUENCY_EVERY_TIME\x10\x02\x12\x1e\n\x1a\x41LERT_FREQUENCY_ONCE_A_DAY\x10\x03*\x9d\x01\n\x12NotificationStatus\x12#\n\x1fNOTIFICATION_STATUS_UNSPECIFIED\x10\x00\x12\x1f\n\x1bNOTIFICATION_STATUS_PENDING\x10\x01\x12!\n\x1dNOTIFICATION_STATUS_DELIVERED\x10\x02\x12\x1e\n\x1aNOTIFICATION_STATUS_FAILED\x10\x03\x32\xdd\x03\n\x0c\x41lertService\x12W\n\nListAlerts\x12#.hypurr.alerts.v1.ListAlertsRequest\x1a$.hypurr.alerts.v1.ListAlertsResponse\x12T\n\x0b\x43reateAlert\x12$.hypurr.alerts.v1.CreateAlertRequest\x1a\x1f.hypurr.alerts.v1.AlertResponse\x12T\n\x0bUpdateAlert\x12$.hypurr.alerts.v1.UpdateAlertRequest\x1a\x1f.hypurr.alerts.v1.AlertResponse\x12Z\n\x0b\x44\x65leteAlert\x12$.hypurr.alerts.v1.DeleteAlertRequest\x1a%.hypurr.alerts.v1.DeleteAlertResponse\x12l\n\x11ListNotifications\x12*.hypurr.alerts.v1.ListNotificationsRequest\x1a+.hypurr.alerts.v1.ListNotificationsResponseB<Z:gitlab.com/hypurr/hypurr-grpc/go/hypurr/alerts/v1;alertsv1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -34,52 +35,54 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._serialized_options = b'Z:gitlab.com/hypurr/hypurr-grpc/go/hypurr/alerts/v1;alertsv1'
   _globals['_NOTIFICATION_DATAENTRY']._loaded_options = None
   _globals['_NOTIFICATION_DATAENTRY']._serialized_options = b'8\001'
-  _globals['_PRICEDIRECTION']._serialized_start=2035
-  _globals['_PRICEDIRECTION']._serialized_end=2138
-  _globals['_CHANGEDIRECTION']._serialized_start=2141
-  _globals['_CHANGEDIRECTION']._serialized_end=2273
-  _globals['_ORDERACTIVITYEVENT']._serialized_start=2276
-  _globals['_ORDERACTIVITYEVENT']._serialized_end=2446
-  _globals['_ALERTFREQUENCY']._serialized_start=2449
-  _globals['_ALERTFREQUENCY']._serialized_end=2592
-  _globals['_NOTIFICATIONSTATUS']._serialized_start=2595
-  _globals['_NOTIFICATIONSTATUS']._serialized_end=2752
-  _globals['_ALERTRULE']._serialized_start=52
-  _globals['_ALERTRULE']._serialized_end=291
-  _globals['_PRICERULE']._serialized_start=293
-  _globals['_PRICERULE']._serialized_end=406
-  _globals['_PRICECHANGERULE']._serialized_start=409
-  _globals['_PRICECHANGERULE']._serialized_end=540
-  _globals['_DRAWDOWNRULE']._serialized_start=542
-  _globals['_DRAWDOWNRULE']._serialized_end=592
-  _globals['_ORDERACTIVITYRULE']._serialized_start=594
-  _globals['_ORDERACTIVITYRULE']._serialized_end=712
-  _globals['_ALERTTRIGGER']._serialized_start=714
-  _globals['_ALERTTRIGGER']._serialized_end=767
-  _globals['_ALERT']._serialized_start=770
-  _globals['_ALERT']._serialized_end=1017
-  _globals['_LISTALERTSREQUEST']._serialized_start=1019
-  _globals['_LISTALERTSREQUEST']._serialized_end=1114
-  _globals['_LISTALERTSRESPONSE']._serialized_start=1116
-  _globals['_LISTALERTSRESPONSE']._serialized_end=1177
-  _globals['_CREATEALERTREQUEST']._serialized_start=1180
-  _globals['_CREATEALERTREQUEST']._serialized_end=1315
-  _globals['_UPDATEALERTREQUEST']._serialized_start=1318
-  _globals['_UPDATEALERTREQUEST']._serialized_end=1499
-  _globals['_ALERTRESPONSE']._serialized_start=1501
-  _globals['_ALERTRESPONSE']._serialized_end=1556
-  _globals['_DELETEALERTREQUEST']._serialized_start=1558
-  _globals['_DELETEALERTREQUEST']._serialized_end=1590
-  _globals['_DELETEALERTRESPONSE']._serialized_start=1592
-  _globals['_DELETEALERTRESPONSE']._serialized_end=1613
-  _globals['_NOTIFICATION']._serialized_start=1616
-  _globals['_NOTIFICATION']._serialized_end=1906
-  _globals['_NOTIFICATION_DATAENTRY']._serialized_start=1863
-  _globals['_NOTIFICATION_DATAENTRY']._serialized_end=1906
-  _globals['_LISTNOTIFICATIONSREQUEST']._serialized_start=1908
-  _globals['_LISTNOTIFICATIONSREQUEST']._serialized_end=1949
-  _globals['_LISTNOTIFICATIONSRESPONSE']._serialized_start=1951
-  _globals['_LISTNOTIFICATIONSRESPONSE']._serialized_end=2033
-  _globals['_ALERTSERVICE']._serialized_start=2755
-  _globals['_ALERTSERVICE']._serialized_end=3232
+  _globals['_PRICEDIRECTION']._serialized_start=2238
+  _globals['_PRICEDIRECTION']._serialized_end=2341
+  _globals['_CHANGEDIRECTION']._serialized_start=2344
+  _globals['_CHANGEDIRECTION']._serialized_end=2476
+  _globals['_ORDERACTIVITYEVENT']._serialized_start=2479
+  _globals['_ORDERACTIVITYEVENT']._serialized_end=2649
+  _globals['_ALERTFREQUENCY']._serialized_start=2652
+  _globals['_ALERTFREQUENCY']._serialized_end=2795
+  _globals['_NOTIFICATIONSTATUS']._serialized_start=2798
+  _globals['_NOTIFICATIONSTATUS']._serialized_end=2955
+  _globals['_ALERTRULE']._serialized_start=82
+  _globals['_ALERTRULE']._serialized_end=369
+  _globals['_PRICERULE']._serialized_start=371
+  _globals['_PRICERULE']._serialized_end=484
+  _globals['_PRICECHANGERULE']._serialized_start=487
+  _globals['_PRICECHANGERULE']._serialized_end=618
+  _globals['_DRAWDOWNRULE']._serialized_start=620
+  _globals['_DRAWDOWNRULE']._serialized_end=670
+  _globals['_ORDERACTIVITYRULE']._serialized_start=672
+  _globals['_ORDERACTIVITYRULE']._serialized_end=790
+  _globals['_SCRIPTRULE']._serialized_start=792
+  _globals['_SCRIPTRULE']._serialized_end=915
+  _globals['_ALERTTRIGGER']._serialized_start=917
+  _globals['_ALERTTRIGGER']._serialized_end=970
+  _globals['_ALERT']._serialized_start=973
+  _globals['_ALERT']._serialized_end=1220
+  _globals['_LISTALERTSREQUEST']._serialized_start=1222
+  _globals['_LISTALERTSREQUEST']._serialized_end=1317
+  _globals['_LISTALERTSRESPONSE']._serialized_start=1319
+  _globals['_LISTALERTSRESPONSE']._serialized_end=1380
+  _globals['_CREATEALERTREQUEST']._serialized_start=1383
+  _globals['_CREATEALERTREQUEST']._serialized_end=1518
+  _globals['_UPDATEALERTREQUEST']._serialized_start=1521
+  _globals['_UPDATEALERTREQUEST']._serialized_end=1702
+  _globals['_ALERTRESPONSE']._serialized_start=1704
+  _globals['_ALERTRESPONSE']._serialized_end=1759
+  _globals['_DELETEALERTREQUEST']._serialized_start=1761
+  _globals['_DELETEALERTREQUEST']._serialized_end=1793
+  _globals['_DELETEALERTRESPONSE']._serialized_start=1795
+  _globals['_DELETEALERTRESPONSE']._serialized_end=1816
+  _globals['_NOTIFICATION']._serialized_start=1819
+  _globals['_NOTIFICATION']._serialized_end=2109
+  _globals['_NOTIFICATION_DATAENTRY']._serialized_start=2066
+  _globals['_NOTIFICATION_DATAENTRY']._serialized_end=2109
+  _globals['_LISTNOTIFICATIONSREQUEST']._serialized_start=2111
+  _globals['_LISTNOTIFICATIONSREQUEST']._serialized_end=2152
+  _globals['_LISTNOTIFICATIONSRESPONSE']._serialized_start=2154
+  _globals['_LISTNOTIFICATIONSRESPONSE']._serialized_end=2236
+  _globals['_ALERTSERVICE']._serialized_start=2958
+  _globals['_ALERTSERVICE']._serialized_end=3435
 # @@protoc_insertion_point(module_scope)

@@ -9,6 +9,7 @@ package alertsv1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -288,6 +289,7 @@ type AlertRule struct {
 	//	*AlertRule_PriceChange
 	//	*AlertRule_Drawdown
 	//	*AlertRule_OrderActivity
+	//	*AlertRule_Script
 	Rule isAlertRule_Rule `protobuf_oneof:"rule"`
 }
 
@@ -358,6 +360,13 @@ func (x *AlertRule) GetOrderActivity() *OrderActivityRule {
 	return nil
 }
 
+func (x *AlertRule) GetScript() *ScriptRule {
+	if x, ok := x.GetRule().(*AlertRule_Script); ok {
+		return x.Script
+	}
+	return nil
+}
+
 type isAlertRule_Rule interface {
 	isAlertRule_Rule()
 }
@@ -378,6 +387,10 @@ type AlertRule_OrderActivity struct {
 	OrderActivity *OrderActivityRule `protobuf:"bytes,4,opt,name=order_activity,json=orderActivity,proto3,oneof"`
 }
 
+type AlertRule_Script struct {
+	Script *ScriptRule `protobuf:"bytes,5,opt,name=script,proto3,oneof"`
+}
+
 func (*AlertRule_Price) isAlertRule_Rule() {}
 
 func (*AlertRule_PriceChange) isAlertRule_Rule() {}
@@ -385,6 +398,8 @@ func (*AlertRule_PriceChange) isAlertRule_Rule() {}
 func (*AlertRule_Drawdown) isAlertRule_Rule() {}
 
 func (*AlertRule_OrderActivity) isAlertRule_Rule() {}
+
+func (*AlertRule_Script) isAlertRule_Rule() {}
 
 // The mid price of a market is above or below a target.
 type PriceRule struct {
@@ -644,6 +659,89 @@ func (x *OrderActivityRule) GetMinNotionalUsd() float64 {
 	return 0
 }
 
+// One of the caller's chart scripts (hypurr.scripts.v1) runs on the market's
+// candles; each alert(message, {key}) it calls on the newest bar notifies,
+// once per key and bar. Fires on every event: the frequency does not apply.
+// Scripts see only their bars: subscribe() data reads as na.
+type ScriptRule struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	MarketId int64            `protobuf:"varint,1,opt,name=market_id,json=marketId,proto3" json:"market_id,omitempty"`
+	ScriptId string           `protobuf:"bytes,2,opt,name=script_id,json=scriptId,proto3" json:"script_id,omitempty"` // e.g. "ema-cross"
+	Interval string           `protobuf:"bytes,3,opt,name=interval,proto3" json:"interval,omitempty"`                 // 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 8h, 12h, 1d
+	Inputs   *structpb.Struct `protobuf:"bytes,4,opt,name=inputs,proto3" json:"inputs,omitempty"`                     // over the script's saved inputs
+	Keys     []string         `protobuf:"bytes,5,rep,name=keys,proto3" json:"keys,omitempty"`                         // only these alert keys; empty: all
+}
+
+func (x *ScriptRule) Reset() {
+	*x = ScriptRule{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ScriptRule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ScriptRule) ProtoMessage() {}
+
+func (x *ScriptRule) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ScriptRule.ProtoReflect.Descriptor instead.
+func (*ScriptRule) Descriptor() ([]byte, []int) {
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ScriptRule) GetMarketId() int64 {
+	if x != nil {
+		return x.MarketId
+	}
+	return 0
+}
+
+func (x *ScriptRule) GetScriptId() string {
+	if x != nil {
+		return x.ScriptId
+	}
+	return ""
+}
+
+func (x *ScriptRule) GetInterval() string {
+	if x != nil {
+		return x.Interval
+	}
+	return ""
+}
+
+func (x *ScriptRule) GetInputs() *structpb.Struct {
+	if x != nil {
+		return x.Inputs
+	}
+	return nil
+}
+
+func (x *ScriptRule) GetKeys() []string {
+	if x != nil {
+		return x.Keys
+	}
+	return nil
+}
+
 type AlertTrigger struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -656,7 +754,7 @@ type AlertTrigger struct {
 func (x *AlertTrigger) Reset() {
 	*x = AlertTrigger{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[5]
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -669,7 +767,7 @@ func (x *AlertTrigger) String() string {
 func (*AlertTrigger) ProtoMessage() {}
 
 func (x *AlertTrigger) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[5]
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -682,7 +780,7 @@ func (x *AlertTrigger) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AlertTrigger.ProtoReflect.Descriptor instead.
 func (*AlertTrigger) Descriptor() ([]byte, []int) {
-	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{5}
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *AlertTrigger) GetOccurredAtMs() int64 {
@@ -718,7 +816,7 @@ type Alert struct {
 func (x *Alert) Reset() {
 	*x = Alert{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[6]
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -731,7 +829,7 @@ func (x *Alert) String() string {
 func (*Alert) ProtoMessage() {}
 
 func (x *Alert) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[6]
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -744,7 +842,7 @@ func (x *Alert) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Alert.ProtoReflect.Descriptor instead.
 func (*Alert) Descriptor() ([]byte, []int) {
-	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{6}
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *Alert) GetId() int64 {
@@ -815,7 +913,7 @@ type ListAlertsRequest struct {
 func (x *ListAlertsRequest) Reset() {
 	*x = ListAlertsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[7]
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -828,7 +926,7 @@ func (x *ListAlertsRequest) String() string {
 func (*ListAlertsRequest) ProtoMessage() {}
 
 func (x *ListAlertsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[7]
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -841,7 +939,7 @@ func (x *ListAlertsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAlertsRequest.ProtoReflect.Descriptor instead.
 func (*ListAlertsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{7}
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ListAlertsRequest) GetMarketId() int64 {
@@ -869,7 +967,7 @@ type ListAlertsResponse struct {
 func (x *ListAlertsResponse) Reset() {
 	*x = ListAlertsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[8]
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -882,7 +980,7 @@ func (x *ListAlertsResponse) String() string {
 func (*ListAlertsResponse) ProtoMessage() {}
 
 func (x *ListAlertsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[8]
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -895,7 +993,7 @@ func (x *ListAlertsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAlertsResponse.ProtoReflect.Descriptor instead.
 func (*ListAlertsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{8}
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ListAlertsResponse) GetAlerts() []*Alert {
@@ -918,7 +1016,7 @@ type CreateAlertRequest struct {
 func (x *CreateAlertRequest) Reset() {
 	*x = CreateAlertRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[9]
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -931,7 +1029,7 @@ func (x *CreateAlertRequest) String() string {
 func (*CreateAlertRequest) ProtoMessage() {}
 
 func (x *CreateAlertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[9]
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -944,7 +1042,7 @@ func (x *CreateAlertRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateAlertRequest.ProtoReflect.Descriptor instead.
 func (*CreateAlertRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{9}
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *CreateAlertRequest) GetRule() *AlertRule {
@@ -983,7 +1081,7 @@ type UpdateAlertRequest struct {
 func (x *UpdateAlertRequest) Reset() {
 	*x = UpdateAlertRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[10]
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -996,7 +1094,7 @@ func (x *UpdateAlertRequest) String() string {
 func (*UpdateAlertRequest) ProtoMessage() {}
 
 func (x *UpdateAlertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[10]
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1009,7 +1107,7 @@ func (x *UpdateAlertRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAlertRequest.ProtoReflect.Descriptor instead.
 func (*UpdateAlertRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{10}
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *UpdateAlertRequest) GetId() int64 {
@@ -1058,7 +1156,7 @@ type AlertResponse struct {
 func (x *AlertResponse) Reset() {
 	*x = AlertResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[11]
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1071,7 +1169,7 @@ func (x *AlertResponse) String() string {
 func (*AlertResponse) ProtoMessage() {}
 
 func (x *AlertResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[11]
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1084,7 +1182,7 @@ func (x *AlertResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AlertResponse.ProtoReflect.Descriptor instead.
 func (*AlertResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{11}
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *AlertResponse) GetAlert() *Alert {
@@ -1105,7 +1203,7 @@ type DeleteAlertRequest struct {
 func (x *DeleteAlertRequest) Reset() {
 	*x = DeleteAlertRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[12]
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1118,7 +1216,7 @@ func (x *DeleteAlertRequest) String() string {
 func (*DeleteAlertRequest) ProtoMessage() {}
 
 func (x *DeleteAlertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[12]
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1131,7 +1229,7 @@ func (x *DeleteAlertRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteAlertRequest.ProtoReflect.Descriptor instead.
 func (*DeleteAlertRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{12}
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *DeleteAlertRequest) GetId() int64 {
@@ -1150,7 +1248,7 @@ type DeleteAlertResponse struct {
 func (x *DeleteAlertResponse) Reset() {
 	*x = DeleteAlertResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[13]
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1163,7 +1261,7 @@ func (x *DeleteAlertResponse) String() string {
 func (*DeleteAlertResponse) ProtoMessage() {}
 
 func (x *DeleteAlertResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[13]
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1176,7 +1274,7 @@ func (x *DeleteAlertResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteAlertResponse.ProtoReflect.Descriptor instead.
 func (*DeleteAlertResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{13}
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{14}
 }
 
 type Notification struct {
@@ -1185,7 +1283,7 @@ type Notification struct {
 	unknownFields protoimpl.UnknownFields
 
 	Id            int64              `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Kind          string             `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"` // price_alert, price_change, drawdown, order_activity, liquidation, ...
+	Kind          string             `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"` // price_alert, price_change, drawdown, order_activity, script, liquidation, ...
 	Title         string             `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`
 	Body          string             `protobuf:"bytes,4,opt,name=body,proto3" json:"body,omitempty"`
 	Data          map[string]string  `protobuf:"bytes,5,rep,name=data,proto3" json:"data,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
@@ -1198,7 +1296,7 @@ type Notification struct {
 func (x *Notification) Reset() {
 	*x = Notification{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[14]
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1211,7 +1309,7 @@ func (x *Notification) String() string {
 func (*Notification) ProtoMessage() {}
 
 func (x *Notification) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[14]
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1224,7 +1322,7 @@ func (x *Notification) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Notification.ProtoReflect.Descriptor instead.
 func (*Notification) Descriptor() ([]byte, []int) {
-	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{14}
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *Notification) GetId() int64 {
@@ -1301,7 +1399,7 @@ type ListNotificationsRequest struct {
 func (x *ListNotificationsRequest) Reset() {
 	*x = ListNotificationsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[15]
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1314,7 +1412,7 @@ func (x *ListNotificationsRequest) String() string {
 func (*ListNotificationsRequest) ProtoMessage() {}
 
 func (x *ListNotificationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[15]
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1327,7 +1425,7 @@ func (x *ListNotificationsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListNotificationsRequest.ProtoReflect.Descriptor instead.
 func (*ListNotificationsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{15}
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ListNotificationsRequest) GetLimit() int32 {
@@ -1348,7 +1446,7 @@ type ListNotificationsResponse struct {
 func (x *ListNotificationsResponse) Reset() {
 	*x = ListNotificationsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[16]
+		mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1361,7 +1459,7 @@ func (x *ListNotificationsResponse) String() string {
 func (*ListNotificationsResponse) ProtoMessage() {}
 
 func (x *ListNotificationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[16]
+	mi := &file_hypurr_alerts_v1_alerts_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1374,7 +1472,7 @@ func (x *ListNotificationsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListNotificationsResponse.ProtoReflect.Descriptor instead.
 func (*ListNotificationsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{16}
+	return file_hypurr_alerts_v1_alerts_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ListNotificationsResponse) GetNotifications() []*Notification {
@@ -1390,60 +1488,76 @@ var file_hypurr_alerts_v1_alerts_proto_rawDesc = []byte{
 	0x0a, 0x1d, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2f,
 	0x76, 0x31, 0x2f, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12,
 	0x10, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2e, 0x76,
-	0x31, 0x22, 0x9c, 0x02, 0x0a, 0x09, 0x41, 0x6c, 0x65, 0x72, 0x74, 0x52, 0x75, 0x6c, 0x65, 0x12,
-	0x33, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b,
-	0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2e, 0x76,
-	0x31, 0x2e, 0x50, 0x72, 0x69, 0x63, 0x65, 0x52, 0x75, 0x6c, 0x65, 0x48, 0x00, 0x52, 0x05, 0x70,
-	0x72, 0x69, 0x63, 0x65, 0x12, 0x46, 0x0a, 0x0c, 0x70, 0x72, 0x69, 0x63, 0x65, 0x5f, 0x63, 0x68,
-	0x61, 0x6e, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x68, 0x79, 0x70,
-	0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72,
-	0x69, 0x63, 0x65, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x52, 0x75, 0x6c, 0x65, 0x48, 0x00, 0x52,
-	0x0b, 0x70, 0x72, 0x69, 0x63, 0x65, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x3c, 0x0a, 0x08,
-	0x64, 0x72, 0x61, 0x77, 0x64, 0x6f, 0x77, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e,
-	0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2e, 0x76,
-	0x31, 0x2e, 0x44, 0x72, 0x61, 0x77, 0x64, 0x6f, 0x77, 0x6e, 0x52, 0x75, 0x6c, 0x65, 0x48, 0x00,
-	0x52, 0x08, 0x64, 0x72, 0x61, 0x77, 0x64, 0x6f, 0x77, 0x6e, 0x12, 0x4c, 0x0a, 0x0e, 0x6f, 0x72,
-	0x64, 0x65, 0x72, 0x5f, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x18, 0x04, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x23, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72,
-	0x74, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x76,
-	0x69, 0x74, 0x79, 0x52, 0x75, 0x6c, 0x65, 0x48, 0x00, 0x52, 0x0d, 0x6f, 0x72, 0x64, 0x65, 0x72,
-	0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x42, 0x06, 0x0a, 0x04, 0x72, 0x75, 0x6c, 0x65,
-	0x22, 0x9a, 0x01, 0x0a, 0x09, 0x50, 0x72, 0x69, 0x63, 0x65, 0x52, 0x75, 0x6c, 0x65, 0x12, 0x1b,
-	0x0a, 0x09, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x03, 0x52, 0x08, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x49, 0x64, 0x12, 0x3e, 0x0a, 0x09, 0x64,
-	0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x20,
-	0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2e, 0x76,
-	0x31, 0x2e, 0x50, 0x72, 0x69, 0x63, 0x65, 0x44, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x52, 0x09, 0x64, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x30, 0x0a, 0x14, 0x74,
-	0x61, 0x72, 0x67, 0x65, 0x74, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x5f, 0x64, 0x65, 0x63, 0x69,
-	0x6d, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x12, 0x74, 0x61, 0x72, 0x67, 0x65,
-	0x74, 0x50, 0x72, 0x69, 0x63, 0x65, 0x44, 0x65, 0x63, 0x69, 0x6d, 0x61, 0x6c, 0x22, 0xb0, 0x01,
-	0x0a, 0x0f, 0x50, 0x72, 0x69, 0x63, 0x65, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x52, 0x75, 0x6c,
-	0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x49, 0x64, 0x12, 0x3f,
-	0x0a, 0x09, 0x64, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x0e, 0x32, 0x21, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74,
-	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x44, 0x69, 0x72, 0x65, 0x63,
-	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x09, 0x64, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12,
-	0x18, 0x0a, 0x07, 0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01,
-	0x52, 0x07, 0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x12, 0x25, 0x0a, 0x0e, 0x77, 0x69, 0x6e,
-	0x64, 0x6f, 0x77, 0x5f, 0x6d, 0x69, 0x6e, 0x75, 0x74, 0x65, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28,
-	0x05, 0x52, 0x0d, 0x77, 0x69, 0x6e, 0x64, 0x6f, 0x77, 0x4d, 0x69, 0x6e, 0x75, 0x74, 0x65, 0x73,
-	0x22, 0x45, 0x0a, 0x0c, 0x44, 0x72, 0x61, 0x77, 0x64, 0x6f, 0x77, 0x6e, 0x52, 0x75, 0x6c, 0x65,
-	0x12, 0x1b, 0x0a, 0x09, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x03, 0x52, 0x08, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x49, 0x64, 0x12, 0x18, 0x0a,
-	0x07, 0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x07,
-	0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x22, 0x98, 0x01, 0x0a, 0x11, 0x4f, 0x72, 0x64, 0x65,
-	0x72, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x52, 0x75, 0x6c, 0x65, 0x12, 0x1b, 0x0a,
-	0x09, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
-	0x52, 0x08, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x49, 0x64, 0x12, 0x3c, 0x0a, 0x06, 0x65, 0x76,
-	0x65, 0x6e, 0x74, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0e, 0x32, 0x24, 0x2e, 0x68, 0x79, 0x70,
-	0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4f, 0x72,
-	0x64, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x45, 0x76, 0x65, 0x6e, 0x74,
-	0x52, 0x06, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x28, 0x0a, 0x10, 0x6d, 0x69, 0x6e, 0x5f,
-	0x6e, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x5f, 0x75, 0x73, 0x64, 0x18, 0x03, 0x20, 0x01,
-	0x28, 0x01, 0x52, 0x0e, 0x6d, 0x69, 0x6e, 0x4e, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x55,
-	0x73, 0x64, 0x22, 0x4a, 0x0a, 0x0c, 0x41, 0x6c, 0x65, 0x72, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67,
+	0x31, 0x1a, 0x1c, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2f, 0x73, 0x74, 0x72, 0x75, 0x63, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22,
+	0xd4, 0x02, 0x0a, 0x09, 0x41, 0x6c, 0x65, 0x72, 0x74, 0x52, 0x75, 0x6c, 0x65, 0x12, 0x33, 0x0a,
+	0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x68,
+	0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2e, 0x76, 0x31, 0x2e,
+	0x50, 0x72, 0x69, 0x63, 0x65, 0x52, 0x75, 0x6c, 0x65, 0x48, 0x00, 0x52, 0x05, 0x70, 0x72, 0x69,
+	0x63, 0x65, 0x12, 0x46, 0x0a, 0x0c, 0x70, 0x72, 0x69, 0x63, 0x65, 0x5f, 0x63, 0x68, 0x61, 0x6e,
+	0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72,
+	0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x69, 0x63,
+	0x65, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x52, 0x75, 0x6c, 0x65, 0x48, 0x00, 0x52, 0x0b, 0x70,
+	0x72, 0x69, 0x63, 0x65, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x12, 0x3c, 0x0a, 0x08, 0x64, 0x72,
+	0x61, 0x77, 0x64, 0x6f, 0x77, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x68,
+	0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2e, 0x76, 0x31, 0x2e,
+	0x44, 0x72, 0x61, 0x77, 0x64, 0x6f, 0x77, 0x6e, 0x52, 0x75, 0x6c, 0x65, 0x48, 0x00, 0x52, 0x08,
+	0x64, 0x72, 0x61, 0x77, 0x64, 0x6f, 0x77, 0x6e, 0x12, 0x4c, 0x0a, 0x0e, 0x6f, 0x72, 0x64, 0x65,
+	0x72, 0x5f, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x23, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73,
+	0x2e, 0x76, 0x31, 0x2e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74,
+	0x79, 0x52, 0x75, 0x6c, 0x65, 0x48, 0x00, 0x52, 0x0d, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x41, 0x63,
+	0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x12, 0x36, 0x0a, 0x06, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
+	0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e,
+	0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74,
+	0x52, 0x75, 0x6c, 0x65, 0x48, 0x00, 0x52, 0x06, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x42, 0x06,
+	0x0a, 0x04, 0x72, 0x75, 0x6c, 0x65, 0x22, 0x9a, 0x01, 0x0a, 0x09, 0x50, 0x72, 0x69, 0x63, 0x65,
+	0x52, 0x75, 0x6c, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x49,
+	0x64, 0x12, 0x3e, 0x0a, 0x09, 0x64, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x0e, 0x32, 0x20, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c,
+	0x65, 0x72, 0x74, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x72, 0x69, 0x63, 0x65, 0x44, 0x69, 0x72,
+	0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x09, 0x64, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x12, 0x30, 0x0a, 0x14, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x5f, 0x70, 0x72, 0x69, 0x63,
+	0x65, 0x5f, 0x64, 0x65, 0x63, 0x69, 0x6d, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x12, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x50, 0x72, 0x69, 0x63, 0x65, 0x44, 0x65, 0x63, 0x69,
+	0x6d, 0x61, 0x6c, 0x22, 0xb0, 0x01, 0x0a, 0x0f, 0x50, 0x72, 0x69, 0x63, 0x65, 0x43, 0x68, 0x61,
+	0x6e, 0x67, 0x65, 0x52, 0x75, 0x6c, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6d, 0x61, 0x72, 0x6b, 0x65,
+	0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x6d, 0x61, 0x72, 0x6b,
+	0x65, 0x74, 0x49, 0x64, 0x12, 0x3f, 0x0a, 0x09, 0x64, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x21, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72,
+	0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x68, 0x61, 0x6e, 0x67,
+	0x65, 0x44, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x09, 0x64, 0x69, 0x72, 0x65,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x18, 0x0a, 0x07, 0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x12,
+	0x25, 0x0a, 0x0e, 0x77, 0x69, 0x6e, 0x64, 0x6f, 0x77, 0x5f, 0x6d, 0x69, 0x6e, 0x75, 0x74, 0x65,
+	0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0d, 0x77, 0x69, 0x6e, 0x64, 0x6f, 0x77, 0x4d,
+	0x69, 0x6e, 0x75, 0x74, 0x65, 0x73, 0x22, 0x45, 0x0a, 0x0c, 0x44, 0x72, 0x61, 0x77, 0x64, 0x6f,
+	0x77, 0x6e, 0x52, 0x75, 0x6c, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74,
+	0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x77, 0x61, 0x6c, 0x6c, 0x65,
+	0x74, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x22, 0x98, 0x01,
+	0x0a, 0x11, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x52,
+	0x75, 0x6c, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x49, 0x64,
+	0x12, 0x3c, 0x0a, 0x06, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0e,
+	0x32, 0x24, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73,
+	0x2e, 0x76, 0x31, 0x2e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74,
+	0x79, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x06, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x28,
+	0x0a, 0x10, 0x6d, 0x69, 0x6e, 0x5f, 0x6e, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x5f, 0x75,
+	0x73, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0e, 0x6d, 0x69, 0x6e, 0x4e, 0x6f, 0x74,
+	0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x55, 0x73, 0x64, 0x22, 0xa7, 0x01, 0x0a, 0x0a, 0x53, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x52, 0x75, 0x6c, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6d, 0x61, 0x72, 0x6b, 0x65,
+	0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x6d, 0x61, 0x72, 0x6b,
+	0x65, 0x74, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5f, 0x69,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x49,
+	0x64, 0x12, 0x1a, 0x0a, 0x08, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x2f, 0x0a,
+	0x06, 0x69, 0x6e, 0x70, 0x75, 0x74, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e,
+	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
+	0x53, 0x74, 0x72, 0x75, 0x63, 0x74, 0x52, 0x06, 0x69, 0x6e, 0x70, 0x75, 0x74, 0x73, 0x12, 0x12,
+	0x0a, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x09, 0x52, 0x04, 0x6b, 0x65,
+	0x79, 0x73, 0x22, 0x4a, 0x0a, 0x0c, 0x41, 0x6c, 0x65, 0x72, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67,
 	0x65, 0x72, 0x12, 0x24, 0x0a, 0x0e, 0x6f, 0x63, 0x63, 0x75, 0x72, 0x72, 0x65, 0x64, 0x5f, 0x61,
 	0x74, 0x5f, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x6f, 0x63, 0x63, 0x75,
 	0x72, 0x72, 0x65, 0x64, 0x41, 0x74, 0x4d, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
@@ -1640,7 +1754,7 @@ func file_hypurr_alerts_v1_alerts_proto_rawDescGZIP() []byte {
 }
 
 var file_hypurr_alerts_v1_alerts_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
-var file_hypurr_alerts_v1_alerts_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_hypurr_alerts_v1_alerts_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_hypurr_alerts_v1_alerts_proto_goTypes = []any{
 	(PriceDirection)(0),               // 0: hypurr.alerts.v1.PriceDirection
 	(ChangeDirection)(0),              // 1: hypurr.alerts.v1.ChangeDirection
@@ -1652,55 +1766,59 @@ var file_hypurr_alerts_v1_alerts_proto_goTypes = []any{
 	(*PriceChangeRule)(nil),           // 7: hypurr.alerts.v1.PriceChangeRule
 	(*DrawdownRule)(nil),              // 8: hypurr.alerts.v1.DrawdownRule
 	(*OrderActivityRule)(nil),         // 9: hypurr.alerts.v1.OrderActivityRule
-	(*AlertTrigger)(nil),              // 10: hypurr.alerts.v1.AlertTrigger
-	(*Alert)(nil),                     // 11: hypurr.alerts.v1.Alert
-	(*ListAlertsRequest)(nil),         // 12: hypurr.alerts.v1.ListAlertsRequest
-	(*ListAlertsResponse)(nil),        // 13: hypurr.alerts.v1.ListAlertsResponse
-	(*CreateAlertRequest)(nil),        // 14: hypurr.alerts.v1.CreateAlertRequest
-	(*UpdateAlertRequest)(nil),        // 15: hypurr.alerts.v1.UpdateAlertRequest
-	(*AlertResponse)(nil),             // 16: hypurr.alerts.v1.AlertResponse
-	(*DeleteAlertRequest)(nil),        // 17: hypurr.alerts.v1.DeleteAlertRequest
-	(*DeleteAlertResponse)(nil),       // 18: hypurr.alerts.v1.DeleteAlertResponse
-	(*Notification)(nil),              // 19: hypurr.alerts.v1.Notification
-	(*ListNotificationsRequest)(nil),  // 20: hypurr.alerts.v1.ListNotificationsRequest
-	(*ListNotificationsResponse)(nil), // 21: hypurr.alerts.v1.ListNotificationsResponse
-	nil,                               // 22: hypurr.alerts.v1.Notification.DataEntry
+	(*ScriptRule)(nil),                // 10: hypurr.alerts.v1.ScriptRule
+	(*AlertTrigger)(nil),              // 11: hypurr.alerts.v1.AlertTrigger
+	(*Alert)(nil),                     // 12: hypurr.alerts.v1.Alert
+	(*ListAlertsRequest)(nil),         // 13: hypurr.alerts.v1.ListAlertsRequest
+	(*ListAlertsResponse)(nil),        // 14: hypurr.alerts.v1.ListAlertsResponse
+	(*CreateAlertRequest)(nil),        // 15: hypurr.alerts.v1.CreateAlertRequest
+	(*UpdateAlertRequest)(nil),        // 16: hypurr.alerts.v1.UpdateAlertRequest
+	(*AlertResponse)(nil),             // 17: hypurr.alerts.v1.AlertResponse
+	(*DeleteAlertRequest)(nil),        // 18: hypurr.alerts.v1.DeleteAlertRequest
+	(*DeleteAlertResponse)(nil),       // 19: hypurr.alerts.v1.DeleteAlertResponse
+	(*Notification)(nil),              // 20: hypurr.alerts.v1.Notification
+	(*ListNotificationsRequest)(nil),  // 21: hypurr.alerts.v1.ListNotificationsRequest
+	(*ListNotificationsResponse)(nil), // 22: hypurr.alerts.v1.ListNotificationsResponse
+	nil,                               // 23: hypurr.alerts.v1.Notification.DataEntry
+	(*structpb.Struct)(nil),           // 24: google.protobuf.Struct
 }
 var file_hypurr_alerts_v1_alerts_proto_depIdxs = []int32{
 	6,  // 0: hypurr.alerts.v1.AlertRule.price:type_name -> hypurr.alerts.v1.PriceRule
 	7,  // 1: hypurr.alerts.v1.AlertRule.price_change:type_name -> hypurr.alerts.v1.PriceChangeRule
 	8,  // 2: hypurr.alerts.v1.AlertRule.drawdown:type_name -> hypurr.alerts.v1.DrawdownRule
 	9,  // 3: hypurr.alerts.v1.AlertRule.order_activity:type_name -> hypurr.alerts.v1.OrderActivityRule
-	0,  // 4: hypurr.alerts.v1.PriceRule.direction:type_name -> hypurr.alerts.v1.PriceDirection
-	1,  // 5: hypurr.alerts.v1.PriceChangeRule.direction:type_name -> hypurr.alerts.v1.ChangeDirection
-	2,  // 6: hypurr.alerts.v1.OrderActivityRule.events:type_name -> hypurr.alerts.v1.OrderActivityEvent
-	5,  // 7: hypurr.alerts.v1.Alert.rule:type_name -> hypurr.alerts.v1.AlertRule
-	3,  // 8: hypurr.alerts.v1.Alert.frequency:type_name -> hypurr.alerts.v1.AlertFrequency
-	10, // 9: hypurr.alerts.v1.Alert.last_triggered:type_name -> hypurr.alerts.v1.AlertTrigger
-	11, // 10: hypurr.alerts.v1.ListAlertsResponse.alerts:type_name -> hypurr.alerts.v1.Alert
-	5,  // 11: hypurr.alerts.v1.CreateAlertRequest.rule:type_name -> hypurr.alerts.v1.AlertRule
-	3,  // 12: hypurr.alerts.v1.CreateAlertRequest.frequency:type_name -> hypurr.alerts.v1.AlertFrequency
-	5,  // 13: hypurr.alerts.v1.UpdateAlertRequest.rule:type_name -> hypurr.alerts.v1.AlertRule
-	3,  // 14: hypurr.alerts.v1.UpdateAlertRequest.frequency:type_name -> hypurr.alerts.v1.AlertFrequency
-	11, // 15: hypurr.alerts.v1.AlertResponse.alert:type_name -> hypurr.alerts.v1.Alert
-	22, // 16: hypurr.alerts.v1.Notification.data:type_name -> hypurr.alerts.v1.Notification.DataEntry
-	4,  // 17: hypurr.alerts.v1.Notification.status:type_name -> hypurr.alerts.v1.NotificationStatus
-	19, // 18: hypurr.alerts.v1.ListNotificationsResponse.notifications:type_name -> hypurr.alerts.v1.Notification
-	12, // 19: hypurr.alerts.v1.AlertService.ListAlerts:input_type -> hypurr.alerts.v1.ListAlertsRequest
-	14, // 20: hypurr.alerts.v1.AlertService.CreateAlert:input_type -> hypurr.alerts.v1.CreateAlertRequest
-	15, // 21: hypurr.alerts.v1.AlertService.UpdateAlert:input_type -> hypurr.alerts.v1.UpdateAlertRequest
-	17, // 22: hypurr.alerts.v1.AlertService.DeleteAlert:input_type -> hypurr.alerts.v1.DeleteAlertRequest
-	20, // 23: hypurr.alerts.v1.AlertService.ListNotifications:input_type -> hypurr.alerts.v1.ListNotificationsRequest
-	13, // 24: hypurr.alerts.v1.AlertService.ListAlerts:output_type -> hypurr.alerts.v1.ListAlertsResponse
-	16, // 25: hypurr.alerts.v1.AlertService.CreateAlert:output_type -> hypurr.alerts.v1.AlertResponse
-	16, // 26: hypurr.alerts.v1.AlertService.UpdateAlert:output_type -> hypurr.alerts.v1.AlertResponse
-	18, // 27: hypurr.alerts.v1.AlertService.DeleteAlert:output_type -> hypurr.alerts.v1.DeleteAlertResponse
-	21, // 28: hypurr.alerts.v1.AlertService.ListNotifications:output_type -> hypurr.alerts.v1.ListNotificationsResponse
-	24, // [24:29] is the sub-list for method output_type
-	19, // [19:24] is the sub-list for method input_type
-	19, // [19:19] is the sub-list for extension type_name
-	19, // [19:19] is the sub-list for extension extendee
-	0,  // [0:19] is the sub-list for field type_name
+	10, // 4: hypurr.alerts.v1.AlertRule.script:type_name -> hypurr.alerts.v1.ScriptRule
+	0,  // 5: hypurr.alerts.v1.PriceRule.direction:type_name -> hypurr.alerts.v1.PriceDirection
+	1,  // 6: hypurr.alerts.v1.PriceChangeRule.direction:type_name -> hypurr.alerts.v1.ChangeDirection
+	2,  // 7: hypurr.alerts.v1.OrderActivityRule.events:type_name -> hypurr.alerts.v1.OrderActivityEvent
+	24, // 8: hypurr.alerts.v1.ScriptRule.inputs:type_name -> google.protobuf.Struct
+	5,  // 9: hypurr.alerts.v1.Alert.rule:type_name -> hypurr.alerts.v1.AlertRule
+	3,  // 10: hypurr.alerts.v1.Alert.frequency:type_name -> hypurr.alerts.v1.AlertFrequency
+	11, // 11: hypurr.alerts.v1.Alert.last_triggered:type_name -> hypurr.alerts.v1.AlertTrigger
+	12, // 12: hypurr.alerts.v1.ListAlertsResponse.alerts:type_name -> hypurr.alerts.v1.Alert
+	5,  // 13: hypurr.alerts.v1.CreateAlertRequest.rule:type_name -> hypurr.alerts.v1.AlertRule
+	3,  // 14: hypurr.alerts.v1.CreateAlertRequest.frequency:type_name -> hypurr.alerts.v1.AlertFrequency
+	5,  // 15: hypurr.alerts.v1.UpdateAlertRequest.rule:type_name -> hypurr.alerts.v1.AlertRule
+	3,  // 16: hypurr.alerts.v1.UpdateAlertRequest.frequency:type_name -> hypurr.alerts.v1.AlertFrequency
+	12, // 17: hypurr.alerts.v1.AlertResponse.alert:type_name -> hypurr.alerts.v1.Alert
+	23, // 18: hypurr.alerts.v1.Notification.data:type_name -> hypurr.alerts.v1.Notification.DataEntry
+	4,  // 19: hypurr.alerts.v1.Notification.status:type_name -> hypurr.alerts.v1.NotificationStatus
+	20, // 20: hypurr.alerts.v1.ListNotificationsResponse.notifications:type_name -> hypurr.alerts.v1.Notification
+	13, // 21: hypurr.alerts.v1.AlertService.ListAlerts:input_type -> hypurr.alerts.v1.ListAlertsRequest
+	15, // 22: hypurr.alerts.v1.AlertService.CreateAlert:input_type -> hypurr.alerts.v1.CreateAlertRequest
+	16, // 23: hypurr.alerts.v1.AlertService.UpdateAlert:input_type -> hypurr.alerts.v1.UpdateAlertRequest
+	18, // 24: hypurr.alerts.v1.AlertService.DeleteAlert:input_type -> hypurr.alerts.v1.DeleteAlertRequest
+	21, // 25: hypurr.alerts.v1.AlertService.ListNotifications:input_type -> hypurr.alerts.v1.ListNotificationsRequest
+	14, // 26: hypurr.alerts.v1.AlertService.ListAlerts:output_type -> hypurr.alerts.v1.ListAlertsResponse
+	17, // 27: hypurr.alerts.v1.AlertService.CreateAlert:output_type -> hypurr.alerts.v1.AlertResponse
+	17, // 28: hypurr.alerts.v1.AlertService.UpdateAlert:output_type -> hypurr.alerts.v1.AlertResponse
+	19, // 29: hypurr.alerts.v1.AlertService.DeleteAlert:output_type -> hypurr.alerts.v1.DeleteAlertResponse
+	22, // 30: hypurr.alerts.v1.AlertService.ListNotifications:output_type -> hypurr.alerts.v1.ListNotificationsResponse
+	26, // [26:31] is the sub-list for method output_type
+	21, // [21:26] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_hypurr_alerts_v1_alerts_proto_init() }
@@ -1770,7 +1888,7 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 			}
 		}
 		file_hypurr_alerts_v1_alerts_proto_msgTypes[5].Exporter = func(v any, i int) any {
-			switch v := v.(*AlertTrigger); i {
+			switch v := v.(*ScriptRule); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1782,7 +1900,7 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 			}
 		}
 		file_hypurr_alerts_v1_alerts_proto_msgTypes[6].Exporter = func(v any, i int) any {
-			switch v := v.(*Alert); i {
+			switch v := v.(*AlertTrigger); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1794,7 +1912,7 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 			}
 		}
 		file_hypurr_alerts_v1_alerts_proto_msgTypes[7].Exporter = func(v any, i int) any {
-			switch v := v.(*ListAlertsRequest); i {
+			switch v := v.(*Alert); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1806,7 +1924,7 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 			}
 		}
 		file_hypurr_alerts_v1_alerts_proto_msgTypes[8].Exporter = func(v any, i int) any {
-			switch v := v.(*ListAlertsResponse); i {
+			switch v := v.(*ListAlertsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1818,7 +1936,7 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 			}
 		}
 		file_hypurr_alerts_v1_alerts_proto_msgTypes[9].Exporter = func(v any, i int) any {
-			switch v := v.(*CreateAlertRequest); i {
+			switch v := v.(*ListAlertsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1830,7 +1948,7 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 			}
 		}
 		file_hypurr_alerts_v1_alerts_proto_msgTypes[10].Exporter = func(v any, i int) any {
-			switch v := v.(*UpdateAlertRequest); i {
+			switch v := v.(*CreateAlertRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1842,7 +1960,7 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 			}
 		}
 		file_hypurr_alerts_v1_alerts_proto_msgTypes[11].Exporter = func(v any, i int) any {
-			switch v := v.(*AlertResponse); i {
+			switch v := v.(*UpdateAlertRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1854,7 +1972,7 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 			}
 		}
 		file_hypurr_alerts_v1_alerts_proto_msgTypes[12].Exporter = func(v any, i int) any {
-			switch v := v.(*DeleteAlertRequest); i {
+			switch v := v.(*AlertResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1866,7 +1984,7 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 			}
 		}
 		file_hypurr_alerts_v1_alerts_proto_msgTypes[13].Exporter = func(v any, i int) any {
-			switch v := v.(*DeleteAlertResponse); i {
+			switch v := v.(*DeleteAlertRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1878,7 +1996,7 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 			}
 		}
 		file_hypurr_alerts_v1_alerts_proto_msgTypes[14].Exporter = func(v any, i int) any {
-			switch v := v.(*Notification); i {
+			switch v := v.(*DeleteAlertResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1890,7 +2008,7 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 			}
 		}
 		file_hypurr_alerts_v1_alerts_proto_msgTypes[15].Exporter = func(v any, i int) any {
-			switch v := v.(*ListNotificationsRequest); i {
+			switch v := v.(*Notification); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1902,6 +2020,18 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 			}
 		}
 		file_hypurr_alerts_v1_alerts_proto_msgTypes[16].Exporter = func(v any, i int) any {
+			switch v := v.(*ListNotificationsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_alerts_v1_alerts_proto_msgTypes[17].Exporter = func(v any, i int) any {
 			switch v := v.(*ListNotificationsResponse); i {
 			case 0:
 				return &v.state
@@ -1919,16 +2049,17 @@ func file_hypurr_alerts_v1_alerts_proto_init() {
 		(*AlertRule_PriceChange)(nil),
 		(*AlertRule_Drawdown)(nil),
 		(*AlertRule_OrderActivity)(nil),
+		(*AlertRule_Script)(nil),
 	}
-	file_hypurr_alerts_v1_alerts_proto_msgTypes[7].OneofWrappers = []any{}
-	file_hypurr_alerts_v1_alerts_proto_msgTypes[10].OneofWrappers = []any{}
+	file_hypurr_alerts_v1_alerts_proto_msgTypes[8].OneofWrappers = []any{}
+	file_hypurr_alerts_v1_alerts_proto_msgTypes[11].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hypurr_alerts_v1_alerts_proto_rawDesc,
 			NumEnums:      5,
-			NumMessages:   18,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

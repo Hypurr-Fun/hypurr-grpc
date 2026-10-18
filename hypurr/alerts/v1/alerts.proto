@@ -2,6 +2,8 @@ syntax = "proto3";
 package hypurr.alerts.v1;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/alerts/v1;alertsv1";
 
+import "google/protobuf/struct.proto";
+
 // AlertService manages the caller's alerts and lists the notifications they
 // produced. Authenticated with the caller's JWT (Authorization metadata):
 // reads need settings:read, changes settings:write.
@@ -24,6 +26,7 @@ message AlertRule {
     PriceChangeRule price_change = 2;
     DrawdownRule drawdown = 3;
     OrderActivityRule order_activity = 4;
+    ScriptRule script = 5;
   }
 }
 
@@ -75,6 +78,18 @@ message OrderActivityRule {
   int64 wallet_id = 1;
   repeated OrderActivityEvent events = 2; // empty means all
   double min_notional_usd = 3;            // fills smaller than this are not notified
+}
+
+// One of the caller's chart scripts (hypurr.scripts.v1) runs on the market's
+// candles; each alert(message, {key}) it calls on the newest bar notifies,
+// once per key and bar. Fires on every event: the frequency does not apply.
+// Scripts see only their bars: subscribe() data reads as na.
+message ScriptRule {
+  int64 market_id = 1;
+  string script_id = 2;              // e.g. "ema-cross"
+  string interval = 3;               // 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 8h, 12h, 1d
+  google.protobuf.Struct inputs = 4; // over the script's saved inputs
+  repeated string keys = 5;          // only these alert keys; empty: all
 }
 
 // --- alerts ---
@@ -147,7 +162,7 @@ enum NotificationStatus {
 
 message Notification {
   int64 id = 1;
-  string kind = 2; // price_alert, price_change, drawdown, order_activity, liquidation, ...
+  string kind = 2; // price_alert, price_change, drawdown, order_activity, script, liquidation, ...
   string title = 3;
   string body = 4;
   map<string, string> data = 5;
