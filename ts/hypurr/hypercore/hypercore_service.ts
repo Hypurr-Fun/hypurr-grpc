@@ -1246,34 +1246,56 @@ export interface InstrumentPerformance {
  */
 export interface WalletPerformanceRequest {
     /**
-     * @generated from protobuf field: string wallet_address = 1
+     * @generated from protobuf field: repeated string wallet_addresses = 1
      */
-    walletAddress: string;
+    walletAddresses: string[]; // 1-100 wallets
     /**
-     * @generated from protobuf field: int64 from_ts = 2
+     * @generated from protobuf field: repeated int64 from_ts = 2
      */
-    fromTs: number; // inclusive, unix seconds; 0 = all-time
+    fromTs: number[]; // 1-5 starts, Unix seconds; 0 = all-time
     /**
      * @generated from protobuf field: int64 to_ts = 3
      */
-    toTs: number; // inclusive, unix seconds; 0 = now
+    toTs: number; // inclusive, Unix seconds; 0 = now
 }
 /**
  * @generated from protobuf message hypercore.WalletPerformanceResponse
  */
 export interface WalletPerformanceResponse {
     /**
+     * @generated from protobuf field: repeated hypercore.WalletPerformanceResult wallets = 1
+     */
+    wallets: WalletPerformanceResult[]; // request order
+}
+/**
+ * @generated from protobuf message hypercore.WalletPerformanceResult
+ */
+export interface WalletPerformanceResult {
+    /**
      * @generated from protobuf field: string wallet_address = 1
      */
     walletAddress: string;
     /**
+     * @generated from protobuf field: repeated hypercore.WalletPerformanceRange ranges = 2
+     */
+    ranges: WalletPerformanceRange[]; // from_timestamps order
+}
+/**
+ * @generated from protobuf message hypercore.WalletPerformanceRange
+ */
+export interface WalletPerformanceRange {
+    /**
+     * @generated from protobuf field: int64 from_ts = 1
+     */
+    fromTs: number; // normalized hour start, Unix seconds
+    /**
      * @generated from protobuf field: hypercore.PerformanceSummary account = 2
      */
-    account?: PerformanceSummary; // total PnL + total win rate
+    account?: PerformanceSummary;
     /**
      * @generated from protobuf field: repeated hypercore.InstrumentPerformance instruments = 3
      */
-    instruments: InstrumentPerformance[]; // per-instrument win rate + all-time PnL
+    instruments: InstrumentPerformance[];
 }
 /**
  * ----- RPC 2: time series (calendar + graphs) -----
@@ -6615,15 +6637,15 @@ export const InstrumentPerformance = new InstrumentPerformance$Type();
 class WalletPerformanceRequest$Type extends MessageType<WalletPerformanceRequest> {
     constructor() {
         super("hypercore.WalletPerformanceRequest", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "from_ts", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 3, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<WalletPerformanceRequest>): WalletPerformanceRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.walletAddress = "";
-        message.fromTs = 0;
+        message.walletAddresses = [];
+        message.fromTs = [];
         message.toTs = 0;
         if (value !== undefined)
             reflectionMergePartial<WalletPerformanceRequest>(this, message, value);
@@ -6634,11 +6656,15 @@ class WalletPerformanceRequest$Type extends MessageType<WalletPerformanceRequest
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string wallet_address */ 1:
-                    message.walletAddress = reader.string();
+                case /* repeated string wallet_addresses */ 1:
+                    message.walletAddresses.push(reader.string());
                     break;
-                case /* int64 from_ts */ 2:
-                    message.fromTs = reader.int64().toNumber();
+                case /* repeated int64 from_ts */ 2:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.fromTs.push(reader.int64().toNumber());
+                    else
+                        message.fromTs.push(reader.int64().toNumber());
                     break;
                 case /* int64 to_ts */ 3:
                     message.toTs = reader.int64().toNumber();
@@ -6655,12 +6681,16 @@ class WalletPerformanceRequest$Type extends MessageType<WalletPerformanceRequest
         return message;
     }
     internalBinaryWrite(message: WalletPerformanceRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_address = 1; */
-        if (message.walletAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
-        /* int64 from_ts = 2; */
-        if (message.fromTs !== 0)
-            writer.tag(2, WireType.Varint).int64(message.fromTs);
+        /* repeated string wallet_addresses = 1; */
+        for (let i = 0; i < message.walletAddresses.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
+        /* repeated int64 from_ts = 2; */
+        if (message.fromTs.length) {
+            writer.tag(2, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.fromTs.length; i++)
+                writer.int64(message.fromTs[i]);
+            writer.join();
+        }
         /* int64 to_ts = 3; */
         if (message.toTs !== 0)
             writer.tag(3, WireType.Varint).int64(message.toTs);
@@ -6678,15 +6708,12 @@ export const WalletPerformanceRequest = new WalletPerformanceRequest$Type();
 class WalletPerformanceResponse$Type extends MessageType<WalletPerformanceResponse> {
     constructor() {
         super("hypercore.WalletPerformanceResponse", [
-            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "account", kind: "message", T: () => PerformanceSummary },
-            { no: 3, name: "instruments", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => InstrumentPerformance }
+            { no: 1, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletPerformanceResult }
         ]);
     }
     create(value?: PartialMessage<WalletPerformanceResponse>): WalletPerformanceResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.walletAddress = "";
-        message.instruments = [];
+        message.wallets = [];
         if (value !== undefined)
             reflectionMergePartial<WalletPerformanceResponse>(this, message, value);
         return message;
@@ -6696,8 +6723,113 @@ class WalletPerformanceResponse$Type extends MessageType<WalletPerformanceRespon
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
+                case /* repeated hypercore.WalletPerformanceResult wallets */ 1:
+                    message.wallets.push(WalletPerformanceResult.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPerformanceResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.WalletPerformanceResult wallets = 1; */
+        for (let i = 0; i < message.wallets.length; i++)
+            WalletPerformanceResult.internalBinaryWrite(message.wallets[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletPerformanceResponse
+ */
+export const WalletPerformanceResponse = new WalletPerformanceResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletPerformanceResult$Type extends MessageType<WalletPerformanceResult> {
+    constructor() {
+        super("hypercore.WalletPerformanceResult", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "ranges", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletPerformanceRange }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPerformanceResult>): WalletPerformanceResult {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        message.ranges = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletPerformanceResult>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPerformanceResult): WalletPerformanceResult {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
                 case /* string wallet_address */ 1:
                     message.walletAddress = reader.string();
+                    break;
+                case /* repeated hypercore.WalletPerformanceRange ranges */ 2:
+                    message.ranges.push(WalletPerformanceRange.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPerformanceResult, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* repeated hypercore.WalletPerformanceRange ranges = 2; */
+        for (let i = 0; i < message.ranges.length; i++)
+            WalletPerformanceRange.internalBinaryWrite(message.ranges[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletPerformanceResult
+ */
+export const WalletPerformanceResult = new WalletPerformanceResult$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletPerformanceRange$Type extends MessageType<WalletPerformanceRange> {
+    constructor() {
+        super("hypercore.WalletPerformanceRange", [
+            { no: 1, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "account", kind: "message", T: () => PerformanceSummary },
+            { no: 3, name: "instruments", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => InstrumentPerformance }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPerformanceRange>): WalletPerformanceRange {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.fromTs = 0;
+        message.instruments = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletPerformanceRange>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPerformanceRange): WalletPerformanceRange {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 from_ts */ 1:
+                    message.fromTs = reader.int64().toNumber();
                     break;
                 case /* hypercore.PerformanceSummary account */ 2:
                     message.account = PerformanceSummary.internalBinaryRead(reader, reader.uint32(), options, message.account);
@@ -6716,10 +6848,10 @@ class WalletPerformanceResponse$Type extends MessageType<WalletPerformanceRespon
         }
         return message;
     }
-    internalBinaryWrite(message: WalletPerformanceResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string wallet_address = 1; */
-        if (message.walletAddress !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+    internalBinaryWrite(message: WalletPerformanceRange, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 from_ts = 1; */
+        if (message.fromTs !== 0)
+            writer.tag(1, WireType.Varint).int64(message.fromTs);
         /* hypercore.PerformanceSummary account = 2; */
         if (message.account)
             PerformanceSummary.internalBinaryWrite(message.account, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
@@ -6733,9 +6865,9 @@ class WalletPerformanceResponse$Type extends MessageType<WalletPerformanceRespon
     }
 }
 /**
- * @generated MessageType for protobuf message hypercore.WalletPerformanceResponse
+ * @generated MessageType for protobuf message hypercore.WalletPerformanceRange
  */
-export const WalletPerformanceResponse = new WalletPerformanceResponse$Type();
+export const WalletPerformanceRange = new WalletPerformanceRange$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class WalletPerformanceSeriesRequest$Type extends MessageType<WalletPerformanceSeriesRequest> {
     constructor() {

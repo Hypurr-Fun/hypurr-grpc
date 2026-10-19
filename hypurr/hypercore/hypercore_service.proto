@@ -524,14 +524,23 @@ message InstrumentPerformance {
 
 // ----- RPC 1: aggregates (totals + per-instrument list) -----
 message WalletPerformanceRequest {
-  string wallet_address = 1;
-  int64  from_ts = 2; // inclusive, unix seconds; 0 = all-time
-  int64  to_ts = 3; // inclusive, unix seconds; 0 = now
+  repeated string wallet_addresses = 1; // 1-100 wallets
+  repeated int64 from_ts = 2; // 1-5 starts, Unix seconds; 0 = all-time
+  int64 to_ts = 3; // inclusive, Unix seconds; 0 = now
 }
 message WalletPerformanceResponse {
+  repeated WalletPerformanceResult wallets = 1; // request order
+}
+
+message WalletPerformanceResult {
   string wallet_address = 1;
-  PerformanceSummary account = 2; // total PnL + total win rate
-  repeated InstrumentPerformance instruments = 3; // per-instrument win rate + all-time PnL
+  repeated WalletPerformanceRange ranges = 2; // from_timestamps order
+}
+
+message WalletPerformanceRange {
+  int64 from_ts = 1; // normalized hour start, Unix seconds
+  PerformanceSummary account = 2;
+  repeated InstrumentPerformance instruments = 3;
 }
 
 // ----- RPC 2: time series (calendar + graphs) -----
