@@ -16,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@grpc/grpc-js": "^1.7.3",
+    "@grpc/grpc-js": "^1.14.6",
     "@protobuf-ts/plugin": "2.11.1",
     "@protobuf-ts/protoc": "2.11.1",
     "google-protobuf": "^3.21.2",
