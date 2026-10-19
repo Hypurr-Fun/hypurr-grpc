@@ -2066,9 +2066,9 @@ export interface PortfolioChartPoint {
      */
     timestamp: string; // RFC3339 UTC.
     /**
-     * @generated from protobuf field: int64 balance_cents = 2
+     * @generated from protobuf field: optional int64 balance_cents = 2
      */
-    balanceCents: number;
+    balanceCents?: number;
 }
 /**
  * @generated from protobuf message hypurr.ios.v2.ClosedPosition
@@ -2093,9 +2093,9 @@ export interface ClosedPosition {
      */
     closedAt: string; // RFC3339 UTC.
     /**
-     * @generated from protobuf field: int64 realized_pnl_cents = 5
+     * @generated from protobuf field: optional int64 realized_pnl_cents = 5
      */
-    realizedPnlCents: number; // Signed.
+    realizedPnlCents?: number; // Signed.
     /**
      * Exactly one variant is populated.
      *
@@ -8731,13 +8731,12 @@ class PortfolioChartPoint$Type extends MessageType<PortfolioChartPoint> {
     constructor() {
         super("hypurr.ios.v2.PortfolioChartPoint", [
             { no: 1, name: "timestamp", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "balance_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 2, name: "balance_cents", kind: "scalar", opt: true, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<PortfolioChartPoint>): PortfolioChartPoint {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.timestamp = "";
-        message.balanceCents = 0;
         if (value !== undefined)
             reflectionMergePartial<PortfolioChartPoint>(this, message, value);
         return message;
@@ -8750,7 +8749,7 @@ class PortfolioChartPoint$Type extends MessageType<PortfolioChartPoint> {
                 case /* string timestamp */ 1:
                     message.timestamp = reader.string();
                     break;
-                case /* int64 balance_cents */ 2:
+                case /* optional int64 balance_cents */ 2:
                     message.balanceCents = reader.int64().toNumber();
                     break;
                 default:
@@ -8768,8 +8767,8 @@ class PortfolioChartPoint$Type extends MessageType<PortfolioChartPoint> {
         /* string timestamp = 1; */
         if (message.timestamp !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.timestamp);
-        /* int64 balance_cents = 2; */
-        if (message.balanceCents !== 0)
+        /* optional int64 balance_cents = 2; */
+        if (message.balanceCents !== undefined)
             writer.tag(2, WireType.Varint).int64(message.balanceCents);
         let u = options.writeUnknownFields;
         if (u !== false)
@@ -8789,7 +8788,7 @@ class ClosedPosition$Type extends MessageType<ClosedPosition> {
             { no: 2, name: "wallet_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "market", kind: "message", T: () => Market },
             { no: 4, name: "closed_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "realized_pnl_cents", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "realized_pnl_cents", kind: "scalar", opt: true, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 6, name: "spot", kind: "message", oneof: "position", T: () => ClosedSpotPosition },
             { no: 7, name: "perp", kind: "message", oneof: "position", T: () => ClosedPerpPosition },
             { no: 8, name: "realized_pnl_known", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
@@ -8800,7 +8799,6 @@ class ClosedPosition$Type extends MessageType<ClosedPosition> {
         message.positionId = "";
         message.walletId = "";
         message.closedAt = "";
-        message.realizedPnlCents = 0;
         message.position = { oneofKind: undefined };
         message.realizedPnlKnown = false;
         if (value !== undefined)
@@ -8824,7 +8822,7 @@ class ClosedPosition$Type extends MessageType<ClosedPosition> {
                 case /* string closed_at */ 4:
                     message.closedAt = reader.string();
                     break;
-                case /* int64 realized_pnl_cents */ 5:
+                case /* optional int64 realized_pnl_cents */ 5:
                     message.realizedPnlCents = reader.int64().toNumber();
                     break;
                 case /* hypurr.ios.v2.ClosedSpotPosition spot */ 6:
@@ -8866,8 +8864,8 @@ class ClosedPosition$Type extends MessageType<ClosedPosition> {
         /* string closed_at = 4; */
         if (message.closedAt !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.closedAt);
-        /* int64 realized_pnl_cents = 5; */
-        if (message.realizedPnlCents !== 0)
+        /* optional int64 realized_pnl_cents = 5; */
+        if (message.realizedPnlCents !== undefined)
             writer.tag(5, WireType.Varint).int64(message.realizedPnlCents);
         /* hypurr.ios.v2.ClosedSpotPosition spot = 6; */
         if (message.position.oneofKind === "spot")

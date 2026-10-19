@@ -918,7 +918,7 @@ message PortfolioChart {
 
 message PortfolioChartPoint {
   string timestamp = 1; // RFC3339 UTC.
-  int64 balance_cents = 2;
+  optional int64 balance_cents = 2;
 }
 
 message ClosedPosition {
@@ -927,7 +927,7 @@ message ClosedPosition {
   string wallet_id = 2;
   Market market = 3;            // Includes asset identity.
   string closed_at = 4;         // RFC3339 UTC.
-  int64 realized_pnl_cents = 5; // Signed.
+  optional int64 realized_pnl_cents = 5; // Signed.
   // Exactly one variant is populated.
   oneof position {
     ClosedSpotPosition spot = 6;
