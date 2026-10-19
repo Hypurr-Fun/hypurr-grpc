@@ -7486,6 +7486,302 @@ func (x *HighLowResponse) GetLow() float64 {
 	return 0
 }
 
+// Perps only. Built from hourly rows, so the interval must be 1H or coarser,
+// and an hour is served about one minute after it closes (no open bucket).
+type InstrumentStatsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	InstrumentIds []int64      `protobuf:"varint,1,rep,packed,name=instrument_ids,json=instrumentIds,proto3" json:"instrument_ids,omitempty"` // non-empty, max 100; same convention as OHLCRequest.instrument_ids, perps only
+	Interval      OHLCInterval `protobuf:"varint,2,opt,name=interval,proto3,enum=hypercore.OHLCInterval" json:"interval,omitempty"`           // OHLC_INTERVAL_1H or coarser
+	FromTs        int64        `protobuf:"varint,3,opt,name=from_ts,json=fromTs,proto3" json:"from_ts,omitempty"`                             // inclusive, unix seconds; 0 = earliest
+	ToTs          int64        `protobuf:"varint,4,opt,name=to_ts,json=toTs,proto3" json:"to_ts,omitempty"`                                   // inclusive, unix seconds; 0 = now
+}
+
+func (x *InstrumentStatsRequest) Reset() {
+	*x = InstrumentStatsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[96]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InstrumentStatsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InstrumentStatsRequest) ProtoMessage() {}
+
+func (x *InstrumentStatsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[96]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InstrumentStatsRequest.ProtoReflect.Descriptor instead.
+func (*InstrumentStatsRequest) Descriptor() ([]byte, []int) {
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{96}
+}
+
+func (x *InstrumentStatsRequest) GetInstrumentIds() []int64 {
+	if x != nil {
+		return x.InstrumentIds
+	}
+	return nil
+}
+
+func (x *InstrumentStatsRequest) GetInterval() OHLCInterval {
+	if x != nil {
+		return x.Interval
+	}
+	return OHLCInterval_OHLC_INTERVAL_UNSPECIFIED
+}
+
+func (x *InstrumentStatsRequest) GetFromTs() int64 {
+	if x != nil {
+		return x.FromTs
+	}
+	return 0
+}
+
+func (x *InstrumentStatsRequest) GetToTs() int64 {
+	if x != nil {
+		return x.ToTs
+	}
+	return 0
+}
+
+type InstrumentStats struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OpenTime int64 `protobuf:"varint,1,opt,name=open_time,json=openTime,proto3" json:"open_time,omitempty"` // bucket start, unix seconds; same grid as OHLC
+	// Open interest in coins and mark in USDC at the end of the bucket's last
+	// sampled hour. Unset when no hour in the bucket has a sample.
+	OpenInterest  *wrapperspb.DoubleValue `protobuf:"bytes,2,opt,name=open_interest,json=openInterest,proto3" json:"open_interest,omitempty"`
+	Mark          *wrapperspb.DoubleValue `protobuf:"bytes,3,opt,name=mark,proto3" json:"mark,omitempty"`
+	TakerBuyBase  float64                 `protobuf:"fixed64,4,opt,name=taker_buy_base,json=takerBuyBase,proto3" json:"taker_buy_base,omitempty"`    // coins bought by takers
+	TakerSellBase float64                 `protobuf:"fixed64,5,opt,name=taker_sell_base,json=takerSellBase,proto3" json:"taker_sell_base,omitempty"` // coins sold by takers
+	TakerBuyUsd   float64                 `protobuf:"fixed64,6,opt,name=taker_buy_usd,json=takerBuyUsd,proto3" json:"taker_buy_usd,omitempty"`       // USDC notional bought by takers
+	TakerSellUsd  float64                 `protobuf:"fixed64,7,opt,name=taker_sell_usd,json=takerSellUsd,proto3" json:"taker_sell_usd,omitempty"`    // USDC notional sold by takers
+	LiqBuyUsd     float64                 `protobuf:"fixed64,8,opt,name=liq_buy_usd,json=liqBuyUsd,proto3" json:"liq_buy_usd,omitempty"`             // USDC notional of liquidations whose taker bought (shorts liquidated)
+	LiqSellUsd    float64                 `protobuf:"fixed64,9,opt,name=liq_sell_usd,json=liqSellUsd,proto3" json:"liq_sell_usd,omitempty"`          // USDC notional of liquidations whose taker sold (longs liquidated)
+	Fills         uint32                  `protobuf:"varint,10,opt,name=fills,proto3" json:"fills,omitempty"`                                        // trade count
+}
+
+func (x *InstrumentStats) Reset() {
+	*x = InstrumentStats{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[97]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InstrumentStats) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InstrumentStats) ProtoMessage() {}
+
+func (x *InstrumentStats) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[97]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InstrumentStats.ProtoReflect.Descriptor instead.
+func (*InstrumentStats) Descriptor() ([]byte, []int) {
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{97}
+}
+
+func (x *InstrumentStats) GetOpenTime() int64 {
+	if x != nil {
+		return x.OpenTime
+	}
+	return 0
+}
+
+func (x *InstrumentStats) GetOpenInterest() *wrapperspb.DoubleValue {
+	if x != nil {
+		return x.OpenInterest
+	}
+	return nil
+}
+
+func (x *InstrumentStats) GetMark() *wrapperspb.DoubleValue {
+	if x != nil {
+		return x.Mark
+	}
+	return nil
+}
+
+func (x *InstrumentStats) GetTakerBuyBase() float64 {
+	if x != nil {
+		return x.TakerBuyBase
+	}
+	return 0
+}
+
+func (x *InstrumentStats) GetTakerSellBase() float64 {
+	if x != nil {
+		return x.TakerSellBase
+	}
+	return 0
+}
+
+func (x *InstrumentStats) GetTakerBuyUsd() float64 {
+	if x != nil {
+		return x.TakerBuyUsd
+	}
+	return 0
+}
+
+func (x *InstrumentStats) GetTakerSellUsd() float64 {
+	if x != nil {
+		return x.TakerSellUsd
+	}
+	return 0
+}
+
+func (x *InstrumentStats) GetLiqBuyUsd() float64 {
+	if x != nil {
+		return x.LiqBuyUsd
+	}
+	return 0
+}
+
+func (x *InstrumentStats) GetLiqSellUsd() float64 {
+	if x != nil {
+		return x.LiqSellUsd
+	}
+	return 0
+}
+
+func (x *InstrumentStats) GetFills() uint32 {
+	if x != nil {
+		return x.Fills
+	}
+	return 0
+}
+
+type InstrumentStatsSeries struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	InstrumentId int64              `protobuf:"varint,1,opt,name=instrument_id,json=instrumentId,proto3" json:"instrument_id,omitempty"`
+	Stats        []*InstrumentStats `protobuf:"bytes,2,rep,name=stats,proto3" json:"stats,omitempty"` // open_time ascending; buckets with no stored hour are omitted
+}
+
+func (x *InstrumentStatsSeries) Reset() {
+	*x = InstrumentStatsSeries{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[98]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InstrumentStatsSeries) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InstrumentStatsSeries) ProtoMessage() {}
+
+func (x *InstrumentStatsSeries) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[98]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InstrumentStatsSeries.ProtoReflect.Descriptor instead.
+func (*InstrumentStatsSeries) Descriptor() ([]byte, []int) {
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{98}
+}
+
+func (x *InstrumentStatsSeries) GetInstrumentId() int64 {
+	if x != nil {
+		return x.InstrumentId
+	}
+	return 0
+}
+
+func (x *InstrumentStatsSeries) GetStats() []*InstrumentStats {
+	if x != nil {
+		return x.Stats
+	}
+	return nil
+}
+
+type InstrumentStatsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Series []*InstrumentStatsSeries `protobuf:"bytes,1,rep,name=series,proto3" json:"series,omitempty"` // request order
+}
+
+func (x *InstrumentStatsResponse) Reset() {
+	*x = InstrumentStatsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[99]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *InstrumentStatsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InstrumentStatsResponse) ProtoMessage() {}
+
+func (x *InstrumentStatsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[99]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InstrumentStatsResponse.ProtoReflect.Descriptor instead.
+func (*InstrumentStatsResponse) Descriptor() ([]byte, []int) {
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{99}
+}
+
+func (x *InstrumentStatsResponse) GetSeries() []*InstrumentStatsSeries {
+	if x != nil {
+		return x.Series
+	}
+	return nil
+}
+
 type PnlClassFilter struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -7497,7 +7793,7 @@ type PnlClassFilter struct {
 func (x *PnlClassFilter) Reset() {
 	*x = PnlClassFilter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[96]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[100]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7510,7 +7806,7 @@ func (x *PnlClassFilter) String() string {
 func (*PnlClassFilter) ProtoMessage() {}
 
 func (x *PnlClassFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[96]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[100]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7523,7 +7819,7 @@ func (x *PnlClassFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PnlClassFilter.ProtoReflect.Descriptor instead.
 func (*PnlClassFilter) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{96}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{100}
 }
 
 func (x *PnlClassFilter) GetClasses() []PnlClass {
@@ -7545,7 +7841,7 @@ type PnlAssetFilter struct {
 func (x *PnlAssetFilter) Reset() {
 	*x = PnlAssetFilter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[97]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[101]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7558,7 +7854,7 @@ func (x *PnlAssetFilter) String() string {
 func (*PnlAssetFilter) ProtoMessage() {}
 
 func (x *PnlAssetFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[97]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[101]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7571,7 +7867,7 @@ func (x *PnlAssetFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PnlAssetFilter.ProtoReflect.Descriptor instead.
 func (*PnlAssetFilter) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{97}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{101}
 }
 
 func (x *PnlAssetFilter) GetAssetIds() []int64 {
@@ -7604,7 +7900,7 @@ type PnlRankRequest struct {
 func (x *PnlRankRequest) Reset() {
 	*x = PnlRankRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[98]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[102]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7617,7 +7913,7 @@ func (x *PnlRankRequest) String() string {
 func (*PnlRankRequest) ProtoMessage() {}
 
 func (x *PnlRankRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[98]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[102]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7630,7 +7926,7 @@ func (x *PnlRankRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PnlRankRequest.ProtoReflect.Descriptor instead.
 func (*PnlRankRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{98}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{102}
 }
 
 func (x *PnlRankRequest) GetPeriod() PnlRankPeriod {
@@ -7693,7 +7989,7 @@ type PnlRankEntry struct {
 func (x *PnlRankEntry) Reset() {
 	*x = PnlRankEntry{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[99]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[103]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7706,7 +8002,7 @@ func (x *PnlRankEntry) String() string {
 func (*PnlRankEntry) ProtoMessage() {}
 
 func (x *PnlRankEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[99]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[103]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7719,7 +8015,7 @@ func (x *PnlRankEntry) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PnlRankEntry.ProtoReflect.Descriptor instead.
 func (*PnlRankEntry) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{99}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{103}
 }
 
 func (x *PnlRankEntry) GetWalletAddress() string {
@@ -7775,7 +8071,7 @@ type PnlRankResponse struct {
 func (x *PnlRankResponse) Reset() {
 	*x = PnlRankResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[100]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[104]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7788,7 +8084,7 @@ func (x *PnlRankResponse) String() string {
 func (*PnlRankResponse) ProtoMessage() {}
 
 func (x *PnlRankResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[100]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[104]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7801,7 +8097,7 @@ func (x *PnlRankResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PnlRankResponse.ProtoReflect.Descriptor instead.
 func (*PnlRankResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{100}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{104}
 }
 
 func (x *PnlRankResponse) GetEntries() []*PnlRankEntry {
@@ -8836,7 +9132,55 @@ var file_hypurr_hypercore_hypercore_service_proto_rawDesc = []byte{
 	0x54, 0x73, 0x22, 0x37, 0x0a, 0x0f, 0x48, 0x69, 0x67, 0x68, 0x4c, 0x6f, 0x77, 0x52, 0x65, 0x73,
 	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x68, 0x69, 0x67, 0x68, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x01, 0x52, 0x04, 0x68, 0x69, 0x67, 0x68, 0x12, 0x10, 0x0a, 0x03, 0x6c, 0x6f, 0x77,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x03, 0x6c, 0x6f, 0x77, 0x22, 0x3f, 0x0a, 0x0e, 0x50,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x03, 0x6c, 0x6f, 0x77, 0x22, 0xa2, 0x01, 0x0a, 0x16,
+	0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x25, 0x0a, 0x0e, 0x69, 0x6e, 0x73, 0x74, 0x72, 0x75,
+	0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52, 0x0d,
+	0x69, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x73, 0x12, 0x33, 0x0a,
+	0x08, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32,
+	0x17, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x4f, 0x48, 0x4c, 0x43,
+	0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x52, 0x08, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76,
+	0x61, 0x6c, 0x12, 0x17, 0x0a, 0x07, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x74, 0x73, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x06, 0x66, 0x72, 0x6f, 0x6d, 0x54, 0x73, 0x12, 0x13, 0x0a, 0x05, 0x74,
+	0x6f, 0x5f, 0x74, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x74, 0x6f, 0x54, 0x73,
+	0x22, 0x93, 0x03, 0x0a, 0x0f, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x53,
+	0x74, 0x61, 0x74, 0x73, 0x12, 0x1b, 0x0a, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x74, 0x69, 0x6d,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x6f, 0x70, 0x65, 0x6e, 0x54, 0x69, 0x6d,
+	0x65, 0x12, 0x41, 0x0a, 0x0d, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x65,
+	0x73, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
+	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x44, 0x6f, 0x75, 0x62, 0x6c,
+	0x65, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x0c, 0x6f, 0x70, 0x65, 0x6e, 0x49, 0x6e, 0x74, 0x65,
+	0x72, 0x65, 0x73, 0x74, 0x12, 0x30, 0x0a, 0x04, 0x6d, 0x61, 0x72, 0x6b, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x44, 0x6f, 0x75, 0x62, 0x6c, 0x65, 0x56, 0x61, 0x6c, 0x75, 0x65,
+	0x52, 0x04, 0x6d, 0x61, 0x72, 0x6b, 0x12, 0x24, 0x0a, 0x0e, 0x74, 0x61, 0x6b, 0x65, 0x72, 0x5f,
+	0x62, 0x75, 0x79, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0c,
+	0x74, 0x61, 0x6b, 0x65, 0x72, 0x42, 0x75, 0x79, 0x42, 0x61, 0x73, 0x65, 0x12, 0x26, 0x0a, 0x0f,
+	0x74, 0x61, 0x6b, 0x65, 0x72, 0x5f, 0x73, 0x65, 0x6c, 0x6c, 0x5f, 0x62, 0x61, 0x73, 0x65, 0x18,
+	0x05, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0d, 0x74, 0x61, 0x6b, 0x65, 0x72, 0x53, 0x65, 0x6c, 0x6c,
+	0x42, 0x61, 0x73, 0x65, 0x12, 0x22, 0x0a, 0x0d, 0x74, 0x61, 0x6b, 0x65, 0x72, 0x5f, 0x62, 0x75,
+	0x79, 0x5f, 0x75, 0x73, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0b, 0x74, 0x61, 0x6b,
+	0x65, 0x72, 0x42, 0x75, 0x79, 0x55, 0x73, 0x64, 0x12, 0x24, 0x0a, 0x0e, 0x74, 0x61, 0x6b, 0x65,
+	0x72, 0x5f, 0x73, 0x65, 0x6c, 0x6c, 0x5f, 0x75, 0x73, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28, 0x01,
+	0x52, 0x0c, 0x74, 0x61, 0x6b, 0x65, 0x72, 0x53, 0x65, 0x6c, 0x6c, 0x55, 0x73, 0x64, 0x12, 0x1e,
+	0x0a, 0x0b, 0x6c, 0x69, 0x71, 0x5f, 0x62, 0x75, 0x79, 0x5f, 0x75, 0x73, 0x64, 0x18, 0x08, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x09, 0x6c, 0x69, 0x71, 0x42, 0x75, 0x79, 0x55, 0x73, 0x64, 0x12, 0x20,
+	0x0a, 0x0c, 0x6c, 0x69, 0x71, 0x5f, 0x73, 0x65, 0x6c, 0x6c, 0x5f, 0x75, 0x73, 0x64, 0x18, 0x09,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x6c, 0x69, 0x71, 0x53, 0x65, 0x6c, 0x6c, 0x55, 0x73, 0x64,
+	0x12, 0x14, 0x0a, 0x05, 0x66, 0x69, 0x6c, 0x6c, 0x73, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x0d, 0x52,
+	0x05, 0x66, 0x69, 0x6c, 0x6c, 0x73, 0x22, 0x6e, 0x0a, 0x15, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75,
+	0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x73, 0x53, 0x65, 0x72, 0x69, 0x65, 0x73, 0x12,
+	0x23, 0x0a, 0x0d, 0x69, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x69, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65,
+	0x6e, 0x74, 0x49, 0x64, 0x12, 0x30, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x73, 0x18, 0x02, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e,
+	0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52,
+	0x05, 0x73, 0x74, 0x61, 0x74, 0x73, 0x22, 0x53, 0x0a, 0x17, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75,
+	0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x38, 0x0a, 0x06, 0x73, 0x65, 0x72, 0x69, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x20, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x49, 0x6e,
+	0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x73, 0x53, 0x65, 0x72,
+	0x69, 0x65, 0x73, 0x52, 0x06, 0x73, 0x65, 0x72, 0x69, 0x65, 0x73, 0x22, 0x3f, 0x0a, 0x0e, 0x50,
 	0x6e, 0x6c, 0x43, 0x6c, 0x61, 0x73, 0x73, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x12, 0x2d, 0x0a,
 	0x07, 0x63, 0x6c, 0x61, 0x73, 0x73, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0e, 0x32, 0x13,
 	0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x50, 0x6e, 0x6c, 0x43, 0x6c,
@@ -9027,7 +9371,7 @@ var file_hypurr_hypercore_hypercore_service_proto_rawDesc = []byte{
 	0x50, 0x45, 0x52, 0x49, 0x4f, 0x44, 0x5f, 0x37, 0x44, 0x10, 0x02, 0x12, 0x17, 0x0a, 0x13, 0x50,
 	0x4e, 0x4c, 0x5f, 0x52, 0x41, 0x4e, 0x4b, 0x5f, 0x50, 0x45, 0x52, 0x49, 0x4f, 0x44, 0x5f, 0x33,
 	0x30, 0x44, 0x10, 0x03, 0x12, 0x17, 0x0a, 0x13, 0x50, 0x4e, 0x4c, 0x5f, 0x52, 0x41, 0x4e, 0x4b,
-	0x5f, 0x50, 0x45, 0x52, 0x49, 0x4f, 0x44, 0x5f, 0x41, 0x4c, 0x4c, 0x10, 0x04, 0x32, 0xa9, 0x16,
+	0x5f, 0x50, 0x45, 0x52, 0x49, 0x4f, 0x44, 0x5f, 0x41, 0x4c, 0x4c, 0x10, 0x04, 0x32, 0x85, 0x17,
 	0x0a, 0x09, 0x48, 0x79, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x72, 0x65, 0x12, 0x5a, 0x0a, 0x0f, 0x57,
 	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x4d, 0x6f, 0x76, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x21,
 	0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65,
@@ -9202,15 +9546,21 @@ var file_hypurr_hypercore_hypercore_service_proto_rawDesc = []byte{
 	0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x48, 0x69, 0x67, 0x68, 0x4c, 0x6f, 0x77,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63,
 	0x6f, 0x72, 0x65, 0x2e, 0x48, 0x69, 0x67, 0x68, 0x4c, 0x6f, 0x77, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x42, 0x0a, 0x07, 0x50, 0x6e, 0x6c, 0x52, 0x61, 0x6e, 0x6b,
-	0x12, 0x19, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x50, 0x6e, 0x6c,
-	0x52, 0x61, 0x6e, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x68, 0x79,
-	0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x50, 0x6e, 0x6c, 0x52, 0x61, 0x6e, 0x6b, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x33, 0x5a, 0x31, 0x67, 0x69, 0x74,
-	0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68,
-	0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79,
-	0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x5a, 0x0a, 0x0f, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d,
+	0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x73, 0x12, 0x21, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72,
+	0x63, 0x6f, 0x72, 0x65, 0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x53,
+	0x74, 0x61, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e, 0x68, 0x79,
+	0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65,
+	0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0x42, 0x0a, 0x07, 0x50, 0x6e, 0x6c, 0x52, 0x61, 0x6e, 0x6b, 0x12, 0x19, 0x2e, 0x68,
+	0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x50, 0x6e, 0x6c, 0x52, 0x61, 0x6e, 0x6b,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63,
+	0x6f, 0x72, 0x65, 0x2e, 0x50, 0x6e, 0x6c, 0x52, 0x61, 0x6e, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x33, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72,
+	0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72,
+	0x2f, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -9226,7 +9576,7 @@ func file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP() []byte {
 }
 
 var file_hypurr_hypercore_hypercore_service_proto_enumTypes = make([]protoimpl.EnumInfo, 13)
-var file_hypurr_hypercore_hypercore_service_proto_msgTypes = make([]protoimpl.MessageInfo, 101)
+var file_hypurr_hypercore_hypercore_service_proto_msgTypes = make([]protoimpl.MessageInfo, 105)
 var file_hypurr_hypercore_hypercore_service_proto_goTypes = []any{
 	(WalletTag)(0),                                    // 0: hypercore.WalletTag
 	(TradeDirOverride)(0),                             // 1: hypercore.TradeDirOverride
@@ -9337,26 +9687,30 @@ var file_hypurr_hypercore_hypercore_service_proto_goTypes = []any{
 	(*OHLCUpdate)(nil),                                // 106: hypercore.OHLCUpdate
 	(*HighLowRequest)(nil),                            // 107: hypercore.HighLowRequest
 	(*HighLowResponse)(nil),                           // 108: hypercore.HighLowResponse
-	(*PnlClassFilter)(nil),                            // 109: hypercore.PnlClassFilter
-	(*PnlAssetFilter)(nil),                            // 110: hypercore.PnlAssetFilter
-	(*PnlRankRequest)(nil),                            // 111: hypercore.PnlRankRequest
-	(*PnlRankEntry)(nil),                              // 112: hypercore.PnlRankEntry
-	(*PnlRankResponse)(nil),                           // 113: hypercore.PnlRankResponse
-	(*wrapperspb.UInt64Value)(nil),                    // 114: google.protobuf.UInt64Value
-	(*wrapperspb.StringValue)(nil),                    // 115: google.protobuf.StringValue
-	(*wrapperspb.DoubleValue)(nil),                    // 116: google.protobuf.DoubleValue
-	(*wrapperspb.Int64Value)(nil),                     // 117: google.protobuf.Int64Value
+	(*InstrumentStatsRequest)(nil),                    // 109: hypercore.InstrumentStatsRequest
+	(*InstrumentStats)(nil),                           // 110: hypercore.InstrumentStats
+	(*InstrumentStatsSeries)(nil),                     // 111: hypercore.InstrumentStatsSeries
+	(*InstrumentStatsResponse)(nil),                   // 112: hypercore.InstrumentStatsResponse
+	(*PnlClassFilter)(nil),                            // 113: hypercore.PnlClassFilter
+	(*PnlAssetFilter)(nil),                            // 114: hypercore.PnlAssetFilter
+	(*PnlRankRequest)(nil),                            // 115: hypercore.PnlRankRequest
+	(*PnlRankEntry)(nil),                              // 116: hypercore.PnlRankEntry
+	(*PnlRankResponse)(nil),                           // 117: hypercore.PnlRankResponse
+	(*wrapperspb.UInt64Value)(nil),                    // 118: google.protobuf.UInt64Value
+	(*wrapperspb.StringValue)(nil),                    // 119: google.protobuf.StringValue
+	(*wrapperspb.DoubleValue)(nil),                    // 120: google.protobuf.DoubleValue
+	(*wrapperspb.Int64Value)(nil),                     // 121: google.protobuf.Int64Value
 }
 var file_hypurr_hypercore_hypercore_service_proto_depIdxs = []int32{
 	0,   // 0: hypercore.WalletFilter.tag:type_name -> hypercore.WalletTag
 	0,   // 1: hypercore.WalletFilter.included_tags:type_name -> hypercore.WalletTag
 	0,   // 2: hypercore.WalletFilter.excluded_tags:type_name -> hypercore.WalletTag
-	114, // 3: hypercore.TradeSideInfo.twap_id:type_name -> google.protobuf.UInt64Value
-	115, // 4: hypercore.TradeSideInfo.cloid:type_name -> google.protobuf.StringValue
+	118, // 3: hypercore.TradeSideInfo.twap_id:type_name -> google.protobuf.UInt64Value
+	119, // 4: hypercore.TradeSideInfo.cloid:type_name -> google.protobuf.StringValue
 	1,   // 5: hypercore.WalletTrade.trade_dir_override:type_name -> hypercore.TradeDirOverride
 	14,  // 6: hypercore.WalletTrade.side_info:type_name -> hypercore.TradeSideInfo
 	16,  // 7: hypercore.WalletMovementsResponse.wallet_movements:type_name -> hypercore.WalletMovement
-	116, // 8: hypercore.WalletPerpBalance.isolated_margin:type_name -> google.protobuf.DoubleValue
+	120, // 8: hypercore.WalletPerpBalance.isolated_margin:type_name -> google.protobuf.DoubleValue
 	19,  // 9: hypercore.WalletBalancesResponse.spot_balances:type_name -> hypercore.WalletSpotBalance
 	20,  // 10: hypercore.WalletBalancesResponse.perp_balances:type_name -> hypercore.WalletPerpBalance
 	15,  // 11: hypercore.WalletTradesStreamResponse.trades:type_name -> hypercore.WalletTrade
@@ -9370,18 +9724,18 @@ var file_hypurr_hypercore_hypercore_service_proto_depIdxs = []int32{
 	31,  // 19: hypercore.WalletFillEvent.from_asset:type_name -> hypercore.WalletEventAsset
 	31,  // 20: hypercore.WalletFillEvent.to_asset:type_name -> hypercore.WalletEventAsset
 	31,  // 21: hypercore.WalletFillEvent.fee_asset:type_name -> hypercore.WalletEventAsset
-	116, // 22: hypercore.WalletFillEvent.closed_pnl:type_name -> google.protobuf.DoubleValue
-	116, // 23: hypercore.WalletFillEvent.cum_pnl:type_name -> google.protobuf.DoubleValue
-	116, // 24: hypercore.WalletFillEvent.cum_fees:type_name -> google.protobuf.DoubleValue
-	117, // 25: hypercore.WalletFillEvent.twap_id:type_name -> google.protobuf.Int64Value
-	117, // 26: hypercore.WalletFillEvent.execution_index:type_name -> google.protobuf.Int64Value
-	116, // 27: hypercore.WalletFillEvent.cum_cost:type_name -> google.protobuf.DoubleValue
+	120, // 22: hypercore.WalletFillEvent.closed_pnl:type_name -> google.protobuf.DoubleValue
+	120, // 23: hypercore.WalletFillEvent.cum_pnl:type_name -> google.protobuf.DoubleValue
+	120, // 24: hypercore.WalletFillEvent.cum_fees:type_name -> google.protobuf.DoubleValue
+	121, // 25: hypercore.WalletFillEvent.twap_id:type_name -> google.protobuf.Int64Value
+	121, // 26: hypercore.WalletFillEvent.execution_index:type_name -> google.protobuf.Int64Value
+	120, // 27: hypercore.WalletFillEvent.cum_cost:type_name -> google.protobuf.DoubleValue
 	31,  // 28: hypercore.WalletMovementEvent.asset:type_name -> hypercore.WalletEventAsset
-	116, // 29: hypercore.WalletMovementEvent.usdc_value:type_name -> google.protobuf.DoubleValue
+	120, // 29: hypercore.WalletMovementEvent.usdc_value:type_name -> google.protobuf.DoubleValue
 	31,  // 30: hypercore.WalletMovementEvent.fee_asset:type_name -> hypercore.WalletEventAsset
-	116, // 31: hypercore.WalletMovementEvent.fee:type_name -> google.protobuf.DoubleValue
-	117, // 32: hypercore.WalletMovementEvent.source_dex_index:type_name -> google.protobuf.Int64Value
-	117, // 33: hypercore.WalletMovementEvent.destination_dex_index:type_name -> google.protobuf.Int64Value
+	120, // 31: hypercore.WalletMovementEvent.fee:type_name -> google.protobuf.DoubleValue
+	121, // 32: hypercore.WalletMovementEvent.source_dex_index:type_name -> google.protobuf.Int64Value
+	121, // 33: hypercore.WalletMovementEvent.destination_dex_index:type_name -> google.protobuf.Int64Value
 	13,  // 34: hypercore.AggregatedWalletPositioningStreamRequest.filter:type_name -> hypercore.WalletFilter
 	37,  // 35: hypercore.AggregatedWalletPositioningStreamResponse.summary:type_name -> hypercore.AggregatedWalletPositioningSummary
 	36,  // 36: hypercore.AggregatedWalletPositioningStreamResponse.wallet_positions:type_name -> hypercore.WalletPositioning
@@ -9395,10 +9749,10 @@ var file_hypurr_hypercore_hypercore_service_proto_depIdxs = []int32{
 	42,  // 44: hypercore.ValidatorDelegatorsResponse.delegators:type_name -> hypercore.ValidatorDelegator
 	0,   // 45: hypercore.WalletTagsResponse.tags:type_name -> hypercore.WalletTag
 	0,   // 46: hypercore.WalletsByTagRequest.tag:type_name -> hypercore.WalletTag
-	117, // 47: hypercore.WalletsByTagRequest.limit:type_name -> google.protobuf.Int64Value
+	121, // 47: hypercore.WalletsByTagRequest.limit:type_name -> google.protobuf.Int64Value
 	47,  // 48: hypercore.WalletsByTagResponse.wallet_infos:type_name -> hypercore.WalletInfo
 	13,  // 49: hypercore.WalletsByFilterRequest.filter:type_name -> hypercore.WalletFilter
-	117, // 50: hypercore.WalletsByFilterRequest.limit:type_name -> google.protobuf.Int64Value
+	121, // 50: hypercore.WalletsByFilterRequest.limit:type_name -> google.protobuf.Int64Value
 	47,  // 51: hypercore.WalletsByFilterResponse.wallet_infos:type_name -> hypercore.WalletInfo
 	0,   // 52: hypercore.AggregatedWalletLiquidationsRequest.tag:type_name -> hypercore.WalletTag
 	54,  // 53: hypercore.AggregatedWalletLiquidationsResponse.wallet_liquidation_groups:type_name -> hypercore.WalletLiquidationGroup
@@ -9429,8 +9783,8 @@ var file_hypurr_hypercore_hypercore_service_proto_depIdxs = []int32{
 	85,  // 78: hypercore.PerpInstrumentsResponse.instruments:type_name -> hypercore.PerpInstrument
 	5,   // 79: hypercore.WalletsByMetricPercentileRequest.metric:type_name -> hypercore.ClassificationMetric
 	88,  // 80: hypercore.WalletsByMetricPercentileResponse.wallets:type_name -> hypercore.WalletMetricRank
-	114, // 81: hypercore.HistoricalTradeSide.twap_id:type_name -> google.protobuf.UInt64Value
-	115, // 82: hypercore.HistoricalTradeSide.cloid:type_name -> google.protobuf.StringValue
+	118, // 81: hypercore.HistoricalTradeSide.twap_id:type_name -> google.protobuf.UInt64Value
+	119, // 82: hypercore.HistoricalTradeSide.cloid:type_name -> google.protobuf.StringValue
 	6,   // 83: hypercore.HistoricalWalletTrade.type:type_name -> hypercore.WalletTradeType
 	1,   // 84: hypercore.HistoricalWalletTrade.trade_dir_override:type_name -> hypercore.TradeDirOverride
 	90,  // 85: hypercore.HistoricalWalletTrade.ask_side:type_name -> hypercore.HistoricalTradeSide
@@ -9447,78 +9801,85 @@ var file_hypurr_hypercore_hypercore_service_proto_depIdxs = []int32{
 	106, // 96: hypercore.OHLCStreamResponse.updates:type_name -> hypercore.OHLCUpdate
 	104, // 97: hypercore.OHLCUpdate.pair:type_name -> hypercore.OHLCPair
 	100, // 98: hypercore.OHLCUpdate.candle:type_name -> hypercore.OHLC
-	9,   // 99: hypercore.PnlClassFilter.classes:type_name -> hypercore.PnlClass
-	10,  // 100: hypercore.PnlRankRequest.period:type_name -> hypercore.PnlRankPeriod
-	109, // 101: hypercore.PnlRankRequest.classes:type_name -> hypercore.PnlClassFilter
-	110, // 102: hypercore.PnlRankRequest.assets:type_name -> hypercore.PnlAssetFilter
-	112, // 103: hypercore.PnlRankResponse.entries:type_name -> hypercore.PnlRankEntry
-	17,  // 104: hypercore.HyperCore.WalletMovements:input_type -> hypercore.WalletMovementsRequest
-	21,  // 105: hypercore.HyperCore.WalletBalances:input_type -> hypercore.WalletBalancesRequest
-	34,  // 106: hypercore.HyperCore.AggregatedWalletPositioningStream:input_type -> hypercore.AggregatedWalletPositioningStreamRequest
-	52,  // 107: hypercore.HyperCore.AggregatedWalletLiquidations:input_type -> hypercore.AggregatedWalletLiquidationsRequest
-	56,  // 108: hypercore.HyperCore.Liquidations:input_type -> hypercore.LiquidationsRequest
-	56,  // 109: hypercore.HyperCore.LiquidationsStream:input_type -> hypercore.LiquidationsRequest
-	60,  // 110: hypercore.HyperCore.TPSL:input_type -> hypercore.TPSLRequest
-	60,  // 111: hypercore.HyperCore.TPSLStream:input_type -> hypercore.TPSLRequest
-	64,  // 112: hypercore.HyperCore.OrderBookDepth:input_type -> hypercore.OrderBookDepthRequest
-	38,  // 113: hypercore.HyperCore.WalletBalancesStream:input_type -> hypercore.WalletBalancesStreamRequest
-	23,  // 114: hypercore.HyperCore.WalletTradesStream:input_type -> hypercore.WalletTradesStreamRequest
-	25,  // 115: hypercore.HyperCore.WalletEventsStream:input_type -> hypercore.WalletEventsStreamRequest
-	26,  // 116: hypercore.HyperCore.WalletEvents:input_type -> hypercore.WalletEventsRequest
-	40,  // 117: hypercore.HyperCore.ValidatorDelegators:input_type -> hypercore.ValidatorDelegatorsRequest
-	43,  // 118: hypercore.HyperCore.ReferrerWallet:input_type -> hypercore.ReferrerWalletRequest
-	45,  // 119: hypercore.HyperCore.WalletTags:input_type -> hypercore.WalletTagsRequest
-	48,  // 120: hypercore.HyperCore.WalletsByTag:input_type -> hypercore.WalletsByTagRequest
-	50,  // 121: hypercore.HyperCore.WalletsByFilter:input_type -> hypercore.WalletsByFilterRequest
-	71,  // 122: hypercore.HyperCore.WalletPerformance:input_type -> hypercore.WalletPerformanceRequest
-	73,  // 123: hypercore.HyperCore.WalletPerformanceSeries:input_type -> hypercore.WalletPerformanceSeriesRequest
-	78,  // 124: hypercore.HyperCore.WalletPositioningSeries:input_type -> hypercore.WalletPositioningSeriesRequest
-	80,  // 125: hypercore.HyperCore.SpotInstruments:input_type -> hypercore.SpotInstrumentsRequest
-	84,  // 126: hypercore.HyperCore.PerpInstruments:input_type -> hypercore.PerpInstrumentsRequest
-	87,  // 127: hypercore.HyperCore.WalletsByMetricPercentile:input_type -> hypercore.WalletsByMetricPercentileRequest
-	92,  // 128: hypercore.HyperCore.DirtyWallets:input_type -> hypercore.DirtyWalletsRequest
-	94,  // 129: hypercore.HyperCore.WalletTrades:input_type -> hypercore.WalletTradesRequest
-	96,  // 130: hypercore.HyperCore.ClosedPositions:input_type -> hypercore.ClosedPositionsRequest
-	99,  // 131: hypercore.HyperCore.OHLC:input_type -> hypercore.OHLCRequest
-	103, // 132: hypercore.HyperCore.OHLCStream:input_type -> hypercore.OHLCStreamRequest
-	107, // 133: hypercore.HyperCore.HighLow:input_type -> hypercore.HighLowRequest
-	111, // 134: hypercore.HyperCore.PnlRank:input_type -> hypercore.PnlRankRequest
-	18,  // 135: hypercore.HyperCore.WalletMovements:output_type -> hypercore.WalletMovementsResponse
-	22,  // 136: hypercore.HyperCore.WalletBalances:output_type -> hypercore.WalletBalancesResponse
-	35,  // 137: hypercore.HyperCore.AggregatedWalletPositioningStream:output_type -> hypercore.AggregatedWalletPositioningStreamResponse
-	53,  // 138: hypercore.HyperCore.AggregatedWalletLiquidations:output_type -> hypercore.AggregatedWalletLiquidationsResponse
-	57,  // 139: hypercore.HyperCore.Liquidations:output_type -> hypercore.LiquidationsResponse
-	58,  // 140: hypercore.HyperCore.LiquidationsStream:output_type -> hypercore.LiquidationSnapshot
-	61,  // 141: hypercore.HyperCore.TPSL:output_type -> hypercore.TPSLResponse
-	62,  // 142: hypercore.HyperCore.TPSLStream:output_type -> hypercore.TPSLSnapshot
-	65,  // 143: hypercore.HyperCore.OrderBookDepth:output_type -> hypercore.OrderBookDepthResponse
-	39,  // 144: hypercore.HyperCore.WalletBalancesStream:output_type -> hypercore.WalletBalancesStreamResponse
-	24,  // 145: hypercore.HyperCore.WalletTradesStream:output_type -> hypercore.WalletTradesStreamResponse
-	30,  // 146: hypercore.HyperCore.WalletEventsStream:output_type -> hypercore.WalletEvent
-	28,  // 147: hypercore.HyperCore.WalletEvents:output_type -> hypercore.WalletEventsResponse
-	41,  // 148: hypercore.HyperCore.ValidatorDelegators:output_type -> hypercore.ValidatorDelegatorsResponse
-	44,  // 149: hypercore.HyperCore.ReferrerWallet:output_type -> hypercore.ReferrerWalletResponse
-	46,  // 150: hypercore.HyperCore.WalletTags:output_type -> hypercore.WalletTagsResponse
-	49,  // 151: hypercore.HyperCore.WalletsByTag:output_type -> hypercore.WalletsByTagResponse
-	51,  // 152: hypercore.HyperCore.WalletsByFilter:output_type -> hypercore.WalletsByFilterResponse
-	72,  // 153: hypercore.HyperCore.WalletPerformance:output_type -> hypercore.WalletPerformanceResponse
-	75,  // 154: hypercore.HyperCore.WalletPerformanceSeries:output_type -> hypercore.WalletPerformanceSeriesResponse
-	79,  // 155: hypercore.HyperCore.WalletPositioningSeries:output_type -> hypercore.WalletPositioningSeriesResponse
-	83,  // 156: hypercore.HyperCore.SpotInstruments:output_type -> hypercore.SpotInstrumentsResponse
-	86,  // 157: hypercore.HyperCore.PerpInstruments:output_type -> hypercore.PerpInstrumentsResponse
-	89,  // 158: hypercore.HyperCore.WalletsByMetricPercentile:output_type -> hypercore.WalletsByMetricPercentileResponse
-	93,  // 159: hypercore.HyperCore.DirtyWallets:output_type -> hypercore.DirtyWalletsResponse
-	95,  // 160: hypercore.HyperCore.WalletTrades:output_type -> hypercore.WalletTradesResponse
-	98,  // 161: hypercore.HyperCore.ClosedPositions:output_type -> hypercore.ClosedPositionsResponse
-	102, // 162: hypercore.HyperCore.OHLC:output_type -> hypercore.OHLCResponse
-	105, // 163: hypercore.HyperCore.OHLCStream:output_type -> hypercore.OHLCStreamResponse
-	108, // 164: hypercore.HyperCore.HighLow:output_type -> hypercore.HighLowResponse
-	113, // 165: hypercore.HyperCore.PnlRank:output_type -> hypercore.PnlRankResponse
-	135, // [135:166] is the sub-list for method output_type
-	104, // [104:135] is the sub-list for method input_type
-	104, // [104:104] is the sub-list for extension type_name
-	104, // [104:104] is the sub-list for extension extendee
-	0,   // [0:104] is the sub-list for field type_name
+	8,   // 99: hypercore.InstrumentStatsRequest.interval:type_name -> hypercore.OHLCInterval
+	120, // 100: hypercore.InstrumentStats.open_interest:type_name -> google.protobuf.DoubleValue
+	120, // 101: hypercore.InstrumentStats.mark:type_name -> google.protobuf.DoubleValue
+	110, // 102: hypercore.InstrumentStatsSeries.stats:type_name -> hypercore.InstrumentStats
+	111, // 103: hypercore.InstrumentStatsResponse.series:type_name -> hypercore.InstrumentStatsSeries
+	9,   // 104: hypercore.PnlClassFilter.classes:type_name -> hypercore.PnlClass
+	10,  // 105: hypercore.PnlRankRequest.period:type_name -> hypercore.PnlRankPeriod
+	113, // 106: hypercore.PnlRankRequest.classes:type_name -> hypercore.PnlClassFilter
+	114, // 107: hypercore.PnlRankRequest.assets:type_name -> hypercore.PnlAssetFilter
+	116, // 108: hypercore.PnlRankResponse.entries:type_name -> hypercore.PnlRankEntry
+	17,  // 109: hypercore.HyperCore.WalletMovements:input_type -> hypercore.WalletMovementsRequest
+	21,  // 110: hypercore.HyperCore.WalletBalances:input_type -> hypercore.WalletBalancesRequest
+	34,  // 111: hypercore.HyperCore.AggregatedWalletPositioningStream:input_type -> hypercore.AggregatedWalletPositioningStreamRequest
+	52,  // 112: hypercore.HyperCore.AggregatedWalletLiquidations:input_type -> hypercore.AggregatedWalletLiquidationsRequest
+	56,  // 113: hypercore.HyperCore.Liquidations:input_type -> hypercore.LiquidationsRequest
+	56,  // 114: hypercore.HyperCore.LiquidationsStream:input_type -> hypercore.LiquidationsRequest
+	60,  // 115: hypercore.HyperCore.TPSL:input_type -> hypercore.TPSLRequest
+	60,  // 116: hypercore.HyperCore.TPSLStream:input_type -> hypercore.TPSLRequest
+	64,  // 117: hypercore.HyperCore.OrderBookDepth:input_type -> hypercore.OrderBookDepthRequest
+	38,  // 118: hypercore.HyperCore.WalletBalancesStream:input_type -> hypercore.WalletBalancesStreamRequest
+	23,  // 119: hypercore.HyperCore.WalletTradesStream:input_type -> hypercore.WalletTradesStreamRequest
+	25,  // 120: hypercore.HyperCore.WalletEventsStream:input_type -> hypercore.WalletEventsStreamRequest
+	26,  // 121: hypercore.HyperCore.WalletEvents:input_type -> hypercore.WalletEventsRequest
+	40,  // 122: hypercore.HyperCore.ValidatorDelegators:input_type -> hypercore.ValidatorDelegatorsRequest
+	43,  // 123: hypercore.HyperCore.ReferrerWallet:input_type -> hypercore.ReferrerWalletRequest
+	45,  // 124: hypercore.HyperCore.WalletTags:input_type -> hypercore.WalletTagsRequest
+	48,  // 125: hypercore.HyperCore.WalletsByTag:input_type -> hypercore.WalletsByTagRequest
+	50,  // 126: hypercore.HyperCore.WalletsByFilter:input_type -> hypercore.WalletsByFilterRequest
+	71,  // 127: hypercore.HyperCore.WalletPerformance:input_type -> hypercore.WalletPerformanceRequest
+	73,  // 128: hypercore.HyperCore.WalletPerformanceSeries:input_type -> hypercore.WalletPerformanceSeriesRequest
+	78,  // 129: hypercore.HyperCore.WalletPositioningSeries:input_type -> hypercore.WalletPositioningSeriesRequest
+	80,  // 130: hypercore.HyperCore.SpotInstruments:input_type -> hypercore.SpotInstrumentsRequest
+	84,  // 131: hypercore.HyperCore.PerpInstruments:input_type -> hypercore.PerpInstrumentsRequest
+	87,  // 132: hypercore.HyperCore.WalletsByMetricPercentile:input_type -> hypercore.WalletsByMetricPercentileRequest
+	92,  // 133: hypercore.HyperCore.DirtyWallets:input_type -> hypercore.DirtyWalletsRequest
+	94,  // 134: hypercore.HyperCore.WalletTrades:input_type -> hypercore.WalletTradesRequest
+	96,  // 135: hypercore.HyperCore.ClosedPositions:input_type -> hypercore.ClosedPositionsRequest
+	99,  // 136: hypercore.HyperCore.OHLC:input_type -> hypercore.OHLCRequest
+	103, // 137: hypercore.HyperCore.OHLCStream:input_type -> hypercore.OHLCStreamRequest
+	107, // 138: hypercore.HyperCore.HighLow:input_type -> hypercore.HighLowRequest
+	109, // 139: hypercore.HyperCore.InstrumentStats:input_type -> hypercore.InstrumentStatsRequest
+	115, // 140: hypercore.HyperCore.PnlRank:input_type -> hypercore.PnlRankRequest
+	18,  // 141: hypercore.HyperCore.WalletMovements:output_type -> hypercore.WalletMovementsResponse
+	22,  // 142: hypercore.HyperCore.WalletBalances:output_type -> hypercore.WalletBalancesResponse
+	35,  // 143: hypercore.HyperCore.AggregatedWalletPositioningStream:output_type -> hypercore.AggregatedWalletPositioningStreamResponse
+	53,  // 144: hypercore.HyperCore.AggregatedWalletLiquidations:output_type -> hypercore.AggregatedWalletLiquidationsResponse
+	57,  // 145: hypercore.HyperCore.Liquidations:output_type -> hypercore.LiquidationsResponse
+	58,  // 146: hypercore.HyperCore.LiquidationsStream:output_type -> hypercore.LiquidationSnapshot
+	61,  // 147: hypercore.HyperCore.TPSL:output_type -> hypercore.TPSLResponse
+	62,  // 148: hypercore.HyperCore.TPSLStream:output_type -> hypercore.TPSLSnapshot
+	65,  // 149: hypercore.HyperCore.OrderBookDepth:output_type -> hypercore.OrderBookDepthResponse
+	39,  // 150: hypercore.HyperCore.WalletBalancesStream:output_type -> hypercore.WalletBalancesStreamResponse
+	24,  // 151: hypercore.HyperCore.WalletTradesStream:output_type -> hypercore.WalletTradesStreamResponse
+	30,  // 152: hypercore.HyperCore.WalletEventsStream:output_type -> hypercore.WalletEvent
+	28,  // 153: hypercore.HyperCore.WalletEvents:output_type -> hypercore.WalletEventsResponse
+	41,  // 154: hypercore.HyperCore.ValidatorDelegators:output_type -> hypercore.ValidatorDelegatorsResponse
+	44,  // 155: hypercore.HyperCore.ReferrerWallet:output_type -> hypercore.ReferrerWalletResponse
+	46,  // 156: hypercore.HyperCore.WalletTags:output_type -> hypercore.WalletTagsResponse
+	49,  // 157: hypercore.HyperCore.WalletsByTag:output_type -> hypercore.WalletsByTagResponse
+	51,  // 158: hypercore.HyperCore.WalletsByFilter:output_type -> hypercore.WalletsByFilterResponse
+	72,  // 159: hypercore.HyperCore.WalletPerformance:output_type -> hypercore.WalletPerformanceResponse
+	75,  // 160: hypercore.HyperCore.WalletPerformanceSeries:output_type -> hypercore.WalletPerformanceSeriesResponse
+	79,  // 161: hypercore.HyperCore.WalletPositioningSeries:output_type -> hypercore.WalletPositioningSeriesResponse
+	83,  // 162: hypercore.HyperCore.SpotInstruments:output_type -> hypercore.SpotInstrumentsResponse
+	86,  // 163: hypercore.HyperCore.PerpInstruments:output_type -> hypercore.PerpInstrumentsResponse
+	89,  // 164: hypercore.HyperCore.WalletsByMetricPercentile:output_type -> hypercore.WalletsByMetricPercentileResponse
+	93,  // 165: hypercore.HyperCore.DirtyWallets:output_type -> hypercore.DirtyWalletsResponse
+	95,  // 166: hypercore.HyperCore.WalletTrades:output_type -> hypercore.WalletTradesResponse
+	98,  // 167: hypercore.HyperCore.ClosedPositions:output_type -> hypercore.ClosedPositionsResponse
+	102, // 168: hypercore.HyperCore.OHLC:output_type -> hypercore.OHLCResponse
+	105, // 169: hypercore.HyperCore.OHLCStream:output_type -> hypercore.OHLCStreamResponse
+	108, // 170: hypercore.HyperCore.HighLow:output_type -> hypercore.HighLowResponse
+	112, // 171: hypercore.HyperCore.InstrumentStats:output_type -> hypercore.InstrumentStatsResponse
+	117, // 172: hypercore.HyperCore.PnlRank:output_type -> hypercore.PnlRankResponse
+	141, // [141:173] is the sub-list for method output_type
+	109, // [109:141] is the sub-list for method input_type
+	109, // [109:109] is the sub-list for extension type_name
+	109, // [109:109] is the sub-list for extension extendee
+	0,   // [0:109] is the sub-list for field type_name
 }
 
 func init() { file_hypurr_hypercore_hypercore_service_proto_init() }
@@ -10680,7 +11041,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[96].Exporter = func(v any, i int) any {
-			switch v := v.(*PnlClassFilter); i {
+			switch v := v.(*InstrumentStatsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10692,7 +11053,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[97].Exporter = func(v any, i int) any {
-			switch v := v.(*PnlAssetFilter); i {
+			switch v := v.(*InstrumentStats); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10704,7 +11065,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[98].Exporter = func(v any, i int) any {
-			switch v := v.(*PnlRankRequest); i {
+			switch v := v.(*InstrumentStatsSeries); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10716,7 +11077,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[99].Exporter = func(v any, i int) any {
-			switch v := v.(*PnlRankEntry); i {
+			switch v := v.(*InstrumentStatsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10728,6 +11089,54 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[100].Exporter = func(v any, i int) any {
+			switch v := v.(*PnlClassFilter); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_hypercore_hypercore_service_proto_msgTypes[101].Exporter = func(v any, i int) any {
+			switch v := v.(*PnlAssetFilter); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_hypercore_hypercore_service_proto_msgTypes[102].Exporter = func(v any, i int) any {
+			switch v := v.(*PnlRankRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_hypercore_hypercore_service_proto_msgTypes[103].Exporter = func(v any, i int) any {
+			switch v := v.(*PnlRankEntry); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_hypercore_hypercore_service_proto_msgTypes[104].Exporter = func(v any, i int) any {
 			switch v := v.(*PnlRankResponse); i {
 			case 0:
 				return &v.state
@@ -10750,7 +11159,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 	file_hypurr_hypercore_hypercore_service_proto_msgTypes[62].OneofWrappers = []any{}
 	file_hypurr_hypercore_hypercore_service_proto_msgTypes[63].OneofWrappers = []any{}
 	file_hypurr_hypercore_hypercore_service_proto_msgTypes[84].OneofWrappers = []any{}
-	file_hypurr_hypercore_hypercore_service_proto_msgTypes[98].OneofWrappers = []any{
+	file_hypurr_hypercore_hypercore_service_proto_msgTypes[102].OneofWrappers = []any{
 		(*PnlRankRequest_Classes)(nil),
 		(*PnlRankRequest_Assets)(nil),
 	}
@@ -10760,7 +11169,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hypurr_hypercore_hypercore_service_proto_rawDesc,
 			NumEnums:      13,
-			NumMessages:   101,
+			NumMessages:   105,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

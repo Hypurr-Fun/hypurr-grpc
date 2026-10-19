@@ -11,6 +11,7 @@ import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { Struct } from "../../../google/protobuf/struct";
 // --- rules ---
 
 /**
@@ -44,6 +45,12 @@ export interface AlertRule {
          * @generated from protobuf field: hypurr.alerts.v1.OrderActivityRule order_activity = 4
          */
         orderActivity: OrderActivityRule;
+    } | {
+        oneofKind: "script";
+        /**
+         * @generated from protobuf field: hypurr.alerts.v1.ScriptRule script = 5
+         */
+        script: ScriptRule;
     } | {
         oneofKind: undefined;
     };
@@ -125,6 +132,36 @@ export interface OrderActivityRule {
      * @generated from protobuf field: double min_notional_usd = 3
      */
     minNotionalUsd: number; // fills smaller than this are not notified
+}
+/**
+ * One of the caller's chart scripts (hypurr.scripts.v1) runs on the market's
+ * candles; each alert(message, {key}) it calls on the newest bar notifies,
+ * once per key and bar. Fires on every event: the frequency does not apply.
+ * Scripts see only their bars: subscribe() data reads as na.
+ *
+ * @generated from protobuf message hypurr.alerts.v1.ScriptRule
+ */
+export interface ScriptRule {
+    /**
+     * @generated from protobuf field: int64 market_id = 1
+     */
+    marketId: number;
+    /**
+     * @generated from protobuf field: string script_id = 2
+     */
+    scriptId: string; // e.g. "ema-cross"
+    /**
+     * @generated from protobuf field: string interval = 3
+     */
+    interval: string; // 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 8h, 12h, 1d
+    /**
+     * @generated from protobuf field: google.protobuf.Struct inputs = 4
+     */
+    inputs?: Struct; // over the script's saved inputs
+    /**
+     * @generated from protobuf field: repeated string keys = 5
+     */
+    keys: string[]; // only these alert keys; empty: all
 }
 /**
  * @generated from protobuf message hypurr.alerts.v1.AlertTrigger
@@ -276,7 +313,7 @@ export interface Notification {
     /**
      * @generated from protobuf field: string kind = 2
      */
-    kind: string; // price_alert, price_change, drawdown, order_activity, liquidation, ...
+    kind: string; // price_alert, price_change, drawdown, order_activity, script, liquidation, ...
     /**
      * @generated from protobuf field: string title = 3
      */
@@ -446,7 +483,8 @@ class AlertRule$Type extends MessageType<AlertRule> {
             { no: 1, name: "price", kind: "message", oneof: "rule", T: () => PriceRule },
             { no: 2, name: "price_change", kind: "message", oneof: "rule", T: () => PriceChangeRule },
             { no: 3, name: "drawdown", kind: "message", oneof: "rule", T: () => DrawdownRule },
-            { no: 4, name: "order_activity", kind: "message", oneof: "rule", T: () => OrderActivityRule }
+            { no: 4, name: "order_activity", kind: "message", oneof: "rule", T: () => OrderActivityRule },
+            { no: 5, name: "script", kind: "message", oneof: "rule", T: () => ScriptRule }
         ]);
     }
     create(value?: PartialMessage<AlertRule>): AlertRule {
@@ -485,6 +523,12 @@ class AlertRule$Type extends MessageType<AlertRule> {
                         orderActivity: OrderActivityRule.internalBinaryRead(reader, reader.uint32(), options, (message.rule as any).orderActivity)
                     };
                     break;
+                case /* hypurr.alerts.v1.ScriptRule script */ 5:
+                    message.rule = {
+                        oneofKind: "script",
+                        script: ScriptRule.internalBinaryRead(reader, reader.uint32(), options, (message.rule as any).script)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -509,6 +553,9 @@ class AlertRule$Type extends MessageType<AlertRule> {
         /* hypurr.alerts.v1.OrderActivityRule order_activity = 4; */
         if (message.rule.oneofKind === "orderActivity")
             OrderActivityRule.internalBinaryWrite(message.rule.orderActivity, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.alerts.v1.ScriptRule script = 5; */
+        if (message.rule.oneofKind === "script")
+            ScriptRule.internalBinaryWrite(message.rule.script, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -779,6 +826,84 @@ class OrderActivityRule$Type extends MessageType<OrderActivityRule> {
  * @generated MessageType for protobuf message hypurr.alerts.v1.OrderActivityRule
  */
 export const OrderActivityRule = new OrderActivityRule$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ScriptRule$Type extends MessageType<ScriptRule> {
+    constructor() {
+        super("hypurr.alerts.v1.ScriptRule", [
+            { no: 1, name: "market_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "interval", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "inputs", kind: "message", T: () => Struct },
+            { no: 5, name: "keys", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ScriptRule>): ScriptRule {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.marketId = 0;
+        message.scriptId = "";
+        message.interval = "";
+        message.keys = [];
+        if (value !== undefined)
+            reflectionMergePartial<ScriptRule>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ScriptRule): ScriptRule {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 market_id */ 1:
+                    message.marketId = reader.int64().toNumber();
+                    break;
+                case /* string script_id */ 2:
+                    message.scriptId = reader.string();
+                    break;
+                case /* string interval */ 3:
+                    message.interval = reader.string();
+                    break;
+                case /* google.protobuf.Struct inputs */ 4:
+                    message.inputs = Struct.internalBinaryRead(reader, reader.uint32(), options, message.inputs);
+                    break;
+                case /* repeated string keys */ 5:
+                    message.keys.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ScriptRule, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 market_id = 1; */
+        if (message.marketId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.marketId);
+        /* string script_id = 2; */
+        if (message.scriptId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.scriptId);
+        /* string interval = 3; */
+        if (message.interval !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.interval);
+        /* google.protobuf.Struct inputs = 4; */
+        if (message.inputs)
+            Struct.internalBinaryWrite(message.inputs, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string keys = 5; */
+        for (let i = 0; i < message.keys.length; i++)
+            writer.tag(5, WireType.LengthDelimited).string(message.keys[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.alerts.v1.ScriptRule
+ */
+export const ScriptRule = new ScriptRule$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class AlertTrigger$Type extends MessageType<AlertTrigger> {
     constructor() {

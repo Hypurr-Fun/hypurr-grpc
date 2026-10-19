@@ -49,6 +49,7 @@ const (
 	HyperCore_OHLC_FullMethodName                              = "/hypercore.HyperCore/OHLC"
 	HyperCore_OHLCStream_FullMethodName                        = "/hypercore.HyperCore/OHLCStream"
 	HyperCore_HighLow_FullMethodName                           = "/hypercore.HyperCore/HighLow"
+	HyperCore_InstrumentStats_FullMethodName                   = "/hypercore.HyperCore/InstrumentStats"
 	HyperCore_PnlRank_FullMethodName                           = "/hypercore.HyperCore/PnlRank"
 )
 
@@ -88,6 +89,7 @@ type HyperCoreClient interface {
 	OHLC(ctx context.Context, in *OHLCRequest, opts ...grpc.CallOption) (*OHLCResponse, error)
 	OHLCStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_OHLCStreamClient, error)
 	HighLow(ctx context.Context, in *HighLowRequest, opts ...grpc.CallOption) (*HighLowResponse, error)
+	InstrumentStats(ctx context.Context, in *InstrumentStatsRequest, opts ...grpc.CallOption) (*InstrumentStatsResponse, error)
 	PnlRank(ctx context.Context, in *PnlRankRequest, opts ...grpc.CallOption) (*PnlRankResponse, error)
 }
 
@@ -558,6 +560,16 @@ func (c *hyperCoreClient) HighLow(ctx context.Context, in *HighLowRequest, opts 
 	return out, nil
 }
 
+func (c *hyperCoreClient) InstrumentStats(ctx context.Context, in *InstrumentStatsRequest, opts ...grpc.CallOption) (*InstrumentStatsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InstrumentStatsResponse)
+	err := c.cc.Invoke(ctx, HyperCore_InstrumentStats_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *hyperCoreClient) PnlRank(ctx context.Context, in *PnlRankRequest, opts ...grpc.CallOption) (*PnlRankResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PnlRankResponse)
@@ -604,6 +616,7 @@ type HyperCoreServer interface {
 	OHLC(context.Context, *OHLCRequest) (*OHLCResponse, error)
 	OHLCStream(HyperCore_OHLCStreamServer) error
 	HighLow(context.Context, *HighLowRequest) (*HighLowResponse, error)
+	InstrumentStats(context.Context, *InstrumentStatsRequest) (*InstrumentStatsResponse, error)
 	PnlRank(context.Context, *PnlRankRequest) (*PnlRankResponse, error)
 	mustEmbedUnimplementedHyperCoreServer()
 }
@@ -701,6 +714,9 @@ func (UnimplementedHyperCoreServer) OHLCStream(HyperCore_OHLCStreamServer) error
 }
 func (UnimplementedHyperCoreServer) HighLow(context.Context, *HighLowRequest) (*HighLowResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HighLow not implemented")
+}
+func (UnimplementedHyperCoreServer) InstrumentStats(context.Context, *InstrumentStatsRequest) (*InstrumentStatsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InstrumentStats not implemented")
 }
 func (UnimplementedHyperCoreServer) PnlRank(context.Context, *PnlRankRequest) (*PnlRankResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PnlRank not implemented")
@@ -1289,6 +1305,24 @@ func _HyperCore_HighLow_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_InstrumentStats_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InstrumentStatsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).InstrumentStats(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_InstrumentStats_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).InstrumentStats(ctx, req.(*InstrumentStatsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _HyperCore_PnlRank_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PnlRankRequest)
 	if err := dec(in); err != nil {
@@ -1405,6 +1439,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HighLow",
 			Handler:    _HyperCore_HighLow_Handler,
+		},
+		{
+			MethodName: "InstrumentStats",
+			Handler:    _HyperCore_InstrumentStats_Handler,
 		},
 		{
 			MethodName: "PnlRank",

@@ -1,0 +1,58 @@
+syntax = "proto3";
+package hypurr.scripts.v1;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/scripts/v1;scriptsv1";
+
+import "google/protobuf/struct.proto";
+
+// ScriptService stores the caller's chart scripts (JavaScript indicators the
+// terminal's chart runs per bar), so they follow the user across devices and
+// script alerts (hypurr.alerts.v1 ScriptRule) can run them. Authenticated with
+// the caller's JWT: reads need settings:read, changes settings:write.
+// Limits: 20 scripts, 20,000 characters of source, ids like "ema-cross"
+// (^[a-z0-9][a-z0-9-]{0,47}$).
+service ScriptService {
+  rpc ListScripts(ListScriptsRequest) returns (ListScriptsResponse);
+  // Creates or replaces a script. The source must compile.
+  rpc SaveScript(SaveScriptRequest) returns (SaveScriptResponse);
+  // Deletes a script and the alerts that run it.
+  rpc DeleteScript(DeleteScriptRequest) returns (DeleteScriptResponse);
+}
+
+message Script {
+  string id = 1;
+  string source = 2;
+  google.protobuf.Struct inputs = 3; // input values keyed by input key
+  bool visible = 4;
+  optional int32 pane_height = 5;
+  int32 revision = 6;                // counts saves
+  int64 created_at_ms = 7;
+  int64 updated_at_ms = 8;
+}
+
+message ListScriptsRequest {}
+
+message ListScriptsResponse {
+  repeated Script scripts = 1; // oldest first, the chart's order
+}
+
+message SaveScriptRequest {
+  string id = 1;
+  string source = 2;
+  google.protobuf.Struct inputs = 3;
+  bool visible = 4;
+  optional int32 pane_height = 5;
+  // The revision the client edited: the save fails with ABORTED when the
+  // stored script has moved on (re-list and merge). 0 creates only. Unset
+  // overwrites whatever is stored.
+  optional int32 base_revision = 6;
+}
+
+message SaveScriptResponse {
+  Script script = 1;
+}
+
+message DeleteScriptRequest {
+  string id = 1;
+}
+
+message DeleteScriptResponse {}

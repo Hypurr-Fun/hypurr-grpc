@@ -2049,6 +2049,102 @@ export interface HighLowResponse {
      */
     low: number; // min traded price in range; 0 = no trades
 }
+// ----- Per-perp market stats (open interest, taker flow, liquidations) -----
+
+/**
+ * Perps only. Built from hourly rows, so the interval must be 1H or coarser,
+ * and an hour is served about one minute after it closes (no open bucket).
+ *
+ * @generated from protobuf message hypercore.InstrumentStatsRequest
+ */
+export interface InstrumentStatsRequest {
+    /**
+     * @generated from protobuf field: repeated int64 instrument_ids = 1
+     */
+    instrumentIds: number[]; // non-empty, max 100; same convention as OHLCRequest.instrument_ids, perps only
+    /**
+     * @generated from protobuf field: hypercore.OHLCInterval interval = 2
+     */
+    interval: OHLCInterval; // OHLC_INTERVAL_1H or coarser
+    /**
+     * @generated from protobuf field: int64 from_ts = 3
+     */
+    fromTs: number; // inclusive, unix seconds; 0 = earliest
+    /**
+     * @generated from protobuf field: int64 to_ts = 4
+     */
+    toTs: number; // inclusive, unix seconds; 0 = now
+}
+/**
+ * @generated from protobuf message hypercore.InstrumentStats
+ */
+export interface InstrumentStats {
+    /**
+     * @generated from protobuf field: int64 open_time = 1
+     */
+    openTime: number; // bucket start, unix seconds; same grid as OHLC
+    /**
+     * Open interest in coins and mark in USDC at the end of the bucket's last
+     * sampled hour. Unset when no hour in the bucket has a sample.
+     *
+     * @generated from protobuf field: google.protobuf.DoubleValue open_interest = 2
+     */
+    openInterest?: DoubleValue;
+    /**
+     * @generated from protobuf field: google.protobuf.DoubleValue mark = 3
+     */
+    mark?: DoubleValue;
+    /**
+     * @generated from protobuf field: double taker_buy_base = 4
+     */
+    takerBuyBase: number; // coins bought by takers
+    /**
+     * @generated from protobuf field: double taker_sell_base = 5
+     */
+    takerSellBase: number; // coins sold by takers
+    /**
+     * @generated from protobuf field: double taker_buy_usd = 6
+     */
+    takerBuyUsd: number; // USDC notional bought by takers
+    /**
+     * @generated from protobuf field: double taker_sell_usd = 7
+     */
+    takerSellUsd: number; // USDC notional sold by takers
+    /**
+     * @generated from protobuf field: double liq_buy_usd = 8
+     */
+    liqBuyUsd: number; // USDC notional of liquidations whose taker bought (shorts liquidated)
+    /**
+     * @generated from protobuf field: double liq_sell_usd = 9
+     */
+    liqSellUsd: number; // USDC notional of liquidations whose taker sold (longs liquidated)
+    /**
+     * @generated from protobuf field: uint32 fills = 10
+     */
+    fills: number; // trade count
+}
+/**
+ * @generated from protobuf message hypercore.InstrumentStatsSeries
+ */
+export interface InstrumentStatsSeries {
+    /**
+     * @generated from protobuf field: int64 instrument_id = 1
+     */
+    instrumentId: number;
+    /**
+     * @generated from protobuf field: repeated hypercore.InstrumentStats stats = 2
+     */
+    stats: InstrumentStats[]; // open_time ascending; buckets with no stored hour are omitted
+}
+/**
+ * @generated from protobuf message hypercore.InstrumentStatsResponse
+ */
+export interface InstrumentStatsResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.InstrumentStatsSeries series = 1
+     */
+    series: InstrumentStatsSeries[]; // request order
+}
 /**
  * @generated from protobuf message hypercore.PnlClassFilter
  */
@@ -9173,6 +9269,304 @@ class HighLowResponse$Type extends MessageType<HighLowResponse> {
  */
 export const HighLowResponse = new HighLowResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class InstrumentStatsRequest$Type extends MessageType<InstrumentStatsRequest> {
+    constructor() {
+        super("hypercore.InstrumentStatsRequest", [
+            { no: 1, name: "instrument_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "interval", kind: "enum", T: () => ["hypercore.OHLCInterval", OHLCInterval] },
+            { no: 3, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<InstrumentStatsRequest>): InstrumentStatsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrumentIds = [];
+        message.interval = 0;
+        message.fromTs = 0;
+        message.toTs = 0;
+        if (value !== undefined)
+            reflectionMergePartial<InstrumentStatsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: InstrumentStatsRequest): InstrumentStatsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated int64 instrument_ids */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.instrumentIds.push(reader.int64().toNumber());
+                    else
+                        message.instrumentIds.push(reader.int64().toNumber());
+                    break;
+                case /* hypercore.OHLCInterval interval */ 2:
+                    message.interval = reader.int32();
+                    break;
+                case /* int64 from_ts */ 3:
+                    message.fromTs = reader.int64().toNumber();
+                    break;
+                case /* int64 to_ts */ 4:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: InstrumentStatsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated int64 instrument_ids = 1; */
+        if (message.instrumentIds.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.instrumentIds.length; i++)
+                writer.int64(message.instrumentIds[i]);
+            writer.join();
+        }
+        /* hypercore.OHLCInterval interval = 2; */
+        if (message.interval !== 0)
+            writer.tag(2, WireType.Varint).int32(message.interval);
+        /* int64 from_ts = 3; */
+        if (message.fromTs !== 0)
+            writer.tag(3, WireType.Varint).int64(message.fromTs);
+        /* int64 to_ts = 4; */
+        if (message.toTs !== 0)
+            writer.tag(4, WireType.Varint).int64(message.toTs);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.InstrumentStatsRequest
+ */
+export const InstrumentStatsRequest = new InstrumentStatsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstrumentStats$Type extends MessageType<InstrumentStats> {
+    constructor() {
+        super("hypercore.InstrumentStats", [
+            { no: 1, name: "open_time", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "open_interest", kind: "message", T: () => DoubleValue },
+            { no: 3, name: "mark", kind: "message", T: () => DoubleValue },
+            { no: 4, name: "taker_buy_base", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "taker_sell_base", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "taker_buy_usd", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "taker_sell_usd", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "liq_buy_usd", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "liq_sell_usd", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "fills", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<InstrumentStats>): InstrumentStats {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.openTime = 0;
+        message.takerBuyBase = 0;
+        message.takerSellBase = 0;
+        message.takerBuyUsd = 0;
+        message.takerSellUsd = 0;
+        message.liqBuyUsd = 0;
+        message.liqSellUsd = 0;
+        message.fills = 0;
+        if (value !== undefined)
+            reflectionMergePartial<InstrumentStats>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: InstrumentStats): InstrumentStats {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 open_time */ 1:
+                    message.openTime = reader.int64().toNumber();
+                    break;
+                case /* google.protobuf.DoubleValue open_interest */ 2:
+                    message.openInterest = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.openInterest);
+                    break;
+                case /* google.protobuf.DoubleValue mark */ 3:
+                    message.mark = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.mark);
+                    break;
+                case /* double taker_buy_base */ 4:
+                    message.takerBuyBase = reader.double();
+                    break;
+                case /* double taker_sell_base */ 5:
+                    message.takerSellBase = reader.double();
+                    break;
+                case /* double taker_buy_usd */ 6:
+                    message.takerBuyUsd = reader.double();
+                    break;
+                case /* double taker_sell_usd */ 7:
+                    message.takerSellUsd = reader.double();
+                    break;
+                case /* double liq_buy_usd */ 8:
+                    message.liqBuyUsd = reader.double();
+                    break;
+                case /* double liq_sell_usd */ 9:
+                    message.liqSellUsd = reader.double();
+                    break;
+                case /* uint32 fills */ 10:
+                    message.fills = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: InstrumentStats, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 open_time = 1; */
+        if (message.openTime !== 0)
+            writer.tag(1, WireType.Varint).int64(message.openTime);
+        /* google.protobuf.DoubleValue open_interest = 2; */
+        if (message.openInterest)
+            DoubleValue.internalBinaryWrite(message.openInterest, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.DoubleValue mark = 3; */
+        if (message.mark)
+            DoubleValue.internalBinaryWrite(message.mark, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* double taker_buy_base = 4; */
+        if (message.takerBuyBase !== 0)
+            writer.tag(4, WireType.Bit64).double(message.takerBuyBase);
+        /* double taker_sell_base = 5; */
+        if (message.takerSellBase !== 0)
+            writer.tag(5, WireType.Bit64).double(message.takerSellBase);
+        /* double taker_buy_usd = 6; */
+        if (message.takerBuyUsd !== 0)
+            writer.tag(6, WireType.Bit64).double(message.takerBuyUsd);
+        /* double taker_sell_usd = 7; */
+        if (message.takerSellUsd !== 0)
+            writer.tag(7, WireType.Bit64).double(message.takerSellUsd);
+        /* double liq_buy_usd = 8; */
+        if (message.liqBuyUsd !== 0)
+            writer.tag(8, WireType.Bit64).double(message.liqBuyUsd);
+        /* double liq_sell_usd = 9; */
+        if (message.liqSellUsd !== 0)
+            writer.tag(9, WireType.Bit64).double(message.liqSellUsd);
+        /* uint32 fills = 10; */
+        if (message.fills !== 0)
+            writer.tag(10, WireType.Varint).uint32(message.fills);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.InstrumentStats
+ */
+export const InstrumentStats = new InstrumentStats$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstrumentStatsSeries$Type extends MessageType<InstrumentStatsSeries> {
+    constructor() {
+        super("hypercore.InstrumentStatsSeries", [
+            { no: 1, name: "instrument_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "stats", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => InstrumentStats }
+        ]);
+    }
+    create(value?: PartialMessage<InstrumentStatsSeries>): InstrumentStatsSeries {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrumentId = 0;
+        message.stats = [];
+        if (value !== undefined)
+            reflectionMergePartial<InstrumentStatsSeries>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: InstrumentStatsSeries): InstrumentStatsSeries {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 instrument_id */ 1:
+                    message.instrumentId = reader.int64().toNumber();
+                    break;
+                case /* repeated hypercore.InstrumentStats stats */ 2:
+                    message.stats.push(InstrumentStats.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: InstrumentStatsSeries, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 instrument_id = 1; */
+        if (message.instrumentId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.instrumentId);
+        /* repeated hypercore.InstrumentStats stats = 2; */
+        for (let i = 0; i < message.stats.length; i++)
+            InstrumentStats.internalBinaryWrite(message.stats[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.InstrumentStatsSeries
+ */
+export const InstrumentStatsSeries = new InstrumentStatsSeries$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstrumentStatsResponse$Type extends MessageType<InstrumentStatsResponse> {
+    constructor() {
+        super("hypercore.InstrumentStatsResponse", [
+            { no: 1, name: "series", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => InstrumentStatsSeries }
+        ]);
+    }
+    create(value?: PartialMessage<InstrumentStatsResponse>): InstrumentStatsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.series = [];
+        if (value !== undefined)
+            reflectionMergePartial<InstrumentStatsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: InstrumentStatsResponse): InstrumentStatsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.InstrumentStatsSeries series */ 1:
+                    message.series.push(InstrumentStatsSeries.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: InstrumentStatsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.InstrumentStatsSeries series = 1; */
+        for (let i = 0; i < message.series.length; i++)
+            InstrumentStatsSeries.internalBinaryWrite(message.series[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.InstrumentStatsResponse
+ */
+export const InstrumentStatsResponse = new InstrumentStatsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class PnlClassFilter$Type extends MessageType<PnlClassFilter> {
     constructor() {
         super("hypercore.PnlClassFilter", [
@@ -9534,5 +9928,6 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "OHLC", options: {}, I: OHLCRequest, O: OHLCResponse },
     { name: "OHLCStream", serverStreaming: true, clientStreaming: true, options: {}, I: OHLCStreamRequest, O: OHLCStreamResponse },
     { name: "HighLow", options: {}, I: HighLowRequest, O: HighLowResponse },
+    { name: "InstrumentStats", options: {}, I: InstrumentStatsRequest, O: InstrumentStatsResponse },
     { name: "PnlRank", options: {}, I: PnlRankRequest, O: PnlRankResponse }
 ]);
