@@ -75,10 +75,6 @@ export interface KmsLoginOrRegisterResponse {
      */
     handoff?: KmsAccountHandoff;
     /**
-     * The bot's session for this login, bound to the x-hypurr-device-id
-     * request metadata: a short-lived bearer token for the bot's other
-     * services and the token that refreshes it.
-     *
      * @generated from protobuf field: string bot_access_token = 3
      */
     botAccessToken: string;

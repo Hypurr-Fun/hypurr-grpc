@@ -880,7 +880,7 @@ message PerpPerformance {
   int64 unrealized_pnl_cents = 3; // Signed.
   int64 realized_pnl_cents = 4;   // Signed.
   double win_rate_percent = 5;
-  int64 volume_cents = 6;  // USD trading volume.
+  int64 volume_cents = 6; // USD trading volume.
   int64 funding_cents = 7; // Signed net funding.
   double max_drawdown_percent = 8;
 }
@@ -918,7 +918,7 @@ message PortfolioChart {
 
 message PortfolioChartPoint {
   string timestamp = 1; // RFC3339 UTC.
-  optional int64 balance_cents = 2;
+  int64 balance_cents = 2;
 }
 
 message ClosedPosition {
@@ -933,8 +933,6 @@ message ClosedPosition {
     ClosedSpotPosition spot = 6;
     ClosedPerpPosition perp = 7;
   }
-  // False when the backend cannot price the realized PnL or the return.
-  bool realized_pnl_known = 8;
 }
 
 message ClosedSpotPosition {

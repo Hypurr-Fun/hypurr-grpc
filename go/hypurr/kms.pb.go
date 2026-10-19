@@ -318,12 +318,9 @@ type KmsLoginOrRegisterResponse struct {
 
 	Attestation []byte `protobuf:"bytes,1,opt,name=attestation,proto3" json:"attestation,omitempty"`
 	// Migrated legacy bot users only, absent otherwise.
-	Handoff *KmsAccountHandoff `protobuf:"bytes,2,opt,name=handoff,proto3" json:"handoff,omitempty"`
-	// The bot's session for this login, bound to the x-hypurr-device-id
-	// request metadata: a short-lived bearer token for the bot's other
-	// services and the token that refreshes it.
-	BotAccessToken  string `protobuf:"bytes,3,opt,name=bot_access_token,json=botAccessToken,proto3" json:"bot_access_token,omitempty"`
-	BotRefreshToken string `protobuf:"bytes,4,opt,name=bot_refresh_token,json=botRefreshToken,proto3" json:"bot_refresh_token,omitempty"`
+	Handoff         *KmsAccountHandoff `protobuf:"bytes,2,opt,name=handoff,proto3" json:"handoff,omitempty"`
+	BotAccessToken  string             `protobuf:"bytes,3,opt,name=bot_access_token,json=botAccessToken,proto3" json:"bot_access_token,omitempty"`
+	BotRefreshToken string             `protobuf:"bytes,4,opt,name=bot_refresh_token,json=botRefreshToken,proto3" json:"bot_refresh_token,omitempty"`
 }
 
 func (x *KmsLoginOrRegisterResponse) Reset() {
