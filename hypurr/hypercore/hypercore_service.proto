@@ -742,6 +742,14 @@ message WalletTradesResponse {
   string next_page_token                = 3; // empty when exhausted
 }
 
+message WalletLastTradeTimesRequest {
+  repeated string wallet_addresses = 1; // 1-10,000 addresses
+}
+
+message WalletLastTradeTimesResponse {
+  map<string, int64> last_trade_ts = 1; // Latest real trade, Unix seconds. Missing trades omitted.
+}
+
 enum ClosedPositionKind {
   CLOSED_POSITION_KIND_ALL  = 0; // perp + spot merged
   CLOSED_POSITION_KIND_SPOT = 1;
@@ -959,6 +967,7 @@ service HyperCore {
   rpc WalletsByMetricPercentile(WalletsByMetricPercentileRequest) returns (WalletsByMetricPercentileResponse) {}
   rpc DirtyWallets(DirtyWalletsRequest) returns (DirtyWalletsResponse) {}
   rpc WalletTrades(WalletTradesRequest) returns (WalletTradesResponse) {}
+  rpc WalletLastTradeTimes(WalletLastTradeTimesRequest) returns (WalletLastTradeTimesResponse) {}
   rpc ClosedPositions(ClosedPositionsRequest) returns (ClosedPositionsResponse) {}
   rpc OHLC(OHLCRequest) returns (OHLCResponse) {}
   rpc OHLCStream(stream OHLCStreamRequest) returns (stream OHLCStreamResponse) {}

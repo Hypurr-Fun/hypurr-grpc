@@ -1840,6 +1840,26 @@ export interface WalletTradesResponse {
     nextPageToken: string; // empty when exhausted
 }
 /**
+ * @generated from protobuf message hypercore.WalletLastTradeTimesRequest
+ */
+export interface WalletLastTradeTimesRequest {
+    /**
+     * @generated from protobuf field: repeated string wallet_addresses = 1
+     */
+    walletAddresses: string[]; // 1-10,000 addresses
+}
+/**
+ * @generated from protobuf message hypercore.WalletLastTradeTimesResponse
+ */
+export interface WalletLastTradeTimesResponse {
+    /**
+     * @generated from protobuf field: map<string, int64> last_trade_ts = 1
+     */
+    lastTradeTs: {
+        [key: string]: number;
+    }; // Latest real trade, Unix seconds. Missing trades omitted.
+}
+/**
  * @generated from protobuf message hypercore.ClosedPositionsRequest
  */
 export interface ClosedPositionsRequest {
@@ -8569,6 +8589,116 @@ class WalletTradesResponse$Type extends MessageType<WalletTradesResponse> {
  */
 export const WalletTradesResponse = new WalletTradesResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class WalletLastTradeTimesRequest$Type extends MessageType<WalletLastTradeTimesRequest> {
+    constructor() {
+        super("hypercore.WalletLastTradeTimesRequest", [
+            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletLastTradeTimesRequest>): WalletLastTradeTimesRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddresses = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletLastTradeTimesRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletLastTradeTimesRequest): WalletLastTradeTimesRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string wallet_addresses */ 1:
+                    message.walletAddresses.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletLastTradeTimesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string wallet_addresses = 1; */
+        for (let i = 0; i < message.walletAddresses.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletLastTradeTimesRequest
+ */
+export const WalletLastTradeTimesRequest = new WalletLastTradeTimesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletLastTradeTimesResponse$Type extends MessageType<WalletLastTradeTimesResponse> {
+    constructor() {
+        super("hypercore.WalletLastTradeTimesResponse", [
+            { no: 1, name: "last_trade_ts", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ } }
+        ]);
+    }
+    create(value?: PartialMessage<WalletLastTradeTimesResponse>): WalletLastTradeTimesResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.lastTradeTs = {};
+        if (value !== undefined)
+            reflectionMergePartial<WalletLastTradeTimesResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletLastTradeTimesResponse): WalletLastTradeTimesResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* map<string, int64> last_trade_ts */ 1:
+                    this.binaryReadMap1(message.lastTradeTs, reader, options);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap1(map: WalletLastTradeTimesResponse["lastTradeTs"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof WalletLastTradeTimesResponse["lastTradeTs"] | undefined, val: WalletLastTradeTimesResponse["lastTradeTs"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.int64().toNumber();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for hypercore.WalletLastTradeTimesResponse.last_trade_ts");
+            }
+        }
+        map[key ?? ""] = val ?? 0;
+    }
+    internalBinaryWrite(message: WalletLastTradeTimesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, int64> last_trade_ts = 1; */
+        for (let k of globalThis.Object.keys(message.lastTradeTs))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.Varint).int64(message.lastTradeTs[k]).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletLastTradeTimesResponse
+ */
+export const WalletLastTradeTimesResponse = new WalletLastTradeTimesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class ClosedPositionsRequest$Type extends MessageType<ClosedPositionsRequest> {
     constructor() {
         super("hypercore.ClosedPositionsRequest", [
@@ -10056,6 +10186,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletsByMetricPercentile", options: {}, I: WalletsByMetricPercentileRequest, O: WalletsByMetricPercentileResponse },
     { name: "DirtyWallets", options: {}, I: DirtyWalletsRequest, O: DirtyWalletsResponse },
     { name: "WalletTrades", options: {}, I: WalletTradesRequest, O: WalletTradesResponse },
+    { name: "WalletLastTradeTimes", options: {}, I: WalletLastTradeTimesRequest, O: WalletLastTradeTimesResponse },
     { name: "ClosedPositions", options: {}, I: ClosedPositionsRequest, O: ClosedPositionsResponse },
     { name: "OHLC", options: {}, I: OHLCRequest, O: OHLCResponse },
     { name: "OHLCStream", serverStreaming: true, clientStreaming: true, options: {}, I: OHLCStreamRequest, O: OHLCStreamResponse },
