@@ -742,11 +742,11 @@ message WalletTradesResponse {
   string next_page_token                = 3; // empty when exhausted
 }
 
-message GetLastEventTimestampRequest {
+message WalletLastEventTimestampRequest {
   repeated string wallet_addresses = 1; // 1-10,000 addresses
 }
 
-message GetLastEventTimestampResponse {
+message WalletLastEventTimestampResponse {
   // Latest real fill or movement in Unix seconds. Funding movements are excluded. Wallets without events are omitted.
   map<string, int64> last_event_timestamp = 1;
 }
@@ -968,7 +968,7 @@ service HyperCore {
   rpc WalletsByMetricPercentile(WalletsByMetricPercentileRequest) returns (WalletsByMetricPercentileResponse) {}
   rpc DirtyWallets(DirtyWalletsRequest) returns (DirtyWalletsResponse) {}
   rpc WalletTrades(WalletTradesRequest) returns (WalletTradesResponse) {}
-  rpc GetLastEventTimestamp(GetLastEventTimestampRequest) returns (GetLastEventTimestampResponse) {}
+  rpc WalletLastEventTimestamp(WalletLastEventTimestampRequest) returns (WalletLastEventTimestampResponse) {}
   rpc ClosedPositions(ClosedPositionsRequest) returns (ClosedPositionsResponse) {}
   rpc OHLC(OHLCRequest) returns (OHLCResponse) {}
   rpc OHLCStream(stream OHLCStreamRequest) returns (stream OHLCStreamResponse) {}

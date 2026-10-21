@@ -1840,18 +1840,18 @@ export interface WalletTradesResponse {
     nextPageToken: string; // empty when exhausted
 }
 /**
- * @generated from protobuf message hypercore.GetLastEventTimestampRequest
+ * @generated from protobuf message hypercore.WalletLastEventTimestampRequest
  */
-export interface GetLastEventTimestampRequest {
+export interface WalletLastEventTimestampRequest {
     /**
      * @generated from protobuf field: repeated string wallet_addresses = 1
      */
     walletAddresses: string[]; // 1-10,000 addresses
 }
 /**
- * @generated from protobuf message hypercore.GetLastEventTimestampResponse
+ * @generated from protobuf message hypercore.WalletLastEventTimestampResponse
  */
-export interface GetLastEventTimestampResponse {
+export interface WalletLastEventTimestampResponse {
     /**
      * Latest real fill or movement in Unix seconds. Funding movements are excluded. Wallets without events are omitted.
      *
@@ -8591,20 +8591,20 @@ class WalletTradesResponse$Type extends MessageType<WalletTradesResponse> {
  */
 export const WalletTradesResponse = new WalletTradesResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class GetLastEventTimestampRequest$Type extends MessageType<GetLastEventTimestampRequest> {
+class WalletLastEventTimestampRequest$Type extends MessageType<WalletLastEventTimestampRequest> {
     constructor() {
-        super("hypercore.GetLastEventTimestampRequest", [
+        super("hypercore.WalletLastEventTimestampRequest", [
             { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<GetLastEventTimestampRequest>): GetLastEventTimestampRequest {
+    create(value?: PartialMessage<WalletLastEventTimestampRequest>): WalletLastEventTimestampRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.walletAddresses = [];
         if (value !== undefined)
-            reflectionMergePartial<GetLastEventTimestampRequest>(this, message, value);
+            reflectionMergePartial<WalletLastEventTimestampRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetLastEventTimestampRequest): GetLastEventTimestampRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletLastEventTimestampRequest): WalletLastEventTimestampRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -8623,7 +8623,7 @@ class GetLastEventTimestampRequest$Type extends MessageType<GetLastEventTimestam
         }
         return message;
     }
-    internalBinaryWrite(message: GetLastEventTimestampRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: WalletLastEventTimestampRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* repeated string wallet_addresses = 1; */
         for (let i = 0; i < message.walletAddresses.length; i++)
             writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
@@ -8634,24 +8634,24 @@ class GetLastEventTimestampRequest$Type extends MessageType<GetLastEventTimestam
     }
 }
 /**
- * @generated MessageType for protobuf message hypercore.GetLastEventTimestampRequest
+ * @generated MessageType for protobuf message hypercore.WalletLastEventTimestampRequest
  */
-export const GetLastEventTimestampRequest = new GetLastEventTimestampRequest$Type();
+export const WalletLastEventTimestampRequest = new WalletLastEventTimestampRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class GetLastEventTimestampResponse$Type extends MessageType<GetLastEventTimestampResponse> {
+class WalletLastEventTimestampResponse$Type extends MessageType<WalletLastEventTimestampResponse> {
     constructor() {
-        super("hypercore.GetLastEventTimestampResponse", [
+        super("hypercore.WalletLastEventTimestampResponse", [
             { no: 1, name: "last_event_timestamp", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ } }
         ]);
     }
-    create(value?: PartialMessage<GetLastEventTimestampResponse>): GetLastEventTimestampResponse {
+    create(value?: PartialMessage<WalletLastEventTimestampResponse>): WalletLastEventTimestampResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.lastEventTimestamp = {};
         if (value !== undefined)
-            reflectionMergePartial<GetLastEventTimestampResponse>(this, message, value);
+            reflectionMergePartial<WalletLastEventTimestampResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetLastEventTimestampResponse): GetLastEventTimestampResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletLastEventTimestampResponse): WalletLastEventTimestampResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -8670,8 +8670,8 @@ class GetLastEventTimestampResponse$Type extends MessageType<GetLastEventTimesta
         }
         return message;
     }
-    private binaryReadMap1(map: GetLastEventTimestampResponse["lastEventTimestamp"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof GetLastEventTimestampResponse["lastEventTimestamp"] | undefined, val: GetLastEventTimestampResponse["lastEventTimestamp"][any] | undefined;
+    private binaryReadMap1(map: WalletLastEventTimestampResponse["lastEventTimestamp"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof WalletLastEventTimestampResponse["lastEventTimestamp"] | undefined, val: WalletLastEventTimestampResponse["lastEventTimestamp"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -8681,12 +8681,12 @@ class GetLastEventTimestampResponse$Type extends MessageType<GetLastEventTimesta
                 case 2:
                     val = reader.int64().toNumber();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for hypercore.GetLastEventTimestampResponse.last_event_timestamp");
+                default: throw new globalThis.Error("unknown map entry field for hypercore.WalletLastEventTimestampResponse.last_event_timestamp");
             }
         }
         map[key ?? ""] = val ?? 0;
     }
-    internalBinaryWrite(message: GetLastEventTimestampResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: WalletLastEventTimestampResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, int64> last_event_timestamp = 1; */
         for (let k of globalThis.Object.keys(message.lastEventTimestamp))
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.Varint).int64(message.lastEventTimestamp[k]).join();
@@ -8697,9 +8697,9 @@ class GetLastEventTimestampResponse$Type extends MessageType<GetLastEventTimesta
     }
 }
 /**
- * @generated MessageType for protobuf message hypercore.GetLastEventTimestampResponse
+ * @generated MessageType for protobuf message hypercore.WalletLastEventTimestampResponse
  */
-export const GetLastEventTimestampResponse = new GetLastEventTimestampResponse$Type();
+export const WalletLastEventTimestampResponse = new WalletLastEventTimestampResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ClosedPositionsRequest$Type extends MessageType<ClosedPositionsRequest> {
     constructor() {
@@ -10188,7 +10188,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletsByMetricPercentile", options: {}, I: WalletsByMetricPercentileRequest, O: WalletsByMetricPercentileResponse },
     { name: "DirtyWallets", options: {}, I: DirtyWalletsRequest, O: DirtyWalletsResponse },
     { name: "WalletTrades", options: {}, I: WalletTradesRequest, O: WalletTradesResponse },
-    { name: "GetLastEventTimestamp", options: {}, I: GetLastEventTimestampRequest, O: GetLastEventTimestampResponse },
+    { name: "WalletLastEventTimestamp", options: {}, I: WalletLastEventTimestampRequest, O: WalletLastEventTimestampResponse },
     { name: "ClosedPositions", options: {}, I: ClosedPositionsRequest, O: ClosedPositionsResponse },
     { name: "OHLC", options: {}, I: OHLCRequest, O: OHLCResponse },
     { name: "OHLCStream", serverStreaming: true, clientStreaming: true, options: {}, I: OHLCStreamRequest, O: OHLCStreamResponse },

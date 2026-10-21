@@ -164,10 +164,10 @@ class HyperCoreStub:
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.FromString,
                 _registered_method=True)
-        self.GetLastEventTimestamp = channel.unary_unary(
-                '/hypercore.HyperCore/GetLastEventTimestamp',
-                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.GetLastEventTimestampRequest.SerializeToString,
-                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.GetLastEventTimestampResponse.FromString,
+        self.WalletLastEventTimestamp = channel.unary_unary(
+                '/hypercore.HyperCore/WalletLastEventTimestamp',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletLastEventTimestampRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletLastEventTimestampResponse.FromString,
                 _registered_method=True)
         self.ClosedPositions = channel.unary_unary(
                 '/hypercore.HyperCore/ClosedPositions',
@@ -362,7 +362,7 @@ class HyperCoreServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetLastEventTimestamp(self, request, context):
+    def WalletLastEventTimestamp(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -537,10 +537,10 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletTradesResponse.SerializeToString,
             ),
-            'GetLastEventTimestamp': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetLastEventTimestamp,
-                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.GetLastEventTimestampRequest.FromString,
-                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.GetLastEventTimestampResponse.SerializeToString,
+            'WalletLastEventTimestamp': grpc.unary_unary_rpc_method_handler(
+                    servicer.WalletLastEventTimestamp,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletLastEventTimestampRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletLastEventTimestampResponse.SerializeToString,
             ),
             'ClosedPositions': grpc.unary_unary_rpc_method_handler(
                     servicer.ClosedPositions,
@@ -1286,7 +1286,7 @@ class HyperCore:
             _registered_method=True)
 
     @staticmethod
-    def GetLastEventTimestamp(request,
+    def WalletLastEventTimestamp(request,
             target,
             options=(),
             channel_credentials=None,
@@ -1299,9 +1299,9 @@ class HyperCore:
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/hypercore.HyperCore/GetLastEventTimestamp',
-            hypurr_dot_hypercore_dot_hypercore__service__pb2.GetLastEventTimestampRequest.SerializeToString,
-            hypurr_dot_hypercore_dot_hypercore__service__pb2.GetLastEventTimestampResponse.FromString,
+            '/hypercore.HyperCore/WalletLastEventTimestamp',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletLastEventTimestampRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletLastEventTimestampResponse.FromString,
             options,
             channel_credentials,
             insecure,

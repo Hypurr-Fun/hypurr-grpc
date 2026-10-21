@@ -45,7 +45,7 @@ const (
 	HyperCore_WalletsByMetricPercentile_FullMethodName         = "/hypercore.HyperCore/WalletsByMetricPercentile"
 	HyperCore_DirtyWallets_FullMethodName                      = "/hypercore.HyperCore/DirtyWallets"
 	HyperCore_WalletTrades_FullMethodName                      = "/hypercore.HyperCore/WalletTrades"
-	HyperCore_GetLastEventTimestamp_FullMethodName             = "/hypercore.HyperCore/GetLastEventTimestamp"
+	HyperCore_WalletLastEventTimestamp_FullMethodName          = "/hypercore.HyperCore/WalletLastEventTimestamp"
 	HyperCore_ClosedPositions_FullMethodName                   = "/hypercore.HyperCore/ClosedPositions"
 	HyperCore_OHLC_FullMethodName                              = "/hypercore.HyperCore/OHLC"
 	HyperCore_OHLCStream_FullMethodName                        = "/hypercore.HyperCore/OHLCStream"
@@ -86,7 +86,7 @@ type HyperCoreClient interface {
 	WalletsByMetricPercentile(ctx context.Context, in *WalletsByMetricPercentileRequest, opts ...grpc.CallOption) (*WalletsByMetricPercentileResponse, error)
 	DirtyWallets(ctx context.Context, in *DirtyWalletsRequest, opts ...grpc.CallOption) (*DirtyWalletsResponse, error)
 	WalletTrades(ctx context.Context, in *WalletTradesRequest, opts ...grpc.CallOption) (*WalletTradesResponse, error)
-	GetLastEventTimestamp(ctx context.Context, in *GetLastEventTimestampRequest, opts ...grpc.CallOption) (*GetLastEventTimestampResponse, error)
+	WalletLastEventTimestamp(ctx context.Context, in *WalletLastEventTimestampRequest, opts ...grpc.CallOption) (*WalletLastEventTimestampResponse, error)
 	ClosedPositions(ctx context.Context, in *ClosedPositionsRequest, opts ...grpc.CallOption) (*ClosedPositionsResponse, error)
 	OHLC(ctx context.Context, in *OHLCRequest, opts ...grpc.CallOption) (*OHLCResponse, error)
 	OHLCStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_OHLCStreamClient, error)
@@ -500,10 +500,10 @@ func (c *hyperCoreClient) WalletTrades(ctx context.Context, in *WalletTradesRequ
 	return out, nil
 }
 
-func (c *hyperCoreClient) GetLastEventTimestamp(ctx context.Context, in *GetLastEventTimestampRequest, opts ...grpc.CallOption) (*GetLastEventTimestampResponse, error) {
+func (c *hyperCoreClient) WalletLastEventTimestamp(ctx context.Context, in *WalletLastEventTimestampRequest, opts ...grpc.CallOption) (*WalletLastEventTimestampResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetLastEventTimestampResponse)
-	err := c.cc.Invoke(ctx, HyperCore_GetLastEventTimestamp_FullMethodName, in, out, cOpts...)
+	out := new(WalletLastEventTimestampResponse)
+	err := c.cc.Invoke(ctx, HyperCore_WalletLastEventTimestamp_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -624,7 +624,7 @@ type HyperCoreServer interface {
 	WalletsByMetricPercentile(context.Context, *WalletsByMetricPercentileRequest) (*WalletsByMetricPercentileResponse, error)
 	DirtyWallets(context.Context, *DirtyWalletsRequest) (*DirtyWalletsResponse, error)
 	WalletTrades(context.Context, *WalletTradesRequest) (*WalletTradesResponse, error)
-	GetLastEventTimestamp(context.Context, *GetLastEventTimestampRequest) (*GetLastEventTimestampResponse, error)
+	WalletLastEventTimestamp(context.Context, *WalletLastEventTimestampRequest) (*WalletLastEventTimestampResponse, error)
 	ClosedPositions(context.Context, *ClosedPositionsRequest) (*ClosedPositionsResponse, error)
 	OHLC(context.Context, *OHLCRequest) (*OHLCResponse, error)
 	OHLCStream(HyperCore_OHLCStreamServer) error
@@ -716,8 +716,8 @@ func (UnimplementedHyperCoreServer) DirtyWallets(context.Context, *DirtyWalletsR
 func (UnimplementedHyperCoreServer) WalletTrades(context.Context, *WalletTradesRequest) (*WalletTradesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletTrades not implemented")
 }
-func (UnimplementedHyperCoreServer) GetLastEventTimestamp(context.Context, *GetLastEventTimestampRequest) (*GetLastEventTimestampResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetLastEventTimestamp not implemented")
+func (UnimplementedHyperCoreServer) WalletLastEventTimestamp(context.Context, *WalletLastEventTimestampRequest) (*WalletLastEventTimestampResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WalletLastEventTimestamp not implemented")
 }
 func (UnimplementedHyperCoreServer) ClosedPositions(context.Context, *ClosedPositionsRequest) (*ClosedPositionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClosedPositions not implemented")
@@ -1241,20 +1241,20 @@ func _HyperCore_WalletTrades_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HyperCore_GetLastEventTimestamp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetLastEventTimestampRequest)
+func _HyperCore_WalletLastEventTimestamp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WalletLastEventTimestampRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HyperCoreServer).GetLastEventTimestamp(ctx, in)
+		return srv.(HyperCoreServer).WalletLastEventTimestamp(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HyperCore_GetLastEventTimestamp_FullMethodName,
+		FullMethod: HyperCore_WalletLastEventTimestamp_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HyperCoreServer).GetLastEventTimestamp(ctx, req.(*GetLastEventTimestampRequest))
+		return srv.(HyperCoreServer).WalletLastEventTimestamp(ctx, req.(*WalletLastEventTimestampRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1463,8 +1463,8 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _HyperCore_WalletTrades_Handler,
 		},
 		{
-			MethodName: "GetLastEventTimestamp",
-			Handler:    _HyperCore_GetLastEventTimestamp_Handler,
+			MethodName: "WalletLastEventTimestamp",
+			Handler:    _HyperCore_WalletLastEventTimestamp_Handler,
 		},
 		{
 			MethodName: "ClosedPositions",
