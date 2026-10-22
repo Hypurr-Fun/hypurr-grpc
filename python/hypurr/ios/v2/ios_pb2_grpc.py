@@ -39,6 +39,11 @@ class IosServiceStub:
                 request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.HomeRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.HomeResponse.FromString,
                 _registered_method=True)
+        self.Activity = channel.unary_unary(
+                '/hypurr.ios.v2.IosService/Activity',
+                request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.ActivityRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.ActivityResponse.FromString,
+                _registered_method=True)
         self.LiveAssetUpdates = channel.unary_stream(
                 '/hypurr.ios.v2.IosService/LiveAssetUpdates',
                 request_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.LiveAssetUpdatesRequest.SerializeToString,
@@ -130,6 +135,12 @@ class IosServiceServicer:
     """Missing associated documentation comment in .proto file."""
 
     def Home(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Activity(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -245,6 +256,11 @@ def add_IosServiceServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.HomeRequest.FromString,
                     response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.HomeResponse.SerializeToString,
             ),
+            'Activity': grpc.unary_unary_rpc_method_handler(
+                    servicer.Activity,
+                    request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.ActivityRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.ActivityResponse.SerializeToString,
+            ),
             'LiveAssetUpdates': grpc.unary_stream_rpc_method_handler(
                     servicer.LiveAssetUpdates,
                     request_deserializer=hypurr_dot_ios_dot_v2_dot_ios__pb2.LiveAssetUpdatesRequest.FromString,
@@ -358,6 +374,33 @@ class IosService:
             '/hypurr.ios.v2.IosService/Home',
             hypurr_dot_ios_dot_v2_dot_ios__pb2.HomeRequest.SerializeToString,
             hypurr_dot_ios_dot_v2_dot_ios__pb2.HomeResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Activity(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.v2.IosService/Activity',
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.ActivityRequest.SerializeToString,
+            hypurr_dot_ios_dot_v2_dot_ios__pb2.ActivityResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion8
 
 const (
 	IosService_Home_FullMethodName                  = "/hypurr.ios.v2.IosService/Home"
+	IosService_Activity_FullMethodName              = "/hypurr.ios.v2.IosService/Activity"
 	IosService_LiveAssetUpdates_FullMethodName      = "/hypurr.ios.v2.IosService/LiveAssetUpdates"
 	IosService_Catalog_FullMethodName               = "/hypurr.ios.v2.IosService/Catalog"
 	IosService_AssetDetail_FullMethodName           = "/hypurr.ios.v2.IosService/AssetDetail"
@@ -44,6 +45,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IosServiceClient interface {
 	Home(ctx context.Context, in *HomeRequest, opts ...grpc.CallOption) (*HomeResponse, error)
+	Activity(ctx context.Context, in *ActivityRequest, opts ...grpc.CallOption) (*ActivityResponse, error)
 	LiveAssetUpdates(ctx context.Context, in *LiveAssetUpdatesRequest, opts ...grpc.CallOption) (IosService_LiveAssetUpdatesClient, error)
 	Catalog(ctx context.Context, in *CatalogRequest, opts ...grpc.CallOption) (*CatalogResponse, error)
 	AssetDetail(ctx context.Context, in *AssetDetailRequest, opts ...grpc.CallOption) (*AssetDetailResponse, error)
@@ -75,6 +77,16 @@ func (c *iosServiceClient) Home(ctx context.Context, in *HomeRequest, opts ...gr
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HomeResponse)
 	err := c.cc.Invoke(ctx, IosService_Home_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iosServiceClient) Activity(ctx context.Context, in *ActivityRequest, opts ...grpc.CallOption) (*ActivityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ActivityResponse)
+	err := c.cc.Invoke(ctx, IosService_Activity_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -325,6 +337,7 @@ func (c *iosServiceClient) ClosedPositionHistory(ctx context.Context, in *Closed
 // for forward compatibility
 type IosServiceServer interface {
 	Home(context.Context, *HomeRequest) (*HomeResponse, error)
+	Activity(context.Context, *ActivityRequest) (*ActivityResponse, error)
 	LiveAssetUpdates(*LiveAssetUpdatesRequest, IosService_LiveAssetUpdatesServer) error
 	Catalog(context.Context, *CatalogRequest) (*CatalogResponse, error)
 	AssetDetail(context.Context, *AssetDetailRequest) (*AssetDetailResponse, error)
@@ -351,6 +364,9 @@ type UnimplementedIosServiceServer struct {
 
 func (UnimplementedIosServiceServer) Home(context.Context, *HomeRequest) (*HomeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Home not implemented")
+}
+func (UnimplementedIosServiceServer) Activity(context.Context, *ActivityRequest) (*ActivityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Activity not implemented")
 }
 func (UnimplementedIosServiceServer) LiveAssetUpdates(*LiveAssetUpdatesRequest, IosService_LiveAssetUpdatesServer) error {
 	return status.Errorf(codes.Unimplemented, "method LiveAssetUpdates not implemented")
@@ -430,6 +446,24 @@ func _IosService_Home_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(IosServiceServer).Home(ctx, req.(*HomeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IosService_Activity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ActivityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IosServiceServer).Activity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IosService_Activity_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IosServiceServer).Activity(ctx, req.(*ActivityRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -759,6 +793,10 @@ var IosService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Home",
 			Handler:    _IosService_Home_Handler,
+		},
+		{
+			MethodName: "Activity",
+			Handler:    _IosService_Activity_Handler,
 		},
 		{
 			MethodName: "Catalog",

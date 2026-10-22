@@ -4,6 +4,7 @@ option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios/v2;iosv2";
 
 service IosService {
   rpc Home(HomeRequest) returns (HomeResponse);
+  rpc Activity(ActivityRequest) returns (ActivityResponse);
   rpc LiveAssetUpdates(LiveAssetUpdatesRequest) returns (stream AssetTicks);
   rpc Catalog(CatalogRequest) returns (CatalogResponse);
   rpc AssetDetail(AssetDetailRequest) returns (AssetDetailResponse);
@@ -300,6 +301,26 @@ message GenesisAllocationActivity {
 message SwapActivity {
   ActivityTokenAmount sent = 1;
   ActivityTokenAmount received = 2;
+}
+
+// ==== Activity ====
+
+message ActivityRequest {
+  // Inclusive RFC3339 UTC. Empty means no lower bound.
+  string from = 1;
+  // Exclusive RFC3339 UTC. Empty means no upper bound.
+  string to = 2;
+  // Same wallet ID as Home. Empty means all authenticated wallets.
+  string wallet_id = 3;
+  // Empty starts the first page. Tokens require the same user and filters.
+  string page_token = 4;
+}
+
+message ActivityResponse {
+  // Ordered by occurred_at DESC, id DESC. The backend limits the page size.
+  repeated ActivityItem items = 1;
+  // Empty when the matching history is exhausted.
+  string next_page_token = 2;
 }
 
 // ==== Live prices ====

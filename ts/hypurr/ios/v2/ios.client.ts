@@ -36,6 +36,8 @@ import type { CatalogRequest } from "./ios";
 import type { AssetTicks } from "./ios";
 import type { LiveAssetUpdatesRequest } from "./ios";
 import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
+import type { ActivityResponse } from "./ios";
+import type { ActivityRequest } from "./ios";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { HomeResponse } from "./ios";
 import type { HomeRequest } from "./ios";
@@ -49,6 +51,10 @@ export interface IIosServiceClient {
      * @generated from protobuf rpc: Home
      */
     home(input: HomeRequest, options?: RpcOptions): UnaryCall<HomeRequest, HomeResponse>;
+    /**
+     * @generated from protobuf rpc: Activity
+     */
+    activity(input: ActivityRequest, options?: RpcOptions): UnaryCall<ActivityRequest, ActivityResponse>;
     /**
      * @generated from protobuf rpc: LiveAssetUpdates
      */
@@ -135,122 +141,129 @@ export class IosServiceClient implements IIosServiceClient, ServiceInfo {
         return stackIntercept<HomeRequest, HomeResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: Activity
+     */
+    activity(input: ActivityRequest, options?: RpcOptions): UnaryCall<ActivityRequest, ActivityResponse> {
+        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        return stackIntercept<ActivityRequest, ActivityResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: LiveAssetUpdates
      */
     liveAssetUpdates(input: LiveAssetUpdatesRequest, options?: RpcOptions): ServerStreamingCall<LiveAssetUpdatesRequest, AssetTicks> {
-        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        const method = this.methods[2], opt = this._transport.mergeOptions(options);
         return stackIntercept<LiveAssetUpdatesRequest, AssetTicks>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: Catalog
      */
     catalog(input: CatalogRequest, options?: RpcOptions): UnaryCall<CatalogRequest, CatalogResponse> {
-        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
         return stackIntercept<CatalogRequest, CatalogResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: AssetDetail
      */
     assetDetail(input: AssetDetailRequest, options?: RpcOptions): UnaryCall<AssetDetailRequest, AssetDetailResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<AssetDetailRequest, AssetDetailResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: Candles
      */
     candles(input: CandlesRequest, options?: RpcOptions): UnaryCall<CandlesRequest, Candles> {
-        const method = this.methods[4], opt = this._transport.mergeOptions(options);
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
         return stackIntercept<CandlesRequest, Candles>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: CandlesStream
      */
     candlesStream(input: CandlesStreamRequest, options?: RpcOptions): ServerStreamingCall<CandlesStreamRequest, Candle> {
-        const method = this.methods[5], opt = this._transport.mergeOptions(options);
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
         return stackIntercept<CandlesStreamRequest, Candle>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: UserStream
      */
     userStream(input: UserStreamRequest, options?: RpcOptions): ServerStreamingCall<UserStreamRequest, UserSnapshot> {
-        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        const method = this.methods[7], opt = this._transport.mergeOptions(options);
         return stackIntercept<UserStreamRequest, UserSnapshot>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: OpenOrders
      */
     openOrders(input: OpenOrdersRequest, options?: RpcOptions): UnaryCall<OpenOrdersRequest, OpenOrdersResponse> {
-        const method = this.methods[7], opt = this._transport.mergeOptions(options);
+        const method = this.methods[8], opt = this._transport.mergeOptions(options);
         return stackIntercept<OpenOrdersRequest, OpenOrdersResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: Markets
      */
     markets(input: MarketsRequest, options?: RpcOptions): UnaryCall<MarketsRequest, MarketsResponse> {
-        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        const method = this.methods[9], opt = this._transport.mergeOptions(options);
         return stackIntercept<MarketsRequest, MarketsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: Watchlist
      */
     watchlist(input: WatchlistRequest, options?: RpcOptions): UnaryCall<WatchlistRequest, WatchlistResponse> {
-        const method = this.methods[9], opt = this._transport.mergeOptions(options);
+        const method = this.methods[10], opt = this._transport.mergeOptions(options);
         return stackIntercept<WatchlistRequest, WatchlistResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: AddToWatchlist
      */
     addToWatchlist(input: AddToWatchlistRequest, options?: RpcOptions): UnaryCall<AddToWatchlistRequest, WatchlistMutationResponse> {
-        const method = this.methods[10], opt = this._transport.mergeOptions(options);
+        const method = this.methods[11], opt = this._transport.mergeOptions(options);
         return stackIntercept<AddToWatchlistRequest, WatchlistMutationResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: RemoveFromWatchlist
      */
     removeFromWatchlist(input: RemoveFromWatchlistRequest, options?: RpcOptions): UnaryCall<RemoveFromWatchlistRequest, WatchlistMutationResponse> {
-        const method = this.methods[11], opt = this._transport.mergeOptions(options);
+        const method = this.methods[12], opt = this._transport.mergeOptions(options);
         return stackIntercept<RemoveFromWatchlistRequest, WatchlistMutationResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PriceAlerts
      */
     priceAlerts(input: PriceAlertsRequest, options?: RpcOptions): UnaryCall<PriceAlertsRequest, PriceAlertsResponse> {
-        const method = this.methods[12], opt = this._transport.mergeOptions(options);
+        const method = this.methods[13], opt = this._transport.mergeOptions(options);
         return stackIntercept<PriceAlertsRequest, PriceAlertsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: CreatePriceAlert
      */
     createPriceAlert(input: CreatePriceAlertRequest, options?: RpcOptions): UnaryCall<CreatePriceAlertRequest, PriceAlertResponse> {
-        const method = this.methods[13], opt = this._transport.mergeOptions(options);
+        const method = this.methods[14], opt = this._transport.mergeOptions(options);
         return stackIntercept<CreatePriceAlertRequest, PriceAlertResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: UpdatePriceAlert
      */
     updatePriceAlert(input: UpdatePriceAlertRequest, options?: RpcOptions): UnaryCall<UpdatePriceAlertRequest, PriceAlertResponse> {
-        const method = this.methods[14], opt = this._transport.mergeOptions(options);
+        const method = this.methods[15], opt = this._transport.mergeOptions(options);
         return stackIntercept<UpdatePriceAlertRequest, PriceAlertResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: DeletePriceAlert
      */
     deletePriceAlert(input: DeletePriceAlertRequest, options?: RpcOptions): UnaryCall<DeletePriceAlertRequest, PriceAlertsResponse> {
-        const method = this.methods[15], opt = this._transport.mergeOptions(options);
+        const method = this.methods[16], opt = this._transport.mergeOptions(options);
         return stackIntercept<DeletePriceAlertRequest, PriceAlertsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PortfolioDashboard
      */
     portfolioDashboard(input: PortfolioDashboardRequest, options?: RpcOptions): UnaryCall<PortfolioDashboardRequest, PortfolioDashboardResponse> {
-        const method = this.methods[16], opt = this._transport.mergeOptions(options);
+        const method = this.methods[17], opt = this._transport.mergeOptions(options);
         return stackIntercept<PortfolioDashboardRequest, PortfolioDashboardResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: ClosedPositionHistory
      */
     closedPositionHistory(input: ClosedPositionHistoryRequest, options?: RpcOptions): UnaryCall<ClosedPositionHistoryRequest, ClosedPositionHistoryResponse> {
-        const method = this.methods[17], opt = this._transport.mergeOptions(options);
+        const method = this.methods[18], opt = this._transport.mergeOptions(options);
         return stackIntercept<ClosedPositionHistoryRequest, ClosedPositionHistoryResponse>("unary", this._transport, method, opt, input);
     }
 }

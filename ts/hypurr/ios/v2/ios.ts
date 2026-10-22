@@ -692,6 +692,54 @@ export interface SwapActivity {
      */
     received?: ActivityTokenAmount;
 }
+// ==== Activity ====
+
+/**
+ * @generated from protobuf message hypurr.ios.v2.ActivityRequest
+ */
+export interface ActivityRequest {
+    /**
+     * Inclusive RFC3339 UTC. Empty means no lower bound.
+     *
+     * @generated from protobuf field: string from = 1
+     */
+    from: string;
+    /**
+     * Exclusive RFC3339 UTC. Empty means no upper bound.
+     *
+     * @generated from protobuf field: string to = 2
+     */
+    to: string;
+    /**
+     * Same wallet ID as Home. Empty means all authenticated wallets.
+     *
+     * @generated from protobuf field: string wallet_id = 3
+     */
+    walletId: string;
+    /**
+     * Empty starts the first page. Tokens require the same user and filters.
+     *
+     * @generated from protobuf field: string page_token = 4
+     */
+    pageToken: string;
+}
+/**
+ * @generated from protobuf message hypurr.ios.v2.ActivityResponse
+ */
+export interface ActivityResponse {
+    /**
+     * Ordered by occurred_at DESC, id DESC. The backend limits the page size.
+     *
+     * @generated from protobuf field: repeated hypurr.ios.v2.ActivityItem items = 1
+     */
+    items: ActivityItem[];
+    /**
+     * Empty when the matching history is exhausted.
+     *
+     * @generated from protobuf field: string next_page_token = 2
+     */
+    nextPageToken: string;
+}
 // ==== Live prices ====
 
 /**
@@ -4561,6 +4609,132 @@ class SwapActivity$Type extends MessageType<SwapActivity> {
  * @generated MessageType for protobuf message hypurr.ios.v2.SwapActivity
  */
 export const SwapActivity = new SwapActivity$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ActivityRequest$Type extends MessageType<ActivityRequest> {
+    constructor() {
+        super("hypurr.ios.v2.ActivityRequest", [
+            { no: 1, name: "from", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "wallet_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ActivityRequest>): ActivityRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.from = "";
+        message.to = "";
+        message.walletId = "";
+        message.pageToken = "";
+        if (value !== undefined)
+            reflectionMergePartial<ActivityRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ActivityRequest): ActivityRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string from */ 1:
+                    message.from = reader.string();
+                    break;
+                case /* string to */ 2:
+                    message.to = reader.string();
+                    break;
+                case /* string wallet_id */ 3:
+                    message.walletId = reader.string();
+                    break;
+                case /* string page_token */ 4:
+                    message.pageToken = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ActivityRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string from = 1; */
+        if (message.from !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.from);
+        /* string to = 2; */
+        if (message.to !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.to);
+        /* string wallet_id = 3; */
+        if (message.walletId !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.walletId);
+        /* string page_token = 4; */
+        if (message.pageToken !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.pageToken);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.ActivityRequest
+ */
+export const ActivityRequest = new ActivityRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ActivityResponse$Type extends MessageType<ActivityResponse> {
+    constructor() {
+        super("hypurr.ios.v2.ActivityResponse", [
+            { no: 1, name: "items", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ActivityItem },
+            { no: 2, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ActivityResponse>): ActivityResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.items = [];
+        message.nextPageToken = "";
+        if (value !== undefined)
+            reflectionMergePartial<ActivityResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ActivityResponse): ActivityResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.ios.v2.ActivityItem items */ 1:
+                    message.items.push(ActivityItem.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string next_page_token */ 2:
+                    message.nextPageToken = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ActivityResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.ios.v2.ActivityItem items = 1; */
+        for (let i = 0; i < message.items.length; i++)
+            ActivityItem.internalBinaryWrite(message.items[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string next_page_token = 2; */
+        if (message.nextPageToken !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.nextPageToken);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.v2.ActivityResponse
+ */
+export const ActivityResponse = new ActivityResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class LiveAssetUpdatesRequest$Type extends MessageType<LiveAssetUpdatesRequest> {
     constructor() {
@@ -9106,6 +9280,7 @@ export const ClosedPositionHistoryResponse = new ClosedPositionHistoryResponse$T
  */
 export const IosService = new ServiceType("hypurr.ios.v2.IosService", [
     { name: "Home", options: {}, I: HomeRequest, O: HomeResponse },
+    { name: "Activity", options: {}, I: ActivityRequest, O: ActivityResponse },
     { name: "LiveAssetUpdates", serverStreaming: true, options: {}, I: LiveAssetUpdatesRequest, O: AssetTicks },
     { name: "Catalog", options: {}, I: CatalogRequest, O: CatalogResponse },
     { name: "AssetDetail", options: {}, I: AssetDetailRequest, O: AssetDetailResponse },
