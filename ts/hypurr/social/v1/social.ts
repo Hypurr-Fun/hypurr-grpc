@@ -260,6 +260,214 @@ export interface RespondFollowRequestRequest {
 export interface RespondFollowRequestResponse {
 }
 /**
+ * PositionLink names the position to attach: one of the caller's wallets and
+ * the market (registry security id, as in ios.v2). Perps only for now.
+ *
+ * @generated from protobuf message hypurr.social.v1.PositionLink
+ */
+export interface PositionLink {
+    /**
+     * @generated from protobuf field: int64 wallet_id = 1
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: uint64 market_id = 2
+     */
+    marketId: number;
+}
+/**
+ * PostPosition is the position as it was when posted, plus its live state.
+ *
+ * @generated from protobuf message hypurr.social.v1.PostPosition
+ */
+export interface PostPosition {
+    /**
+     * @generated from protobuf field: uint64 market_id = 1
+     */
+    marketId: number;
+    /**
+     * @generated from protobuf field: string symbol = 2
+     */
+    symbol: string; // "BTC", "xyz:TSLA"
+    /**
+     * @generated from protobuf field: hypurr.social.v1.PositionSide side = 3
+     */
+    side: PositionSide;
+    /**
+     * @generated from protobuf field: double size = 4
+     */
+    size: number; // base units, positive
+    /**
+     * @generated from protobuf field: double entry_price = 5
+     */
+    entryPrice: number;
+    /**
+     * @generated from protobuf field: double mark_price = 6
+     */
+    markPrice: number; // when posted
+    /**
+     * @generated from protobuf field: double notional_usd = 7
+     */
+    notionalUsd: number; // when posted
+    /**
+     * @generated from protobuf field: int32 leverage = 8
+     */
+    leverage: number;
+    /**
+     * @generated from protobuf field: string leverage_type = 9
+     */
+    leverageType: string; // "cross", "isolated"
+    /**
+     * The wallet, when it is public (or the caller owns it). A post from a
+     * private wallet shows the position but not the wallet: wallet_id 0 and
+     * empty name and address.
+     *
+     * @generated from protobuf field: int64 wallet_id = 10
+     */
+    walletId: number;
+    /**
+     * @generated from protobuf field: string wallet_name = 11
+     */
+    walletName: string;
+    /**
+     * @generated from protobuf field: string wallet_address = 12
+     */
+    walletAddress: string;
+    /**
+     * Live: whether the wallet still holds the position on the same side, and
+     * the market's current mark price (about a minute fresh).
+     *
+     * @generated from protobuf field: bool open = 13
+     */
+    open: boolean;
+    /**
+     * @generated from protobuf field: double current_mark_price = 14
+     */
+    currentMarkPrice: number;
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.Post
+ */
+export interface Post {
+    /**
+     * @generated from protobuf field: int64 id = 1
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: hypurr.social.v1.UserSummary author = 2
+     */
+    author?: UserSummary;
+    /**
+     * @generated from protobuf field: string body = 3
+     */
+    body: string;
+    /**
+     * @generated from protobuf field: hypurr.social.v1.PostPosition position = 4
+     */
+    position?: PostPosition; // unset for a text post
+    /**
+     * @generated from protobuf field: int64 created_at_ms = 5
+     */
+    createdAtMs: number;
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.CreatePostRequest
+ */
+export interface CreatePostRequest {
+    /**
+     * @generated from protobuf field: string body = 1
+     */
+    body: string; // at most 1000 characters; may be empty with a position
+    /**
+     * @generated from protobuf field: hypurr.social.v1.PositionLink position = 2
+     */
+    position?: PositionLink;
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.CreatePostResponse
+ */
+export interface CreatePostResponse {
+    /**
+     * @generated from protobuf field: hypurr.social.v1.Post post = 1
+     */
+    post?: Post;
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.DeletePostRequest
+ */
+export interface DeletePostRequest {
+    /**
+     * @generated from protobuf field: int64 post_id = 1
+     */
+    postId: number;
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.DeletePostResponse
+ */
+export interface DeletePostResponse {
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.GetPostRequest
+ */
+export interface GetPostRequest {
+    /**
+     * @generated from protobuf field: int64 post_id = 1
+     */
+    postId: number;
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.GetPostResponse
+ */
+export interface GetPostResponse {
+    /**
+     * @generated from protobuf field: hypurr.social.v1.Post post = 1
+     */
+    post?: Post;
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.ListUserPostsRequest
+ */
+export interface ListUserPostsRequest {
+    /**
+     * @generated from protobuf field: int64 user_id = 1
+     */
+    userId: number; // 0 = the caller
+    /**
+     * @generated from protobuf field: int32 limit = 2
+     */
+    limit: number; // default 30, at most 100
+    /**
+     * @generated from protobuf field: int64 before_id = 3
+     */
+    beforeId: number; // page cursor: posts older than this id; 0 = newest
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.GetFeedRequest
+ */
+export interface GetFeedRequest {
+    /**
+     * @generated from protobuf field: int32 limit = 1
+     */
+    limit: number; // default 30, at most 100
+    /**
+     * @generated from protobuf field: int64 before_id = 2
+     */
+    beforeId: number;
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.ListPostsResponse
+ */
+export interface ListPostsResponse {
+    /**
+     * @generated from protobuf field: repeated hypurr.social.v1.Post posts = 1
+     */
+    posts: Post[];
+    /**
+     * @generated from protobuf field: int64 next_before_id = 2
+     */
+    nextBeforeId: number; // 0 when there is no more
+}
+/**
  * @generated from protobuf enum hypurr.social.v1.Visibility
  */
 export enum Visibility {
@@ -294,6 +502,23 @@ export enum FollowStatus {
      * @generated from protobuf enum value: FOLLOW_STATUS_ACCEPTED = 2;
      */
     ACCEPTED = 2
+}
+/**
+ * @generated from protobuf enum hypurr.social.v1.PositionSide
+ */
+export enum PositionSide {
+    /**
+     * @generated from protobuf enum value: POSITION_SIDE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: POSITION_SIDE_LONG = 1;
+     */
+    LONG = 1,
+    /**
+     * @generated from protobuf enum value: POSITION_SIDE_SHORT = 2;
+     */
+    SHORT = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class UserSummary$Type extends MessageType<UserSummary> {
@@ -1284,6 +1509,740 @@ class RespondFollowRequestResponse$Type extends MessageType<RespondFollowRequest
  * @generated MessageType for protobuf message hypurr.social.v1.RespondFollowRequestResponse
  */
 export const RespondFollowRequestResponse = new RespondFollowRequestResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PositionLink$Type extends MessageType<PositionLink> {
+    constructor() {
+        super("hypurr.social.v1.PositionLink", [
+            { no: 1, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "market_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PositionLink>): PositionLink {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletId = 0;
+        message.marketId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PositionLink>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PositionLink): PositionLink {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 wallet_id */ 1:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* uint64 market_id */ 2:
+                    message.marketId = reader.uint64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PositionLink, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 wallet_id = 1; */
+        if (message.walletId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.walletId);
+        /* uint64 market_id = 2; */
+        if (message.marketId !== 0)
+            writer.tag(2, WireType.Varint).uint64(message.marketId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.PositionLink
+ */
+export const PositionLink = new PositionLink$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PostPosition$Type extends MessageType<PostPosition> {
+    constructor() {
+        super("hypurr.social.v1.PostPosition", [
+            { no: 1, name: "market_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "symbol", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "side", kind: "enum", T: () => ["hypurr.social.v1.PositionSide", PositionSide, "POSITION_SIDE_"] },
+            { no: 4, name: "size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "entry_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "mark_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "notional_usd", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "leverage", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 9, name: "leverage_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 11, name: "wallet_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 12, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 13, name: "open", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 14, name: "current_mark_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PostPosition>): PostPosition {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.marketId = 0;
+        message.symbol = "";
+        message.side = 0;
+        message.size = 0;
+        message.entryPrice = 0;
+        message.markPrice = 0;
+        message.notionalUsd = 0;
+        message.leverage = 0;
+        message.leverageType = "";
+        message.walletId = 0;
+        message.walletName = "";
+        message.walletAddress = "";
+        message.open = false;
+        message.currentMarkPrice = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PostPosition>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PostPosition): PostPosition {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 market_id */ 1:
+                    message.marketId = reader.uint64().toNumber();
+                    break;
+                case /* string symbol */ 2:
+                    message.symbol = reader.string();
+                    break;
+                case /* hypurr.social.v1.PositionSide side */ 3:
+                    message.side = reader.int32();
+                    break;
+                case /* double size */ 4:
+                    message.size = reader.double();
+                    break;
+                case /* double entry_price */ 5:
+                    message.entryPrice = reader.double();
+                    break;
+                case /* double mark_price */ 6:
+                    message.markPrice = reader.double();
+                    break;
+                case /* double notional_usd */ 7:
+                    message.notionalUsd = reader.double();
+                    break;
+                case /* int32 leverage */ 8:
+                    message.leverage = reader.int32();
+                    break;
+                case /* string leverage_type */ 9:
+                    message.leverageType = reader.string();
+                    break;
+                case /* int64 wallet_id */ 10:
+                    message.walletId = reader.int64().toNumber();
+                    break;
+                case /* string wallet_name */ 11:
+                    message.walletName = reader.string();
+                    break;
+                case /* string wallet_address */ 12:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* bool open */ 13:
+                    message.open = reader.bool();
+                    break;
+                case /* double current_mark_price */ 14:
+                    message.currentMarkPrice = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PostPosition, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 market_id = 1; */
+        if (message.marketId !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.marketId);
+        /* string symbol = 2; */
+        if (message.symbol !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.symbol);
+        /* hypurr.social.v1.PositionSide side = 3; */
+        if (message.side !== 0)
+            writer.tag(3, WireType.Varint).int32(message.side);
+        /* double size = 4; */
+        if (message.size !== 0)
+            writer.tag(4, WireType.Bit64).double(message.size);
+        /* double entry_price = 5; */
+        if (message.entryPrice !== 0)
+            writer.tag(5, WireType.Bit64).double(message.entryPrice);
+        /* double mark_price = 6; */
+        if (message.markPrice !== 0)
+            writer.tag(6, WireType.Bit64).double(message.markPrice);
+        /* double notional_usd = 7; */
+        if (message.notionalUsd !== 0)
+            writer.tag(7, WireType.Bit64).double(message.notionalUsd);
+        /* int32 leverage = 8; */
+        if (message.leverage !== 0)
+            writer.tag(8, WireType.Varint).int32(message.leverage);
+        /* string leverage_type = 9; */
+        if (message.leverageType !== "")
+            writer.tag(9, WireType.LengthDelimited).string(message.leverageType);
+        /* int64 wallet_id = 10; */
+        if (message.walletId !== 0)
+            writer.tag(10, WireType.Varint).int64(message.walletId);
+        /* string wallet_name = 11; */
+        if (message.walletName !== "")
+            writer.tag(11, WireType.LengthDelimited).string(message.walletName);
+        /* string wallet_address = 12; */
+        if (message.walletAddress !== "")
+            writer.tag(12, WireType.LengthDelimited).string(message.walletAddress);
+        /* bool open = 13; */
+        if (message.open !== false)
+            writer.tag(13, WireType.Varint).bool(message.open);
+        /* double current_mark_price = 14; */
+        if (message.currentMarkPrice !== 0)
+            writer.tag(14, WireType.Bit64).double(message.currentMarkPrice);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.PostPosition
+ */
+export const PostPosition = new PostPosition$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Post$Type extends MessageType<Post> {
+    constructor() {
+        super("hypurr.social.v1.Post", [
+            { no: 1, name: "id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "author", kind: "message", T: () => UserSummary },
+            { no: 3, name: "body", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "position", kind: "message", T: () => PostPosition },
+            { no: 5, name: "created_at_ms", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<Post>): Post {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = 0;
+        message.body = "";
+        message.createdAtMs = 0;
+        if (value !== undefined)
+            reflectionMergePartial<Post>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Post): Post {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 id */ 1:
+                    message.id = reader.int64().toNumber();
+                    break;
+                case /* hypurr.social.v1.UserSummary author */ 2:
+                    message.author = UserSummary.internalBinaryRead(reader, reader.uint32(), options, message.author);
+                    break;
+                case /* string body */ 3:
+                    message.body = reader.string();
+                    break;
+                case /* hypurr.social.v1.PostPosition position */ 4:
+                    message.position = PostPosition.internalBinaryRead(reader, reader.uint32(), options, message.position);
+                    break;
+                case /* int64 created_at_ms */ 5:
+                    message.createdAtMs = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: Post, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).int64(message.id);
+        /* hypurr.social.v1.UserSummary author = 2; */
+        if (message.author)
+            UserSummary.internalBinaryWrite(message.author, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string body = 3; */
+        if (message.body !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.body);
+        /* hypurr.social.v1.PostPosition position = 4; */
+        if (message.position)
+            PostPosition.internalBinaryWrite(message.position, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* int64 created_at_ms = 5; */
+        if (message.createdAtMs !== 0)
+            writer.tag(5, WireType.Varint).int64(message.createdAtMs);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.Post
+ */
+export const Post = new Post$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreatePostRequest$Type extends MessageType<CreatePostRequest> {
+    constructor() {
+        super("hypurr.social.v1.CreatePostRequest", [
+            { no: 1, name: "body", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "position", kind: "message", T: () => PositionLink }
+        ]);
+    }
+    create(value?: PartialMessage<CreatePostRequest>): CreatePostRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.body = "";
+        if (value !== undefined)
+            reflectionMergePartial<CreatePostRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePostRequest): CreatePostRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string body */ 1:
+                    message.body = reader.string();
+                    break;
+                case /* hypurr.social.v1.PositionLink position */ 2:
+                    message.position = PositionLink.internalBinaryRead(reader, reader.uint32(), options, message.position);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CreatePostRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string body = 1; */
+        if (message.body !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.body);
+        /* hypurr.social.v1.PositionLink position = 2; */
+        if (message.position)
+            PositionLink.internalBinaryWrite(message.position, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.CreatePostRequest
+ */
+export const CreatePostRequest = new CreatePostRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreatePostResponse$Type extends MessageType<CreatePostResponse> {
+    constructor() {
+        super("hypurr.social.v1.CreatePostResponse", [
+            { no: 1, name: "post", kind: "message", T: () => Post }
+        ]);
+    }
+    create(value?: PartialMessage<CreatePostResponse>): CreatePostResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<CreatePostResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePostResponse): CreatePostResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.social.v1.Post post */ 1:
+                    message.post = Post.internalBinaryRead(reader, reader.uint32(), options, message.post);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CreatePostResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.social.v1.Post post = 1; */
+        if (message.post)
+            Post.internalBinaryWrite(message.post, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.CreatePostResponse
+ */
+export const CreatePostResponse = new CreatePostResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DeletePostRequest$Type extends MessageType<DeletePostRequest> {
+    constructor() {
+        super("hypurr.social.v1.DeletePostRequest", [
+            { no: 1, name: "post_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<DeletePostRequest>): DeletePostRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.postId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<DeletePostRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeletePostRequest): DeletePostRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 post_id */ 1:
+                    message.postId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: DeletePostRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 post_id = 1; */
+        if (message.postId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.postId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.DeletePostRequest
+ */
+export const DeletePostRequest = new DeletePostRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DeletePostResponse$Type extends MessageType<DeletePostResponse> {
+    constructor() {
+        super("hypurr.social.v1.DeletePostResponse", []);
+    }
+    create(value?: PartialMessage<DeletePostResponse>): DeletePostResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<DeletePostResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeletePostResponse): DeletePostResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: DeletePostResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.DeletePostResponse
+ */
+export const DeletePostResponse = new DeletePostResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetPostRequest$Type extends MessageType<GetPostRequest> {
+    constructor() {
+        super("hypurr.social.v1.GetPostRequest", [
+            { no: 1, name: "post_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<GetPostRequest>): GetPostRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.postId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<GetPostRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetPostRequest): GetPostRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 post_id */ 1:
+                    message.postId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetPostRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 post_id = 1; */
+        if (message.postId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.postId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.GetPostRequest
+ */
+export const GetPostRequest = new GetPostRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetPostResponse$Type extends MessageType<GetPostResponse> {
+    constructor() {
+        super("hypurr.social.v1.GetPostResponse", [
+            { no: 1, name: "post", kind: "message", T: () => Post }
+        ]);
+    }
+    create(value?: PartialMessage<GetPostResponse>): GetPostResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<GetPostResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetPostResponse): GetPostResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.social.v1.Post post */ 1:
+                    message.post = Post.internalBinaryRead(reader, reader.uint32(), options, message.post);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetPostResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.social.v1.Post post = 1; */
+        if (message.post)
+            Post.internalBinaryWrite(message.post, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.GetPostResponse
+ */
+export const GetPostResponse = new GetPostResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ListUserPostsRequest$Type extends MessageType<ListUserPostsRequest> {
+    constructor() {
+        super("hypurr.social.v1.ListUserPostsRequest", [
+            { no: 1, name: "user_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "limit", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 3, name: "before_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ListUserPostsRequest>): ListUserPostsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.userId = 0;
+        message.limit = 0;
+        message.beforeId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<ListUserPostsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListUserPostsRequest): ListUserPostsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 user_id */ 1:
+                    message.userId = reader.int64().toNumber();
+                    break;
+                case /* int32 limit */ 2:
+                    message.limit = reader.int32();
+                    break;
+                case /* int64 before_id */ 3:
+                    message.beforeId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ListUserPostsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 user_id = 1; */
+        if (message.userId !== 0)
+            writer.tag(1, WireType.Varint).int64(message.userId);
+        /* int32 limit = 2; */
+        if (message.limit !== 0)
+            writer.tag(2, WireType.Varint).int32(message.limit);
+        /* int64 before_id = 3; */
+        if (message.beforeId !== 0)
+            writer.tag(3, WireType.Varint).int64(message.beforeId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.ListUserPostsRequest
+ */
+export const ListUserPostsRequest = new ListUserPostsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetFeedRequest$Type extends MessageType<GetFeedRequest> {
+    constructor() {
+        super("hypurr.social.v1.GetFeedRequest", [
+            { no: 1, name: "limit", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "before_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<GetFeedRequest>): GetFeedRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.limit = 0;
+        message.beforeId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<GetFeedRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetFeedRequest): GetFeedRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 limit */ 1:
+                    message.limit = reader.int32();
+                    break;
+                case /* int64 before_id */ 2:
+                    message.beforeId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetFeedRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 limit = 1; */
+        if (message.limit !== 0)
+            writer.tag(1, WireType.Varint).int32(message.limit);
+        /* int64 before_id = 2; */
+        if (message.beforeId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.beforeId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.GetFeedRequest
+ */
+export const GetFeedRequest = new GetFeedRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ListPostsResponse$Type extends MessageType<ListPostsResponse> {
+    constructor() {
+        super("hypurr.social.v1.ListPostsResponse", [
+            { no: 1, name: "posts", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => Post },
+            { no: 2, name: "next_before_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ListPostsResponse>): ListPostsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.posts = [];
+        message.nextBeforeId = 0;
+        if (value !== undefined)
+            reflectionMergePartial<ListPostsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListPostsResponse): ListPostsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypurr.social.v1.Post posts */ 1:
+                    message.posts.push(Post.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* int64 next_before_id */ 2:
+                    message.nextBeforeId = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ListPostsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypurr.social.v1.Post posts = 1; */
+        for (let i = 0; i < message.posts.length; i++)
+            Post.internalBinaryWrite(message.posts[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* int64 next_before_id = 2; */
+        if (message.nextBeforeId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.nextBeforeId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.ListPostsResponse
+ */
+export const ListPostsResponse = new ListPostsResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.social.v1.SocialService
  */
@@ -1296,5 +2255,10 @@ export const SocialService = new ServiceType("hypurr.social.v1.SocialService", [
     { name: "ListFollowers", options: {}, I: ListFollowsRequest, O: ListFollowsResponse },
     { name: "ListFollowing", options: {}, I: ListFollowsRequest, O: ListFollowsResponse },
     { name: "ListFollowRequests", options: {}, I: ListFollowRequestsRequest, O: ListFollowsResponse },
-    { name: "RespondFollowRequest", options: {}, I: RespondFollowRequestRequest, O: RespondFollowRequestResponse }
+    { name: "RespondFollowRequest", options: {}, I: RespondFollowRequestRequest, O: RespondFollowRequestResponse },
+    { name: "CreatePost", options: {}, I: CreatePostRequest, O: CreatePostResponse },
+    { name: "DeletePost", options: {}, I: DeletePostRequest, O: DeletePostResponse },
+    { name: "GetPost", options: {}, I: GetPostRequest, O: GetPostResponse },
+    { name: "ListUserPosts", options: {}, I: ListUserPostsRequest, O: ListPostsResponse },
+    { name: "GetFeed", options: {}, I: GetFeedRequest, O: ListPostsResponse }
 ]);

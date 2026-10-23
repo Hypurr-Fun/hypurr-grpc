@@ -4,6 +4,15 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { SocialService } from "./social";
+import type { GetFeedRequest } from "./social";
+import type { ListPostsResponse } from "./social";
+import type { ListUserPostsRequest } from "./social";
+import type { GetPostResponse } from "./social";
+import type { GetPostRequest } from "./social";
+import type { DeletePostResponse } from "./social";
+import type { DeletePostRequest } from "./social";
+import type { CreatePostResponse } from "./social";
+import type { CreatePostRequest } from "./social";
 import type { RespondFollowRequestResponse } from "./social";
 import type { RespondFollowRequestRequest } from "./social";
 import type { ListFollowRequestsRequest } from "./social";
@@ -94,6 +103,40 @@ export interface ISocialServiceClient {
      * @generated from protobuf rpc: RespondFollowRequest
      */
     respondFollowRequest(input: RespondFollowRequestRequest, options?: RpcOptions): UnaryCall<RespondFollowRequestRequest, RespondFollowRequestResponse>;
+    /**
+     * Posts: text, optionally linked to one of the author's open perp
+     * positions. A post is visible to whoever can view its author's profile.
+     *
+     * CreatePost checks the position live on Hyperliquid (it must be open in
+     * one of the caller's wallets) and stores a snapshot of it; an unknown
+     * market or no open position fails with FAILED_PRECONDITION.
+     *
+     * @generated from protobuf rpc: CreatePost
+     */
+    createPost(input: CreatePostRequest, options?: RpcOptions): UnaryCall<CreatePostRequest, CreatePostResponse>;
+    /**
+     * DeletePost deletes one of the caller's posts.
+     *
+     * @generated from protobuf rpc: DeletePost
+     */
+    deletePost(input: DeletePostRequest, options?: RpcOptions): UnaryCall<DeletePostRequest, DeletePostResponse>;
+    /**
+     * @generated from protobuf rpc: GetPost
+     */
+    getPost(input: GetPostRequest, options?: RpcOptions): UnaryCall<GetPostRequest, GetPostResponse>;
+    /**
+     * A user's posts, newest first. Visible when the profile is (can_view).
+     *
+     * @generated from protobuf rpc: ListUserPosts
+     */
+    listUserPosts(input: ListUserPostsRequest, options?: RpcOptions): UnaryCall<ListUserPostsRequest, ListPostsResponse>;
+    /**
+     * The caller's posts and those of the users they follow (accepted),
+     * newest first.
+     *
+     * @generated from protobuf rpc: GetFeed
+     */
+    getFeed(input: GetFeedRequest, options?: RpcOptions): UnaryCall<GetFeedRequest, ListPostsResponse>;
 }
 /**
  * SocialService: Hfun users following each other.
@@ -198,5 +241,54 @@ export class SocialServiceClient implements ISocialServiceClient, ServiceInfo {
     respondFollowRequest(input: RespondFollowRequestRequest, options?: RpcOptions): UnaryCall<RespondFollowRequestRequest, RespondFollowRequestResponse> {
         const method = this.methods[8], opt = this._transport.mergeOptions(options);
         return stackIntercept<RespondFollowRequestRequest, RespondFollowRequestResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * Posts: text, optionally linked to one of the author's open perp
+     * positions. A post is visible to whoever can view its author's profile.
+     *
+     * CreatePost checks the position live on Hyperliquid (it must be open in
+     * one of the caller's wallets) and stores a snapshot of it; an unknown
+     * market or no open position fails with FAILED_PRECONDITION.
+     *
+     * @generated from protobuf rpc: CreatePost
+     */
+    createPost(input: CreatePostRequest, options?: RpcOptions): UnaryCall<CreatePostRequest, CreatePostResponse> {
+        const method = this.methods[9], opt = this._transport.mergeOptions(options);
+        return stackIntercept<CreatePostRequest, CreatePostResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * DeletePost deletes one of the caller's posts.
+     *
+     * @generated from protobuf rpc: DeletePost
+     */
+    deletePost(input: DeletePostRequest, options?: RpcOptions): UnaryCall<DeletePostRequest, DeletePostResponse> {
+        const method = this.methods[10], opt = this._transport.mergeOptions(options);
+        return stackIntercept<DeletePostRequest, DeletePostResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: GetPost
+     */
+    getPost(input: GetPostRequest, options?: RpcOptions): UnaryCall<GetPostRequest, GetPostResponse> {
+        const method = this.methods[11], opt = this._transport.mergeOptions(options);
+        return stackIntercept<GetPostRequest, GetPostResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * A user's posts, newest first. Visible when the profile is (can_view).
+     *
+     * @generated from protobuf rpc: ListUserPosts
+     */
+    listUserPosts(input: ListUserPostsRequest, options?: RpcOptions): UnaryCall<ListUserPostsRequest, ListPostsResponse> {
+        const method = this.methods[12], opt = this._transport.mergeOptions(options);
+        return stackIntercept<ListUserPostsRequest, ListPostsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * The caller's posts and those of the users they follow (accepted),
+     * newest first.
+     *
+     * @generated from protobuf rpc: GetFeed
+     */
+    getFeed(input: GetFeedRequest, options?: RpcOptions): UnaryCall<GetFeedRequest, ListPostsResponse> {
+        const method = this.methods[13], opt = this._transport.mergeOptions(options);
+        return stackIntercept<GetFeedRequest, ListPostsResponse>("unary", this._transport, method, opt, input);
     }
 }

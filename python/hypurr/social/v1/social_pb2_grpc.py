@@ -96,6 +96,31 @@ class SocialServiceStub:
                 request_serializer=hypurr_dot_social_dot_v1_dot_social__pb2.RespondFollowRequestRequest.SerializeToString,
                 response_deserializer=hypurr_dot_social_dot_v1_dot_social__pb2.RespondFollowRequestResponse.FromString,
                 _registered_method=True)
+        self.CreatePost = channel.unary_unary(
+                '/hypurr.social.v1.SocialService/CreatePost',
+                request_serializer=hypurr_dot_social_dot_v1_dot_social__pb2.CreatePostRequest.SerializeToString,
+                response_deserializer=hypurr_dot_social_dot_v1_dot_social__pb2.CreatePostResponse.FromString,
+                _registered_method=True)
+        self.DeletePost = channel.unary_unary(
+                '/hypurr.social.v1.SocialService/DeletePost',
+                request_serializer=hypurr_dot_social_dot_v1_dot_social__pb2.DeletePostRequest.SerializeToString,
+                response_deserializer=hypurr_dot_social_dot_v1_dot_social__pb2.DeletePostResponse.FromString,
+                _registered_method=True)
+        self.GetPost = channel.unary_unary(
+                '/hypurr.social.v1.SocialService/GetPost',
+                request_serializer=hypurr_dot_social_dot_v1_dot_social__pb2.GetPostRequest.SerializeToString,
+                response_deserializer=hypurr_dot_social_dot_v1_dot_social__pb2.GetPostResponse.FromString,
+                _registered_method=True)
+        self.ListUserPosts = channel.unary_unary(
+                '/hypurr.social.v1.SocialService/ListUserPosts',
+                request_serializer=hypurr_dot_social_dot_v1_dot_social__pb2.ListUserPostsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_social_dot_v1_dot_social__pb2.ListPostsResponse.FromString,
+                _registered_method=True)
+        self.GetFeed = channel.unary_unary(
+                '/hypurr.social.v1.SocialService/GetFeed',
+                request_serializer=hypurr_dot_social_dot_v1_dot_social__pb2.GetFeedRequest.SerializeToString,
+                response_deserializer=hypurr_dot_social_dot_v1_dot_social__pb2.ListPostsResponse.FromString,
+                _registered_method=True)
 
 
 class SocialServiceServicer:
@@ -180,6 +205,46 @@ class SocialServiceServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CreatePost(self, request, context):
+        """Posts: text, optionally linked to one of the author's open perp
+        positions. A post is visible to whoever can view its author's profile.
+
+        CreatePost checks the position live on Hyperliquid (it must be open in
+        one of the caller's wallets) and stores a snapshot of it; an unknown
+        market or no open position fails with FAILED_PRECONDITION.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeletePost(self, request, context):
+        """DeletePost deletes one of the caller's posts.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetPost(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListUserPosts(self, request, context):
+        """A user's posts, newest first. Visible when the profile is (can_view).
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetFeed(self, request, context):
+        """The caller's posts and those of the users they follow (accepted),
+        newest first.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_SocialServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -227,6 +292,31 @@ def add_SocialServiceServicer_to_server(servicer, server):
                     servicer.RespondFollowRequest,
                     request_deserializer=hypurr_dot_social_dot_v1_dot_social__pb2.RespondFollowRequestRequest.FromString,
                     response_serializer=hypurr_dot_social_dot_v1_dot_social__pb2.RespondFollowRequestResponse.SerializeToString,
+            ),
+            'CreatePost': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreatePost,
+                    request_deserializer=hypurr_dot_social_dot_v1_dot_social__pb2.CreatePostRequest.FromString,
+                    response_serializer=hypurr_dot_social_dot_v1_dot_social__pb2.CreatePostResponse.SerializeToString,
+            ),
+            'DeletePost': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeletePost,
+                    request_deserializer=hypurr_dot_social_dot_v1_dot_social__pb2.DeletePostRequest.FromString,
+                    response_serializer=hypurr_dot_social_dot_v1_dot_social__pb2.DeletePostResponse.SerializeToString,
+            ),
+            'GetPost': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetPost,
+                    request_deserializer=hypurr_dot_social_dot_v1_dot_social__pb2.GetPostRequest.FromString,
+                    response_serializer=hypurr_dot_social_dot_v1_dot_social__pb2.GetPostResponse.SerializeToString,
+            ),
+            'ListUserPosts': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListUserPosts,
+                    request_deserializer=hypurr_dot_social_dot_v1_dot_social__pb2.ListUserPostsRequest.FromString,
+                    response_serializer=hypurr_dot_social_dot_v1_dot_social__pb2.ListPostsResponse.SerializeToString,
+            ),
+            'GetFeed': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetFeed,
+                    request_deserializer=hypurr_dot_social_dot_v1_dot_social__pb2.GetFeedRequest.FromString,
+                    response_serializer=hypurr_dot_social_dot_v1_dot_social__pb2.ListPostsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -489,6 +579,141 @@ class SocialService:
             '/hypurr.social.v1.SocialService/RespondFollowRequest',
             hypurr_dot_social_dot_v1_dot_social__pb2.RespondFollowRequestRequest.SerializeToString,
             hypurr_dot_social_dot_v1_dot_social__pb2.RespondFollowRequestResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CreatePost(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.social.v1.SocialService/CreatePost',
+            hypurr_dot_social_dot_v1_dot_social__pb2.CreatePostRequest.SerializeToString,
+            hypurr_dot_social_dot_v1_dot_social__pb2.CreatePostResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DeletePost(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.social.v1.SocialService/DeletePost',
+            hypurr_dot_social_dot_v1_dot_social__pb2.DeletePostRequest.SerializeToString,
+            hypurr_dot_social_dot_v1_dot_social__pb2.DeletePostResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetPost(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.social.v1.SocialService/GetPost',
+            hypurr_dot_social_dot_v1_dot_social__pb2.GetPostRequest.SerializeToString,
+            hypurr_dot_social_dot_v1_dot_social__pb2.GetPostResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListUserPosts(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.social.v1.SocialService/ListUserPosts',
+            hypurr_dot_social_dot_v1_dot_social__pb2.ListUserPostsRequest.SerializeToString,
+            hypurr_dot_social_dot_v1_dot_social__pb2.ListPostsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetFeed(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.social.v1.SocialService/GetFeed',
+            hypurr_dot_social_dot_v1_dot_social__pb2.GetFeedRequest.SerializeToString,
+            hypurr_dot_social_dot_v1_dot_social__pb2.ListPostsResponse.FromString,
             options,
             channel_credentials,
             insecure,

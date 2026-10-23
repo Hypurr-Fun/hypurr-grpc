@@ -28,6 +28,11 @@ const (
 	SocialService_ListFollowing_FullMethodName         = "/hypurr.social.v1.SocialService/ListFollowing"
 	SocialService_ListFollowRequests_FullMethodName    = "/hypurr.social.v1.SocialService/ListFollowRequests"
 	SocialService_RespondFollowRequest_FullMethodName  = "/hypurr.social.v1.SocialService/RespondFollowRequest"
+	SocialService_CreatePost_FullMethodName            = "/hypurr.social.v1.SocialService/CreatePost"
+	SocialService_DeletePost_FullMethodName            = "/hypurr.social.v1.SocialService/DeletePost"
+	SocialService_GetPost_FullMethodName               = "/hypurr.social.v1.SocialService/GetPost"
+	SocialService_ListUserPosts_FullMethodName         = "/hypurr.social.v1.SocialService/ListUserPosts"
+	SocialService_GetFeed_FullMethodName               = "/hypurr.social.v1.SocialService/GetFeed"
 )
 
 // SocialServiceClient is the client API for SocialService service.
@@ -69,6 +74,21 @@ type SocialServiceClient interface {
 	// Pending requests to follow the caller, newest first.
 	ListFollowRequests(ctx context.Context, in *ListFollowRequestsRequest, opts ...grpc.CallOption) (*ListFollowsResponse, error)
 	RespondFollowRequest(ctx context.Context, in *RespondFollowRequestRequest, opts ...grpc.CallOption) (*RespondFollowRequestResponse, error)
+	// Posts: text, optionally linked to one of the author's open perp
+	// positions. A post is visible to whoever can view its author's profile.
+	//
+	// CreatePost checks the position live on Hyperliquid (it must be open in
+	// one of the caller's wallets) and stores a snapshot of it; an unknown
+	// market or no open position fails with FAILED_PRECONDITION.
+	CreatePost(ctx context.Context, in *CreatePostRequest, opts ...grpc.CallOption) (*CreatePostResponse, error)
+	// DeletePost deletes one of the caller's posts.
+	DeletePost(ctx context.Context, in *DeletePostRequest, opts ...grpc.CallOption) (*DeletePostResponse, error)
+	GetPost(ctx context.Context, in *GetPostRequest, opts ...grpc.CallOption) (*GetPostResponse, error)
+	// A user's posts, newest first. Visible when the profile is (can_view).
+	ListUserPosts(ctx context.Context, in *ListUserPostsRequest, opts ...grpc.CallOption) (*ListPostsResponse, error)
+	// The caller's posts and those of the users they follow (accepted),
+	// newest first.
+	GetFeed(ctx context.Context, in *GetFeedRequest, opts ...grpc.CallOption) (*ListPostsResponse, error)
 }
 
 type socialServiceClient struct {
@@ -169,6 +189,56 @@ func (c *socialServiceClient) RespondFollowRequest(ctx context.Context, in *Resp
 	return out, nil
 }
 
+func (c *socialServiceClient) CreatePost(ctx context.Context, in *CreatePostRequest, opts ...grpc.CallOption) (*CreatePostResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreatePostResponse)
+	err := c.cc.Invoke(ctx, SocialService_CreatePost_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *socialServiceClient) DeletePost(ctx context.Context, in *DeletePostRequest, opts ...grpc.CallOption) (*DeletePostResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeletePostResponse)
+	err := c.cc.Invoke(ctx, SocialService_DeletePost_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *socialServiceClient) GetPost(ctx context.Context, in *GetPostRequest, opts ...grpc.CallOption) (*GetPostResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPostResponse)
+	err := c.cc.Invoke(ctx, SocialService_GetPost_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *socialServiceClient) ListUserPosts(ctx context.Context, in *ListUserPostsRequest, opts ...grpc.CallOption) (*ListPostsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPostsResponse)
+	err := c.cc.Invoke(ctx, SocialService_ListUserPosts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *socialServiceClient) GetFeed(ctx context.Context, in *GetFeedRequest, opts ...grpc.CallOption) (*ListPostsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPostsResponse)
+	err := c.cc.Invoke(ctx, SocialService_GetFeed_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SocialServiceServer is the server API for SocialService service.
 // All implementations must embed UnimplementedSocialServiceServer
 // for forward compatibility
@@ -208,6 +278,21 @@ type SocialServiceServer interface {
 	// Pending requests to follow the caller, newest first.
 	ListFollowRequests(context.Context, *ListFollowRequestsRequest) (*ListFollowsResponse, error)
 	RespondFollowRequest(context.Context, *RespondFollowRequestRequest) (*RespondFollowRequestResponse, error)
+	// Posts: text, optionally linked to one of the author's open perp
+	// positions. A post is visible to whoever can view its author's profile.
+	//
+	// CreatePost checks the position live on Hyperliquid (it must be open in
+	// one of the caller's wallets) and stores a snapshot of it; an unknown
+	// market or no open position fails with FAILED_PRECONDITION.
+	CreatePost(context.Context, *CreatePostRequest) (*CreatePostResponse, error)
+	// DeletePost deletes one of the caller's posts.
+	DeletePost(context.Context, *DeletePostRequest) (*DeletePostResponse, error)
+	GetPost(context.Context, *GetPostRequest) (*GetPostResponse, error)
+	// A user's posts, newest first. Visible when the profile is (can_view).
+	ListUserPosts(context.Context, *ListUserPostsRequest) (*ListPostsResponse, error)
+	// The caller's posts and those of the users they follow (accepted),
+	// newest first.
+	GetFeed(context.Context, *GetFeedRequest) (*ListPostsResponse, error)
 	mustEmbedUnimplementedSocialServiceServer()
 }
 
@@ -241,6 +326,21 @@ func (UnimplementedSocialServiceServer) ListFollowRequests(context.Context, *Lis
 }
 func (UnimplementedSocialServiceServer) RespondFollowRequest(context.Context, *RespondFollowRequestRequest) (*RespondFollowRequestResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RespondFollowRequest not implemented")
+}
+func (UnimplementedSocialServiceServer) CreatePost(context.Context, *CreatePostRequest) (*CreatePostResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePost not implemented")
+}
+func (UnimplementedSocialServiceServer) DeletePost(context.Context, *DeletePostRequest) (*DeletePostResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePost not implemented")
+}
+func (UnimplementedSocialServiceServer) GetPost(context.Context, *GetPostRequest) (*GetPostResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPost not implemented")
+}
+func (UnimplementedSocialServiceServer) ListUserPosts(context.Context, *ListUserPostsRequest) (*ListPostsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUserPosts not implemented")
+}
+func (UnimplementedSocialServiceServer) GetFeed(context.Context, *GetFeedRequest) (*ListPostsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFeed not implemented")
 }
 func (UnimplementedSocialServiceServer) mustEmbedUnimplementedSocialServiceServer() {}
 
@@ -417,6 +517,96 @@ func _SocialService_RespondFollowRequest_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SocialService_CreatePost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SocialServiceServer).CreatePost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SocialService_CreatePost_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SocialServiceServer).CreatePost(ctx, req.(*CreatePostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SocialService_DeletePost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SocialServiceServer).DeletePost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SocialService_DeletePost_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SocialServiceServer).DeletePost(ctx, req.(*DeletePostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SocialService_GetPost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SocialServiceServer).GetPost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SocialService_GetPost_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SocialServiceServer).GetPost(ctx, req.(*GetPostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SocialService_ListUserPosts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUserPostsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SocialServiceServer).ListUserPosts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SocialService_ListUserPosts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SocialServiceServer).ListUserPosts(ctx, req.(*ListUserPostsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SocialService_GetFeed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFeedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SocialServiceServer).GetFeed(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SocialService_GetFeed_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SocialServiceServer).GetFeed(ctx, req.(*GetFeedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SocialService_ServiceDesc is the grpc.ServiceDesc for SocialService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -459,6 +649,26 @@ var SocialService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RespondFollowRequest",
 			Handler:    _SocialService_RespondFollowRequest_Handler,
+		},
+		{
+			MethodName: "CreatePost",
+			Handler:    _SocialService_CreatePost_Handler,
+		},
+		{
+			MethodName: "DeletePost",
+			Handler:    _SocialService_DeletePost_Handler,
+		},
+		{
+			MethodName: "GetPost",
+			Handler:    _SocialService_GetPost_Handler,
+		},
+		{
+			MethodName: "ListUserPosts",
+			Handler:    _SocialService_ListUserPosts_Handler,
+		},
+		{
+			MethodName: "GetFeed",
+			Handler:    _SocialService_GetFeed_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

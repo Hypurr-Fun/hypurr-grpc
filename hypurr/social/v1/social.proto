@@ -39,6 +39,22 @@ service SocialService {
   // Pending requests to follow the caller, newest first.
   rpc ListFollowRequests(ListFollowRequestsRequest) returns (ListFollowsResponse);
   rpc RespondFollowRequest(RespondFollowRequestRequest) returns (RespondFollowRequestResponse);
+
+  // Posts: text, optionally linked to one of the author's open perp
+  // positions. A post is visible to whoever can view its author's profile.
+  //
+  // CreatePost checks the position live on Hyperliquid (it must be open in
+  // one of the caller's wallets) and stores a snapshot of it; an unknown
+  // market or no open position fails with FAILED_PRECONDITION.
+  rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
+  // DeletePost deletes one of the caller's posts.
+  rpc DeletePost(DeletePostRequest) returns (DeletePostResponse);
+  rpc GetPost(GetPostRequest) returns (GetPostResponse);
+  // A user's posts, newest first. Visible when the profile is (can_view).
+  rpc ListUserPosts(ListUserPostsRequest) returns (ListPostsResponse);
+  // The caller's posts and those of the users they follow (accepted),
+  // newest first.
+  rpc GetFeed(GetFeedRequest) returns (ListPostsResponse);
 }
 
 enum Visibility {
@@ -143,3 +159,86 @@ message RespondFollowRequestRequest {
 }
 
 message RespondFollowRequestResponse {}
+
+enum PositionSide {
+  POSITION_SIDE_UNSPECIFIED = 0;
+  POSITION_SIDE_LONG = 1;
+  POSITION_SIDE_SHORT = 2;
+}
+
+// PositionLink names the position to attach: one of the caller's wallets and
+// the market (registry security id, as in ios.v2). Perps only for now.
+message PositionLink {
+  int64 wallet_id = 1;
+  uint64 market_id = 2;
+}
+
+// PostPosition is the position as it was when posted, plus its live state.
+message PostPosition {
+  uint64 market_id = 1;
+  string symbol = 2;           // "BTC", "xyz:TSLA"
+  PositionSide side = 3;
+  double size = 4;             // base units, positive
+  double entry_price = 5;
+  double mark_price = 6;       // when posted
+  double notional_usd = 7;     // when posted
+  int32 leverage = 8;
+  string leverage_type = 9;    // "cross", "isolated"
+  // The wallet, when it is public (or the caller owns it). A post from a
+  // private wallet shows the position but not the wallet: wallet_id 0 and
+  // empty name and address.
+  int64 wallet_id = 10;
+  string wallet_name = 11;
+  string wallet_address = 12;
+  // Live: whether the wallet still holds the position on the same side, and
+  // the market's current mark price (about a minute fresh).
+  bool open = 13;
+  double current_mark_price = 14;
+}
+
+message Post {
+  int64 id = 1;
+  UserSummary author = 2;
+  string body = 3;
+  PostPosition position = 4;   // unset for a text post
+  int64 created_at_ms = 5;
+}
+
+message CreatePostRequest {
+  string body = 1;             // at most 1000 characters; may be empty with a position
+  PositionLink position = 2;
+}
+
+message CreatePostResponse {
+  Post post = 1;
+}
+
+message DeletePostRequest {
+  int64 post_id = 1;
+}
+
+message DeletePostResponse {}
+
+message GetPostRequest {
+  int64 post_id = 1;
+}
+
+message GetPostResponse {
+  Post post = 1;
+}
+
+message ListUserPostsRequest {
+  int64 user_id = 1;   // 0 = the caller
+  int32 limit = 2;     // default 30, at most 100
+  int64 before_id = 3; // page cursor: posts older than this id; 0 = newest
+}
+
+message GetFeedRequest {
+  int32 limit = 1;     // default 30, at most 100
+  int64 before_id = 2;
+}
+
+message ListPostsResponse {
+  repeated Post posts = 1;
+  int64 next_before_id = 2; // 0 when there is no more
+}
