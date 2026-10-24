@@ -114,6 +114,68 @@ message WalletBalancesResponse {
   repeated WalletPerpBalance perp_balances = 3;
 }
 
+message WalletStatesRequest {
+  // Supply 1–100 unique wallet addresses.
+  repeated string wallet_addresses = 1;
+}
+
+message WalletStatesResponse {
+  // Results retain request order.
+  repeated WalletState wallets = 1;
+}
+
+message WalletState {
+  enum AccountMode {
+    ACCOUNT_MODE_UNSPECIFIED = 0;
+    ACCOUNT_MODE_DISABLED = 1;
+    ACCOUNT_MODE_UNIFIED = 2;
+    ACCOUNT_MODE_PORTFOLIO_MARGIN = 3;
+    ACCOUNT_MODE_DEX_ABSTRACTION = 4;
+  }
+
+  message SpotBalance {
+    int64 token = 1;
+    double balance = 2; // Token units.
+    double cost = 3; // USDC units.
+  }
+
+  message PerpState {
+    int64 dex = 1;
+    int64 collateral_token = 2;
+    // Collateral units. Includes signed entry costs and excludes unrealized PnL.
+    double collateral = 3;
+    repeated PerpPosition positions = 4;
+  }
+
+  message PerpPosition {
+    int64 instrument = 1;
+    double size = 2; // Signed base units.
+    double cost = 3; // Signed entry cost in collateral units.
+    double funding = 4; // Collateral units.
+    double leverage = 5;
+    bool isolated = 6;
+    double isolated_margin = 7; // Collateral units.
+  }
+
+  message StakingState {
+    double total = 1; // HYPE units.
+  }
+
+  message BorrowLendBalance {
+    int64 token = 1;
+    double borrowed = 2; // Token units, including accrued interest.
+    double supplied = 3; // Token units, including accrued interest.
+  }
+
+  string wallet_address = 1;
+  AccountMode mode = 2;
+  repeated SpotBalance spot = 3;
+  repeated PerpState perps = 4;
+  double vault_equity = 5; // Aggregate USDC equity across vaults.
+  StakingState staking = 6;
+  repeated BorrowLendBalance borrow_lend = 7;
+}
+
 message WalletTradesStreamRequest {
   repeated string wallet_addresses = 1;
   bytes bloom_filter = 2;
@@ -942,6 +1004,7 @@ message PnlRankResponse {
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
+  rpc WalletStates(WalletStatesRequest) returns (WalletStatesResponse) {}
   rpc AggregatedWalletPositioningStream(AggregatedWalletPositioningStreamRequest) returns (stream AggregatedWalletPositioningStreamResponse) {}
   rpc AggregatedWalletLiquidations(AggregatedWalletLiquidationsRequest) returns (AggregatedWalletLiquidationsResponse) {}
   rpc Liquidations(LiquidationsRequest) returns (LiquidationsResponse) {}

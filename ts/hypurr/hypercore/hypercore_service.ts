@@ -214,6 +214,185 @@ export interface WalletBalancesResponse {
     perpBalances: WalletPerpBalance[];
 }
 /**
+ * @generated from protobuf message hypercore.WalletStatesRequest
+ */
+export interface WalletStatesRequest {
+    /**
+     * Supply 1–100 unique wallet addresses.
+     *
+     * @generated from protobuf field: repeated string wallet_addresses = 1
+     */
+    walletAddresses: string[];
+}
+/**
+ * @generated from protobuf message hypercore.WalletStatesResponse
+ */
+export interface WalletStatesResponse {
+    /**
+     * Results retain request order.
+     *
+     * @generated from protobuf field: repeated hypercore.WalletState wallets = 1
+     */
+    wallets: WalletState[];
+}
+/**
+ * @generated from protobuf message hypercore.WalletState
+ */
+export interface WalletState {
+    /**
+     * @generated from protobuf field: string wallet_address = 1
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: hypercore.WalletState.AccountMode mode = 2
+     */
+    mode: WalletState_AccountMode;
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletState.SpotBalance spot = 3
+     */
+    spot: WalletState_SpotBalance[];
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletState.PerpState perps = 4
+     */
+    perps: WalletState_PerpState[];
+    /**
+     * @generated from protobuf field: double vault_equity = 5
+     */
+    vaultEquity: number; // Aggregate USDC equity across vaults.
+    /**
+     * @generated from protobuf field: hypercore.WalletState.StakingState staking = 6
+     */
+    staking?: WalletState_StakingState;
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletState.BorrowLendBalance borrow_lend = 7
+     */
+    borrowLend: WalletState_BorrowLendBalance[];
+}
+/**
+ * @generated from protobuf message hypercore.WalletState.SpotBalance
+ */
+export interface WalletState_SpotBalance {
+    /**
+     * @generated from protobuf field: int64 token = 1
+     */
+    token: number;
+    /**
+     * @generated from protobuf field: double balance = 2
+     */
+    balance: number; // Token units.
+    /**
+     * @generated from protobuf field: double cost = 3
+     */
+    cost: number; // USDC units.
+}
+/**
+ * @generated from protobuf message hypercore.WalletState.PerpState
+ */
+export interface WalletState_PerpState {
+    /**
+     * @generated from protobuf field: int64 dex = 1
+     */
+    dex: number;
+    /**
+     * @generated from protobuf field: int64 collateral_token = 2
+     */
+    collateralToken: number;
+    /**
+     * Collateral units. Includes signed entry costs and excludes unrealized PnL.
+     *
+     * @generated from protobuf field: double collateral = 3
+     */
+    collateral: number;
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletState.PerpPosition positions = 4
+     */
+    positions: WalletState_PerpPosition[];
+}
+/**
+ * @generated from protobuf message hypercore.WalletState.PerpPosition
+ */
+export interface WalletState_PerpPosition {
+    /**
+     * @generated from protobuf field: int64 instrument = 1
+     */
+    instrument: number;
+    /**
+     * @generated from protobuf field: double size = 2
+     */
+    size: number; // Signed base units.
+    /**
+     * @generated from protobuf field: double cost = 3
+     */
+    cost: number; // Signed entry cost in collateral units.
+    /**
+     * @generated from protobuf field: double funding = 4
+     */
+    funding: number; // Collateral units.
+    /**
+     * @generated from protobuf field: double leverage = 5
+     */
+    leverage: number;
+    /**
+     * @generated from protobuf field: bool isolated = 6
+     */
+    isolated: boolean;
+    /**
+     * @generated from protobuf field: double isolated_margin = 7
+     */
+    isolatedMargin: number; // Collateral units.
+}
+/**
+ * @generated from protobuf message hypercore.WalletState.StakingState
+ */
+export interface WalletState_StakingState {
+    /**
+     * @generated from protobuf field: double total = 1
+     */
+    total: number; // HYPE units.
+}
+/**
+ * @generated from protobuf message hypercore.WalletState.BorrowLendBalance
+ */
+export interface WalletState_BorrowLendBalance {
+    /**
+     * @generated from protobuf field: int64 token = 1
+     */
+    token: number;
+    /**
+     * @generated from protobuf field: double borrowed = 2
+     */
+    borrowed: number; // Token units, including accrued interest.
+    /**
+     * @generated from protobuf field: double supplied = 3
+     */
+    supplied: number; // Token units, including accrued interest.
+}
+/**
+ * @generated from protobuf enum hypercore.WalletState.AccountMode
+ */
+export enum WalletState_AccountMode {
+    /**
+     * @generated from protobuf enum value: ACCOUNT_MODE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: ACCOUNT_MODE_DISABLED = 1;
+     */
+    DISABLED = 1,
+    /**
+     * @generated from protobuf enum value: ACCOUNT_MODE_UNIFIED = 2;
+     */
+    UNIFIED = 2,
+    /**
+     * @generated from protobuf enum value: ACCOUNT_MODE_PORTFOLIO_MARGIN = 3;
+     */
+    PORTFOLIO_MARGIN = 3,
+    /**
+     * @generated from protobuf enum value: ACCOUNT_MODE_DEX_ABSTRACTION = 4;
+     */
+    DEX_ABSTRACTION = 4
+}
+/**
  * @generated from protobuf message hypercore.WalletTradesStreamRequest
  */
 export interface WalletTradesStreamRequest {
@@ -3414,6 +3593,533 @@ class WalletBalancesResponse$Type extends MessageType<WalletBalancesResponse> {
  * @generated MessageType for protobuf message hypercore.WalletBalancesResponse
  */
 export const WalletBalancesResponse = new WalletBalancesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletStatesRequest$Type extends MessageType<WalletStatesRequest> {
+    constructor() {
+        super("hypercore.WalletStatesRequest", [
+            { no: 1, name: "wallet_addresses", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletStatesRequest>): WalletStatesRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddresses = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletStatesRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletStatesRequest): WalletStatesRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string wallet_addresses */ 1:
+                    message.walletAddresses.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletStatesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string wallet_addresses = 1; */
+        for (let i = 0; i < message.walletAddresses.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddresses[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletStatesRequest
+ */
+export const WalletStatesRequest = new WalletStatesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletStatesResponse$Type extends MessageType<WalletStatesResponse> {
+    constructor() {
+        super("hypercore.WalletStatesResponse", [
+            { no: 1, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletState }
+        ]);
+    }
+    create(value?: PartialMessage<WalletStatesResponse>): WalletStatesResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.wallets = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletStatesResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletStatesResponse): WalletStatesResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.WalletState wallets */ 1:
+                    message.wallets.push(WalletState.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletStatesResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.WalletState wallets = 1; */
+        for (let i = 0; i < message.wallets.length; i++)
+            WalletState.internalBinaryWrite(message.wallets[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletStatesResponse
+ */
+export const WalletStatesResponse = new WalletStatesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletState$Type extends MessageType<WalletState> {
+    constructor() {
+        super("hypercore.WalletState", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "mode", kind: "enum", T: () => ["hypercore.WalletState.AccountMode", WalletState_AccountMode, "ACCOUNT_MODE_"] },
+            { no: 3, name: "spot", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletState_SpotBalance },
+            { no: 4, name: "perps", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletState_PerpState },
+            { no: 5, name: "vault_equity", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "staking", kind: "message", T: () => WalletState_StakingState },
+            { no: 7, name: "borrow_lend", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletState_BorrowLendBalance }
+        ]);
+    }
+    create(value?: PartialMessage<WalletState>): WalletState {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        message.mode = 0;
+        message.spot = [];
+        message.perps = [];
+        message.vaultEquity = 0;
+        message.borrowLend = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletState>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletState): WalletState {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* hypercore.WalletState.AccountMode mode */ 2:
+                    message.mode = reader.int32();
+                    break;
+                case /* repeated hypercore.WalletState.SpotBalance spot */ 3:
+                    message.spot.push(WalletState_SpotBalance.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated hypercore.WalletState.PerpState perps */ 4:
+                    message.perps.push(WalletState_PerpState.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* double vault_equity */ 5:
+                    message.vaultEquity = reader.double();
+                    break;
+                case /* hypercore.WalletState.StakingState staking */ 6:
+                    message.staking = WalletState_StakingState.internalBinaryRead(reader, reader.uint32(), options, message.staking);
+                    break;
+                case /* repeated hypercore.WalletState.BorrowLendBalance borrow_lend */ 7:
+                    message.borrowLend.push(WalletState_BorrowLendBalance.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletState, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* hypercore.WalletState.AccountMode mode = 2; */
+        if (message.mode !== 0)
+            writer.tag(2, WireType.Varint).int32(message.mode);
+        /* repeated hypercore.WalletState.SpotBalance spot = 3; */
+        for (let i = 0; i < message.spot.length; i++)
+            WalletState_SpotBalance.internalBinaryWrite(message.spot[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypercore.WalletState.PerpState perps = 4; */
+        for (let i = 0; i < message.perps.length; i++)
+            WalletState_PerpState.internalBinaryWrite(message.perps[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* double vault_equity = 5; */
+        if (message.vaultEquity !== 0)
+            writer.tag(5, WireType.Bit64).double(message.vaultEquity);
+        /* hypercore.WalletState.StakingState staking = 6; */
+        if (message.staking)
+            WalletState_StakingState.internalBinaryWrite(message.staking, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypercore.WalletState.BorrowLendBalance borrow_lend = 7; */
+        for (let i = 0; i < message.borrowLend.length; i++)
+            WalletState_BorrowLendBalance.internalBinaryWrite(message.borrowLend[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletState
+ */
+export const WalletState = new WalletState$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletState_SpotBalance$Type extends MessageType<WalletState_SpotBalance> {
+    constructor() {
+        super("hypercore.WalletState.SpotBalance", [
+            { no: 1, name: "token", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "balance", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletState_SpotBalance>): WalletState_SpotBalance {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.token = 0;
+        message.balance = 0;
+        message.cost = 0;
+        if (value !== undefined)
+            reflectionMergePartial<WalletState_SpotBalance>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletState_SpotBalance): WalletState_SpotBalance {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 token */ 1:
+                    message.token = reader.int64().toNumber();
+                    break;
+                case /* double balance */ 2:
+                    message.balance = reader.double();
+                    break;
+                case /* double cost */ 3:
+                    message.cost = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletState_SpotBalance, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 token = 1; */
+        if (message.token !== 0)
+            writer.tag(1, WireType.Varint).int64(message.token);
+        /* double balance = 2; */
+        if (message.balance !== 0)
+            writer.tag(2, WireType.Bit64).double(message.balance);
+        /* double cost = 3; */
+        if (message.cost !== 0)
+            writer.tag(3, WireType.Bit64).double(message.cost);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletState.SpotBalance
+ */
+export const WalletState_SpotBalance = new WalletState_SpotBalance$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletState_PerpState$Type extends MessageType<WalletState_PerpState> {
+    constructor() {
+        super("hypercore.WalletState.PerpState", [
+            { no: 1, name: "dex", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "collateral_token", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "collateral", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "positions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletState_PerpPosition }
+        ]);
+    }
+    create(value?: PartialMessage<WalletState_PerpState>): WalletState_PerpState {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.dex = 0;
+        message.collateralToken = 0;
+        message.collateral = 0;
+        message.positions = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletState_PerpState>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletState_PerpState): WalletState_PerpState {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 dex */ 1:
+                    message.dex = reader.int64().toNumber();
+                    break;
+                case /* int64 collateral_token */ 2:
+                    message.collateralToken = reader.int64().toNumber();
+                    break;
+                case /* double collateral */ 3:
+                    message.collateral = reader.double();
+                    break;
+                case /* repeated hypercore.WalletState.PerpPosition positions */ 4:
+                    message.positions.push(WalletState_PerpPosition.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletState_PerpState, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 dex = 1; */
+        if (message.dex !== 0)
+            writer.tag(1, WireType.Varint).int64(message.dex);
+        /* int64 collateral_token = 2; */
+        if (message.collateralToken !== 0)
+            writer.tag(2, WireType.Varint).int64(message.collateralToken);
+        /* double collateral = 3; */
+        if (message.collateral !== 0)
+            writer.tag(3, WireType.Bit64).double(message.collateral);
+        /* repeated hypercore.WalletState.PerpPosition positions = 4; */
+        for (let i = 0; i < message.positions.length; i++)
+            WalletState_PerpPosition.internalBinaryWrite(message.positions[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletState.PerpState
+ */
+export const WalletState_PerpState = new WalletState_PerpState$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletState_PerpPosition$Type extends MessageType<WalletState_PerpPosition> {
+    constructor() {
+        super("hypercore.WalletState.PerpPosition", [
+            { no: 1, name: "instrument", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "cost", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "funding", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "leverage", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "isolated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 7, name: "isolated_margin", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletState_PerpPosition>): WalletState_PerpPosition {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.instrument = 0;
+        message.size = 0;
+        message.cost = 0;
+        message.funding = 0;
+        message.leverage = 0;
+        message.isolated = false;
+        message.isolatedMargin = 0;
+        if (value !== undefined)
+            reflectionMergePartial<WalletState_PerpPosition>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletState_PerpPosition): WalletState_PerpPosition {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 instrument */ 1:
+                    message.instrument = reader.int64().toNumber();
+                    break;
+                case /* double size */ 2:
+                    message.size = reader.double();
+                    break;
+                case /* double cost */ 3:
+                    message.cost = reader.double();
+                    break;
+                case /* double funding */ 4:
+                    message.funding = reader.double();
+                    break;
+                case /* double leverage */ 5:
+                    message.leverage = reader.double();
+                    break;
+                case /* bool isolated */ 6:
+                    message.isolated = reader.bool();
+                    break;
+                case /* double isolated_margin */ 7:
+                    message.isolatedMargin = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletState_PerpPosition, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 instrument = 1; */
+        if (message.instrument !== 0)
+            writer.tag(1, WireType.Varint).int64(message.instrument);
+        /* double size = 2; */
+        if (message.size !== 0)
+            writer.tag(2, WireType.Bit64).double(message.size);
+        /* double cost = 3; */
+        if (message.cost !== 0)
+            writer.tag(3, WireType.Bit64).double(message.cost);
+        /* double funding = 4; */
+        if (message.funding !== 0)
+            writer.tag(4, WireType.Bit64).double(message.funding);
+        /* double leverage = 5; */
+        if (message.leverage !== 0)
+            writer.tag(5, WireType.Bit64).double(message.leverage);
+        /* bool isolated = 6; */
+        if (message.isolated !== false)
+            writer.tag(6, WireType.Varint).bool(message.isolated);
+        /* double isolated_margin = 7; */
+        if (message.isolatedMargin !== 0)
+            writer.tag(7, WireType.Bit64).double(message.isolatedMargin);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletState.PerpPosition
+ */
+export const WalletState_PerpPosition = new WalletState_PerpPosition$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletState_StakingState$Type extends MessageType<WalletState_StakingState> {
+    constructor() {
+        super("hypercore.WalletState.StakingState", [
+            { no: 1, name: "total", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletState_StakingState>): WalletState_StakingState {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.total = 0;
+        if (value !== undefined)
+            reflectionMergePartial<WalletState_StakingState>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletState_StakingState): WalletState_StakingState {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* double total */ 1:
+                    message.total = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletState_StakingState, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* double total = 1; */
+        if (message.total !== 0)
+            writer.tag(1, WireType.Bit64).double(message.total);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletState.StakingState
+ */
+export const WalletState_StakingState = new WalletState_StakingState$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletState_BorrowLendBalance$Type extends MessageType<WalletState_BorrowLendBalance> {
+    constructor() {
+        super("hypercore.WalletState.BorrowLendBalance", [
+            { no: 1, name: "token", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "borrowed", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 3, name: "supplied", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletState_BorrowLendBalance>): WalletState_BorrowLendBalance {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.token = 0;
+        message.borrowed = 0;
+        message.supplied = 0;
+        if (value !== undefined)
+            reflectionMergePartial<WalletState_BorrowLendBalance>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletState_BorrowLendBalance): WalletState_BorrowLendBalance {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 token */ 1:
+                    message.token = reader.int64().toNumber();
+                    break;
+                case /* double borrowed */ 2:
+                    message.borrowed = reader.double();
+                    break;
+                case /* double supplied */ 3:
+                    message.supplied = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletState_BorrowLendBalance, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 token = 1; */
+        if (message.token !== 0)
+            writer.tag(1, WireType.Varint).int64(message.token);
+        /* double borrowed = 2; */
+        if (message.borrowed !== 0)
+            writer.tag(2, WireType.Bit64).double(message.borrowed);
+        /* double supplied = 3; */
+        if (message.supplied !== 0)
+            writer.tag(3, WireType.Bit64).double(message.supplied);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletState.BorrowLendBalance
+ */
+export const WalletState_BorrowLendBalance = new WalletState_BorrowLendBalance$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class WalletTradesStreamRequest$Type extends MessageType<WalletTradesStreamRequest> {
     constructor() {
@@ -10164,6 +10870,7 @@ export const PnlRankResponse = new PnlRankResponse$Type();
 export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletMovements", options: {}, I: WalletMovementsRequest, O: WalletMovementsResponse },
     { name: "WalletBalances", options: {}, I: WalletBalancesRequest, O: WalletBalancesResponse },
+    { name: "WalletStates", options: {}, I: WalletStatesRequest, O: WalletStatesResponse },
     { name: "AggregatedWalletPositioningStream", serverStreaming: true, options: {}, I: AggregatedWalletPositioningStreamRequest, O: AggregatedWalletPositioningStreamResponse },
     { name: "AggregatedWalletLiquidations", options: {}, I: AggregatedWalletLiquidationsRequest, O: AggregatedWalletLiquidationsResponse },
     { name: "Liquidations", options: {}, I: LiquidationsRequest, O: LiquidationsResponse },

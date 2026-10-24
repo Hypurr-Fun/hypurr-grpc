@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion8
 const (
 	HyperCore_WalletMovements_FullMethodName                   = "/hypercore.HyperCore/WalletMovements"
 	HyperCore_WalletBalances_FullMethodName                    = "/hypercore.HyperCore/WalletBalances"
+	HyperCore_WalletStates_FullMethodName                      = "/hypercore.HyperCore/WalletStates"
 	HyperCore_AggregatedWalletPositioningStream_FullMethodName = "/hypercore.HyperCore/AggregatedWalletPositioningStream"
 	HyperCore_AggregatedWalletLiquidations_FullMethodName      = "/hypercore.HyperCore/AggregatedWalletLiquidations"
 	HyperCore_Liquidations_FullMethodName                      = "/hypercore.HyperCore/Liquidations"
@@ -60,6 +61,7 @@ const (
 type HyperCoreClient interface {
 	WalletMovements(ctx context.Context, in *WalletMovementsRequest, opts ...grpc.CallOption) (*WalletMovementsResponse, error)
 	WalletBalances(ctx context.Context, in *WalletBalancesRequest, opts ...grpc.CallOption) (*WalletBalancesResponse, error)
+	WalletStates(ctx context.Context, in *WalletStatesRequest, opts ...grpc.CallOption) (*WalletStatesResponse, error)
 	AggregatedWalletPositioningStream(ctx context.Context, in *AggregatedWalletPositioningStreamRequest, opts ...grpc.CallOption) (HyperCore_AggregatedWalletPositioningStreamClient, error)
 	AggregatedWalletLiquidations(ctx context.Context, in *AggregatedWalletLiquidationsRequest, opts ...grpc.CallOption) (*AggregatedWalletLiquidationsResponse, error)
 	Liquidations(ctx context.Context, in *LiquidationsRequest, opts ...grpc.CallOption) (*LiquidationsResponse, error)
@@ -117,6 +119,16 @@ func (c *hyperCoreClient) WalletBalances(ctx context.Context, in *WalletBalances
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(WalletBalancesResponse)
 	err := c.cc.Invoke(ctx, HyperCore_WalletBalances_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hyperCoreClient) WalletStates(ctx context.Context, in *WalletStatesRequest, opts ...grpc.CallOption) (*WalletStatesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WalletStatesResponse)
+	err := c.cc.Invoke(ctx, HyperCore_WalletStates_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -598,6 +610,7 @@ func (c *hyperCoreClient) PnlRank(ctx context.Context, in *PnlRankRequest, opts 
 type HyperCoreServer interface {
 	WalletMovements(context.Context, *WalletMovementsRequest) (*WalletMovementsResponse, error)
 	WalletBalances(context.Context, *WalletBalancesRequest) (*WalletBalancesResponse, error)
+	WalletStates(context.Context, *WalletStatesRequest) (*WalletStatesResponse, error)
 	AggregatedWalletPositioningStream(*AggregatedWalletPositioningStreamRequest, HyperCore_AggregatedWalletPositioningStreamServer) error
 	AggregatedWalletLiquidations(context.Context, *AggregatedWalletLiquidationsRequest) (*AggregatedWalletLiquidationsResponse, error)
 	Liquidations(context.Context, *LiquidationsRequest) (*LiquidationsResponse, error)
@@ -643,6 +656,9 @@ func (UnimplementedHyperCoreServer) WalletMovements(context.Context, *WalletMove
 }
 func (UnimplementedHyperCoreServer) WalletBalances(context.Context, *WalletBalancesRequest) (*WalletBalancesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletBalances not implemented")
+}
+func (UnimplementedHyperCoreServer) WalletStates(context.Context, *WalletStatesRequest) (*WalletStatesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WalletStates not implemented")
 }
 func (UnimplementedHyperCoreServer) AggregatedWalletPositioningStream(*AggregatedWalletPositioningStreamRequest, HyperCore_AggregatedWalletPositioningStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method AggregatedWalletPositioningStream not implemented")
@@ -782,6 +798,24 @@ func _HyperCore_WalletBalances_Handler(srv interface{}, ctx context.Context, dec
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(HyperCoreServer).WalletBalances(ctx, req.(*WalletBalancesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HyperCore_WalletStates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WalletStatesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).WalletStates(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_WalletStates_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).WalletStates(ctx, req.(*WalletStatesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1389,6 +1423,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WalletBalances",
 			Handler:    _HyperCore_WalletBalances_Handler,
+		},
+		{
+			MethodName: "WalletStates",
+			Handler:    _HyperCore_WalletStates_Handler,
 		},
 		{
 			MethodName: "AggregatedWalletLiquidations",
