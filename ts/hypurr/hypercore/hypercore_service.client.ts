@@ -478,14 +478,14 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
      * @generated from protobuf rpc: QueryPositions
      */
     queryPositions(input: QueryPositionsRequest, options?: RpcOptions): UnaryCall<QueryPositionsRequest, QueryPositionsResponse> {
-        const method = this.methods[32], opt = this._transport.mergeOptions(options);
+        const method = this.methods[33], opt = this._transport.mergeOptions(options);
         return stackIntercept<QueryPositionsRequest, QueryPositionsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PnlRank
      */
     pnlRank(input: PnlRankRequest, options?: RpcOptions): UnaryCall<PnlRankRequest, PnlRankResponse> {
-        const method = this.methods[33], opt = this._transport.mergeOptions(options);
+        const method = this.methods[34], opt = this._transport.mergeOptions(options);
         return stackIntercept<PnlRankRequest, PnlRankResponse>("unary", this._transport, method, opt, input);
     }
 }
