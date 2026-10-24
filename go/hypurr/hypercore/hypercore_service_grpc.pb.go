@@ -51,6 +51,7 @@ const (
 	HyperCore_OHLCStream_FullMethodName                        = "/hypercore.HyperCore/OHLCStream"
 	HyperCore_HighLow_FullMethodName                           = "/hypercore.HyperCore/HighLow"
 	HyperCore_InstrumentStats_FullMethodName                   = "/hypercore.HyperCore/InstrumentStats"
+	HyperCore_QueryPositions_FullMethodName                    = "/hypercore.HyperCore/QueryPositions"
 	HyperCore_PnlRank_FullMethodName                           = "/hypercore.HyperCore/PnlRank"
 )
 
@@ -92,6 +93,8 @@ type HyperCoreClient interface {
 	OHLCStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_OHLCStreamClient, error)
 	HighLow(ctx context.Context, in *HighLowRequest, opts ...grpc.CallOption) (*HighLowResponse, error)
 	InstrumentStats(ctx context.Context, in *InstrumentStatsRequest, opts ...grpc.CallOption) (*InstrumentStatsResponse, error)
+	// Metered in compute units; see QueryPositionsRequest.
+	QueryPositions(ctx context.Context, in *QueryPositionsRequest, opts ...grpc.CallOption) (*QueryPositionsResponse, error)
 	PnlRank(ctx context.Context, in *PnlRankRequest, opts ...grpc.CallOption) (*PnlRankResponse, error)
 }
 
@@ -582,6 +585,16 @@ func (c *hyperCoreClient) InstrumentStats(ctx context.Context, in *InstrumentSta
 	return out, nil
 }
 
+func (c *hyperCoreClient) QueryPositions(ctx context.Context, in *QueryPositionsRequest, opts ...grpc.CallOption) (*QueryPositionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QueryPositionsResponse)
+	err := c.cc.Invoke(ctx, HyperCore_QueryPositions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *hyperCoreClient) PnlRank(ctx context.Context, in *PnlRankRequest, opts ...grpc.CallOption) (*PnlRankResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PnlRankResponse)
@@ -630,6 +643,8 @@ type HyperCoreServer interface {
 	OHLCStream(HyperCore_OHLCStreamServer) error
 	HighLow(context.Context, *HighLowRequest) (*HighLowResponse, error)
 	InstrumentStats(context.Context, *InstrumentStatsRequest) (*InstrumentStatsResponse, error)
+	// Metered in compute units; see QueryPositionsRequest.
+	QueryPositions(context.Context, *QueryPositionsRequest) (*QueryPositionsResponse, error)
 	PnlRank(context.Context, *PnlRankRequest) (*PnlRankResponse, error)
 	mustEmbedUnimplementedHyperCoreServer()
 }
@@ -733,6 +748,9 @@ func (UnimplementedHyperCoreServer) HighLow(context.Context, *HighLowRequest) (*
 }
 func (UnimplementedHyperCoreServer) InstrumentStats(context.Context, *InstrumentStatsRequest) (*InstrumentStatsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InstrumentStats not implemented")
+}
+func (UnimplementedHyperCoreServer) QueryPositions(context.Context, *QueryPositionsRequest) (*QueryPositionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryPositions not implemented")
 }
 func (UnimplementedHyperCoreServer) PnlRank(context.Context, *PnlRankRequest) (*PnlRankResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PnlRank not implemented")
@@ -1357,6 +1375,24 @@ func _HyperCore_InstrumentStats_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_QueryPositions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryPositionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).QueryPositions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_QueryPositions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).QueryPositions(ctx, req.(*QueryPositionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _HyperCore_PnlRank_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PnlRankRequest)
 	if err := dec(in); err != nil {
@@ -1481,6 +1517,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InstrumentStats",
 			Handler:    _HyperCore_InstrumentStats_Handler,
+		},
+		{
+			MethodName: "QueryPositions",
+			Handler:    _HyperCore_QueryPositions_Handler,
 		},
 		{
 			MethodName: "PnlRank",
