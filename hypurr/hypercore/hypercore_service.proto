@@ -1001,6 +1001,107 @@ message PnlRankResponse {
   repeated PnlRankEntry entries = 1; // rank ascending
 }
 
+// QueryPositions: one query surface over every open perp position the indexer
+// holds. A row is a (wallet, market) position; the request filters rows with
+// predicates on its columns, orders them and returns the first `limit`. New
+// questions are new columns or operators here, not new RPCs.
+//
+// Cost is metered in compute units (see ComputeUsage): scanning wallets,
+// evaluating positions and computing liquidation prices each charge the
+// caller's budget, and a query that runs past its per-request cap fails with
+// RESOURCE_EXHAUSTED. Narrow it (markets, a wallet filter, cheaper columns)
+// to make it cheaper.
+enum PositionField {
+  POSITION_FIELD_UNSPECIFIED       = 0;
+  POSITION_FIELD_MARKET            = 1;  // string: market name ("ETH", "xyz:XYZ100")
+  POSITION_FIELD_SIDE              = 2;  // string: "long" | "short"
+  POSITION_FIELD_MARGIN_MODE       = 3;  // string: "cross" | "isolated"
+  POSITION_FIELD_SIZE              = 4;  // base units, absolute
+  POSITION_FIELD_ENTRY_PRICE       = 5;
+  POSITION_FIELD_ENTRY_NOTIONAL    = 6;  // USD at entry
+  POSITION_FIELD_NOTIONAL          = 7;  // USD at mark
+  POSITION_FIELD_UNREALIZED_PNL    = 8;  // USD at mark
+  POSITION_FIELD_UNREALIZED_PNL_PCT = 9; // percent of entry notional
+  POSITION_FIELD_FUNDING           = 10; // all-time funding paid, USD (received is negative)
+  POSITION_FIELD_LEVERAGE          = 11; // the position's leverage setting
+  POSITION_FIELD_LIQUIDATION_PRICE = 12; // 0 when none; costlier: computed per wallet
+  POSITION_FIELD_LIQUIDATION_DISTANCE_PCT = 13; // |liq - mark| / mark, percent; costlier
+}
+
+enum PredicateOp {
+  PREDICATE_OP_UNSPECIFIED = 0;
+  PREDICATE_OP_EQ          = 1; // numbers[0] or strings[0]
+  PREDICATE_OP_NE          = 2;
+  PREDICATE_OP_LT          = 3;
+  PREDICATE_OP_LTE         = 4;
+  PREDICATE_OP_GT          = 5;
+  PREDICATE_OP_GTE         = 6;
+  PREDICATE_OP_BETWEEN     = 7; // numbers = [low, high], inclusive
+  PREDICATE_OP_NEAR        = 8; // numbers = [target, tolerance percent of target]
+  PREDICATE_OP_IN          = 9; // strings (string fields) or numbers
+}
+
+message PositionPredicate {
+  PositionField field     = 1;
+  PredicateOp op          = 2;
+  repeated double numbers = 3;
+  repeated string strings = 4; // compared case-insensitively
+}
+
+message PositionSort {
+  PositionField field = 1; // numeric fields only
+  bool descending     = 2;
+  // When set, orders by distance to this value instead (closest first unless
+  // descending): "the entries nearest 2381.48".
+  google.protobuf.DoubleValue relative_to = 3;
+}
+
+message QueryPositionsRequest {
+  WalletFilter universe            = 1; // unset = every wallet
+  repeated string markets          = 2; // market names; empty = every perp (much costlier)
+  repeated PositionPredicate where = 3; // ANDed
+  repeated PositionSort order_by   = 4; // default: notional descending
+  uint32 limit                     = 5; // default 50, capped at 200
+}
+
+message PositionRow {
+  string wallet_address           = 1;
+  int64 instrument_id             = 2;
+  string market                   = 3;
+  string side                     = 4; // "long" | "short"
+  string margin_mode              = 5; // "cross" | "isolated"
+  double size                     = 6; // absolute base units
+  double entry_price              = 7;
+  double mark_price               = 8;
+  double entry_notional           = 9;
+  double notional                 = 10;
+  double unrealized_pnl           = 11;
+  double unrealized_pnl_pct       = 12;
+  double funding                  = 13;
+  int64 leverage                  = 14;
+  double liquidation_price        = 15; // 0 = none
+  double liquidation_distance_pct = 16; // 0 when no liquidation price
+}
+
+// ComputeUsage reports what a metered call cost. 1 unit is about 1 ms of
+// indexer CPU. Callers have a budget that refills over time (by tier); one
+// request may spend at most max_per_request of it.
+message ComputeUsage {
+  uint64 used            = 1;
+  uint64 remaining       = 2; // budget left after this call
+  uint64 max_per_request = 3;
+  uint64 refill_per_minute = 4;
+  string plan            = 5;
+}
+
+message QueryPositionsResponse {
+  repeated PositionRow rows = 1;
+  uint64 matched            = 2; // rows that matched, before limit
+  uint64 wallets_scanned    = 3;
+  uint64 positions_scanned  = 4;
+  ComputeUsage usage        = 5;
+}
+
 service HyperCore {
   rpc WalletMovements(WalletMovementsRequest) returns (WalletMovementsResponse) {}
   rpc WalletBalances(WalletBalancesRequest) returns (WalletBalancesResponse) {}
@@ -1037,6 +1138,8 @@ service HyperCore {
   rpc OHLCStream(stream OHLCStreamRequest) returns (stream OHLCStreamResponse) {}
   rpc HighLow(HighLowRequest) returns (HighLowResponse) {}
   rpc InstrumentStats(InstrumentStatsRequest) returns (InstrumentStatsResponse) {}
+  // Metered in compute units; see QueryPositionsRequest.
+  rpc QueryPositions(QueryPositionsRequest) returns (QueryPositionsResponse) {}
   rpc PnlRank(PnlRankRequest) returns (PnlRankResponse) {}
 }
 

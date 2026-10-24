@@ -6,6 +6,8 @@ import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
 import type { PnlRankResponse } from "./hypercore_service";
 import type { PnlRankRequest } from "./hypercore_service";
+import type { QueryPositionsResponse } from "./hypercore_service";
+import type { QueryPositionsRequest } from "./hypercore_service";
 import type { InstrumentStatsResponse } from "./hypercore_service";
 import type { InstrumentStatsRequest } from "./hypercore_service";
 import type { HighLowResponse } from "./hypercore_service";
@@ -215,6 +217,12 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: InstrumentStats
      */
     instrumentStats(input: InstrumentStatsRequest, options?: RpcOptions): UnaryCall<InstrumentStatsRequest, InstrumentStatsResponse>;
+    /**
+     * Metered in compute units; see QueryPositionsRequest.
+     *
+     * @generated from protobuf rpc: QueryPositions
+     */
+    queryPositions(input: QueryPositionsRequest, options?: RpcOptions): UnaryCall<QueryPositionsRequest, QueryPositionsResponse>;
     /**
      * @generated from protobuf rpc: PnlRank
      */
@@ -463,6 +471,15 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
     instrumentStats(input: InstrumentStatsRequest, options?: RpcOptions): UnaryCall<InstrumentStatsRequest, InstrumentStatsResponse> {
         const method = this.methods[32], opt = this._transport.mergeOptions(options);
         return stackIntercept<InstrumentStatsRequest, InstrumentStatsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * Metered in compute units; see QueryPositionsRequest.
+     *
+     * @generated from protobuf rpc: QueryPositions
+     */
+    queryPositions(input: QueryPositionsRequest, options?: RpcOptions): UnaryCall<QueryPositionsRequest, QueryPositionsResponse> {
+        const method = this.methods[32], opt = this._transport.mergeOptions(options);
+        return stackIntercept<QueryPositionsRequest, QueryPositionsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PnlRank

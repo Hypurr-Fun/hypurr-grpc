@@ -1,0 +1,67 @@
+syntax = "proto3";
+package hypurr.access.v1;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/access/v1;accessv1";
+
+// AccessService says what an HFUN score unlocks. The backend owns the policy
+// and enforces it; apps render the tiers, features and limits from here
+// instead of keeping their own copy.
+//
+// A call the caller's score does not allow fails with PERMISSION_DENIED and a
+// google.rpc.ErrorInfo detail: reason "HFUN_ACCESS", domain "hypurr.fun",
+// metadata "feature" or "quota" (+ "limit"), and "required_tier" /
+// "required_score" when a higher tier allows it. The status message is
+// readable as is, e.g. "Scale orders: needs Trader (HFUN score 5, 50 HFUN held)".
+service AccessService {
+  // The policy. No auth needed.
+  rpc GetPolicy(GetPolicyRequest) returns (GetPolicyResponse);
+  // The caller's score, tier, unlocked features, limits and usage. Needs the
+  // caller's JWT (any scope).
+  rpc GetAccess(GetAccessRequest) returns (GetAccessResponse);
+}
+
+message Tier {
+  string id = 1;               // "basic", "explorer", "trader", "pro"
+  string name = 2;             // "Trader"
+  double score = 3;            // lowest score in the tier
+  string summary = 4;          // "Scale, Chaser TWAPs, wick catcher and filters"
+  map<string, int32> limits = 5; // quota id -> limit
+}
+
+message Feature {
+  string id = 1;               // e.g. "scale", "liquidation_heatmap"
+  string title = 2;
+  string benefit = 3;
+  string tier_id = 4;          // the tier that unlocks it
+  double score = 5;            // that tier's score
+}
+
+message Quota {
+  string id = 1;               // e.g. "tracked_wallets", "alerts"
+  string title = 2;
+}
+
+message Policy {
+  double hfun_per_score = 1;   // HFUN held per point of score
+  repeated Tier tiers = 2;     // lowest score first
+  repeated Feature features = 3;
+  repeated Quota quotas = 4;
+}
+
+message GetPolicyRequest {}
+
+message GetPolicyResponse {
+  Policy policy = 1;
+}
+
+message GetAccessRequest {}
+
+message GetAccessResponse {
+  double score = 1;            // live, not the token's login-time claim
+  string tier_id = 2;
+  repeated string features = 3; // unlocked feature ids
+  map<string, int32> limits = 4; // quota id -> the tier's limit
+  // quota id -> what the caller holds now. Quotas only the app stores
+  // ("overlays") are absent.
+  map<string, int32> usage = 5;
+  Policy policy = 6;
+}

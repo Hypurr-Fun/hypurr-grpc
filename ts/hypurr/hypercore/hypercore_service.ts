@@ -2457,6 +2457,195 @@ export interface PnlRankResponse {
      */
     entries: PnlRankEntry[]; // rank ascending
 }
+/**
+ * @generated from protobuf message hypercore.PositionPredicate
+ */
+export interface PositionPredicate {
+    /**
+     * @generated from protobuf field: hypercore.PositionField field = 1
+     */
+    field: PositionField;
+    /**
+     * @generated from protobuf field: hypercore.PredicateOp op = 2
+     */
+    op: PredicateOp;
+    /**
+     * @generated from protobuf field: repeated double numbers = 3
+     */
+    numbers: number[];
+    /**
+     * @generated from protobuf field: repeated string strings = 4
+     */
+    strings: string[]; // compared case-insensitively
+}
+/**
+ * @generated from protobuf message hypercore.PositionSort
+ */
+export interface PositionSort {
+    /**
+     * @generated from protobuf field: hypercore.PositionField field = 1
+     */
+    field: PositionField; // numeric fields only
+    /**
+     * @generated from protobuf field: bool descending = 2
+     */
+    descending: boolean;
+    /**
+     * When set, orders by distance to this value instead (closest first unless
+     * descending): "the entries nearest 2381.48".
+     *
+     * @generated from protobuf field: google.protobuf.DoubleValue relative_to = 3
+     */
+    relativeTo?: DoubleValue;
+}
+/**
+ * @generated from protobuf message hypercore.QueryPositionsRequest
+ */
+export interface QueryPositionsRequest {
+    /**
+     * @generated from protobuf field: hypercore.WalletFilter universe = 1
+     */
+    universe?: WalletFilter; // unset = every wallet
+    /**
+     * @generated from protobuf field: repeated string markets = 2
+     */
+    markets: string[]; // market names; empty = every perp (much costlier)
+    /**
+     * @generated from protobuf field: repeated hypercore.PositionPredicate where = 3
+     */
+    where: PositionPredicate[]; // ANDed
+    /**
+     * @generated from protobuf field: repeated hypercore.PositionSort order_by = 4
+     */
+    orderBy: PositionSort[]; // default: notional descending
+    /**
+     * @generated from protobuf field: uint32 limit = 5
+     */
+    limit: number; // default 50, capped at 200
+}
+/**
+ * @generated from protobuf message hypercore.PositionRow
+ */
+export interface PositionRow {
+    /**
+     * @generated from protobuf field: string wallet_address = 1
+     */
+    walletAddress: string;
+    /**
+     * @generated from protobuf field: int64 instrument_id = 2
+     */
+    instrumentId: number;
+    /**
+     * @generated from protobuf field: string market = 3
+     */
+    market: string;
+    /**
+     * @generated from protobuf field: string side = 4
+     */
+    side: string; // "long" | "short"
+    /**
+     * @generated from protobuf field: string margin_mode = 5
+     */
+    marginMode: string; // "cross" | "isolated"
+    /**
+     * @generated from protobuf field: double size = 6
+     */
+    size: number; // absolute base units
+    /**
+     * @generated from protobuf field: double entry_price = 7
+     */
+    entryPrice: number;
+    /**
+     * @generated from protobuf field: double mark_price = 8
+     */
+    markPrice: number;
+    /**
+     * @generated from protobuf field: double entry_notional = 9
+     */
+    entryNotional: number;
+    /**
+     * @generated from protobuf field: double notional = 10
+     */
+    notional: number;
+    /**
+     * @generated from protobuf field: double unrealized_pnl = 11
+     */
+    unrealizedPnl: number;
+    /**
+     * @generated from protobuf field: double unrealized_pnl_pct = 12
+     */
+    unrealizedPnlPct: number;
+    /**
+     * @generated from protobuf field: double funding = 13
+     */
+    funding: number;
+    /**
+     * @generated from protobuf field: int64 leverage = 14
+     */
+    leverage: number;
+    /**
+     * @generated from protobuf field: double liquidation_price = 15
+     */
+    liquidationPrice: number; // 0 = none
+    /**
+     * @generated from protobuf field: double liquidation_distance_pct = 16
+     */
+    liquidationDistancePct: number; // 0 when no liquidation price
+}
+/**
+ * ComputeUsage reports what a metered call cost. 1 unit is about 1 ms of
+ * indexer CPU. Callers have a budget that refills over time (by tier); one
+ * request may spend at most max_per_request of it.
+ *
+ * @generated from protobuf message hypercore.ComputeUsage
+ */
+export interface ComputeUsage {
+    /**
+     * @generated from protobuf field: uint64 used = 1
+     */
+    used: number;
+    /**
+     * @generated from protobuf field: uint64 remaining = 2
+     */
+    remaining: number; // budget left after this call
+    /**
+     * @generated from protobuf field: uint64 max_per_request = 3
+     */
+    maxPerRequest: number;
+    /**
+     * @generated from protobuf field: uint64 refill_per_minute = 4
+     */
+    refillPerMinute: number;
+    /**
+     * @generated from protobuf field: string plan = 5
+     */
+    plan: string;
+}
+/**
+ * @generated from protobuf message hypercore.QueryPositionsResponse
+ */
+export interface QueryPositionsResponse {
+    /**
+     * @generated from protobuf field: repeated hypercore.PositionRow rows = 1
+     */
+    rows: PositionRow[];
+    /**
+     * @generated from protobuf field: uint64 matched = 2
+     */
+    matched: number; // rows that matched, before limit
+    /**
+     * @generated from protobuf field: uint64 wallets_scanned = 3
+     */
+    walletsScanned: number;
+    /**
+     * @generated from protobuf field: uint64 positions_scanned = 4
+     */
+    positionsScanned: number;
+    /**
+     * @generated from protobuf field: hypercore.ComputeUsage usage = 5
+     */
+    usage?: ComputeUsage;
+}
 // 
 // type Trade struct {
 // Coin             string           `json:"coin"`               // Perp symbol or @ notation
@@ -2894,6 +3083,155 @@ export enum PnlRankPeriod {
      * @generated from protobuf enum value: PNL_RANK_PERIOD_ALL = 4;
      */
     PNL_RANK_PERIOD_ALL = 4
+}
+/**
+ * QueryPositions: one query surface over every open perp position the indexer
+ * holds. A row is a (wallet, market) position; the request filters rows with
+ * predicates on its columns, orders them and returns the first `limit`. New
+ * questions are new columns or operators here, not new RPCs.
+ *
+ * Cost is metered in compute units (see ComputeUsage): scanning wallets,
+ * evaluating positions and computing liquidation prices each charge the
+ * caller's budget, and a query that runs past its per-request cap fails with
+ * RESOURCE_EXHAUSTED. Narrow it (markets, a wallet filter, cheaper columns)
+ * to make it cheaper.
+ *
+ * @generated from protobuf enum hypercore.PositionField
+ */
+export enum PositionField {
+    /**
+     * @generated from protobuf enum value: POSITION_FIELD_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * string: market name ("ETH", "xyz:XYZ100")
+     *
+     * @generated from protobuf enum value: POSITION_FIELD_MARKET = 1;
+     */
+    MARKET = 1,
+    /**
+     * string: "long" | "short"
+     *
+     * @generated from protobuf enum value: POSITION_FIELD_SIDE = 2;
+     */
+    SIDE = 2,
+    /**
+     * string: "cross" | "isolated"
+     *
+     * @generated from protobuf enum value: POSITION_FIELD_MARGIN_MODE = 3;
+     */
+    MARGIN_MODE = 3,
+    /**
+     * base units, absolute
+     *
+     * @generated from protobuf enum value: POSITION_FIELD_SIZE = 4;
+     */
+    SIZE = 4,
+    /**
+     * @generated from protobuf enum value: POSITION_FIELD_ENTRY_PRICE = 5;
+     */
+    ENTRY_PRICE = 5,
+    /**
+     * USD at entry
+     *
+     * @generated from protobuf enum value: POSITION_FIELD_ENTRY_NOTIONAL = 6;
+     */
+    ENTRY_NOTIONAL = 6,
+    /**
+     * USD at mark
+     *
+     * @generated from protobuf enum value: POSITION_FIELD_NOTIONAL = 7;
+     */
+    NOTIONAL = 7,
+    /**
+     * USD at mark
+     *
+     * @generated from protobuf enum value: POSITION_FIELD_UNREALIZED_PNL = 8;
+     */
+    UNREALIZED_PNL = 8,
+    /**
+     * percent of entry notional
+     *
+     * @generated from protobuf enum value: POSITION_FIELD_UNREALIZED_PNL_PCT = 9;
+     */
+    UNREALIZED_PNL_PCT = 9,
+    /**
+     * all-time funding paid, USD (received is negative)
+     *
+     * @generated from protobuf enum value: POSITION_FIELD_FUNDING = 10;
+     */
+    FUNDING = 10,
+    /**
+     * the position's leverage setting
+     *
+     * @generated from protobuf enum value: POSITION_FIELD_LEVERAGE = 11;
+     */
+    LEVERAGE = 11,
+    /**
+     * 0 when none; costlier: computed per wallet
+     *
+     * @generated from protobuf enum value: POSITION_FIELD_LIQUIDATION_PRICE = 12;
+     */
+    LIQUIDATION_PRICE = 12,
+    /**
+     * |liq - mark| / mark, percent; costlier
+     *
+     * @generated from protobuf enum value: POSITION_FIELD_LIQUIDATION_DISTANCE_PCT = 13;
+     */
+    LIQUIDATION_DISTANCE_PCT = 13
+}
+/**
+ * @generated from protobuf enum hypercore.PredicateOp
+ */
+export enum PredicateOp {
+    /**
+     * @generated from protobuf enum value: PREDICATE_OP_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * numbers[0] or strings[0]
+     *
+     * @generated from protobuf enum value: PREDICATE_OP_EQ = 1;
+     */
+    EQ = 1,
+    /**
+     * @generated from protobuf enum value: PREDICATE_OP_NE = 2;
+     */
+    NE = 2,
+    /**
+     * @generated from protobuf enum value: PREDICATE_OP_LT = 3;
+     */
+    LT = 3,
+    /**
+     * @generated from protobuf enum value: PREDICATE_OP_LTE = 4;
+     */
+    LTE = 4,
+    /**
+     * @generated from protobuf enum value: PREDICATE_OP_GT = 5;
+     */
+    GT = 5,
+    /**
+     * @generated from protobuf enum value: PREDICATE_OP_GTE = 6;
+     */
+    GTE = 6,
+    /**
+     * numbers = [low, high], inclusive
+     *
+     * @generated from protobuf enum value: PREDICATE_OP_BETWEEN = 7;
+     */
+    BETWEEN = 7,
+    /**
+     * numbers = [target, tolerance percent of target]
+     *
+     * @generated from protobuf enum value: PREDICATE_OP_NEAR = 8;
+     */
+    NEAR = 8,
+    /**
+     * strings (string fields) or numbers
+     *
+     * @generated from protobuf enum value: PREDICATE_OP_IN = 9;
+     */
+    IN = 9
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class WalletFilter$Type extends MessageType<WalletFilter> {
@@ -10864,6 +11202,549 @@ class PnlRankResponse$Type extends MessageType<PnlRankResponse> {
  * @generated MessageType for protobuf message hypercore.PnlRankResponse
  */
 export const PnlRankResponse = new PnlRankResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PositionPredicate$Type extends MessageType<PositionPredicate> {
+    constructor() {
+        super("hypercore.PositionPredicate", [
+            { no: 1, name: "field", kind: "enum", T: () => ["hypercore.PositionField", PositionField, "POSITION_FIELD_"] },
+            { no: 2, name: "op", kind: "enum", T: () => ["hypercore.PredicateOp", PredicateOp, "PREDICATE_OP_"] },
+            { no: 3, name: "numbers", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "strings", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PositionPredicate>): PositionPredicate {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.field = 0;
+        message.op = 0;
+        message.numbers = [];
+        message.strings = [];
+        if (value !== undefined)
+            reflectionMergePartial<PositionPredicate>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PositionPredicate): PositionPredicate {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypercore.PositionField field */ 1:
+                    message.field = reader.int32();
+                    break;
+                case /* hypercore.PredicateOp op */ 2:
+                    message.op = reader.int32();
+                    break;
+                case /* repeated double numbers */ 3:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.numbers.push(reader.double());
+                    else
+                        message.numbers.push(reader.double());
+                    break;
+                case /* repeated string strings */ 4:
+                    message.strings.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PositionPredicate, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypercore.PositionField field = 1; */
+        if (message.field !== 0)
+            writer.tag(1, WireType.Varint).int32(message.field);
+        /* hypercore.PredicateOp op = 2; */
+        if (message.op !== 0)
+            writer.tag(2, WireType.Varint).int32(message.op);
+        /* repeated double numbers = 3; */
+        if (message.numbers.length) {
+            writer.tag(3, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.numbers.length; i++)
+                writer.double(message.numbers[i]);
+            writer.join();
+        }
+        /* repeated string strings = 4; */
+        for (let i = 0; i < message.strings.length; i++)
+            writer.tag(4, WireType.LengthDelimited).string(message.strings[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PositionPredicate
+ */
+export const PositionPredicate = new PositionPredicate$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PositionSort$Type extends MessageType<PositionSort> {
+    constructor() {
+        super("hypercore.PositionSort", [
+            { no: 1, name: "field", kind: "enum", T: () => ["hypercore.PositionField", PositionField, "POSITION_FIELD_"] },
+            { no: 2, name: "descending", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 3, name: "relative_to", kind: "message", T: () => DoubleValue }
+        ]);
+    }
+    create(value?: PartialMessage<PositionSort>): PositionSort {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.field = 0;
+        message.descending = false;
+        if (value !== undefined)
+            reflectionMergePartial<PositionSort>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PositionSort): PositionSort {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypercore.PositionField field */ 1:
+                    message.field = reader.int32();
+                    break;
+                case /* bool descending */ 2:
+                    message.descending = reader.bool();
+                    break;
+                case /* google.protobuf.DoubleValue relative_to */ 3:
+                    message.relativeTo = DoubleValue.internalBinaryRead(reader, reader.uint32(), options, message.relativeTo);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PositionSort, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypercore.PositionField field = 1; */
+        if (message.field !== 0)
+            writer.tag(1, WireType.Varint).int32(message.field);
+        /* bool descending = 2; */
+        if (message.descending !== false)
+            writer.tag(2, WireType.Varint).bool(message.descending);
+        /* google.protobuf.DoubleValue relative_to = 3; */
+        if (message.relativeTo)
+            DoubleValue.internalBinaryWrite(message.relativeTo, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PositionSort
+ */
+export const PositionSort = new PositionSort$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class QueryPositionsRequest$Type extends MessageType<QueryPositionsRequest> {
+    constructor() {
+        super("hypercore.QueryPositionsRequest", [
+            { no: 1, name: "universe", kind: "message", T: () => WalletFilter },
+            { no: 2, name: "markets", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "where", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PositionPredicate },
+            { no: 4, name: "order_by", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PositionSort },
+            { no: 5, name: "limit", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<QueryPositionsRequest>): QueryPositionsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.markets = [];
+        message.where = [];
+        message.orderBy = [];
+        message.limit = 0;
+        if (value !== undefined)
+            reflectionMergePartial<QueryPositionsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: QueryPositionsRequest): QueryPositionsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypercore.WalletFilter universe */ 1:
+                    message.universe = WalletFilter.internalBinaryRead(reader, reader.uint32(), options, message.universe);
+                    break;
+                case /* repeated string markets */ 2:
+                    message.markets.push(reader.string());
+                    break;
+                case /* repeated hypercore.PositionPredicate where */ 3:
+                    message.where.push(PositionPredicate.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated hypercore.PositionSort order_by */ 4:
+                    message.orderBy.push(PositionSort.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* uint32 limit */ 5:
+                    message.limit = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: QueryPositionsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypercore.WalletFilter universe = 1; */
+        if (message.universe)
+            WalletFilter.internalBinaryWrite(message.universe, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string markets = 2; */
+        for (let i = 0; i < message.markets.length; i++)
+            writer.tag(2, WireType.LengthDelimited).string(message.markets[i]);
+        /* repeated hypercore.PositionPredicate where = 3; */
+        for (let i = 0; i < message.where.length; i++)
+            PositionPredicate.internalBinaryWrite(message.where[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypercore.PositionSort order_by = 4; */
+        for (let i = 0; i < message.orderBy.length; i++)
+            PositionSort.internalBinaryWrite(message.orderBy[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* uint32 limit = 5; */
+        if (message.limit !== 0)
+            writer.tag(5, WireType.Varint).uint32(message.limit);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.QueryPositionsRequest
+ */
+export const QueryPositionsRequest = new QueryPositionsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PositionRow$Type extends MessageType<PositionRow> {
+    constructor() {
+        super("hypercore.PositionRow", [
+            { no: 1, name: "wallet_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "instrument_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "market", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "side", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "margin_mode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "size", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "entry_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 8, name: "mark_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 9, name: "entry_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 10, name: "notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "unrealized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 12, name: "unrealized_pnl_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 13, name: "funding", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 14, name: "leverage", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 15, name: "liquidation_price", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 16, name: "liquidation_distance_pct", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PositionRow>): PositionRow {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.walletAddress = "";
+        message.instrumentId = 0;
+        message.market = "";
+        message.side = "";
+        message.marginMode = "";
+        message.size = 0;
+        message.entryPrice = 0;
+        message.markPrice = 0;
+        message.entryNotional = 0;
+        message.notional = 0;
+        message.unrealizedPnl = 0;
+        message.unrealizedPnlPct = 0;
+        message.funding = 0;
+        message.leverage = 0;
+        message.liquidationPrice = 0;
+        message.liquidationDistancePct = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PositionRow>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PositionRow): PositionRow {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string wallet_address */ 1:
+                    message.walletAddress = reader.string();
+                    break;
+                case /* int64 instrument_id */ 2:
+                    message.instrumentId = reader.int64().toNumber();
+                    break;
+                case /* string market */ 3:
+                    message.market = reader.string();
+                    break;
+                case /* string side */ 4:
+                    message.side = reader.string();
+                    break;
+                case /* string margin_mode */ 5:
+                    message.marginMode = reader.string();
+                    break;
+                case /* double size */ 6:
+                    message.size = reader.double();
+                    break;
+                case /* double entry_price */ 7:
+                    message.entryPrice = reader.double();
+                    break;
+                case /* double mark_price */ 8:
+                    message.markPrice = reader.double();
+                    break;
+                case /* double entry_notional */ 9:
+                    message.entryNotional = reader.double();
+                    break;
+                case /* double notional */ 10:
+                    message.notional = reader.double();
+                    break;
+                case /* double unrealized_pnl */ 11:
+                    message.unrealizedPnl = reader.double();
+                    break;
+                case /* double unrealized_pnl_pct */ 12:
+                    message.unrealizedPnlPct = reader.double();
+                    break;
+                case /* double funding */ 13:
+                    message.funding = reader.double();
+                    break;
+                case /* int64 leverage */ 14:
+                    message.leverage = reader.int64().toNumber();
+                    break;
+                case /* double liquidation_price */ 15:
+                    message.liquidationPrice = reader.double();
+                    break;
+                case /* double liquidation_distance_pct */ 16:
+                    message.liquidationDistancePct = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PositionRow, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string wallet_address = 1; */
+        if (message.walletAddress !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.walletAddress);
+        /* int64 instrument_id = 2; */
+        if (message.instrumentId !== 0)
+            writer.tag(2, WireType.Varint).int64(message.instrumentId);
+        /* string market = 3; */
+        if (message.market !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.market);
+        /* string side = 4; */
+        if (message.side !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.side);
+        /* string margin_mode = 5; */
+        if (message.marginMode !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.marginMode);
+        /* double size = 6; */
+        if (message.size !== 0)
+            writer.tag(6, WireType.Bit64).double(message.size);
+        /* double entry_price = 7; */
+        if (message.entryPrice !== 0)
+            writer.tag(7, WireType.Bit64).double(message.entryPrice);
+        /* double mark_price = 8; */
+        if (message.markPrice !== 0)
+            writer.tag(8, WireType.Bit64).double(message.markPrice);
+        /* double entry_notional = 9; */
+        if (message.entryNotional !== 0)
+            writer.tag(9, WireType.Bit64).double(message.entryNotional);
+        /* double notional = 10; */
+        if (message.notional !== 0)
+            writer.tag(10, WireType.Bit64).double(message.notional);
+        /* double unrealized_pnl = 11; */
+        if (message.unrealizedPnl !== 0)
+            writer.tag(11, WireType.Bit64).double(message.unrealizedPnl);
+        /* double unrealized_pnl_pct = 12; */
+        if (message.unrealizedPnlPct !== 0)
+            writer.tag(12, WireType.Bit64).double(message.unrealizedPnlPct);
+        /* double funding = 13; */
+        if (message.funding !== 0)
+            writer.tag(13, WireType.Bit64).double(message.funding);
+        /* int64 leverage = 14; */
+        if (message.leverage !== 0)
+            writer.tag(14, WireType.Varint).int64(message.leverage);
+        /* double liquidation_price = 15; */
+        if (message.liquidationPrice !== 0)
+            writer.tag(15, WireType.Bit64).double(message.liquidationPrice);
+        /* double liquidation_distance_pct = 16; */
+        if (message.liquidationDistancePct !== 0)
+            writer.tag(16, WireType.Bit64).double(message.liquidationDistancePct);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.PositionRow
+ */
+export const PositionRow = new PositionRow$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ComputeUsage$Type extends MessageType<ComputeUsage> {
+    constructor() {
+        super("hypercore.ComputeUsage", [
+            { no: 1, name: "used", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "remaining", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "max_per_request", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "refill_per_minute", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ComputeUsage>): ComputeUsage {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.used = 0;
+        message.remaining = 0;
+        message.maxPerRequest = 0;
+        message.refillPerMinute = 0;
+        message.plan = "";
+        if (value !== undefined)
+            reflectionMergePartial<ComputeUsage>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ComputeUsage): ComputeUsage {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint64 used */ 1:
+                    message.used = reader.uint64().toNumber();
+                    break;
+                case /* uint64 remaining */ 2:
+                    message.remaining = reader.uint64().toNumber();
+                    break;
+                case /* uint64 max_per_request */ 3:
+                    message.maxPerRequest = reader.uint64().toNumber();
+                    break;
+                case /* uint64 refill_per_minute */ 4:
+                    message.refillPerMinute = reader.uint64().toNumber();
+                    break;
+                case /* string plan */ 5:
+                    message.plan = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ComputeUsage, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint64 used = 1; */
+        if (message.used !== 0)
+            writer.tag(1, WireType.Varint).uint64(message.used);
+        /* uint64 remaining = 2; */
+        if (message.remaining !== 0)
+            writer.tag(2, WireType.Varint).uint64(message.remaining);
+        /* uint64 max_per_request = 3; */
+        if (message.maxPerRequest !== 0)
+            writer.tag(3, WireType.Varint).uint64(message.maxPerRequest);
+        /* uint64 refill_per_minute = 4; */
+        if (message.refillPerMinute !== 0)
+            writer.tag(4, WireType.Varint).uint64(message.refillPerMinute);
+        /* string plan = 5; */
+        if (message.plan !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.plan);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.ComputeUsage
+ */
+export const ComputeUsage = new ComputeUsage$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class QueryPositionsResponse$Type extends MessageType<QueryPositionsResponse> {
+    constructor() {
+        super("hypercore.QueryPositionsResponse", [
+            { no: 1, name: "rows", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PositionRow },
+            { no: 2, name: "matched", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "wallets_scanned", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 4, name: "positions_scanned", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 5, name: "usage", kind: "message", T: () => ComputeUsage }
+        ]);
+    }
+    create(value?: PartialMessage<QueryPositionsResponse>): QueryPositionsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.rows = [];
+        message.matched = 0;
+        message.walletsScanned = 0;
+        message.positionsScanned = 0;
+        if (value !== undefined)
+            reflectionMergePartial<QueryPositionsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: QueryPositionsResponse): QueryPositionsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated hypercore.PositionRow rows */ 1:
+                    message.rows.push(PositionRow.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* uint64 matched */ 2:
+                    message.matched = reader.uint64().toNumber();
+                    break;
+                case /* uint64 wallets_scanned */ 3:
+                    message.walletsScanned = reader.uint64().toNumber();
+                    break;
+                case /* uint64 positions_scanned */ 4:
+                    message.positionsScanned = reader.uint64().toNumber();
+                    break;
+                case /* hypercore.ComputeUsage usage */ 5:
+                    message.usage = ComputeUsage.internalBinaryRead(reader, reader.uint32(), options, message.usage);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: QueryPositionsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated hypercore.PositionRow rows = 1; */
+        for (let i = 0; i < message.rows.length; i++)
+            PositionRow.internalBinaryWrite(message.rows[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* uint64 matched = 2; */
+        if (message.matched !== 0)
+            writer.tag(2, WireType.Varint).uint64(message.matched);
+        /* uint64 wallets_scanned = 3; */
+        if (message.walletsScanned !== 0)
+            writer.tag(3, WireType.Varint).uint64(message.walletsScanned);
+        /* uint64 positions_scanned = 4; */
+        if (message.positionsScanned !== 0)
+            writer.tag(4, WireType.Varint).uint64(message.positionsScanned);
+        /* hypercore.ComputeUsage usage = 5; */
+        if (message.usage)
+            ComputeUsage.internalBinaryWrite(message.usage, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.QueryPositionsResponse
+ */
+export const QueryPositionsResponse = new QueryPositionsResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypercore.HyperCore
  */
@@ -10901,5 +11782,6 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "OHLCStream", serverStreaming: true, clientStreaming: true, options: {}, I: OHLCStreamRequest, O: OHLCStreamResponse },
     { name: "HighLow", options: {}, I: HighLowRequest, O: HighLowResponse },
     { name: "InstrumentStats", options: {}, I: InstrumentStatsRequest, O: InstrumentStatsResponse },
+    { name: "QueryPositions", options: {}, I: QueryPositionsRequest, O: QueryPositionsResponse },
     { name: "PnlRank", options: {}, I: PnlRankRequest, O: PnlRankResponse }
 ]);
