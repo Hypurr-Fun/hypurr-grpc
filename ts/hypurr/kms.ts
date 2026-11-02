@@ -235,6 +235,13 @@ export interface KmsGetAccountInfoResponse {
      * @generated from protobuf field: repeated hypurr.KmsAgentInfo agents = 5
      */
     agents: KmsAgentInfo[];
+    /**
+     * The enrolled passkey's WebAuthn credential id, empty without one: apps
+     * pass it to the passkey prompt so it offers only that passkey.
+     *
+     * @generated from protobuf field: bytes passkey_credential_id = 6
+     */
+    passkeyCredentialId: Uint8Array;
 }
 /**
  * @generated from protobuf message hypurr.KmsProviderInfo
@@ -298,6 +305,12 @@ export interface KmsAgentInfo {
      * @generated from protobuf field: int64 daily_spend_cap_usd = 5
      */
     dailySpendCapUsd: number;
+    /**
+     * The account wallets (KmsWalletInfo.id) the agent may sign for.
+     *
+     * @generated from protobuf field: repeated string wallet_ids = 6
+     */
+    walletIds: string[];
 }
 /**
  * @generated from protobuf message hypurr.KmsAccountShardSecretRequest
@@ -1371,7 +1384,8 @@ class KmsGetAccountInfoResponse$Type extends MessageType<KmsGetAccountInfoRespon
             { no: 2, name: "providers", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => KmsProviderInfo },
             { no: 3, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => KmsWalletInfo },
             { no: 4, name: "two_factor_types", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "agents", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => KmsAgentInfo }
+            { no: 5, name: "agents", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => KmsAgentInfo },
+            { no: 6, name: "passkey_credential_id", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<KmsGetAccountInfoResponse>): KmsGetAccountInfoResponse {
@@ -1381,6 +1395,7 @@ class KmsGetAccountInfoResponse$Type extends MessageType<KmsGetAccountInfoRespon
         message.wallets = [];
         message.twoFactorTypes = [];
         message.agents = [];
+        message.passkeyCredentialId = new Uint8Array(0);
         if (value !== undefined)
             reflectionMergePartial<KmsGetAccountInfoResponse>(this, message, value);
         return message;
@@ -1404,6 +1419,9 @@ class KmsGetAccountInfoResponse$Type extends MessageType<KmsGetAccountInfoRespon
                     break;
                 case /* repeated hypurr.KmsAgentInfo agents */ 5:
                     message.agents.push(KmsAgentInfo.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* bytes passkey_credential_id */ 6:
+                    message.passkeyCredentialId = reader.bytes();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1432,6 +1450,9 @@ class KmsGetAccountInfoResponse$Type extends MessageType<KmsGetAccountInfoRespon
         /* repeated hypurr.KmsAgentInfo agents = 5; */
         for (let i = 0; i < message.agents.length; i++)
             KmsAgentInfo.internalBinaryWrite(message.agents[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* bytes passkey_credential_id = 6; */
+        if (message.passkeyCredentialId.length)
+            writer.tag(6, WireType.LengthDelimited).bytes(message.passkeyCredentialId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1584,7 +1605,8 @@ class KmsAgentInfo$Type extends MessageType<KmsAgentInfo> {
             { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 5, name: "daily_spend_cap_usd", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 5, name: "daily_spend_cap_usd", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "wallet_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsAgentInfo>): KmsAgentInfo {
@@ -1594,6 +1616,7 @@ class KmsAgentInfo$Type extends MessageType<KmsAgentInfo> {
         message.expiresAt = 0;
         message.createdAt = 0;
         message.dailySpendCapUsd = 0;
+        message.walletIds = [];
         if (value !== undefined)
             reflectionMergePartial<KmsAgentInfo>(this, message, value);
         return message;
@@ -1617,6 +1640,9 @@ class KmsAgentInfo$Type extends MessageType<KmsAgentInfo> {
                     break;
                 case /* int64 daily_spend_cap_usd */ 5:
                     message.dailySpendCapUsd = reader.int64().toNumber();
+                    break;
+                case /* repeated string wallet_ids */ 6:
+                    message.walletIds.push(reader.string());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1645,6 +1671,9 @@ class KmsAgentInfo$Type extends MessageType<KmsAgentInfo> {
         /* int64 daily_spend_cap_usd = 5; */
         if (message.dailySpendCapUsd !== 0)
             writer.tag(5, WireType.Varint).int64(message.dailySpendCapUsd);
+        /* repeated string wallet_ids = 6; */
+        for (let i = 0; i < message.walletIds.length; i++)
+            writer.tag(6, WireType.LengthDelimited).string(message.walletIds[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
