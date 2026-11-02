@@ -119,6 +119,7 @@ message KmsGetAccountInfoResponse {
   repeated KmsWalletInfo wallets = 3;
   repeated string two_factor_types = 4;
   repeated KmsAgentInfo agents = 5;
+  bytes passkey_credential_id = 6;
 }
 
 message KmsProviderInfo {
@@ -140,6 +141,8 @@ message KmsAgentInfo {
   int64 expires_at = 3;
   int64 created_at = 4;
   int64 daily_spend_cap_usd = 5;
+  // The account wallets (KmsWalletInfo.id) the agent may sign for.
+  repeated string wallet_ids = 6;
 }
 
 message KmsAccountShardSecretRequest {
