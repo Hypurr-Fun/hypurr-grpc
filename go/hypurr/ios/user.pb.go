@@ -20,20 +20,125 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// TraderBadge uses the highest threshold exceeded by the total indexed HFUN spot balance.
+// Count all controlled wallets, including private and archived wallets. Exclude read-only wallets.
+// Include locked tokens. Do not round the balance or use a smoothed score.
+type TraderBadge int32
+
+const (
+	TraderBadge_TRADER_BADGE_UNSPECIFIED TraderBadge = 0 // No badge.
+	TraderBadge_TRADER_BADGE_GOLD        TraderBadge = 1 // More than 5000 HFUN.
+	TraderBadge_TRADER_BADGE_SILVER      TraderBadge = 2 // More than 500 HFUN.
+	TraderBadge_TRADER_BADGE_BRONZE      TraderBadge = 3 // More than 50 HFUN.
+	TraderBadge_TRADER_BADGE_BLUE        TraderBadge = 4 // More than 0 HFUN.
+)
+
+// Enum value maps for TraderBadge.
+var (
+	TraderBadge_name = map[int32]string{
+		0: "TRADER_BADGE_UNSPECIFIED",
+		1: "TRADER_BADGE_GOLD",
+		2: "TRADER_BADGE_SILVER",
+		3: "TRADER_BADGE_BRONZE",
+		4: "TRADER_BADGE_BLUE",
+	}
+	TraderBadge_value = map[string]int32{
+		"TRADER_BADGE_UNSPECIFIED": 0,
+		"TRADER_BADGE_GOLD":        1,
+		"TRADER_BADGE_SILVER":      2,
+		"TRADER_BADGE_BRONZE":      3,
+		"TRADER_BADGE_BLUE":        4,
+	}
+)
+
+func (x TraderBadge) Enum() *TraderBadge {
+	p := new(TraderBadge)
+	*p = x
+	return p
+}
+
+func (x TraderBadge) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (TraderBadge) Descriptor() protoreflect.EnumDescriptor {
+	return file_hypurr_ios_user_proto_enumTypes[0].Descriptor()
+}
+
+func (TraderBadge) Type() protoreflect.EnumType {
+	return &file_hypurr_ios_user_proto_enumTypes[0]
+}
+
+func (x TraderBadge) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use TraderBadge.Descriptor instead.
+func (TraderBadge) EnumDescriptor() ([]byte, []int) {
+	return file_hypurr_ios_user_proto_rawDescGZIP(), []int{0}
+}
+
+type CurrentUserRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *CurrentUserRequest) Reset() {
+	*x = CurrentUserRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_ios_user_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CurrentUserRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CurrentUserRequest) ProtoMessage() {}
+
+func (x *CurrentUserRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_ios_user_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CurrentUserRequest.ProtoReflect.Descriptor instead.
+func (*CurrentUserRequest) Descriptor() ([]byte, []int) {
+	return file_hypurr_ios_user_proto_rawDescGZIP(), []int{0}
+}
+
 type HfunUser struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	UserId    int64  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Handle    string `protobuf:"bytes,2,opt,name=handle,proto3" json:"handle,omitempty"`
-	AvatarUrl string `protobuf:"bytes,3,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
+	// The canonical HFUN user ID, not the Telegram user ID.
+	UserId int64 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	// The handle excludes the leading @.
+	Handle string `protobuf:"bytes,2,opt,name=handle,proto3" json:"handle,omitempty"`
+	// An absolute HTTP(S) URL, or empty when no URL is available.
+	AvatarUrl   string      `protobuf:"bytes,3,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
+	DisplayName string      `protobuf:"bytes,4,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
+	TraderBadge TraderBadge `protobuf:"varint,5,opt,name=trader_badge,json=traderBadge,proto3,enum=hypurr.ios.TraderBadge" json:"trader_badge,omitempty"`
+	// Positions start at 1. Zero means unranked.
+	// Mobile shows podium decoration for positions 1 through 3.
+	// CurrentUser returns zero until global ranking is available.
+	GlobalLeaderboardPosition uint32 `protobuf:"varint,6,opt,name=global_leaderboard_position,json=globalLeaderboardPosition,proto3" json:"global_leaderboard_position,omitempty"`
 }
 
 func (x *HfunUser) Reset() {
 	*x = HfunUser{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_ios_user_proto_msgTypes[0]
+		mi := &file_hypurr_ios_user_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -46,7 +151,7 @@ func (x *HfunUser) String() string {
 func (*HfunUser) ProtoMessage() {}
 
 func (x *HfunUser) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_ios_user_proto_msgTypes[0]
+	mi := &file_hypurr_ios_user_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59,7 +164,7 @@ func (x *HfunUser) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HfunUser.ProtoReflect.Descriptor instead.
 func (*HfunUser) Descriptor() ([]byte, []int) {
-	return file_hypurr_ios_user_proto_rawDescGZIP(), []int{0}
+	return file_hypurr_ios_user_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *HfunUser) GetUserId() int64 {
@@ -83,21 +188,261 @@ func (x *HfunUser) GetAvatarUrl() string {
 	return ""
 }
 
+func (x *HfunUser) GetDisplayName() string {
+	if x != nil {
+		return x.DisplayName
+	}
+	return ""
+}
+
+func (x *HfunUser) GetTraderBadge() TraderBadge {
+	if x != nil {
+		return x.TraderBadge
+	}
+	return TraderBadge_TRADER_BADGE_UNSPECIFIED
+}
+
+func (x *HfunUser) GetGlobalLeaderboardPosition() uint32 {
+	if x != nil {
+		return x.GlobalLeaderboardPosition
+	}
+	return 0
+}
+
+// ViewerRelationship describes each follow direction at response time.
+// Both fields are true for mutual follows.
+type ViewerRelationship struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ViewerFollows bool `protobuf:"varint,1,opt,name=viewer_follows,json=viewerFollows,proto3" json:"viewer_follows,omitempty"`
+	FollowsViewer bool `protobuf:"varint,2,opt,name=follows_viewer,json=followsViewer,proto3" json:"follows_viewer,omitempty"`
+}
+
+func (x *ViewerRelationship) Reset() {
+	*x = ViewerRelationship{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_ios_user_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ViewerRelationship) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ViewerRelationship) ProtoMessage() {}
+
+func (x *ViewerRelationship) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_ios_user_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ViewerRelationship.ProtoReflect.Descriptor instead.
+func (*ViewerRelationship) Descriptor() ([]byte, []int) {
+	return file_hypurr_ios_user_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ViewerRelationship) GetViewerFollows() bool {
+	if x != nil {
+		return x.ViewerFollows
+	}
+	return false
+}
+
+func (x *ViewerRelationship) GetFollowsViewer() bool {
+	if x != nil {
+		return x.FollowsViewer
+	}
+	return false
+}
+
+// People the viewer follows who also follow the subject user.
+type MutualFriendsSummary struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The preview contains at most three users in display order.
+	// The preview is empty when total_count is zero.
+	Preview    []*HfunUser `protobuf:"bytes,1,rep,name=preview,proto3" json:"preview,omitempty"`
+	TotalCount int32       `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+}
+
+func (x *MutualFriendsSummary) Reset() {
+	*x = MutualFriendsSummary{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_ios_user_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MutualFriendsSummary) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MutualFriendsSummary) ProtoMessage() {}
+
+func (x *MutualFriendsSummary) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_ios_user_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MutualFriendsSummary.ProtoReflect.Descriptor instead.
+func (*MutualFriendsSummary) Descriptor() ([]byte, []int) {
+	return file_hypurr_ios_user_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *MutualFriendsSummary) GetPreview() []*HfunUser {
+	if x != nil {
+		return x.Preview
+	}
+	return nil
+}
+
+func (x *MutualFriendsSummary) GetTotalCount() int32 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+// Trader combines identity with the user's all-time win rate.
+type Trader struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	User *HfunUser `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	// All-time percentage of closed positions with positive realized PnL.
+	// Absent before the first closed position. A value of 54.8 means 54.8%.
+	WinRatePercent *float64 `protobuf:"fixed64,2,opt,name=win_rate_percent,json=winRatePercent,proto3,oneof" json:"win_rate_percent,omitempty"`
+}
+
+func (x *Trader) Reset() {
+	*x = Trader{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_ios_user_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Trader) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Trader) ProtoMessage() {}
+
+func (x *Trader) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_ios_user_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Trader.ProtoReflect.Descriptor instead.
+func (*Trader) Descriptor() ([]byte, []int) {
+	return file_hypurr_ios_user_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *Trader) GetUser() *HfunUser {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
+func (x *Trader) GetWinRatePercent() float64 {
+	if x != nil && x.WinRatePercent != nil {
+		return *x.WinRatePercent
+	}
+	return 0
+}
+
 var File_hypurr_ios_user_proto protoreflect.FileDescriptor
 
 var file_hypurr_ios_user_proto_rawDesc = []byte{
 	0x0a, 0x15, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x69, 0x6f, 0x73, 0x2f, 0x75, 0x73, 0x65,
 	0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0a, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e,
-	0x69, 0x6f, 0x73, 0x22, 0x5a, 0x0a, 0x08, 0x48, 0x66, 0x75, 0x6e, 0x55, 0x73, 0x65, 0x72, 0x12,
-	0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
-	0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x68, 0x61, 0x6e, 0x64,
-	0x6c, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x68, 0x61, 0x6e, 0x64, 0x6c, 0x65,
-	0x12, 0x1d, 0x0a, 0x0a, 0x61, 0x76, 0x61, 0x74, 0x61, 0x72, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x03,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x61, 0x76, 0x61, 0x74, 0x61, 0x72, 0x55, 0x72, 0x6c, 0x42,
-	0x31, 0x5a, 0x2f, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79,
-	0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63,
-	0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x69, 0x6f, 0x73, 0x3b, 0x69,
-	0x6f, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x69, 0x6f, 0x73, 0x22, 0x14, 0x0a, 0x12, 0x43, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x55, 0x73,
+	0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0xf9, 0x01, 0x0a, 0x08, 0x48, 0x66,
+	0x75, 0x6e, 0x55, 0x73, 0x65, 0x72, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12,
+	0x16, 0x0a, 0x06, 0x68, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x68, 0x61, 0x6e, 0x64, 0x6c, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x61, 0x76, 0x61, 0x74, 0x61,
+	0x72, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x61, 0x76, 0x61,
+	0x74, 0x61, 0x72, 0x55, 0x72, 0x6c, 0x12, 0x21, 0x0a, 0x0c, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61,
+	0x79, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x69,
+	0x73, 0x70, 0x6c, 0x61, 0x79, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x3a, 0x0a, 0x0c, 0x74, 0x72, 0x61,
+	0x64, 0x65, 0x72, 0x5f, 0x62, 0x61, 0x64, 0x67, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0e, 0x32,
+	0x17, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x69, 0x6f, 0x73, 0x2e, 0x54, 0x72, 0x61,
+	0x64, 0x65, 0x72, 0x42, 0x61, 0x64, 0x67, 0x65, 0x52, 0x0b, 0x74, 0x72, 0x61, 0x64, 0x65, 0x72,
+	0x42, 0x61, 0x64, 0x67, 0x65, 0x12, 0x3e, 0x0a, 0x1b, 0x67, 0x6c, 0x6f, 0x62, 0x61, 0x6c, 0x5f,
+	0x6c, 0x65, 0x61, 0x64, 0x65, 0x72, 0x62, 0x6f, 0x61, 0x72, 0x64, 0x5f, 0x70, 0x6f, 0x73, 0x69,
+	0x74, 0x69, 0x6f, 0x6e, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x19, 0x67, 0x6c, 0x6f, 0x62,
+	0x61, 0x6c, 0x4c, 0x65, 0x61, 0x64, 0x65, 0x72, 0x62, 0x6f, 0x61, 0x72, 0x64, 0x50, 0x6f, 0x73,
+	0x69, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x62, 0x0a, 0x12, 0x56, 0x69, 0x65, 0x77, 0x65, 0x72, 0x52,
+	0x65, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x68, 0x69, 0x70, 0x12, 0x25, 0x0a, 0x0e, 0x76,
+	0x69, 0x65, 0x77, 0x65, 0x72, 0x5f, 0x66, 0x6f, 0x6c, 0x6c, 0x6f, 0x77, 0x73, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x08, 0x52, 0x0d, 0x76, 0x69, 0x65, 0x77, 0x65, 0x72, 0x46, 0x6f, 0x6c, 0x6c, 0x6f,
+	0x77, 0x73, 0x12, 0x25, 0x0a, 0x0e, 0x66, 0x6f, 0x6c, 0x6c, 0x6f, 0x77, 0x73, 0x5f, 0x76, 0x69,
+	0x65, 0x77, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0d, 0x66, 0x6f, 0x6c, 0x6c,
+	0x6f, 0x77, 0x73, 0x56, 0x69, 0x65, 0x77, 0x65, 0x72, 0x22, 0x67, 0x0a, 0x14, 0x4d, 0x75, 0x74,
+	0x75, 0x61, 0x6c, 0x46, 0x72, 0x69, 0x65, 0x6e, 0x64, 0x73, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72,
+	0x79, 0x12, 0x2e, 0x0a, 0x07, 0x70, 0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x14, 0x2e, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x69, 0x6f, 0x73, 0x2e,
+	0x48, 0x66, 0x75, 0x6e, 0x55, 0x73, 0x65, 0x72, 0x52, 0x07, 0x70, 0x72, 0x65, 0x76, 0x69, 0x65,
+	0x77, 0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x43, 0x6f, 0x75,
+	0x6e, 0x74, 0x22, 0x76, 0x0a, 0x06, 0x54, 0x72, 0x61, 0x64, 0x65, 0x72, 0x12, 0x28, 0x0a, 0x04,
+	0x75, 0x73, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x68, 0x79, 0x70,
+	0x75, 0x72, 0x72, 0x2e, 0x69, 0x6f, 0x73, 0x2e, 0x48, 0x66, 0x75, 0x6e, 0x55, 0x73, 0x65, 0x72,
+	0x52, 0x04, 0x75, 0x73, 0x65, 0x72, 0x12, 0x2d, 0x0a, 0x10, 0x77, 0x69, 0x6e, 0x5f, 0x72, 0x61,
+	0x74, 0x65, 0x5f, 0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01,
+	0x48, 0x00, 0x52, 0x0e, 0x77, 0x69, 0x6e, 0x52, 0x61, 0x74, 0x65, 0x50, 0x65, 0x72, 0x63, 0x65,
+	0x6e, 0x74, 0x88, 0x01, 0x01, 0x42, 0x13, 0x0a, 0x11, 0x5f, 0x77, 0x69, 0x6e, 0x5f, 0x72, 0x61,
+	0x74, 0x65, 0x5f, 0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x2a, 0x8b, 0x01, 0x0a, 0x0b, 0x54,
+	0x72, 0x61, 0x64, 0x65, 0x72, 0x42, 0x61, 0x64, 0x67, 0x65, 0x12, 0x1c, 0x0a, 0x18, 0x54, 0x52,
+	0x41, 0x44, 0x45, 0x52, 0x5f, 0x42, 0x41, 0x44, 0x47, 0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45,
+	0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x15, 0x0a, 0x11, 0x54, 0x52, 0x41, 0x44,
+	0x45, 0x52, 0x5f, 0x42, 0x41, 0x44, 0x47, 0x45, 0x5f, 0x47, 0x4f, 0x4c, 0x44, 0x10, 0x01, 0x12,
+	0x17, 0x0a, 0x13, 0x54, 0x52, 0x41, 0x44, 0x45, 0x52, 0x5f, 0x42, 0x41, 0x44, 0x47, 0x45, 0x5f,
+	0x53, 0x49, 0x4c, 0x56, 0x45, 0x52, 0x10, 0x02, 0x12, 0x17, 0x0a, 0x13, 0x54, 0x52, 0x41, 0x44,
+	0x45, 0x52, 0x5f, 0x42, 0x41, 0x44, 0x47, 0x45, 0x5f, 0x42, 0x52, 0x4f, 0x4e, 0x5a, 0x45, 0x10,
+	0x03, 0x12, 0x15, 0x0a, 0x11, 0x54, 0x52, 0x41, 0x44, 0x45, 0x52, 0x5f, 0x42, 0x41, 0x44, 0x47,
+	0x45, 0x5f, 0x42, 0x4c, 0x55, 0x45, 0x10, 0x04, 0x32, 0x59, 0x0a, 0x12, 0x43, 0x75, 0x72, 0x72,
+	0x65, 0x6e, 0x74, 0x55, 0x73, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x43,
+	0x0a, 0x0b, 0x43, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x55, 0x73, 0x65, 0x72, 0x12, 0x1e, 0x2e,
+	0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x69, 0x6f, 0x73, 0x2e, 0x43, 0x75, 0x72, 0x72, 0x65,
+	0x6e, 0x74, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e,
+	0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2e, 0x69, 0x6f, 0x73, 0x2e, 0x48, 0x66, 0x75, 0x6e, 0x55,
+	0x73, 0x65, 0x72, 0x42, 0x31, 0x5a, 0x2f, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d,
+	0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x69,
+	0x6f, 0x73, 0x3b, 0x69, 0x6f, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -112,16 +457,27 @@ func file_hypurr_ios_user_proto_rawDescGZIP() []byte {
 	return file_hypurr_ios_user_proto_rawDescData
 }
 
-var file_hypurr_ios_user_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_hypurr_ios_user_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_hypurr_ios_user_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_hypurr_ios_user_proto_goTypes = []any{
-	(*HfunUser)(nil), // 0: hypurr.ios.HfunUser
+	(TraderBadge)(0),             // 0: hypurr.ios.TraderBadge
+	(*CurrentUserRequest)(nil),   // 1: hypurr.ios.CurrentUserRequest
+	(*HfunUser)(nil),             // 2: hypurr.ios.HfunUser
+	(*ViewerRelationship)(nil),   // 3: hypurr.ios.ViewerRelationship
+	(*MutualFriendsSummary)(nil), // 4: hypurr.ios.MutualFriendsSummary
+	(*Trader)(nil),               // 5: hypurr.ios.Trader
 }
 var file_hypurr_ios_user_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0, // 0: hypurr.ios.HfunUser.trader_badge:type_name -> hypurr.ios.TraderBadge
+	2, // 1: hypurr.ios.MutualFriendsSummary.preview:type_name -> hypurr.ios.HfunUser
+	2, // 2: hypurr.ios.Trader.user:type_name -> hypurr.ios.HfunUser
+	1, // 3: hypurr.ios.CurrentUserService.CurrentUser:input_type -> hypurr.ios.CurrentUserRequest
+	2, // 4: hypurr.ios.CurrentUserService.CurrentUser:output_type -> hypurr.ios.HfunUser
+	4, // [4:5] is the sub-list for method output_type
+	3, // [3:4] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_hypurr_ios_user_proto_init() }
@@ -131,6 +487,18 @@ func file_hypurr_ios_user_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_hypurr_ios_user_proto_msgTypes[0].Exporter = func(v any, i int) any {
+			switch v := v.(*CurrentUserRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_ios_user_proto_msgTypes[1].Exporter = func(v any, i int) any {
 			switch v := v.(*HfunUser); i {
 			case 0:
 				return &v.state
@@ -142,19 +510,57 @@ func file_hypurr_ios_user_proto_init() {
 				return nil
 			}
 		}
+		file_hypurr_ios_user_proto_msgTypes[2].Exporter = func(v any, i int) any {
+			switch v := v.(*ViewerRelationship); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_ios_user_proto_msgTypes[3].Exporter = func(v any, i int) any {
+			switch v := v.(*MutualFriendsSummary); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_ios_user_proto_msgTypes[4].Exporter = func(v any, i int) any {
+			switch v := v.(*Trader); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
+	file_hypurr_ios_user_proto_msgTypes[4].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hypurr_ios_user_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   1,
+			NumEnums:      1,
+			NumMessages:   5,
 			NumExtensions: 0,
-			NumServices:   0,
+			NumServices:   1,
 		},
 		GoTypes:           file_hypurr_ios_user_proto_goTypes,
 		DependencyIndexes: file_hypurr_ios_user_proto_depIdxs,
+		EnumInfos:         file_hypurr_ios_user_proto_enumTypes,
 		MessageInfos:      file_hypurr_ios_user_proto_msgTypes,
 	}.Build()
 	File_hypurr_ios_user_proto = out.File

@@ -2,8 +2,59 @@ syntax = "proto3";
 package hypurr.ios;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
 
+service CurrentUserService {
+  // Returns the authenticated viewer's shared identity. Requires user:read.
+  // Missing or invalid authentication returns UNAUTHENTICATED.
+  rpc CurrentUser(CurrentUserRequest) returns (HfunUser);
+}
+
+message CurrentUserRequest {}
+
 message HfunUser {
+  // The canonical HFUN user ID, not the Telegram user ID.
   int64 user_id = 1;
+  // The handle excludes the leading @.
   string handle = 2;
+  // An absolute HTTP(S) URL, or empty when no URL is available.
   string avatar_url = 3;
+  string display_name = 4;
+  TraderBadge trader_badge = 5;
+  // Positions start at 1. Zero means unranked.
+  // Mobile shows podium decoration for positions 1 through 3.
+  // CurrentUser returns zero until global ranking is available.
+  uint32 global_leaderboard_position = 6;
+}
+
+// TraderBadge uses the highest threshold exceeded by the total indexed HFUN spot balance.
+// Count all controlled wallets, including private and archived wallets. Exclude read-only wallets.
+// Include locked tokens. Do not round the balance or use a smoothed score.
+enum TraderBadge {
+  TRADER_BADGE_UNSPECIFIED = 0; // No badge.
+  TRADER_BADGE_GOLD = 1; // More than 5000 HFUN.
+  TRADER_BADGE_SILVER = 2; // More than 500 HFUN.
+  TRADER_BADGE_BRONZE = 3; // More than 50 HFUN.
+  TRADER_BADGE_BLUE = 4; // More than 0 HFUN.
+}
+
+// ViewerRelationship describes each follow direction at response time.
+// Both fields are true for mutual follows.
+message ViewerRelationship {
+  bool viewer_follows = 1;
+  bool follows_viewer = 2;
+}
+
+// People the viewer follows who also follow the subject user.
+message MutualFriendsSummary {
+  // The preview contains at most three users in display order.
+  // The preview is empty when total_count is zero.
+  repeated HfunUser preview = 1;
+  int32 total_count = 2;
+}
+
+// Trader combines identity with the user's all-time win rate.
+message Trader {
+  HfunUser user = 1;
+  // All-time percentage of closed positions with positive realized PnL.
+  // Absent before the first closed position. A value of 54.8 means 54.8%.
+  optional double win_rate_percent = 2;
 }

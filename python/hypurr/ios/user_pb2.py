@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15hypurr/ios/user.proto\x12\nhypurr.ios\"?\n\x08HfunUser\x12\x0f\n\x07user_id\x18\x01 \x01(\x03\x12\x0e\n\x06handle\x18\x02 \x01(\t\x12\x12\n\navatar_url\x18\x03 \x01(\tB1Z/gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;iosb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15hypurr/ios/user.proto\x12\nhypurr.ios\"\x14\n\x12\x43urrentUserRequest\"\xa9\x01\n\x08HfunUser\x12\x0f\n\x07user_id\x18\x01 \x01(\x03\x12\x0e\n\x06handle\x18\x02 \x01(\t\x12\x12\n\navatar_url\x18\x03 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x04 \x01(\t\x12-\n\x0ctrader_badge\x18\x05 \x01(\x0e\x32\x17.hypurr.ios.TraderBadge\x12#\n\x1bglobal_leaderboard_position\x18\x06 \x01(\r\"D\n\x12ViewerRelationship\x12\x16\n\x0eviewer_follows\x18\x01 \x01(\x08\x12\x16\n\x0e\x66ollows_viewer\x18\x02 \x01(\x08\"R\n\x14MutualFriendsSummary\x12%\n\x07preview\x18\x01 \x03(\x0b\x32\x14.hypurr.ios.HfunUser\x12\x13\n\x0btotal_count\x18\x02 \x01(\x05\"`\n\x06Trader\x12\"\n\x04user\x18\x01 \x01(\x0b\x32\x14.hypurr.ios.HfunUser\x12\x1d\n\x10win_rate_percent\x18\x02 \x01(\x01H\x00\x88\x01\x01\x42\x13\n\x11_win_rate_percent*\x8b\x01\n\x0bTraderBadge\x12\x1c\n\x18TRADER_BADGE_UNSPECIFIED\x10\x00\x12\x15\n\x11TRADER_BADGE_GOLD\x10\x01\x12\x17\n\x13TRADER_BADGE_SILVER\x10\x02\x12\x17\n\x13TRADER_BADGE_BRONZE\x10\x03\x12\x15\n\x11TRADER_BADGE_BLUE\x10\x04\x32Y\n\x12\x43urrentUserService\x12\x43\n\x0b\x43urrentUser\x12\x1e.hypurr.ios.CurrentUserRequest\x1a\x14.hypurr.ios.HfunUserB1Z/gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;iosb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,6 +32,18 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'hypurr.ios.user_pb2', _glob
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z/gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios'
-  _globals['_HFUNUSER']._serialized_start=37
-  _globals['_HFUNUSER']._serialized_end=100
+  _globals['_TRADERBADGE']._serialized_start=484
+  _globals['_TRADERBADGE']._serialized_end=623
+  _globals['_CURRENTUSERREQUEST']._serialized_start=37
+  _globals['_CURRENTUSERREQUEST']._serialized_end=57
+  _globals['_HFUNUSER']._serialized_start=60
+  _globals['_HFUNUSER']._serialized_end=229
+  _globals['_VIEWERRELATIONSHIP']._serialized_start=231
+  _globals['_VIEWERRELATIONSHIP']._serialized_end=299
+  _globals['_MUTUALFRIENDSSUMMARY']._serialized_start=301
+  _globals['_MUTUALFRIENDSSUMMARY']._serialized_end=383
+  _globals['_TRADER']._serialized_start=385
+  _globals['_TRADER']._serialized_end=481
+  _globals['_CURRENTUSERSERVICE']._serialized_start=625
+  _globals['_CURRENTUSERSERVICE']._serialized_end=714
 # @@protoc_insertion_point(module_scope)

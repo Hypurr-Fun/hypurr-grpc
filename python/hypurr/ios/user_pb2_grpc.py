@@ -3,6 +3,7 @@
 import grpc
 import warnings
 
+from hypurr.ios import user_pb2 as hypurr_dot_ios_dot_user__pb2
 
 GRPC_GENERATED_VERSION = '1.81.0'
 GRPC_VERSION = grpc.__version__
@@ -22,3 +23,77 @@ if _version_not_supported:
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
     )
+
+
+class CurrentUserServiceStub:
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.CurrentUser = channel.unary_unary(
+                '/hypurr.ios.CurrentUserService/CurrentUser',
+                request_serializer=hypurr_dot_ios_dot_user__pb2.CurrentUserRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_user__pb2.HfunUser.FromString,
+                _registered_method=True)
+
+
+class CurrentUserServiceServicer:
+    """Missing associated documentation comment in .proto file."""
+
+    def CurrentUser(self, request, context):
+        """Returns the authenticated viewer's shared identity. Requires user:read.
+        Missing or invalid authentication returns UNAUTHENTICATED.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_CurrentUserServiceServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'CurrentUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.CurrentUser,
+                    request_deserializer=hypurr_dot_ios_dot_user__pb2.CurrentUserRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_user__pb2.HfunUser.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'hypurr.ios.CurrentUserService', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+    server.add_registered_method_handlers('hypurr.ios.CurrentUserService', rpc_method_handlers)
+
+
+ # This class is part of an EXPERIMENTAL API.
+class CurrentUserService:
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def CurrentUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.CurrentUserService/CurrentUser',
+            hypurr_dot_ios_dot_user__pb2.CurrentUserRequest.SerializeToString,
+            hypurr_dot_ios_dot_user__pb2.HfunUser.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
