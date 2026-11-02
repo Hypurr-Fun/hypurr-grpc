@@ -1,0 +1,140 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+import "hypurr/ios/instrument.proto";
+import "hypurr/ios/period.proto";
+import "hypurr/ios/wallet.proto";
+
+service UserStreamService {
+  rpc UserStream(UserStreamRequest) returns (stream UserSnapshot);
+}
+
+message UserStreamRequest {}
+
+message UserSnapshot {
+  // RFC3339 UTC time at which this internally consistent snapshot was calculated.
+  string as_of = 1;
+  // Aggregate across every authenticated wallet.
+  PortfolioValue all_wallets_value = 2;
+  // Wallet selector display order.
+  repeated UserWallet wallets = 3;
+  // Backend-calculated performance across all authenticated wallets.
+  repeated SpotPerformance spot_performance = 4;
+  repeated PerpPerformance perp_performance = 5;
+  PerpAccount perp_account = 6;
+}
+
+message UserWallet {
+  WalletReference wallet = 1;
+  PortfolioValue value = 2;
+  // Empty arrays mean this wallet has no current holdings or positions.
+  // Display order: market value, largest first.
+  repeated SpotHolding spot_holdings = 3;
+  // Display order: notional value, largest first.
+  repeated OpenPerpPosition perp_positions = 4;
+  // Performance for this wallet only.
+  repeated SpotPerformance spot_performance = 5;
+  repeated PerpPerformance perp_performance = 6;
+  PerpAccount perp_account = 7;
+}
+
+message PortfolioValue {
+  int64 total_balance_cents = 1;
+  int64 change_cents = 2;       // Signed; current product-defined period.
+  double change_percentage = 3; // Signed; same period as change_cents.
+}
+
+message SpotHolding {
+  // "<wallet_id>:<token ref>".
+  string position_id = 1;
+  Token token = 2;
+  string quantity_decimal = 3;
+  // 0 when the token has no price.
+  int64 market_value_cents = 4;
+  // Absent when the token has no price or no cost basis.
+  SpotPositionDetails position_details = 5;
+}
+
+message OpenPerpPosition {
+  // "<wallet_id>:<market_id>".
+  string position_id = 1;
+  Market market = 2;
+  int32 leverage = 3;
+  PositionDirection direction = 4;
+  int64 unrealized_pnl_cents = 5; // Signed.
+  double roe_percent = 6;         // Signed.
+  // Always present for every open perp position.
+  PerpLiquidationDistance liquidation_distance = 7;
+  // Present for every current open perp position.
+  PerpPositionDetails position_details = 8;
+}
+
+message SpotPositionDetails {
+  int64 unrealized_pnl_cents = 1; // Signed.
+  string average_cost_price_decimal = 2;
+  double roe_percent = 3; // Signed.
+  double portfolio_share_percent = 4;
+}
+
+message PerpPositionDetails {
+  int64 funding_cents = 1; // Signed net funding value.
+  string mark_price_decimal = 2;
+  string entry_price_decimal = 3;
+  string liquidation_price_decimal = 4;
+  string size_decimal = 5; // Base-asset quantity.
+  int64 notional_value_cents = 6; // Current USD notional.
+  int64 margin_cents = 7; // Margin shown for this position.
+  PerpMarginMode margin_mode = 8;
+  // Absent when the position has no take-profit or stop-loss order.
+  PerpAutoClose auto_close = 9;
+}
+
+enum PerpMarginMode {
+  PERP_MARGIN_MODE_UNSPECIFIED = 0;
+  PERP_MARGIN_MODE_ISOLATED = 1;
+  PERP_MARGIN_MODE_CROSS = 2;
+}
+
+message PerpAutoClose {
+  string take_profit_price_decimal = 1;
+  string stop_loss_price_decimal = 2;
+}
+
+enum PerpLiquidationWarningLevel {
+  PERP_LIQUIDATION_WARNING_LEVEL_UNSPECIFIED = 0;
+  PERP_LIQUIDATION_WARNING_LEVEL_WARNING = 1;
+  PERP_LIQUIDATION_WARNING_LEVEL_CRITICAL = 2;
+}
+
+message PerpLiquidationDistance {
+  // Percentage points: 5.4 means 5.4%.
+  double distance_percentage = 1;
+  // Absent means no warning. When present, must be WARNING or CRITICAL.
+  optional PerpLiquidationWarningLevel warning_level = 2;
+}
+
+message SpotPerformance {
+  PortfolioPeriod performance_period = 1;
+  int64 pnl_cents = 2;    // Signed USD PnL.
+  int64 volume_cents = 3; // USD trading volume.
+  double max_drawdown_percent = 4;
+}
+
+message PerpPerformance {
+  PortfolioPeriod performance_period = 1;
+  int64 pnl_cents = 2;            // Signed USD PnL.
+  int64 unrealized_pnl_cents = 3; // Signed.
+  int64 realized_pnl_cents = 4;   // Signed.
+  double win_rate_percent = 5;
+  int64 volume_cents = 6; // USD trading volume.
+  int64 funding_cents = 7; // Signed net funding.
+  double max_drawdown_percent = 8;
+}
+
+// Live cross-margin state of the perp account, not tied to a period.
+message PerpAccount {
+  double account_leverage = 1;  // Multiplier: 2.5 means 2.5x.
+  double margin_ratio = 2;      // Ratio: 0.25 means 25%.
+  int64 withdrawable_cents = 3; // USD amount.
+}

@@ -1,0 +1,36 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+enum ChartInterval {
+  CHART_INTERVAL_UNSPECIFIED = 0;
+  CHART_INTERVAL_15M = 1;
+  CHART_INTERVAL_30M = 2;
+  CHART_INTERVAL_1H = 3;
+  CHART_INTERVAL_2H = 4;
+  CHART_INTERVAL_4H = 5;
+  CHART_INTERVAL_8H = 6;
+  CHART_INTERVAL_12H = 7;
+  CHART_INTERVAL_1D = 8;
+  CHART_INTERVAL_3D = 9;
+  CHART_INTERVAL_1W = 10;
+  CHART_INTERVAL_30D = 11;
+}
+
+message ChartPeriod {
+  ChartInterval interval = 1;
+  // RFC3339 UTC range [start_at, end_at). Both fall on a 15 minute boundary.
+  // Candles are on the interval grid: the first is the one that contains start_at.
+  string start_at = 2;
+  string end_at = 3;
+}
+
+// Shared by streamed performance and the dashboard request.
+enum PortfolioPeriod {
+  PORTFOLIO_PERIOD_UNSPECIFIED = 0;
+  PORTFOLIO_PERIOD_24H = 1;
+  PORTFOLIO_PERIOD_7D = 2;
+  PORTFOLIO_PERIOD_30D = 3;
+  PORTFOLIO_PERIOD_1Y = 4;
+  PORTFOLIO_PERIOD_ALL = 5;
+}

@@ -1,0 +1,9 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+message HfunUser {
+  int64 user_id = 1;
+  string handle = 2;
+  string avatar_url = 3;
+}

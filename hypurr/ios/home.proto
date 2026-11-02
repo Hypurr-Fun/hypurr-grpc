@@ -1,0 +1,48 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+import "hypurr/ios/activity_item.proto";
+import "hypurr/ios/instrument.proto";
+
+service HomeService {
+  rpc Home(HomeRequest) returns (HomeResponse);
+}
+
+message HomeRequest {
+  // Empty means all wallets. This scopes recent_activity only.
+  string wallet_id = 1;
+}
+
+message HomeResponse {
+  RecentActivitySection recent_activity = 1;
+  repeated HomeMarketCategory market_categories = 2;
+}
+
+message HomeMarketCategory {
+  // Stable backend/config identifier for diffing and analytics.
+  string id = 1;
+  // Backend-configured display title.
+  string title = 2;
+  // Backend-configured display order.
+  repeated HomeMarketPrice assets = 3;
+}
+
+message HomeMarketPrice {
+  // Price and history are the ones of market.
+  Asset asset = 1;
+  // Required, unformatted base-10 decimal string.
+  // No currency symbol, grouping, rounding, or floating-point conversion.
+  // Examples: "114321.5", "0.00017".
+  string price_decimal = 2;
+  // Exactly 12 points, oldest first: Home's fixed 24h, 2-hour series.
+  repeated AssetPricePoint history = 3;
+  // The market this row shows and trades: the perp the user holds a position
+  // in, else the book of a token the user holds, else the asset's reference
+  // market.
+  Market market = 4;
+}
+
+message RecentActivitySection {
+  repeated ActivityItem items = 1; // At most three, newest first.
+}

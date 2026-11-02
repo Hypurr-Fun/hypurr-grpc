@@ -1,0 +1,113 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+import "hypurr/ios/instrument.proto";
+import "hypurr/ios/user.proto";
+
+message ActivityTokenAmount {
+  Token token = 1;
+  string quantity_decimal = 2;
+}
+
+message ActivityParty {
+  oneof identity {
+    HfunUser hfun_user = 1; // Only with a verified wallet-to-user link.
+    string wallet_address = 2;
+  }
+}
+
+message ActivityItem {
+  string id = 1;
+  string occurred_at = 2; // RFC3339 UTC.
+  oneof activity {
+    DepositActivity deposit = 10;
+    WithdrawActivity withdraw = 11;
+    SendActivity send = 12;
+    ReceiveActivity receive = 13;
+    AccountClassTransferActivity account_class_transfer = 14;
+    SpotFillActivity spot_fill = 15;
+    OpenPerpActivity open_perp = 16;
+    ClosePerpActivity close_perp = 17;
+    LiquidationActivity liquidation = 19;
+    GenesisAllocationActivity genesis_allocation = 20;
+    SwapActivity swap = 21;
+  }
+}
+
+message DepositActivity {
+  ActivityTokenAmount received = 1;
+  int64 usd_value_cents = 2;
+}
+
+message WithdrawActivity {
+  ActivityTokenAmount sent = 1;
+  int64 usd_value_cents = 2;
+}
+
+message SendActivity {
+  ActivityParty recipient = 1;
+  ActivityTokenAmount sent = 2;
+  int64 usd_value_cents = 3;
+}
+
+message ReceiveActivity {
+  ActivityParty sender = 1;
+  ActivityTokenAmount received = 2;
+  int64 usd_value_cents = 3;
+}
+
+enum AccountClass {
+  ACCOUNT_CLASS_UNSPECIFIED = 0;
+  ACCOUNT_CLASS_SPOT = 1;
+  ACCOUNT_CLASS_PERPS = 2;
+}
+
+message AccountClassTransferActivity {
+  AccountClass destination = 1;
+  string usdc_amount_decimal = 2;
+}
+
+message SpotFillActivity {
+  TradeSide side = 1;
+  ActivityTokenAmount filled = 2;
+  int64 usd_value_cents = 3;
+}
+
+message OpenPerpActivity {
+  PositionDirection direction = 1;
+  Market market = 2;
+  string size_decimal = 3;
+  string fill_price_decimal = 4;
+  int64 fee_cents = 5;
+}
+
+message ClosePerpActivity {
+  PositionDirection direction = 1;
+  Market market = 2;
+  string size_decimal = 3;
+  oneof result {
+    int64 realized_pnl_cents = 4; // Signed; only when supplied upstream.
+    ExecutionPriceAndFee execution = 5;
+  }
+}
+
+message ExecutionPriceAndFee {
+  string fill_price_decimal = 1;
+  int64 fee_cents = 2;
+}
+
+message LiquidationActivity {
+  Market market = 1;
+  string size_decimal = 2;   // Contracts liquidated.
+  int64 usd_value_cents = 3; // Notional of the liquidated size.
+}
+
+message GenesisAllocationActivity {
+  ActivityTokenAmount received = 1;
+}
+
+message SwapActivity {
+  ActivityTokenAmount sent = 1;
+  ActivityTokenAmount received = 2;
+}

@@ -1,0 +1,23 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+import "hypurr/ios/instrument.proto";
+
+service CatalogService {
+  rpc Catalog(CatalogRequest) returns (CatalogResponse);
+}
+
+message CatalogRequest {}
+
+message CatalogResponse {
+  // Every asset with a market the app can show. Sorted by the reference
+  // market's 24h notional, largest first.
+  repeated CatalogEntry entries = 1;
+}
+
+message CatalogEntry {
+  Asset asset = 1;
+  // Every market of this asset. The first is the reference market.
+  repeated MarketQuote markets = 2;
+}

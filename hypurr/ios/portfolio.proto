@@ -1,0 +1,83 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+import "hypurr/ios/instrument.proto";
+import "hypurr/ios/period.proto";
+
+service PortfolioService {
+  rpc PortfolioDashboard(PortfolioDashboardRequest) returns (PortfolioDashboardResponse);
+  rpc ClosedPositionHistory(ClosedPositionHistoryRequest) returns (ClosedPositionHistoryResponse);
+}
+
+enum PortfolioDashboardMode {
+  PORTFOLIO_DASHBOARD_MODE_UNSPECIFIED = 0;
+  PORTFOLIO_DASHBOARD_MODE_SPOT = 1;
+  PORTFOLIO_DASHBOARD_MODE_PERP = 2;
+  PORTFOLIO_DASHBOARD_MODE_ALL = 3;
+}
+
+message PortfolioDashboardRequest {
+  PortfolioDashboardMode mode = 1;
+  // Applies to the chart only. closed_positions are the last 30, any period.
+  PortfolioPeriod portfolio_period = 2;
+  // Empty means all authenticated wallets.
+  string wallet_id = 3;
+}
+
+message PortfolioDashboardResponse {
+  PortfolioChart chart = 1;
+  repeated ClosedPosition closed_positions = 2; // Newest close first.
+}
+
+message PortfolioChart {
+  repeated PortfolioChartPoint points = 1; // Oldest first.
+}
+
+message PortfolioChartPoint {
+  string timestamp = 1; // RFC3339 UTC.
+  int64 balance_cents = 2;
+}
+
+message ClosedPosition {
+  // Stable identifier across dashboard and history responses.
+  string position_id = 1;
+  string wallet_id = 2;
+  Market market = 3;            // Includes asset identity.
+  string closed_at = 4;         // RFC3339 UTC.
+  optional int64 realized_pnl_cents = 5; // Signed.
+  // Exactly one variant is populated.
+  oneof position {
+    ClosedSpotPosition spot = 6;
+    ClosedPerpPosition perp = 7;
+  }
+}
+
+message ClosedSpotPosition {
+  TradeSide side = 1;
+  double return_percent = 2; // Signed, unleveraged return.
+}
+
+message ClosedPerpPosition {
+  PositionDirection side = 1;
+}
+
+enum ClosedPositionKind {
+  CLOSED_POSITION_KIND_UNSPECIFIED = 0;
+  CLOSED_POSITION_KIND_SPOT = 1;
+  CLOSED_POSITION_KIND_PERP = 2;
+}
+
+message ClosedPositionHistoryRequest {
+  // Empty means all authenticated wallets.
+  string wallet_id = 1;
+  // Required: SPOT or PERP.
+  ClosedPositionKind kind = 2;
+  int32 page_size = 3;
+  string page_token = 4; // Empty means first page.
+}
+
+message ClosedPositionHistoryResponse {
+  repeated ClosedPosition closed_positions = 1; // Newest close first.
+  string next_page_token = 2;                   // Empty when exhausted.
+}

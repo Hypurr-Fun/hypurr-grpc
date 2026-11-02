@@ -1,0 +1,95 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+import "hypurr/ios/candle.proto";
+import "hypurr/ios/instrument.proto";
+import "hypurr/ios/period.proto";
+
+service MarketsService {
+  rpc Markets(MarketsRequest) returns (MarketsResponse);
+  rpc Watchlist(WatchlistRequest) returns (WatchlistResponse);
+  rpc AddToWatchlist(AddToWatchlistRequest) returns (WatchlistMutationResponse);
+  rpc RemoveFromWatchlist(RemoveFromWatchlistRequest) returns (WatchlistMutationResponse);
+}
+
+// Shared by Markets and Watchlist.
+message MarketWithCandles {
+  Market market = 1;
+  // Live price, same format as MarketQuote.price_decimal.
+  string price_decimal = 2;
+  // Live price against the first candle's open, e.g. 6.0 = +6%.
+  double period_change_percentage = 3;
+  // Oldest first; empty when the range has no observations.
+  repeated Candle candles = 4;
+}
+
+message MarketsRequest {
+  ChartPeriod chart_period = 1;
+  // Exactly one selection is required.
+  oneof selected_market {
+    MarketsSpotSelection spot = 2;
+    MarketsPerpSelection perp = 3;
+  }
+}
+
+message MarketsSpotSelection {
+  MarketsSpotFilter filter = 1;
+}
+
+enum MarketsSpotFilter {
+  MARKETS_SPOT_FILTER_ALL = 0;
+  MARKETS_SPOT_FILTER_TRENDING = 1;
+  MARKETS_SPOT_FILTER_GAINERS = 2;
+  MARKETS_SPOT_FILTER_LOSERS = 3;
+  MARKETS_SPOT_FILTER_NEW = 4;
+}
+
+message MarketsPerpSelection {
+  MarketsPerpFilter filter = 1;
+}
+
+enum MarketsPerpFilter {
+  MARKETS_PERP_FILTER_ALL = 0;
+  MARKETS_PERP_FILTER_CRYPTO = 1;
+  MARKETS_PERP_FILTER_STOCKS = 2;
+  MARKETS_PERP_FILTER_INDICES = 3;
+  MARKETS_PERP_FILTER_COMMODITIES = 4;
+}
+
+message MarketsResponse {
+  // Complete selected list, already filtered and in display order.
+  repeated MarketWithCandles items = 1;
+  // Effective candle bucket duration in seconds.
+  int64 candle_interval_seconds = 2;
+}
+
+message WatchlistRequest {
+  // Watchlist membership comes from the authenticated user.
+  ChartPeriod chart_period = 1;
+}
+
+message WatchlistResponse {
+  // Spot markets first, then perps; 24h volume desc in each. Empty when the
+  // user has no saved markets.
+  repeated MarketWithCandles items = 1;
+  // Effective candle bucket duration in seconds.
+  int64 candle_interval_seconds = 2;
+}
+
+message AddToWatchlistRequest {
+  // Fails with NotFound when the market is unknown. Adding a saved market
+  // changes nothing.
+  uint64 market_id = 1;
+}
+
+message RemoveFromWatchlistRequest {
+  // Removing a market that is not saved changes nothing.
+  uint64 market_id = 1;
+}
+
+// Shared by AddToWatchlist and RemoveFromWatchlist.
+message WatchlistMutationResponse {
+  // The saved markets after the change, in Watchlist order.
+  repeated uint64 market_ids = 1;
+}

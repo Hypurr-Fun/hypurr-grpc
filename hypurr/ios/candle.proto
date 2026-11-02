@@ -1,0 +1,30 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+message Candles {
+  // Effective bucket duration in seconds.
+  int64 candle_interval_seconds = 1;
+  // One series per market, in request order.
+  repeated CandleSeries series = 2;
+}
+
+message CandleSeries {
+  uint64 market_id = 1;
+  // Oldest first; empty when the market has no observations in the range.
+  repeated Candle candles = 2;
+}
+
+message Candle {
+  // Stable, series-unique id: "<market_id>:<bucket_start_rfc3339>".
+  string id = 1;
+  // RFC3339 UTC start of the candle bucket.
+  string occurred_at = 2;
+  // Simple price for price-only consumers. Always equals close_decimal.
+  string price_decimal = 3;
+  // USD OHLC decimal strings; low <= min(open, close), high >= max(open, close).
+  string open_decimal = 4;
+  string high_decimal = 5;
+  string low_decimal = 6;
+  string close_decimal = 7;
+}
