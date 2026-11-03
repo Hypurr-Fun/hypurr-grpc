@@ -925,14 +925,12 @@ type KmsGetAccountInfoResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AccountId      string             `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
-	Providers      []*KmsProviderInfo `protobuf:"bytes,2,rep,name=providers,proto3" json:"providers,omitempty"`
-	Wallets        []*KmsWalletInfo   `protobuf:"bytes,3,rep,name=wallets,proto3" json:"wallets,omitempty"`
-	TwoFactorTypes []string           `protobuf:"bytes,4,rep,name=two_factor_types,json=twoFactorTypes,proto3" json:"two_factor_types,omitempty"`
-	Agents         []*KmsAgentInfo    `protobuf:"bytes,5,rep,name=agents,proto3" json:"agents,omitempty"`
-	// The enrolled passkey's WebAuthn credential id, empty without one: apps
-	// pass it to the passkey prompt so it offers only that passkey.
-	PasskeyCredentialId []byte `protobuf:"bytes,6,opt,name=passkey_credential_id,json=passkeyCredentialId,proto3" json:"passkey_credential_id,omitempty"`
+	AccountId           string             `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	Providers           []*KmsProviderInfo `protobuf:"bytes,2,rep,name=providers,proto3" json:"providers,omitempty"`
+	Wallets             []*KmsWalletInfo   `protobuf:"bytes,3,rep,name=wallets,proto3" json:"wallets,omitempty"`
+	TwoFactorTypes      []string           `protobuf:"bytes,4,rep,name=two_factor_types,json=twoFactorTypes,proto3" json:"two_factor_types,omitempty"`
+	Agents              []*KmsAgentInfo    `protobuf:"bytes,5,rep,name=agents,proto3" json:"agents,omitempty"`
+	PasskeyCredentialId []byte             `protobuf:"bytes,6,opt,name=passkey_credential_id,json=passkeyCredentialId,proto3" json:"passkey_credential_id,omitempty"`
 }
 
 func (x *KmsGetAccountInfoResponse) Reset() {

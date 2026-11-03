@@ -1,0 +1,71 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+import "hypurr/ios/user.proto";
+
+// Requires user:read for lists and settings:write for mutations.
+// Relationship booleans are true only for accepted follows.
+// Private profiles keep new follows pending until the owner accepts them.
+// Only owners and accepted followers can read a private profile's lists.
+service FollowService {
+  rpc Follow(FollowRequest) returns (RelationshipResponse);
+  rpc Unfollow(UnfollowRequest) returns (RelationshipResponse);
+  rpc Followers(FollowersRequest) returns (FollowListResponse);
+  rpc Following(FollowingRequest) returns (FollowListResponse);
+}
+
+// Following an already followed user succeeds without changing the follow.
+message FollowRequest {
+  // A positive canonical HFUN user ID. Self-follow returns INVALID_ARGUMENT.
+  int64 user_id = 1;
+}
+
+// Unfollowing succeeds when no follow exists, including an unknown positive user ID.
+// Unfollowing also cancels a pending request.
+message UnfollowRequest {
+  // A positive canonical HFUN user ID.
+  int64 user_id = 1;
+}
+
+message RelationshipResponse {
+  int64 user_id = 1;
+  // The viewer's relationship to this user after the mutation.
+  ViewerRelationship relationship = 2;
+}
+
+// People who follow user_id. Only accepted follows appear.
+message FollowersRequest {
+  // Absent means the authenticated viewer. Explicit values must be positive.
+  optional int64 user_id = 1;
+  // Empty means the first page. The server returns at most 50 users.
+  // Tokens are specific to the viewer, list owner, and direction.
+  string page_token = 2;
+}
+
+// People user_id follows. Only accepted follows appear.
+message FollowingRequest {
+  // Absent means the authenticated viewer. Explicit values must be positive.
+  optional int64 user_id = 1;
+  // Empty means the first page. The server returns at most 50 users.
+  // Tokens are specific to the viewer, list owner, and direction.
+  string page_token = 2;
+}
+
+message FollowListResponse {
+  // Most recent follow first. User ID breaks equal-time ties.
+  repeated FollowListRow users = 1;
+  // The whole accepted list's count, on every page.
+  int32 total_count = 2;
+  // Empty when the list is exhausted.
+  string next_page_token = 3;
+}
+
+message FollowListRow {
+  HfunUser user = 1;
+  // The viewer's relationship to this row's user, not to the list owner.
+  ViewerRelationship relationship = 2;
+  // Accepted users the viewer follows who also follow this row's user.
+  // Preview order is newest viewer follow first, then user ID.
+  MutualFriendsSummary mutual_friends = 3;
+}

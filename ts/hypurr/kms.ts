@@ -236,9 +236,6 @@ export interface KmsGetAccountInfoResponse {
      */
     agents: KmsAgentInfo[];
     /**
-     * The enrolled passkey's WebAuthn credential id, empty without one: apps
-     * pass it to the passkey prompt so it offers only that passkey.
-     *
      * @generated from protobuf field: bytes passkey_credential_id = 6
      */
     passkeyCredentialId: Uint8Array;
