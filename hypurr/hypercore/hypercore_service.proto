@@ -590,6 +590,18 @@ message WalletPerformanceRequest {
   repeated int64 from_ts = 2; // 1-5 starts, Unix seconds; 0 = all-time
   int64 to_ts = 3; // inclusive, Unix seconds; 0 = now
 }
+// Each client owns its wallet list. Remove takes precedence when both lists contain a wallet.
+message WalletPerformanceStreamRequest {
+  repeated string add_wallets = 1;
+  repeated string remove_wallets = 2;
+}
+
+// Results contain hour-aligned 24-hour, 7-day, 30-day, and all-time ranges, in that order.
+message WalletPerformanceStreamResponse {
+  int64 to_ts = 1;
+  repeated WalletPerformanceResult wallets = 2;
+}
+
 message WalletPerformanceResponse {
   repeated WalletPerformanceResult wallets = 1; // request order
 }
@@ -1125,6 +1137,7 @@ service HyperCore {
   rpc WalletsByTag(WalletsByTagRequest) returns (WalletsByTagResponse) {}
   rpc WalletsByFilter(WalletsByFilterRequest) returns (WalletsByFilterResponse) {}
   rpc WalletPerformance(WalletPerformanceRequest) returns (WalletPerformanceResponse) {}
+  rpc WalletPerformanceStream(stream WalletPerformanceStreamRequest) returns (stream WalletPerformanceStreamResponse) {}
   rpc WalletPerformanceSeries(WalletPerformanceSeriesRequest) returns (WalletPerformanceSeriesResponse) {}
   rpc WalletPositioningSeries(WalletPositioningSeriesRequest) returns (WalletPositioningSeriesResponse) {}
   rpc SpotInstruments(SpotInstrumentsRequest) returns (SpotInstrumentsResponse);

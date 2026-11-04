@@ -134,6 +134,11 @@ class HyperCoreStub:
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceResponse.FromString,
                 _registered_method=True)
+        self.WalletPerformanceStream = channel.stream_stream(
+                '/hypercore.HyperCore/WalletPerformanceStream',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceStreamRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceStreamResponse.FromString,
+                _registered_method=True)
         self.WalletPerformanceSeries = channel.unary_unary(
                 '/hypercore.HyperCore/WalletPerformanceSeries',
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSeriesRequest.SerializeToString,
@@ -336,6 +341,12 @@ class HyperCoreServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def WalletPerformanceStream(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def WalletPerformanceSeries(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -529,6 +540,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     servicer.WalletPerformance,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceResponse.SerializeToString,
+            ),
+            'WalletPerformanceStream': grpc.stream_stream_rpc_method_handler(
+                    servicer.WalletPerformanceStream,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceStreamRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceStreamResponse.SerializeToString,
             ),
             'WalletPerformanceSeries': grpc.unary_unary_rpc_method_handler(
                     servicer.WalletPerformanceSeries,
@@ -1146,6 +1162,33 @@ class HyperCore:
             '/hypercore.HyperCore/WalletPerformance',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def WalletPerformanceStream(request_iterator,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.stream_stream(
+            request_iterator,
+            target,
+            '/hypercore.HyperCore/WalletPerformanceStream',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceStreamRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceStreamResponse.FromString,
             options,
             channel_credentials,
             insecure,

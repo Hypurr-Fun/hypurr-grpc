@@ -5283,6 +5283,118 @@ func (x *WalletPerformanceRequest) GetToTs() int64 {
 	return 0
 }
 
+// Each client owns its wallet list. Remove takes precedence when both lists contain a wallet.
+type WalletPerformanceStreamRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AddWallets    []string `protobuf:"bytes,1,rep,name=add_wallets,json=addWallets,proto3" json:"add_wallets,omitempty"`
+	RemoveWallets []string `protobuf:"bytes,2,rep,name=remove_wallets,json=removeWallets,proto3" json:"remove_wallets,omitempty"`
+}
+
+func (x *WalletPerformanceStreamRequest) Reset() {
+	*x = WalletPerformanceStreamRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[62]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WalletPerformanceStreamRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WalletPerformanceStreamRequest) ProtoMessage() {}
+
+func (x *WalletPerformanceStreamRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[62]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WalletPerformanceStreamRequest.ProtoReflect.Descriptor instead.
+func (*WalletPerformanceStreamRequest) Descriptor() ([]byte, []int) {
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{62}
+}
+
+func (x *WalletPerformanceStreamRequest) GetAddWallets() []string {
+	if x != nil {
+		return x.AddWallets
+	}
+	return nil
+}
+
+func (x *WalletPerformanceStreamRequest) GetRemoveWallets() []string {
+	if x != nil {
+		return x.RemoveWallets
+	}
+	return nil
+}
+
+// Results contain hour-aligned 24-hour, 7-day, 30-day, and all-time ranges, in that order.
+type WalletPerformanceStreamResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ToTs    int64                      `protobuf:"varint,1,opt,name=to_ts,json=toTs,proto3" json:"to_ts,omitempty"`
+	Wallets []*WalletPerformanceResult `protobuf:"bytes,2,rep,name=wallets,proto3" json:"wallets,omitempty"`
+}
+
+func (x *WalletPerformanceStreamResponse) Reset() {
+	*x = WalletPerformanceStreamResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[63]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WalletPerformanceStreamResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WalletPerformanceStreamResponse) ProtoMessage() {}
+
+func (x *WalletPerformanceStreamResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[63]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WalletPerformanceStreamResponse.ProtoReflect.Descriptor instead.
+func (*WalletPerformanceStreamResponse) Descriptor() ([]byte, []int) {
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{63}
+}
+
+func (x *WalletPerformanceStreamResponse) GetToTs() int64 {
+	if x != nil {
+		return x.ToTs
+	}
+	return 0
+}
+
+func (x *WalletPerformanceStreamResponse) GetWallets() []*WalletPerformanceResult {
+	if x != nil {
+		return x.Wallets
+	}
+	return nil
+}
+
 type WalletPerformanceResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -5294,7 +5406,7 @@ type WalletPerformanceResponse struct {
 func (x *WalletPerformanceResponse) Reset() {
 	*x = WalletPerformanceResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[62]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[64]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5307,7 +5419,7 @@ func (x *WalletPerformanceResponse) String() string {
 func (*WalletPerformanceResponse) ProtoMessage() {}
 
 func (x *WalletPerformanceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[62]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[64]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5320,7 +5432,7 @@ func (x *WalletPerformanceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletPerformanceResponse.ProtoReflect.Descriptor instead.
 func (*WalletPerformanceResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{62}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *WalletPerformanceResponse) GetWallets() []*WalletPerformanceResult {
@@ -5342,7 +5454,7 @@ type WalletPerformanceResult struct {
 func (x *WalletPerformanceResult) Reset() {
 	*x = WalletPerformanceResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[63]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[65]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5355,7 +5467,7 @@ func (x *WalletPerformanceResult) String() string {
 func (*WalletPerformanceResult) ProtoMessage() {}
 
 func (x *WalletPerformanceResult) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[63]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[65]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5368,7 +5480,7 @@ func (x *WalletPerformanceResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletPerformanceResult.ProtoReflect.Descriptor instead.
 func (*WalletPerformanceResult) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{63}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *WalletPerformanceResult) GetWalletAddress() string {
@@ -5398,7 +5510,7 @@ type WalletPerformanceRange struct {
 func (x *WalletPerformanceRange) Reset() {
 	*x = WalletPerformanceRange{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[64]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[66]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5411,7 +5523,7 @@ func (x *WalletPerformanceRange) String() string {
 func (*WalletPerformanceRange) ProtoMessage() {}
 
 func (x *WalletPerformanceRange) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[64]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[66]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5424,7 +5536,7 @@ func (x *WalletPerformanceRange) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletPerformanceRange.ProtoReflect.Descriptor instead.
 func (*WalletPerformanceRange) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{64}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *WalletPerformanceRange) GetFromTs() int64 {
@@ -5465,7 +5577,7 @@ type WalletPerformanceSeriesRequest struct {
 func (x *WalletPerformanceSeriesRequest) Reset() {
 	*x = WalletPerformanceSeriesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[65]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[67]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5478,7 +5590,7 @@ func (x *WalletPerformanceSeriesRequest) String() string {
 func (*WalletPerformanceSeriesRequest) ProtoMessage() {}
 
 func (x *WalletPerformanceSeriesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[65]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[67]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5491,7 +5603,7 @@ func (x *WalletPerformanceSeriesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletPerformanceSeriesRequest.ProtoReflect.Descriptor instead.
 func (*WalletPerformanceSeriesRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{65}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{67}
 }
 
 func (x *WalletPerformanceSeriesRequest) GetWallets() []*WalletPerformanceSeriesQuery {
@@ -5548,7 +5660,7 @@ type WalletPerformanceSeriesQuery struct {
 func (x *WalletPerformanceSeriesQuery) Reset() {
 	*x = WalletPerformanceSeriesQuery{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[66]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[68]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5561,7 +5673,7 @@ func (x *WalletPerformanceSeriesQuery) String() string {
 func (*WalletPerformanceSeriesQuery) ProtoMessage() {}
 
 func (x *WalletPerformanceSeriesQuery) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[66]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[68]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5574,7 +5686,7 @@ func (x *WalletPerformanceSeriesQuery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletPerformanceSeriesQuery.ProtoReflect.Descriptor instead.
 func (*WalletPerformanceSeriesQuery) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{66}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *WalletPerformanceSeriesQuery) GetWalletAddress() string {
@@ -5604,7 +5716,7 @@ type WalletPerformanceSeriesResponse struct {
 func (x *WalletPerformanceSeriesResponse) Reset() {
 	*x = WalletPerformanceSeriesResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[67]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[69]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5617,7 +5729,7 @@ func (x *WalletPerformanceSeriesResponse) String() string {
 func (*WalletPerformanceSeriesResponse) ProtoMessage() {}
 
 func (x *WalletPerformanceSeriesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[67]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[69]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5630,7 +5742,7 @@ func (x *WalletPerformanceSeriesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletPerformanceSeriesResponse.ProtoReflect.Descriptor instead.
 func (*WalletPerformanceSeriesResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{67}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *WalletPerformanceSeriesResponse) GetWallets() []*WalletPerformanceSeriesResult {
@@ -5667,7 +5779,7 @@ type WalletPerformanceSeriesResult struct {
 func (x *WalletPerformanceSeriesResult) Reset() {
 	*x = WalletPerformanceSeriesResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[68]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[70]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5680,7 +5792,7 @@ func (x *WalletPerformanceSeriesResult) String() string {
 func (*WalletPerformanceSeriesResult) ProtoMessage() {}
 
 func (x *WalletPerformanceSeriesResult) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[68]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[70]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5693,7 +5805,7 @@ func (x *WalletPerformanceSeriesResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletPerformanceSeriesResult.ProtoReflect.Descriptor instead.
 func (*WalletPerformanceSeriesResult) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{68}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *WalletPerformanceSeriesResult) GetWalletAddress() string {
@@ -5742,7 +5854,7 @@ type PositioningBucket struct {
 func (x *PositioningBucket) Reset() {
 	*x = PositioningBucket{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[69]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[71]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5755,7 +5867,7 @@ func (x *PositioningBucket) String() string {
 func (*PositioningBucket) ProtoMessage() {}
 
 func (x *PositioningBucket) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[69]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[71]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5768,7 +5880,7 @@ func (x *PositioningBucket) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PositioningBucket.ProtoReflect.Descriptor instead.
 func (*PositioningBucket) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{69}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{71}
 }
 
 func (x *PositioningBucket) GetTs() int64 {
@@ -5849,7 +5961,7 @@ type WalletPositioningSeriesRequest struct {
 func (x *WalletPositioningSeriesRequest) Reset() {
 	*x = WalletPositioningSeriesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[70]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[72]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5862,7 +5974,7 @@ func (x *WalletPositioningSeriesRequest) String() string {
 func (*WalletPositioningSeriesRequest) ProtoMessage() {}
 
 func (x *WalletPositioningSeriesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[70]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[72]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5875,7 +5987,7 @@ func (x *WalletPositioningSeriesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletPositioningSeriesRequest.ProtoReflect.Descriptor instead.
 func (*WalletPositioningSeriesRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{70}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{72}
 }
 
 func (x *WalletPositioningSeriesRequest) GetInstrumentId() uint64 {
@@ -5927,7 +6039,7 @@ type WalletPositioningSeriesResponse struct {
 func (x *WalletPositioningSeriesResponse) Reset() {
 	*x = WalletPositioningSeriesResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[71]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[73]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5940,7 +6052,7 @@ func (x *WalletPositioningSeriesResponse) String() string {
 func (*WalletPositioningSeriesResponse) ProtoMessage() {}
 
 func (x *WalletPositioningSeriesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[71]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[73]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5953,7 +6065,7 @@ func (x *WalletPositioningSeriesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletPositioningSeriesResponse.ProtoReflect.Descriptor instead.
 func (*WalletPositioningSeriesResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{71}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{73}
 }
 
 func (x *WalletPositioningSeriesResponse) GetInstrumentId() uint64 {
@@ -5993,7 +6105,7 @@ type SpotInstrumentsRequest struct {
 func (x *SpotInstrumentsRequest) Reset() {
 	*x = SpotInstrumentsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[72]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[74]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6006,7 +6118,7 @@ func (x *SpotInstrumentsRequest) String() string {
 func (*SpotInstrumentsRequest) ProtoMessage() {}
 
 func (x *SpotInstrumentsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[72]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[74]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6019,7 +6131,7 @@ func (x *SpotInstrumentsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpotInstrumentsRequest.ProtoReflect.Descriptor instead.
 func (*SpotInstrumentsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{72}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{74}
 }
 
 type SpotToken struct {
@@ -6039,7 +6151,7 @@ type SpotToken struct {
 func (x *SpotToken) Reset() {
 	*x = SpotToken{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[73]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[75]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6052,7 +6164,7 @@ func (x *SpotToken) String() string {
 func (*SpotToken) ProtoMessage() {}
 
 func (x *SpotToken) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[73]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[75]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6065,7 +6177,7 @@ func (x *SpotToken) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpotToken.ProtoReflect.Descriptor instead.
 func (*SpotToken) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{73}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *SpotToken) GetIndex() int32 {
@@ -6133,7 +6245,7 @@ type SpotInstrument struct {
 func (x *SpotInstrument) Reset() {
 	*x = SpotInstrument{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[74]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[76]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6146,7 +6258,7 @@ func (x *SpotInstrument) String() string {
 func (*SpotInstrument) ProtoMessage() {}
 
 func (x *SpotInstrument) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[74]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[76]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6159,7 +6271,7 @@ func (x *SpotInstrument) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpotInstrument.ProtoReflect.Descriptor instead.
 func (*SpotInstrument) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{74}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *SpotInstrument) GetId() int64 {
@@ -6215,7 +6327,7 @@ type SpotInstrumentsResponse struct {
 func (x *SpotInstrumentsResponse) Reset() {
 	*x = SpotInstrumentsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[75]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[77]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6228,7 +6340,7 @@ func (x *SpotInstrumentsResponse) String() string {
 func (*SpotInstrumentsResponse) ProtoMessage() {}
 
 func (x *SpotInstrumentsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[75]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[77]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6241,7 +6353,7 @@ func (x *SpotInstrumentsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpotInstrumentsResponse.ProtoReflect.Descriptor instead.
 func (*SpotInstrumentsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{75}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *SpotInstrumentsResponse) GetInstruments() []*SpotInstrument {
@@ -6260,7 +6372,7 @@ type PerpInstrumentsRequest struct {
 func (x *PerpInstrumentsRequest) Reset() {
 	*x = PerpInstrumentsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[76]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[78]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6273,7 +6385,7 @@ func (x *PerpInstrumentsRequest) String() string {
 func (*PerpInstrumentsRequest) ProtoMessage() {}
 
 func (x *PerpInstrumentsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[76]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[78]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6286,7 +6398,7 @@ func (x *PerpInstrumentsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PerpInstrumentsRequest.ProtoReflect.Descriptor instead.
 func (*PerpInstrumentsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{76}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{78}
 }
 
 type PerpInstrument struct {
@@ -6310,7 +6422,7 @@ type PerpInstrument struct {
 func (x *PerpInstrument) Reset() {
 	*x = PerpInstrument{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[77]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[79]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6323,7 +6435,7 @@ func (x *PerpInstrument) String() string {
 func (*PerpInstrument) ProtoMessage() {}
 
 func (x *PerpInstrument) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[77]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[79]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6336,7 +6448,7 @@ func (x *PerpInstrument) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PerpInstrument.ProtoReflect.Descriptor instead.
 func (*PerpInstrument) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{77}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *PerpInstrument) GetId() int64 {
@@ -6427,7 +6539,7 @@ type PerpInstrumentsResponse struct {
 func (x *PerpInstrumentsResponse) Reset() {
 	*x = PerpInstrumentsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[78]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[80]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6440,7 +6552,7 @@ func (x *PerpInstrumentsResponse) String() string {
 func (*PerpInstrumentsResponse) ProtoMessage() {}
 
 func (x *PerpInstrumentsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[78]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[80]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6453,7 +6565,7 @@ func (x *PerpInstrumentsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PerpInstrumentsResponse.ProtoReflect.Descriptor instead.
 func (*PerpInstrumentsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{78}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{80}
 }
 
 func (x *PerpInstrumentsResponse) GetInstruments() []*PerpInstrument {
@@ -6480,7 +6592,7 @@ type WalletsByMetricPercentileRequest struct {
 func (x *WalletsByMetricPercentileRequest) Reset() {
 	*x = WalletsByMetricPercentileRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[79]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[81]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6493,7 +6605,7 @@ func (x *WalletsByMetricPercentileRequest) String() string {
 func (*WalletsByMetricPercentileRequest) ProtoMessage() {}
 
 func (x *WalletsByMetricPercentileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[79]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[81]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6506,7 +6618,7 @@ func (x *WalletsByMetricPercentileRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletsByMetricPercentileRequest.ProtoReflect.Descriptor instead.
 func (*WalletsByMetricPercentileRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{79}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *WalletsByMetricPercentileRequest) GetMetric() ClassificationMetric {
@@ -6571,7 +6683,7 @@ type WalletMetricRank struct {
 func (x *WalletMetricRank) Reset() {
 	*x = WalletMetricRank{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[80]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[82]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6584,7 +6696,7 @@ func (x *WalletMetricRank) String() string {
 func (*WalletMetricRank) ProtoMessage() {}
 
 func (x *WalletMetricRank) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[80]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[82]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6597,7 +6709,7 @@ func (x *WalletMetricRank) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletMetricRank.ProtoReflect.Descriptor instead.
 func (*WalletMetricRank) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{80}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *WalletMetricRank) GetWalletAddress() string {
@@ -6632,7 +6744,7 @@ type WalletsByMetricPercentileResponse struct {
 func (x *WalletsByMetricPercentileResponse) Reset() {
 	*x = WalletsByMetricPercentileResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[81]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[83]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6645,7 +6757,7 @@ func (x *WalletsByMetricPercentileResponse) String() string {
 func (*WalletsByMetricPercentileResponse) ProtoMessage() {}
 
 func (x *WalletsByMetricPercentileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[81]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[83]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6658,7 +6770,7 @@ func (x *WalletsByMetricPercentileResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use WalletsByMetricPercentileResponse.ProtoReflect.Descriptor instead.
 func (*WalletsByMetricPercentileResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{81}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{83}
 }
 
 func (x *WalletsByMetricPercentileResponse) GetWallets() []*WalletMetricRank {
@@ -6685,7 +6797,7 @@ type HistoricalTradeSide struct {
 func (x *HistoricalTradeSide) Reset() {
 	*x = HistoricalTradeSide{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[82]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[84]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6698,7 +6810,7 @@ func (x *HistoricalTradeSide) String() string {
 func (*HistoricalTradeSide) ProtoMessage() {}
 
 func (x *HistoricalTradeSide) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[82]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[84]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6711,7 +6823,7 @@ func (x *HistoricalTradeSide) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HistoricalTradeSide.ProtoReflect.Descriptor instead.
 func (*HistoricalTradeSide) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{82}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *HistoricalTradeSide) GetUser() string {
@@ -6774,7 +6886,7 @@ type HistoricalWalletTrade struct {
 func (x *HistoricalWalletTrade) Reset() {
 	*x = HistoricalWalletTrade{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[83]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[85]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6787,7 +6899,7 @@ func (x *HistoricalWalletTrade) String() string {
 func (*HistoricalWalletTrade) ProtoMessage() {}
 
 func (x *HistoricalWalletTrade) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[83]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[85]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6800,7 +6912,7 @@ func (x *HistoricalWalletTrade) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HistoricalWalletTrade.ProtoReflect.Descriptor instead.
 func (*HistoricalWalletTrade) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{83}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *HistoricalWalletTrade) GetType() WalletTradeType {
@@ -6915,7 +7027,7 @@ type DirtyWalletsRequest struct {
 func (x *DirtyWalletsRequest) Reset() {
 	*x = DirtyWalletsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[84]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[86]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6928,7 +7040,7 @@ func (x *DirtyWalletsRequest) String() string {
 func (*DirtyWalletsRequest) ProtoMessage() {}
 
 func (x *DirtyWalletsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[84]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[86]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6941,7 +7053,7 @@ func (x *DirtyWalletsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DirtyWalletsRequest.ProtoReflect.Descriptor instead.
 func (*DirtyWalletsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{84}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *DirtyWalletsRequest) GetFromTs() int64 {
@@ -6970,7 +7082,7 @@ type DirtyWalletsResponse struct {
 func (x *DirtyWalletsResponse) Reset() {
 	*x = DirtyWalletsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[85]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[87]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6983,7 +7095,7 @@ func (x *DirtyWalletsResponse) String() string {
 func (*DirtyWalletsResponse) ProtoMessage() {}
 
 func (x *DirtyWalletsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[85]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[87]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6996,7 +7108,7 @@ func (x *DirtyWalletsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DirtyWalletsResponse.ProtoReflect.Descriptor instead.
 func (*DirtyWalletsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{85}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{87}
 }
 
 func (x *DirtyWalletsResponse) GetWalletAddresses() []string {
@@ -7023,7 +7135,7 @@ type WalletTradesRequest struct {
 func (x *WalletTradesRequest) Reset() {
 	*x = WalletTradesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[86]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[88]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7036,7 +7148,7 @@ func (x *WalletTradesRequest) String() string {
 func (*WalletTradesRequest) ProtoMessage() {}
 
 func (x *WalletTradesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[86]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[88]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7049,7 +7161,7 @@ func (x *WalletTradesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletTradesRequest.ProtoReflect.Descriptor instead.
 func (*WalletTradesRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{86}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{88}
 }
 
 func (x *WalletTradesRequest) GetWalletAddress() string {
@@ -7114,7 +7226,7 @@ type WalletTradesResponse struct {
 func (x *WalletTradesResponse) Reset() {
 	*x = WalletTradesResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[87]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[89]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7127,7 +7239,7 @@ func (x *WalletTradesResponse) String() string {
 func (*WalletTradesResponse) ProtoMessage() {}
 
 func (x *WalletTradesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[87]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[89]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7140,7 +7252,7 @@ func (x *WalletTradesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletTradesResponse.ProtoReflect.Descriptor instead.
 func (*WalletTradesResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{87}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{89}
 }
 
 func (x *WalletTradesResponse) GetWalletAddress() string {
@@ -7175,7 +7287,7 @@ type WalletLastEventTimestampRequest struct {
 func (x *WalletLastEventTimestampRequest) Reset() {
 	*x = WalletLastEventTimestampRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[88]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[90]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7188,7 +7300,7 @@ func (x *WalletLastEventTimestampRequest) String() string {
 func (*WalletLastEventTimestampRequest) ProtoMessage() {}
 
 func (x *WalletLastEventTimestampRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[88]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[90]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7201,7 +7313,7 @@ func (x *WalletLastEventTimestampRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletLastEventTimestampRequest.ProtoReflect.Descriptor instead.
 func (*WalletLastEventTimestampRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{88}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{90}
 }
 
 func (x *WalletLastEventTimestampRequest) GetWalletAddresses() []string {
@@ -7223,7 +7335,7 @@ type WalletLastEventTimestampResponse struct {
 func (x *WalletLastEventTimestampResponse) Reset() {
 	*x = WalletLastEventTimestampResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[89]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[91]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7236,7 +7348,7 @@ func (x *WalletLastEventTimestampResponse) String() string {
 func (*WalletLastEventTimestampResponse) ProtoMessage() {}
 
 func (x *WalletLastEventTimestampResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[89]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[91]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7249,7 +7361,7 @@ func (x *WalletLastEventTimestampResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WalletLastEventTimestampResponse.ProtoReflect.Descriptor instead.
 func (*WalletLastEventTimestampResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{89}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{91}
 }
 
 func (x *WalletLastEventTimestampResponse) GetLastEventTimestamp() map[string]int64 {
@@ -7275,7 +7387,7 @@ type ClosedPositionsRequest struct {
 func (x *ClosedPositionsRequest) Reset() {
 	*x = ClosedPositionsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[90]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[92]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7288,7 +7400,7 @@ func (x *ClosedPositionsRequest) String() string {
 func (*ClosedPositionsRequest) ProtoMessage() {}
 
 func (x *ClosedPositionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[90]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[92]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7301,7 +7413,7 @@ func (x *ClosedPositionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClosedPositionsRequest.ProtoReflect.Descriptor instead.
 func (*ClosedPositionsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{90}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{92}
 }
 
 func (x *ClosedPositionsRequest) GetWalletAddresses() []string {
@@ -7365,7 +7477,7 @@ type ClosedPosition struct {
 func (x *ClosedPosition) Reset() {
 	*x = ClosedPosition{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[91]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[93]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7378,7 +7490,7 @@ func (x *ClosedPosition) String() string {
 func (*ClosedPosition) ProtoMessage() {}
 
 func (x *ClosedPosition) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[91]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[93]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7391,7 +7503,7 @@ func (x *ClosedPosition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClosedPosition.ProtoReflect.Descriptor instead.
 func (*ClosedPosition) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{91}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{93}
 }
 
 func (x *ClosedPosition) GetPositionId() string {
@@ -7469,7 +7581,7 @@ type ClosedPositionsResponse struct {
 func (x *ClosedPositionsResponse) Reset() {
 	*x = ClosedPositionsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[92]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[94]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7482,7 +7594,7 @@ func (x *ClosedPositionsResponse) String() string {
 func (*ClosedPositionsResponse) ProtoMessage() {}
 
 func (x *ClosedPositionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[92]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[94]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7495,7 +7607,7 @@ func (x *ClosedPositionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ClosedPositionsResponse.ProtoReflect.Descriptor instead.
 func (*ClosedPositionsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{92}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{94}
 }
 
 func (x *ClosedPositionsResponse) GetPositions() []*ClosedPosition {
@@ -7526,7 +7638,7 @@ type OHLCRequest struct {
 func (x *OHLCRequest) Reset() {
 	*x = OHLCRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[93]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[95]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7539,7 +7651,7 @@ func (x *OHLCRequest) String() string {
 func (*OHLCRequest) ProtoMessage() {}
 
 func (x *OHLCRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[93]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[95]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7552,7 +7664,7 @@ func (x *OHLCRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OHLCRequest.ProtoReflect.Descriptor instead.
 func (*OHLCRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{93}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{95}
 }
 
 func (x *OHLCRequest) GetInstrumentIds() []int64 {
@@ -7598,7 +7710,7 @@ type OHLC struct {
 func (x *OHLC) Reset() {
 	*x = OHLC{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[94]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[96]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7611,7 +7723,7 @@ func (x *OHLC) String() string {
 func (*OHLC) ProtoMessage() {}
 
 func (x *OHLC) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[94]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[96]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7624,7 +7736,7 @@ func (x *OHLC) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OHLC.ProtoReflect.Descriptor instead.
 func (*OHLC) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{94}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{96}
 }
 
 func (x *OHLC) GetOpenTime() int64 {
@@ -7674,7 +7786,7 @@ type OHLCSeries struct {
 func (x *OHLCSeries) Reset() {
 	*x = OHLCSeries{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[95]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[97]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7687,7 +7799,7 @@ func (x *OHLCSeries) String() string {
 func (*OHLCSeries) ProtoMessage() {}
 
 func (x *OHLCSeries) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[95]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[97]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7700,7 +7812,7 @@ func (x *OHLCSeries) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OHLCSeries.ProtoReflect.Descriptor instead.
 func (*OHLCSeries) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{95}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{97}
 }
 
 func (x *OHLCSeries) GetInstrumentId() int64 {
@@ -7728,7 +7840,7 @@ type OHLCResponse struct {
 func (x *OHLCResponse) Reset() {
 	*x = OHLCResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[96]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[98]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7741,7 +7853,7 @@ func (x *OHLCResponse) String() string {
 func (*OHLCResponse) ProtoMessage() {}
 
 func (x *OHLCResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[96]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[98]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7754,7 +7866,7 @@ func (x *OHLCResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OHLCResponse.ProtoReflect.Descriptor instead.
 func (*OHLCResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{96}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{98}
 }
 
 func (x *OHLCResponse) GetSeries() []*OHLCSeries {
@@ -7776,7 +7888,7 @@ type OHLCStreamRequest struct {
 func (x *OHLCStreamRequest) Reset() {
 	*x = OHLCStreamRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[97]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[99]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7789,7 +7901,7 @@ func (x *OHLCStreamRequest) String() string {
 func (*OHLCStreamRequest) ProtoMessage() {}
 
 func (x *OHLCStreamRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[97]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[99]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7802,7 +7914,7 @@ func (x *OHLCStreamRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OHLCStreamRequest.ProtoReflect.Descriptor instead.
 func (*OHLCStreamRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{97}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{99}
 }
 
 func (x *OHLCStreamRequest) GetPairs() []*OHLCPair {
@@ -7824,7 +7936,7 @@ type OHLCPair struct {
 func (x *OHLCPair) Reset() {
 	*x = OHLCPair{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[98]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[100]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7837,7 +7949,7 @@ func (x *OHLCPair) String() string {
 func (*OHLCPair) ProtoMessage() {}
 
 func (x *OHLCPair) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[98]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[100]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7850,7 +7962,7 @@ func (x *OHLCPair) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OHLCPair.ProtoReflect.Descriptor instead.
 func (*OHLCPair) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{98}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{100}
 }
 
 func (x *OHLCPair) GetInstrumentId() int64 {
@@ -7882,7 +7994,7 @@ type OHLCStreamResponse struct {
 func (x *OHLCStreamResponse) Reset() {
 	*x = OHLCStreamResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[99]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[101]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7895,7 +8007,7 @@ func (x *OHLCStreamResponse) String() string {
 func (*OHLCStreamResponse) ProtoMessage() {}
 
 func (x *OHLCStreamResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[99]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[101]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7908,7 +8020,7 @@ func (x *OHLCStreamResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OHLCStreamResponse.ProtoReflect.Descriptor instead.
 func (*OHLCStreamResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{99}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{101}
 }
 
 func (x *OHLCStreamResponse) GetUpdates() []*OHLCUpdate {
@@ -7930,7 +8042,7 @@ type OHLCUpdate struct {
 func (x *OHLCUpdate) Reset() {
 	*x = OHLCUpdate{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[100]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[102]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7943,7 +8055,7 @@ func (x *OHLCUpdate) String() string {
 func (*OHLCUpdate) ProtoMessage() {}
 
 func (x *OHLCUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[100]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[102]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7956,7 +8068,7 @@ func (x *OHLCUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OHLCUpdate.ProtoReflect.Descriptor instead.
 func (*OHLCUpdate) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{100}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{102}
 }
 
 func (x *OHLCUpdate) GetPair() *OHLCPair {
@@ -7986,7 +8098,7 @@ type HighLowRequest struct {
 func (x *HighLowRequest) Reset() {
 	*x = HighLowRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[101]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[103]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7999,7 +8111,7 @@ func (x *HighLowRequest) String() string {
 func (*HighLowRequest) ProtoMessage() {}
 
 func (x *HighLowRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[101]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[103]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8012,7 +8124,7 @@ func (x *HighLowRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HighLowRequest.ProtoReflect.Descriptor instead.
 func (*HighLowRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{101}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{103}
 }
 
 func (x *HighLowRequest) GetInstrumentId() int64 {
@@ -8048,7 +8160,7 @@ type HighLowResponse struct {
 func (x *HighLowResponse) Reset() {
 	*x = HighLowResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[102]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[104]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8061,7 +8173,7 @@ func (x *HighLowResponse) String() string {
 func (*HighLowResponse) ProtoMessage() {}
 
 func (x *HighLowResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[102]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[104]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8074,7 +8186,7 @@ func (x *HighLowResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HighLowResponse.ProtoReflect.Descriptor instead.
 func (*HighLowResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{102}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{104}
 }
 
 func (x *HighLowResponse) GetHigh() float64 {
@@ -8107,7 +8219,7 @@ type InstrumentStatsRequest struct {
 func (x *InstrumentStatsRequest) Reset() {
 	*x = InstrumentStatsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[103]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[105]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8120,7 +8232,7 @@ func (x *InstrumentStatsRequest) String() string {
 func (*InstrumentStatsRequest) ProtoMessage() {}
 
 func (x *InstrumentStatsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[103]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[105]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8133,7 +8245,7 @@ func (x *InstrumentStatsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InstrumentStatsRequest.ProtoReflect.Descriptor instead.
 func (*InstrumentStatsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{103}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{105}
 }
 
 func (x *InstrumentStatsRequest) GetInstrumentIds() []int64 {
@@ -8186,7 +8298,7 @@ type InstrumentStats struct {
 func (x *InstrumentStats) Reset() {
 	*x = InstrumentStats{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[104]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[106]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8199,7 +8311,7 @@ func (x *InstrumentStats) String() string {
 func (*InstrumentStats) ProtoMessage() {}
 
 func (x *InstrumentStats) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[104]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[106]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8212,7 +8324,7 @@ func (x *InstrumentStats) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InstrumentStats.ProtoReflect.Descriptor instead.
 func (*InstrumentStats) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{104}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{106}
 }
 
 func (x *InstrumentStats) GetOpenTime() int64 {
@@ -8297,7 +8409,7 @@ type InstrumentStatsSeries struct {
 func (x *InstrumentStatsSeries) Reset() {
 	*x = InstrumentStatsSeries{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[105]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[107]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8310,7 +8422,7 @@ func (x *InstrumentStatsSeries) String() string {
 func (*InstrumentStatsSeries) ProtoMessage() {}
 
 func (x *InstrumentStatsSeries) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[105]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[107]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8323,7 +8435,7 @@ func (x *InstrumentStatsSeries) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InstrumentStatsSeries.ProtoReflect.Descriptor instead.
 func (*InstrumentStatsSeries) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{105}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{107}
 }
 
 func (x *InstrumentStatsSeries) GetInstrumentId() int64 {
@@ -8351,7 +8463,7 @@ type InstrumentStatsResponse struct {
 func (x *InstrumentStatsResponse) Reset() {
 	*x = InstrumentStatsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[106]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[108]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8364,7 +8476,7 @@ func (x *InstrumentStatsResponse) String() string {
 func (*InstrumentStatsResponse) ProtoMessage() {}
 
 func (x *InstrumentStatsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[106]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[108]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8377,7 +8489,7 @@ func (x *InstrumentStatsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InstrumentStatsResponse.ProtoReflect.Descriptor instead.
 func (*InstrumentStatsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{106}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{108}
 }
 
 func (x *InstrumentStatsResponse) GetSeries() []*InstrumentStatsSeries {
@@ -8398,7 +8510,7 @@ type PnlClassFilter struct {
 func (x *PnlClassFilter) Reset() {
 	*x = PnlClassFilter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[107]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[109]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8411,7 +8523,7 @@ func (x *PnlClassFilter) String() string {
 func (*PnlClassFilter) ProtoMessage() {}
 
 func (x *PnlClassFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[107]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[109]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8424,7 +8536,7 @@ func (x *PnlClassFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PnlClassFilter.ProtoReflect.Descriptor instead.
 func (*PnlClassFilter) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{107}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{109}
 }
 
 func (x *PnlClassFilter) GetClasses() []PnlClass {
@@ -8446,7 +8558,7 @@ type PnlAssetFilter struct {
 func (x *PnlAssetFilter) Reset() {
 	*x = PnlAssetFilter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[108]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[110]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8459,7 +8571,7 @@ func (x *PnlAssetFilter) String() string {
 func (*PnlAssetFilter) ProtoMessage() {}
 
 func (x *PnlAssetFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[108]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[110]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8472,7 +8584,7 @@ func (x *PnlAssetFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PnlAssetFilter.ProtoReflect.Descriptor instead.
 func (*PnlAssetFilter) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{108}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{110}
 }
 
 func (x *PnlAssetFilter) GetAssetIds() []int64 {
@@ -8505,7 +8617,7 @@ type PnlRankRequest struct {
 func (x *PnlRankRequest) Reset() {
 	*x = PnlRankRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[109]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[111]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8518,7 +8630,7 @@ func (x *PnlRankRequest) String() string {
 func (*PnlRankRequest) ProtoMessage() {}
 
 func (x *PnlRankRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[109]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[111]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8531,7 +8643,7 @@ func (x *PnlRankRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PnlRankRequest.ProtoReflect.Descriptor instead.
 func (*PnlRankRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{109}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{111}
 }
 
 func (x *PnlRankRequest) GetPeriod() PnlRankPeriod {
@@ -8594,7 +8706,7 @@ type PnlRankEntry struct {
 func (x *PnlRankEntry) Reset() {
 	*x = PnlRankEntry{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[110]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[112]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8607,7 +8719,7 @@ func (x *PnlRankEntry) String() string {
 func (*PnlRankEntry) ProtoMessage() {}
 
 func (x *PnlRankEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[110]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[112]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8620,7 +8732,7 @@ func (x *PnlRankEntry) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PnlRankEntry.ProtoReflect.Descriptor instead.
 func (*PnlRankEntry) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{110}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{112}
 }
 
 func (x *PnlRankEntry) GetWalletAddress() string {
@@ -8676,7 +8788,7 @@ type PnlRankResponse struct {
 func (x *PnlRankResponse) Reset() {
 	*x = PnlRankResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[111]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[113]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8689,7 +8801,7 @@ func (x *PnlRankResponse) String() string {
 func (*PnlRankResponse) ProtoMessage() {}
 
 func (x *PnlRankResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[111]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[113]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8702,7 +8814,7 @@ func (x *PnlRankResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PnlRankResponse.ProtoReflect.Descriptor instead.
 func (*PnlRankResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{111}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{113}
 }
 
 func (x *PnlRankResponse) GetEntries() []*PnlRankEntry {
@@ -8726,7 +8838,7 @@ type PositionPredicate struct {
 func (x *PositionPredicate) Reset() {
 	*x = PositionPredicate{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[112]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[114]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8739,7 +8851,7 @@ func (x *PositionPredicate) String() string {
 func (*PositionPredicate) ProtoMessage() {}
 
 func (x *PositionPredicate) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[112]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[114]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8752,7 +8864,7 @@ func (x *PositionPredicate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PositionPredicate.ProtoReflect.Descriptor instead.
 func (*PositionPredicate) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{112}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{114}
 }
 
 func (x *PositionPredicate) GetField() PositionField {
@@ -8798,7 +8910,7 @@ type PositionSort struct {
 func (x *PositionSort) Reset() {
 	*x = PositionSort{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[113]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[115]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8811,7 +8923,7 @@ func (x *PositionSort) String() string {
 func (*PositionSort) ProtoMessage() {}
 
 func (x *PositionSort) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[113]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[115]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8824,7 +8936,7 @@ func (x *PositionSort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PositionSort.ProtoReflect.Descriptor instead.
 func (*PositionSort) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{113}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{115}
 }
 
 func (x *PositionSort) GetField() PositionField {
@@ -8863,7 +8975,7 @@ type QueryPositionsRequest struct {
 func (x *QueryPositionsRequest) Reset() {
 	*x = QueryPositionsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[114]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[116]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8876,7 +8988,7 @@ func (x *QueryPositionsRequest) String() string {
 func (*QueryPositionsRequest) ProtoMessage() {}
 
 func (x *QueryPositionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[114]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[116]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8889,7 +9001,7 @@ func (x *QueryPositionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryPositionsRequest.ProtoReflect.Descriptor instead.
 func (*QueryPositionsRequest) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{114}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{116}
 }
 
 func (x *QueryPositionsRequest) GetUniverse() *WalletFilter {
@@ -8953,7 +9065,7 @@ type PositionRow struct {
 func (x *PositionRow) Reset() {
 	*x = PositionRow{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[115]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[117]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8966,7 +9078,7 @@ func (x *PositionRow) String() string {
 func (*PositionRow) ProtoMessage() {}
 
 func (x *PositionRow) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[115]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[117]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8979,7 +9091,7 @@ func (x *PositionRow) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PositionRow.ProtoReflect.Descriptor instead.
 func (*PositionRow) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{115}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{117}
 }
 
 func (x *PositionRow) GetWalletAddress() string {
@@ -9112,7 +9224,7 @@ type ComputeUsage struct {
 func (x *ComputeUsage) Reset() {
 	*x = ComputeUsage{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[116]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[118]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9125,7 +9237,7 @@ func (x *ComputeUsage) String() string {
 func (*ComputeUsage) ProtoMessage() {}
 
 func (x *ComputeUsage) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[116]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[118]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9138,7 +9250,7 @@ func (x *ComputeUsage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ComputeUsage.ProtoReflect.Descriptor instead.
 func (*ComputeUsage) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{116}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{118}
 }
 
 func (x *ComputeUsage) GetUsed() uint64 {
@@ -9191,7 +9303,7 @@ type QueryPositionsResponse struct {
 func (x *QueryPositionsResponse) Reset() {
 	*x = QueryPositionsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[117]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[119]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9204,7 +9316,7 @@ func (x *QueryPositionsResponse) String() string {
 func (*QueryPositionsResponse) ProtoMessage() {}
 
 func (x *QueryPositionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[117]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[119]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9217,7 +9329,7 @@ func (x *QueryPositionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryPositionsResponse.ProtoReflect.Descriptor instead.
 func (*QueryPositionsResponse) Descriptor() ([]byte, []int) {
-	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{117}
+	return file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP(), []int{119}
 }
 
 func (x *QueryPositionsResponse) GetRows() []*PositionRow {
@@ -9268,7 +9380,7 @@ type WalletState_SpotBalance struct {
 func (x *WalletState_SpotBalance) Reset() {
 	*x = WalletState_SpotBalance{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[118]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[120]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9281,7 +9393,7 @@ func (x *WalletState_SpotBalance) String() string {
 func (*WalletState_SpotBalance) ProtoMessage() {}
 
 func (x *WalletState_SpotBalance) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[118]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[120]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9333,7 +9445,7 @@ type WalletState_PerpState struct {
 func (x *WalletState_PerpState) Reset() {
 	*x = WalletState_PerpState{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[119]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[121]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9346,7 +9458,7 @@ func (x *WalletState_PerpState) String() string {
 func (*WalletState_PerpState) ProtoMessage() {}
 
 func (x *WalletState_PerpState) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[119]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[121]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9407,7 +9519,7 @@ type WalletState_PerpPosition struct {
 func (x *WalletState_PerpPosition) Reset() {
 	*x = WalletState_PerpPosition{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[120]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[122]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9420,7 +9532,7 @@ func (x *WalletState_PerpPosition) String() string {
 func (*WalletState_PerpPosition) ProtoMessage() {}
 
 func (x *WalletState_PerpPosition) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[120]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[122]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9496,7 +9608,7 @@ type WalletState_StakingState struct {
 func (x *WalletState_StakingState) Reset() {
 	*x = WalletState_StakingState{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[121]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[123]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9509,7 +9621,7 @@ func (x *WalletState_StakingState) String() string {
 func (*WalletState_StakingState) ProtoMessage() {}
 
 func (x *WalletState_StakingState) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[121]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[123]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9545,7 +9657,7 @@ type WalletState_BorrowLendBalance struct {
 func (x *WalletState_BorrowLendBalance) Reset() {
 	*x = WalletState_BorrowLendBalance{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[122]
+		mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[124]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -9558,7 +9670,7 @@ func (x *WalletState_BorrowLendBalance) String() string {
 func (*WalletState_BorrowLendBalance) ProtoMessage() {}
 
 func (x *WalletState_BorrowLendBalance) ProtoReflect() protoreflect.Message {
-	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[122]
+	mi := &file_hypurr_hypercore_hypercore_service_proto_msgTypes[124]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10317,6 +10429,20 @@ var file_hypurr_hypercore_hypercore_service_proto_rawDesc = []byte{
 	0x65, 0x73, 0x12, 0x17, 0x0a, 0x07, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x74, 0x73, 0x18, 0x02, 0x20,
 	0x03, 0x28, 0x03, 0x52, 0x06, 0x66, 0x72, 0x6f, 0x6d, 0x54, 0x73, 0x12, 0x13, 0x0a, 0x05, 0x74,
 	0x6f, 0x5f, 0x74, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x74, 0x6f, 0x54, 0x73,
+	0x22, 0x68, 0x0a, 0x1e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x65, 0x72, 0x66, 0x6f, 0x72,
+	0x6d, 0x61, 0x6e, 0x63, 0x65, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x61, 0x64, 0x64, 0x5f, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0a, 0x61, 0x64, 0x64, 0x57, 0x61, 0x6c, 0x6c,
+	0x65, 0x74, 0x73, 0x12, 0x25, 0x0a, 0x0e, 0x72, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x5f, 0x77, 0x61,
+	0x6c, 0x6c, 0x65, 0x74, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0d, 0x72, 0x65, 0x6d,
+	0x6f, 0x76, 0x65, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73, 0x22, 0x74, 0x0a, 0x1f, 0x57, 0x61,
+	0x6c, 0x6c, 0x65, 0x74, 0x50, 0x65, 0x72, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x6e, 0x63, 0x65, 0x53,
+	0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x13, 0x0a,
+	0x05, 0x74, 0x6f, 0x5f, 0x74, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x74, 0x6f,
+	0x54, 0x73, 0x12, 0x3c, 0x0a, 0x07, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73, 0x18, 0x02, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e,
+	0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x65, 0x72, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x6e, 0x63,
+	0x65, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x07, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73,
 	0x22, 0x59, 0x0a, 0x19, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x65, 0x72, 0x66, 0x6f, 0x72,
 	0x6d, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3c, 0x0a,
 	0x07, 0x77, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x22,
@@ -11112,7 +11238,7 @@ var file_hypurr_hypercore_hypercore_service_proto_rawDesc = []byte{
 	0x41, 0x54, 0x45, 0x5f, 0x4f, 0x50, 0x5f, 0x42, 0x45, 0x54, 0x57, 0x45, 0x45, 0x4e, 0x10, 0x07,
 	0x12, 0x15, 0x0a, 0x11, 0x50, 0x52, 0x45, 0x44, 0x49, 0x43, 0x41, 0x54, 0x45, 0x5f, 0x4f, 0x50,
 	0x5f, 0x4e, 0x45, 0x41, 0x52, 0x10, 0x08, 0x12, 0x13, 0x0a, 0x0f, 0x50, 0x52, 0x45, 0x44, 0x49,
-	0x43, 0x41, 0x54, 0x45, 0x5f, 0x4f, 0x50, 0x5f, 0x49, 0x4e, 0x10, 0x09, 0x32, 0xa8, 0x19, 0x0a,
+	0x43, 0x41, 0x54, 0x45, 0x5f, 0x4f, 0x50, 0x5f, 0x49, 0x4e, 0x10, 0x09, 0x32, 0xa0, 0x1a, 0x0a,
 	0x09, 0x48, 0x79, 0x70, 0x65, 0x72, 0x43, 0x6f, 0x72, 0x65, 0x12, 0x5a, 0x0a, 0x0f, 0x57, 0x61,
 	0x6c, 0x6c, 0x65, 0x74, 0x4d, 0x6f, 0x76, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x21, 0x2e,
 	0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74,
@@ -11230,96 +11356,103 @@ var file_hypurr_hypercore_hypercore_service_proto_rawDesc = []byte{
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x24, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63,
 	0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x65, 0x72, 0x66, 0x6f, 0x72,
 	0x6d, 0x61, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
-	0x72, 0x0a, 0x17, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x65, 0x72, 0x66, 0x6f, 0x72, 0x6d,
-	0x61, 0x6e, 0x63, 0x65, 0x53, 0x65, 0x72, 0x69, 0x65, 0x73, 0x12, 0x29, 0x2e, 0x68, 0x79, 0x70,
+	0x76, 0x0a, 0x17, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x65, 0x72, 0x66, 0x6f, 0x72, 0x6d,
+	0x61, 0x6e, 0x63, 0x65, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x12, 0x29, 0x2e, 0x68, 0x79, 0x70,
 	0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x65, 0x72,
-	0x66, 0x6f, 0x72, 0x6d, 0x61, 0x6e, 0x63, 0x65, 0x53, 0x65, 0x72, 0x69, 0x65, 0x73, 0x52, 0x65,
+	0x66, 0x6f, 0x72, 0x6d, 0x61, 0x6e, 0x63, 0x65, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65,
 	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72,
 	0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x65, 0x72, 0x66, 0x6f, 0x72, 0x6d, 0x61,
-	0x6e, 0x63, 0x65, 0x53, 0x65, 0x72, 0x69, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x22, 0x00, 0x12, 0x72, 0x0a, 0x17, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x6f, 0x73,
-	0x69, 0x74, 0x69, 0x6f, 0x6e, 0x69, 0x6e, 0x67, 0x53, 0x65, 0x72, 0x69, 0x65, 0x73, 0x12, 0x29,
-	0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65,
-	0x74, 0x50, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x69, 0x6e, 0x67, 0x53, 0x65, 0x72, 0x69,
-	0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e, 0x68, 0x79, 0x70, 0x65,
-	0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x6f, 0x73, 0x69,
-	0x74, 0x69, 0x6f, 0x6e, 0x69, 0x6e, 0x67, 0x53, 0x65, 0x72, 0x69, 0x65, 0x73, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x58, 0x0a, 0x0f, 0x53, 0x70, 0x6f, 0x74, 0x49,
-	0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x21, 0x2e, 0x68, 0x79, 0x70,
-	0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x53, 0x70, 0x6f, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x72,
-	0x75, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e,
-	0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x53, 0x70, 0x6f, 0x74, 0x49, 0x6e,
-	0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x58, 0x0a, 0x0f, 0x50, 0x65, 0x72, 0x70, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d,
-	0x65, 0x6e, 0x74, 0x73, 0x12, 0x21, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65,
-	0x2e, 0x50, 0x65, 0x72, 0x70, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x73,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63,
-	0x6f, 0x72, 0x65, 0x2e, 0x50, 0x65, 0x72, 0x70, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65,
-	0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x78, 0x0a, 0x19, 0x57,
-	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73, 0x42, 0x79, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x50, 0x65,
-	0x72, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x6c, 0x65, 0x12, 0x2b, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72,
-	0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73, 0x42, 0x79, 0x4d, 0x65,
-	0x74, 0x72, 0x69, 0x63, 0x50, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x6c, 0x65, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2c, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72,
-	0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73, 0x42, 0x79, 0x4d, 0x65, 0x74, 0x72, 0x69,
-	0x63, 0x50, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x51, 0x0a, 0x0c, 0x44, 0x69, 0x72, 0x74, 0x79, 0x57, 0x61,
-	0x6c, 0x6c, 0x65, 0x74, 0x73, 0x12, 0x1e, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72,
-	0x65, 0x2e, 0x44, 0x69, 0x72, 0x74, 0x79, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1f, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72,
-	0x65, 0x2e, 0x44, 0x69, 0x72, 0x74, 0x79, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x51, 0x0a, 0x0c, 0x57, 0x61, 0x6c, 0x6c,
-	0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x73, 0x12, 0x1e, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72,
-	0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65,
-	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1f, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72,
-	0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65,
-	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x75, 0x0a, 0x18, 0x57,
-	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x4c, 0x61, 0x73, 0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x54, 0x69,
-	0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x2a, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63,
-	0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x4c, 0x61, 0x73, 0x74, 0x45, 0x76,
-	0x65, 0x6e, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e,
-	0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x4c, 0x61, 0x73, 0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x54,
-	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x22, 0x00, 0x12, 0x5a, 0x0a, 0x0f, 0x43, 0x6c, 0x6f, 0x73, 0x65, 0x64, 0x50, 0x6f, 0x73, 0x69,
-	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x21, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72,
-	0x65, 0x2e, 0x43, 0x6c, 0x6f, 0x73, 0x65, 0x64, 0x50, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e,
-	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72,
-	0x63, 0x6f, 0x72, 0x65, 0x2e, 0x43, 0x6c, 0x6f, 0x73, 0x65, 0x64, 0x50, 0x6f, 0x73, 0x69, 0x74,
-	0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x39,
-	0x0a, 0x04, 0x4f, 0x48, 0x4c, 0x43, 0x12, 0x16, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f,
-	0x72, 0x65, 0x2e, 0x4f, 0x48, 0x4c, 0x43, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17,
+	0x6e, 0x63, 0x65, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x00, 0x28, 0x01, 0x30, 0x01, 0x12, 0x72, 0x0a, 0x17, 0x57, 0x61, 0x6c, 0x6c, 0x65,
+	0x74, 0x50, 0x65, 0x72, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x6e, 0x63, 0x65, 0x53, 0x65, 0x72, 0x69,
+	0x65, 0x73, 0x12, 0x29, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57,
+	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x65, 0x72, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x6e, 0x63, 0x65,
+	0x53, 0x65, 0x72, 0x69, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e,
+	0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74,
+	0x50, 0x65, 0x72, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x6e, 0x63, 0x65, 0x53, 0x65, 0x72, 0x69, 0x65,
+	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x72, 0x0a, 0x17, 0x57,
+	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x69, 0x6e, 0x67,
+	0x53, 0x65, 0x72, 0x69, 0x65, 0x73, 0x12, 0x29, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f,
+	0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x50, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f,
+	0x6e, 0x69, 0x6e, 0x67, 0x53, 0x65, 0x72, 0x69, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x2a, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61,
+	0x6c, 0x6c, 0x65, 0x74, 0x50, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x69, 0x6e, 0x67, 0x53,
+	0x65, 0x72, 0x69, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
+	0x58, 0x0a, 0x0f, 0x53, 0x70, 0x6f, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e,
+	0x74, 0x73, 0x12, 0x21, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x53,
+	0x70, 0x6f, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72,
+	0x65, 0x2e, 0x53, 0x70, 0x6f, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74,
+	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x58, 0x0a, 0x0f, 0x50, 0x65, 0x72,
+	0x70, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x21, 0x2e, 0x68,
+	0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x50, 0x65, 0x72, 0x70, 0x49, 0x6e, 0x73,
+	0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x22, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x50, 0x65, 0x72, 0x70,
+	0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x78, 0x0a, 0x19, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73, 0x42, 0x79,
+	0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x50, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x69, 0x6c, 0x65,
+	0x12, 0x2b, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c,
+	0x6c, 0x65, 0x74, 0x73, 0x42, 0x79, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x50, 0x65, 0x72, 0x63,
+	0x65, 0x6e, 0x74, 0x69, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2c, 0x2e,
+	0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74,
+	0x73, 0x42, 0x79, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x50, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74,
+	0x69, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x51, 0x0a,
+	0x0c, 0x44, 0x69, 0x72, 0x74, 0x79, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73, 0x12, 0x1e, 0x2e,
+	0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x44, 0x69, 0x72, 0x74, 0x79, 0x57,
+	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1f, 0x2e,
+	0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x44, 0x69, 0x72, 0x74, 0x79, 0x57,
+	0x61, 0x6c, 0x6c, 0x65, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
+	0x12, 0x51, 0x0a, 0x0c, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x73,
+	0x12, 0x1e, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c,
+	0x6c, 0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x1f, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c,
+	0x6c, 0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x00, 0x12, 0x75, 0x0a, 0x18, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x4c, 0x61, 0x73,
+	0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12,
+	0x2a, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c,
+	0x65, 0x74, 0x4c, 0x61, 0x73, 0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73,
+	0x74, 0x61, 0x6d, 0x70, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x68, 0x79,
+	0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x57, 0x61, 0x6c, 0x6c, 0x65, 0x74, 0x4c, 0x61,
+	0x73, 0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x5a, 0x0a, 0x0f, 0x43, 0x6c,
+	0x6f, 0x73, 0x65, 0x64, 0x50, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x21, 0x2e,
+	0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x43, 0x6c, 0x6f, 0x73, 0x65, 0x64,
+	0x50, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x22, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x43, 0x6c, 0x6f,
+	0x73, 0x65, 0x64, 0x50, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x39, 0x0a, 0x04, 0x4f, 0x48, 0x4c, 0x43, 0x12, 0x16,
 	0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x4f, 0x48, 0x4c, 0x43, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x4f, 0x0a, 0x0a, 0x4f, 0x48, 0x4c,
-	0x43, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x12, 0x1c, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63,
-	0x6f, 0x72, 0x65, 0x2e, 0x4f, 0x48, 0x4c, 0x43, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72,
-	0x65, 0x2e, 0x4f, 0x48, 0x4c, 0x43, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x28, 0x01, 0x30, 0x01, 0x12, 0x42, 0x0a, 0x07, 0x48, 0x69,
-	0x67, 0x68, 0x4c, 0x6f, 0x77, 0x12, 0x19, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72,
-	0x65, 0x2e, 0x48, 0x69, 0x67, 0x68, 0x4c, 0x6f, 0x77, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x1a, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x48, 0x69, 0x67,
-	0x68, 0x4c, 0x6f, 0x77, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x5a,
-	0x0a, 0x0f, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74,
-	0x73, 0x12, 0x21, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x49, 0x6e,
-	0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65,
-	0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x73,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x57, 0x0a, 0x0e, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x50, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x20, 0x2e, 0x68,
-	0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x6f,
-	0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x21,
-	0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79,
-	0x50, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x22, 0x00, 0x12, 0x42, 0x0a, 0x07, 0x50, 0x6e, 0x6c, 0x52, 0x61, 0x6e, 0x6b, 0x12, 0x19,
-	0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x50, 0x6e, 0x6c, 0x52, 0x61,
-	0x6e, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x68, 0x79, 0x70, 0x65,
-	0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x50, 0x6e, 0x6c, 0x52, 0x61, 0x6e, 0x6b, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x33, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x6c, 0x61,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70,
-	0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75,
-	0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f,
+	0x72, 0x65, 0x2e, 0x4f, 0x48, 0x4c, 0x43, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0x4f, 0x0a, 0x0a, 0x4f, 0x48, 0x4c, 0x43, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x12,
+	0x1c, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x4f, 0x48, 0x4c, 0x43,
+	0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e,
+	0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x4f, 0x48, 0x4c, 0x43, 0x53, 0x74,
+	0x72, 0x65, 0x61, 0x6d, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x28, 0x01,
+	0x30, 0x01, 0x12, 0x42, 0x0a, 0x07, 0x48, 0x69, 0x67, 0x68, 0x4c, 0x6f, 0x77, 0x12, 0x19, 0x2e,
+	0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x48, 0x69, 0x67, 0x68, 0x4c, 0x6f,
+	0x77, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72,
+	0x63, 0x6f, 0x72, 0x65, 0x2e, 0x48, 0x69, 0x67, 0x68, 0x4c, 0x6f, 0x77, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x5a, 0x0a, 0x0f, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75,
+	0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x73, 0x12, 0x21, 0x2e, 0x68, 0x79, 0x70, 0x65,
+	0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d, 0x65, 0x6e, 0x74,
+	0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e, 0x68,
+	0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x49, 0x6e, 0x73, 0x74, 0x72, 0x75, 0x6d,
+	0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x00, 0x12, 0x57, 0x0a, 0x0e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x6f, 0x73, 0x69, 0x74,
+	0x69, 0x6f, 0x6e, 0x73, 0x12, 0x20, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65,
+	0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x21, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f,
+	0x72, 0x65, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e,
+	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x42, 0x0a, 0x07, 0x50,
+	0x6e, 0x6c, 0x52, 0x61, 0x6e, 0x6b, 0x12, 0x19, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f,
+	0x72, 0x65, 0x2e, 0x50, 0x6e, 0x6c, 0x52, 0x61, 0x6e, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x1a, 0x2e, 0x68, 0x79, 0x70, 0x65, 0x72, 0x63, 0x6f, 0x72, 0x65, 0x2e, 0x50, 0x6e,
+	0x6c, 0x52, 0x61, 0x6e, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42,
+	0x33, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x6c, 0x61, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x68, 0x79,
+	0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2d, 0x67, 0x72, 0x70, 0x63,
+	0x2f, 0x67, 0x6f, 0x2f, 0x68, 0x79, 0x70, 0x75, 0x72, 0x72, 0x2f, 0x68, 0x79, 0x70, 0x65, 0x72,
+	0x63, 0x6f, 0x72, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -11335,7 +11468,7 @@ func file_hypurr_hypercore_hypercore_service_proto_rawDescGZIP() []byte {
 }
 
 var file_hypurr_hypercore_hypercore_service_proto_enumTypes = make([]protoimpl.EnumInfo, 16)
-var file_hypurr_hypercore_hypercore_service_proto_msgTypes = make([]protoimpl.MessageInfo, 124)
+var file_hypurr_hypercore_hypercore_service_proto_msgTypes = make([]protoimpl.MessageInfo, 126)
 var file_hypurr_hypercore_hypercore_service_proto_goTypes = []any{
 	(WalletTag)(0),                                    // 0: hypercore.WalletTag
 	(TradeDirOverride)(0),                             // 1: hypercore.TradeDirOverride
@@ -11415,91 +11548,93 @@ var file_hypurr_hypercore_hypercore_service_proto_goTypes = []any{
 	(*PerformanceSummary)(nil),                        // 75: hypercore.PerformanceSummary
 	(*InstrumentPerformance)(nil),                     // 76: hypercore.InstrumentPerformance
 	(*WalletPerformanceRequest)(nil),                  // 77: hypercore.WalletPerformanceRequest
-	(*WalletPerformanceResponse)(nil),                 // 78: hypercore.WalletPerformanceResponse
-	(*WalletPerformanceResult)(nil),                   // 79: hypercore.WalletPerformanceResult
-	(*WalletPerformanceRange)(nil),                    // 80: hypercore.WalletPerformanceRange
-	(*WalletPerformanceSeriesRequest)(nil),            // 81: hypercore.WalletPerformanceSeriesRequest
-	(*WalletPerformanceSeriesQuery)(nil),              // 82: hypercore.WalletPerformanceSeriesQuery
-	(*WalletPerformanceSeriesResponse)(nil),           // 83: hypercore.WalletPerformanceSeriesResponse
-	(*WalletPerformanceSeriesResult)(nil),             // 84: hypercore.WalletPerformanceSeriesResult
-	(*PositioningBucket)(nil),                         // 85: hypercore.PositioningBucket
-	(*WalletPositioningSeriesRequest)(nil),            // 86: hypercore.WalletPositioningSeriesRequest
-	(*WalletPositioningSeriesResponse)(nil),           // 87: hypercore.WalletPositioningSeriesResponse
-	(*SpotInstrumentsRequest)(nil),                    // 88: hypercore.SpotInstrumentsRequest
-	(*SpotToken)(nil),                                 // 89: hypercore.SpotToken
-	(*SpotInstrument)(nil),                            // 90: hypercore.SpotInstrument
-	(*SpotInstrumentsResponse)(nil),                   // 91: hypercore.SpotInstrumentsResponse
-	(*PerpInstrumentsRequest)(nil),                    // 92: hypercore.PerpInstrumentsRequest
-	(*PerpInstrument)(nil),                            // 93: hypercore.PerpInstrument
-	(*PerpInstrumentsResponse)(nil),                   // 94: hypercore.PerpInstrumentsResponse
-	(*WalletsByMetricPercentileRequest)(nil),          // 95: hypercore.WalletsByMetricPercentileRequest
-	(*WalletMetricRank)(nil),                          // 96: hypercore.WalletMetricRank
-	(*WalletsByMetricPercentileResponse)(nil),         // 97: hypercore.WalletsByMetricPercentileResponse
-	(*HistoricalTradeSide)(nil),                       // 98: hypercore.HistoricalTradeSide
-	(*HistoricalWalletTrade)(nil),                     // 99: hypercore.HistoricalWalletTrade
-	(*DirtyWalletsRequest)(nil),                       // 100: hypercore.DirtyWalletsRequest
-	(*DirtyWalletsResponse)(nil),                      // 101: hypercore.DirtyWalletsResponse
-	(*WalletTradesRequest)(nil),                       // 102: hypercore.WalletTradesRequest
-	(*WalletTradesResponse)(nil),                      // 103: hypercore.WalletTradesResponse
-	(*WalletLastEventTimestampRequest)(nil),           // 104: hypercore.WalletLastEventTimestampRequest
-	(*WalletLastEventTimestampResponse)(nil),          // 105: hypercore.WalletLastEventTimestampResponse
-	(*ClosedPositionsRequest)(nil),                    // 106: hypercore.ClosedPositionsRequest
-	(*ClosedPosition)(nil),                            // 107: hypercore.ClosedPosition
-	(*ClosedPositionsResponse)(nil),                   // 108: hypercore.ClosedPositionsResponse
-	(*OHLCRequest)(nil),                               // 109: hypercore.OHLCRequest
-	(*OHLC)(nil),                                      // 110: hypercore.OHLC
-	(*OHLCSeries)(nil),                                // 111: hypercore.OHLCSeries
-	(*OHLCResponse)(nil),                              // 112: hypercore.OHLCResponse
-	(*OHLCStreamRequest)(nil),                         // 113: hypercore.OHLCStreamRequest
-	(*OHLCPair)(nil),                                  // 114: hypercore.OHLCPair
-	(*OHLCStreamResponse)(nil),                        // 115: hypercore.OHLCStreamResponse
-	(*OHLCUpdate)(nil),                                // 116: hypercore.OHLCUpdate
-	(*HighLowRequest)(nil),                            // 117: hypercore.HighLowRequest
-	(*HighLowResponse)(nil),                           // 118: hypercore.HighLowResponse
-	(*InstrumentStatsRequest)(nil),                    // 119: hypercore.InstrumentStatsRequest
-	(*InstrumentStats)(nil),                           // 120: hypercore.InstrumentStats
-	(*InstrumentStatsSeries)(nil),                     // 121: hypercore.InstrumentStatsSeries
-	(*InstrumentStatsResponse)(nil),                   // 122: hypercore.InstrumentStatsResponse
-	(*PnlClassFilter)(nil),                            // 123: hypercore.PnlClassFilter
-	(*PnlAssetFilter)(nil),                            // 124: hypercore.PnlAssetFilter
-	(*PnlRankRequest)(nil),                            // 125: hypercore.PnlRankRequest
-	(*PnlRankEntry)(nil),                              // 126: hypercore.PnlRankEntry
-	(*PnlRankResponse)(nil),                           // 127: hypercore.PnlRankResponse
-	(*PositionPredicate)(nil),                         // 128: hypercore.PositionPredicate
-	(*PositionSort)(nil),                              // 129: hypercore.PositionSort
-	(*QueryPositionsRequest)(nil),                     // 130: hypercore.QueryPositionsRequest
-	(*PositionRow)(nil),                               // 131: hypercore.PositionRow
-	(*ComputeUsage)(nil),                              // 132: hypercore.ComputeUsage
-	(*QueryPositionsResponse)(nil),                    // 133: hypercore.QueryPositionsResponse
-	(*WalletState_SpotBalance)(nil),                   // 134: hypercore.WalletState.SpotBalance
-	(*WalletState_PerpState)(nil),                     // 135: hypercore.WalletState.PerpState
-	(*WalletState_PerpPosition)(nil),                  // 136: hypercore.WalletState.PerpPosition
-	(*WalletState_StakingState)(nil),                  // 137: hypercore.WalletState.StakingState
-	(*WalletState_BorrowLendBalance)(nil),             // 138: hypercore.WalletState.BorrowLendBalance
-	nil,                                               // 139: hypercore.WalletLastEventTimestampResponse.LastEventTimestampEntry
-	(*wrapperspb.UInt64Value)(nil),                    // 140: google.protobuf.UInt64Value
-	(*wrapperspb.StringValue)(nil),                    // 141: google.protobuf.StringValue
-	(*wrapperspb.DoubleValue)(nil),                    // 142: google.protobuf.DoubleValue
-	(*wrapperspb.Int64Value)(nil),                     // 143: google.protobuf.Int64Value
+	(*WalletPerformanceStreamRequest)(nil),            // 78: hypercore.WalletPerformanceStreamRequest
+	(*WalletPerformanceStreamResponse)(nil),           // 79: hypercore.WalletPerformanceStreamResponse
+	(*WalletPerformanceResponse)(nil),                 // 80: hypercore.WalletPerformanceResponse
+	(*WalletPerformanceResult)(nil),                   // 81: hypercore.WalletPerformanceResult
+	(*WalletPerformanceRange)(nil),                    // 82: hypercore.WalletPerformanceRange
+	(*WalletPerformanceSeriesRequest)(nil),            // 83: hypercore.WalletPerformanceSeriesRequest
+	(*WalletPerformanceSeriesQuery)(nil),              // 84: hypercore.WalletPerformanceSeriesQuery
+	(*WalletPerformanceSeriesResponse)(nil),           // 85: hypercore.WalletPerformanceSeriesResponse
+	(*WalletPerformanceSeriesResult)(nil),             // 86: hypercore.WalletPerformanceSeriesResult
+	(*PositioningBucket)(nil),                         // 87: hypercore.PositioningBucket
+	(*WalletPositioningSeriesRequest)(nil),            // 88: hypercore.WalletPositioningSeriesRequest
+	(*WalletPositioningSeriesResponse)(nil),           // 89: hypercore.WalletPositioningSeriesResponse
+	(*SpotInstrumentsRequest)(nil),                    // 90: hypercore.SpotInstrumentsRequest
+	(*SpotToken)(nil),                                 // 91: hypercore.SpotToken
+	(*SpotInstrument)(nil),                            // 92: hypercore.SpotInstrument
+	(*SpotInstrumentsResponse)(nil),                   // 93: hypercore.SpotInstrumentsResponse
+	(*PerpInstrumentsRequest)(nil),                    // 94: hypercore.PerpInstrumentsRequest
+	(*PerpInstrument)(nil),                            // 95: hypercore.PerpInstrument
+	(*PerpInstrumentsResponse)(nil),                   // 96: hypercore.PerpInstrumentsResponse
+	(*WalletsByMetricPercentileRequest)(nil),          // 97: hypercore.WalletsByMetricPercentileRequest
+	(*WalletMetricRank)(nil),                          // 98: hypercore.WalletMetricRank
+	(*WalletsByMetricPercentileResponse)(nil),         // 99: hypercore.WalletsByMetricPercentileResponse
+	(*HistoricalTradeSide)(nil),                       // 100: hypercore.HistoricalTradeSide
+	(*HistoricalWalletTrade)(nil),                     // 101: hypercore.HistoricalWalletTrade
+	(*DirtyWalletsRequest)(nil),                       // 102: hypercore.DirtyWalletsRequest
+	(*DirtyWalletsResponse)(nil),                      // 103: hypercore.DirtyWalletsResponse
+	(*WalletTradesRequest)(nil),                       // 104: hypercore.WalletTradesRequest
+	(*WalletTradesResponse)(nil),                      // 105: hypercore.WalletTradesResponse
+	(*WalletLastEventTimestampRequest)(nil),           // 106: hypercore.WalletLastEventTimestampRequest
+	(*WalletLastEventTimestampResponse)(nil),          // 107: hypercore.WalletLastEventTimestampResponse
+	(*ClosedPositionsRequest)(nil),                    // 108: hypercore.ClosedPositionsRequest
+	(*ClosedPosition)(nil),                            // 109: hypercore.ClosedPosition
+	(*ClosedPositionsResponse)(nil),                   // 110: hypercore.ClosedPositionsResponse
+	(*OHLCRequest)(nil),                               // 111: hypercore.OHLCRequest
+	(*OHLC)(nil),                                      // 112: hypercore.OHLC
+	(*OHLCSeries)(nil),                                // 113: hypercore.OHLCSeries
+	(*OHLCResponse)(nil),                              // 114: hypercore.OHLCResponse
+	(*OHLCStreamRequest)(nil),                         // 115: hypercore.OHLCStreamRequest
+	(*OHLCPair)(nil),                                  // 116: hypercore.OHLCPair
+	(*OHLCStreamResponse)(nil),                        // 117: hypercore.OHLCStreamResponse
+	(*OHLCUpdate)(nil),                                // 118: hypercore.OHLCUpdate
+	(*HighLowRequest)(nil),                            // 119: hypercore.HighLowRequest
+	(*HighLowResponse)(nil),                           // 120: hypercore.HighLowResponse
+	(*InstrumentStatsRequest)(nil),                    // 121: hypercore.InstrumentStatsRequest
+	(*InstrumentStats)(nil),                           // 122: hypercore.InstrumentStats
+	(*InstrumentStatsSeries)(nil),                     // 123: hypercore.InstrumentStatsSeries
+	(*InstrumentStatsResponse)(nil),                   // 124: hypercore.InstrumentStatsResponse
+	(*PnlClassFilter)(nil),                            // 125: hypercore.PnlClassFilter
+	(*PnlAssetFilter)(nil),                            // 126: hypercore.PnlAssetFilter
+	(*PnlRankRequest)(nil),                            // 127: hypercore.PnlRankRequest
+	(*PnlRankEntry)(nil),                              // 128: hypercore.PnlRankEntry
+	(*PnlRankResponse)(nil),                           // 129: hypercore.PnlRankResponse
+	(*PositionPredicate)(nil),                         // 130: hypercore.PositionPredicate
+	(*PositionSort)(nil),                              // 131: hypercore.PositionSort
+	(*QueryPositionsRequest)(nil),                     // 132: hypercore.QueryPositionsRequest
+	(*PositionRow)(nil),                               // 133: hypercore.PositionRow
+	(*ComputeUsage)(nil),                              // 134: hypercore.ComputeUsage
+	(*QueryPositionsResponse)(nil),                    // 135: hypercore.QueryPositionsResponse
+	(*WalletState_SpotBalance)(nil),                   // 136: hypercore.WalletState.SpotBalance
+	(*WalletState_PerpState)(nil),                     // 137: hypercore.WalletState.PerpState
+	(*WalletState_PerpPosition)(nil),                  // 138: hypercore.WalletState.PerpPosition
+	(*WalletState_StakingState)(nil),                  // 139: hypercore.WalletState.StakingState
+	(*WalletState_BorrowLendBalance)(nil),             // 140: hypercore.WalletState.BorrowLendBalance
+	nil,                                               // 141: hypercore.WalletLastEventTimestampResponse.LastEventTimestampEntry
+	(*wrapperspb.UInt64Value)(nil),                    // 142: google.protobuf.UInt64Value
+	(*wrapperspb.StringValue)(nil),                    // 143: google.protobuf.StringValue
+	(*wrapperspb.DoubleValue)(nil),                    // 144: google.protobuf.DoubleValue
+	(*wrapperspb.Int64Value)(nil),                     // 145: google.protobuf.Int64Value
 }
 var file_hypurr_hypercore_hypercore_service_proto_depIdxs = []int32{
 	0,   // 0: hypercore.WalletFilter.tag:type_name -> hypercore.WalletTag
 	0,   // 1: hypercore.WalletFilter.included_tags:type_name -> hypercore.WalletTag
 	0,   // 2: hypercore.WalletFilter.excluded_tags:type_name -> hypercore.WalletTag
-	140, // 3: hypercore.TradeSideInfo.twap_id:type_name -> google.protobuf.UInt64Value
-	141, // 4: hypercore.TradeSideInfo.cloid:type_name -> google.protobuf.StringValue
+	142, // 3: hypercore.TradeSideInfo.twap_id:type_name -> google.protobuf.UInt64Value
+	143, // 4: hypercore.TradeSideInfo.cloid:type_name -> google.protobuf.StringValue
 	1,   // 5: hypercore.WalletTrade.trade_dir_override:type_name -> hypercore.TradeDirOverride
 	17,  // 6: hypercore.WalletTrade.side_info:type_name -> hypercore.TradeSideInfo
 	19,  // 7: hypercore.WalletMovementsResponse.wallet_movements:type_name -> hypercore.WalletMovement
-	142, // 8: hypercore.WalletPerpBalance.isolated_margin:type_name -> google.protobuf.DoubleValue
+	144, // 8: hypercore.WalletPerpBalance.isolated_margin:type_name -> google.protobuf.DoubleValue
 	22,  // 9: hypercore.WalletBalancesResponse.spot_balances:type_name -> hypercore.WalletSpotBalance
 	23,  // 10: hypercore.WalletBalancesResponse.perp_balances:type_name -> hypercore.WalletPerpBalance
 	28,  // 11: hypercore.WalletStatesResponse.wallets:type_name -> hypercore.WalletState
 	13,  // 12: hypercore.WalletState.mode:type_name -> hypercore.WalletState.AccountMode
-	134, // 13: hypercore.WalletState.spot:type_name -> hypercore.WalletState.SpotBalance
-	135, // 14: hypercore.WalletState.perps:type_name -> hypercore.WalletState.PerpState
-	137, // 15: hypercore.WalletState.staking:type_name -> hypercore.WalletState.StakingState
-	138, // 16: hypercore.WalletState.borrow_lend:type_name -> hypercore.WalletState.BorrowLendBalance
+	136, // 13: hypercore.WalletState.spot:type_name -> hypercore.WalletState.SpotBalance
+	137, // 14: hypercore.WalletState.perps:type_name -> hypercore.WalletState.PerpState
+	139, // 15: hypercore.WalletState.staking:type_name -> hypercore.WalletState.StakingState
+	140, // 16: hypercore.WalletState.borrow_lend:type_name -> hypercore.WalletState.BorrowLendBalance
 	18,  // 17: hypercore.WalletTradesStreamResponse.trades:type_name -> hypercore.WalletTrade
 	33,  // 18: hypercore.WalletEventsRequest.wallets:type_name -> hypercore.WalletEventsQuery
 	35,  // 19: hypercore.WalletEventsResponse.wallets:type_name -> hypercore.WalletEventsResult
@@ -11511,18 +11646,18 @@ var file_hypurr_hypercore_hypercore_service_proto_depIdxs = []int32{
 	37,  // 25: hypercore.WalletFillEvent.from_asset:type_name -> hypercore.WalletEventAsset
 	37,  // 26: hypercore.WalletFillEvent.to_asset:type_name -> hypercore.WalletEventAsset
 	37,  // 27: hypercore.WalletFillEvent.fee_asset:type_name -> hypercore.WalletEventAsset
-	142, // 28: hypercore.WalletFillEvent.closed_pnl:type_name -> google.protobuf.DoubleValue
-	142, // 29: hypercore.WalletFillEvent.cum_pnl:type_name -> google.protobuf.DoubleValue
-	142, // 30: hypercore.WalletFillEvent.cum_fees:type_name -> google.protobuf.DoubleValue
-	143, // 31: hypercore.WalletFillEvent.twap_id:type_name -> google.protobuf.Int64Value
-	143, // 32: hypercore.WalletFillEvent.execution_index:type_name -> google.protobuf.Int64Value
-	142, // 33: hypercore.WalletFillEvent.cum_cost:type_name -> google.protobuf.DoubleValue
+	144, // 28: hypercore.WalletFillEvent.closed_pnl:type_name -> google.protobuf.DoubleValue
+	144, // 29: hypercore.WalletFillEvent.cum_pnl:type_name -> google.protobuf.DoubleValue
+	144, // 30: hypercore.WalletFillEvent.cum_fees:type_name -> google.protobuf.DoubleValue
+	145, // 31: hypercore.WalletFillEvent.twap_id:type_name -> google.protobuf.Int64Value
+	145, // 32: hypercore.WalletFillEvent.execution_index:type_name -> google.protobuf.Int64Value
+	144, // 33: hypercore.WalletFillEvent.cum_cost:type_name -> google.protobuf.DoubleValue
 	37,  // 34: hypercore.WalletMovementEvent.asset:type_name -> hypercore.WalletEventAsset
-	142, // 35: hypercore.WalletMovementEvent.usdc_value:type_name -> google.protobuf.DoubleValue
+	144, // 35: hypercore.WalletMovementEvent.usdc_value:type_name -> google.protobuf.DoubleValue
 	37,  // 36: hypercore.WalletMovementEvent.fee_asset:type_name -> hypercore.WalletEventAsset
-	142, // 37: hypercore.WalletMovementEvent.fee:type_name -> google.protobuf.DoubleValue
-	143, // 38: hypercore.WalletMovementEvent.source_dex_index:type_name -> google.protobuf.Int64Value
-	143, // 39: hypercore.WalletMovementEvent.destination_dex_index:type_name -> google.protobuf.Int64Value
+	144, // 37: hypercore.WalletMovementEvent.fee:type_name -> google.protobuf.DoubleValue
+	145, // 38: hypercore.WalletMovementEvent.source_dex_index:type_name -> google.protobuf.Int64Value
+	145, // 39: hypercore.WalletMovementEvent.destination_dex_index:type_name -> google.protobuf.Int64Value
 	16,  // 40: hypercore.AggregatedWalletPositioningStreamRequest.filter:type_name -> hypercore.WalletFilter
 	43,  // 41: hypercore.AggregatedWalletPositioningStreamResponse.summary:type_name -> hypercore.AggregatedWalletPositioningSummary
 	42,  // 42: hypercore.AggregatedWalletPositioningStreamResponse.wallet_positions:type_name -> hypercore.WalletPositioning
@@ -11536,10 +11671,10 @@ var file_hypurr_hypercore_hypercore_service_proto_depIdxs = []int32{
 	48,  // 50: hypercore.ValidatorDelegatorsResponse.delegators:type_name -> hypercore.ValidatorDelegator
 	0,   // 51: hypercore.WalletTagsResponse.tags:type_name -> hypercore.WalletTag
 	0,   // 52: hypercore.WalletsByTagRequest.tag:type_name -> hypercore.WalletTag
-	143, // 53: hypercore.WalletsByTagRequest.limit:type_name -> google.protobuf.Int64Value
+	145, // 53: hypercore.WalletsByTagRequest.limit:type_name -> google.protobuf.Int64Value
 	53,  // 54: hypercore.WalletsByTagResponse.wallet_infos:type_name -> hypercore.WalletInfo
 	16,  // 55: hypercore.WalletsByFilterRequest.filter:type_name -> hypercore.WalletFilter
-	143, // 56: hypercore.WalletsByFilterRequest.limit:type_name -> google.protobuf.Int64Value
+	145, // 56: hypercore.WalletsByFilterRequest.limit:type_name -> google.protobuf.Int64Value
 	53,  // 57: hypercore.WalletsByFilterResponse.wallet_infos:type_name -> hypercore.WalletInfo
 	0,   // 58: hypercore.AggregatedWalletLiquidationsRequest.tag:type_name -> hypercore.WalletTag
 	60,  // 59: hypercore.AggregatedWalletLiquidationsResponse.wallet_liquidation_groups:type_name -> hypercore.WalletLiquidationGroup
@@ -11552,140 +11687,143 @@ var file_hypurr_hypercore_hypercore_service_proto_depIdxs = []int32{
 	3,   // 66: hypercore.OrderBookDepthRequest.step:type_name -> hypercore.OrderBookDepthStep
 	72,  // 67: hypercore.OrderBookDepthResponse.snapshots:type_name -> hypercore.OrderBookDepthSnapshot
 	73,  // 68: hypercore.OrderBookDepthSnapshot.bands:type_name -> hypercore.OrderBookDepthBand
-	79,  // 69: hypercore.WalletPerformanceResponse.wallets:type_name -> hypercore.WalletPerformanceResult
-	80,  // 70: hypercore.WalletPerformanceResult.ranges:type_name -> hypercore.WalletPerformanceRange
-	75,  // 71: hypercore.WalletPerformanceRange.account:type_name -> hypercore.PerformanceSummary
-	76,  // 72: hypercore.WalletPerformanceRange.instruments:type_name -> hypercore.InstrumentPerformance
-	82,  // 73: hypercore.WalletPerformanceSeriesRequest.wallets:type_name -> hypercore.WalletPerformanceSeriesQuery
-	4,   // 74: hypercore.WalletPerformanceSeriesRequest.interval:type_name -> hypercore.MetricInterval
-	84,  // 75: hypercore.WalletPerformanceSeriesResponse.wallets:type_name -> hypercore.WalletPerformanceSeriesResult
-	4,   // 76: hypercore.WalletPerformanceSeriesResponse.interval:type_name -> hypercore.MetricInterval
-	74,  // 77: hypercore.WalletPerformanceSeriesResult.buckets:type_name -> hypercore.PerformanceBucket
-	16,  // 78: hypercore.WalletPositioningSeriesRequest.filter:type_name -> hypercore.WalletFilter
-	4,   // 79: hypercore.WalletPositioningSeriesRequest.interval:type_name -> hypercore.MetricInterval
-	0,   // 80: hypercore.WalletPositioningSeriesResponse.tag:type_name -> hypercore.WalletTag
-	4,   // 81: hypercore.WalletPositioningSeriesResponse.interval:type_name -> hypercore.MetricInterval
-	85,  // 82: hypercore.WalletPositioningSeriesResponse.buckets:type_name -> hypercore.PositioningBucket
-	89,  // 83: hypercore.SpotInstrument.base:type_name -> hypercore.SpotToken
-	89,  // 84: hypercore.SpotInstrument.quote:type_name -> hypercore.SpotToken
-	90,  // 85: hypercore.SpotInstrumentsResponse.instruments:type_name -> hypercore.SpotInstrument
-	93,  // 86: hypercore.PerpInstrumentsResponse.instruments:type_name -> hypercore.PerpInstrument
-	5,   // 87: hypercore.WalletsByMetricPercentileRequest.metric:type_name -> hypercore.ClassificationMetric
-	96,  // 88: hypercore.WalletsByMetricPercentileResponse.wallets:type_name -> hypercore.WalletMetricRank
-	140, // 89: hypercore.HistoricalTradeSide.twap_id:type_name -> google.protobuf.UInt64Value
-	141, // 90: hypercore.HistoricalTradeSide.cloid:type_name -> google.protobuf.StringValue
-	6,   // 91: hypercore.HistoricalWalletTrade.type:type_name -> hypercore.WalletTradeType
-	1,   // 92: hypercore.HistoricalWalletTrade.trade_dir_override:type_name -> hypercore.TradeDirOverride
-	98,  // 93: hypercore.HistoricalWalletTrade.ask_side:type_name -> hypercore.HistoricalTradeSide
-	98,  // 94: hypercore.HistoricalWalletTrade.bid_side:type_name -> hypercore.HistoricalTradeSide
-	6,   // 95: hypercore.WalletTradesRequest.type:type_name -> hypercore.WalletTradeType
-	99,  // 96: hypercore.WalletTradesResponse.trades:type_name -> hypercore.HistoricalWalletTrade
-	139, // 97: hypercore.WalletLastEventTimestampResponse.last_event_timestamp:type_name -> hypercore.WalletLastEventTimestampResponse.LastEventTimestampEntry
-	7,   // 98: hypercore.ClosedPositionsRequest.kind:type_name -> hypercore.ClosedPositionKind
-	107, // 99: hypercore.ClosedPositionsResponse.positions:type_name -> hypercore.ClosedPosition
-	8,   // 100: hypercore.OHLCRequest.interval:type_name -> hypercore.OHLCInterval
-	110, // 101: hypercore.OHLCSeries.ohlc:type_name -> hypercore.OHLC
-	111, // 102: hypercore.OHLCResponse.series:type_name -> hypercore.OHLCSeries
-	114, // 103: hypercore.OHLCStreamRequest.pairs:type_name -> hypercore.OHLCPair
-	8,   // 104: hypercore.OHLCPair.interval:type_name -> hypercore.OHLCInterval
-	116, // 105: hypercore.OHLCStreamResponse.updates:type_name -> hypercore.OHLCUpdate
-	114, // 106: hypercore.OHLCUpdate.pair:type_name -> hypercore.OHLCPair
-	110, // 107: hypercore.OHLCUpdate.candle:type_name -> hypercore.OHLC
-	8,   // 108: hypercore.InstrumentStatsRequest.interval:type_name -> hypercore.OHLCInterval
-	142, // 109: hypercore.InstrumentStats.open_interest:type_name -> google.protobuf.DoubleValue
-	142, // 110: hypercore.InstrumentStats.mark:type_name -> google.protobuf.DoubleValue
-	120, // 111: hypercore.InstrumentStatsSeries.stats:type_name -> hypercore.InstrumentStats
-	121, // 112: hypercore.InstrumentStatsResponse.series:type_name -> hypercore.InstrumentStatsSeries
-	9,   // 113: hypercore.PnlClassFilter.classes:type_name -> hypercore.PnlClass
-	10,  // 114: hypercore.PnlRankRequest.period:type_name -> hypercore.PnlRankPeriod
-	123, // 115: hypercore.PnlRankRequest.classes:type_name -> hypercore.PnlClassFilter
-	124, // 116: hypercore.PnlRankRequest.assets:type_name -> hypercore.PnlAssetFilter
-	126, // 117: hypercore.PnlRankResponse.entries:type_name -> hypercore.PnlRankEntry
-	11,  // 118: hypercore.PositionPredicate.field:type_name -> hypercore.PositionField
-	12,  // 119: hypercore.PositionPredicate.op:type_name -> hypercore.PredicateOp
-	11,  // 120: hypercore.PositionSort.field:type_name -> hypercore.PositionField
-	142, // 121: hypercore.PositionSort.relative_to:type_name -> google.protobuf.DoubleValue
-	16,  // 122: hypercore.QueryPositionsRequest.universe:type_name -> hypercore.WalletFilter
-	128, // 123: hypercore.QueryPositionsRequest.where:type_name -> hypercore.PositionPredicate
-	129, // 124: hypercore.QueryPositionsRequest.order_by:type_name -> hypercore.PositionSort
-	131, // 125: hypercore.QueryPositionsResponse.rows:type_name -> hypercore.PositionRow
-	132, // 126: hypercore.QueryPositionsResponse.usage:type_name -> hypercore.ComputeUsage
-	136, // 127: hypercore.WalletState.PerpState.positions:type_name -> hypercore.WalletState.PerpPosition
-	20,  // 128: hypercore.HyperCore.WalletMovements:input_type -> hypercore.WalletMovementsRequest
-	24,  // 129: hypercore.HyperCore.WalletBalances:input_type -> hypercore.WalletBalancesRequest
-	26,  // 130: hypercore.HyperCore.WalletStates:input_type -> hypercore.WalletStatesRequest
-	40,  // 131: hypercore.HyperCore.AggregatedWalletPositioningStream:input_type -> hypercore.AggregatedWalletPositioningStreamRequest
-	58,  // 132: hypercore.HyperCore.AggregatedWalletLiquidations:input_type -> hypercore.AggregatedWalletLiquidationsRequest
-	62,  // 133: hypercore.HyperCore.Liquidations:input_type -> hypercore.LiquidationsRequest
-	62,  // 134: hypercore.HyperCore.LiquidationsStream:input_type -> hypercore.LiquidationsRequest
-	66,  // 135: hypercore.HyperCore.TPSL:input_type -> hypercore.TPSLRequest
-	66,  // 136: hypercore.HyperCore.TPSLStream:input_type -> hypercore.TPSLRequest
-	70,  // 137: hypercore.HyperCore.OrderBookDepth:input_type -> hypercore.OrderBookDepthRequest
-	44,  // 138: hypercore.HyperCore.WalletBalancesStream:input_type -> hypercore.WalletBalancesStreamRequest
-	29,  // 139: hypercore.HyperCore.WalletTradesStream:input_type -> hypercore.WalletTradesStreamRequest
-	31,  // 140: hypercore.HyperCore.WalletEventsStream:input_type -> hypercore.WalletEventsStreamRequest
-	32,  // 141: hypercore.HyperCore.WalletEvents:input_type -> hypercore.WalletEventsRequest
-	46,  // 142: hypercore.HyperCore.ValidatorDelegators:input_type -> hypercore.ValidatorDelegatorsRequest
-	49,  // 143: hypercore.HyperCore.ReferrerWallet:input_type -> hypercore.ReferrerWalletRequest
-	51,  // 144: hypercore.HyperCore.WalletTags:input_type -> hypercore.WalletTagsRequest
-	54,  // 145: hypercore.HyperCore.WalletsByTag:input_type -> hypercore.WalletsByTagRequest
-	56,  // 146: hypercore.HyperCore.WalletsByFilter:input_type -> hypercore.WalletsByFilterRequest
-	77,  // 147: hypercore.HyperCore.WalletPerformance:input_type -> hypercore.WalletPerformanceRequest
-	81,  // 148: hypercore.HyperCore.WalletPerformanceSeries:input_type -> hypercore.WalletPerformanceSeriesRequest
-	86,  // 149: hypercore.HyperCore.WalletPositioningSeries:input_type -> hypercore.WalletPositioningSeriesRequest
-	88,  // 150: hypercore.HyperCore.SpotInstruments:input_type -> hypercore.SpotInstrumentsRequest
-	92,  // 151: hypercore.HyperCore.PerpInstruments:input_type -> hypercore.PerpInstrumentsRequest
-	95,  // 152: hypercore.HyperCore.WalletsByMetricPercentile:input_type -> hypercore.WalletsByMetricPercentileRequest
-	100, // 153: hypercore.HyperCore.DirtyWallets:input_type -> hypercore.DirtyWalletsRequest
-	102, // 154: hypercore.HyperCore.WalletTrades:input_type -> hypercore.WalletTradesRequest
-	104, // 155: hypercore.HyperCore.WalletLastEventTimestamp:input_type -> hypercore.WalletLastEventTimestampRequest
-	106, // 156: hypercore.HyperCore.ClosedPositions:input_type -> hypercore.ClosedPositionsRequest
-	109, // 157: hypercore.HyperCore.OHLC:input_type -> hypercore.OHLCRequest
-	113, // 158: hypercore.HyperCore.OHLCStream:input_type -> hypercore.OHLCStreamRequest
-	117, // 159: hypercore.HyperCore.HighLow:input_type -> hypercore.HighLowRequest
-	119, // 160: hypercore.HyperCore.InstrumentStats:input_type -> hypercore.InstrumentStatsRequest
-	130, // 161: hypercore.HyperCore.QueryPositions:input_type -> hypercore.QueryPositionsRequest
-	125, // 162: hypercore.HyperCore.PnlRank:input_type -> hypercore.PnlRankRequest
-	21,  // 163: hypercore.HyperCore.WalletMovements:output_type -> hypercore.WalletMovementsResponse
-	25,  // 164: hypercore.HyperCore.WalletBalances:output_type -> hypercore.WalletBalancesResponse
-	27,  // 165: hypercore.HyperCore.WalletStates:output_type -> hypercore.WalletStatesResponse
-	41,  // 166: hypercore.HyperCore.AggregatedWalletPositioningStream:output_type -> hypercore.AggregatedWalletPositioningStreamResponse
-	59,  // 167: hypercore.HyperCore.AggregatedWalletLiquidations:output_type -> hypercore.AggregatedWalletLiquidationsResponse
-	63,  // 168: hypercore.HyperCore.Liquidations:output_type -> hypercore.LiquidationsResponse
-	64,  // 169: hypercore.HyperCore.LiquidationsStream:output_type -> hypercore.LiquidationSnapshot
-	67,  // 170: hypercore.HyperCore.TPSL:output_type -> hypercore.TPSLResponse
-	68,  // 171: hypercore.HyperCore.TPSLStream:output_type -> hypercore.TPSLSnapshot
-	71,  // 172: hypercore.HyperCore.OrderBookDepth:output_type -> hypercore.OrderBookDepthResponse
-	45,  // 173: hypercore.HyperCore.WalletBalancesStream:output_type -> hypercore.WalletBalancesStreamResponse
-	30,  // 174: hypercore.HyperCore.WalletTradesStream:output_type -> hypercore.WalletTradesStreamResponse
-	36,  // 175: hypercore.HyperCore.WalletEventsStream:output_type -> hypercore.WalletEvent
-	34,  // 176: hypercore.HyperCore.WalletEvents:output_type -> hypercore.WalletEventsResponse
-	47,  // 177: hypercore.HyperCore.ValidatorDelegators:output_type -> hypercore.ValidatorDelegatorsResponse
-	50,  // 178: hypercore.HyperCore.ReferrerWallet:output_type -> hypercore.ReferrerWalletResponse
-	52,  // 179: hypercore.HyperCore.WalletTags:output_type -> hypercore.WalletTagsResponse
-	55,  // 180: hypercore.HyperCore.WalletsByTag:output_type -> hypercore.WalletsByTagResponse
-	57,  // 181: hypercore.HyperCore.WalletsByFilter:output_type -> hypercore.WalletsByFilterResponse
-	78,  // 182: hypercore.HyperCore.WalletPerformance:output_type -> hypercore.WalletPerformanceResponse
-	83,  // 183: hypercore.HyperCore.WalletPerformanceSeries:output_type -> hypercore.WalletPerformanceSeriesResponse
-	87,  // 184: hypercore.HyperCore.WalletPositioningSeries:output_type -> hypercore.WalletPositioningSeriesResponse
-	91,  // 185: hypercore.HyperCore.SpotInstruments:output_type -> hypercore.SpotInstrumentsResponse
-	94,  // 186: hypercore.HyperCore.PerpInstruments:output_type -> hypercore.PerpInstrumentsResponse
-	97,  // 187: hypercore.HyperCore.WalletsByMetricPercentile:output_type -> hypercore.WalletsByMetricPercentileResponse
-	101, // 188: hypercore.HyperCore.DirtyWallets:output_type -> hypercore.DirtyWalletsResponse
-	103, // 189: hypercore.HyperCore.WalletTrades:output_type -> hypercore.WalletTradesResponse
-	105, // 190: hypercore.HyperCore.WalletLastEventTimestamp:output_type -> hypercore.WalletLastEventTimestampResponse
-	108, // 191: hypercore.HyperCore.ClosedPositions:output_type -> hypercore.ClosedPositionsResponse
-	112, // 192: hypercore.HyperCore.OHLC:output_type -> hypercore.OHLCResponse
-	115, // 193: hypercore.HyperCore.OHLCStream:output_type -> hypercore.OHLCStreamResponse
-	118, // 194: hypercore.HyperCore.HighLow:output_type -> hypercore.HighLowResponse
-	122, // 195: hypercore.HyperCore.InstrumentStats:output_type -> hypercore.InstrumentStatsResponse
-	133, // 196: hypercore.HyperCore.QueryPositions:output_type -> hypercore.QueryPositionsResponse
-	127, // 197: hypercore.HyperCore.PnlRank:output_type -> hypercore.PnlRankResponse
-	163, // [163:198] is the sub-list for method output_type
-	128, // [128:163] is the sub-list for method input_type
-	128, // [128:128] is the sub-list for extension type_name
-	128, // [128:128] is the sub-list for extension extendee
-	0,   // [0:128] is the sub-list for field type_name
+	81,  // 69: hypercore.WalletPerformanceStreamResponse.wallets:type_name -> hypercore.WalletPerformanceResult
+	81,  // 70: hypercore.WalletPerformanceResponse.wallets:type_name -> hypercore.WalletPerformanceResult
+	82,  // 71: hypercore.WalletPerformanceResult.ranges:type_name -> hypercore.WalletPerformanceRange
+	75,  // 72: hypercore.WalletPerformanceRange.account:type_name -> hypercore.PerformanceSummary
+	76,  // 73: hypercore.WalletPerformanceRange.instruments:type_name -> hypercore.InstrumentPerformance
+	84,  // 74: hypercore.WalletPerformanceSeriesRequest.wallets:type_name -> hypercore.WalletPerformanceSeriesQuery
+	4,   // 75: hypercore.WalletPerformanceSeriesRequest.interval:type_name -> hypercore.MetricInterval
+	86,  // 76: hypercore.WalletPerformanceSeriesResponse.wallets:type_name -> hypercore.WalletPerformanceSeriesResult
+	4,   // 77: hypercore.WalletPerformanceSeriesResponse.interval:type_name -> hypercore.MetricInterval
+	74,  // 78: hypercore.WalletPerformanceSeriesResult.buckets:type_name -> hypercore.PerformanceBucket
+	16,  // 79: hypercore.WalletPositioningSeriesRequest.filter:type_name -> hypercore.WalletFilter
+	4,   // 80: hypercore.WalletPositioningSeriesRequest.interval:type_name -> hypercore.MetricInterval
+	0,   // 81: hypercore.WalletPositioningSeriesResponse.tag:type_name -> hypercore.WalletTag
+	4,   // 82: hypercore.WalletPositioningSeriesResponse.interval:type_name -> hypercore.MetricInterval
+	87,  // 83: hypercore.WalletPositioningSeriesResponse.buckets:type_name -> hypercore.PositioningBucket
+	91,  // 84: hypercore.SpotInstrument.base:type_name -> hypercore.SpotToken
+	91,  // 85: hypercore.SpotInstrument.quote:type_name -> hypercore.SpotToken
+	92,  // 86: hypercore.SpotInstrumentsResponse.instruments:type_name -> hypercore.SpotInstrument
+	95,  // 87: hypercore.PerpInstrumentsResponse.instruments:type_name -> hypercore.PerpInstrument
+	5,   // 88: hypercore.WalletsByMetricPercentileRequest.metric:type_name -> hypercore.ClassificationMetric
+	98,  // 89: hypercore.WalletsByMetricPercentileResponse.wallets:type_name -> hypercore.WalletMetricRank
+	142, // 90: hypercore.HistoricalTradeSide.twap_id:type_name -> google.protobuf.UInt64Value
+	143, // 91: hypercore.HistoricalTradeSide.cloid:type_name -> google.protobuf.StringValue
+	6,   // 92: hypercore.HistoricalWalletTrade.type:type_name -> hypercore.WalletTradeType
+	1,   // 93: hypercore.HistoricalWalletTrade.trade_dir_override:type_name -> hypercore.TradeDirOverride
+	100, // 94: hypercore.HistoricalWalletTrade.ask_side:type_name -> hypercore.HistoricalTradeSide
+	100, // 95: hypercore.HistoricalWalletTrade.bid_side:type_name -> hypercore.HistoricalTradeSide
+	6,   // 96: hypercore.WalletTradesRequest.type:type_name -> hypercore.WalletTradeType
+	101, // 97: hypercore.WalletTradesResponse.trades:type_name -> hypercore.HistoricalWalletTrade
+	141, // 98: hypercore.WalletLastEventTimestampResponse.last_event_timestamp:type_name -> hypercore.WalletLastEventTimestampResponse.LastEventTimestampEntry
+	7,   // 99: hypercore.ClosedPositionsRequest.kind:type_name -> hypercore.ClosedPositionKind
+	109, // 100: hypercore.ClosedPositionsResponse.positions:type_name -> hypercore.ClosedPosition
+	8,   // 101: hypercore.OHLCRequest.interval:type_name -> hypercore.OHLCInterval
+	112, // 102: hypercore.OHLCSeries.ohlc:type_name -> hypercore.OHLC
+	113, // 103: hypercore.OHLCResponse.series:type_name -> hypercore.OHLCSeries
+	116, // 104: hypercore.OHLCStreamRequest.pairs:type_name -> hypercore.OHLCPair
+	8,   // 105: hypercore.OHLCPair.interval:type_name -> hypercore.OHLCInterval
+	118, // 106: hypercore.OHLCStreamResponse.updates:type_name -> hypercore.OHLCUpdate
+	116, // 107: hypercore.OHLCUpdate.pair:type_name -> hypercore.OHLCPair
+	112, // 108: hypercore.OHLCUpdate.candle:type_name -> hypercore.OHLC
+	8,   // 109: hypercore.InstrumentStatsRequest.interval:type_name -> hypercore.OHLCInterval
+	144, // 110: hypercore.InstrumentStats.open_interest:type_name -> google.protobuf.DoubleValue
+	144, // 111: hypercore.InstrumentStats.mark:type_name -> google.protobuf.DoubleValue
+	122, // 112: hypercore.InstrumentStatsSeries.stats:type_name -> hypercore.InstrumentStats
+	123, // 113: hypercore.InstrumentStatsResponse.series:type_name -> hypercore.InstrumentStatsSeries
+	9,   // 114: hypercore.PnlClassFilter.classes:type_name -> hypercore.PnlClass
+	10,  // 115: hypercore.PnlRankRequest.period:type_name -> hypercore.PnlRankPeriod
+	125, // 116: hypercore.PnlRankRequest.classes:type_name -> hypercore.PnlClassFilter
+	126, // 117: hypercore.PnlRankRequest.assets:type_name -> hypercore.PnlAssetFilter
+	128, // 118: hypercore.PnlRankResponse.entries:type_name -> hypercore.PnlRankEntry
+	11,  // 119: hypercore.PositionPredicate.field:type_name -> hypercore.PositionField
+	12,  // 120: hypercore.PositionPredicate.op:type_name -> hypercore.PredicateOp
+	11,  // 121: hypercore.PositionSort.field:type_name -> hypercore.PositionField
+	144, // 122: hypercore.PositionSort.relative_to:type_name -> google.protobuf.DoubleValue
+	16,  // 123: hypercore.QueryPositionsRequest.universe:type_name -> hypercore.WalletFilter
+	130, // 124: hypercore.QueryPositionsRequest.where:type_name -> hypercore.PositionPredicate
+	131, // 125: hypercore.QueryPositionsRequest.order_by:type_name -> hypercore.PositionSort
+	133, // 126: hypercore.QueryPositionsResponse.rows:type_name -> hypercore.PositionRow
+	134, // 127: hypercore.QueryPositionsResponse.usage:type_name -> hypercore.ComputeUsage
+	138, // 128: hypercore.WalletState.PerpState.positions:type_name -> hypercore.WalletState.PerpPosition
+	20,  // 129: hypercore.HyperCore.WalletMovements:input_type -> hypercore.WalletMovementsRequest
+	24,  // 130: hypercore.HyperCore.WalletBalances:input_type -> hypercore.WalletBalancesRequest
+	26,  // 131: hypercore.HyperCore.WalletStates:input_type -> hypercore.WalletStatesRequest
+	40,  // 132: hypercore.HyperCore.AggregatedWalletPositioningStream:input_type -> hypercore.AggregatedWalletPositioningStreamRequest
+	58,  // 133: hypercore.HyperCore.AggregatedWalletLiquidations:input_type -> hypercore.AggregatedWalletLiquidationsRequest
+	62,  // 134: hypercore.HyperCore.Liquidations:input_type -> hypercore.LiquidationsRequest
+	62,  // 135: hypercore.HyperCore.LiquidationsStream:input_type -> hypercore.LiquidationsRequest
+	66,  // 136: hypercore.HyperCore.TPSL:input_type -> hypercore.TPSLRequest
+	66,  // 137: hypercore.HyperCore.TPSLStream:input_type -> hypercore.TPSLRequest
+	70,  // 138: hypercore.HyperCore.OrderBookDepth:input_type -> hypercore.OrderBookDepthRequest
+	44,  // 139: hypercore.HyperCore.WalletBalancesStream:input_type -> hypercore.WalletBalancesStreamRequest
+	29,  // 140: hypercore.HyperCore.WalletTradesStream:input_type -> hypercore.WalletTradesStreamRequest
+	31,  // 141: hypercore.HyperCore.WalletEventsStream:input_type -> hypercore.WalletEventsStreamRequest
+	32,  // 142: hypercore.HyperCore.WalletEvents:input_type -> hypercore.WalletEventsRequest
+	46,  // 143: hypercore.HyperCore.ValidatorDelegators:input_type -> hypercore.ValidatorDelegatorsRequest
+	49,  // 144: hypercore.HyperCore.ReferrerWallet:input_type -> hypercore.ReferrerWalletRequest
+	51,  // 145: hypercore.HyperCore.WalletTags:input_type -> hypercore.WalletTagsRequest
+	54,  // 146: hypercore.HyperCore.WalletsByTag:input_type -> hypercore.WalletsByTagRequest
+	56,  // 147: hypercore.HyperCore.WalletsByFilter:input_type -> hypercore.WalletsByFilterRequest
+	77,  // 148: hypercore.HyperCore.WalletPerformance:input_type -> hypercore.WalletPerformanceRequest
+	78,  // 149: hypercore.HyperCore.WalletPerformanceStream:input_type -> hypercore.WalletPerformanceStreamRequest
+	83,  // 150: hypercore.HyperCore.WalletPerformanceSeries:input_type -> hypercore.WalletPerformanceSeriesRequest
+	88,  // 151: hypercore.HyperCore.WalletPositioningSeries:input_type -> hypercore.WalletPositioningSeriesRequest
+	90,  // 152: hypercore.HyperCore.SpotInstruments:input_type -> hypercore.SpotInstrumentsRequest
+	94,  // 153: hypercore.HyperCore.PerpInstruments:input_type -> hypercore.PerpInstrumentsRequest
+	97,  // 154: hypercore.HyperCore.WalletsByMetricPercentile:input_type -> hypercore.WalletsByMetricPercentileRequest
+	102, // 155: hypercore.HyperCore.DirtyWallets:input_type -> hypercore.DirtyWalletsRequest
+	104, // 156: hypercore.HyperCore.WalletTrades:input_type -> hypercore.WalletTradesRequest
+	106, // 157: hypercore.HyperCore.WalletLastEventTimestamp:input_type -> hypercore.WalletLastEventTimestampRequest
+	108, // 158: hypercore.HyperCore.ClosedPositions:input_type -> hypercore.ClosedPositionsRequest
+	111, // 159: hypercore.HyperCore.OHLC:input_type -> hypercore.OHLCRequest
+	115, // 160: hypercore.HyperCore.OHLCStream:input_type -> hypercore.OHLCStreamRequest
+	119, // 161: hypercore.HyperCore.HighLow:input_type -> hypercore.HighLowRequest
+	121, // 162: hypercore.HyperCore.InstrumentStats:input_type -> hypercore.InstrumentStatsRequest
+	132, // 163: hypercore.HyperCore.QueryPositions:input_type -> hypercore.QueryPositionsRequest
+	127, // 164: hypercore.HyperCore.PnlRank:input_type -> hypercore.PnlRankRequest
+	21,  // 165: hypercore.HyperCore.WalletMovements:output_type -> hypercore.WalletMovementsResponse
+	25,  // 166: hypercore.HyperCore.WalletBalances:output_type -> hypercore.WalletBalancesResponse
+	27,  // 167: hypercore.HyperCore.WalletStates:output_type -> hypercore.WalletStatesResponse
+	41,  // 168: hypercore.HyperCore.AggregatedWalletPositioningStream:output_type -> hypercore.AggregatedWalletPositioningStreamResponse
+	59,  // 169: hypercore.HyperCore.AggregatedWalletLiquidations:output_type -> hypercore.AggregatedWalletLiquidationsResponse
+	63,  // 170: hypercore.HyperCore.Liquidations:output_type -> hypercore.LiquidationsResponse
+	64,  // 171: hypercore.HyperCore.LiquidationsStream:output_type -> hypercore.LiquidationSnapshot
+	67,  // 172: hypercore.HyperCore.TPSL:output_type -> hypercore.TPSLResponse
+	68,  // 173: hypercore.HyperCore.TPSLStream:output_type -> hypercore.TPSLSnapshot
+	71,  // 174: hypercore.HyperCore.OrderBookDepth:output_type -> hypercore.OrderBookDepthResponse
+	45,  // 175: hypercore.HyperCore.WalletBalancesStream:output_type -> hypercore.WalletBalancesStreamResponse
+	30,  // 176: hypercore.HyperCore.WalletTradesStream:output_type -> hypercore.WalletTradesStreamResponse
+	36,  // 177: hypercore.HyperCore.WalletEventsStream:output_type -> hypercore.WalletEvent
+	34,  // 178: hypercore.HyperCore.WalletEvents:output_type -> hypercore.WalletEventsResponse
+	47,  // 179: hypercore.HyperCore.ValidatorDelegators:output_type -> hypercore.ValidatorDelegatorsResponse
+	50,  // 180: hypercore.HyperCore.ReferrerWallet:output_type -> hypercore.ReferrerWalletResponse
+	52,  // 181: hypercore.HyperCore.WalletTags:output_type -> hypercore.WalletTagsResponse
+	55,  // 182: hypercore.HyperCore.WalletsByTag:output_type -> hypercore.WalletsByTagResponse
+	57,  // 183: hypercore.HyperCore.WalletsByFilter:output_type -> hypercore.WalletsByFilterResponse
+	80,  // 184: hypercore.HyperCore.WalletPerformance:output_type -> hypercore.WalletPerformanceResponse
+	79,  // 185: hypercore.HyperCore.WalletPerformanceStream:output_type -> hypercore.WalletPerformanceStreamResponse
+	85,  // 186: hypercore.HyperCore.WalletPerformanceSeries:output_type -> hypercore.WalletPerformanceSeriesResponse
+	89,  // 187: hypercore.HyperCore.WalletPositioningSeries:output_type -> hypercore.WalletPositioningSeriesResponse
+	93,  // 188: hypercore.HyperCore.SpotInstruments:output_type -> hypercore.SpotInstrumentsResponse
+	96,  // 189: hypercore.HyperCore.PerpInstruments:output_type -> hypercore.PerpInstrumentsResponse
+	99,  // 190: hypercore.HyperCore.WalletsByMetricPercentile:output_type -> hypercore.WalletsByMetricPercentileResponse
+	103, // 191: hypercore.HyperCore.DirtyWallets:output_type -> hypercore.DirtyWalletsResponse
+	105, // 192: hypercore.HyperCore.WalletTrades:output_type -> hypercore.WalletTradesResponse
+	107, // 193: hypercore.HyperCore.WalletLastEventTimestamp:output_type -> hypercore.WalletLastEventTimestampResponse
+	110, // 194: hypercore.HyperCore.ClosedPositions:output_type -> hypercore.ClosedPositionsResponse
+	114, // 195: hypercore.HyperCore.OHLC:output_type -> hypercore.OHLCResponse
+	117, // 196: hypercore.HyperCore.OHLCStream:output_type -> hypercore.OHLCStreamResponse
+	120, // 197: hypercore.HyperCore.HighLow:output_type -> hypercore.HighLowResponse
+	124, // 198: hypercore.HyperCore.InstrumentStats:output_type -> hypercore.InstrumentStatsResponse
+	135, // 199: hypercore.HyperCore.QueryPositions:output_type -> hypercore.QueryPositionsResponse
+	129, // 200: hypercore.HyperCore.PnlRank:output_type -> hypercore.PnlRankResponse
+	165, // [165:201] is the sub-list for method output_type
+	129, // [129:165] is the sub-list for method input_type
+	129, // [129:129] is the sub-list for extension type_name
+	129, // [129:129] is the sub-list for extension extendee
+	0,   // [0:129] is the sub-list for field type_name
 }
 
 func init() { file_hypurr_hypercore_hypercore_service_proto_init() }
@@ -12439,7 +12577,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[62].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletPerformanceResponse); i {
+			switch v := v.(*WalletPerformanceStreamRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12451,7 +12589,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[63].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletPerformanceResult); i {
+			switch v := v.(*WalletPerformanceStreamResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12463,7 +12601,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[64].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletPerformanceRange); i {
+			switch v := v.(*WalletPerformanceResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12475,7 +12613,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[65].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletPerformanceSeriesRequest); i {
+			switch v := v.(*WalletPerformanceResult); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12487,7 +12625,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[66].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletPerformanceSeriesQuery); i {
+			switch v := v.(*WalletPerformanceRange); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12499,7 +12637,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[67].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletPerformanceSeriesResponse); i {
+			switch v := v.(*WalletPerformanceSeriesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12511,7 +12649,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[68].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletPerformanceSeriesResult); i {
+			switch v := v.(*WalletPerformanceSeriesQuery); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12523,7 +12661,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[69].Exporter = func(v any, i int) any {
-			switch v := v.(*PositioningBucket); i {
+			switch v := v.(*WalletPerformanceSeriesResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12535,7 +12673,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[70].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletPositioningSeriesRequest); i {
+			switch v := v.(*WalletPerformanceSeriesResult); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12547,7 +12685,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[71].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletPositioningSeriesResponse); i {
+			switch v := v.(*PositioningBucket); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12559,7 +12697,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[72].Exporter = func(v any, i int) any {
-			switch v := v.(*SpotInstrumentsRequest); i {
+			switch v := v.(*WalletPositioningSeriesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12571,7 +12709,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[73].Exporter = func(v any, i int) any {
-			switch v := v.(*SpotToken); i {
+			switch v := v.(*WalletPositioningSeriesResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12583,7 +12721,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[74].Exporter = func(v any, i int) any {
-			switch v := v.(*SpotInstrument); i {
+			switch v := v.(*SpotInstrumentsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12595,7 +12733,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[75].Exporter = func(v any, i int) any {
-			switch v := v.(*SpotInstrumentsResponse); i {
+			switch v := v.(*SpotToken); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12607,7 +12745,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[76].Exporter = func(v any, i int) any {
-			switch v := v.(*PerpInstrumentsRequest); i {
+			switch v := v.(*SpotInstrument); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12619,7 +12757,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[77].Exporter = func(v any, i int) any {
-			switch v := v.(*PerpInstrument); i {
+			switch v := v.(*SpotInstrumentsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12631,7 +12769,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[78].Exporter = func(v any, i int) any {
-			switch v := v.(*PerpInstrumentsResponse); i {
+			switch v := v.(*PerpInstrumentsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12643,7 +12781,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[79].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletsByMetricPercentileRequest); i {
+			switch v := v.(*PerpInstrument); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12655,7 +12793,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[80].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletMetricRank); i {
+			switch v := v.(*PerpInstrumentsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12667,7 +12805,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[81].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletsByMetricPercentileResponse); i {
+			switch v := v.(*WalletsByMetricPercentileRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12679,7 +12817,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[82].Exporter = func(v any, i int) any {
-			switch v := v.(*HistoricalTradeSide); i {
+			switch v := v.(*WalletMetricRank); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12691,7 +12829,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[83].Exporter = func(v any, i int) any {
-			switch v := v.(*HistoricalWalletTrade); i {
+			switch v := v.(*WalletsByMetricPercentileResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12703,7 +12841,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[84].Exporter = func(v any, i int) any {
-			switch v := v.(*DirtyWalletsRequest); i {
+			switch v := v.(*HistoricalTradeSide); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12715,7 +12853,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[85].Exporter = func(v any, i int) any {
-			switch v := v.(*DirtyWalletsResponse); i {
+			switch v := v.(*HistoricalWalletTrade); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12727,7 +12865,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[86].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletTradesRequest); i {
+			switch v := v.(*DirtyWalletsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12739,7 +12877,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[87].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletTradesResponse); i {
+			switch v := v.(*DirtyWalletsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12751,7 +12889,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[88].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletLastEventTimestampRequest); i {
+			switch v := v.(*WalletTradesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12763,7 +12901,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[89].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletLastEventTimestampResponse); i {
+			switch v := v.(*WalletTradesResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12775,7 +12913,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[90].Exporter = func(v any, i int) any {
-			switch v := v.(*ClosedPositionsRequest); i {
+			switch v := v.(*WalletLastEventTimestampRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12787,7 +12925,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[91].Exporter = func(v any, i int) any {
-			switch v := v.(*ClosedPosition); i {
+			switch v := v.(*WalletLastEventTimestampResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12799,7 +12937,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[92].Exporter = func(v any, i int) any {
-			switch v := v.(*ClosedPositionsResponse); i {
+			switch v := v.(*ClosedPositionsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12811,7 +12949,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[93].Exporter = func(v any, i int) any {
-			switch v := v.(*OHLCRequest); i {
+			switch v := v.(*ClosedPosition); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12823,7 +12961,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[94].Exporter = func(v any, i int) any {
-			switch v := v.(*OHLC); i {
+			switch v := v.(*ClosedPositionsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12835,7 +12973,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[95].Exporter = func(v any, i int) any {
-			switch v := v.(*OHLCSeries); i {
+			switch v := v.(*OHLCRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12847,7 +12985,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[96].Exporter = func(v any, i int) any {
-			switch v := v.(*OHLCResponse); i {
+			switch v := v.(*OHLC); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12859,7 +12997,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[97].Exporter = func(v any, i int) any {
-			switch v := v.(*OHLCStreamRequest); i {
+			switch v := v.(*OHLCSeries); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12871,7 +13009,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[98].Exporter = func(v any, i int) any {
-			switch v := v.(*OHLCPair); i {
+			switch v := v.(*OHLCResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12883,7 +13021,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[99].Exporter = func(v any, i int) any {
-			switch v := v.(*OHLCStreamResponse); i {
+			switch v := v.(*OHLCStreamRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12895,7 +13033,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[100].Exporter = func(v any, i int) any {
-			switch v := v.(*OHLCUpdate); i {
+			switch v := v.(*OHLCPair); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12907,7 +13045,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[101].Exporter = func(v any, i int) any {
-			switch v := v.(*HighLowRequest); i {
+			switch v := v.(*OHLCStreamResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12919,7 +13057,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[102].Exporter = func(v any, i int) any {
-			switch v := v.(*HighLowResponse); i {
+			switch v := v.(*OHLCUpdate); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12931,7 +13069,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[103].Exporter = func(v any, i int) any {
-			switch v := v.(*InstrumentStatsRequest); i {
+			switch v := v.(*HighLowRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12943,7 +13081,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[104].Exporter = func(v any, i int) any {
-			switch v := v.(*InstrumentStats); i {
+			switch v := v.(*HighLowResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12955,7 +13093,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[105].Exporter = func(v any, i int) any {
-			switch v := v.(*InstrumentStatsSeries); i {
+			switch v := v.(*InstrumentStatsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12967,7 +13105,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[106].Exporter = func(v any, i int) any {
-			switch v := v.(*InstrumentStatsResponse); i {
+			switch v := v.(*InstrumentStats); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12979,7 +13117,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[107].Exporter = func(v any, i int) any {
-			switch v := v.(*PnlClassFilter); i {
+			switch v := v.(*InstrumentStatsSeries); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -12991,7 +13129,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[108].Exporter = func(v any, i int) any {
-			switch v := v.(*PnlAssetFilter); i {
+			switch v := v.(*InstrumentStatsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13003,7 +13141,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[109].Exporter = func(v any, i int) any {
-			switch v := v.(*PnlRankRequest); i {
+			switch v := v.(*PnlClassFilter); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13015,7 +13153,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[110].Exporter = func(v any, i int) any {
-			switch v := v.(*PnlRankEntry); i {
+			switch v := v.(*PnlAssetFilter); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13027,7 +13165,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[111].Exporter = func(v any, i int) any {
-			switch v := v.(*PnlRankResponse); i {
+			switch v := v.(*PnlRankRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13039,7 +13177,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[112].Exporter = func(v any, i int) any {
-			switch v := v.(*PositionPredicate); i {
+			switch v := v.(*PnlRankEntry); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13051,7 +13189,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[113].Exporter = func(v any, i int) any {
-			switch v := v.(*PositionSort); i {
+			switch v := v.(*PnlRankResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13063,7 +13201,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[114].Exporter = func(v any, i int) any {
-			switch v := v.(*QueryPositionsRequest); i {
+			switch v := v.(*PositionPredicate); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13075,7 +13213,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[115].Exporter = func(v any, i int) any {
-			switch v := v.(*PositionRow); i {
+			switch v := v.(*PositionSort); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13087,7 +13225,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[116].Exporter = func(v any, i int) any {
-			switch v := v.(*ComputeUsage); i {
+			switch v := v.(*QueryPositionsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13099,7 +13237,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[117].Exporter = func(v any, i int) any {
-			switch v := v.(*QueryPositionsResponse); i {
+			switch v := v.(*PositionRow); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13111,7 +13249,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[118].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletState_SpotBalance); i {
+			switch v := v.(*ComputeUsage); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13123,7 +13261,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[119].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletState_PerpState); i {
+			switch v := v.(*QueryPositionsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13135,7 +13273,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[120].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletState_PerpPosition); i {
+			switch v := v.(*WalletState_SpotBalance); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13147,7 +13285,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[121].Exporter = func(v any, i int) any {
-			switch v := v.(*WalletState_StakingState); i {
+			switch v := v.(*WalletState_PerpState); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -13159,6 +13297,30 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			}
 		}
 		file_hypurr_hypercore_hypercore_service_proto_msgTypes[122].Exporter = func(v any, i int) any {
+			switch v := v.(*WalletState_PerpPosition); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_hypercore_hypercore_service_proto_msgTypes[123].Exporter = func(v any, i int) any {
+			switch v := v.(*WalletState_StakingState); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_hypurr_hypercore_hypercore_service_proto_msgTypes[124].Exporter = func(v any, i int) any {
 			switch v := v.(*WalletState_BorrowLendBalance); i {
 			case 0:
 				return &v.state
@@ -13176,12 +13338,12 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 		(*WalletEvent_Movement)(nil),
 	}
 	file_hypurr_hypercore_hypercore_service_proto_msgTypes[60].OneofWrappers = []any{}
-	file_hypurr_hypercore_hypercore_service_proto_msgTypes[65].OneofWrappers = []any{}
-	file_hypurr_hypercore_hypercore_service_proto_msgTypes[66].OneofWrappers = []any{}
 	file_hypurr_hypercore_hypercore_service_proto_msgTypes[67].OneofWrappers = []any{}
 	file_hypurr_hypercore_hypercore_service_proto_msgTypes[68].OneofWrappers = []any{}
-	file_hypurr_hypercore_hypercore_service_proto_msgTypes[91].OneofWrappers = []any{}
-	file_hypurr_hypercore_hypercore_service_proto_msgTypes[109].OneofWrappers = []any{
+	file_hypurr_hypercore_hypercore_service_proto_msgTypes[69].OneofWrappers = []any{}
+	file_hypurr_hypercore_hypercore_service_proto_msgTypes[70].OneofWrappers = []any{}
+	file_hypurr_hypercore_hypercore_service_proto_msgTypes[93].OneofWrappers = []any{}
+	file_hypurr_hypercore_hypercore_service_proto_msgTypes[111].OneofWrappers = []any{
 		(*PnlRankRequest_Classes)(nil),
 		(*PnlRankRequest_Assets)(nil),
 	}
@@ -13191,7 +13353,7 @@ func file_hypurr_hypercore_hypercore_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_hypurr_hypercore_hypercore_service_proto_rawDesc,
 			NumEnums:      16,
-			NumMessages:   124,
+			NumMessages:   126,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

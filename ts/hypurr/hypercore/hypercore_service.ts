@@ -1438,6 +1438,36 @@ export interface WalletPerformanceRequest {
     toTs: number; // inclusive, Unix seconds; 0 = now
 }
 /**
+ * Each client owns its wallet list. Remove takes precedence when both lists contain a wallet.
+ *
+ * @generated from protobuf message hypercore.WalletPerformanceStreamRequest
+ */
+export interface WalletPerformanceStreamRequest {
+    /**
+     * @generated from protobuf field: repeated string add_wallets = 1
+     */
+    addWallets: string[];
+    /**
+     * @generated from protobuf field: repeated string remove_wallets = 2
+     */
+    removeWallets: string[];
+}
+/**
+ * Results contain hour-aligned 24-hour, 7-day, 30-day, and all-time ranges, in that order.
+ *
+ * @generated from protobuf message hypercore.WalletPerformanceStreamResponse
+ */
+export interface WalletPerformanceStreamResponse {
+    /**
+     * @generated from protobuf field: int64 to_ts = 1
+     */
+    toTs: number;
+    /**
+     * @generated from protobuf field: repeated hypercore.WalletPerformanceResult wallets = 2
+     */
+    wallets: WalletPerformanceResult[];
+}
+/**
  * @generated from protobuf message hypercore.WalletPerformanceResponse
  */
 export interface WalletPerformanceResponse {
@@ -7771,6 +7801,116 @@ class WalletPerformanceRequest$Type extends MessageType<WalletPerformanceRequest
  */
 export const WalletPerformanceRequest = new WalletPerformanceRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class WalletPerformanceStreamRequest$Type extends MessageType<WalletPerformanceStreamRequest> {
+    constructor() {
+        super("hypercore.WalletPerformanceStreamRequest", [
+            { no: 1, name: "add_wallets", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "remove_wallets", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPerformanceStreamRequest>): WalletPerformanceStreamRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.addWallets = [];
+        message.removeWallets = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletPerformanceStreamRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPerformanceStreamRequest): WalletPerformanceStreamRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string add_wallets */ 1:
+                    message.addWallets.push(reader.string());
+                    break;
+                case /* repeated string remove_wallets */ 2:
+                    message.removeWallets.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPerformanceStreamRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string add_wallets = 1; */
+        for (let i = 0; i < message.addWallets.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.addWallets[i]);
+        /* repeated string remove_wallets = 2; */
+        for (let i = 0; i < message.removeWallets.length; i++)
+            writer.tag(2, WireType.LengthDelimited).string(message.removeWallets[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletPerformanceStreamRequest
+ */
+export const WalletPerformanceStreamRequest = new WalletPerformanceStreamRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class WalletPerformanceStreamResponse$Type extends MessageType<WalletPerformanceStreamResponse> {
+    constructor() {
+        super("hypercore.WalletPerformanceStreamResponse", [
+            { no: 1, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletPerformanceResult }
+        ]);
+    }
+    create(value?: PartialMessage<WalletPerformanceStreamResponse>): WalletPerformanceStreamResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.toTs = 0;
+        message.wallets = [];
+        if (value !== undefined)
+            reflectionMergePartial<WalletPerformanceStreamResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: WalletPerformanceStreamResponse): WalletPerformanceStreamResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 to_ts */ 1:
+                    message.toTs = reader.int64().toNumber();
+                    break;
+                case /* repeated hypercore.WalletPerformanceResult wallets */ 2:
+                    message.wallets.push(WalletPerformanceResult.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: WalletPerformanceStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 to_ts = 1; */
+        if (message.toTs !== 0)
+            writer.tag(1, WireType.Varint).int64(message.toTs);
+        /* repeated hypercore.WalletPerformanceResult wallets = 2; */
+        for (let i = 0; i < message.wallets.length; i++)
+            WalletPerformanceResult.internalBinaryWrite(message.wallets[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypercore.WalletPerformanceStreamResponse
+ */
+export const WalletPerformanceStreamResponse = new WalletPerformanceStreamResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class WalletPerformanceResponse$Type extends MessageType<WalletPerformanceResponse> {
     constructor() {
         super("hypercore.WalletPerformanceResponse", [
@@ -11769,6 +11909,7 @@ export const HyperCore = new ServiceType("hypercore.HyperCore", [
     { name: "WalletsByTag", options: {}, I: WalletsByTagRequest, O: WalletsByTagResponse },
     { name: "WalletsByFilter", options: {}, I: WalletsByFilterRequest, O: WalletsByFilterResponse },
     { name: "WalletPerformance", options: {}, I: WalletPerformanceRequest, O: WalletPerformanceResponse },
+    { name: "WalletPerformanceStream", serverStreaming: true, clientStreaming: true, options: {}, I: WalletPerformanceStreamRequest, O: WalletPerformanceStreamResponse },
     { name: "WalletPerformanceSeries", options: {}, I: WalletPerformanceSeriesRequest, O: WalletPerformanceSeriesResponse },
     { name: "WalletPositioningSeries", options: {}, I: WalletPositioningSeriesRequest, O: WalletPositioningSeriesResponse },
     { name: "SpotInstruments", options: {}, I: SpotInstrumentsRequest, O: SpotInstrumentsResponse },

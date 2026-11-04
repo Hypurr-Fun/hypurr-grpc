@@ -39,6 +39,7 @@ const (
 	HyperCore_WalletsByTag_FullMethodName                      = "/hypercore.HyperCore/WalletsByTag"
 	HyperCore_WalletsByFilter_FullMethodName                   = "/hypercore.HyperCore/WalletsByFilter"
 	HyperCore_WalletPerformance_FullMethodName                 = "/hypercore.HyperCore/WalletPerformance"
+	HyperCore_WalletPerformanceStream_FullMethodName           = "/hypercore.HyperCore/WalletPerformanceStream"
 	HyperCore_WalletPerformanceSeries_FullMethodName           = "/hypercore.HyperCore/WalletPerformanceSeries"
 	HyperCore_WalletPositioningSeries_FullMethodName           = "/hypercore.HyperCore/WalletPositioningSeries"
 	HyperCore_SpotInstruments_FullMethodName                   = "/hypercore.HyperCore/SpotInstruments"
@@ -82,6 +83,7 @@ type HyperCoreClient interface {
 	WalletsByTag(ctx context.Context, in *WalletsByTagRequest, opts ...grpc.CallOption) (*WalletsByTagResponse, error)
 	WalletsByFilter(ctx context.Context, in *WalletsByFilterRequest, opts ...grpc.CallOption) (*WalletsByFilterResponse, error)
 	WalletPerformance(ctx context.Context, in *WalletPerformanceRequest, opts ...grpc.CallOption) (*WalletPerformanceResponse, error)
+	WalletPerformanceStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_WalletPerformanceStreamClient, error)
 	WalletPerformanceSeries(ctx context.Context, in *WalletPerformanceSeriesRequest, opts ...grpc.CallOption) (*WalletPerformanceSeriesResponse, error)
 	WalletPositioningSeries(ctx context.Context, in *WalletPositioningSeriesRequest, opts ...grpc.CallOption) (*WalletPositioningSeriesResponse, error)
 	SpotInstruments(ctx context.Context, in *SpotInstrumentsRequest, opts ...grpc.CallOption) (*SpotInstrumentsResponse, error)
@@ -445,6 +447,38 @@ func (c *hyperCoreClient) WalletPerformance(ctx context.Context, in *WalletPerfo
 	return out, nil
 }
 
+func (c *hyperCoreClient) WalletPerformanceStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_WalletPerformanceStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[6], HyperCore_WalletPerformanceStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &hyperCoreWalletPerformanceStreamClient{ClientStream: stream}
+	return x, nil
+}
+
+type HyperCore_WalletPerformanceStreamClient interface {
+	Send(*WalletPerformanceStreamRequest) error
+	Recv() (*WalletPerformanceStreamResponse, error)
+	grpc.ClientStream
+}
+
+type hyperCoreWalletPerformanceStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *hyperCoreWalletPerformanceStreamClient) Send(m *WalletPerformanceStreamRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *hyperCoreWalletPerformanceStreamClient) Recv() (*WalletPerformanceStreamResponse, error) {
+	m := new(WalletPerformanceStreamResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *hyperCoreClient) WalletPerformanceSeries(ctx context.Context, in *WalletPerformanceSeriesRequest, opts ...grpc.CallOption) (*WalletPerformanceSeriesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(WalletPerformanceSeriesResponse)
@@ -547,7 +581,7 @@ func (c *hyperCoreClient) OHLC(ctx context.Context, in *OHLCRequest, opts ...grp
 
 func (c *hyperCoreClient) OHLCStream(ctx context.Context, opts ...grpc.CallOption) (HyperCore_OHLCStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[6], HyperCore_OHLCStream_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HyperCore_ServiceDesc.Streams[7], HyperCore_OHLCStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -643,6 +677,7 @@ type HyperCoreServer interface {
 	WalletsByTag(context.Context, *WalletsByTagRequest) (*WalletsByTagResponse, error)
 	WalletsByFilter(context.Context, *WalletsByFilterRequest) (*WalletsByFilterResponse, error)
 	WalletPerformance(context.Context, *WalletPerformanceRequest) (*WalletPerformanceResponse, error)
+	WalletPerformanceStream(HyperCore_WalletPerformanceStreamServer) error
 	WalletPerformanceSeries(context.Context, *WalletPerformanceSeriesRequest) (*WalletPerformanceSeriesResponse, error)
 	WalletPositioningSeries(context.Context, *WalletPositioningSeriesRequest) (*WalletPositioningSeriesResponse, error)
 	SpotInstruments(context.Context, *SpotInstrumentsRequest) (*SpotInstrumentsResponse, error)
@@ -725,6 +760,9 @@ func (UnimplementedHyperCoreServer) WalletsByFilter(context.Context, *WalletsByF
 }
 func (UnimplementedHyperCoreServer) WalletPerformance(context.Context, *WalletPerformanceRequest) (*WalletPerformanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletPerformance not implemented")
+}
+func (UnimplementedHyperCoreServer) WalletPerformanceStream(HyperCore_WalletPerformanceStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method WalletPerformanceStream not implemented")
 }
 func (UnimplementedHyperCoreServer) WalletPerformanceSeries(context.Context, *WalletPerformanceSeriesRequest) (*WalletPerformanceSeriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WalletPerformanceSeries not implemented")
@@ -1167,6 +1205,32 @@ func _HyperCore_WalletPerformance_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_WalletPerformanceStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(HyperCoreServer).WalletPerformanceStream(&hyperCoreWalletPerformanceStreamServer{ServerStream: stream})
+}
+
+type HyperCore_WalletPerformanceStreamServer interface {
+	Send(*WalletPerformanceStreamResponse) error
+	Recv() (*WalletPerformanceStreamRequest, error)
+	grpc.ServerStream
+}
+
+type hyperCoreWalletPerformanceStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *hyperCoreWalletPerformanceStreamServer) Send(m *WalletPerformanceStreamResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *hyperCoreWalletPerformanceStreamServer) Recv() (*WalletPerformanceStreamRequest, error) {
+	m := new(WalletPerformanceStreamRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func _HyperCore_WalletPerformanceSeries_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(WalletPerformanceSeriesRequest)
 	if err := dec(in); err != nil {
@@ -1596,6 +1660,12 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 			StreamName:    "WalletEventsStream",
 			Handler:       _HyperCore_WalletEventsStream_Handler,
 			ServerStreams: true,
+		},
+		{
+			StreamName:    "WalletPerformanceStream",
+			Handler:       _HyperCore_WalletPerformanceStream_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
 		},
 		{
 			StreamName:    "OHLCStream",
