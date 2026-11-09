@@ -4,8 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { SvmWalletService } from "./svm";
-import type { SignSvmMessageResponse } from "./svm";
-import type { SignSvmMessageRequest } from "./svm";
+import type { SignSvmTransactionResponse } from "./svm";
+import type { SignSvmTransactionRequest } from "./svm";
 import type { DeleteSvmWalletResponse } from "./svm";
 import type { DeleteSvmWalletRequest } from "./svm";
 import type { RenameSvmWalletResponse } from "./svm";
@@ -23,7 +23,9 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  * SvmWalletService stores the caller's SVM (ed25519) wallets, e.g. for Fogo
  * or Solana. Keys are custodial and encrypted like Hyperliquid wallet keys.
  * Storage and signing only: no chain RPC, indexing or balances. Private keys
- * are never returned; SignSvmMessage signs with them.
+ * are never returned; SignSvmTransaction signs whitelisted transactions with
+ * them. There is no raw message signing: a raw signature can authorize any
+ * transaction, including transfers.
  *
  * Identifiers are stable: SvmWallet.id is a generic wallet id (one id space
  * with Hyperliquid wallets, kept when wallets become chain-agnostic) and
@@ -32,9 +34,9 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  * wallet has at most one svm account, so wallet_id names the signer.
  *
  * Every call needs the caller's own JWT: ListSvmWallets wallet:read, wallet
- * changes wallet:write, SignSvmMessage trade:write. Wallet API keys (bound to
- * one Hyperliquid wallet) are refused with PERMISSION_DENIED. A wallet id the
- * caller does not own is NOT_FOUND.
+ * changes wallet:write, SignSvmTransaction trade:write. Wallet API keys
+ * (bound to one Hyperliquid wallet) are refused with PERMISSION_DENIED. A
+ * wallet id the caller does not own is NOT_FOUND.
  *
  * @generated from protobuf service hypurr.svm.v1.SvmWalletService
  */
@@ -69,18 +71,26 @@ export interface ISvmWalletServiceClient {
      */
     deleteSvmWallet(input: DeleteSvmWalletRequest, options?: RpcOptions): UnaryCall<DeleteSvmWalletRequest, DeleteSvmWalletResponse>;
     /**
-     * Ed25519 signature of the message bytes as given, no prefix or hash. For a
-     * transaction, sign its serialized message.
+     * Ed25519 signature of a transaction message, given only when every
+     * instruction in it is whitelisted. Today that is the Chronicles game
+     * program acting on the wallet's own accounts to delegate gameplay to a
+     * session key: SetSession, CreateCharacter followed by SetSession, and
+     * CreatePlayerAccounts; plus ComputeBudget instructions. The wallet must be
+     * a signer and may not be the fee payer. Anything else (System or token
+     * transfers, other programs, address lookup tables, another wallet's
+     * accounts) is PERMISSION_DENIED.
      *
-     * @generated from protobuf rpc: SignSvmMessage
+     * @generated from protobuf rpc: SignSvmTransaction
      */
-    signSvmMessage(input: SignSvmMessageRequest, options?: RpcOptions): UnaryCall<SignSvmMessageRequest, SignSvmMessageResponse>;
+    signSvmTransaction(input: SignSvmTransactionRequest, options?: RpcOptions): UnaryCall<SignSvmTransactionRequest, SignSvmTransactionResponse>;
 }
 /**
  * SvmWalletService stores the caller's SVM (ed25519) wallets, e.g. for Fogo
  * or Solana. Keys are custodial and encrypted like Hyperliquid wallet keys.
  * Storage and signing only: no chain RPC, indexing or balances. Private keys
- * are never returned; SignSvmMessage signs with them.
+ * are never returned; SignSvmTransaction signs whitelisted transactions with
+ * them. There is no raw message signing: a raw signature can authorize any
+ * transaction, including transfers.
  *
  * Identifiers are stable: SvmWallet.id is a generic wallet id (one id space
  * with Hyperliquid wallets, kept when wallets become chain-agnostic) and
@@ -89,9 +99,9 @@ export interface ISvmWalletServiceClient {
  * wallet has at most one svm account, so wallet_id names the signer.
  *
  * Every call needs the caller's own JWT: ListSvmWallets wallet:read, wallet
- * changes wallet:write, SignSvmMessage trade:write. Wallet API keys (bound to
- * one Hyperliquid wallet) are refused with PERMISSION_DENIED. A wallet id the
- * caller does not own is NOT_FOUND.
+ * changes wallet:write, SignSvmTransaction trade:write. Wallet API keys
+ * (bound to one Hyperliquid wallet) are refused with PERMISSION_DENIED. A
+ * wallet id the caller does not own is NOT_FOUND.
  *
  * @generated from protobuf service hypurr.svm.v1.SvmWalletService
  */
@@ -146,13 +156,19 @@ export class SvmWalletServiceClient implements ISvmWalletServiceClient, ServiceI
         return stackIntercept<DeleteSvmWalletRequest, DeleteSvmWalletResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * Ed25519 signature of the message bytes as given, no prefix or hash. For a
-     * transaction, sign its serialized message.
+     * Ed25519 signature of a transaction message, given only when every
+     * instruction in it is whitelisted. Today that is the Chronicles game
+     * program acting on the wallet's own accounts to delegate gameplay to a
+     * session key: SetSession, CreateCharacter followed by SetSession, and
+     * CreatePlayerAccounts; plus ComputeBudget instructions. The wallet must be
+     * a signer and may not be the fee payer. Anything else (System or token
+     * transfers, other programs, address lookup tables, another wallet's
+     * accounts) is PERMISSION_DENIED.
      *
-     * @generated from protobuf rpc: SignSvmMessage
+     * @generated from protobuf rpc: SignSvmTransaction
      */
-    signSvmMessage(input: SignSvmMessageRequest, options?: RpcOptions): UnaryCall<SignSvmMessageRequest, SignSvmMessageResponse> {
+    signSvmTransaction(input: SignSvmTransactionRequest, options?: RpcOptions): UnaryCall<SignSvmTransactionRequest, SignSvmTransactionResponse> {
         const method = this.methods[5], opt = this._transport.mergeOptions(options);
-        return stackIntercept<SignSvmMessageRequest, SignSvmMessageResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<SignSvmTransactionRequest, SignSvmTransactionResponse>("unary", this._transport, method, opt, input);
     }
 }

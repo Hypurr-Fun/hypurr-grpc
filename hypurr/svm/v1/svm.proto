@@ -7,7 +7,9 @@ import "google/protobuf/timestamp.proto";
 // SvmWalletService stores the caller's SVM (ed25519) wallets, e.g. for Fogo
 // or Solana. Keys are custodial and encrypted like Hyperliquid wallet keys.
 // Storage and signing only: no chain RPC, indexing or balances. Private keys
-// are never returned; SignSvmMessage signs with them.
+// are never returned; SignSvmTransaction signs whitelisted transactions with
+// them. There is no raw message signing: a raw signature can authorize any
+// transaction, including transfers.
 //
 // Identifiers are stable: SvmWallet.id is a generic wallet id (one id space
 // with Hyperliquid wallets, kept when wallets become chain-agnostic) and
@@ -16,9 +18,9 @@ import "google/protobuf/timestamp.proto";
 // wallet has at most one svm account, so wallet_id names the signer.
 //
 // Every call needs the caller's own JWT: ListSvmWallets wallet:read, wallet
-// changes wallet:write, SignSvmMessage trade:write. Wallet API keys (bound to
-// one Hyperliquid wallet) are refused with PERMISSION_DENIED. A wallet id the
-// caller does not own is NOT_FOUND.
+// changes wallet:write, SignSvmTransaction trade:write. Wallet API keys
+// (bound to one Hyperliquid wallet) are refused with PERMISSION_DENIED. A
+// wallet id the caller does not own is NOT_FOUND.
 service SvmWalletService {
   // The caller's wallets, oldest first.
   rpc ListSvmWallets(ListSvmWalletsRequest) returns (ListSvmWalletsResponse);
@@ -30,9 +32,15 @@ service SvmWalletService {
   rpc RenameSvmWallet(RenameSvmWalletRequest) returns (RenameSvmWalletResponse);
   // Unbinds the wallet from the caller; importing its key again restores it.
   rpc DeleteSvmWallet(DeleteSvmWalletRequest) returns (DeleteSvmWalletResponse);
-  // Ed25519 signature of the message bytes as given, no prefix or hash. For a
-  // transaction, sign its serialized message.
-  rpc SignSvmMessage(SignSvmMessageRequest) returns (SignSvmMessageResponse);
+  // Ed25519 signature of a transaction message, given only when every
+  // instruction in it is whitelisted. Today that is the Chronicles game
+  // program acting on the wallet's own accounts to delegate gameplay to a
+  // session key: SetSession, CreateCharacter followed by SetSession, and
+  // CreatePlayerAccounts; plus ComputeBudget instructions. The wallet must be
+  // a signer and may not be the fee payer. Anything else (System or token
+  // transfers, other programs, address lookup tables, another wallet's
+  // accounts) is PERMISSION_DENIED.
+  rpc SignSvmTransaction(SignSvmTransactionRequest) returns (SignSvmTransactionResponse);
 }
 
 message SvmWallet {
@@ -86,13 +94,15 @@ message DeleteSvmWalletRequest {
 
 message DeleteSvmWalletResponse {}
 
-message SignSvmMessageRequest {
+message SignSvmTransactionRequest {
   int64 wallet_id = 1;
-  // 1 to 65536 bytes.
+  // The serialized transaction message (legacy or v0), the bytes the
+  // transaction's signatures cover: web3.js Transaction.serializeMessage()
+  // or VersionedMessage.serialize(). At most 1232 bytes.
   bytes message = 2;
 }
 
-message SignSvmMessageResponse {
+message SignSvmTransactionResponse {
   // 64-byte ed25519 signature.
   bytes signature = 1;
   // Base58 public key of the signer.

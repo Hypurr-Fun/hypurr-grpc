@@ -134,24 +134,26 @@ export interface DeleteSvmWalletRequest {
 export interface DeleteSvmWalletResponse {
 }
 /**
- * @generated from protobuf message hypurr.svm.v1.SignSvmMessageRequest
+ * @generated from protobuf message hypurr.svm.v1.SignSvmTransactionRequest
  */
-export interface SignSvmMessageRequest {
+export interface SignSvmTransactionRequest {
     /**
      * @generated from protobuf field: int64 wallet_id = 1
      */
     walletId: number;
     /**
-     * 1 to 65536 bytes.
+     * The serialized transaction message (legacy or v0), the bytes the
+     * transaction's signatures cover: web3.js Transaction.serializeMessage()
+     * or VersionedMessage.serialize(). At most 1232 bytes.
      *
      * @generated from protobuf field: bytes message = 2
      */
     message: Uint8Array;
 }
 /**
- * @generated from protobuf message hypurr.svm.v1.SignSvmMessageResponse
+ * @generated from protobuf message hypurr.svm.v1.SignSvmTransactionResponse
  */
-export interface SignSvmMessageResponse {
+export interface SignSvmTransactionResponse {
     /**
      * 64-byte ed25519 signature.
      *
@@ -701,22 +703,22 @@ class DeleteSvmWalletResponse$Type extends MessageType<DeleteSvmWalletResponse> 
  */
 export const DeleteSvmWalletResponse = new DeleteSvmWalletResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class SignSvmMessageRequest$Type extends MessageType<SignSvmMessageRequest> {
+class SignSvmTransactionRequest$Type extends MessageType<SignSvmTransactionRequest> {
     constructor() {
-        super("hypurr.svm.v1.SignSvmMessageRequest", [
+        super("hypurr.svm.v1.SignSvmTransactionRequest", [
             { no: 1, name: "wallet_id", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 2, name: "message", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
-    create(value?: PartialMessage<SignSvmMessageRequest>): SignSvmMessageRequest {
+    create(value?: PartialMessage<SignSvmTransactionRequest>): SignSvmTransactionRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.walletId = 0;
         message.message = new Uint8Array(0);
         if (value !== undefined)
-            reflectionMergePartial<SignSvmMessageRequest>(this, message, value);
+            reflectionMergePartial<SignSvmTransactionRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignSvmMessageRequest): SignSvmMessageRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignSvmTransactionRequest): SignSvmTransactionRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -738,7 +740,7 @@ class SignSvmMessageRequest$Type extends MessageType<SignSvmMessageRequest> {
         }
         return message;
     }
-    internalBinaryWrite(message: SignSvmMessageRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: SignSvmTransactionRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* int64 wallet_id = 1; */
         if (message.walletId !== 0)
             writer.tag(1, WireType.Varint).int64(message.walletId);
@@ -752,26 +754,26 @@ class SignSvmMessageRequest$Type extends MessageType<SignSvmMessageRequest> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.svm.v1.SignSvmMessageRequest
+ * @generated MessageType for protobuf message hypurr.svm.v1.SignSvmTransactionRequest
  */
-export const SignSvmMessageRequest = new SignSvmMessageRequest$Type();
+export const SignSvmTransactionRequest = new SignSvmTransactionRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class SignSvmMessageResponse$Type extends MessageType<SignSvmMessageResponse> {
+class SignSvmTransactionResponse$Type extends MessageType<SignSvmTransactionResponse> {
     constructor() {
-        super("hypurr.svm.v1.SignSvmMessageResponse", [
+        super("hypurr.svm.v1.SignSvmTransactionResponse", [
             { no: 1, name: "signature", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
             { no: 2, name: "public_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<SignSvmMessageResponse>): SignSvmMessageResponse {
+    create(value?: PartialMessage<SignSvmTransactionResponse>): SignSvmTransactionResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.signature = new Uint8Array(0);
         message.publicKey = "";
         if (value !== undefined)
-            reflectionMergePartial<SignSvmMessageResponse>(this, message, value);
+            reflectionMergePartial<SignSvmTransactionResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignSvmMessageResponse): SignSvmMessageResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignSvmTransactionResponse): SignSvmTransactionResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -793,7 +795,7 @@ class SignSvmMessageResponse$Type extends MessageType<SignSvmMessageResponse> {
         }
         return message;
     }
-    internalBinaryWrite(message: SignSvmMessageResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: SignSvmTransactionResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* bytes signature = 1; */
         if (message.signature.length)
             writer.tag(1, WireType.LengthDelimited).bytes(message.signature);
@@ -807,9 +809,9 @@ class SignSvmMessageResponse$Type extends MessageType<SignSvmMessageResponse> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.svm.v1.SignSvmMessageResponse
+ * @generated MessageType for protobuf message hypurr.svm.v1.SignSvmTransactionResponse
  */
-export const SignSvmMessageResponse = new SignSvmMessageResponse$Type();
+export const SignSvmTransactionResponse = new SignSvmTransactionResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.svm.v1.SvmWalletService
  */
@@ -819,5 +821,5 @@ export const SvmWalletService = new ServiceType("hypurr.svm.v1.SvmWalletService"
     { name: "ImportSvmWallet", options: {}, I: ImportSvmWalletRequest, O: ImportSvmWalletResponse },
     { name: "RenameSvmWallet", options: {}, I: RenameSvmWalletRequest, O: RenameSvmWalletResponse },
     { name: "DeleteSvmWallet", options: {}, I: DeleteSvmWalletRequest, O: DeleteSvmWalletResponse },
-    { name: "SignSvmMessage", options: {}, I: SignSvmMessageRequest, O: SignSvmMessageResponse }
+    { name: "SignSvmTransaction", options: {}, I: SignSvmTransactionRequest, O: SignSvmTransactionResponse }
 ]);

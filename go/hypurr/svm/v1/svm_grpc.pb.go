@@ -19,12 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	SvmWalletService_ListSvmWallets_FullMethodName  = "/hypurr.svm.v1.SvmWalletService/ListSvmWallets"
-	SvmWalletService_CreateSvmWallet_FullMethodName = "/hypurr.svm.v1.SvmWalletService/CreateSvmWallet"
-	SvmWalletService_ImportSvmWallet_FullMethodName = "/hypurr.svm.v1.SvmWalletService/ImportSvmWallet"
-	SvmWalletService_RenameSvmWallet_FullMethodName = "/hypurr.svm.v1.SvmWalletService/RenameSvmWallet"
-	SvmWalletService_DeleteSvmWallet_FullMethodName = "/hypurr.svm.v1.SvmWalletService/DeleteSvmWallet"
-	SvmWalletService_SignSvmMessage_FullMethodName  = "/hypurr.svm.v1.SvmWalletService/SignSvmMessage"
+	SvmWalletService_ListSvmWallets_FullMethodName     = "/hypurr.svm.v1.SvmWalletService/ListSvmWallets"
+	SvmWalletService_CreateSvmWallet_FullMethodName    = "/hypurr.svm.v1.SvmWalletService/CreateSvmWallet"
+	SvmWalletService_ImportSvmWallet_FullMethodName    = "/hypurr.svm.v1.SvmWalletService/ImportSvmWallet"
+	SvmWalletService_RenameSvmWallet_FullMethodName    = "/hypurr.svm.v1.SvmWalletService/RenameSvmWallet"
+	SvmWalletService_DeleteSvmWallet_FullMethodName    = "/hypurr.svm.v1.SvmWalletService/DeleteSvmWallet"
+	SvmWalletService_SignSvmTransaction_FullMethodName = "/hypurr.svm.v1.SvmWalletService/SignSvmTransaction"
 )
 
 // SvmWalletServiceClient is the client API for SvmWalletService service.
@@ -34,7 +34,9 @@ const (
 // SvmWalletService stores the caller's SVM (ed25519) wallets, e.g. for Fogo
 // or Solana. Keys are custodial and encrypted like Hyperliquid wallet keys.
 // Storage and signing only: no chain RPC, indexing or balances. Private keys
-// are never returned; SignSvmMessage signs with them.
+// are never returned; SignSvmTransaction signs whitelisted transactions with
+// them. There is no raw message signing: a raw signature can authorize any
+// transaction, including transfers.
 //
 // Identifiers are stable: SvmWallet.id is a generic wallet id (one id space
 // with Hyperliquid wallets, kept when wallets become chain-agnostic) and
@@ -43,9 +45,9 @@ const (
 // wallet has at most one svm account, so wallet_id names the signer.
 //
 // Every call needs the caller's own JWT: ListSvmWallets wallet:read, wallet
-// changes wallet:write, SignSvmMessage trade:write. Wallet API keys (bound to
-// one Hyperliquid wallet) are refused with PERMISSION_DENIED. A wallet id the
-// caller does not own is NOT_FOUND.
+// changes wallet:write, SignSvmTransaction trade:write. Wallet API keys
+// (bound to one Hyperliquid wallet) are refused with PERMISSION_DENIED. A
+// wallet id the caller does not own is NOT_FOUND.
 type SvmWalletServiceClient interface {
 	// The caller's wallets, oldest first.
 	ListSvmWallets(ctx context.Context, in *ListSvmWalletsRequest, opts ...grpc.CallOption) (*ListSvmWalletsResponse, error)
@@ -57,9 +59,15 @@ type SvmWalletServiceClient interface {
 	RenameSvmWallet(ctx context.Context, in *RenameSvmWalletRequest, opts ...grpc.CallOption) (*RenameSvmWalletResponse, error)
 	// Unbinds the wallet from the caller; importing its key again restores it.
 	DeleteSvmWallet(ctx context.Context, in *DeleteSvmWalletRequest, opts ...grpc.CallOption) (*DeleteSvmWalletResponse, error)
-	// Ed25519 signature of the message bytes as given, no prefix or hash. For a
-	// transaction, sign its serialized message.
-	SignSvmMessage(ctx context.Context, in *SignSvmMessageRequest, opts ...grpc.CallOption) (*SignSvmMessageResponse, error)
+	// Ed25519 signature of a transaction message, given only when every
+	// instruction in it is whitelisted. Today that is the Chronicles game
+	// program acting on the wallet's own accounts to delegate gameplay to a
+	// session key: SetSession, CreateCharacter followed by SetSession, and
+	// CreatePlayerAccounts; plus ComputeBudget instructions. The wallet must be
+	// a signer and may not be the fee payer. Anything else (System or token
+	// transfers, other programs, address lookup tables, another wallet's
+	// accounts) is PERMISSION_DENIED.
+	SignSvmTransaction(ctx context.Context, in *SignSvmTransactionRequest, opts ...grpc.CallOption) (*SignSvmTransactionResponse, error)
 }
 
 type svmWalletServiceClient struct {
@@ -120,10 +128,10 @@ func (c *svmWalletServiceClient) DeleteSvmWallet(ctx context.Context, in *Delete
 	return out, nil
 }
 
-func (c *svmWalletServiceClient) SignSvmMessage(ctx context.Context, in *SignSvmMessageRequest, opts ...grpc.CallOption) (*SignSvmMessageResponse, error) {
+func (c *svmWalletServiceClient) SignSvmTransaction(ctx context.Context, in *SignSvmTransactionRequest, opts ...grpc.CallOption) (*SignSvmTransactionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SignSvmMessageResponse)
-	err := c.cc.Invoke(ctx, SvmWalletService_SignSvmMessage_FullMethodName, in, out, cOpts...)
+	out := new(SignSvmTransactionResponse)
+	err := c.cc.Invoke(ctx, SvmWalletService_SignSvmTransaction_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +145,9 @@ func (c *svmWalletServiceClient) SignSvmMessage(ctx context.Context, in *SignSvm
 // SvmWalletService stores the caller's SVM (ed25519) wallets, e.g. for Fogo
 // or Solana. Keys are custodial and encrypted like Hyperliquid wallet keys.
 // Storage and signing only: no chain RPC, indexing or balances. Private keys
-// are never returned; SignSvmMessage signs with them.
+// are never returned; SignSvmTransaction signs whitelisted transactions with
+// them. There is no raw message signing: a raw signature can authorize any
+// transaction, including transfers.
 //
 // Identifiers are stable: SvmWallet.id is a generic wallet id (one id space
 // with Hyperliquid wallets, kept when wallets become chain-agnostic) and
@@ -146,9 +156,9 @@ func (c *svmWalletServiceClient) SignSvmMessage(ctx context.Context, in *SignSvm
 // wallet has at most one svm account, so wallet_id names the signer.
 //
 // Every call needs the caller's own JWT: ListSvmWallets wallet:read, wallet
-// changes wallet:write, SignSvmMessage trade:write. Wallet API keys (bound to
-// one Hyperliquid wallet) are refused with PERMISSION_DENIED. A wallet id the
-// caller does not own is NOT_FOUND.
+// changes wallet:write, SignSvmTransaction trade:write. Wallet API keys
+// (bound to one Hyperliquid wallet) are refused with PERMISSION_DENIED. A
+// wallet id the caller does not own is NOT_FOUND.
 type SvmWalletServiceServer interface {
 	// The caller's wallets, oldest first.
 	ListSvmWallets(context.Context, *ListSvmWalletsRequest) (*ListSvmWalletsResponse, error)
@@ -160,9 +170,15 @@ type SvmWalletServiceServer interface {
 	RenameSvmWallet(context.Context, *RenameSvmWalletRequest) (*RenameSvmWalletResponse, error)
 	// Unbinds the wallet from the caller; importing its key again restores it.
 	DeleteSvmWallet(context.Context, *DeleteSvmWalletRequest) (*DeleteSvmWalletResponse, error)
-	// Ed25519 signature of the message bytes as given, no prefix or hash. For a
-	// transaction, sign its serialized message.
-	SignSvmMessage(context.Context, *SignSvmMessageRequest) (*SignSvmMessageResponse, error)
+	// Ed25519 signature of a transaction message, given only when every
+	// instruction in it is whitelisted. Today that is the Chronicles game
+	// program acting on the wallet's own accounts to delegate gameplay to a
+	// session key: SetSession, CreateCharacter followed by SetSession, and
+	// CreatePlayerAccounts; plus ComputeBudget instructions. The wallet must be
+	// a signer and may not be the fee payer. Anything else (System or token
+	// transfers, other programs, address lookup tables, another wallet's
+	// accounts) is PERMISSION_DENIED.
+	SignSvmTransaction(context.Context, *SignSvmTransactionRequest) (*SignSvmTransactionResponse, error)
 	mustEmbedUnimplementedSvmWalletServiceServer()
 }
 
@@ -185,8 +201,8 @@ func (UnimplementedSvmWalletServiceServer) RenameSvmWallet(context.Context, *Ren
 func (UnimplementedSvmWalletServiceServer) DeleteSvmWallet(context.Context, *DeleteSvmWalletRequest) (*DeleteSvmWalletResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSvmWallet not implemented")
 }
-func (UnimplementedSvmWalletServiceServer) SignSvmMessage(context.Context, *SignSvmMessageRequest) (*SignSvmMessageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SignSvmMessage not implemented")
+func (UnimplementedSvmWalletServiceServer) SignSvmTransaction(context.Context, *SignSvmTransactionRequest) (*SignSvmTransactionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignSvmTransaction not implemented")
 }
 func (UnimplementedSvmWalletServiceServer) mustEmbedUnimplementedSvmWalletServiceServer() {}
 
@@ -291,20 +307,20 @@ func _SvmWalletService_DeleteSvmWallet_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SvmWalletService_SignSvmMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SignSvmMessageRequest)
+func _SvmWalletService_SignSvmTransaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignSvmTransactionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SvmWalletServiceServer).SignSvmMessage(ctx, in)
+		return srv.(SvmWalletServiceServer).SignSvmTransaction(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SvmWalletService_SignSvmMessage_FullMethodName,
+		FullMethod: SvmWalletService_SignSvmTransaction_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SvmWalletServiceServer).SignSvmMessage(ctx, req.(*SignSvmMessageRequest))
+		return srv.(SvmWalletServiceServer).SignSvmTransaction(ctx, req.(*SignSvmTransactionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -337,8 +353,8 @@ var SvmWalletService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SvmWalletService_DeleteSvmWallet_Handler,
 		},
 		{
-			MethodName: "SignSvmMessage",
-			Handler:    _SvmWalletService_SignSvmMessage_Handler,
+			MethodName: "SignSvmTransaction",
+			Handler:    _SvmWalletService_SignSvmTransaction_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

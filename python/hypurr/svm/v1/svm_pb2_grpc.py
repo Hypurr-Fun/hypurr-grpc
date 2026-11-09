@@ -29,7 +29,9 @@ class SvmWalletServiceStub:
     """SvmWalletService stores the caller's SVM (ed25519) wallets, e.g. for Fogo
     or Solana. Keys are custodial and encrypted like Hyperliquid wallet keys.
     Storage and signing only: no chain RPC, indexing or balances. Private keys
-    are never returned; SignSvmMessage signs with them.
+    are never returned; SignSvmTransaction signs whitelisted transactions with
+    them. There is no raw message signing: a raw signature can authorize any
+    transaction, including transfers.
 
     Identifiers are stable: SvmWallet.id is a generic wallet id (one id space
     with Hyperliquid wallets, kept when wallets become chain-agnostic) and
@@ -38,9 +40,9 @@ class SvmWalletServiceStub:
     wallet has at most one svm account, so wallet_id names the signer.
 
     Every call needs the caller's own JWT: ListSvmWallets wallet:read, wallet
-    changes wallet:write, SignSvmMessage trade:write. Wallet API keys (bound to
-    one Hyperliquid wallet) are refused with PERMISSION_DENIED. A wallet id the
-    caller does not own is NOT_FOUND.
+    changes wallet:write, SignSvmTransaction trade:write. Wallet API keys
+    (bound to one Hyperliquid wallet) are refused with PERMISSION_DENIED. A
+    wallet id the caller does not own is NOT_FOUND.
     """
 
     def __init__(self, channel):
@@ -74,10 +76,10 @@ class SvmWalletServiceStub:
                 request_serializer=hypurr_dot_svm_dot_v1_dot_svm__pb2.DeleteSvmWalletRequest.SerializeToString,
                 response_deserializer=hypurr_dot_svm_dot_v1_dot_svm__pb2.DeleteSvmWalletResponse.FromString,
                 _registered_method=True)
-        self.SignSvmMessage = channel.unary_unary(
-                '/hypurr.svm.v1.SvmWalletService/SignSvmMessage',
-                request_serializer=hypurr_dot_svm_dot_v1_dot_svm__pb2.SignSvmMessageRequest.SerializeToString,
-                response_deserializer=hypurr_dot_svm_dot_v1_dot_svm__pb2.SignSvmMessageResponse.FromString,
+        self.SignSvmTransaction = channel.unary_unary(
+                '/hypurr.svm.v1.SvmWalletService/SignSvmTransaction',
+                request_serializer=hypurr_dot_svm_dot_v1_dot_svm__pb2.SignSvmTransactionRequest.SerializeToString,
+                response_deserializer=hypurr_dot_svm_dot_v1_dot_svm__pb2.SignSvmTransactionResponse.FromString,
                 _registered_method=True)
 
 
@@ -85,7 +87,9 @@ class SvmWalletServiceServicer:
     """SvmWalletService stores the caller's SVM (ed25519) wallets, e.g. for Fogo
     or Solana. Keys are custodial and encrypted like Hyperliquid wallet keys.
     Storage and signing only: no chain RPC, indexing or balances. Private keys
-    are never returned; SignSvmMessage signs with them.
+    are never returned; SignSvmTransaction signs whitelisted transactions with
+    them. There is no raw message signing: a raw signature can authorize any
+    transaction, including transfers.
 
     Identifiers are stable: SvmWallet.id is a generic wallet id (one id space
     with Hyperliquid wallets, kept when wallets become chain-agnostic) and
@@ -94,9 +98,9 @@ class SvmWalletServiceServicer:
     wallet has at most one svm account, so wallet_id names the signer.
 
     Every call needs the caller's own JWT: ListSvmWallets wallet:read, wallet
-    changes wallet:write, SignSvmMessage trade:write. Wallet API keys (bound to
-    one Hyperliquid wallet) are refused with PERMISSION_DENIED. A wallet id the
-    caller does not own is NOT_FOUND.
+    changes wallet:write, SignSvmTransaction trade:write. Wallet API keys
+    (bound to one Hyperliquid wallet) are refused with PERMISSION_DENIED. A
+    wallet id the caller does not own is NOT_FOUND.
     """
 
     def ListSvmWallets(self, request, context):
@@ -134,9 +138,15 @@ class SvmWalletServiceServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def SignSvmMessage(self, request, context):
-        """Ed25519 signature of the message bytes as given, no prefix or hash. For a
-        transaction, sign its serialized message.
+    def SignSvmTransaction(self, request, context):
+        """Ed25519 signature of a transaction message, given only when every
+        instruction in it is whitelisted. Today that is the Chronicles game
+        program acting on the wallet's own accounts to delegate gameplay to a
+        session key: SetSession, CreateCharacter followed by SetSession, and
+        CreatePlayerAccounts; plus ComputeBudget instructions. The wallet must be
+        a signer and may not be the fee payer. Anything else (System or token
+        transfers, other programs, address lookup tables, another wallet's
+        accounts) is PERMISSION_DENIED.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -170,10 +180,10 @@ def add_SvmWalletServiceServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_svm_dot_v1_dot_svm__pb2.DeleteSvmWalletRequest.FromString,
                     response_serializer=hypurr_dot_svm_dot_v1_dot_svm__pb2.DeleteSvmWalletResponse.SerializeToString,
             ),
-            'SignSvmMessage': grpc.unary_unary_rpc_method_handler(
-                    servicer.SignSvmMessage,
-                    request_deserializer=hypurr_dot_svm_dot_v1_dot_svm__pb2.SignSvmMessageRequest.FromString,
-                    response_serializer=hypurr_dot_svm_dot_v1_dot_svm__pb2.SignSvmMessageResponse.SerializeToString,
+            'SignSvmTransaction': grpc.unary_unary_rpc_method_handler(
+                    servicer.SignSvmTransaction,
+                    request_deserializer=hypurr_dot_svm_dot_v1_dot_svm__pb2.SignSvmTransactionRequest.FromString,
+                    response_serializer=hypurr_dot_svm_dot_v1_dot_svm__pb2.SignSvmTransactionResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -187,7 +197,9 @@ class SvmWalletService:
     """SvmWalletService stores the caller's SVM (ed25519) wallets, e.g. for Fogo
     or Solana. Keys are custodial and encrypted like Hyperliquid wallet keys.
     Storage and signing only: no chain RPC, indexing or balances. Private keys
-    are never returned; SignSvmMessage signs with them.
+    are never returned; SignSvmTransaction signs whitelisted transactions with
+    them. There is no raw message signing: a raw signature can authorize any
+    transaction, including transfers.
 
     Identifiers are stable: SvmWallet.id is a generic wallet id (one id space
     with Hyperliquid wallets, kept when wallets become chain-agnostic) and
@@ -196,9 +208,9 @@ class SvmWalletService:
     wallet has at most one svm account, so wallet_id names the signer.
 
     Every call needs the caller's own JWT: ListSvmWallets wallet:read, wallet
-    changes wallet:write, SignSvmMessage trade:write. Wallet API keys (bound to
-    one Hyperliquid wallet) are refused with PERMISSION_DENIED. A wallet id the
-    caller does not own is NOT_FOUND.
+    changes wallet:write, SignSvmTransaction trade:write. Wallet API keys
+    (bound to one Hyperliquid wallet) are refused with PERMISSION_DENIED. A
+    wallet id the caller does not own is NOT_FOUND.
     """
 
     @staticmethod
@@ -337,7 +349,7 @@ class SvmWalletService:
             _registered_method=True)
 
     @staticmethod
-    def SignSvmMessage(request,
+    def SignSvmTransaction(request,
             target,
             options=(),
             channel_credentials=None,
@@ -350,9 +362,9 @@ class SvmWalletService:
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/hypurr.svm.v1.SvmWalletService/SignSvmMessage',
-            hypurr_dot_svm_dot_v1_dot_svm__pb2.SignSvmMessageRequest.SerializeToString,
-            hypurr_dot_svm_dot_v1_dot_svm__pb2.SignSvmMessageResponse.FromString,
+            '/hypurr.svm.v1.SvmWalletService/SignSvmTransaction',
+            hypurr_dot_svm_dot_v1_dot_svm__pb2.SignSvmTransactionRequest.SerializeToString,
+            hypurr_dot_svm_dot_v1_dot_svm__pb2.SignSvmTransactionResponse.FromString,
             options,
             channel_credentials,
             insecure,
