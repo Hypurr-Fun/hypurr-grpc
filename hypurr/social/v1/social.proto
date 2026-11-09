@@ -71,7 +71,12 @@ enum FollowStatus {
 
 message UserSummary {
   int64 user_id = 1;
+  // The username the user chose, else their Telegram handle. Never a name
+  // from another sign-in provider.
   string username = 2;
+  // Telegram's only, and empty with username limited to the chosen one when
+  // the profile is private and the caller is neither an accepted follower
+  // nor followed by this user.
   string display_name = 3;
   string avatar_ref = 4;
   Visibility visibility = 5;
@@ -101,7 +106,7 @@ message Profile {
 message GetProfileRequest {
   oneof user {
     int64 user_id = 1;
-    string username = 2; // case-insensitive, Telegram username first
+    string username = 2; // case-insensitive: the chosen username, else a Telegram handle
   }
 }
 
@@ -111,6 +116,10 @@ message GetProfileResponse {
 
 message UpdateProfileSettingsRequest {
   Visibility visibility = 1; // UNSPECIFIED leaves it as is
+  // The username the user chooses for their profile: 3 to 20 of a-z, 0-9
+  // and _, unique whatever the case. Empty leaves it as is. INVALID_ARGUMENT
+  // when malformed, ALREADY_EXISTS when taken.
+  string username = 2;
 }
 
 message UpdateProfileSettingsResponse {

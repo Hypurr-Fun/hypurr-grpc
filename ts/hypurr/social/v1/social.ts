@@ -20,10 +20,17 @@ export interface UserSummary {
      */
     userId: number;
     /**
+     * The username the user chose, else their Telegram handle. Never a name
+     * from another sign-in provider.
+     *
      * @generated from protobuf field: string username = 2
      */
     username: string;
     /**
+     * Telegram's only, and empty with username limited to the chosen one when
+     * the profile is private and the caller is neither an accepted follower
+     * nor followed by this user.
+     *
      * @generated from protobuf field: string display_name = 3
      */
     displayName: string;
@@ -120,7 +127,7 @@ export interface GetProfileRequest {
         /**
          * @generated from protobuf field: string username = 2
          */
-        username: string; // case-insensitive, Telegram username first
+        username: string; // case-insensitive: the chosen username, else a Telegram handle
     } | {
         oneofKind: undefined;
     };
@@ -142,6 +149,14 @@ export interface UpdateProfileSettingsRequest {
      * @generated from protobuf field: hypurr.social.v1.Visibility visibility = 1
      */
     visibility: Visibility; // UNSPECIFIED leaves it as is
+    /**
+     * The username the user chooses for their profile: 3 to 20 of a-z, 0-9
+     * and _, unique whatever the case. Empty leaves it as is. INVALID_ARGUMENT
+     * when malformed, ALREADY_EXISTS when taken.
+     *
+     * @generated from protobuf field: string username = 2
+     */
+    username: string;
 }
 /**
  * @generated from protobuf message hypurr.social.v1.UpdateProfileSettingsResponse
@@ -890,12 +905,14 @@ export const GetProfileResponse = new GetProfileResponse$Type();
 class UpdateProfileSettingsRequest$Type extends MessageType<UpdateProfileSettingsRequest> {
     constructor() {
         super("hypurr.social.v1.UpdateProfileSettingsRequest", [
-            { no: 1, name: "visibility", kind: "enum", T: () => ["hypurr.social.v1.Visibility", Visibility, "VISIBILITY_"] }
+            { no: 1, name: "visibility", kind: "enum", T: () => ["hypurr.social.v1.Visibility", Visibility, "VISIBILITY_"] },
+            { no: 2, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<UpdateProfileSettingsRequest>): UpdateProfileSettingsRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.visibility = 0;
+        message.username = "";
         if (value !== undefined)
             reflectionMergePartial<UpdateProfileSettingsRequest>(this, message, value);
         return message;
@@ -907,6 +924,9 @@ class UpdateProfileSettingsRequest$Type extends MessageType<UpdateProfileSetting
             switch (fieldNo) {
                 case /* hypurr.social.v1.Visibility visibility */ 1:
                     message.visibility = reader.int32();
+                    break;
+                case /* string username */ 2:
+                    message.username = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -923,6 +943,9 @@ class UpdateProfileSettingsRequest$Type extends MessageType<UpdateProfileSetting
         /* hypurr.social.v1.Visibility visibility = 1; */
         if (message.visibility !== 0)
             writer.tag(1, WireType.Varint).int32(message.visibility);
+        /* string username = 2; */
+        if (message.username !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.username);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
