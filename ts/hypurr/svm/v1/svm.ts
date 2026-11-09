@@ -17,6 +17,8 @@ import { Timestamp } from "../../../google/protobuf/timestamp";
  */
 export interface SvmWallet {
     /**
+     * Generic wallet id, never reused by a Hyperliquid wallet.
+     *
      * @generated from protobuf field: int64 id = 1
      */
     id: number;
@@ -27,7 +29,8 @@ export interface SvmWallet {
      */
     name: string;
     /**
-     * Base58 ed25519 public key: the wallet's address.
+     * Base58 ed25519 public key: the wallet's address and stable external
+     * identifier.
      *
      * @generated from protobuf field: string public_key = 3
      */

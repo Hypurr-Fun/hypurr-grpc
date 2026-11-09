@@ -36,6 +36,12 @@ const (
 // Storage and signing only: no chain RPC, indexing or balances. Private keys
 // are never returned; SignSvmMessage signs with them.
 //
+// Identifiers are stable: SvmWallet.id is a generic wallet id (one id space
+// with Hyperliquid wallets, kept when wallets become chain-agnostic) and
+// public_key is the wallet's svm account address. A future chain-agnostic
+// wallet API maps them as Wallet.id and the address of its "svm" account; a
+// wallet has at most one svm account, so wallet_id names the signer.
+//
 // Every call needs the caller's own JWT: ListSvmWallets wallet:read, wallet
 // changes wallet:write, SignSvmMessage trade:write. Wallet API keys (bound to
 // one Hyperliquid wallet) are refused with PERMISSION_DENIED. A wallet id the
@@ -132,6 +138,12 @@ func (c *svmWalletServiceClient) SignSvmMessage(ctx context.Context, in *SignSvm
 // or Solana. Keys are custodial and encrypted like Hyperliquid wallet keys.
 // Storage and signing only: no chain RPC, indexing or balances. Private keys
 // are never returned; SignSvmMessage signs with them.
+//
+// Identifiers are stable: SvmWallet.id is a generic wallet id (one id space
+// with Hyperliquid wallets, kept when wallets become chain-agnostic) and
+// public_key is the wallet's svm account address. A future chain-agnostic
+// wallet API maps them as Wallet.id and the address of its "svm" account; a
+// wallet has at most one svm account, so wallet_id names the signer.
 //
 // Every call needs the caller's own JWT: ListSvmWallets wallet:read, wallet
 // changes wallet:write, SignSvmMessage trade:write. Wallet API keys (bound to

@@ -9,6 +9,12 @@ import "google/protobuf/timestamp.proto";
 // Storage and signing only: no chain RPC, indexing or balances. Private keys
 // are never returned; SignSvmMessage signs with them.
 //
+// Identifiers are stable: SvmWallet.id is a generic wallet id (one id space
+// with Hyperliquid wallets, kept when wallets become chain-agnostic) and
+// public_key is the wallet's svm account address. A future chain-agnostic
+// wallet API maps them as Wallet.id and the address of its "svm" account; a
+// wallet has at most one svm account, so wallet_id names the signer.
+//
 // Every call needs the caller's own JWT: ListSvmWallets wallet:read, wallet
 // changes wallet:write, SignSvmMessage trade:write. Wallet API keys (bound to
 // one Hyperliquid wallet) are refused with PERMISSION_DENIED. A wallet id the
@@ -30,10 +36,12 @@ service SvmWalletService {
 }
 
 message SvmWallet {
+  // Generic wallet id, never reused by a Hyperliquid wallet.
   int64 id = 1;
   // 3 to 128 letters, digits or "/", as for Hyperliquid wallets.
   string name = 2;
-  // Base58 ed25519 public key: the wallet's address.
+  // Base58 ed25519 public key: the wallet's address and stable external
+  // identifier.
   string public_key = 3;
   google.protobuf.Timestamp created_at = 4;
 }

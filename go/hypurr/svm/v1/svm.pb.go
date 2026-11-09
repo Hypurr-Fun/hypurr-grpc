@@ -26,10 +26,12 @@ type SvmWallet struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// Generic wallet id, never reused by a Hyperliquid wallet.
 	Id int64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	// 3 to 128 letters, digits or "/", as for Hyperliquid wallets.
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	// Base58 ed25519 public key: the wallet's address.
+	// Base58 ed25519 public key: the wallet's address and stable external
+	// identifier.
 	PublicKey string                 `protobuf:"bytes,3,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 }
