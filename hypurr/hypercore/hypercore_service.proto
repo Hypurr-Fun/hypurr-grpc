@@ -663,6 +663,23 @@ message PositioningBucket {
   // --- Crowding context: distinct wallets on each side at bucket close ---
   uint32 long_wallets = 8;
   uint32 short_wallets = 9;
+
+  // --- Cost basis: Σ entry cost (|size| × avg entry price, fees/funding excluded) of the
+  // wallets on each side, USD, at bucket close. avg long entry = long_entry_notional /
+  // long_position. Absent when not computed.
+  optional double long_entry_notional = 10;
+  optional double short_entry_notional = 11;
+
+  // --- Current leverage: Σ margin backing the positions on each side (the collateral the
+  // liquidation price is solved from, plus the position's own unrealized PnL), USD, and
+  // Σ notional of those same positions at the same mark. Only positions that carry a
+  // margin stamp are included in both sums, so
+  // long leverage = long_margin_notional / long_margin. Absent before the stamp existed
+  // or when no position on that side is stamped.
+  optional double long_margin = 12;
+  optional double short_margin = 13;
+  optional double long_margin_notional = 14;
+  optional double short_margin_notional = 15;
 }
 
 message WalletPositioningSeriesRequest {
