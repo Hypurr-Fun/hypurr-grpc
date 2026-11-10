@@ -1,0 +1,153 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+import "hypurr/ios/instrument.proto";
+import "hypurr/ios/user.proto";
+
+// An empty filter list selects every kind.
+enum FeedFilter {
+  FEED_FILTER_UNSPECIFIED = 0;
+  FEED_FILTER_PREDICTIONS = 1;
+  FEED_FILTER_FUNS = 2;
+  FEED_FILTER_OPENS = 3;
+  FEED_FILTER_CLOSES = 4;
+  FEED_FILTER_LIQUIDATIONS = 5;
+  FEED_FILTER_BUYS = 6; // Spot trades with TRADE_SIDE_BUY.
+  FEED_FILTER_SELLS = 7; // Spot trades with TRADE_SIDE_SELL.
+  FEED_FILTER_MILESTONES = 8;
+}
+
+message FeedItem {
+  // Stable across pages, scopes, and filters. Used for diffing, likes, and reports.
+  string item_id = 1;
+  Trader author = 2;
+  // RFC3339 UTC. The trade time or post time.
+  string occurred_at = 3;
+  // Exactly one content variant must be present.
+  oneof content {
+    FeedPerpOpen perp_open = 10;
+    FeedSpotTrade spot_trade = 11;
+    FeedPerpClose perp_close = 12;
+    FeedLiquidation liquidation = 13;
+    FeedMilestone milestone = 14;
+    FeedPrediction prediction = 15;
+    FeedFuns funs = 16;
+  }
+}
+
+message FeedPerpOpen {
+  Market market = 1;
+  PositionDirection direction = 2;
+  // Absent when historical leverage is unknown.
+  optional int32 leverage = 3;
+  string entry_price_decimal = 4;
+  // USD notional at open.
+  int64 size_cents = 5;
+}
+
+message FeedSpotTrade {
+  Market market = 1;
+  TradeSide side = 2;
+  string price_decimal = 3;
+  // USD value of the fill.
+  int64 size_cents = 4;
+}
+
+message FeedPerpClose {
+  Market market = 1;
+  PositionDirection direction = 2;
+  // Absent when historical leverage is unknown.
+  optional int32 leverage = 3;
+  string exit_price_decimal = 4;
+  // Signed realized PnL.
+  int64 realized_pnl_cents = 5;
+  // Signed return on margin. A value of 16.8 means +16.8%.
+  // Absent when the return is unknown.
+  optional double return_percent = 6;
+}
+
+message FeedLiquidation {
+  Market market = 1;
+  PositionDirection direction = 2;
+  // Absent when historical leverage is unknown.
+  optional int32 leverage = 3;
+  string liquidation_price_decimal = 4;
+  // Signed realized PnL, normally negative.
+  int64 realized_pnl_cents = 5;
+  // Signed return on margin, normally -100.
+  // Absent when the return is unknown.
+  optional double return_percent = 6;
+}
+
+message FeedMilestone {
+  // Exactly one milestone variant must be present.
+  oneof milestone {
+    AllTimeProfitMilestone all_time_profit = 1;
+    AllTimeVolumeMilestone all_time_volume = 2;
+    AllTimeTradeCountMilestone all_time_trade_count = 3;
+  }
+}
+
+message AllTimeProfitMilestone {
+  // The all-time profit threshold reached, in cents.
+  int64 all_time_pnl_cents = 1;
+}
+
+message AllTimeVolumeMilestone {
+  // The all-time trading volume threshold reached, in USD cents.
+  int64 all_time_volume_cents = 1;
+}
+
+message AllTimeTradeCountMilestone {
+  // The all-time trade count threshold reached, in whole trades.
+  int64 all_time_trade_count = 1;
+}
+
+// A price call on one spot or perp market, optionally with a trade.
+message FeedPrediction {
+  string text = 1;
+  // The market quote at response time. Mobile uses LiveAssetUpdates for live prices.
+  MarketQuote market_quote = 2;
+  // Exactly 12 points, oldest first. Uses Home's 24-hour series with 2-hour intervals.
+  repeated AssetPricePoint history = 3;
+  // The trade placed with the prediction, on market_quote's market.
+  // Neither variant is present for a call without a trade.
+  oneof order {
+    FeedPerpOpen perp_order = 4;
+    FeedSpotTrade spot_order = 6;
+  }
+  FeedEngagement engagement = 5;
+}
+
+// A post with text, media, or both.
+message FeedFuns {
+  // Empty for a post with media only.
+  string text = 1;
+  // Absent for a post with text only.
+  FeedMedia media = 2;
+  FeedEngagement engagement = 3;
+  // Author-provided alt text. Empty when media or its description is absent.
+  string media_description = 4;
+}
+
+message FeedMedia {
+  FeedMediaKind kind = 1;
+  // Full URL.
+  string url = 2;
+}
+
+enum FeedMediaKind {
+  FEED_MEDIA_KIND_UNSPECIFIED = 0;
+  FEED_MEDIA_KIND_IMAGE = 1;
+  FEED_MEDIA_KIND_GIF = 2;
+}
+
+message FeedEngagement {
+  int32 like_count = 1;
+  // Always zero until comments exist.
+  int32 comment_count = 2;
+  bool liked_by_viewer = 3;
+  // At most three most recent likers, for the avatar stack.
+  repeated HfunUser recent_likers = 4;
+}

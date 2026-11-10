@@ -1,0 +1,47 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+import "hypurr/ios/feed_item.proto";
+import "hypurr/ios/user.proto";
+
+service FeedService {
+  rpc Feed(FeedRequest) returns (FeedResponse);
+}
+
+message FeedRequest {
+  FeedScope scope = 1;
+  // An item matches when it matches any selected filter. Empty means every kind.
+  repeated FeedFilter filters = 2;
+  // Empty means the first page. The server chooses the page size.
+  string page_token = 3;
+}
+
+enum FeedScope {
+  FEED_SCOPE_UNSPECIFIED = 0;
+  FEED_SCOPE_GLOBAL = 1; // Everyone with public activity.
+  FEED_SCOPE_FOLLOWING = 2; // People the viewer follows.
+  FEED_SCOPE_FRIENDS = 3; // Mutual follows.
+}
+
+message FeedResponse {
+  // Newest first. Pagination uses occurred_at and item_id.
+  repeated FeedItem items = 1;
+  // Empty when the feed is exhausted.
+  string next_page_token = 2;
+  // Present on the first page only. Independent of scope and filters.
+  SuggestedTradersSection suggested_traders = 3;
+}
+
+message SuggestedTradersSection {
+  // At most 10 traders, in display order. Empty hides the carousel.
+  repeated SuggestedTrader traders = 1;
+  // True when the full suggested-trader list contains more traders.
+  bool has_more = 2;
+}
+
+// Excludes the viewer, users the viewer follows, blocked users, and dismissed users.
+message SuggestedTrader {
+  Trader trader = 1;
+  MutualFriendsSummary mutual_friends = 2;
+}
