@@ -444,12 +444,36 @@ export interface WalletEventsRequest {
      */
     wallets: WalletEventsQuery[];
     /**
-     * Maximum events per wallet. Zero selects 100. Maximum: 2,000.
-     * Wallet count multiplied by the resolved page size must not exceed 10,000.
+     * Maximum source events per page. Zero selects 100. Maximum: 2,000.
+     * Per-wallet mode also limits wallet count times page size to 10,000.
      *
      * @generated from protobuf field: uint32 page_size = 2
      */
     pageSize: number;
+    /**
+     * @generated from protobuf field: hypercore.WalletEventsRequest.Pagination pagination = 3
+     */
+    pagination: WalletEventsRequest_Pagination;
+    /**
+     * Global mode only. All wallet queries must share bounds and omit their tokens.
+     * Keep the wallet set and time range unchanged between pages.
+     *
+     * @generated from protobuf field: string page_token = 4
+     */
+    pageToken: string;
+}
+/**
+ * @generated from protobuf enum hypercore.WalletEventsRequest.Pagination
+ */
+export enum WalletEventsRequest_Pagination {
+    /**
+     * @generated from protobuf enum value: PAGINATION_PER_WALLET = 0;
+     */
+    PER_WALLET = 0,
+    /**
+     * @generated from protobuf enum value: PAGINATION_GLOBAL = 1;
+     */
+    GLOBAL = 1
 }
 /**
  * @generated from protobuf message hypercore.WalletEventsQuery
@@ -483,11 +507,24 @@ export interface WalletEventsQuery {
  */
 export interface WalletEventsResponse {
     /**
-     * Results retain request order. Each wallet has an independent read snapshot.
+     * Per-wallet mode. Results retain request order and independent read snapshots.
      *
      * @generated from protobuf field: repeated hypercore.WalletEventsResult wallets = 1
      */
     wallets: WalletEventsResult[];
+    /**
+     * Global mode. Descending timestamp_ns, wallet address, source kind, source ID.
+     * Source kinds: perp=1, spot=2, outcome=3, movement=4.
+     *
+     * @generated from protobuf field: repeated hypercore.WalletEvent events = 2
+     */
+    events: WalletEvent[];
+    /**
+     * Global mode. Continue even when missing metadata produces an empty event list.
+     *
+     * @generated from protobuf field: string next_page_token = 3
+     */
+    nextPageToken: string;
 }
 /**
  * @generated from protobuf message hypercore.WalletEventsResult
@@ -2565,6 +2602,14 @@ export interface WalletPerformanceSummaryPeriod {
      * @generated from protobuf field: int64 trade_count = 6
      */
     tradeCount: number; // sum of the stored hourly trade-count metric over the period
+    /**
+     * @generated from protobuf field: optional int64 winning_trades = 7
+     */
+    winningTrades?: number; // profitable closing fills, from stored instrument and token metrics
+    /**
+     * @generated from protobuf field: optional int64 closed_trades = 8
+     */
+    closedTrades?: number; // closing fills, including partial closes and flips
 }
 /**
  * @generated from protobuf message hypercore.PositionPredicate
@@ -4737,13 +4782,17 @@ class WalletEventsRequest$Type extends MessageType<WalletEventsRequest> {
     constructor() {
         super("hypercore.WalletEventsRequest", [
             { no: 1, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletEventsQuery },
-            { no: 2, name: "page_size", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+            { no: 2, name: "page_size", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 3, name: "pagination", kind: "enum", T: () => ["hypercore.WalletEventsRequest.Pagination", WalletEventsRequest_Pagination, "PAGINATION_"] },
+            { no: 4, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<WalletEventsRequest>): WalletEventsRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.wallets = [];
         message.pageSize = 0;
+        message.pagination = 0;
+        message.pageToken = "";
         if (value !== undefined)
             reflectionMergePartial<WalletEventsRequest>(this, message, value);
         return message;
@@ -4758,6 +4807,12 @@ class WalletEventsRequest$Type extends MessageType<WalletEventsRequest> {
                     break;
                 case /* uint32 page_size */ 2:
                     message.pageSize = reader.uint32();
+                    break;
+                case /* hypercore.WalletEventsRequest.Pagination pagination */ 3:
+                    message.pagination = reader.int32();
+                    break;
+                case /* string page_token */ 4:
+                    message.pageToken = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4777,6 +4832,12 @@ class WalletEventsRequest$Type extends MessageType<WalletEventsRequest> {
         /* uint32 page_size = 2; */
         if (message.pageSize !== 0)
             writer.tag(2, WireType.Varint).uint32(message.pageSize);
+        /* hypercore.WalletEventsRequest.Pagination pagination = 3; */
+        if (message.pagination !== 0)
+            writer.tag(3, WireType.Varint).int32(message.pagination);
+        /* string page_token = 4; */
+        if (message.pageToken !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.pageToken);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4862,12 +4923,16 @@ export const WalletEventsQuery = new WalletEventsQuery$Type();
 class WalletEventsResponse$Type extends MessageType<WalletEventsResponse> {
     constructor() {
         super("hypercore.WalletEventsResponse", [
-            { no: 1, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletEventsResult }
+            { no: 1, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletEventsResult },
+            { no: 2, name: "events", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => WalletEvent },
+            { no: 3, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<WalletEventsResponse>): WalletEventsResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.wallets = [];
+        message.events = [];
+        message.nextPageToken = "";
         if (value !== undefined)
             reflectionMergePartial<WalletEventsResponse>(this, message, value);
         return message;
@@ -4879,6 +4944,12 @@ class WalletEventsResponse$Type extends MessageType<WalletEventsResponse> {
             switch (fieldNo) {
                 case /* repeated hypercore.WalletEventsResult wallets */ 1:
                     message.wallets.push(WalletEventsResult.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated hypercore.WalletEvent events */ 2:
+                    message.events.push(WalletEvent.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string next_page_token */ 3:
+                    message.nextPageToken = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4895,6 +4966,12 @@ class WalletEventsResponse$Type extends MessageType<WalletEventsResponse> {
         /* repeated hypercore.WalletEventsResult wallets = 1; */
         for (let i = 0; i < message.wallets.length; i++)
             WalletEventsResult.internalBinaryWrite(message.wallets[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypercore.WalletEvent events = 2; */
+        for (let i = 0; i < message.events.length; i++)
+            WalletEvent.internalBinaryWrite(message.events[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string next_page_token = 3; */
+        if (message.nextPageToken !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.nextPageToken);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -11611,7 +11688,9 @@ class WalletPerformanceSummaryPeriod$Type extends MessageType<WalletPerformanceS
             { no: 3, name: "realized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 4, name: "unrealized_pnl", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 5, name: "volume", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 6, name: "trade_count", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 6, name: "trade_count", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "winning_trades", kind: "scalar", opt: true, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 8, name: "closed_trades", kind: "scalar", opt: true, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<WalletPerformanceSummaryPeriod>): WalletPerformanceSummaryPeriod {
@@ -11649,6 +11728,12 @@ class WalletPerformanceSummaryPeriod$Type extends MessageType<WalletPerformanceS
                 case /* int64 trade_count */ 6:
                     message.tradeCount = reader.int64().toNumber();
                     break;
+                case /* optional int64 winning_trades */ 7:
+                    message.winningTrades = reader.int64().toNumber();
+                    break;
+                case /* optional int64 closed_trades */ 8:
+                    message.closedTrades = reader.int64().toNumber();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -11679,6 +11764,12 @@ class WalletPerformanceSummaryPeriod$Type extends MessageType<WalletPerformanceS
         /* int64 trade_count = 6; */
         if (message.tradeCount !== 0)
             writer.tag(6, WireType.Varint).int64(message.tradeCount);
+        /* optional int64 winning_trades = 7; */
+        if (message.winningTrades !== undefined)
+            writer.tag(7, WireType.Varint).int64(message.winningTrades);
+        /* optional int64 closed_trades = 8; */
+        if (message.closedTrades !== undefined)
+            writer.tag(8, WireType.Varint).int64(message.closedTrades);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
