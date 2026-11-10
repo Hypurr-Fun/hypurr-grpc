@@ -1671,6 +1671,41 @@ export interface PositioningBucket {
      * @generated from protobuf field: uint32 short_wallets = 9
      */
     shortWallets: number;
+    /**
+     * --- Cost basis: Σ entry cost (|size| × avg entry price, fees/funding excluded) of the
+     * wallets on each side, USD, at bucket close. avg long entry = long_entry_notional /
+     * long_position. Absent when not computed.
+     *
+     * @generated from protobuf field: optional double long_entry_notional = 10
+     */
+    longEntryNotional?: number;
+    /**
+     * @generated from protobuf field: optional double short_entry_notional = 11
+     */
+    shortEntryNotional?: number;
+    /**
+     * --- Current leverage: Σ margin backing the positions on each side (the collateral the
+     * liquidation price is solved from, plus the position's own unrealized PnL), USD, and
+     * Σ notional of those same positions at the same mark. Only positions that carry a
+     * margin stamp are included in both sums, so
+     * long leverage = long_margin_notional / long_margin. Absent before the stamp existed
+     * or when no position on that side is stamped.
+     *
+     * @generated from protobuf field: optional double long_margin = 12
+     */
+    longMargin?: number;
+    /**
+     * @generated from protobuf field: optional double short_margin = 13
+     */
+    shortMargin?: number;
+    /**
+     * @generated from protobuf field: optional double long_margin_notional = 14
+     */
+    longMarginNotional?: number;
+    /**
+     * @generated from protobuf field: optional double short_margin_notional = 15
+     */
+    shortMarginNotional?: number;
 }
 /**
  * @generated from protobuf message hypercore.WalletPositioningSeriesRequest
@@ -8506,7 +8541,13 @@ class PositioningBucket$Type extends MessageType<PositioningBucket> {
             { no: 6, name: "long_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 7, name: "short_notional", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 8, name: "long_wallets", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 9, name: "short_wallets", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+            { no: 9, name: "short_wallets", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 10, name: "long_entry_notional", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 11, name: "short_entry_notional", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 12, name: "long_margin", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 13, name: "short_margin", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 14, name: "long_margin_notional", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 15, name: "short_margin_notional", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<PositioningBucket>): PositioningBucket {
@@ -8556,6 +8597,24 @@ class PositioningBucket$Type extends MessageType<PositioningBucket> {
                 case /* uint32 short_wallets */ 9:
                     message.shortWallets = reader.uint32();
                     break;
+                case /* optional double long_entry_notional */ 10:
+                    message.longEntryNotional = reader.double();
+                    break;
+                case /* optional double short_entry_notional */ 11:
+                    message.shortEntryNotional = reader.double();
+                    break;
+                case /* optional double long_margin */ 12:
+                    message.longMargin = reader.double();
+                    break;
+                case /* optional double short_margin */ 13:
+                    message.shortMargin = reader.double();
+                    break;
+                case /* optional double long_margin_notional */ 14:
+                    message.longMarginNotional = reader.double();
+                    break;
+                case /* optional double short_margin_notional */ 15:
+                    message.shortMarginNotional = reader.double();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -8595,6 +8654,24 @@ class PositioningBucket$Type extends MessageType<PositioningBucket> {
         /* uint32 short_wallets = 9; */
         if (message.shortWallets !== 0)
             writer.tag(9, WireType.Varint).uint32(message.shortWallets);
+        /* optional double long_entry_notional = 10; */
+        if (message.longEntryNotional !== undefined)
+            writer.tag(10, WireType.Bit64).double(message.longEntryNotional);
+        /* optional double short_entry_notional = 11; */
+        if (message.shortEntryNotional !== undefined)
+            writer.tag(11, WireType.Bit64).double(message.shortEntryNotional);
+        /* optional double long_margin = 12; */
+        if (message.longMargin !== undefined)
+            writer.tag(12, WireType.Bit64).double(message.longMargin);
+        /* optional double short_margin = 13; */
+        if (message.shortMargin !== undefined)
+            writer.tag(13, WireType.Bit64).double(message.shortMargin);
+        /* optional double long_margin_notional = 14; */
+        if (message.longMarginNotional !== undefined)
+            writer.tag(14, WireType.Bit64).double(message.longMarginNotional);
+        /* optional double short_margin_notional = 15; */
+        if (message.shortMarginNotional !== undefined)
+            writer.tag(15, WireType.Bit64).double(message.shortMarginNotional);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
