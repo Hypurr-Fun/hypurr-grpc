@@ -1013,6 +1013,35 @@ message PnlRankResponse {
   repeated PnlRankEntry entries = 1; // rank ascending
 }
 
+message WalletPerformanceSummaryRequest {
+  // 1-20,000 distinct addresses. Addresses are case-insensitive.
+  repeated string wallet_addresses = 1;
+  // 1-4 distinct, specified periods. Results retain this order.
+  repeated PnlRankPeriod periods = 2;
+  // Exclusive cutoff in Unix seconds, aligned to a completed UTC hour.
+  // Zero selects the latest indexable hour's end.
+  int64 to_ts = 3;
+}
+
+message WalletPerformanceSummaryResponse {
+  repeated WalletPerformanceSummaryResult wallets = 1; // request order, normalized addresses
+  int64 to_ts = 2; // exclusive cutoff used for every period
+}
+
+message WalletPerformanceSummaryResult {
+  string wallet_address = 1;
+  repeated WalletPerformanceSummaryPeriod periods = 2; // request order
+}
+
+message WalletPerformanceSummaryPeriod {
+  PnlRankPeriod period = 1;
+  double total_pnl = 2; // USD, realized + change in unrealized over the period
+  double realized_pnl = 3; // USD, including fees and funding
+  double unrealized_pnl = 4; // USD change over the period, not open mark-to-market
+  double volume = 5; // traded notional in USDC over the period
+  int64 trade_count = 6; // sum of the stored hourly trade-count metric over the period
+}
+
 // QueryPositions: one query surface over every open perp position the indexer
 // holds. A row is a (wallet, market) position; the request filters rows with
 // predicates on its columns, orders them and returns the first `limit`. New
@@ -1154,6 +1183,10 @@ service HyperCore {
   // Metered in compute units; see QueryPositionsRequest.
   rpc QueryPositions(QueryPositionsRequest) returns (QueryPositionsResponse) {}
   rpc PnlRank(PnlRankRequest) returns (PnlRankResponse) {}
+  // Uses PnlRank accounting over stored hourly metrics, without head replay.
+  // Includes every requested wallet. Wallets without stored metrics have zero totals.
+  // Allow at least 8 MiB for gRPC responses when requesting the maximum batch.
+  rpc WalletPerformanceSummary(WalletPerformanceSummaryRequest) returns (WalletPerformanceSummaryResponse) {}
 }
 
 /*

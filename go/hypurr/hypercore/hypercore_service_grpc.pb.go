@@ -55,6 +55,7 @@ const (
 	HyperCore_InstrumentStats_FullMethodName                   = "/hypercore.HyperCore/InstrumentStats"
 	HyperCore_QueryPositions_FullMethodName                    = "/hypercore.HyperCore/QueryPositions"
 	HyperCore_PnlRank_FullMethodName                           = "/hypercore.HyperCore/PnlRank"
+	HyperCore_WalletPerformanceSummary_FullMethodName          = "/hypercore.HyperCore/WalletPerformanceSummary"
 )
 
 // HyperCoreClient is the client API for HyperCore service.
@@ -100,6 +101,10 @@ type HyperCoreClient interface {
 	// Metered in compute units; see QueryPositionsRequest.
 	QueryPositions(ctx context.Context, in *QueryPositionsRequest, opts ...grpc.CallOption) (*QueryPositionsResponse, error)
 	PnlRank(ctx context.Context, in *PnlRankRequest, opts ...grpc.CallOption) (*PnlRankResponse, error)
+	// Uses PnlRank accounting over stored hourly metrics, without head replay.
+	// Includes every requested wallet. Wallets without stored metrics have zero totals.
+	// Allow at least 8 MiB for gRPC responses when requesting the maximum batch.
+	WalletPerformanceSummary(ctx context.Context, in *WalletPerformanceSummaryRequest, opts ...grpc.CallOption) (*WalletPerformanceSummaryResponse, error)
 }
 
 type hyperCoreClient struct {
@@ -651,6 +656,16 @@ func (c *hyperCoreClient) PnlRank(ctx context.Context, in *PnlRankRequest, opts 
 	return out, nil
 }
 
+func (c *hyperCoreClient) WalletPerformanceSummary(ctx context.Context, in *WalletPerformanceSummaryRequest, opts ...grpc.CallOption) (*WalletPerformanceSummaryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WalletPerformanceSummaryResponse)
+	err := c.cc.Invoke(ctx, HyperCore_WalletPerformanceSummary_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HyperCoreServer is the server API for HyperCore service.
 // All implementations must embed UnimplementedHyperCoreServer
 // for forward compatibility
@@ -694,6 +709,10 @@ type HyperCoreServer interface {
 	// Metered in compute units; see QueryPositionsRequest.
 	QueryPositions(context.Context, *QueryPositionsRequest) (*QueryPositionsResponse, error)
 	PnlRank(context.Context, *PnlRankRequest) (*PnlRankResponse, error)
+	// Uses PnlRank accounting over stored hourly metrics, without head replay.
+	// Includes every requested wallet. Wallets without stored metrics have zero totals.
+	// Allow at least 8 MiB for gRPC responses when requesting the maximum batch.
+	WalletPerformanceSummary(context.Context, *WalletPerformanceSummaryRequest) (*WalletPerformanceSummaryResponse, error)
 	mustEmbedUnimplementedHyperCoreServer()
 }
 
@@ -808,6 +827,9 @@ func (UnimplementedHyperCoreServer) QueryPositions(context.Context, *QueryPositi
 }
 func (UnimplementedHyperCoreServer) PnlRank(context.Context, *PnlRankRequest) (*PnlRankResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PnlRank not implemented")
+}
+func (UnimplementedHyperCoreServer) WalletPerformanceSummary(context.Context, *WalletPerformanceSummaryRequest) (*WalletPerformanceSummaryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WalletPerformanceSummary not implemented")
 }
 func (UnimplementedHyperCoreServer) mustEmbedUnimplementedHyperCoreServer() {}
 
@@ -1509,6 +1531,24 @@ func _HyperCore_PnlRank_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HyperCore_WalletPerformanceSummary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WalletPerformanceSummaryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HyperCoreServer).WalletPerformanceSummary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HyperCore_WalletPerformanceSummary_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HyperCoreServer).WalletPerformanceSummary(ctx, req.(*WalletPerformanceSummaryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HyperCore_ServiceDesc is the grpc.ServiceDesc for HyperCore service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1627,6 +1667,10 @@ var HyperCore_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PnlRank",
 			Handler:    _HyperCore_PnlRank_Handler,
+		},
+		{
+			MethodName: "WalletPerformanceSummary",
+			Handler:    _HyperCore_WalletPerformanceSummary_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

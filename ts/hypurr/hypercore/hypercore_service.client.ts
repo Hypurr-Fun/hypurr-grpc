@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { HyperCore } from "./hypercore_service";
+import type { WalletPerformanceSummaryResponse } from "./hypercore_service";
+import type { WalletPerformanceSummaryRequest } from "./hypercore_service";
 import type { PnlRankResponse } from "./hypercore_service";
 import type { PnlRankRequest } from "./hypercore_service";
 import type { QueryPositionsResponse } from "./hypercore_service";
@@ -233,6 +235,14 @@ export interface IHyperCoreClient {
      * @generated from protobuf rpc: PnlRank
      */
     pnlRank(input: PnlRankRequest, options?: RpcOptions): UnaryCall<PnlRankRequest, PnlRankResponse>;
+    /**
+     * Uses PnlRank accounting over stored hourly metrics, without head replay.
+     * Includes every requested wallet. Wallets without stored metrics have zero totals.
+     * Allow at least 8 MiB for gRPC responses when requesting the maximum batch.
+     *
+     * @generated from protobuf rpc: WalletPerformanceSummary
+     */
+    walletPerformanceSummary(input: WalletPerformanceSummaryRequest, options?: RpcOptions): UnaryCall<WalletPerformanceSummaryRequest, WalletPerformanceSummaryResponse>;
 }
 /**
  * @generated from protobuf service hypercore.HyperCore
@@ -500,5 +510,16 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
     pnlRank(input: PnlRankRequest, options?: RpcOptions): UnaryCall<PnlRankRequest, PnlRankResponse> {
         const method = this.methods[35], opt = this._transport.mergeOptions(options);
         return stackIntercept<PnlRankRequest, PnlRankResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * Uses PnlRank accounting over stored hourly metrics, without head replay.
+     * Includes every requested wallet. Wallets without stored metrics have zero totals.
+     * Allow at least 8 MiB for gRPC responses when requesting the maximum batch.
+     *
+     * @generated from protobuf rpc: WalletPerformanceSummary
+     */
+    walletPerformanceSummary(input: WalletPerformanceSummaryRequest, options?: RpcOptions): UnaryCall<WalletPerformanceSummaryRequest, WalletPerformanceSummaryResponse> {
+        const method = this.methods[36], opt = this._transport.mergeOptions(options);
+        return stackIntercept<WalletPerformanceSummaryRequest, WalletPerformanceSummaryResponse>("unary", this._transport, method, opt, input);
     }
 }

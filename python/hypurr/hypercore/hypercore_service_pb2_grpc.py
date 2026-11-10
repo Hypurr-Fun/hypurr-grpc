@@ -214,6 +214,11 @@ class HyperCoreStub:
                 request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankRequest.SerializeToString,
                 response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankResponse.FromString,
                 _registered_method=True)
+        self.WalletPerformanceSummary = channel.unary_unary(
+                '/hypercore.HyperCore/WalletPerformanceSummary',
+                request_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSummaryRequest.SerializeToString,
+                response_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSummaryResponse.FromString,
+                _registered_method=True)
 
 
 class HyperCoreServicer:
@@ -438,6 +443,15 @@ class HyperCoreServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def WalletPerformanceSummary(self, request, context):
+        """Uses PnlRank accounting over stored hourly metrics, without head replay.
+        Includes every requested wallet. Wallets without stored metrics have zero totals.
+        Allow at least 8 MiB for gRPC responses when requesting the maximum batch.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_HyperCoreServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -620,6 +634,11 @@ def add_HyperCoreServicer_to_server(servicer, server):
                     servicer.PnlRank,
                     request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankRequest.FromString,
                     response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankResponse.SerializeToString,
+            ),
+            'WalletPerformanceSummary': grpc.unary_unary_rpc_method_handler(
+                    servicer.WalletPerformanceSummary,
+                    request_deserializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSummaryRequest.FromString,
+                    response_serializer=hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSummaryResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -1594,6 +1613,33 @@ class HyperCore:
             '/hypercore.HyperCore/PnlRank',
             hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankRequest.SerializeToString,
             hypurr_dot_hypercore_dot_hypercore__service__pb2.PnlRankResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def WalletPerformanceSummary(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypercore.HyperCore/WalletPerformanceSummary',
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSummaryRequest.SerializeToString,
+            hypurr_dot_hypercore_dot_hypercore__service__pb2.WalletPerformanceSummaryResponse.FromString,
             options,
             channel_credentials,
             insecure,
