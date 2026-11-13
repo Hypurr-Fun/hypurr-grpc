@@ -11,7 +11,6 @@ import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { Empty } from "../../google/protobuf/empty";
 /**
  * @generated from protobuf message hypurr.ios.SettingsRequest
  */
@@ -39,68 +38,34 @@ export interface SettingsResponse {
  */
 export interface SettingsProfile {
     /**
-     * @generated from protobuf field: string display_name = 1
+     * @generated from protobuf field: hypurr.ios.SettingsProfileField display_name = 1
      */
-    displayName: string;
+    displayName?: SettingsProfileField;
     /**
-     * @generated from protobuf field: string username = 2
+     * @generated from protobuf field: hypurr.ios.SettingsProfileField username = 2
      */
-    username: string; // Without @.
-    /**
-     * @generated from protobuf field: bool can_edit_profile = 3
-     */
-    canEditProfile: boolean; // Username and display name share a 15-day cooldown.
-    /**
-     * @generated from protobuf field: bool can_edit_username = 4
-     */
-    canEditUsername: boolean; // Same permission as can_edit_profile.
-    /**
-     * Exactly one: the UI only needs dates when a previous change exists.
-     *
-     * @generated from protobuf oneof: username_history
-     */
-    usernameHistory: {
-        oneofKind: "usernameNeverChanged";
-        /**
-         * @generated from protobuf field: google.protobuf.Empty username_never_changed = 5
-         */
-        usernameNeverChanged: Empty;
-    } | {
-        oneofKind: "lastUsernameChange";
-        /**
-         * @generated from protobuf field: hypurr.ios.SettingsUsernameChange last_username_change = 6
-         */
-        lastUsernameChange: SettingsUsernameChange;
-    } | {
-        oneofKind: "usernameHistoryUnavailable";
-        /**
-         * Legacy profiles can have a chosen username without a recorded change date.
-         *
-         * @generated from protobuf field: google.protobuf.Empty username_history_unavailable = 8
-         */
-        usernameHistoryUnavailable: Empty;
-    } | {
-        oneofKind: undefined;
-    };
-    /**
-     * Absent before the first profile change. ISO 8601 UTC.
-     *
-     * @generated from protobuf field: optional string profile_change_allowed_at = 7
-     */
-    profileChangeAllowedAt?: string;
+    username?: SettingsProfileField; // Value without @.
 }
 /**
- * @generated from protobuf message hypurr.ios.SettingsUsernameChange
+ * One editable profile field with its own 15-day cooldown.
+ *
+ * @generated from protobuf message hypurr.ios.SettingsProfileField
  */
-export interface SettingsUsernameChange {
+export interface SettingsProfileField {
     /**
-     * @generated from protobuf field: string changed_at = 1
+     * @generated from protobuf field: string value = 1
      */
-    changedAt: string; // ISO 8601 UTC.
+    value: string;
     /**
-     * @generated from protobuf field: string change_allowed_at = 2
+     * Both are absent when the field has no recorded change. ISO 8601 UTC.
+     *
+     * @generated from protobuf field: optional string changed_at = 2
      */
-    changeAllowedAt: string; // ISO 8601 UTC; backend owns the cooldown calculation.
+    changedAt?: string;
+    /**
+     * @generated from protobuf field: optional string change_allowed_at = 3
+     */
+    changeAllowedAt?: string; // changed_at plus the cooldown; backend owns the calculation.
 }
 /**
  * @generated from protobuf message hypurr.ios.SettingsPreferences
@@ -389,7 +354,7 @@ export interface UpdateSettingsProfileRequest {
     /**
      * @generated from protobuf field: optional string username = 2
      */
-    username?: string; // Without @. Both profile fields share the same cooldown.
+    username?: string; // Without @. Each profile field has its own cooldown.
 }
 /**
  * @generated from protobuf message hypurr.ios.UpdateSettingsProfileResponse
@@ -561,23 +526,12 @@ export const SettingsResponse = new SettingsResponse$Type();
 class SettingsProfile$Type extends MessageType<SettingsProfile> {
     constructor() {
         super("hypurr.ios.SettingsProfile", [
-            { no: 1, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "can_edit_profile", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 4, name: "can_edit_username", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 5, name: "username_never_changed", kind: "message", oneof: "usernameHistory", T: () => Empty },
-            { no: 6, name: "last_username_change", kind: "message", oneof: "usernameHistory", T: () => SettingsUsernameChange },
-            { no: 8, name: "username_history_unavailable", kind: "message", oneof: "usernameHistory", T: () => Empty },
-            { no: 7, name: "profile_change_allowed_at", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "display_name", kind: "message", T: () => SettingsProfileField },
+            { no: 2, name: "username", kind: "message", T: () => SettingsProfileField }
         ]);
     }
     create(value?: PartialMessage<SettingsProfile>): SettingsProfile {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.displayName = "";
-        message.username = "";
-        message.canEditProfile = false;
-        message.canEditUsername = false;
-        message.usernameHistory = { oneofKind: undefined };
         if (value !== undefined)
             reflectionMergePartial<SettingsProfile>(this, message, value);
         return message;
@@ -587,38 +541,11 @@ class SettingsProfile$Type extends MessageType<SettingsProfile> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string display_name */ 1:
-                    message.displayName = reader.string();
+                case /* hypurr.ios.SettingsProfileField display_name */ 1:
+                    message.displayName = SettingsProfileField.internalBinaryRead(reader, reader.uint32(), options, message.displayName);
                     break;
-                case /* string username */ 2:
-                    message.username = reader.string();
-                    break;
-                case /* bool can_edit_profile */ 3:
-                    message.canEditProfile = reader.bool();
-                    break;
-                case /* bool can_edit_username */ 4:
-                    message.canEditUsername = reader.bool();
-                    break;
-                case /* google.protobuf.Empty username_never_changed */ 5:
-                    message.usernameHistory = {
-                        oneofKind: "usernameNeverChanged",
-                        usernameNeverChanged: Empty.internalBinaryRead(reader, reader.uint32(), options, (message.usernameHistory as any).usernameNeverChanged)
-                    };
-                    break;
-                case /* hypurr.ios.SettingsUsernameChange last_username_change */ 6:
-                    message.usernameHistory = {
-                        oneofKind: "lastUsernameChange",
-                        lastUsernameChange: SettingsUsernameChange.internalBinaryRead(reader, reader.uint32(), options, (message.usernameHistory as any).lastUsernameChange)
-                    };
-                    break;
-                case /* google.protobuf.Empty username_history_unavailable */ 8:
-                    message.usernameHistory = {
-                        oneofKind: "usernameHistoryUnavailable",
-                        usernameHistoryUnavailable: Empty.internalBinaryRead(reader, reader.uint32(), options, (message.usernameHistory as any).usernameHistoryUnavailable)
-                    };
-                    break;
-                case /* optional string profile_change_allowed_at */ 7:
-                    message.profileChangeAllowedAt = reader.string();
+                case /* hypurr.ios.SettingsProfileField username */ 2:
+                    message.username = SettingsProfileField.internalBinaryRead(reader, reader.uint32(), options, message.username);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -632,30 +559,12 @@ class SettingsProfile$Type extends MessageType<SettingsProfile> {
         return message;
     }
     internalBinaryWrite(message: SettingsProfile, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string display_name = 1; */
-        if (message.displayName !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.displayName);
-        /* string username = 2; */
-        if (message.username !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.username);
-        /* bool can_edit_profile = 3; */
-        if (message.canEditProfile !== false)
-            writer.tag(3, WireType.Varint).bool(message.canEditProfile);
-        /* bool can_edit_username = 4; */
-        if (message.canEditUsername !== false)
-            writer.tag(4, WireType.Varint).bool(message.canEditUsername);
-        /* google.protobuf.Empty username_never_changed = 5; */
-        if (message.usernameHistory.oneofKind === "usernameNeverChanged")
-            Empty.internalBinaryWrite(message.usernameHistory.usernameNeverChanged, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* hypurr.ios.SettingsUsernameChange last_username_change = 6; */
-        if (message.usernameHistory.oneofKind === "lastUsernameChange")
-            SettingsUsernameChange.internalBinaryWrite(message.usernameHistory.lastUsernameChange, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* optional string profile_change_allowed_at = 7; */
-        if (message.profileChangeAllowedAt !== undefined)
-            writer.tag(7, WireType.LengthDelimited).string(message.profileChangeAllowedAt);
-        /* google.protobuf.Empty username_history_unavailable = 8; */
-        if (message.usernameHistory.oneofKind === "usernameHistoryUnavailable")
-            Empty.internalBinaryWrite(message.usernameHistory.usernameHistoryUnavailable, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.SettingsProfileField display_name = 1; */
+        if (message.displayName)
+            SettingsProfileField.internalBinaryWrite(message.displayName, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.SettingsProfileField username = 2; */
+        if (message.username)
+            SettingsProfileField.internalBinaryWrite(message.username, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -667,30 +576,33 @@ class SettingsProfile$Type extends MessageType<SettingsProfile> {
  */
 export const SettingsProfile = new SettingsProfile$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class SettingsUsernameChange$Type extends MessageType<SettingsUsernameChange> {
+class SettingsProfileField$Type extends MessageType<SettingsProfileField> {
     constructor() {
-        super("hypurr.ios.SettingsUsernameChange", [
-            { no: 1, name: "changed_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "change_allowed_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        super("hypurr.ios.SettingsProfileField", [
+            { no: 1, name: "value", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "changed_at", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "change_allowed_at", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<SettingsUsernameChange>): SettingsUsernameChange {
+    create(value?: PartialMessage<SettingsProfileField>): SettingsProfileField {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.changedAt = "";
-        message.changeAllowedAt = "";
+        message.value = "";
         if (value !== undefined)
-            reflectionMergePartial<SettingsUsernameChange>(this, message, value);
+            reflectionMergePartial<SettingsProfileField>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SettingsUsernameChange): SettingsUsernameChange {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SettingsProfileField): SettingsProfileField {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string changed_at */ 1:
+                case /* string value */ 1:
+                    message.value = reader.string();
+                    break;
+                case /* optional string changed_at */ 2:
                     message.changedAt = reader.string();
                     break;
-                case /* string change_allowed_at */ 2:
+                case /* optional string change_allowed_at */ 3:
                     message.changeAllowedAt = reader.string();
                     break;
                 default:
@@ -704,13 +616,16 @@ class SettingsUsernameChange$Type extends MessageType<SettingsUsernameChange> {
         }
         return message;
     }
-    internalBinaryWrite(message: SettingsUsernameChange, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string changed_at = 1; */
-        if (message.changedAt !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.changedAt);
-        /* string change_allowed_at = 2; */
-        if (message.changeAllowedAt !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.changeAllowedAt);
+    internalBinaryWrite(message: SettingsProfileField, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string value = 1; */
+        if (message.value !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.value);
+        /* optional string changed_at = 2; */
+        if (message.changedAt !== undefined)
+            writer.tag(2, WireType.LengthDelimited).string(message.changedAt);
+        /* optional string change_allowed_at = 3; */
+        if (message.changeAllowedAt !== undefined)
+            writer.tag(3, WireType.LengthDelimited).string(message.changeAllowedAt);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -718,9 +633,9 @@ class SettingsUsernameChange$Type extends MessageType<SettingsUsernameChange> {
     }
 }
 /**
- * @generated MessageType for protobuf message hypurr.ios.SettingsUsernameChange
+ * @generated MessageType for protobuf message hypurr.ios.SettingsProfileField
  */
-export const SettingsUsernameChange = new SettingsUsernameChange$Type();
+export const SettingsProfileField = new SettingsProfileField$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SettingsPreferences$Type extends MessageType<SettingsPreferences> {
     constructor() {

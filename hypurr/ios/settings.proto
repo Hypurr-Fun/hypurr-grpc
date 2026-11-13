@@ -3,8 +3,6 @@ syntax = "proto3";
 package hypurr.ios;
 option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
 
-import "google/protobuf/empty.proto";
-
 service SettingsService {
   rpc Settings(SettingsRequest) returns (SettingsResponse);
   rpc UpdateSettings(UpdateSettingsRequest) returns (UpdateSettingsResponse);
@@ -19,23 +17,15 @@ message SettingsResponse {
 }
 
 message SettingsProfile {
-  string display_name = 1;
-  string username = 2; // Without @.
-  bool can_edit_profile = 3; // Username and display name share a 15-day cooldown.
-  bool can_edit_username = 4; // Same permission as can_edit_profile.
-  // Exactly one: the UI only needs dates when a previous change exists.
-  oneof username_history {
-    google.protobuf.Empty username_never_changed = 5;
-    SettingsUsernameChange last_username_change = 6;
-    // Legacy profiles can have a chosen username without a recorded change date.
-    google.protobuf.Empty username_history_unavailable = 8;
-  }
-  // Absent before the first profile change. ISO 8601 UTC.
-  optional string profile_change_allowed_at = 7;
+  SettingsProfileField display_name = 1;
+  SettingsProfileField username = 2; // Value without @.
 }
-message SettingsUsernameChange {
-  string changed_at = 1; // ISO 8601 UTC.
-  string change_allowed_at = 2; // ISO 8601 UTC; backend owns the cooldown calculation.
+// One editable profile field with its own 15-day cooldown.
+message SettingsProfileField {
+  string value = 1;
+  // Both are absent when the field has no recorded change. ISO 8601 UTC.
+  optional string changed_at = 2;
+  optional string change_allowed_at = 3; // changed_at plus the cooldown; backend owns the calculation.
 }
 message SettingsPreferences {
   SettingsNotifications notifications = 1;
@@ -136,7 +126,7 @@ message UpdateSettingsResponse {
 message UpdateSettingsProfileRequest {
   // At least one field must be present; omitted fields remain unchanged.
   optional string display_name = 1;
-  optional string username = 2; // Without @. Both profile fields share the same cooldown.
+  optional string username = 2; // Without @. Each profile field has its own cooldown.
 }
 message UpdateSettingsProfileResponse {
   SettingsProfile profile = 1; // Includes current username permission and history after saving.
