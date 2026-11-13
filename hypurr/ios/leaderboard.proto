@@ -1,0 +1,91 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+import "hypurr/ios/user.proto";
+
+// Requires user:read.
+// A user who turned off "Appear on leaderboards" is left out of every scope.
+service LeaderboardService {
+  rpc TopTraders(TopTradersRequest) returns (TopTradersResponse);
+  rpc Leaderboard(LeaderboardRequest) returns (LeaderboardResponse);
+}
+
+message TopTradersRequest {}
+
+message TopTradersResponse {
+  // Rolling last 7 days, ranked by PnL, everyone. Display order. At most 10.
+  repeated TopTrader traders = 1;
+}
+
+message TopTrader {
+  HfunUser user = 1;
+  ViewerRelationship relationship = 2; // Drives Follow / Following.
+  double win_rate_percent = 3; // Last 7 days. 54.84 means 54.84%.
+  int64 pnl_cents = 4;         // Signed. Last 7 days.
+}
+
+message LeaderboardRequest {
+  LeaderboardScope scope = 1;
+  LeaderboardPeriod period = 2;
+  LeaderboardDirection direction = 3;
+  string page_token = 4; // Empty means first page. Page size is server-defined.
+}
+
+// The population ranked. Room for a future SUBSCRIBED scope.
+enum LeaderboardScope {
+  LEADERBOARD_SCOPE_UNSPECIFIED = 0;
+  LEADERBOARD_SCOPE_GLOBAL = 1;    // Everyone.
+  LEADERBOARD_SCOPE_FOLLOWING = 2; // The viewer and people they follow.
+  LEADERBOARD_SCOPE_FRIENDS = 3;   // The viewer and mutual follows.
+}
+
+enum LeaderboardPeriod {
+  LEADERBOARD_PERIOD_UNSPECIFIED = 0;
+  LEADERBOARD_PERIOD_24H = 1;
+  LEADERBOARD_PERIOD_7D = 2;
+  LEADERBOARD_PERIOD_30D = 3;
+  LEADERBOARD_PERIOD_ALL_TIME = 4;
+}
+
+enum LeaderboardDirection {
+  LEADERBOARD_DIRECTION_UNSPECIFIED = 0;
+  LEADERBOARD_DIRECTION_TOP_GAINERS = 1; // Highest PnL first.
+  LEADERBOARD_DIRECTION_TOP_LOSERS = 2;  // Lowest PnL first.
+}
+
+message LeaderboardResponse {
+  // Rank order. Ranks 1-3 render as the podium on the first page.
+  repeated LeaderboardEntry entries = 1;
+  string next_page_token = 2; // Empty when exhausted.
+  // Same on every page.
+  LeaderboardViewerStanding viewer = 3;
+}
+
+message LeaderboardEntry {
+  uint32 rank = 1; // 1-based within this scope, period and direction.
+  HfunUser user = 2;
+  // Signed positions moved since the previous hourly ranking:
+  // +2 means up two places. Absent when the trader was not ranked then.
+  optional int32 rank_change = 3;
+  int64 pnl_cents = 4; // Signed. Realized + unrealized USD PnL in the period.
+}
+
+message LeaderboardViewerStanding {
+  oneof standing {
+    LeaderboardEntry ranked = 1;
+    LeaderboardUnranked unranked = 2;
+  }
+}
+
+message LeaderboardUnranked {
+  LeaderboardUnrankedReason reason = 1;
+}
+
+enum LeaderboardUnrankedReason {
+  LEADERBOARD_UNRANKED_REASON_UNSPECIFIED = 0;
+  // The viewer has no ranking row: "Make your first trade to enter".
+  LEADERBOARD_UNRANKED_REASON_NO_TRADES = 1;
+  // The viewer turned off "Appear on leaderboards" in Feed settings.
+  LEADERBOARD_UNRANKED_REASON_HIDDEN_BY_USER = 2;
+}
