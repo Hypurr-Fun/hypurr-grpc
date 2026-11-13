@@ -193,7 +193,7 @@ message WalletEventsStreamRequest {
 }
 
 message WalletEventsRequest {
-  // At most 100 wallets. Duplicate addresses are invalid.
+  // At most 1,000 wallets. Duplicate addresses are invalid.
   repeated WalletEventsQuery wallets = 1;
   // Maximum source events across all wallets. Zero selects 100. Maximum: 2,000.
   uint32 page_size = 2;

@@ -2085,7 +2085,7 @@ type WalletEventsRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// At most 100 wallets. Duplicate addresses are invalid.
+	// At most 1,000 wallets. Duplicate addresses are invalid.
 	Wallets []*WalletEventsQuery `protobuf:"bytes,1,rep,name=wallets,proto3" json:"wallets,omitempty"`
 	// Maximum source events across all wallets. Zero selects 100. Maximum: 2,000.
 	PageSize uint32 `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`

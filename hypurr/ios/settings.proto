@@ -1,0 +1,143 @@
+// hypurr/ios/settings.proto (service file, SettingsService, new)
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+import "google/protobuf/empty.proto";
+
+service SettingsService {
+  rpc Settings(SettingsRequest) returns (SettingsResponse);
+  rpc UpdateSettings(UpdateSettingsRequest) returns (UpdateSettingsResponse);
+  rpc UpdateSettingsProfile(UpdateSettingsProfileRequest) returns (UpdateSettingsProfileResponse);
+}
+
+message SettingsRequest {}
+message SettingsResponse {
+  string email = 1; // Read-only export delivery address; mobile owns masking. Email changes are deferred.
+  SettingsProfile profile = 2; // Required.
+  SettingsPreferences preferences = 3; // Required, including all nested sections.
+}
+
+message SettingsProfile {
+  string display_name = 1;
+  string username = 2; // Without @.
+  bool can_edit_profile = 3; // Username and display name share a 15-day cooldown.
+  bool can_edit_username = 4; // Same permission as can_edit_profile.
+  // Exactly one: the UI only needs dates when a previous change exists.
+  oneof username_history {
+    google.protobuf.Empty username_never_changed = 5;
+    SettingsUsernameChange last_username_change = 6;
+    // Legacy profiles can have a chosen username without a recorded change date.
+    google.protobuf.Empty username_history_unavailable = 8;
+  }
+  // Absent before the first profile change. ISO 8601 UTC.
+  optional string profile_change_allowed_at = 7;
+}
+message SettingsUsernameChange {
+  string changed_at = 1; // ISO 8601 UTC.
+  string change_allowed_at = 2; // ISO 8601 UTC; backend owns the cooldown calculation.
+}
+message SettingsPreferences {
+  SettingsNotifications notifications = 1;
+  SettingsFeed feed = 2;
+}
+message SettingsNotifications {
+  bool account_and_security = 1;
+  bool marketing = 2;
+  bool weekly_summary = 3;
+  bool product_updates = 4;
+  SettingsTradingNotifications trading = 5;
+  SettingsFriendsAndFeedNotifications friends_and_feed = 6;
+}
+message SettingsTradingNotifications {
+  bool order_filled = 1;
+  bool order_cancelled_or_expired = 2;
+  bool position_closed = 3;
+  bool liquidation_warning = 4;
+  bool funding_payment = 5;
+}
+message SettingsFriendsAndFeedNotifications {
+  bool friend_opens_trade = 1;
+  bool friend_gets_liquidated = 2;
+  bool new_follower = 3;
+  bool likes_on_my_post = 4;
+  bool milestones = 5;
+}
+message SettingsFeed {
+  bool share_trades = 1;
+  bool show_amounts = 2;
+  bool share_liquidations = 3;
+  bool share_milestones = 4;
+  SettingsPostingDelay posting_delay = 5;
+  SettingsTradeVisibility trade_visibility = 6;
+  bool appear_on_leaderboards = 7;
+}
+enum SettingsPostingDelay {
+  SETTINGS_POSTING_DELAY_UNSPECIFIED = 0;
+  SETTINGS_POSTING_DELAY_REAL_TIME = 1;
+  SETTINGS_POSTING_DELAY_ONE_MINUTE = 2;
+  SETTINGS_POSTING_DELAY_FIVE_MINUTES = 3;
+  SETTINGS_POSTING_DELAY_FIFTEEN_MINUTES = 4;
+  SETTINGS_POSTING_DELAY_THIRTY_MINUTES = 5;
+  SETTINGS_POSTING_DELAY_FORTY_FIVE_MINUTES = 6;
+  SETTINGS_POSTING_DELAY_ONE_HOUR = 7;
+}
+enum SettingsTradeVisibility {
+  SETTINGS_TRADE_VISIBILITY_UNSPECIFIED = 0;
+  SETTINGS_TRADE_VISIBILITY_EVERYONE = 1;
+  SETTINGS_TRADE_VISIBILITY_FRIENDS = 2;
+  SETTINGS_TRADE_VISIBILITY_ONLY_ME = 3;
+}
+message UpdateSettingsRequest {
+  // Required, with at least one scalar field explicitly set in a nested patch.
+  SettingsPreferencesPatch preferences = 1;
+}
+// Patch messages track which values were supplied; read messages remain complete snapshots.
+// Omitted scalar = unchanged. Present false = disabled. Present enum = new selection.
+// Nested messages already track presence; never replace a whole section with its patch.
+message SettingsPreferencesPatch {
+  SettingsNotificationsPatch notifications = 1;
+  SettingsFeedPatch feed = 2;
+}
+message SettingsNotificationsPatch {
+  optional bool account_and_security = 1;
+  optional bool marketing = 2;
+  optional bool weekly_summary = 3;
+  optional bool product_updates = 4;
+  SettingsTradingNotificationsPatch trading = 5;
+  SettingsFriendsAndFeedNotificationsPatch friends_and_feed = 6;
+}
+message SettingsTradingNotificationsPatch {
+  optional bool order_filled = 1;
+  optional bool order_cancelled_or_expired = 2;
+  optional bool position_closed = 3;
+  optional bool liquidation_warning = 4;
+  optional bool funding_payment = 5;
+}
+message SettingsFriendsAndFeedNotificationsPatch {
+  optional bool friend_opens_trade = 1;
+  optional bool friend_gets_liquidated = 2;
+  optional bool new_follower = 3;
+  optional bool likes_on_my_post = 4;
+  optional bool milestones = 5;
+}
+message SettingsFeedPatch {
+  optional bool share_trades = 1;
+  optional bool show_amounts = 2;
+  optional bool share_liquidations = 3;
+  optional bool share_milestones = 4;
+  optional SettingsPostingDelay posting_delay = 5;
+  optional SettingsTradeVisibility trade_visibility = 6;
+  optional bool appear_on_leaderboards = 7;
+}
+message UpdateSettingsResponse {
+  SettingsPreferences preferences = 1; // Complete authoritative preferences after the update.
+}
+message UpdateSettingsProfileRequest {
+  // At least one field must be present; omitted fields remain unchanged.
+  optional string display_name = 1;
+  optional string username = 2; // Without @. Both profile fields share the same cooldown.
+}
+message UpdateSettingsProfileResponse {
+  SettingsProfile profile = 1; // Includes current username permission and history after saving.
+}

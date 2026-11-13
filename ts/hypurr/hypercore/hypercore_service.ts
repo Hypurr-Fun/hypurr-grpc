@@ -438,7 +438,7 @@ export interface WalletEventsStreamRequest {
  */
 export interface WalletEventsRequest {
     /**
-     * At most 100 wallets. Duplicate addresses are invalid.
+     * At most 1,000 wallets. Duplicate addresses are invalid.
      *
      * @generated from protobuf field: repeated hypercore.WalletEventsQuery wallets = 1
      */
