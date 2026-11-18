@@ -7,6 +7,9 @@ service SettingsService {
   rpc Settings(SettingsRequest) returns (SettingsResponse);
   rpc UpdateSettings(UpdateSettingsRequest) returns (UpdateSettingsResponse);
   rpc UpdateSettingsProfile(UpdateSettingsProfileRequest) returns (UpdateSettingsProfileResponse);
+
+  rpc AccountDeletionEligibility(AccountDeletionEligibilityRequest) returns (AccountDeletionEligibilityResponse);
+  rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse);
 }
 
 message SettingsRequest {}
@@ -130,4 +133,16 @@ message UpdateSettingsProfileRequest {
 }
 message UpdateSettingsProfileResponse {
   SettingsProfile profile = 1; // Includes current username permission and history after saving.
+}
+
+message AccountDeletionEligibilityRequest {}
+message AccountDeletionEligibilityResponse {
+  bool has_any_balance = 1;
+  bool has_open_positions = 2;
+}
+message DeleteAccountRequest {
+  string confirmation = 1; // Must be exactly DELETE.
+}
+message DeleteAccountResponse {
+  string deleted_at = 1; // ISO 8601 UTC.
 }

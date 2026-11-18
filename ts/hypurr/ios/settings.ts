@@ -366,6 +366,42 @@ export interface UpdateSettingsProfileResponse {
     profile?: SettingsProfile; // Includes current username permission and history after saving.
 }
 /**
+ * @generated from protobuf message hypurr.ios.AccountDeletionEligibilityRequest
+ */
+export interface AccountDeletionEligibilityRequest {
+}
+/**
+ * @generated from protobuf message hypurr.ios.AccountDeletionEligibilityResponse
+ */
+export interface AccountDeletionEligibilityResponse {
+    /**
+     * @generated from protobuf field: bool has_any_balance = 1
+     */
+    hasAnyBalance: boolean;
+    /**
+     * @generated from protobuf field: bool has_open_positions = 2
+     */
+    hasOpenPositions: boolean;
+}
+/**
+ * @generated from protobuf message hypurr.ios.DeleteAccountRequest
+ */
+export interface DeleteAccountRequest {
+    /**
+     * @generated from protobuf field: string confirmation = 1
+     */
+    confirmation: string; // Must be exactly DELETE.
+}
+/**
+ * @generated from protobuf message hypurr.ios.DeleteAccountResponse
+ */
+export interface DeleteAccountResponse {
+    /**
+     * @generated from protobuf field: string deleted_at = 1
+     */
+    deletedAt: string; // ISO 8601 UTC.
+}
+/**
  * @generated from protobuf enum hypurr.ios.SettingsPostingDelay
  */
 export enum SettingsPostingDelay {
@@ -1588,11 +1624,200 @@ class UpdateSettingsProfileResponse$Type extends MessageType<UpdateSettingsProfi
  * @generated MessageType for protobuf message hypurr.ios.UpdateSettingsProfileResponse
  */
 export const UpdateSettingsProfileResponse = new UpdateSettingsProfileResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AccountDeletionEligibilityRequest$Type extends MessageType<AccountDeletionEligibilityRequest> {
+    constructor() {
+        super("hypurr.ios.AccountDeletionEligibilityRequest", []);
+    }
+    create(value?: PartialMessage<AccountDeletionEligibilityRequest>): AccountDeletionEligibilityRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<AccountDeletionEligibilityRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AccountDeletionEligibilityRequest): AccountDeletionEligibilityRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AccountDeletionEligibilityRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.AccountDeletionEligibilityRequest
+ */
+export const AccountDeletionEligibilityRequest = new AccountDeletionEligibilityRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AccountDeletionEligibilityResponse$Type extends MessageType<AccountDeletionEligibilityResponse> {
+    constructor() {
+        super("hypurr.ios.AccountDeletionEligibilityResponse", [
+            { no: 1, name: "has_any_balance", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "has_open_positions", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AccountDeletionEligibilityResponse>): AccountDeletionEligibilityResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.hasAnyBalance = false;
+        message.hasOpenPositions = false;
+        if (value !== undefined)
+            reflectionMergePartial<AccountDeletionEligibilityResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AccountDeletionEligibilityResponse): AccountDeletionEligibilityResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bool has_any_balance */ 1:
+                    message.hasAnyBalance = reader.bool();
+                    break;
+                case /* bool has_open_positions */ 2:
+                    message.hasOpenPositions = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AccountDeletionEligibilityResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bool has_any_balance = 1; */
+        if (message.hasAnyBalance !== false)
+            writer.tag(1, WireType.Varint).bool(message.hasAnyBalance);
+        /* bool has_open_positions = 2; */
+        if (message.hasOpenPositions !== false)
+            writer.tag(2, WireType.Varint).bool(message.hasOpenPositions);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.AccountDeletionEligibilityResponse
+ */
+export const AccountDeletionEligibilityResponse = new AccountDeletionEligibilityResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DeleteAccountRequest$Type extends MessageType<DeleteAccountRequest> {
+    constructor() {
+        super("hypurr.ios.DeleteAccountRequest", [
+            { no: 1, name: "confirmation", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<DeleteAccountRequest>): DeleteAccountRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.confirmation = "";
+        if (value !== undefined)
+            reflectionMergePartial<DeleteAccountRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeleteAccountRequest): DeleteAccountRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string confirmation */ 1:
+                    message.confirmation = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: DeleteAccountRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string confirmation = 1; */
+        if (message.confirmation !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.confirmation);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.DeleteAccountRequest
+ */
+export const DeleteAccountRequest = new DeleteAccountRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DeleteAccountResponse$Type extends MessageType<DeleteAccountResponse> {
+    constructor() {
+        super("hypurr.ios.DeleteAccountResponse", [
+            { no: 1, name: "deleted_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<DeleteAccountResponse>): DeleteAccountResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.deletedAt = "";
+        if (value !== undefined)
+            reflectionMergePartial<DeleteAccountResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeleteAccountResponse): DeleteAccountResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string deleted_at */ 1:
+                    message.deletedAt = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: DeleteAccountResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string deleted_at = 1; */
+        if (message.deletedAt !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.deletedAt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.DeleteAccountResponse
+ */
+export const DeleteAccountResponse = new DeleteAccountResponse$Type();
 /**
  * @generated ServiceType for protobuf service hypurr.ios.SettingsService
  */
 export const SettingsService = new ServiceType("hypurr.ios.SettingsService", [
     { name: "Settings", options: {}, I: SettingsRequest, O: SettingsResponse },
     { name: "UpdateSettings", options: {}, I: UpdateSettingsRequest, O: UpdateSettingsResponse },
-    { name: "UpdateSettingsProfile", options: {}, I: UpdateSettingsProfileRequest, O: UpdateSettingsProfileResponse }
+    { name: "UpdateSettingsProfile", options: {}, I: UpdateSettingsProfileRequest, O: UpdateSettingsProfileResponse },
+    { name: "AccountDeletionEligibility", options: {}, I: AccountDeletionEligibilityRequest, O: AccountDeletionEligibilityResponse },
+    { name: "DeleteAccount", options: {}, I: DeleteAccountRequest, O: DeleteAccountResponse }
 ]);

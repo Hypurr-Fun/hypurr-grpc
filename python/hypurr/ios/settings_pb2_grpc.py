@@ -49,6 +49,16 @@ class SettingsServiceStub:
                 request_serializer=hypurr_dot_ios_dot_settings__pb2.UpdateSettingsProfileRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios_dot_settings__pb2.UpdateSettingsProfileResponse.FromString,
                 _registered_method=True)
+        self.AccountDeletionEligibility = channel.unary_unary(
+                '/hypurr.ios.SettingsService/AccountDeletionEligibility',
+                request_serializer=hypurr_dot_ios_dot_settings__pb2.AccountDeletionEligibilityRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_settings__pb2.AccountDeletionEligibilityResponse.FromString,
+                _registered_method=True)
+        self.DeleteAccount = channel.unary_unary(
+                '/hypurr.ios.SettingsService/DeleteAccount',
+                request_serializer=hypurr_dot_ios_dot_settings__pb2.DeleteAccountRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_settings__pb2.DeleteAccountResponse.FromString,
+                _registered_method=True)
 
 
 class SettingsServiceServicer:
@@ -72,6 +82,18 @@ class SettingsServiceServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def AccountDeletionEligibility(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteAccount(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_SettingsServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -89,6 +111,16 @@ def add_SettingsServiceServicer_to_server(servicer, server):
                     servicer.UpdateSettingsProfile,
                     request_deserializer=hypurr_dot_ios_dot_settings__pb2.UpdateSettingsProfileRequest.FromString,
                     response_serializer=hypurr_dot_ios_dot_settings__pb2.UpdateSettingsProfileResponse.SerializeToString,
+            ),
+            'AccountDeletionEligibility': grpc.unary_unary_rpc_method_handler(
+                    servicer.AccountDeletionEligibility,
+                    request_deserializer=hypurr_dot_ios_dot_settings__pb2.AccountDeletionEligibilityRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_settings__pb2.AccountDeletionEligibilityResponse.SerializeToString,
+            ),
+            'DeleteAccount': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteAccount,
+                    request_deserializer=hypurr_dot_ios_dot_settings__pb2.DeleteAccountRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_settings__pb2.DeleteAccountResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -172,6 +204,60 @@ class SettingsService:
             '/hypurr.ios.SettingsService/UpdateSettingsProfile',
             hypurr_dot_ios_dot_settings__pb2.UpdateSettingsProfileRequest.SerializeToString,
             hypurr_dot_ios_dot_settings__pb2.UpdateSettingsProfileResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AccountDeletionEligibility(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.SettingsService/AccountDeletionEligibility',
+            hypurr_dot_ios_dot_settings__pb2.AccountDeletionEligibilityRequest.SerializeToString,
+            hypurr_dot_ios_dot_settings__pb2.AccountDeletionEligibilityResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DeleteAccount(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.SettingsService/DeleteAccount',
+            hypurr_dot_ios_dot_settings__pb2.DeleteAccountRequest.SerializeToString,
+            hypurr_dot_ios_dot_settings__pb2.DeleteAccountResponse.FromString,
             options,
             channel_credentials,
             insecure,

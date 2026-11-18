@@ -21,9 +21,11 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	SettingsService_Settings_FullMethodName              = "/hypurr.ios.SettingsService/Settings"
-	SettingsService_UpdateSettings_FullMethodName        = "/hypurr.ios.SettingsService/UpdateSettings"
-	SettingsService_UpdateSettingsProfile_FullMethodName = "/hypurr.ios.SettingsService/UpdateSettingsProfile"
+	SettingsService_Settings_FullMethodName                   = "/hypurr.ios.SettingsService/Settings"
+	SettingsService_UpdateSettings_FullMethodName             = "/hypurr.ios.SettingsService/UpdateSettings"
+	SettingsService_UpdateSettingsProfile_FullMethodName      = "/hypurr.ios.SettingsService/UpdateSettingsProfile"
+	SettingsService_AccountDeletionEligibility_FullMethodName = "/hypurr.ios.SettingsService/AccountDeletionEligibility"
+	SettingsService_DeleteAccount_FullMethodName              = "/hypurr.ios.SettingsService/DeleteAccount"
 )
 
 // SettingsServiceClient is the client API for SettingsService service.
@@ -33,6 +35,8 @@ type SettingsServiceClient interface {
 	Settings(ctx context.Context, in *SettingsRequest, opts ...grpc.CallOption) (*SettingsResponse, error)
 	UpdateSettings(ctx context.Context, in *UpdateSettingsRequest, opts ...grpc.CallOption) (*UpdateSettingsResponse, error)
 	UpdateSettingsProfile(ctx context.Context, in *UpdateSettingsProfileRequest, opts ...grpc.CallOption) (*UpdateSettingsProfileResponse, error)
+	AccountDeletionEligibility(ctx context.Context, in *AccountDeletionEligibilityRequest, opts ...grpc.CallOption) (*AccountDeletionEligibilityResponse, error)
+	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*DeleteAccountResponse, error)
 }
 
 type settingsServiceClient struct {
@@ -73,6 +77,26 @@ func (c *settingsServiceClient) UpdateSettingsProfile(ctx context.Context, in *U
 	return out, nil
 }
 
+func (c *settingsServiceClient) AccountDeletionEligibility(ctx context.Context, in *AccountDeletionEligibilityRequest, opts ...grpc.CallOption) (*AccountDeletionEligibilityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AccountDeletionEligibilityResponse)
+	err := c.cc.Invoke(ctx, SettingsService_AccountDeletionEligibility_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsServiceClient) DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*DeleteAccountResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteAccountResponse)
+	err := c.cc.Invoke(ctx, SettingsService_DeleteAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServiceServer is the server API for SettingsService service.
 // All implementations must embed UnimplementedSettingsServiceServer
 // for forward compatibility
@@ -80,6 +104,8 @@ type SettingsServiceServer interface {
 	Settings(context.Context, *SettingsRequest) (*SettingsResponse, error)
 	UpdateSettings(context.Context, *UpdateSettingsRequest) (*UpdateSettingsResponse, error)
 	UpdateSettingsProfile(context.Context, *UpdateSettingsProfileRequest) (*UpdateSettingsProfileResponse, error)
+	AccountDeletionEligibility(context.Context, *AccountDeletionEligibilityRequest) (*AccountDeletionEligibilityResponse, error)
+	DeleteAccount(context.Context, *DeleteAccountRequest) (*DeleteAccountResponse, error)
 	mustEmbedUnimplementedSettingsServiceServer()
 }
 
@@ -95,6 +121,12 @@ func (UnimplementedSettingsServiceServer) UpdateSettings(context.Context, *Updat
 }
 func (UnimplementedSettingsServiceServer) UpdateSettingsProfile(context.Context, *UpdateSettingsProfileRequest) (*UpdateSettingsProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSettingsProfile not implemented")
+}
+func (UnimplementedSettingsServiceServer) AccountDeletionEligibility(context.Context, *AccountDeletionEligibilityRequest) (*AccountDeletionEligibilityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AccountDeletionEligibility not implemented")
+}
+func (UnimplementedSettingsServiceServer) DeleteAccount(context.Context, *DeleteAccountRequest) (*DeleteAccountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAccount not implemented")
 }
 func (UnimplementedSettingsServiceServer) mustEmbedUnimplementedSettingsServiceServer() {}
 
@@ -163,6 +195,42 @@ func _SettingsService_UpdateSettingsProfile_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SettingsService_AccountDeletionEligibility_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AccountDeletionEligibilityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServiceServer).AccountDeletionEligibility(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingsService_AccountDeletionEligibility_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServiceServer).AccountDeletionEligibility(ctx, req.(*AccountDeletionEligibilityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingsService_DeleteAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServiceServer).DeleteAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingsService_DeleteAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServiceServer).DeleteAccount(ctx, req.(*DeleteAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SettingsService_ServiceDesc is the grpc.ServiceDesc for SettingsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -181,6 +249,14 @@ var SettingsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateSettingsProfile",
 			Handler:    _SettingsService_UpdateSettingsProfile_Handler,
+		},
+		{
+			MethodName: "AccountDeletionEligibility",
+			Handler:    _SettingsService_AccountDeletionEligibility_Handler,
+		},
+		{
+			MethodName: "DeleteAccount",
+			Handler:    _SettingsService_DeleteAccount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
