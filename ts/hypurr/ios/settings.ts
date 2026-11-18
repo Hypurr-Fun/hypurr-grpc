@@ -366,6 +366,30 @@ export interface UpdateSettingsProfileResponse {
     profile?: SettingsProfile; // Includes current username permission and history after saving.
 }
 /**
+ * @generated from protobuf message hypurr.ios.CheckUsernameAvailabilityRequest
+ */
+export interface CheckUsernameAvailabilityRequest {
+    /**
+     * Without @. Mobile sends only lowercase a-z, 0-9 and _, 3 to 20 characters.
+     * A value outside these rules returns INVALID_ARGUMENT.
+     *
+     * @generated from protobuf field: string username = 1
+     */
+    username: string;
+}
+/**
+ * @generated from protobuf message hypurr.ios.CheckUsernameAvailabilityResponse
+ */
+export interface CheckUsernameAvailabilityResponse {
+    /**
+     * True when UpdateSettingsProfile would accept this username right now, ignoring the caller's cooldown.
+     * The caller's own current username counts as available.
+     *
+     * @generated from protobuf field: bool available = 1
+     */
+    available: boolean;
+}
+/**
  * @generated from protobuf message hypurr.ios.AccountDeletionEligibilityRequest
  */
 export interface AccountDeletionEligibilityRequest {
@@ -1625,6 +1649,100 @@ class UpdateSettingsProfileResponse$Type extends MessageType<UpdateSettingsProfi
  */
 export const UpdateSettingsProfileResponse = new UpdateSettingsProfileResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class CheckUsernameAvailabilityRequest$Type extends MessageType<CheckUsernameAvailabilityRequest> {
+    constructor() {
+        super("hypurr.ios.CheckUsernameAvailabilityRequest", [
+            { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CheckUsernameAvailabilityRequest>): CheckUsernameAvailabilityRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.username = "";
+        if (value !== undefined)
+            reflectionMergePartial<CheckUsernameAvailabilityRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CheckUsernameAvailabilityRequest): CheckUsernameAvailabilityRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string username */ 1:
+                    message.username = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CheckUsernameAvailabilityRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string username = 1; */
+        if (message.username !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.username);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.CheckUsernameAvailabilityRequest
+ */
+export const CheckUsernameAvailabilityRequest = new CheckUsernameAvailabilityRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CheckUsernameAvailabilityResponse$Type extends MessageType<CheckUsernameAvailabilityResponse> {
+    constructor() {
+        super("hypurr.ios.CheckUsernameAvailabilityResponse", [
+            { no: 1, name: "available", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CheckUsernameAvailabilityResponse>): CheckUsernameAvailabilityResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.available = false;
+        if (value !== undefined)
+            reflectionMergePartial<CheckUsernameAvailabilityResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CheckUsernameAvailabilityResponse): CheckUsernameAvailabilityResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bool available */ 1:
+                    message.available = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CheckUsernameAvailabilityResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bool available = 1; */
+        if (message.available !== false)
+            writer.tag(1, WireType.Varint).bool(message.available);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.CheckUsernameAvailabilityResponse
+ */
+export const CheckUsernameAvailabilityResponse = new CheckUsernameAvailabilityResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class AccountDeletionEligibilityRequest$Type extends MessageType<AccountDeletionEligibilityRequest> {
     constructor() {
         super("hypurr.ios.AccountDeletionEligibilityRequest", []);
@@ -1818,6 +1936,7 @@ export const SettingsService = new ServiceType("hypurr.ios.SettingsService", [
     { name: "Settings", options: {}, I: SettingsRequest, O: SettingsResponse },
     { name: "UpdateSettings", options: {}, I: UpdateSettingsRequest, O: UpdateSettingsResponse },
     { name: "UpdateSettingsProfile", options: {}, I: UpdateSettingsProfileRequest, O: UpdateSettingsProfileResponse },
+    { name: "CheckUsernameAvailability", options: {}, I: CheckUsernameAvailabilityRequest, O: CheckUsernameAvailabilityResponse },
     { name: "AccountDeletionEligibility", options: {}, I: AccountDeletionEligibilityRequest, O: AccountDeletionEligibilityResponse },
     { name: "DeleteAccount", options: {}, I: DeleteAccountRequest, O: DeleteAccountResponse }
 ]);

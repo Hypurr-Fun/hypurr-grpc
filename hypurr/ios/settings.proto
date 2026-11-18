@@ -7,6 +7,7 @@ service SettingsService {
   rpc Settings(SettingsRequest) returns (SettingsResponse);
   rpc UpdateSettings(UpdateSettingsRequest) returns (UpdateSettingsResponse);
   rpc UpdateSettingsProfile(UpdateSettingsProfileRequest) returns (UpdateSettingsProfileResponse);
+  rpc CheckUsernameAvailability(CheckUsernameAvailabilityRequest) returns (CheckUsernameAvailabilityResponse);
 
   rpc AccountDeletionEligibility(AccountDeletionEligibilityRequest) returns (AccountDeletionEligibilityResponse);
   rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse);
@@ -133,6 +134,16 @@ message UpdateSettingsProfileRequest {
 }
 message UpdateSettingsProfileResponse {
   SettingsProfile profile = 1; // Includes current username permission and history after saving.
+}
+message CheckUsernameAvailabilityRequest {
+  // Without @. Mobile sends only lowercase a-z, 0-9 and _, 3 to 20 characters.
+  // A value outside these rules returns INVALID_ARGUMENT.
+  string username = 1;
+}
+message CheckUsernameAvailabilityResponse {
+  // True when UpdateSettingsProfile would accept this username right now, ignoring the caller's cooldown.
+  // The caller's own current username counts as available.
+  bool available = 1;
 }
 
 message AccountDeletionEligibilityRequest {}

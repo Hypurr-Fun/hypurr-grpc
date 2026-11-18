@@ -8,6 +8,8 @@ import type { DeleteAccountResponse } from "./settings";
 import type { DeleteAccountRequest } from "./settings";
 import type { AccountDeletionEligibilityResponse } from "./settings";
 import type { AccountDeletionEligibilityRequest } from "./settings";
+import type { CheckUsernameAvailabilityResponse } from "./settings";
+import type { CheckUsernameAvailabilityRequest } from "./settings";
 import type { UpdateSettingsProfileResponse } from "./settings";
 import type { UpdateSettingsProfileRequest } from "./settings";
 import type { UpdateSettingsResponse } from "./settings";
@@ -33,6 +35,10 @@ export interface ISettingsServiceClient {
      * @generated from protobuf rpc: UpdateSettingsProfile
      */
     updateSettingsProfile(input: UpdateSettingsProfileRequest, options?: RpcOptions): UnaryCall<UpdateSettingsProfileRequest, UpdateSettingsProfileResponse>;
+    /**
+     * @generated from protobuf rpc: CheckUsernameAvailability
+     */
+    checkUsernameAvailability(input: CheckUsernameAvailabilityRequest, options?: RpcOptions): UnaryCall<CheckUsernameAvailabilityRequest, CheckUsernameAvailabilityResponse>;
     /**
      * @generated from protobuf rpc: AccountDeletionEligibility
      */
@@ -73,17 +79,24 @@ export class SettingsServiceClient implements ISettingsServiceClient, ServiceInf
         return stackIntercept<UpdateSettingsProfileRequest, UpdateSettingsProfileResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: CheckUsernameAvailability
+     */
+    checkUsernameAvailability(input: CheckUsernameAvailabilityRequest, options?: RpcOptions): UnaryCall<CheckUsernameAvailabilityRequest, CheckUsernameAvailabilityResponse> {
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        return stackIntercept<CheckUsernameAvailabilityRequest, CheckUsernameAvailabilityResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: AccountDeletionEligibility
      */
     accountDeletionEligibility(input: AccountDeletionEligibilityRequest, options?: RpcOptions): UnaryCall<AccountDeletionEligibilityRequest, AccountDeletionEligibilityResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<AccountDeletionEligibilityRequest, AccountDeletionEligibilityResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: DeleteAccount
      */
     deleteAccount(input: DeleteAccountRequest, options?: RpcOptions): UnaryCall<DeleteAccountRequest, DeleteAccountResponse> {
-        const method = this.methods[4], opt = this._transport.mergeOptions(options);
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
         return stackIntercept<DeleteAccountRequest, DeleteAccountResponse>("unary", this._transport, method, opt, input);
     }
 }

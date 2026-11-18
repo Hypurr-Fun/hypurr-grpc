@@ -49,6 +49,11 @@ class SettingsServiceStub:
                 request_serializer=hypurr_dot_ios_dot_settings__pb2.UpdateSettingsProfileRequest.SerializeToString,
                 response_deserializer=hypurr_dot_ios_dot_settings__pb2.UpdateSettingsProfileResponse.FromString,
                 _registered_method=True)
+        self.CheckUsernameAvailability = channel.unary_unary(
+                '/hypurr.ios.SettingsService/CheckUsernameAvailability',
+                request_serializer=hypurr_dot_ios_dot_settings__pb2.CheckUsernameAvailabilityRequest.SerializeToString,
+                response_deserializer=hypurr_dot_ios_dot_settings__pb2.CheckUsernameAvailabilityResponse.FromString,
+                _registered_method=True)
         self.AccountDeletionEligibility = channel.unary_unary(
                 '/hypurr.ios.SettingsService/AccountDeletionEligibility',
                 request_serializer=hypurr_dot_ios_dot_settings__pb2.AccountDeletionEligibilityRequest.SerializeToString,
@@ -77,6 +82,12 @@ class SettingsServiceServicer:
         raise NotImplementedError('Method not implemented!')
 
     def UpdateSettingsProfile(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CheckUsernameAvailability(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -111,6 +122,11 @@ def add_SettingsServiceServicer_to_server(servicer, server):
                     servicer.UpdateSettingsProfile,
                     request_deserializer=hypurr_dot_ios_dot_settings__pb2.UpdateSettingsProfileRequest.FromString,
                     response_serializer=hypurr_dot_ios_dot_settings__pb2.UpdateSettingsProfileResponse.SerializeToString,
+            ),
+            'CheckUsernameAvailability': grpc.unary_unary_rpc_method_handler(
+                    servicer.CheckUsernameAvailability,
+                    request_deserializer=hypurr_dot_ios_dot_settings__pb2.CheckUsernameAvailabilityRequest.FromString,
+                    response_serializer=hypurr_dot_ios_dot_settings__pb2.CheckUsernameAvailabilityResponse.SerializeToString,
             ),
             'AccountDeletionEligibility': grpc.unary_unary_rpc_method_handler(
                     servicer.AccountDeletionEligibility,
@@ -204,6 +220,33 @@ class SettingsService:
             '/hypurr.ios.SettingsService/UpdateSettingsProfile',
             hypurr_dot_ios_dot_settings__pb2.UpdateSettingsProfileRequest.SerializeToString,
             hypurr_dot_ios_dot_settings__pb2.UpdateSettingsProfileResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CheckUsernameAvailability(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.ios.SettingsService/CheckUsernameAvailability',
+            hypurr_dot_ios_dot_settings__pb2.CheckUsernameAvailabilityRequest.SerializeToString,
+            hypurr_dot_ios_dot_settings__pb2.CheckUsernameAvailabilityResponse.FromString,
             options,
             channel_credentials,
             insecure,

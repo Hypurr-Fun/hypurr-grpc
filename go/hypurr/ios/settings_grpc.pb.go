@@ -24,6 +24,7 @@ const (
 	SettingsService_Settings_FullMethodName                   = "/hypurr.ios.SettingsService/Settings"
 	SettingsService_UpdateSettings_FullMethodName             = "/hypurr.ios.SettingsService/UpdateSettings"
 	SettingsService_UpdateSettingsProfile_FullMethodName      = "/hypurr.ios.SettingsService/UpdateSettingsProfile"
+	SettingsService_CheckUsernameAvailability_FullMethodName  = "/hypurr.ios.SettingsService/CheckUsernameAvailability"
 	SettingsService_AccountDeletionEligibility_FullMethodName = "/hypurr.ios.SettingsService/AccountDeletionEligibility"
 	SettingsService_DeleteAccount_FullMethodName              = "/hypurr.ios.SettingsService/DeleteAccount"
 )
@@ -35,6 +36,7 @@ type SettingsServiceClient interface {
 	Settings(ctx context.Context, in *SettingsRequest, opts ...grpc.CallOption) (*SettingsResponse, error)
 	UpdateSettings(ctx context.Context, in *UpdateSettingsRequest, opts ...grpc.CallOption) (*UpdateSettingsResponse, error)
 	UpdateSettingsProfile(ctx context.Context, in *UpdateSettingsProfileRequest, opts ...grpc.CallOption) (*UpdateSettingsProfileResponse, error)
+	CheckUsernameAvailability(ctx context.Context, in *CheckUsernameAvailabilityRequest, opts ...grpc.CallOption) (*CheckUsernameAvailabilityResponse, error)
 	AccountDeletionEligibility(ctx context.Context, in *AccountDeletionEligibilityRequest, opts ...grpc.CallOption) (*AccountDeletionEligibilityResponse, error)
 	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*DeleteAccountResponse, error)
 }
@@ -77,6 +79,16 @@ func (c *settingsServiceClient) UpdateSettingsProfile(ctx context.Context, in *U
 	return out, nil
 }
 
+func (c *settingsServiceClient) CheckUsernameAvailability(ctx context.Context, in *CheckUsernameAvailabilityRequest, opts ...grpc.CallOption) (*CheckUsernameAvailabilityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CheckUsernameAvailabilityResponse)
+	err := c.cc.Invoke(ctx, SettingsService_CheckUsernameAvailability_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *settingsServiceClient) AccountDeletionEligibility(ctx context.Context, in *AccountDeletionEligibilityRequest, opts ...grpc.CallOption) (*AccountDeletionEligibilityResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AccountDeletionEligibilityResponse)
@@ -104,6 +116,7 @@ type SettingsServiceServer interface {
 	Settings(context.Context, *SettingsRequest) (*SettingsResponse, error)
 	UpdateSettings(context.Context, *UpdateSettingsRequest) (*UpdateSettingsResponse, error)
 	UpdateSettingsProfile(context.Context, *UpdateSettingsProfileRequest) (*UpdateSettingsProfileResponse, error)
+	CheckUsernameAvailability(context.Context, *CheckUsernameAvailabilityRequest) (*CheckUsernameAvailabilityResponse, error)
 	AccountDeletionEligibility(context.Context, *AccountDeletionEligibilityRequest) (*AccountDeletionEligibilityResponse, error)
 	DeleteAccount(context.Context, *DeleteAccountRequest) (*DeleteAccountResponse, error)
 	mustEmbedUnimplementedSettingsServiceServer()
@@ -121,6 +134,9 @@ func (UnimplementedSettingsServiceServer) UpdateSettings(context.Context, *Updat
 }
 func (UnimplementedSettingsServiceServer) UpdateSettingsProfile(context.Context, *UpdateSettingsProfileRequest) (*UpdateSettingsProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSettingsProfile not implemented")
+}
+func (UnimplementedSettingsServiceServer) CheckUsernameAvailability(context.Context, *CheckUsernameAvailabilityRequest) (*CheckUsernameAvailabilityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckUsernameAvailability not implemented")
 }
 func (UnimplementedSettingsServiceServer) AccountDeletionEligibility(context.Context, *AccountDeletionEligibilityRequest) (*AccountDeletionEligibilityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AccountDeletionEligibility not implemented")
@@ -195,6 +211,24 @@ func _SettingsService_UpdateSettingsProfile_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SettingsService_CheckUsernameAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckUsernameAvailabilityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServiceServer).CheckUsernameAvailability(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingsService_CheckUsernameAvailability_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServiceServer).CheckUsernameAvailability(ctx, req.(*CheckUsernameAvailabilityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SettingsService_AccountDeletionEligibility_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AccountDeletionEligibilityRequest)
 	if err := dec(in); err != nil {
@@ -249,6 +283,10 @@ var SettingsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateSettingsProfile",
 			Handler:    _SettingsService_UpdateSettingsProfile_Handler,
+		},
+		{
+			MethodName: "CheckUsernameAvailability",
+			Handler:    _SettingsService_CheckUsernameAvailability_Handler,
 		},
 		{
 			MethodName: "AccountDeletionEligibility",
