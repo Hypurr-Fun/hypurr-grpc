@@ -60,6 +60,8 @@ message KmsLoginOrRegisterResponse {
   KmsAccountHandoff handoff = 2;
   string bot_access_token = 3;
   string bot_refresh_token = 4;
+  // Seconds until bot_access_token expires.
+  int64 bot_access_token_expires_in = 5;
 }
 
 // User shard and recovery codes sealed to the device key of this login.
