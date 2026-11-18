@@ -82,6 +82,12 @@ export interface KmsLoginOrRegisterResponse {
      * @generated from protobuf field: string bot_refresh_token = 4
      */
     botRefreshToken: string;
+    /**
+     * Seconds until bot_access_token expires.
+     *
+     * @generated from protobuf field: int64 bot_access_token_expires_in = 5
+     */
+    botAccessTokenExpiresIn: number;
 }
 /**
  * User shard and recovery codes sealed to the device key of this login.
@@ -777,7 +783,8 @@ class KmsLoginOrRegisterResponse$Type extends MessageType<KmsLoginOrRegisterResp
             { no: 1, name: "attestation", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
             { no: 2, name: "handoff", kind: "message", T: () => KmsAccountHandoff },
             { no: 3, name: "bot_access_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "bot_refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "bot_refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "bot_access_token_expires_in", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<KmsLoginOrRegisterResponse>): KmsLoginOrRegisterResponse {
@@ -785,6 +792,7 @@ class KmsLoginOrRegisterResponse$Type extends MessageType<KmsLoginOrRegisterResp
         message.attestation = new Uint8Array(0);
         message.botAccessToken = "";
         message.botRefreshToken = "";
+        message.botAccessTokenExpiresIn = 0;
         if (value !== undefined)
             reflectionMergePartial<KmsLoginOrRegisterResponse>(this, message, value);
         return message;
@@ -805,6 +813,9 @@ class KmsLoginOrRegisterResponse$Type extends MessageType<KmsLoginOrRegisterResp
                     break;
                 case /* string bot_refresh_token */ 4:
                     message.botRefreshToken = reader.string();
+                    break;
+                case /* int64 bot_access_token_expires_in */ 5:
+                    message.botAccessTokenExpiresIn = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -830,6 +841,9 @@ class KmsLoginOrRegisterResponse$Type extends MessageType<KmsLoginOrRegisterResp
         /* string bot_refresh_token = 4; */
         if (message.botRefreshToken !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.botRefreshToken);
+        /* int64 bot_access_token_expires_in = 5; */
+        if (message.botAccessTokenExpiresIn !== 0)
+            writer.tag(5, WireType.Varint).int64(message.botAccessTokenExpiresIn);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
