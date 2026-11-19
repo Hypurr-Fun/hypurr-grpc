@@ -673,6 +673,14 @@ message PositioningBucket {
   optional double short_margin = 13;
   optional double long_margin_notional = 14;
   optional double short_margin_notional = 15;
+
+  // --- Realized flow: Σ realized PnL booked on the instrument during the bucket by the
+  // selected wallets, USD, gross of fees and funding, and Σ trading fees they paid on it
+  // in the bucket (net of fees = realized_pnl − fees). Unlike the fields above these are
+  // flows over the bucket, not a state at its close, and every selected wallet counts,
+  // including those flat at bucket close. Absent when not computed.
+  optional double realized_pnl = 16;
+  optional double fees = 17;
 }
 
 message WalletPositioningSeriesRequest {

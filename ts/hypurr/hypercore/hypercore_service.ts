@@ -1650,6 +1650,20 @@ export interface PositioningBucket {
      * @generated from protobuf field: optional double short_margin_notional = 15
      */
     shortMarginNotional?: number;
+    /**
+     * --- Realized flow: Σ realized PnL booked on the instrument during the bucket by the
+     * selected wallets, USD, gross of fees and funding, and Σ trading fees they paid on it
+     * in the bucket (net of fees = realized_pnl − fees). Unlike the fields above these are
+     * flows over the bucket, not a state at its close, and every selected wallet counts,
+     * including those flat at bucket close. Absent when not computed.
+     *
+     * @generated from protobuf field: optional double realized_pnl = 16
+     */
+    realizedPnl?: number;
+    /**
+     * @generated from protobuf field: optional double fees = 17
+     */
+    fees?: number;
 }
 /**
  * @generated from protobuf message hypercore.WalletPositioningSeriesRequest
@@ -8396,7 +8410,9 @@ class PositioningBucket$Type extends MessageType<PositioningBucket> {
             { no: 12, name: "long_margin", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
             { no: 13, name: "short_margin", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
             { no: 14, name: "long_margin_notional", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 15, name: "short_margin_notional", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 15, name: "short_margin_notional", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 16, name: "realized_pnl", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 17, name: "fees", kind: "scalar", opt: true, T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<PositioningBucket>): PositioningBucket {
@@ -8464,6 +8480,12 @@ class PositioningBucket$Type extends MessageType<PositioningBucket> {
                 case /* optional double short_margin_notional */ 15:
                     message.shortMarginNotional = reader.double();
                     break;
+                case /* optional double realized_pnl */ 16:
+                    message.realizedPnl = reader.double();
+                    break;
+                case /* optional double fees */ 17:
+                    message.fees = reader.double();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -8521,6 +8543,12 @@ class PositioningBucket$Type extends MessageType<PositioningBucket> {
         /* optional double short_margin_notional = 15; */
         if (message.shortMarginNotional !== undefined)
             writer.tag(15, WireType.Bit64).double(message.shortMarginNotional);
+        /* optional double realized_pnl = 16; */
+        if (message.realizedPnl !== undefined)
+            writer.tag(16, WireType.Bit64).double(message.realizedPnl);
+        /* optional double fees = 17; */
+        if (message.fees !== undefined)
+            writer.tag(17, WireType.Bit64).double(message.fees);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
