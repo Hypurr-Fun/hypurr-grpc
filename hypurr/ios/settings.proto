@@ -159,7 +159,10 @@ message AccountDeletionEligibilityResponse {
 }
 message DeleteAccountRequest {
   string confirmation = 1; // Must be exactly DELETE.
+  string instance_jwt = 2; // Required when the user has a KMS account.
+  bytes encrypted_payload = 3; // Required when the user has a KMS account.
 }
 message DeleteAccountResponse {
   string deleted_at = 1; // ISO 8601 UTC.
+  bytes attestation = 2; // The KMS's signed answer; empty without a KMS account.
 }
