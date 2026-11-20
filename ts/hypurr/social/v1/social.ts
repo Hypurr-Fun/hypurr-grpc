@@ -50,6 +50,10 @@ export interface UserSummary {
      * @generated from protobuf field: hypurr.social.v1.FollowStatus followed_by = 7
      */
     followedBy: FollowStatus; // this user's follow of the caller
+    /**
+     * @generated from protobuf field: string avatar_url = 8
+     */
+    avatarUrl: string; // full URL of the image the user chose; empty when unset
 }
 /**
  * @generated from protobuf message hypurr.social.v1.ProfileWallet
@@ -108,6 +112,10 @@ export interface Profile {
      * @generated from protobuf field: repeated hypurr.social.v1.ProfileWallet wallets = 7
      */
     wallets: ProfileWallet[]; // empty unless can_view
+    /**
+     * @generated from protobuf field: string banner_url = 8
+     */
+    bannerUrl: string; // full URL; empty when unset
 }
 /**
  * @generated from protobuf message hypurr.social.v1.GetProfileRequest
@@ -545,7 +553,8 @@ class UserSummary$Type extends MessageType<UserSummary> {
             { no: 4, name: "avatar_ref", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "visibility", kind: "enum", T: () => ["hypurr.social.v1.Visibility", Visibility, "VISIBILITY_"] },
             { no: 6, name: "following", kind: "enum", T: () => ["hypurr.social.v1.FollowStatus", FollowStatus, "FOLLOW_STATUS_"] },
-            { no: 7, name: "followed_by", kind: "enum", T: () => ["hypurr.social.v1.FollowStatus", FollowStatus, "FOLLOW_STATUS_"] }
+            { no: 7, name: "followed_by", kind: "enum", T: () => ["hypurr.social.v1.FollowStatus", FollowStatus, "FOLLOW_STATUS_"] },
+            { no: 8, name: "avatar_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<UserSummary>): UserSummary {
@@ -557,6 +566,7 @@ class UserSummary$Type extends MessageType<UserSummary> {
         message.visibility = 0;
         message.following = 0;
         message.followedBy = 0;
+        message.avatarUrl = "";
         if (value !== undefined)
             reflectionMergePartial<UserSummary>(this, message, value);
         return message;
@@ -586,6 +596,9 @@ class UserSummary$Type extends MessageType<UserSummary> {
                     break;
                 case /* hypurr.social.v1.FollowStatus followed_by */ 7:
                     message.followedBy = reader.int32();
+                    break;
+                case /* string avatar_url */ 8:
+                    message.avatarUrl = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -620,6 +633,9 @@ class UserSummary$Type extends MessageType<UserSummary> {
         /* hypurr.social.v1.FollowStatus followed_by = 7; */
         if (message.followedBy !== 0)
             writer.tag(7, WireType.Varint).int32(message.followedBy);
+        /* string avatar_url = 8; */
+        if (message.avatarUrl !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.avatarUrl);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -711,7 +727,8 @@ class Profile$Type extends MessageType<Profile> {
             { no: 4, name: "followers_count", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 5, name: "following_count", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 6, name: "follow_requests_count", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 7, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ProfileWallet }
+            { no: 7, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ProfileWallet },
+            { no: 8, name: "banner_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<Profile>): Profile {
@@ -722,6 +739,7 @@ class Profile$Type extends MessageType<Profile> {
         message.followingCount = 0;
         message.followRequestsCount = 0;
         message.wallets = [];
+        message.bannerUrl = "";
         if (value !== undefined)
             reflectionMergePartial<Profile>(this, message, value);
         return message;
@@ -751,6 +769,9 @@ class Profile$Type extends MessageType<Profile> {
                     break;
                 case /* repeated hypurr.social.v1.ProfileWallet wallets */ 7:
                     message.wallets.push(ProfileWallet.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string banner_url */ 8:
+                    message.bannerUrl = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -785,6 +806,9 @@ class Profile$Type extends MessageType<Profile> {
         /* repeated hypurr.social.v1.ProfileWallet wallets = 7; */
         for (let i = 0; i < message.wallets.length; i++)
             ProfileWallet.internalBinaryWrite(message.wallets[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* string banner_url = 8; */
+        if (message.bannerUrl !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.bannerUrl);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

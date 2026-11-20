@@ -23,6 +23,8 @@ message SettingsResponse {
 message SettingsProfile {
   SettingsProfileField display_name = 1;
   SettingsProfileField username = 2; // Value without @.
+  string avatar_url = 3; // Full URL of the image the user chose; empty when unset.
+  string banner_url = 4; // Full URL of the image the user chose; empty when unset.
 }
 // One editable profile field with its own 15-day cooldown.
 message SettingsProfileField {
@@ -131,6 +133,10 @@ message UpdateSettingsProfileRequest {
   // At least one field must be present; omitted fields remain unchanged.
   optional string display_name = 1;
   optional string username = 2; // Without @. Each profile field has its own cooldown.
+  // media_id from MediaService.UploadImage, uploaded by the caller. No cooldown.
+  // INVALID_ARGUMENT when it is not the caller's.
+  optional string avatar_media_id = 3;
+  optional string banner_media_id = 4;
 }
 message UpdateSettingsProfileResponse {
   SettingsProfile profile = 1; // Includes current username permission and history after saving.

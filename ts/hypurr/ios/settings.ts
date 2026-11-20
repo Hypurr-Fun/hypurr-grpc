@@ -45,6 +45,14 @@ export interface SettingsProfile {
      * @generated from protobuf field: hypurr.ios.SettingsProfileField username = 2
      */
     username?: SettingsProfileField; // Value without @.
+    /**
+     * @generated from protobuf field: string avatar_url = 3
+     */
+    avatarUrl: string; // Full URL of the image the user chose; empty when unset.
+    /**
+     * @generated from protobuf field: string banner_url = 4
+     */
+    bannerUrl: string; // Full URL of the image the user chose; empty when unset.
 }
 /**
  * One editable profile field with its own 15-day cooldown.
@@ -355,6 +363,17 @@ export interface UpdateSettingsProfileRequest {
      * @generated from protobuf field: optional string username = 2
      */
     username?: string; // Without @. Each profile field has its own cooldown.
+    /**
+     * media_id from MediaService.UploadImage, uploaded by the caller. No cooldown.
+     * INVALID_ARGUMENT when it is not the caller's.
+     *
+     * @generated from protobuf field: optional string avatar_media_id = 3
+     */
+    avatarMediaId?: string;
+    /**
+     * @generated from protobuf field: optional string banner_media_id = 4
+     */
+    bannerMediaId?: string;
 }
 /**
  * @generated from protobuf message hypurr.ios.UpdateSettingsProfileResponse
@@ -587,11 +606,15 @@ class SettingsProfile$Type extends MessageType<SettingsProfile> {
     constructor() {
         super("hypurr.ios.SettingsProfile", [
             { no: 1, name: "display_name", kind: "message", T: () => SettingsProfileField },
-            { no: 2, name: "username", kind: "message", T: () => SettingsProfileField }
+            { no: 2, name: "username", kind: "message", T: () => SettingsProfileField },
+            { no: 3, name: "avatar_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "banner_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<SettingsProfile>): SettingsProfile {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.avatarUrl = "";
+        message.bannerUrl = "";
         if (value !== undefined)
             reflectionMergePartial<SettingsProfile>(this, message, value);
         return message;
@@ -606,6 +629,12 @@ class SettingsProfile$Type extends MessageType<SettingsProfile> {
                     break;
                 case /* hypurr.ios.SettingsProfileField username */ 2:
                     message.username = SettingsProfileField.internalBinaryRead(reader, reader.uint32(), options, message.username);
+                    break;
+                case /* string avatar_url */ 3:
+                    message.avatarUrl = reader.string();
+                    break;
+                case /* string banner_url */ 4:
+                    message.bannerUrl = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -625,6 +654,12 @@ class SettingsProfile$Type extends MessageType<SettingsProfile> {
         /* hypurr.ios.SettingsProfileField username = 2; */
         if (message.username)
             SettingsProfileField.internalBinaryWrite(message.username, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string avatar_url = 3; */
+        if (message.avatarUrl !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.avatarUrl);
+        /* string banner_url = 4; */
+        if (message.bannerUrl !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.bannerUrl);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1554,7 +1589,9 @@ class UpdateSettingsProfileRequest$Type extends MessageType<UpdateSettingsProfil
     constructor() {
         super("hypurr.ios.UpdateSettingsProfileRequest", [
             { no: 1, name: "display_name", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "username", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "username", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "avatar_media_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "banner_media_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<UpdateSettingsProfileRequest>): UpdateSettingsProfileRequest {
@@ -1574,6 +1611,12 @@ class UpdateSettingsProfileRequest$Type extends MessageType<UpdateSettingsProfil
                 case /* optional string username */ 2:
                     message.username = reader.string();
                     break;
+                case /* optional string avatar_media_id */ 3:
+                    message.avatarMediaId = reader.string();
+                    break;
+                case /* optional string banner_media_id */ 4:
+                    message.bannerMediaId = reader.string();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1592,6 +1635,12 @@ class UpdateSettingsProfileRequest$Type extends MessageType<UpdateSettingsProfil
         /* optional string username = 2; */
         if (message.username !== undefined)
             writer.tag(2, WireType.LengthDelimited).string(message.username);
+        /* optional string avatar_media_id = 3; */
+        if (message.avatarMediaId !== undefined)
+            writer.tag(3, WireType.LengthDelimited).string(message.avatarMediaId);
+        /* optional string banner_media_id = 4; */
+        if (message.bannerMediaId !== undefined)
+            writer.tag(4, WireType.LengthDelimited).string(message.bannerMediaId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

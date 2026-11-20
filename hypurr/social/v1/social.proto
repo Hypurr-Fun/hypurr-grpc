@@ -82,6 +82,7 @@ message UserSummary {
   Visibility visibility = 5;
   FollowStatus following = 6;  // the caller's follow of this user
   FollowStatus followed_by = 7; // this user's follow of the caller
+  string avatar_url = 8; // full URL of the image the user chose; empty when unset
 }
 
 message ProfileWallet {
@@ -101,6 +102,7 @@ message Profile {
   // Pending requests to follow this profile; the owner's own view only.
   int64 follow_requests_count = 6;
   repeated ProfileWallet wallets = 7; // empty unless can_view
+  string banner_url = 8; // full URL; empty when unset
 }
 
 message GetProfileRequest {
