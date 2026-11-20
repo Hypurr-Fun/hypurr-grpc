@@ -434,6 +434,14 @@ export interface DeleteAccountRequest {
      * @generated from protobuf field: string confirmation = 1
      */
     confirmation: string; // Must be exactly DELETE.
+    /**
+     * @generated from protobuf field: string instance_jwt = 2
+     */
+    instanceJwt: string; // Required when the user has a KMS account.
+    /**
+     * @generated from protobuf field: bytes encrypted_payload = 3
+     */
+    encryptedPayload: Uint8Array; // Required when the user has a KMS account.
 }
 /**
  * @generated from protobuf message hypurr.ios.DeleteAccountResponse
@@ -443,6 +451,10 @@ export interface DeleteAccountResponse {
      * @generated from protobuf field: string deleted_at = 1
      */
     deletedAt: string; // ISO 8601 UTC.
+    /**
+     * @generated from protobuf field: bytes attestation = 2
+     */
+    attestation: Uint8Array; // The KMS's signed answer; empty without a KMS account.
 }
 /**
  * @generated from protobuf enum hypurr.ios.SettingsPostingDelay
@@ -1888,12 +1900,16 @@ export const AccountDeletionEligibilityResponse = new AccountDeletionEligibility
 class DeleteAccountRequest$Type extends MessageType<DeleteAccountRequest> {
     constructor() {
         super("hypurr.ios.DeleteAccountRequest", [
-            { no: 1, name: "confirmation", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "confirmation", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<DeleteAccountRequest>): DeleteAccountRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.confirmation = "";
+        message.instanceJwt = "";
+        message.encryptedPayload = new Uint8Array(0);
         if (value !== undefined)
             reflectionMergePartial<DeleteAccountRequest>(this, message, value);
         return message;
@@ -1905,6 +1921,12 @@ class DeleteAccountRequest$Type extends MessageType<DeleteAccountRequest> {
             switch (fieldNo) {
                 case /* string confirmation */ 1:
                     message.confirmation = reader.string();
+                    break;
+                case /* string instance_jwt */ 2:
+                    message.instanceJwt = reader.string();
+                    break;
+                case /* bytes encrypted_payload */ 3:
+                    message.encryptedPayload = reader.bytes();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1921,6 +1943,12 @@ class DeleteAccountRequest$Type extends MessageType<DeleteAccountRequest> {
         /* string confirmation = 1; */
         if (message.confirmation !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.confirmation);
+        /* string instance_jwt = 2; */
+        if (message.instanceJwt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
+        /* bytes encrypted_payload = 3; */
+        if (message.encryptedPayload.length)
+            writer.tag(3, WireType.LengthDelimited).bytes(message.encryptedPayload);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1935,12 +1963,14 @@ export const DeleteAccountRequest = new DeleteAccountRequest$Type();
 class DeleteAccountResponse$Type extends MessageType<DeleteAccountResponse> {
     constructor() {
         super("hypurr.ios.DeleteAccountResponse", [
-            { no: 1, name: "deleted_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "deleted_at", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "attestation", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<DeleteAccountResponse>): DeleteAccountResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.deletedAt = "";
+        message.attestation = new Uint8Array(0);
         if (value !== undefined)
             reflectionMergePartial<DeleteAccountResponse>(this, message, value);
         return message;
@@ -1952,6 +1982,9 @@ class DeleteAccountResponse$Type extends MessageType<DeleteAccountResponse> {
             switch (fieldNo) {
                 case /* string deleted_at */ 1:
                     message.deletedAt = reader.string();
+                    break;
+                case /* bytes attestation */ 2:
+                    message.attestation = reader.bytes();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1968,6 +2001,9 @@ class DeleteAccountResponse$Type extends MessageType<DeleteAccountResponse> {
         /* string deleted_at = 1; */
         if (message.deletedAt !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.deletedAt);
+        /* bytes attestation = 2; */
+        if (message.attestation.length)
+            writer.tag(2, WireType.LengthDelimited).bytes(message.attestation);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
