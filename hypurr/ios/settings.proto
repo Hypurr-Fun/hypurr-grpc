@@ -25,6 +25,13 @@ message SettingsProfile {
   SettingsProfileField username = 2; // Value without @.
   string avatar_url = 3; // Full URL of the image the user chose; empty when unset.
   string banner_url = 4; // Full URL of the image the user chose; empty when unset.
+  SettingsProfileVisibility visibility = 5;
+  string bio = 6; // Empty when unset.
+}
+// The profile privacy that SocialService reads.
+enum SettingsProfileVisibility {
+  SETTINGS_PROFILE_VISIBILITY_PUBLIC = 0; // Default for new profiles.
+  SETTINGS_PROFILE_VISIBILITY_PRIVATE = 1;
 }
 // One editable profile field with its own 15-day cooldown.
 message SettingsProfileField {
@@ -137,6 +144,9 @@ message UpdateSettingsProfileRequest {
   // INVALID_ARGUMENT when it is not the caller's.
   optional string avatar_media_id = 3;
   optional string banner_media_id = 4;
+  // No cooldown. To make a private profile public accepts each pending follow request.
+  optional SettingsProfileVisibility visibility = 5;
+  optional string bio = 6; // At most 80 characters; empty clears it. No cooldown.
 }
 message UpdateSettingsProfileResponse {
   SettingsProfile profile = 1; // Includes current username permission and history after saving.

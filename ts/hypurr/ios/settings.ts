@@ -53,6 +53,14 @@ export interface SettingsProfile {
      * @generated from protobuf field: string banner_url = 4
      */
     bannerUrl: string; // Full URL of the image the user chose; empty when unset.
+    /**
+     * @generated from protobuf field: hypurr.ios.SettingsProfileVisibility visibility = 5
+     */
+    visibility: SettingsProfileVisibility;
+    /**
+     * @generated from protobuf field: string bio = 6
+     */
+    bio: string; // Empty when unset.
 }
 /**
  * One editable profile field with its own 15-day cooldown.
@@ -374,6 +382,16 @@ export interface UpdateSettingsProfileRequest {
      * @generated from protobuf field: optional string banner_media_id = 4
      */
     bannerMediaId?: string;
+    /**
+     * No cooldown. To make a private profile public accepts each pending follow request.
+     *
+     * @generated from protobuf field: optional hypurr.ios.SettingsProfileVisibility visibility = 5
+     */
+    visibility?: SettingsProfileVisibility;
+    /**
+     * @generated from protobuf field: optional string bio = 6
+     */
+    bio?: string; // At most 80 characters; empty clears it. No cooldown.
 }
 /**
  * @generated from protobuf message hypurr.ios.UpdateSettingsProfileResponse
@@ -455,6 +473,23 @@ export interface DeleteAccountResponse {
      * @generated from protobuf field: bytes attestation = 2
      */
     attestation: Uint8Array; // The KMS's signed answer; empty without a KMS account.
+}
+/**
+ * The profile privacy that SocialService reads.
+ *
+ * @generated from protobuf enum hypurr.ios.SettingsProfileVisibility
+ */
+export enum SettingsProfileVisibility {
+    /**
+     * Default for new profiles.
+     *
+     * @generated from protobuf enum value: SETTINGS_PROFILE_VISIBILITY_PUBLIC = 0;
+     */
+    PUBLIC = 0,
+    /**
+     * @generated from protobuf enum value: SETTINGS_PROFILE_VISIBILITY_PRIVATE = 1;
+     */
+    PRIVATE = 1
 }
 /**
  * @generated from protobuf enum hypurr.ios.SettingsPostingDelay
@@ -620,13 +655,17 @@ class SettingsProfile$Type extends MessageType<SettingsProfile> {
             { no: 1, name: "display_name", kind: "message", T: () => SettingsProfileField },
             { no: 2, name: "username", kind: "message", T: () => SettingsProfileField },
             { no: 3, name: "avatar_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "banner_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "banner_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "visibility", kind: "enum", T: () => ["hypurr.ios.SettingsProfileVisibility", SettingsProfileVisibility, "SETTINGS_PROFILE_VISIBILITY_"] },
+            { no: 6, name: "bio", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<SettingsProfile>): SettingsProfile {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.avatarUrl = "";
         message.bannerUrl = "";
+        message.visibility = 0;
+        message.bio = "";
         if (value !== undefined)
             reflectionMergePartial<SettingsProfile>(this, message, value);
         return message;
@@ -647,6 +686,12 @@ class SettingsProfile$Type extends MessageType<SettingsProfile> {
                     break;
                 case /* string banner_url */ 4:
                     message.bannerUrl = reader.string();
+                    break;
+                case /* hypurr.ios.SettingsProfileVisibility visibility */ 5:
+                    message.visibility = reader.int32();
+                    break;
+                case /* string bio */ 6:
+                    message.bio = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -672,6 +717,12 @@ class SettingsProfile$Type extends MessageType<SettingsProfile> {
         /* string banner_url = 4; */
         if (message.bannerUrl !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.bannerUrl);
+        /* hypurr.ios.SettingsProfileVisibility visibility = 5; */
+        if (message.visibility !== 0)
+            writer.tag(5, WireType.Varint).int32(message.visibility);
+        /* string bio = 6; */
+        if (message.bio !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.bio);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1603,7 +1654,9 @@ class UpdateSettingsProfileRequest$Type extends MessageType<UpdateSettingsProfil
             { no: 1, name: "display_name", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "username", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "avatar_media_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "banner_media_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "banner_media_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "visibility", kind: "enum", opt: true, T: () => ["hypurr.ios.SettingsProfileVisibility", SettingsProfileVisibility, "SETTINGS_PROFILE_VISIBILITY_"] },
+            { no: 6, name: "bio", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<UpdateSettingsProfileRequest>): UpdateSettingsProfileRequest {
@@ -1629,6 +1682,12 @@ class UpdateSettingsProfileRequest$Type extends MessageType<UpdateSettingsProfil
                 case /* optional string banner_media_id */ 4:
                     message.bannerMediaId = reader.string();
                     break;
+                case /* optional hypurr.ios.SettingsProfileVisibility visibility */ 5:
+                    message.visibility = reader.int32();
+                    break;
+                case /* optional string bio */ 6:
+                    message.bio = reader.string();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1653,6 +1712,12 @@ class UpdateSettingsProfileRequest$Type extends MessageType<UpdateSettingsProfil
         /* optional string banner_media_id = 4; */
         if (message.bannerMediaId !== undefined)
             writer.tag(4, WireType.LengthDelimited).string(message.bannerMediaId);
+        /* optional hypurr.ios.SettingsProfileVisibility visibility = 5; */
+        if (message.visibility !== undefined)
+            writer.tag(5, WireType.Varint).int32(message.visibility);
+        /* optional string bio = 6; */
+        if (message.bio !== undefined)
+            writer.tag(6, WireType.LengthDelimited).string(message.bio);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
