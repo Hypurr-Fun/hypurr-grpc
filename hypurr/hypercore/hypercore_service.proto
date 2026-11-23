@@ -834,13 +834,15 @@ message WalletTradesResponse {
   string next_page_token                = 3; // empty when exhausted
 }
 
-message WalletLastEventTimestampRequest {
+message WalletEventTimestampsRequest {
   repeated string wallet_addresses = 1; // 1-10,000 addresses
 }
 
-message WalletLastEventTimestampResponse {
+message WalletEventTimestampsResponse {
   // Latest real fill or movement in Unix seconds. Funding movements are excluded. Wallets without events are omitted.
   map<string, int64> last_event_timestamp = 1;
+  // Earliest real fill in Unix seconds. Wallets without fills are omitted.
+  map<string, int64> first_trade_timestamp = 2;
 }
 
 enum ClosedPositionKind {
@@ -1200,7 +1202,7 @@ service HyperCore {
   rpc WalletsByMetricPercentile(WalletsByMetricPercentileRequest) returns (WalletsByMetricPercentileResponse) {}
   rpc DirtyWallets(DirtyWalletsRequest) returns (DirtyWalletsResponse) {}
   rpc WalletTrades(WalletTradesRequest) returns (WalletTradesResponse) {}
-  rpc WalletLastEventTimestamp(WalletLastEventTimestampRequest) returns (WalletLastEventTimestampResponse) {}
+  rpc WalletEventTimestamps(WalletEventTimestampsRequest) returns (WalletEventTimestampsResponse) {}
   rpc ClosedPositions(ClosedPositionsRequest) returns (ClosedPositionsResponse) {}
   rpc OHLC(OHLCRequest) returns (OHLCResponse) {}
   rpc OHLCStream(stream OHLCStreamRequest) returns (stream OHLCStreamResponse) {}

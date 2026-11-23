@@ -20,8 +20,8 @@ import type { OHLCResponse } from "./hypercore_service";
 import type { OHLCRequest } from "./hypercore_service";
 import type { ClosedPositionsResponse } from "./hypercore_service";
 import type { ClosedPositionsRequest } from "./hypercore_service";
-import type { WalletLastEventTimestampResponse } from "./hypercore_service";
-import type { WalletLastEventTimestampRequest } from "./hypercore_service";
+import type { WalletEventTimestampsResponse } from "./hypercore_service";
+import type { WalletEventTimestampsRequest } from "./hypercore_service";
 import type { WalletTradesResponse } from "./hypercore_service";
 import type { WalletTradesRequest } from "./hypercore_service";
 import type { DirtyWalletsResponse } from "./hypercore_service";
@@ -202,9 +202,9 @@ export interface IHyperCoreClient {
      */
     walletTrades(input: WalletTradesRequest, options?: RpcOptions): UnaryCall<WalletTradesRequest, WalletTradesResponse>;
     /**
-     * @generated from protobuf rpc: WalletLastEventTimestamp
+     * @generated from protobuf rpc: WalletEventTimestamps
      */
-    walletLastEventTimestamp(input: WalletLastEventTimestampRequest, options?: RpcOptions): UnaryCall<WalletLastEventTimestampRequest, WalletLastEventTimestampResponse>;
+    walletEventTimestamps(input: WalletEventTimestampsRequest, options?: RpcOptions): UnaryCall<WalletEventTimestampsRequest, WalletEventTimestampsResponse>;
     /**
      * @generated from protobuf rpc: ClosedPositions
      */
@@ -454,11 +454,11 @@ export class HyperCoreClient implements IHyperCoreClient, ServiceInfo {
         return stackIntercept<WalletTradesRequest, WalletTradesResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: WalletLastEventTimestamp
+     * @generated from protobuf rpc: WalletEventTimestamps
      */
-    walletLastEventTimestamp(input: WalletLastEventTimestampRequest, options?: RpcOptions): UnaryCall<WalletLastEventTimestampRequest, WalletLastEventTimestampResponse> {
+    walletEventTimestamps(input: WalletEventTimestampsRequest, options?: RpcOptions): UnaryCall<WalletEventTimestampsRequest, WalletEventTimestampsResponse> {
         const method = this.methods[28], opt = this._transport.mergeOptions(options);
-        return stackIntercept<WalletLastEventTimestampRequest, WalletLastEventTimestampResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<WalletEventTimestampsRequest, WalletEventTimestampsResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: ClosedPositions
