@@ -856,6 +856,12 @@ message ClosedPositionsRequest {
   int64  to_ts            = 4; // inclusive, unix seconds; 0 = now
   int32  page_size        = 5; // max 500; 0 = 500
   string page_token       = 6; // from previous response; empty = first page
+  ClosedPositionOrder order = 7; // TOP_PNL: one page, page_token must be empty
+}
+
+enum ClosedPositionOrder {
+  CLOSED_POSITION_ORDER_NEWEST  = 0; // closed_at descending
+  CLOSED_POSITION_ORDER_TOP_PNL = 1; // realized_pnl descending, known PnL only
 }
 
 message ClosedPosition {

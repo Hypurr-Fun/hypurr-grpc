@@ -2128,6 +2128,10 @@ export interface ClosedPositionsRequest {
      * @generated from protobuf field: string page_token = 6
      */
     pageToken: string; // from previous response; empty = first page
+    /**
+     * @generated from protobuf field: hypercore.ClosedPositionOrder order = 7
+     */
+    order: ClosedPositionOrder; // TOP_PNL: one page, page_token must be empty
 }
 /**
  * @generated from protobuf message hypercore.ClosedPosition
@@ -3122,6 +3126,23 @@ export enum ClosedPositionKind {
      * @generated from protobuf enum value: CLOSED_POSITION_KIND_PERP = 2;
      */
     PERP = 2
+}
+/**
+ * @generated from protobuf enum hypercore.ClosedPositionOrder
+ */
+export enum ClosedPositionOrder {
+    /**
+     * closed_at descending
+     *
+     * @generated from protobuf enum value: CLOSED_POSITION_ORDER_NEWEST = 0;
+     */
+    NEWEST = 0,
+    /**
+     * realized_pnl descending, known PnL only
+     *
+     * @generated from protobuf enum value: CLOSED_POSITION_ORDER_TOP_PNL = 1;
+     */
+    TOP_PNL = 1
 }
 /**
  * Numbering matches hypurr.HistoricalChartInterval in ios.proto; convert by cast.
@@ -10003,7 +10024,8 @@ class ClosedPositionsRequest$Type extends MessageType<ClosedPositionsRequest> {
             { no: 3, name: "from_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 4, name: "to_ts", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 5, name: "page_size", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 6, name: "page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "order", kind: "enum", T: () => ["hypercore.ClosedPositionOrder", ClosedPositionOrder, "CLOSED_POSITION_ORDER_"] }
         ]);
     }
     create(value?: PartialMessage<ClosedPositionsRequest>): ClosedPositionsRequest {
@@ -10014,6 +10036,7 @@ class ClosedPositionsRequest$Type extends MessageType<ClosedPositionsRequest> {
         message.toTs = 0;
         message.pageSize = 0;
         message.pageToken = "";
+        message.order = 0;
         if (value !== undefined)
             reflectionMergePartial<ClosedPositionsRequest>(this, message, value);
         return message;
@@ -10040,6 +10063,9 @@ class ClosedPositionsRequest$Type extends MessageType<ClosedPositionsRequest> {
                     break;
                 case /* string page_token */ 6:
                     message.pageToken = reader.string();
+                    break;
+                case /* hypercore.ClosedPositionOrder order */ 7:
+                    message.order = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -10071,6 +10097,9 @@ class ClosedPositionsRequest$Type extends MessageType<ClosedPositionsRequest> {
         /* string page_token = 6; */
         if (message.pageToken !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.pageToken);
+        /* hypercore.ClosedPositionOrder order = 7; */
+        if (message.order !== 0)
+            writer.tag(7, WireType.Varint).int32(message.order);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
