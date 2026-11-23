@@ -1068,6 +1068,7 @@ message WalletPerformanceSummaryPeriod {
   int64 trade_count = 6; // sum of the stored hourly trade-count metric over the period
   optional int64 winning_trades = 7; // profitable closing fills, from stored instrument and token metrics
   optional int64 closed_trades = 8; // closing fills, including partial closes and flips
+  optional int64 hold_seconds = 9;
 }
 
 // QueryPositions: one query surface over every open perp position the indexer

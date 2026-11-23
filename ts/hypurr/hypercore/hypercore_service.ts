@@ -2615,6 +2615,10 @@ export interface WalletPerformanceSummaryPeriod {
      * @generated from protobuf field: optional int64 closed_trades = 8
      */
     closedTrades?: number; // closing fills, including partial closes and flips
+    /**
+     * @generated from protobuf field: optional int64 hold_seconds = 9
+     */
+    holdSeconds?: number;
 }
 /**
  * @generated from protobuf message hypercore.PositionPredicate
@@ -11705,7 +11709,8 @@ class WalletPerformanceSummaryPeriod$Type extends MessageType<WalletPerformanceS
             { no: 5, name: "volume", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 6, name: "trade_count", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 7, name: "winning_trades", kind: "scalar", opt: true, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 8, name: "closed_trades", kind: "scalar", opt: true, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 8, name: "closed_trades", kind: "scalar", opt: true, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 9, name: "hold_seconds", kind: "scalar", opt: true, T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<WalletPerformanceSummaryPeriod>): WalletPerformanceSummaryPeriod {
@@ -11749,6 +11754,9 @@ class WalletPerformanceSummaryPeriod$Type extends MessageType<WalletPerformanceS
                 case /* optional int64 closed_trades */ 8:
                     message.closedTrades = reader.int64().toNumber();
                     break;
+                case /* optional int64 hold_seconds */ 9:
+                    message.holdSeconds = reader.int64().toNumber();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -11785,6 +11793,9 @@ class WalletPerformanceSummaryPeriod$Type extends MessageType<WalletPerformanceS
         /* optional int64 closed_trades = 8; */
         if (message.closedTrades !== undefined)
             writer.tag(8, WireType.Varint).int64(message.closedTrades);
+        /* optional int64 hold_seconds = 9; */
+        if (message.holdSeconds !== undefined)
+            writer.tag(9, WireType.Varint).int64(message.holdSeconds);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
