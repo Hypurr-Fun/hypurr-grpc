@@ -1,0 +1,99 @@
+syntax = "proto3";
+package hypurr.ios;
+option go_package = "gitlab.com/hypurr/hypurr-grpc/go/hypurr/ios;ios";
+
+import "hypurr/ios/feed_item.proto";
+import "hypurr/ios/period.proto";
+import "hypurr/ios/portfolio_history.proto";
+import "hypurr/ios/user.proto";
+
+// Requires user:read. Another trader's data covers their public wallets,
+// and wallet_id is empty for them.
+service TraderProfileService {
+  rpc TraderProfile(TraderProfileRequest) returns (TraderProfileResponse);
+  rpc TraderPortfolioDashboard(TraderPortfolioDashboardRequest) returns (PortfolioDashboardResponse);
+  rpc TraderClosedPositionHistory(TraderClosedPositionHistoryRequest) returns (ClosedPositionHistoryResponse);
+  rpc TraderPosts(TraderPostsRequest) returns (TraderPostsResponse);
+}
+
+message TraderProfileRequest {
+  optional int64 user_id = 1; // Absent means the authenticated viewer.
+}
+
+message TraderProfileResponse {
+  HfunUser user = 1;
+  string bio = 2;            // Empty when none.
+  string hero_image_url = 3; // Full URL. Empty means mobile renders its fallback.
+  XAccount x_account = 4;    // Absent when no X account is linked.
+  // "Top 10% of all traders" on the global leaderboard.
+  bool top_ten_percent = 5;
+  TraderSocialSummary social = 6;
+  // Absent until the trader's first trade ("New trader" state).
+  TraderStats stats = 7;
+  // All-time, spot and perp, by realized PnL, largest first. At most 3.
+  // Empty when none. wallet_id is empty for another trader.
+  repeated ClosedPosition top_trades = 8;
+}
+
+// A linked X account is a verified one.
+message XAccount {
+  string profile_url = 1; // e.g. "https://x.com/lummi"
+}
+
+message TraderSocialSummary {
+  int32 following_count = 1;
+  int32 followers_count = 2;
+  // Both fields are false on the viewer's own profile.
+  ViewerRelationship relationship = 3;
+  // People the viewer follows who follow this trader.
+  MutualFriendsSummary mutual_followers = 4;
+}
+
+message TraderStats {
+  double win_rate_percent = 1;  // All-time, same definition as Trader.win_rate_percent.
+  int32 trade_count = 2;        // All-time closed positions.
+  // Approximate, spot and perp. Zero when the trader has no closed position.
+  int64 average_hold_seconds = 3;
+  int64 all_time_pnl_cents = 4; // Signed. "Profit" in the header.
+  string trading_since = 5;     // RFC3339 UTC time of the first trade.
+}
+
+// Same semantics as PortfolioDashboardRequest, for any trader's public
+// wallets. Returns PortfolioDashboardResponse: the chart for the period and
+// the last 30 closed positions (first Activity page).
+message TraderPortfolioDashboardRequest {
+  optional int64 user_id = 1; // Absent means the authenticated viewer.
+  PortfolioDashboardMode mode = 2;
+  // 24H, 7D, 30D or ALL. Applies to the chart only.
+  PortfolioPeriod portfolio_period = 3;
+}
+
+// Same semantics as ClosedPositionHistoryRequest, for any trader. Returns
+// ClosedPositionHistoryResponse; wallet_id is empty for another trader.
+message TraderClosedPositionHistoryRequest {
+  optional int64 user_id = 1;  // Absent means the authenticated viewer.
+  ClosedPositionKind kind = 2; // Required: SPOT or PERP.
+  string page_token = 3;       // Empty means first page. Page size is server-defined.
+}
+
+message TraderPostsRequest {
+  optional int64 user_id = 1; // Absent means the authenticated viewer.
+  // FEED_FILTER_PREDICTIONS and/or FEED_FILTER_FUNS. Empty means all posts.
+  repeated FeedFilter filters = 2;
+  TraderPostsSort sort = 3;
+  string page_token = 4; // Empty means first page. Page size is server-defined.
+}
+
+enum TraderPostsSort {
+  TRADER_POSTS_SORT_UNSPECIFIED = 0;
+  TRADER_POSTS_SORT_NEWEST = 1;
+  TRADER_POSTS_SORT_OLDEST = 2;
+}
+
+message TraderPostsResponse {
+  // Prediction and Funs items in requested sort order. Excludes the active pin on every page.
+  repeated FeedItem items = 1;
+  string next_page_token = 2; // Empty when exhausted.
+  // First page only, present when the viewer can see the pin and it matches filters.
+  FeedItem pinned_post = 3;
+}

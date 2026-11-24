@@ -3,6 +3,7 @@
 import grpc
 import warnings
 
+from hypurr.ios import portfolio_history_pb2 as hypurr_dot_ios_dot_portfolio__history__pb2
 from hypurr.ios import portfolio_pb2 as hypurr_dot_ios_dot_portfolio__pb2
 
 GRPC_GENERATED_VERSION = '1.81.0'
@@ -37,12 +38,12 @@ class PortfolioServiceStub:
         self.PortfolioDashboard = channel.unary_unary(
                 '/hypurr.ios.PortfolioService/PortfolioDashboard',
                 request_serializer=hypurr_dot_ios_dot_portfolio__pb2.PortfolioDashboardRequest.SerializeToString,
-                response_deserializer=hypurr_dot_ios_dot_portfolio__pb2.PortfolioDashboardResponse.FromString,
+                response_deserializer=hypurr_dot_ios_dot_portfolio__history__pb2.PortfolioDashboardResponse.FromString,
                 _registered_method=True)
         self.ClosedPositionHistory = channel.unary_unary(
                 '/hypurr.ios.PortfolioService/ClosedPositionHistory',
                 request_serializer=hypurr_dot_ios_dot_portfolio__pb2.ClosedPositionHistoryRequest.SerializeToString,
-                response_deserializer=hypurr_dot_ios_dot_portfolio__pb2.ClosedPositionHistoryResponse.FromString,
+                response_deserializer=hypurr_dot_ios_dot_portfolio__history__pb2.ClosedPositionHistoryResponse.FromString,
                 _registered_method=True)
 
 
@@ -67,12 +68,12 @@ def add_PortfolioServiceServicer_to_server(servicer, server):
             'PortfolioDashboard': grpc.unary_unary_rpc_method_handler(
                     servicer.PortfolioDashboard,
                     request_deserializer=hypurr_dot_ios_dot_portfolio__pb2.PortfolioDashboardRequest.FromString,
-                    response_serializer=hypurr_dot_ios_dot_portfolio__pb2.PortfolioDashboardResponse.SerializeToString,
+                    response_serializer=hypurr_dot_ios_dot_portfolio__history__pb2.PortfolioDashboardResponse.SerializeToString,
             ),
             'ClosedPositionHistory': grpc.unary_unary_rpc_method_handler(
                     servicer.ClosedPositionHistory,
                     request_deserializer=hypurr_dot_ios_dot_portfolio__pb2.ClosedPositionHistoryRequest.FromString,
-                    response_serializer=hypurr_dot_ios_dot_portfolio__pb2.ClosedPositionHistoryResponse.SerializeToString,
+                    response_serializer=hypurr_dot_ios_dot_portfolio__history__pb2.ClosedPositionHistoryResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -101,7 +102,7 @@ class PortfolioService:
             target,
             '/hypurr.ios.PortfolioService/PortfolioDashboard',
             hypurr_dot_ios_dot_portfolio__pb2.PortfolioDashboardRequest.SerializeToString,
-            hypurr_dot_ios_dot_portfolio__pb2.PortfolioDashboardResponse.FromString,
+            hypurr_dot_ios_dot_portfolio__history__pb2.PortfolioDashboardResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -128,7 +129,7 @@ class PortfolioService:
             target,
             '/hypurr.ios.PortfolioService/ClosedPositionHistory',
             hypurr_dot_ios_dot_portfolio__pb2.ClosedPositionHistoryRequest.SerializeToString,
-            hypurr_dot_ios_dot_portfolio__pb2.ClosedPositionHistoryResponse.FromString,
+            hypurr_dot_ios_dot_portfolio__history__pb2.ClosedPositionHistoryResponse.FromString,
             options,
             channel_credentials,
             insecure,

@@ -4,10 +4,10 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { PortfolioService } from "./portfolio";
-import type { ClosedPositionHistoryResponse } from "./portfolio";
+import type { ClosedPositionHistoryResponse } from "./portfolio_history";
 import type { ClosedPositionHistoryRequest } from "./portfolio";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { PortfolioDashboardResponse } from "./portfolio";
+import type { PortfolioDashboardResponse } from "./portfolio_history";
 import type { PortfolioDashboardRequest } from "./portfolio";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
