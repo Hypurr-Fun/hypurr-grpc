@@ -104,22 +104,27 @@ message AllTimeTradeCountMilestone {
   int64 all_time_trade_count = 1;
 }
 
-// A price call on one spot or perp market, optionally with a trade.
+// A price call on one or more spot or perp markets, optionally with a trade.
 message FeedPrediction {
   string text = 1;
-  // One quote per predicted asset at response time, in the author's order.
-  repeated MarketQuote market_quotes = 2;
-  // Exactly 12 points, oldest first. Uses Home's 24-hour series with 2-hour intervals.
-  repeated AssetPricePoint history = 3;
-  // The trade placed with the prediction, on the market of the first quote.
+  // One per predicted asset, in the author's order.
+  repeated FeedPredictionMarket markets = 2;
+  // The trade placed with the prediction, on the first market.
   // Neither variant is present for a call without a trade.
   oneof order {
-    FeedPerpOpen perp_order = 4;
-    FeedSpotTrade spot_order = 5;
+    FeedPerpOpen perp_order = 3;
+    FeedSpotTrade spot_order = 4;
   }
-  FeedEngagement engagement = 6;
+  FeedEngagement engagement = 5;
   // Same rules as FeedFuns.media_items.
-  repeated FeedMedia media_items = 7;
+  repeated FeedMedia media_items = 6;
+}
+
+message FeedPredictionMarket {
+  // The market quote at response time. Mobile uses LiveAssetUpdates for live prices.
+  MarketQuote quote = 1;
+  // Exactly 12 points, oldest first. Uses Home's 24-hour series with 2-hour intervals.
+  repeated AssetPricePoint history = 2;
 }
 
 // A post with text, media, or both.

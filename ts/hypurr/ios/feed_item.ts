@@ -277,7 +277,7 @@ export interface AllTimeTradeCountMilestone {
     allTimeTradeCount: number;
 }
 /**
- * A price call on one spot or perp market, optionally with a trade.
+ * A price call on one or more spot or perp markets, optionally with a trade.
  *
  * @generated from protobuf message hypurr.ios.FeedPrediction
  */
@@ -287,19 +287,13 @@ export interface FeedPrediction {
      */
     text: string;
     /**
-     * One quote per predicted asset at response time, in the author's order.
+     * One per predicted asset, in the author's order.
      *
-     * @generated from protobuf field: repeated hypurr.ios.MarketQuote market_quotes = 2
+     * @generated from protobuf field: repeated hypurr.ios.FeedPredictionMarket markets = 2
      */
-    marketQuotes: MarketQuote[];
+    markets: FeedPredictionMarket[];
     /**
-     * Exactly 12 points, oldest first. Uses Home's 24-hour series with 2-hour intervals.
-     *
-     * @generated from protobuf field: repeated hypurr.ios.AssetPricePoint history = 3
-     */
-    history: AssetPricePoint[];
-    /**
-     * The trade placed with the prediction, on the market of the first quote.
+     * The trade placed with the prediction, on the first market.
      * Neither variant is present for a call without a trade.
      *
      * @generated from protobuf oneof: order
@@ -307,28 +301,45 @@ export interface FeedPrediction {
     order: {
         oneofKind: "perpOrder";
         /**
-         * @generated from protobuf field: hypurr.ios.FeedPerpOpen perp_order = 4
+         * @generated from protobuf field: hypurr.ios.FeedPerpOpen perp_order = 3
          */
         perpOrder: FeedPerpOpen;
     } | {
         oneofKind: "spotOrder";
         /**
-         * @generated from protobuf field: hypurr.ios.FeedSpotTrade spot_order = 5
+         * @generated from protobuf field: hypurr.ios.FeedSpotTrade spot_order = 4
          */
         spotOrder: FeedSpotTrade;
     } | {
         oneofKind: undefined;
     };
     /**
-     * @generated from protobuf field: hypurr.ios.FeedEngagement engagement = 6
+     * @generated from protobuf field: hypurr.ios.FeedEngagement engagement = 5
      */
     engagement?: FeedEngagement;
     /**
      * Same rules as FeedFuns.media_items.
      *
-     * @generated from protobuf field: repeated hypurr.ios.FeedMedia media_items = 7
+     * @generated from protobuf field: repeated hypurr.ios.FeedMedia media_items = 6
      */
     mediaItems: FeedMedia[];
+}
+/**
+ * @generated from protobuf message hypurr.ios.FeedPredictionMarket
+ */
+export interface FeedPredictionMarket {
+    /**
+     * The market quote at response time. Mobile uses LiveAssetUpdates for live prices.
+     *
+     * @generated from protobuf field: hypurr.ios.MarketQuote quote = 1
+     */
+    quote?: MarketQuote;
+    /**
+     * Exactly 12 points, oldest first. Uses Home's 24-hour series with 2-hour intervals.
+     *
+     * @generated from protobuf field: repeated hypurr.ios.AssetPricePoint history = 2
+     */
+    history: AssetPricePoint[];
 }
 /**
  * A post with text, media, or both.
@@ -1133,19 +1144,17 @@ class FeedPrediction$Type extends MessageType<FeedPrediction> {
     constructor() {
         super("hypurr.ios.FeedPrediction", [
             { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "market_quotes", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => MarketQuote },
-            { no: 3, name: "history", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => AssetPricePoint },
-            { no: 4, name: "perp_order", kind: "message", oneof: "order", T: () => FeedPerpOpen },
-            { no: 5, name: "spot_order", kind: "message", oneof: "order", T: () => FeedSpotTrade },
-            { no: 6, name: "engagement", kind: "message", T: () => FeedEngagement },
-            { no: 7, name: "media_items", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => FeedMedia }
+            { no: 2, name: "markets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => FeedPredictionMarket },
+            { no: 3, name: "perp_order", kind: "message", oneof: "order", T: () => FeedPerpOpen },
+            { no: 4, name: "spot_order", kind: "message", oneof: "order", T: () => FeedSpotTrade },
+            { no: 5, name: "engagement", kind: "message", T: () => FeedEngagement },
+            { no: 6, name: "media_items", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => FeedMedia }
         ]);
     }
     create(value?: PartialMessage<FeedPrediction>): FeedPrediction {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.text = "";
-        message.marketQuotes = [];
-        message.history = [];
+        message.markets = [];
         message.order = { oneofKind: undefined };
         message.mediaItems = [];
         if (value !== undefined)
@@ -1160,28 +1169,25 @@ class FeedPrediction$Type extends MessageType<FeedPrediction> {
                 case /* string text */ 1:
                     message.text = reader.string();
                     break;
-                case /* repeated hypurr.ios.MarketQuote market_quotes */ 2:
-                    message.marketQuotes.push(MarketQuote.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated hypurr.ios.FeedPredictionMarket markets */ 2:
+                    message.markets.push(FeedPredictionMarket.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* repeated hypurr.ios.AssetPricePoint history */ 3:
-                    message.history.push(AssetPricePoint.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* hypurr.ios.FeedPerpOpen perp_order */ 4:
+                case /* hypurr.ios.FeedPerpOpen perp_order */ 3:
                     message.order = {
                         oneofKind: "perpOrder",
                         perpOrder: FeedPerpOpen.internalBinaryRead(reader, reader.uint32(), options, (message.order as any).perpOrder)
                     };
                     break;
-                case /* hypurr.ios.FeedSpotTrade spot_order */ 5:
+                case /* hypurr.ios.FeedSpotTrade spot_order */ 4:
                     message.order = {
                         oneofKind: "spotOrder",
                         spotOrder: FeedSpotTrade.internalBinaryRead(reader, reader.uint32(), options, (message.order as any).spotOrder)
                     };
                     break;
-                case /* hypurr.ios.FeedEngagement engagement */ 6:
+                case /* hypurr.ios.FeedEngagement engagement */ 5:
                     message.engagement = FeedEngagement.internalBinaryRead(reader, reader.uint32(), options, message.engagement);
                     break;
-                case /* repeated hypurr.ios.FeedMedia media_items */ 7:
+                case /* repeated hypurr.ios.FeedMedia media_items */ 6:
                     message.mediaItems.push(FeedMedia.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1199,24 +1205,21 @@ class FeedPrediction$Type extends MessageType<FeedPrediction> {
         /* string text = 1; */
         if (message.text !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.text);
-        /* repeated hypurr.ios.MarketQuote market_quotes = 2; */
-        for (let i = 0; i < message.marketQuotes.length; i++)
-            MarketQuote.internalBinaryWrite(message.marketQuotes[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* repeated hypurr.ios.AssetPricePoint history = 3; */
-        for (let i = 0; i < message.history.length; i++)
-            AssetPricePoint.internalBinaryWrite(message.history[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* hypurr.ios.FeedPerpOpen perp_order = 4; */
+        /* repeated hypurr.ios.FeedPredictionMarket markets = 2; */
+        for (let i = 0; i < message.markets.length; i++)
+            FeedPredictionMarket.internalBinaryWrite(message.markets[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.FeedPerpOpen perp_order = 3; */
         if (message.order.oneofKind === "perpOrder")
-            FeedPerpOpen.internalBinaryWrite(message.order.perpOrder, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* hypurr.ios.FeedSpotTrade spot_order = 5; */
+            FeedPerpOpen.internalBinaryWrite(message.order.perpOrder, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.FeedSpotTrade spot_order = 4; */
         if (message.order.oneofKind === "spotOrder")
-            FeedSpotTrade.internalBinaryWrite(message.order.spotOrder, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* hypurr.ios.FeedEngagement engagement = 6; */
+            FeedSpotTrade.internalBinaryWrite(message.order.spotOrder, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.FeedEngagement engagement = 5; */
         if (message.engagement)
-            FeedEngagement.internalBinaryWrite(message.engagement, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* repeated hypurr.ios.FeedMedia media_items = 7; */
+            FeedEngagement.internalBinaryWrite(message.engagement, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.ios.FeedMedia media_items = 6; */
         for (let i = 0; i < message.mediaItems.length; i++)
-            FeedMedia.internalBinaryWrite(message.mediaItems[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+            FeedMedia.internalBinaryWrite(message.mediaItems[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1227,6 +1230,60 @@ class FeedPrediction$Type extends MessageType<FeedPrediction> {
  * @generated MessageType for protobuf message hypurr.ios.FeedPrediction
  */
 export const FeedPrediction = new FeedPrediction$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class FeedPredictionMarket$Type extends MessageType<FeedPredictionMarket> {
+    constructor() {
+        super("hypurr.ios.FeedPredictionMarket", [
+            { no: 1, name: "quote", kind: "message", T: () => MarketQuote },
+            { no: 2, name: "history", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => AssetPricePoint }
+        ]);
+    }
+    create(value?: PartialMessage<FeedPredictionMarket>): FeedPredictionMarket {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.history = [];
+        if (value !== undefined)
+            reflectionMergePartial<FeedPredictionMarket>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FeedPredictionMarket): FeedPredictionMarket {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* hypurr.ios.MarketQuote quote */ 1:
+                    message.quote = MarketQuote.internalBinaryRead(reader, reader.uint32(), options, message.quote);
+                    break;
+                case /* repeated hypurr.ios.AssetPricePoint history */ 2:
+                    message.history.push(AssetPricePoint.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: FeedPredictionMarket, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* hypurr.ios.MarketQuote quote = 1; */
+        if (message.quote)
+            MarketQuote.internalBinaryWrite(message.quote, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.ios.AssetPricePoint history = 2; */
+        for (let i = 0; i < message.history.length; i++)
+            AssetPricePoint.internalBinaryWrite(message.history[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.ios.FeedPredictionMarket
+ */
+export const FeedPredictionMarket = new FeedPredictionMarket$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class FeedFuns$Type extends MessageType<FeedFuns> {
     constructor() {
