@@ -2,7 +2,6 @@
 // @generated from protobuf file "hypurr/ios/trader_profile.proto" (package "hypurr.ios", syntax proto3)
 // tslint:disable
 import { ClosedPositionHistoryResponse } from "./portfolio_history";
-import { PortfolioDashboardResponse } from "./portfolio_history";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
 import type { IBinaryWriter } from "@protobuf-ts/runtime";
@@ -20,6 +19,7 @@ import { PortfolioPeriod } from "./period";
 import { PortfolioDashboardMode } from "./portfolio_history";
 import { MutualFriendsSummary } from "./user";
 import { ViewerRelationship } from "./user";
+import { PortfolioDashboardResponse } from "./portfolio_history";
 import { ClosedPosition } from "./portfolio_history";
 import { HfunUser } from "./user";
 /**
@@ -74,6 +74,22 @@ export interface TraderProfileResponse {
      * @generated from protobuf field: repeated hypurr.ios.ClosedPosition top_trades = 8
      */
     topTrades: ClosedPosition[];
+    /**
+     * Same as TraderPortfolioDashboard with mode ALL and portfolio_period ALL:
+     * the all-time chart and the last 30 closed positions (first Activity
+     * page). Empty points and positions before the first trade.
+     *
+     * @generated from protobuf field: hypurr.ios.PortfolioDashboardResponse dashboard = 9
+     */
+    dashboard?: PortfolioDashboardResponse;
+    /**
+     * Same as TraderPosts with no filters, sort NEWEST and no page_token:
+     * the first Posts page, including pinned_post. Continue with TraderPosts
+     * and posts.next_page_token.
+     *
+     * @generated from protobuf field: hypurr.ios.TraderPostsResponse posts = 10
+     */
+    posts?: TraderPostsResponse;
 }
 /**
  * A linked X account is a verified one.
@@ -299,7 +315,9 @@ class TraderProfileResponse$Type extends MessageType<TraderProfileResponse> {
             { no: 5, name: "top_ten_percent", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 6, name: "social", kind: "message", T: () => TraderSocialSummary },
             { no: 7, name: "stats", kind: "message", T: () => TraderStats },
-            { no: 8, name: "top_trades", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ClosedPosition }
+            { no: 8, name: "top_trades", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ClosedPosition },
+            { no: 9, name: "dashboard", kind: "message", T: () => PortfolioDashboardResponse },
+            { no: 10, name: "posts", kind: "message", T: () => TraderPostsResponse }
         ]);
     }
     create(value?: PartialMessage<TraderProfileResponse>): TraderProfileResponse {
@@ -341,6 +359,12 @@ class TraderProfileResponse$Type extends MessageType<TraderProfileResponse> {
                 case /* repeated hypurr.ios.ClosedPosition top_trades */ 8:
                     message.topTrades.push(ClosedPosition.internalBinaryRead(reader, reader.uint32(), options));
                     break;
+                case /* hypurr.ios.PortfolioDashboardResponse dashboard */ 9:
+                    message.dashboard = PortfolioDashboardResponse.internalBinaryRead(reader, reader.uint32(), options, message.dashboard);
+                    break;
+                case /* hypurr.ios.TraderPostsResponse posts */ 10:
+                    message.posts = TraderPostsResponse.internalBinaryRead(reader, reader.uint32(), options, message.posts);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -377,6 +401,12 @@ class TraderProfileResponse$Type extends MessageType<TraderProfileResponse> {
         /* repeated hypurr.ios.ClosedPosition top_trades = 8; */
         for (let i = 0; i < message.topTrades.length; i++)
             ClosedPosition.internalBinaryWrite(message.topTrades[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.PortfolioDashboardResponse dashboard = 9; */
+        if (message.dashboard)
+            PortfolioDashboardResponse.internalBinaryWrite(message.dashboard, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.ios.TraderPostsResponse posts = 10; */
+        if (message.posts)
+            TraderPostsResponse.internalBinaryWrite(message.posts, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

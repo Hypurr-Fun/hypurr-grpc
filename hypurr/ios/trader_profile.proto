@@ -33,6 +33,14 @@ message TraderProfileResponse {
   // All-time, spot and perp, by realized PnL, largest first. At most 3.
   // Empty when none. wallet_id is empty for another trader.
   repeated ClosedPosition top_trades = 8;
+  // Same as TraderPortfolioDashboard with mode ALL and portfolio_period ALL:
+  // the all-time chart and the last 30 closed positions (first Activity
+  // page). Empty points and positions before the first trade.
+  PortfolioDashboardResponse dashboard = 9;
+  // Same as TraderPosts with no filters, sort NEWEST and no page_token:
+  // the first Posts page, including pinned_post. Continue with TraderPosts
+  // and posts.next_page_token.
+  TraderPostsResponse posts = 10;
 }
 
 // A linked X account is a verified one.
