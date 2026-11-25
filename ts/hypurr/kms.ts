@@ -246,15 +246,13 @@ export interface KmsGetAccountInfoResponse {
      */
     passkeyCredentialId: Uint8Array;
     /**
-     * Built by the instance, not signed by the enclave.
-     *
      * @generated from protobuf field: repeated hypurr.KmsSessionInfo sessions = 7
      */
     sessions: KmsSessionInfo[];
     /**
      * @generated from protobuf field: hypurr.KmsFactorResetStatus factor_reset = 8
      */
-    factorReset?: KmsFactorResetStatus; // unset when no reset is pending
+    factorReset?: KmsFactorResetStatus;
 }
 /**
  * @generated from protobuf message hypurr.KmsProviderInfo
@@ -463,9 +461,6 @@ export interface KmsExecuteFactorResetResponse {
      */
     attestation: Uint8Array;
     /**
-     * The executing device gets a fresh session; the request needs
-     * x-hypurr-device-id.
-     *
      * @generated from protobuf field: string bot_access_token = 2
      */
     botAccessToken: string;
@@ -474,8 +469,6 @@ export interface KmsExecuteFactorResetResponse {
      */
     botRefreshToken: string;
     /**
-     * Seconds until bot_access_token expires.
-     *
      * @generated from protobuf field: int64 bot_access_token_expires_in = 4
      */
     botAccessTokenExpiresIn: number;
@@ -531,9 +524,6 @@ export interface KmsAccountRefreshSessionResponse {
      */
     attestation: Uint8Array;
     /**
-     * The bot's new access token, refresh token and
-     * bot_access_token_expires_in, sealed to the session's device key.
-     *
      * @generated from protobuf field: bytes bot_tokens_sealed = 2
      */
     botTokensSealed: Uint8Array;

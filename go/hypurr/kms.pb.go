@@ -934,15 +934,14 @@ type KmsGetAccountInfoResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AccountId           string             `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
-	Providers           []*KmsProviderInfo `protobuf:"bytes,2,rep,name=providers,proto3" json:"providers,omitempty"`
-	Wallets             []*KmsWalletInfo   `protobuf:"bytes,3,rep,name=wallets,proto3" json:"wallets,omitempty"`
-	TwoFactorTypes      []string           `protobuf:"bytes,4,rep,name=two_factor_types,json=twoFactorTypes,proto3" json:"two_factor_types,omitempty"`
-	Agents              []*KmsAgentInfo    `protobuf:"bytes,5,rep,name=agents,proto3" json:"agents,omitempty"`
-	PasskeyCredentialId []byte             `protobuf:"bytes,6,opt,name=passkey_credential_id,json=passkeyCredentialId,proto3" json:"passkey_credential_id,omitempty"`
-	// Built by the instance, not signed by the enclave.
-	Sessions    []*KmsSessionInfo     `protobuf:"bytes,7,rep,name=sessions,proto3" json:"sessions,omitempty"`
-	FactorReset *KmsFactorResetStatus `protobuf:"bytes,8,opt,name=factor_reset,json=factorReset,proto3" json:"factor_reset,omitempty"` // unset when no reset is pending
+	AccountId           string                `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	Providers           []*KmsProviderInfo    `protobuf:"bytes,2,rep,name=providers,proto3" json:"providers,omitempty"`
+	Wallets             []*KmsWalletInfo      `protobuf:"bytes,3,rep,name=wallets,proto3" json:"wallets,omitempty"`
+	TwoFactorTypes      []string              `protobuf:"bytes,4,rep,name=two_factor_types,json=twoFactorTypes,proto3" json:"two_factor_types,omitempty"`
+	Agents              []*KmsAgentInfo       `protobuf:"bytes,5,rep,name=agents,proto3" json:"agents,omitempty"`
+	PasskeyCredentialId []byte                `protobuf:"bytes,6,opt,name=passkey_credential_id,json=passkeyCredentialId,proto3" json:"passkey_credential_id,omitempty"`
+	Sessions            []*KmsSessionInfo     `protobuf:"bytes,7,rep,name=sessions,proto3" json:"sessions,omitempty"`
+	FactorReset         *KmsFactorResetStatus `protobuf:"bytes,8,opt,name=factor_reset,json=factorReset,proto3" json:"factor_reset,omitempty"`
 }
 
 func (x *KmsGetAccountInfoResponse) Reset() {
@@ -1779,13 +1778,10 @@ type KmsExecuteFactorResetResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Attestation []byte `protobuf:"bytes,1,opt,name=attestation,proto3" json:"attestation,omitempty"`
-	// The executing device gets a fresh session; the request needs
-	// x-hypurr-device-id.
-	BotAccessToken  string `protobuf:"bytes,2,opt,name=bot_access_token,json=botAccessToken,proto3" json:"bot_access_token,omitempty"`
-	BotRefreshToken string `protobuf:"bytes,3,opt,name=bot_refresh_token,json=botRefreshToken,proto3" json:"bot_refresh_token,omitempty"`
-	// Seconds until bot_access_token expires.
-	BotAccessTokenExpiresIn int64 `protobuf:"varint,4,opt,name=bot_access_token_expires_in,json=botAccessTokenExpiresIn,proto3" json:"bot_access_token_expires_in,omitempty"`
+	Attestation             []byte `protobuf:"bytes,1,opt,name=attestation,proto3" json:"attestation,omitempty"`
+	BotAccessToken          string `protobuf:"bytes,2,opt,name=bot_access_token,json=botAccessToken,proto3" json:"bot_access_token,omitempty"`
+	BotRefreshToken         string `protobuf:"bytes,3,opt,name=bot_refresh_token,json=botRefreshToken,proto3" json:"bot_refresh_token,omitempty"`
+	BotAccessTokenExpiresIn int64  `protobuf:"varint,4,opt,name=bot_access_token_expires_in,json=botAccessTokenExpiresIn,proto3" json:"bot_access_token_expires_in,omitempty"`
 }
 
 func (x *KmsExecuteFactorResetResponse) Reset() {
@@ -2020,9 +2016,7 @@ type KmsAccountRefreshSessionResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Attestation []byte `protobuf:"bytes,1,opt,name=attestation,proto3" json:"attestation,omitempty"`
-	// The bot's new access token, refresh token and
-	// bot_access_token_expires_in, sealed to the session's device key.
+	Attestation     []byte `protobuf:"bytes,1,opt,name=attestation,proto3" json:"attestation,omitempty"`
 	BotTokensSealed []byte `protobuf:"bytes,2,opt,name=bot_tokens_sealed,json=botTokensSealed,proto3" json:"bot_tokens_sealed,omitempty"`
 }
 

@@ -323,6 +323,18 @@ export interface FeedPrediction {
      * @generated from protobuf field: hypurr.ios.FeedEngagement engagement = 5
      */
     engagement?: FeedEngagement;
+    /**
+     * Same rules as FeedFuns.media_items.
+     *
+     * @generated from protobuf field: repeated hypurr.ios.FeedMedia media_items = 7
+     */
+    mediaItems: FeedMedia[];
+    /**
+     * One quote per predicted asset, in the author's order. market_quote is the first.
+     *
+     * @generated from protobuf field: repeated hypurr.ios.MarketQuote market_quotes = 8
+     */
+    marketQuotes: MarketQuote[];
 }
 /**
  * A post with text, media, or both.
@@ -337,7 +349,7 @@ export interface FeedFuns {
      */
     text: string;
     /**
-     * Absent for a post with text only.
+     * Deprecated: use media_items. Kept as media_items[0] for older app versions.
      *
      * @generated from protobuf field: hypurr.ios.FeedMedia media = 2
      */
@@ -352,6 +364,12 @@ export interface FeedFuns {
      * @generated from protobuf field: string media_description = 4
      */
     mediaDescription: string;
+    /**
+     * Up to 4 images and GIFs, in display order.
+     *
+     * @generated from protobuf field: repeated hypurr.ios.FeedMedia media_items = 5
+     */
+    mediaItems: FeedMedia[];
 }
 /**
  * @generated from protobuf message hypurr.ios.FeedMedia
@@ -362,11 +380,17 @@ export interface FeedMedia {
      */
     kind: FeedMediaKind;
     /**
-     * Full URL.
+     * Full URL. Empty for a GIPHY GIF.
      *
      * @generated from protobuf field: string url = 2
      */
     url: string;
+    /**
+     * The GIPHY GIF id when kind is FEED_MEDIA_KIND_GIF.
+     *
+     * @generated from protobuf field: string giphy_id = 3
+     */
+    giphyId: string;
 }
 /**
  * @generated from protobuf message hypurr.ios.FeedEngagement
@@ -1125,7 +1149,9 @@ class FeedPrediction$Type extends MessageType<FeedPrediction> {
             { no: 3, name: "history", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => AssetPricePoint },
             { no: 4, name: "perp_order", kind: "message", oneof: "order", T: () => FeedPerpOpen },
             { no: 6, name: "spot_order", kind: "message", oneof: "order", T: () => FeedSpotTrade },
-            { no: 5, name: "engagement", kind: "message", T: () => FeedEngagement }
+            { no: 5, name: "engagement", kind: "message", T: () => FeedEngagement },
+            { no: 7, name: "media_items", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => FeedMedia },
+            { no: 8, name: "market_quotes", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => MarketQuote }
         ]);
     }
     create(value?: PartialMessage<FeedPrediction>): FeedPrediction {
@@ -1133,6 +1159,8 @@ class FeedPrediction$Type extends MessageType<FeedPrediction> {
         message.text = "";
         message.history = [];
         message.order = { oneofKind: undefined };
+        message.mediaItems = [];
+        message.marketQuotes = [];
         if (value !== undefined)
             reflectionMergePartial<FeedPrediction>(this, message, value);
         return message;
@@ -1166,6 +1194,12 @@ class FeedPrediction$Type extends MessageType<FeedPrediction> {
                 case /* hypurr.ios.FeedEngagement engagement */ 5:
                     message.engagement = FeedEngagement.internalBinaryRead(reader, reader.uint32(), options, message.engagement);
                     break;
+                case /* repeated hypurr.ios.FeedMedia media_items */ 7:
+                    message.mediaItems.push(FeedMedia.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated hypurr.ios.MarketQuote market_quotes */ 8:
+                    message.marketQuotes.push(MarketQuote.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1196,6 +1230,12 @@ class FeedPrediction$Type extends MessageType<FeedPrediction> {
         /* hypurr.ios.FeedSpotTrade spot_order = 6; */
         if (message.order.oneofKind === "spotOrder")
             FeedSpotTrade.internalBinaryWrite(message.order.spotOrder, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.ios.FeedMedia media_items = 7; */
+        for (let i = 0; i < message.mediaItems.length; i++)
+            FeedMedia.internalBinaryWrite(message.mediaItems[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.ios.MarketQuote market_quotes = 8; */
+        for (let i = 0; i < message.marketQuotes.length; i++)
+            MarketQuote.internalBinaryWrite(message.marketQuotes[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1213,13 +1253,15 @@ class FeedFuns$Type extends MessageType<FeedFuns> {
             { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "media", kind: "message", T: () => FeedMedia },
             { no: 3, name: "engagement", kind: "message", T: () => FeedEngagement },
-            { no: 4, name: "media_description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "media_description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "media_items", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => FeedMedia }
         ]);
     }
     create(value?: PartialMessage<FeedFuns>): FeedFuns {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.text = "";
         message.mediaDescription = "";
+        message.mediaItems = [];
         if (value !== undefined)
             reflectionMergePartial<FeedFuns>(this, message, value);
         return message;
@@ -1240,6 +1282,9 @@ class FeedFuns$Type extends MessageType<FeedFuns> {
                     break;
                 case /* string media_description */ 4:
                     message.mediaDescription = reader.string();
+                    break;
+                case /* repeated hypurr.ios.FeedMedia media_items */ 5:
+                    message.mediaItems.push(FeedMedia.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1265,6 +1310,9 @@ class FeedFuns$Type extends MessageType<FeedFuns> {
         /* string media_description = 4; */
         if (message.mediaDescription !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.mediaDescription);
+        /* repeated hypurr.ios.FeedMedia media_items = 5; */
+        for (let i = 0; i < message.mediaItems.length; i++)
+            FeedMedia.internalBinaryWrite(message.mediaItems[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1280,13 +1328,15 @@ class FeedMedia$Type extends MessageType<FeedMedia> {
     constructor() {
         super("hypurr.ios.FeedMedia", [
             { no: 1, name: "kind", kind: "enum", T: () => ["hypurr.ios.FeedMediaKind", FeedMediaKind, "FEED_MEDIA_KIND_"] },
-            { no: 2, name: "url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "giphy_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<FeedMedia>): FeedMedia {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.kind = 0;
         message.url = "";
+        message.giphyId = "";
         if (value !== undefined)
             reflectionMergePartial<FeedMedia>(this, message, value);
         return message;
@@ -1301,6 +1351,9 @@ class FeedMedia$Type extends MessageType<FeedMedia> {
                     break;
                 case /* string url */ 2:
                     message.url = reader.string();
+                    break;
+                case /* string giphy_id */ 3:
+                    message.giphyId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1320,6 +1373,9 @@ class FeedMedia$Type extends MessageType<FeedMedia> {
         /* string url = 2; */
         if (message.url !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.url);
+        /* string giphy_id = 3; */
+        if (message.giphyId !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.giphyId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

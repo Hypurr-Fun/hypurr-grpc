@@ -387,24 +387,158 @@ export interface Post {
     /**
      * @generated from protobuf field: hypurr.social.v1.PostPosition position = 4
      */
-    position?: PostPosition; // unset for a text post
+    position?: PostPosition; // unset for a post without a position
     /**
      * @generated from protobuf field: int64 created_at_ms = 5
      */
     createdAtMs: number;
+    /**
+     * Absent when the post was created without a kind.
+     *
+     * @generated from protobuf oneof: kind
+     */
+    kind: {
+        oneofKind: "fun";
+        /**
+         * @generated from protobuf field: hypurr.social.v1.FunPost fun = 6
+         */
+        fun: FunPost;
+    } | {
+        oneofKind: "prediction";
+        /**
+         * @generated from protobuf field: hypurr.social.v1.PredictionPost prediction = 7
+         */
+        prediction: PredictionPost;
+    } | {
+        oneofKind: undefined;
+    };
+    /**
+     * In display order. Empty when the post has no attachments.
+     *
+     * @generated from protobuf field: repeated hypurr.social.v1.PostAttachment attachments = 8
+     */
+    attachments: PostAttachment[];
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.FunPost
+ */
+export interface FunPost {
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.PredictionPost
+ */
+export interface PredictionPost {
+    /**
+     * 1 to 5 different hypurr.ios.Asset.asset_id values, in the author's order.
+     *
+     * @generated from protobuf field: repeated uint32 asset_ids = 1
+     */
+    assetIds: number[];
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.PostAttachment
+ */
+export interface PostAttachment {
+    /**
+     * Exactly one source is present.
+     *
+     * @generated from protobuf oneof: source
+     */
+    source: {
+        oneofKind: "imageUrl";
+        /**
+         * Full URL of an uploaded photo.
+         *
+         * @generated from protobuf field: string image_url = 1
+         */
+        imageUrl: string;
+    } | {
+        oneofKind: "giphyId";
+        /**
+         * The GIPHY GIF id.
+         *
+         * @generated from protobuf field: string giphy_id = 2
+         */
+        giphyId: string;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message hypurr.social.v1.PostAttachmentInput
+ */
+export interface PostAttachmentInput {
+    /**
+     * Exactly one source must be present.
+     *
+     * @generated from protobuf oneof: source
+     */
+    source: {
+        oneofKind: "imageMediaId";
+        /**
+         * A media_id that MediaService.UploadImage returned to the caller.
+         *
+         * @generated from protobuf field: string image_media_id = 1
+         */
+        imageMediaId: string;
+    } | {
+        oneofKind: "giphyId";
+        /**
+         * A GIPHY GIF id: 1 to 64 ASCII letters and digits. The server never calls GIPHY.
+         *
+         * @generated from protobuf field: string giphy_id = 2
+         */
+        giphyId: string;
+    } | {
+        oneofKind: undefined;
+    };
 }
 /**
  * @generated from protobuf message hypurr.social.v1.CreatePostRequest
  */
 export interface CreatePostRequest {
     /**
+     * At most 280 grapheme clusters. Empty only with attachments or a position.
+     *
      * @generated from protobuf field: string body = 1
      */
-    body: string; // at most 1000 characters; may be empty with a position
+    body: string;
     /**
      * @generated from protobuf field: hypurr.social.v1.PositionLink position = 2
      */
     position?: PositionLink;
+    /**
+     * Absent for a post with only body and position.
+     *
+     * @generated from protobuf oneof: kind
+     */
+    kind: {
+        oneofKind: "fun";
+        /**
+         * @generated from protobuf field: hypurr.social.v1.FunPost fun = 3
+         */
+        fun: FunPost;
+    } | {
+        oneofKind: "prediction";
+        /**
+         * @generated from protobuf field: hypurr.social.v1.PredictionPost prediction = 4
+         */
+        prediction: PredictionPost;
+    } | {
+        oneofKind: undefined;
+    };
+    /**
+     * 0 to 4 photos and GIFs, in display order.
+     *
+     * @generated from protobuf field: repeated hypurr.social.v1.PostAttachmentInput attachments = 5
+     */
+    attachments: PostAttachmentInput[];
+    /**
+     * A UUID per draft. A retry with the same id returns the first post.
+     *
+     * @generated from protobuf field: string client_post_id = 6
+     */
+    clientPostId: string;
 }
 /**
  * @generated from protobuf message hypurr.social.v1.CreatePostResponse
@@ -1770,7 +1904,10 @@ class Post$Type extends MessageType<Post> {
             { no: 2, name: "author", kind: "message", T: () => UserSummary },
             { no: 3, name: "body", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "position", kind: "message", T: () => PostPosition },
-            { no: 5, name: "created_at_ms", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 5, name: "created_at_ms", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "fun", kind: "message", oneof: "kind", T: () => FunPost },
+            { no: 7, name: "prediction", kind: "message", oneof: "kind", T: () => PredictionPost },
+            { no: 8, name: "attachments", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PostAttachment }
         ]);
     }
     create(value?: PartialMessage<Post>): Post {
@@ -1778,6 +1915,8 @@ class Post$Type extends MessageType<Post> {
         message.id = 0;
         message.body = "";
         message.createdAtMs = 0;
+        message.kind = { oneofKind: undefined };
+        message.attachments = [];
         if (value !== undefined)
             reflectionMergePartial<Post>(this, message, value);
         return message;
@@ -1801,6 +1940,21 @@ class Post$Type extends MessageType<Post> {
                     break;
                 case /* int64 created_at_ms */ 5:
                     message.createdAtMs = reader.int64().toNumber();
+                    break;
+                case /* hypurr.social.v1.FunPost fun */ 6:
+                    message.kind = {
+                        oneofKind: "fun",
+                        fun: FunPost.internalBinaryRead(reader, reader.uint32(), options, (message.kind as any).fun)
+                    };
+                    break;
+                case /* hypurr.social.v1.PredictionPost prediction */ 7:
+                    message.kind = {
+                        oneofKind: "prediction",
+                        prediction: PredictionPost.internalBinaryRead(reader, reader.uint32(), options, (message.kind as any).prediction)
+                    };
+                    break;
+                case /* repeated hypurr.social.v1.PostAttachment attachments */ 8:
+                    message.attachments.push(PostAttachment.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1829,6 +1983,15 @@ class Post$Type extends MessageType<Post> {
         /* int64 created_at_ms = 5; */
         if (message.createdAtMs !== 0)
             writer.tag(5, WireType.Varint).int64(message.createdAtMs);
+        /* hypurr.social.v1.FunPost fun = 6; */
+        if (message.kind.oneofKind === "fun")
+            FunPost.internalBinaryWrite(message.kind.fun, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.social.v1.PredictionPost prediction = 7; */
+        if (message.kind.oneofKind === "prediction")
+            PredictionPost.internalBinaryWrite(message.kind.prediction, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.social.v1.PostAttachment attachments = 8; */
+        for (let i = 0; i < message.attachments.length; i++)
+            PostAttachment.internalBinaryWrite(message.attachments[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1840,16 +2003,236 @@ class Post$Type extends MessageType<Post> {
  */
 export const Post = new Post$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class FunPost$Type extends MessageType<FunPost> {
+    constructor() {
+        super("hypurr.social.v1.FunPost", []);
+    }
+    create(value?: PartialMessage<FunPost>): FunPost {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<FunPost>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FunPost): FunPost {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: FunPost, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.FunPost
+ */
+export const FunPost = new FunPost$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PredictionPost$Type extends MessageType<PredictionPost> {
+    constructor() {
+        super("hypurr.social.v1.PredictionPost", [
+            { no: 1, name: "asset_ids", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PredictionPost>): PredictionPost {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.assetIds = [];
+        if (value !== undefined)
+            reflectionMergePartial<PredictionPost>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PredictionPost): PredictionPost {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated uint32 asset_ids */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.assetIds.push(reader.uint32());
+                    else
+                        message.assetIds.push(reader.uint32());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PredictionPost, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated uint32 asset_ids = 1; */
+        if (message.assetIds.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.assetIds.length; i++)
+                writer.uint32(message.assetIds[i]);
+            writer.join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.PredictionPost
+ */
+export const PredictionPost = new PredictionPost$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PostAttachment$Type extends MessageType<PostAttachment> {
+    constructor() {
+        super("hypurr.social.v1.PostAttachment", [
+            { no: 1, name: "image_url", kind: "scalar", oneof: "source", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "giphy_id", kind: "scalar", oneof: "source", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PostAttachment>): PostAttachment {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.source = { oneofKind: undefined };
+        if (value !== undefined)
+            reflectionMergePartial<PostAttachment>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PostAttachment): PostAttachment {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string image_url */ 1:
+                    message.source = {
+                        oneofKind: "imageUrl",
+                        imageUrl: reader.string()
+                    };
+                    break;
+                case /* string giphy_id */ 2:
+                    message.source = {
+                        oneofKind: "giphyId",
+                        giphyId: reader.string()
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PostAttachment, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string image_url = 1; */
+        if (message.source.oneofKind === "imageUrl")
+            writer.tag(1, WireType.LengthDelimited).string(message.source.imageUrl);
+        /* string giphy_id = 2; */
+        if (message.source.oneofKind === "giphyId")
+            writer.tag(2, WireType.LengthDelimited).string(message.source.giphyId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.PostAttachment
+ */
+export const PostAttachment = new PostAttachment$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PostAttachmentInput$Type extends MessageType<PostAttachmentInput> {
+    constructor() {
+        super("hypurr.social.v1.PostAttachmentInput", [
+            { no: 1, name: "image_media_id", kind: "scalar", oneof: "source", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "giphy_id", kind: "scalar", oneof: "source", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PostAttachmentInput>): PostAttachmentInput {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.source = { oneofKind: undefined };
+        if (value !== undefined)
+            reflectionMergePartial<PostAttachmentInput>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PostAttachmentInput): PostAttachmentInput {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string image_media_id */ 1:
+                    message.source = {
+                        oneofKind: "imageMediaId",
+                        imageMediaId: reader.string()
+                    };
+                    break;
+                case /* string giphy_id */ 2:
+                    message.source = {
+                        oneofKind: "giphyId",
+                        giphyId: reader.string()
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PostAttachmentInput, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string image_media_id = 1; */
+        if (message.source.oneofKind === "imageMediaId")
+            writer.tag(1, WireType.LengthDelimited).string(message.source.imageMediaId);
+        /* string giphy_id = 2; */
+        if (message.source.oneofKind === "giphyId")
+            writer.tag(2, WireType.LengthDelimited).string(message.source.giphyId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.social.v1.PostAttachmentInput
+ */
+export const PostAttachmentInput = new PostAttachmentInput$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class CreatePostRequest$Type extends MessageType<CreatePostRequest> {
     constructor() {
         super("hypurr.social.v1.CreatePostRequest", [
             { no: 1, name: "body", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "position", kind: "message", T: () => PositionLink }
+            { no: 2, name: "position", kind: "message", T: () => PositionLink },
+            { no: 3, name: "fun", kind: "message", oneof: "kind", T: () => FunPost },
+            { no: 4, name: "prediction", kind: "message", oneof: "kind", T: () => PredictionPost },
+            { no: 5, name: "attachments", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => PostAttachmentInput },
+            { no: 6, name: "client_post_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<CreatePostRequest>): CreatePostRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.body = "";
+        message.kind = { oneofKind: undefined };
+        message.attachments = [];
+        message.clientPostId = "";
         if (value !== undefined)
             reflectionMergePartial<CreatePostRequest>(this, message, value);
         return message;
@@ -1864,6 +2247,24 @@ class CreatePostRequest$Type extends MessageType<CreatePostRequest> {
                     break;
                 case /* hypurr.social.v1.PositionLink position */ 2:
                     message.position = PositionLink.internalBinaryRead(reader, reader.uint32(), options, message.position);
+                    break;
+                case /* hypurr.social.v1.FunPost fun */ 3:
+                    message.kind = {
+                        oneofKind: "fun",
+                        fun: FunPost.internalBinaryRead(reader, reader.uint32(), options, (message.kind as any).fun)
+                    };
+                    break;
+                case /* hypurr.social.v1.PredictionPost prediction */ 4:
+                    message.kind = {
+                        oneofKind: "prediction",
+                        prediction: PredictionPost.internalBinaryRead(reader, reader.uint32(), options, (message.kind as any).prediction)
+                    };
+                    break;
+                case /* repeated hypurr.social.v1.PostAttachmentInput attachments */ 5:
+                    message.attachments.push(PostAttachmentInput.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string client_post_id */ 6:
+                    message.clientPostId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1883,6 +2284,18 @@ class CreatePostRequest$Type extends MessageType<CreatePostRequest> {
         /* hypurr.social.v1.PositionLink position = 2; */
         if (message.position)
             PositionLink.internalBinaryWrite(message.position, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.social.v1.FunPost fun = 3; */
+        if (message.kind.oneofKind === "fun")
+            FunPost.internalBinaryWrite(message.kind.fun, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.social.v1.PredictionPost prediction = 4; */
+        if (message.kind.oneofKind === "prediction")
+            PredictionPost.internalBinaryWrite(message.kind.prediction, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* repeated hypurr.social.v1.PostAttachmentInput attachments = 5; */
+        for (let i = 0; i < message.attachments.length; i++)
+            PostAttachmentInput.internalBinaryWrite(message.attachments[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* string client_post_id = 6; */
+        if (message.clientPostId !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.clientPostId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

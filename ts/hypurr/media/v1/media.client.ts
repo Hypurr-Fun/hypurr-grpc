@@ -15,10 +15,11 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 export interface IMediaServiceClient {
     /**
      * Stores an image for the caller. It stays unattached until a call such as
-     * hypurr.ios.SettingsService.UpdateSettingsProfile refers to its media_id.
+     * hypurr.ios.SettingsService.UpdateSettingsProfile or
+     * hypurr.social.v1.SocialService.CreatePost refers to its media_id.
      *
      * INVALID_ARGUMENT when the data is not a JPEG or PNG image, is above 2 MB,
-     * or is above 1536 pixels on a side. RESOURCE_EXHAUSTED after 10 uploads in
+     * or is above 1536 pixels on a side. RESOURCE_EXHAUSTED after 30 uploads in
      * one hour.
      *
      * @generated from protobuf rpc: UploadImage
@@ -36,10 +37,11 @@ export class MediaServiceClient implements IMediaServiceClient, ServiceInfo {
     }
     /**
      * Stores an image for the caller. It stays unattached until a call such as
-     * hypurr.ios.SettingsService.UpdateSettingsProfile refers to its media_id.
+     * hypurr.ios.SettingsService.UpdateSettingsProfile or
+     * hypurr.social.v1.SocialService.CreatePost refers to its media_id.
      *
      * INVALID_ARGUMENT when the data is not a JPEG or PNG image, is above 2 MB,
-     * or is above 1536 pixels on a side. RESOURCE_EXHAUSTED after 10 uploads in
+     * or is above 1536 pixels on a side. RESOURCE_EXHAUSTED after 30 uploads in
      * one hour.
      *
      * @generated from protobuf rpc: UploadImage

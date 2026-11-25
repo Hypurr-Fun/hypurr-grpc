@@ -118,23 +118,31 @@ message FeedPrediction {
     FeedSpotTrade spot_order = 6;
   }
   FeedEngagement engagement = 5;
+  // Same rules as FeedFuns.media_items.
+  repeated FeedMedia media_items = 7;
+  // One quote per predicted asset, in the author's order. market_quote is the first.
+  repeated MarketQuote market_quotes = 8;
 }
 
 // A post with text, media, or both.
 message FeedFuns {
   // Empty for a post with media only.
   string text = 1;
-  // Absent for a post with text only.
+  // Deprecated: use media_items. Kept as media_items[0] for older app versions.
   FeedMedia media = 2;
   FeedEngagement engagement = 3;
   // Author-provided alt text. Empty when media or its description is absent.
   string media_description = 4;
+  // Up to 4 images and GIFs, in display order.
+  repeated FeedMedia media_items = 5;
 }
 
 message FeedMedia {
   FeedMediaKind kind = 1;
-  // Full URL.
+  // Full URL. Empty for a GIPHY GIF.
   string url = 2;
+  // The GIPHY GIF id when kind is FEED_MEDIA_KIND_GIF.
+  string giphy_id = 3;
 }
 
 enum FeedMediaKind {

@@ -41,11 +41,13 @@ service SocialService {
   rpc RespondFollowRequest(RespondFollowRequestRequest) returns (RespondFollowRequestResponse);
 
   // Posts: text, optionally linked to one of the author's open perp
-  // positions. A post is visible to whoever can view its author's profile.
+  // positions and up to 4 photos and GIPHY GIFs. A post is visible to whoever
+  // can view its author's profile.
   //
   // CreatePost checks the position live on Hyperliquid (it must be open in
   // one of the caller's wallets) and stores a snapshot of it; an unknown
   // market or no open position fails with FAILED_PRECONDITION.
+  // INVALID_ARGUMENT on a broken field rule; RESOURCE_EXHAUSTED after a post in the last 5 minutes.
   rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
   // DeletePost deletes one of the caller's posts.
   rpc DeletePost(DeletePostRequest) returns (DeletePostResponse);
@@ -211,13 +213,61 @@ message Post {
   int64 id = 1;
   UserSummary author = 2;
   string body = 3;
-  PostPosition position = 4;   // unset for a text post
+  PostPosition position = 4;   // unset for a post without a position
   int64 created_at_ms = 5;
+
+  // Absent when the post was created without a kind.
+  oneof kind {
+    FunPost fun = 6;
+    PredictionPost prediction = 7;
+  }
+  // In display order. Empty when the post has no attachments.
+  repeated PostAttachment attachments = 8;
+}
+
+message FunPost {}
+
+message PredictionPost {
+  // 1 to 5 different hypurr.ios.Asset.asset_id values, in the author's order.
+  repeated uint32 asset_ids = 1;
+}
+
+message PostAttachment {
+  // Exactly one source is present.
+  oneof source {
+    // Full URL of an uploaded photo.
+    string image_url = 1;
+    // The GIPHY GIF id.
+    string giphy_id = 2;
+  }
+}
+
+message PostAttachmentInput {
+  // Exactly one source must be present.
+  oneof source {
+    // A media_id that MediaService.UploadImage returned to the caller.
+    string image_media_id = 1;
+    // A GIPHY GIF id: 1 to 64 ASCII letters and digits. The server never calls GIPHY.
+    string giphy_id = 2;
+  }
 }
 
 message CreatePostRequest {
-  string body = 1;             // at most 1000 characters; may be empty with a position
+  // At most 280 grapheme clusters. Empty only with attachments or a position.
+  string body = 1;
   PositionLink position = 2;
+
+  // Absent for a post with only body and position.
+  oneof kind {
+    FunPost fun = 3;
+    PredictionPost prediction = 4;
+  }
+
+  // 0 to 4 photos and GIFs, in display order.
+  repeated PostAttachmentInput attachments = 5;
+
+  // A UUID per draft. A retry with the same id returns the first post.
+  string client_post_id = 6;
 }
 
 message CreatePostResponse {

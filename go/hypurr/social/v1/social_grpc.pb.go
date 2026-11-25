@@ -75,11 +75,13 @@ type SocialServiceClient interface {
 	ListFollowRequests(ctx context.Context, in *ListFollowRequestsRequest, opts ...grpc.CallOption) (*ListFollowsResponse, error)
 	RespondFollowRequest(ctx context.Context, in *RespondFollowRequestRequest, opts ...grpc.CallOption) (*RespondFollowRequestResponse, error)
 	// Posts: text, optionally linked to one of the author's open perp
-	// positions. A post is visible to whoever can view its author's profile.
+	// positions and up to 4 photos and GIPHY GIFs. A post is visible to whoever
+	// can view its author's profile.
 	//
 	// CreatePost checks the position live on Hyperliquid (it must be open in
 	// one of the caller's wallets) and stores a snapshot of it; an unknown
 	// market or no open position fails with FAILED_PRECONDITION.
+	// INVALID_ARGUMENT on a broken field rule; RESOURCE_EXHAUSTED after a post in the last 5 minutes.
 	CreatePost(ctx context.Context, in *CreatePostRequest, opts ...grpc.CallOption) (*CreatePostResponse, error)
 	// DeletePost deletes one of the caller's posts.
 	DeletePost(ctx context.Context, in *DeletePostRequest, opts ...grpc.CallOption) (*DeletePostResponse, error)
@@ -279,11 +281,13 @@ type SocialServiceServer interface {
 	ListFollowRequests(context.Context, *ListFollowRequestsRequest) (*ListFollowsResponse, error)
 	RespondFollowRequest(context.Context, *RespondFollowRequestRequest) (*RespondFollowRequestResponse, error)
 	// Posts: text, optionally linked to one of the author's open perp
-	// positions. A post is visible to whoever can view its author's profile.
+	// positions and up to 4 photos and GIPHY GIFs. A post is visible to whoever
+	// can view its author's profile.
 	//
 	// CreatePost checks the position live on Hyperliquid (it must be open in
 	// one of the caller's wallets) and stores a snapshot of it; an unknown
 	// market or no open position fails with FAILED_PRECONDITION.
+	// INVALID_ARGUMENT on a broken field rule; RESOURCE_EXHAUSTED after a post in the last 5 minutes.
 	CreatePost(context.Context, *CreatePostRequest) (*CreatePostResponse, error)
 	// DeletePost deletes one of the caller's posts.
 	DeletePost(context.Context, *DeletePostRequest) (*DeletePostResponse, error)

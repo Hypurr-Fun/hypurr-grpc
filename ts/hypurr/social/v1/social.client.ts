@@ -105,11 +105,13 @@ export interface ISocialServiceClient {
     respondFollowRequest(input: RespondFollowRequestRequest, options?: RpcOptions): UnaryCall<RespondFollowRequestRequest, RespondFollowRequestResponse>;
     /**
      * Posts: text, optionally linked to one of the author's open perp
-     * positions. A post is visible to whoever can view its author's profile.
+     * positions and up to 4 photos and GIPHY GIFs. A post is visible to whoever
+     * can view its author's profile.
      *
      * CreatePost checks the position live on Hyperliquid (it must be open in
      * one of the caller's wallets) and stores a snapshot of it; an unknown
      * market or no open position fails with FAILED_PRECONDITION.
+     * INVALID_ARGUMENT on a broken field rule; RESOURCE_EXHAUSTED after a post in the last 5 minutes.
      *
      * @generated from protobuf rpc: CreatePost
      */
@@ -244,11 +246,13 @@ export class SocialServiceClient implements ISocialServiceClient, ServiceInfo {
     }
     /**
      * Posts: text, optionally linked to one of the author's open perp
-     * positions. A post is visible to whoever can view its author's profile.
+     * positions and up to 4 photos and GIPHY GIFs. A post is visible to whoever
+     * can view its author's profile.
      *
      * CreatePost checks the position live on Hyperliquid (it must be open in
      * one of the caller's wallets) and stores a snapshot of it; an unknown
      * market or no open position fails with FAILED_PRECONDITION.
+     * INVALID_ARGUMENT on a broken field rule; RESOURCE_EXHAUSTED after a post in the last 5 minutes.
      *
      * @generated from protobuf rpc: CreatePost
      */

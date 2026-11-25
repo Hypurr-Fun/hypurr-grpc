@@ -27,10 +27,11 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MediaServiceClient interface {
 	// Stores an image for the caller. It stays unattached until a call such as
-	// hypurr.ios.SettingsService.UpdateSettingsProfile refers to its media_id.
+	// hypurr.ios.SettingsService.UpdateSettingsProfile or
+	// hypurr.social.v1.SocialService.CreatePost refers to its media_id.
 	//
 	// INVALID_ARGUMENT when the data is not a JPEG or PNG image, is above 2 MB,
-	// or is above 1536 pixels on a side. RESOURCE_EXHAUSTED after 10 uploads in
+	// or is above 1536 pixels on a side. RESOURCE_EXHAUSTED after 30 uploads in
 	// one hour.
 	UploadImage(ctx context.Context, in *UploadImageRequest, opts ...grpc.CallOption) (*UploadImageResponse, error)
 }
@@ -58,10 +59,11 @@ func (c *mediaServiceClient) UploadImage(ctx context.Context, in *UploadImageReq
 // for forward compatibility
 type MediaServiceServer interface {
 	// Stores an image for the caller. It stays unattached until a call such as
-	// hypurr.ios.SettingsService.UpdateSettingsProfile refers to its media_id.
+	// hypurr.ios.SettingsService.UpdateSettingsProfile or
+	// hypurr.social.v1.SocialService.CreatePost refers to its media_id.
 	//
 	// INVALID_ARGUMENT when the data is not a JPEG or PNG image, is above 2 MB,
-	// or is above 1536 pixels on a side. RESOURCE_EXHAUSTED after 10 uploads in
+	// or is above 1536 pixels on a side. RESOURCE_EXHAUSTED after 30 uploads in
 	// one hour.
 	UploadImage(context.Context, *UploadImageRequest) (*UploadImageResponse, error)
 	mustEmbedUnimplementedMediaServiceServer()
