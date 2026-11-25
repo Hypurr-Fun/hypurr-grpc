@@ -1438,8 +1438,6 @@ type Post struct {
 	Body        string        `protobuf:"bytes,3,opt,name=body,proto3" json:"body,omitempty"`
 	Position    *PostPosition `protobuf:"bytes,4,opt,name=position,proto3" json:"position,omitempty"` // unset for a post without a position
 	CreatedAtMs int64         `protobuf:"varint,5,opt,name=created_at_ms,json=createdAtMs,proto3" json:"created_at_ms,omitempty"`
-	// Absent when the post was created without a kind.
-	//
 	// Types that are assignable to Kind:
 	//
 	//	*Post_Fun
@@ -1824,7 +1822,7 @@ type CreatePostRequest struct {
 	// At most 280 grapheme clusters. Empty only with attachments or a position.
 	Body     string        `protobuf:"bytes,1,opt,name=body,proto3" json:"body,omitempty"`
 	Position *PositionLink `protobuf:"bytes,2,opt,name=position,proto3" json:"position,omitempty"`
-	// Absent for a post with only body and position.
+	// Required.
 	//
 	// Types that are assignable to Kind:
 	//
@@ -1833,7 +1831,7 @@ type CreatePostRequest struct {
 	Kind isCreatePostRequest_Kind `protobuf_oneof:"kind"`
 	// 0 to 4 photos and GIFs, in display order.
 	Attachments []*PostAttachmentInput `protobuf:"bytes,5,rep,name=attachments,proto3" json:"attachments,omitempty"`
-	// A UUID per draft. A retry with the same id returns the first post.
+	// Required. A UUID per draft. A retry with the same id returns the first post.
 	ClientPostId string `protobuf:"bytes,6,opt,name=client_post_id,json=clientPostId,proto3" json:"client_post_id,omitempty"`
 }
 

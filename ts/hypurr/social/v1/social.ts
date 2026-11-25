@@ -393,8 +393,6 @@ export interface Post {
      */
     createdAtMs: number;
     /**
-     * Absent when the post was created without a kind.
-     *
      * @generated from protobuf oneof: kind
      */
     kind: {
@@ -508,7 +506,7 @@ export interface CreatePostRequest {
      */
     position?: PositionLink;
     /**
-     * Absent for a post with only body and position.
+     * Required.
      *
      * @generated from protobuf oneof: kind
      */
@@ -534,7 +532,7 @@ export interface CreatePostRequest {
      */
     attachments: PostAttachmentInput[];
     /**
-     * A UUID per draft. A retry with the same id returns the first post.
+     * Required. A UUID per draft. A retry with the same id returns the first post.
      *
      * @generated from protobuf field: string client_post_id = 6
      */

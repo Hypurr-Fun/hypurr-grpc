@@ -216,7 +216,6 @@ message Post {
   PostPosition position = 4;   // unset for a post without a position
   int64 created_at_ms = 5;
 
-  // Absent when the post was created without a kind.
   oneof kind {
     FunPost fun = 6;
     PredictionPost prediction = 7;
@@ -257,7 +256,7 @@ message CreatePostRequest {
   string body = 1;
   PositionLink position = 2;
 
-  // Absent for a post with only body and position.
+  // Required.
   oneof kind {
     FunPost fun = 3;
     PredictionPost prediction = 4;
@@ -266,7 +265,7 @@ message CreatePostRequest {
   // 0 to 4 photos and GIFs, in display order.
   repeated PostAttachmentInput attachments = 5;
 
-  // A UUID per draft. A retry with the same id returns the first post.
+  // Required. A UUID per draft. A retry with the same id returns the first post.
   string client_post_id = 6;
 }
 
