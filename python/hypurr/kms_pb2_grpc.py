@@ -111,6 +111,16 @@ class KmsStub:
                 request_serializer=hypurr_dot_kms__pb2.KmsRecoverKeysRequest.SerializeToString,
                 response_deserializer=hypurr_dot_kms__pb2.KmsRecoverKeysResponse.FromString,
                 _registered_method=True)
+        self.AccountRefreshSession = channel.unary_unary(
+                '/hypurr.Kms/AccountRefreshSession',
+                request_serializer=hypurr_dot_kms__pb2.KmsAccountRefreshSessionRequest.SerializeToString,
+                response_deserializer=hypurr_dot_kms__pb2.KmsAccountRefreshSessionResponse.FromString,
+                _registered_method=True)
+        self.AccountRevokeSessions = channel.unary_unary(
+                '/hypurr.Kms/AccountRevokeSessions',
+                request_serializer=hypurr_dot_kms__pb2.KmsAccountRevokeSessionsRequest.SerializeToString,
+                response_deserializer=hypurr_dot_kms__pb2.KmsAccountRevokeSessionsResponse.FromString,
+                _registered_method=True)
         self.CompleteAccountHandoff = channel.unary_unary(
                 '/hypurr.Kms/CompleteAccountHandoff',
                 request_serializer=hypurr_dot_kms__pb2.KmsCompleteAccountHandoffRequest.SerializeToString,
@@ -219,6 +229,18 @@ class KmsServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def AccountRefreshSession(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AccountRevokeSessions(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def CompleteAccountHandoff(self, request, context):
         """Bot JWT.
         """
@@ -309,6 +331,16 @@ def add_KmsServicer_to_server(servicer, server):
                     servicer.RecoverKeys,
                     request_deserializer=hypurr_dot_kms__pb2.KmsRecoverKeysRequest.FromString,
                     response_serializer=hypurr_dot_kms__pb2.KmsRecoverKeysResponse.SerializeToString,
+            ),
+            'AccountRefreshSession': grpc.unary_unary_rpc_method_handler(
+                    servicer.AccountRefreshSession,
+                    request_deserializer=hypurr_dot_kms__pb2.KmsAccountRefreshSessionRequest.FromString,
+                    response_serializer=hypurr_dot_kms__pb2.KmsAccountRefreshSessionResponse.SerializeToString,
+            ),
+            'AccountRevokeSessions': grpc.unary_unary_rpc_method_handler(
+                    servicer.AccountRevokeSessions,
+                    request_deserializer=hypurr_dot_kms__pb2.KmsAccountRevokeSessionsRequest.FromString,
+                    response_serializer=hypurr_dot_kms__pb2.KmsAccountRevokeSessionsResponse.SerializeToString,
             ),
             'CompleteAccountHandoff': grpc.unary_unary_rpc_method_handler(
                     servicer.CompleteAccountHandoff,
@@ -728,6 +760,60 @@ class Kms:
             '/hypurr.Kms/RecoverKeys',
             hypurr_dot_kms__pb2.KmsRecoverKeysRequest.SerializeToString,
             hypurr_dot_kms__pb2.KmsRecoverKeysResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AccountRefreshSession(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Kms/AccountRefreshSession',
+            hypurr_dot_kms__pb2.KmsAccountRefreshSessionRequest.SerializeToString,
+            hypurr_dot_kms__pb2.KmsAccountRefreshSessionResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AccountRevokeSessions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Kms/AccountRevokeSessions',
+            hypurr_dot_kms__pb2.KmsAccountRevokeSessionsRequest.SerializeToString,
+            hypurr_dot_kms__pb2.KmsAccountRevokeSessionsResponse.FromString,
             options,
             channel_credentials,
             insecure,
