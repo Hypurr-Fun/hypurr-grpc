@@ -245,6 +245,16 @@ export interface KmsGetAccountInfoResponse {
      * @generated from protobuf field: bytes passkey_credential_id = 6
      */
     passkeyCredentialId: Uint8Array;
+    /**
+     * Built by the instance, not signed by the enclave.
+     *
+     * @generated from protobuf field: repeated hypurr.KmsSessionInfo sessions = 7
+     */
+    sessions: KmsSessionInfo[];
+    /**
+     * @generated from protobuf field: hypurr.KmsFactorResetStatus factor_reset = 8
+     */
+    factorReset?: KmsFactorResetStatus; // unset when no reset is pending
 }
 /**
  * @generated from protobuf message hypurr.KmsProviderInfo
@@ -314,6 +324,56 @@ export interface KmsAgentInfo {
      * @generated from protobuf field: repeated string wallet_ids = 6
      */
     walletIds: string[];
+}
+/**
+ * @generated from protobuf message hypurr.KmsSessionInfo
+ */
+export interface KmsSessionInfo {
+    /**
+     * @generated from protobuf field: string session_id = 1
+     */
+    sessionId: string;
+    /**
+     * @generated from protobuf field: string device_id = 2
+     */
+    deviceId: string;
+    /**
+     * @generated from protobuf field: string device_name = 3
+     */
+    deviceName: string;
+    /**
+     * @generated from protobuf field: string device_platform = 4
+     */
+    devicePlatform: string;
+    /**
+     * @generated from protobuf field: int64 created_at = 5
+     */
+    createdAt: number;
+    /**
+     * @generated from protobuf field: int64 refreshed_at = 6
+     */
+    refreshedAt: number;
+    /**
+     * @generated from protobuf field: int64 expires_at = 7
+     */
+    expiresAt: number;
+}
+/**
+ * @generated from protobuf message hypurr.KmsFactorResetStatus
+ */
+export interface KmsFactorResetStatus {
+    /**
+     * @generated from protobuf field: int64 requested_at = 1
+     */
+    requestedAt: number;
+    /**
+     * @generated from protobuf field: int64 executable_at = 2
+     */
+    executableAt: number;
+    /**
+     * @generated from protobuf field: int64 executable_until = 3
+     */
+    executableUntil: number;
 }
 /**
  * @generated from protobuf message hypurr.KmsAccountShardSecretRequest
@@ -402,6 +462,23 @@ export interface KmsExecuteFactorResetResponse {
      * @generated from protobuf field: bytes attestation = 1
      */
     attestation: Uint8Array;
+    /**
+     * The executing device gets a fresh session; the request needs
+     * x-hypurr-device-id.
+     *
+     * @generated from protobuf field: string bot_access_token = 2
+     */
+    botAccessToken: string;
+    /**
+     * @generated from protobuf field: string bot_refresh_token = 3
+     */
+    botRefreshToken: string;
+    /**
+     * Seconds until bot_access_token expires.
+     *
+     * @generated from protobuf field: int64 bot_access_token_expires_in = 4
+     */
+    botAccessTokenExpiresIn: number;
 }
 /**
  * @generated from protobuf message hypurr.KmsRecoverKeysRequest
@@ -420,6 +497,66 @@ export interface KmsRecoverKeysRequest {
  * @generated from protobuf message hypurr.KmsRecoverKeysResponse
  */
 export interface KmsRecoverKeysResponse {
+    /**
+     * @generated from protobuf field: bytes attestation = 1
+     */
+    attestation: Uint8Array;
+}
+/**
+ * Authenticated by the bot refresh token plus x-hypurr-device-id, because
+ * the access token has expired.
+ *
+ * @generated from protobuf message hypurr.KmsAccountRefreshSessionRequest
+ */
+export interface KmsAccountRefreshSessionRequest {
+    /**
+     * @generated from protobuf field: bytes encrypted_payload = 1
+     */
+    encryptedPayload: Uint8Array;
+    /**
+     * @generated from protobuf field: string instance_jwt = 2
+     */
+    instanceJwt: string; // may be expired on this route
+    /**
+     * @generated from protobuf field: string bot_refresh_token = 3
+     */
+    botRefreshToken: string;
+}
+/**
+ * @generated from protobuf message hypurr.KmsAccountRefreshSessionResponse
+ */
+export interface KmsAccountRefreshSessionResponse {
+    /**
+     * @generated from protobuf field: bytes attestation = 1
+     */
+    attestation: Uint8Array;
+    /**
+     * The bot's new access token, refresh token and
+     * bot_access_token_expires_in, sealed to the session's device key.
+     *
+     * @generated from protobuf field: bytes bot_tokens_sealed = 2
+     */
+    botTokensSealed: Uint8Array;
+}
+/**
+ * Authenticated by Authorization: Bearer <bot access token>.
+ *
+ * @generated from protobuf message hypurr.KmsAccountRevokeSessionsRequest
+ */
+export interface KmsAccountRevokeSessionsRequest {
+    /**
+     * @generated from protobuf field: bytes encrypted_payload = 1
+     */
+    encryptedPayload: Uint8Array;
+    /**
+     * @generated from protobuf field: string instance_jwt = 2
+     */
+    instanceJwt: string;
+}
+/**
+ * @generated from protobuf message hypurr.KmsAccountRevokeSessionsResponse
+ */
+export interface KmsAccountRevokeSessionsResponse {
     /**
      * @generated from protobuf field: bytes attestation = 1
      */
@@ -1396,7 +1533,9 @@ class KmsGetAccountInfoResponse$Type extends MessageType<KmsGetAccountInfoRespon
             { no: 3, name: "wallets", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => KmsWalletInfo },
             { no: 4, name: "two_factor_types", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "agents", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => KmsAgentInfo },
-            { no: 6, name: "passkey_credential_id", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+            { no: 6, name: "passkey_credential_id", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 7, name: "sessions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => KmsSessionInfo },
+            { no: 8, name: "factor_reset", kind: "message", T: () => KmsFactorResetStatus }
         ]);
     }
     create(value?: PartialMessage<KmsGetAccountInfoResponse>): KmsGetAccountInfoResponse {
@@ -1407,6 +1546,7 @@ class KmsGetAccountInfoResponse$Type extends MessageType<KmsGetAccountInfoRespon
         message.twoFactorTypes = [];
         message.agents = [];
         message.passkeyCredentialId = new Uint8Array(0);
+        message.sessions = [];
         if (value !== undefined)
             reflectionMergePartial<KmsGetAccountInfoResponse>(this, message, value);
         return message;
@@ -1433,6 +1573,12 @@ class KmsGetAccountInfoResponse$Type extends MessageType<KmsGetAccountInfoRespon
                     break;
                 case /* bytes passkey_credential_id */ 6:
                     message.passkeyCredentialId = reader.bytes();
+                    break;
+                case /* repeated hypurr.KmsSessionInfo sessions */ 7:
+                    message.sessions.push(KmsSessionInfo.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* hypurr.KmsFactorResetStatus factor_reset */ 8:
+                    message.factorReset = KmsFactorResetStatus.internalBinaryRead(reader, reader.uint32(), options, message.factorReset);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1464,6 +1610,12 @@ class KmsGetAccountInfoResponse$Type extends MessageType<KmsGetAccountInfoRespon
         /* bytes passkey_credential_id = 6; */
         if (message.passkeyCredentialId.length)
             writer.tag(6, WireType.LengthDelimited).bytes(message.passkeyCredentialId);
+        /* repeated hypurr.KmsSessionInfo sessions = 7; */
+        for (let i = 0; i < message.sessions.length; i++)
+            KmsSessionInfo.internalBinaryWrite(message.sessions[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* hypurr.KmsFactorResetStatus factor_reset = 8; */
+        if (message.factorReset)
+            KmsFactorResetStatus.internalBinaryWrite(message.factorReset, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1695,6 +1847,164 @@ class KmsAgentInfo$Type extends MessageType<KmsAgentInfo> {
  * @generated MessageType for protobuf message hypurr.KmsAgentInfo
  */
 export const KmsAgentInfo = new KmsAgentInfo$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KmsSessionInfo$Type extends MessageType<KmsSessionInfo> {
+    constructor() {
+        super("hypurr.KmsSessionInfo", [
+            { no: 1, name: "session_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "device_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "device_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "device_platform", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 6, name: "refreshed_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 7, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KmsSessionInfo>): KmsSessionInfo {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.sessionId = "";
+        message.deviceId = "";
+        message.deviceName = "";
+        message.devicePlatform = "";
+        message.createdAt = 0;
+        message.refreshedAt = 0;
+        message.expiresAt = 0;
+        if (value !== undefined)
+            reflectionMergePartial<KmsSessionInfo>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsSessionInfo): KmsSessionInfo {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string session_id */ 1:
+                    message.sessionId = reader.string();
+                    break;
+                case /* string device_id */ 2:
+                    message.deviceId = reader.string();
+                    break;
+                case /* string device_name */ 3:
+                    message.deviceName = reader.string();
+                    break;
+                case /* string device_platform */ 4:
+                    message.devicePlatform = reader.string();
+                    break;
+                case /* int64 created_at */ 5:
+                    message.createdAt = reader.int64().toNumber();
+                    break;
+                case /* int64 refreshed_at */ 6:
+                    message.refreshedAt = reader.int64().toNumber();
+                    break;
+                case /* int64 expires_at */ 7:
+                    message.expiresAt = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsSessionInfo, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string session_id = 1; */
+        if (message.sessionId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.sessionId);
+        /* string device_id = 2; */
+        if (message.deviceId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.deviceId);
+        /* string device_name = 3; */
+        if (message.deviceName !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.deviceName);
+        /* string device_platform = 4; */
+        if (message.devicePlatform !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.devicePlatform);
+        /* int64 created_at = 5; */
+        if (message.createdAt !== 0)
+            writer.tag(5, WireType.Varint).int64(message.createdAt);
+        /* int64 refreshed_at = 6; */
+        if (message.refreshedAt !== 0)
+            writer.tag(6, WireType.Varint).int64(message.refreshedAt);
+        /* int64 expires_at = 7; */
+        if (message.expiresAt !== 0)
+            writer.tag(7, WireType.Varint).int64(message.expiresAt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsSessionInfo
+ */
+export const KmsSessionInfo = new KmsSessionInfo$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KmsFactorResetStatus$Type extends MessageType<KmsFactorResetStatus> {
+    constructor() {
+        super("hypurr.KmsFactorResetStatus", [
+            { no: 1, name: "requested_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 2, name: "executable_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 3, name: "executable_until", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KmsFactorResetStatus>): KmsFactorResetStatus {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.requestedAt = 0;
+        message.executableAt = 0;
+        message.executableUntil = 0;
+        if (value !== undefined)
+            reflectionMergePartial<KmsFactorResetStatus>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsFactorResetStatus): KmsFactorResetStatus {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 requested_at */ 1:
+                    message.requestedAt = reader.int64().toNumber();
+                    break;
+                case /* int64 executable_at */ 2:
+                    message.executableAt = reader.int64().toNumber();
+                    break;
+                case /* int64 executable_until */ 3:
+                    message.executableUntil = reader.int64().toNumber();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsFactorResetStatus, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 requested_at = 1; */
+        if (message.requestedAt !== 0)
+            writer.tag(1, WireType.Varint).int64(message.requestedAt);
+        /* int64 executable_at = 2; */
+        if (message.executableAt !== 0)
+            writer.tag(2, WireType.Varint).int64(message.executableAt);
+        /* int64 executable_until = 3; */
+        if (message.executableUntil !== 0)
+            writer.tag(3, WireType.Varint).int64(message.executableUntil);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsFactorResetStatus
+ */
+export const KmsFactorResetStatus = new KmsFactorResetStatus$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class KmsAccountShardSecretRequest$Type extends MessageType<KmsAccountShardSecretRequest> {
     constructor() {
@@ -2060,12 +2370,18 @@ export const KmsExecuteFactorResetRequest = new KmsExecuteFactorResetRequest$Typ
 class KmsExecuteFactorResetResponse$Type extends MessageType<KmsExecuteFactorResetResponse> {
     constructor() {
         super("hypurr.KmsExecuteFactorResetResponse", [
-            { no: 1, name: "attestation", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+            { no: 1, name: "attestation", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 2, name: "bot_access_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "bot_refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "bot_access_token_expires_in", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<KmsExecuteFactorResetResponse>): KmsExecuteFactorResetResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.attestation = new Uint8Array(0);
+        message.botAccessToken = "";
+        message.botRefreshToken = "";
+        message.botAccessTokenExpiresIn = 0;
         if (value !== undefined)
             reflectionMergePartial<KmsExecuteFactorResetResponse>(this, message, value);
         return message;
@@ -2077,6 +2393,15 @@ class KmsExecuteFactorResetResponse$Type extends MessageType<KmsExecuteFactorRes
             switch (fieldNo) {
                 case /* bytes attestation */ 1:
                     message.attestation = reader.bytes();
+                    break;
+                case /* string bot_access_token */ 2:
+                    message.botAccessToken = reader.string();
+                    break;
+                case /* string bot_refresh_token */ 3:
+                    message.botRefreshToken = reader.string();
+                    break;
+                case /* int64 bot_access_token_expires_in */ 4:
+                    message.botAccessTokenExpiresIn = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2093,6 +2418,15 @@ class KmsExecuteFactorResetResponse$Type extends MessageType<KmsExecuteFactorRes
         /* bytes attestation = 1; */
         if (message.attestation.length)
             writer.tag(1, WireType.LengthDelimited).bytes(message.attestation);
+        /* string bot_access_token = 2; */
+        if (message.botAccessToken !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.botAccessToken);
+        /* string bot_refresh_token = 3; */
+        if (message.botRefreshToken !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.botRefreshToken);
+        /* int64 bot_access_token_expires_in = 4; */
+        if (message.botAccessTokenExpiresIn !== 0)
+            writer.tag(4, WireType.Varint).int64(message.botAccessTokenExpiresIn);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2205,6 +2539,226 @@ class KmsRecoverKeysResponse$Type extends MessageType<KmsRecoverKeysResponse> {
  * @generated MessageType for protobuf message hypurr.KmsRecoverKeysResponse
  */
 export const KmsRecoverKeysResponse = new KmsRecoverKeysResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KmsAccountRefreshSessionRequest$Type extends MessageType<KmsAccountRefreshSessionRequest> {
+    constructor() {
+        super("hypurr.KmsAccountRefreshSessionRequest", [
+            { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "bot_refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KmsAccountRefreshSessionRequest>): KmsAccountRefreshSessionRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.encryptedPayload = new Uint8Array(0);
+        message.instanceJwt = "";
+        message.botRefreshToken = "";
+        if (value !== undefined)
+            reflectionMergePartial<KmsAccountRefreshSessionRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsAccountRefreshSessionRequest): KmsAccountRefreshSessionRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bytes encrypted_payload */ 1:
+                    message.encryptedPayload = reader.bytes();
+                    break;
+                case /* string instance_jwt */ 2:
+                    message.instanceJwt = reader.string();
+                    break;
+                case /* string bot_refresh_token */ 3:
+                    message.botRefreshToken = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsAccountRefreshSessionRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bytes encrypted_payload = 1; */
+        if (message.encryptedPayload.length)
+            writer.tag(1, WireType.LengthDelimited).bytes(message.encryptedPayload);
+        /* string instance_jwt = 2; */
+        if (message.instanceJwt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
+        /* string bot_refresh_token = 3; */
+        if (message.botRefreshToken !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.botRefreshToken);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsAccountRefreshSessionRequest
+ */
+export const KmsAccountRefreshSessionRequest = new KmsAccountRefreshSessionRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KmsAccountRefreshSessionResponse$Type extends MessageType<KmsAccountRefreshSessionResponse> {
+    constructor() {
+        super("hypurr.KmsAccountRefreshSessionResponse", [
+            { no: 1, name: "attestation", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 2, name: "bot_tokens_sealed", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KmsAccountRefreshSessionResponse>): KmsAccountRefreshSessionResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.attestation = new Uint8Array(0);
+        message.botTokensSealed = new Uint8Array(0);
+        if (value !== undefined)
+            reflectionMergePartial<KmsAccountRefreshSessionResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsAccountRefreshSessionResponse): KmsAccountRefreshSessionResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bytes attestation */ 1:
+                    message.attestation = reader.bytes();
+                    break;
+                case /* bytes bot_tokens_sealed */ 2:
+                    message.botTokensSealed = reader.bytes();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsAccountRefreshSessionResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bytes attestation = 1; */
+        if (message.attestation.length)
+            writer.tag(1, WireType.LengthDelimited).bytes(message.attestation);
+        /* bytes bot_tokens_sealed = 2; */
+        if (message.botTokensSealed.length)
+            writer.tag(2, WireType.LengthDelimited).bytes(message.botTokensSealed);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsAccountRefreshSessionResponse
+ */
+export const KmsAccountRefreshSessionResponse = new KmsAccountRefreshSessionResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KmsAccountRevokeSessionsRequest$Type extends MessageType<KmsAccountRevokeSessionsRequest> {
+    constructor() {
+        super("hypurr.KmsAccountRevokeSessionsRequest", [
+            { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KmsAccountRevokeSessionsRequest>): KmsAccountRevokeSessionsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.encryptedPayload = new Uint8Array(0);
+        message.instanceJwt = "";
+        if (value !== undefined)
+            reflectionMergePartial<KmsAccountRevokeSessionsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsAccountRevokeSessionsRequest): KmsAccountRevokeSessionsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bytes encrypted_payload */ 1:
+                    message.encryptedPayload = reader.bytes();
+                    break;
+                case /* string instance_jwt */ 2:
+                    message.instanceJwt = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsAccountRevokeSessionsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bytes encrypted_payload = 1; */
+        if (message.encryptedPayload.length)
+            writer.tag(1, WireType.LengthDelimited).bytes(message.encryptedPayload);
+        /* string instance_jwt = 2; */
+        if (message.instanceJwt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsAccountRevokeSessionsRequest
+ */
+export const KmsAccountRevokeSessionsRequest = new KmsAccountRevokeSessionsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KmsAccountRevokeSessionsResponse$Type extends MessageType<KmsAccountRevokeSessionsResponse> {
+    constructor() {
+        super("hypurr.KmsAccountRevokeSessionsResponse", [
+            { no: 1, name: "attestation", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KmsAccountRevokeSessionsResponse>): KmsAccountRevokeSessionsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.attestation = new Uint8Array(0);
+        if (value !== undefined)
+            reflectionMergePartial<KmsAccountRevokeSessionsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KmsAccountRevokeSessionsResponse): KmsAccountRevokeSessionsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bytes attestation */ 1:
+                    message.attestation = reader.bytes();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KmsAccountRevokeSessionsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bytes attestation = 1; */
+        if (message.attestation.length)
+            writer.tag(1, WireType.LengthDelimited).bytes(message.attestation);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message hypurr.KmsAccountRevokeSessionsResponse
+ */
+export const KmsAccountRevokeSessionsResponse = new KmsAccountRevokeSessionsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class KmsAccountSignMessageRequest$Type extends MessageType<KmsAccountSignMessageRequest> {
     constructor() {
@@ -2640,6 +3194,8 @@ export const Kms = new ServiceType("hypurr.Kms", [
     { name: "CancelFactorReset", options: {}, I: KmsCancelFactorResetRequest, O: KmsCancelFactorResetResponse },
     { name: "ExecuteFactorReset", options: {}, I: KmsExecuteFactorResetRequest, O: KmsExecuteFactorResetResponse },
     { name: "RecoverKeys", options: {}, I: KmsRecoverKeysRequest, O: KmsRecoverKeysResponse },
+    { name: "AccountRefreshSession", options: {}, I: KmsAccountRefreshSessionRequest, O: KmsAccountRefreshSessionResponse },
+    { name: "AccountRevokeSessions", options: {}, I: KmsAccountRevokeSessionsRequest, O: KmsAccountRevokeSessionsResponse },
     { name: "CompleteAccountHandoff", options: {}, I: KmsCompleteAccountHandoffRequest, O: KmsCompleteAccountHandoffResponse },
     { name: "RequestAgent", options: {}, I: KmsRequestAgentRequest, O: KmsRequestAgentResponse }
 ]);

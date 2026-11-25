@@ -22,6 +22,8 @@ service Kms {
   rpc CancelFactorReset(KmsCancelFactorResetRequest) returns (KmsCancelFactorResetResponse);
   rpc ExecuteFactorReset(KmsExecuteFactorResetRequest) returns (KmsExecuteFactorResetResponse);
   rpc RecoverKeys(KmsRecoverKeysRequest) returns (KmsRecoverKeysResponse);
+  rpc AccountRefreshSession(KmsAccountRefreshSessionRequest) returns (KmsAccountRefreshSessionResponse);
+  rpc AccountRevokeSessions(KmsAccountRevokeSessionsRequest) returns (KmsAccountRevokeSessionsResponse);
 
   // Bot JWT.
   rpc CompleteAccountHandoff(KmsCompleteAccountHandoffRequest) returns (KmsCompleteAccountHandoffResponse);
@@ -122,6 +124,8 @@ message KmsGetAccountInfoResponse {
   repeated string two_factor_types = 4;
   repeated KmsAgentInfo agents = 5;
   bytes passkey_credential_id = 6;
+  repeated KmsSessionInfo sessions = 7;
+  KmsFactorResetStatus factor_reset = 8;
 }
 
 message KmsProviderInfo {
@@ -145,6 +149,22 @@ message KmsAgentInfo {
   int64 daily_spend_cap_usd = 5;
   // The account wallets (KmsWalletInfo.id) the agent may sign for.
   repeated string wallet_ids = 6;
+}
+
+message KmsSessionInfo {
+  string session_id = 1;
+  string device_id = 2;
+  string device_name = 3;
+  string device_platform = 4;
+  int64 created_at = 5;
+  int64 refreshed_at = 6;
+  int64 expires_at = 7;
+}
+
+message KmsFactorResetStatus {
+  int64 requested_at = 1;
+  int64 executable_at = 2;
+  int64 executable_until = 3;
 }
 
 message KmsAccountShardSecretRequest {
@@ -181,6 +201,9 @@ message KmsExecuteFactorResetRequest {
 
 message KmsExecuteFactorResetResponse {
   bytes attestation = 1;
+  string bot_access_token = 2;
+  string bot_refresh_token = 3;
+  int64 bot_access_token_expires_in = 4;
 }
 
 message KmsRecoverKeysRequest {
@@ -189,6 +212,29 @@ message KmsRecoverKeysRequest {
 }
 
 message KmsRecoverKeysResponse {
+  bytes attestation = 1;
+}
+
+// Authenticated by the bot refresh token plus x-hypurr-device-id, because
+// the access token has expired.
+message KmsAccountRefreshSessionRequest {
+  bytes encrypted_payload = 1;
+  string instance_jwt = 2; // may be expired on this route
+  string bot_refresh_token = 3;
+}
+
+message KmsAccountRefreshSessionResponse {
+  bytes attestation = 1;
+  bytes bot_tokens_sealed = 2;
+}
+
+// Authenticated by Authorization: Bearer <bot access token>.
+message KmsAccountRevokeSessionsRequest {
+  bytes encrypted_payload = 1;
+  string instance_jwt = 2;
+}
+
+message KmsAccountRevokeSessionsResponse {
   bytes attestation = 1;
 }
 
