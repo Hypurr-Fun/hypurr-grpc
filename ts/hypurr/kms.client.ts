@@ -8,6 +8,10 @@ import type { KmsRequestAgentResponse } from "./kms";
 import type { KmsRequestAgentRequest } from "./kms";
 import type { KmsCompleteAccountHandoffResponse } from "./kms";
 import type { KmsCompleteAccountHandoffRequest } from "./kms";
+import type { KmsAccountRevokeSessionsResponse } from "./kms";
+import type { KmsAccountRevokeSessionsRequest } from "./kms";
+import type { KmsAccountRefreshSessionResponse } from "./kms";
+import type { KmsAccountRefreshSessionRequest } from "./kms";
 import type { KmsRecoverKeysResponse } from "./kms";
 import type { KmsRecoverKeysRequest } from "./kms";
 import type { KmsExecuteFactorResetResponse } from "./kms";
@@ -110,6 +114,14 @@ export interface IKmsClient {
      * @generated from protobuf rpc: RecoverKeys
      */
     recoverKeys(input: KmsRecoverKeysRequest, options?: RpcOptions): UnaryCall<KmsRecoverKeysRequest, KmsRecoverKeysResponse>;
+    /**
+     * @generated from protobuf rpc: AccountRefreshSession
+     */
+    accountRefreshSession(input: KmsAccountRefreshSessionRequest, options?: RpcOptions): UnaryCall<KmsAccountRefreshSessionRequest, KmsAccountRefreshSessionResponse>;
+    /**
+     * @generated from protobuf rpc: AccountRevokeSessions
+     */
+    accountRevokeSessions(input: KmsAccountRevokeSessionsRequest, options?: RpcOptions): UnaryCall<KmsAccountRevokeSessionsRequest, KmsAccountRevokeSessionsResponse>;
     /**
      * Bot JWT.
      *
@@ -241,19 +253,33 @@ export class KmsClient implements IKmsClient, ServiceInfo {
         return stackIntercept<KmsRecoverKeysRequest, KmsRecoverKeysResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: AccountRefreshSession
+     */
+    accountRefreshSession(input: KmsAccountRefreshSessionRequest, options?: RpcOptions): UnaryCall<KmsAccountRefreshSessionRequest, KmsAccountRefreshSessionResponse> {
+        const method = this.methods[15], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsAccountRefreshSessionRequest, KmsAccountRefreshSessionResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: AccountRevokeSessions
+     */
+    accountRevokeSessions(input: KmsAccountRevokeSessionsRequest, options?: RpcOptions): UnaryCall<KmsAccountRevokeSessionsRequest, KmsAccountRevokeSessionsResponse> {
+        const method = this.methods[16], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsAccountRevokeSessionsRequest, KmsAccountRevokeSessionsResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * Bot JWT.
      *
      * @generated from protobuf rpc: CompleteAccountHandoff
      */
     completeAccountHandoff(input: KmsCompleteAccountHandoffRequest, options?: RpcOptions): UnaryCall<KmsCompleteAccountHandoffRequest, KmsCompleteAccountHandoffResponse> {
-        const method = this.methods[15], opt = this._transport.mergeOptions(options);
+        const method = this.methods[17], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsCompleteAccountHandoffRequest, KmsCompleteAccountHandoffResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: RequestAgent
      */
     requestAgent(input: KmsRequestAgentRequest, options?: RpcOptions): UnaryCall<KmsRequestAgentRequest, KmsRequestAgentResponse> {
-        const method = this.methods[16], opt = this._transport.mergeOptions(options);
+        const method = this.methods[18], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsRequestAgentRequest, KmsRequestAgentResponse>("unary", this._transport, method, opt, input);
     }
 }

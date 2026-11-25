@@ -34,6 +34,8 @@ const (
 	Kms_CancelFactorReset_FullMethodName      = "/hypurr.Kms/CancelFactorReset"
 	Kms_ExecuteFactorReset_FullMethodName     = "/hypurr.Kms/ExecuteFactorReset"
 	Kms_RecoverKeys_FullMethodName            = "/hypurr.Kms/RecoverKeys"
+	Kms_AccountRefreshSession_FullMethodName  = "/hypurr.Kms/AccountRefreshSession"
+	Kms_AccountRevokeSessions_FullMethodName  = "/hypurr.Kms/AccountRevokeSessions"
 	Kms_CompleteAccountHandoff_FullMethodName = "/hypurr.Kms/CompleteAccountHandoff"
 	Kms_RequestAgent_FullMethodName           = "/hypurr.Kms/RequestAgent"
 )
@@ -61,6 +63,8 @@ type KmsClient interface {
 	CancelFactorReset(ctx context.Context, in *KmsCancelFactorResetRequest, opts ...grpc.CallOption) (*KmsCancelFactorResetResponse, error)
 	ExecuteFactorReset(ctx context.Context, in *KmsExecuteFactorResetRequest, opts ...grpc.CallOption) (*KmsExecuteFactorResetResponse, error)
 	RecoverKeys(ctx context.Context, in *KmsRecoverKeysRequest, opts ...grpc.CallOption) (*KmsRecoverKeysResponse, error)
+	AccountRefreshSession(ctx context.Context, in *KmsAccountRefreshSessionRequest, opts ...grpc.CallOption) (*KmsAccountRefreshSessionResponse, error)
+	AccountRevokeSessions(ctx context.Context, in *KmsAccountRevokeSessionsRequest, opts ...grpc.CallOption) (*KmsAccountRevokeSessionsResponse, error)
 	// Bot JWT.
 	CompleteAccountHandoff(ctx context.Context, in *KmsCompleteAccountHandoffRequest, opts ...grpc.CallOption) (*KmsCompleteAccountHandoffResponse, error)
 	RequestAgent(ctx context.Context, in *KmsRequestAgentRequest, opts ...grpc.CallOption) (*KmsRequestAgentResponse, error)
@@ -224,6 +228,26 @@ func (c *kmsClient) RecoverKeys(ctx context.Context, in *KmsRecoverKeysRequest, 
 	return out, nil
 }
 
+func (c *kmsClient) AccountRefreshSession(ctx context.Context, in *KmsAccountRefreshSessionRequest, opts ...grpc.CallOption) (*KmsAccountRefreshSessionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(KmsAccountRefreshSessionResponse)
+	err := c.cc.Invoke(ctx, Kms_AccountRefreshSession_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *kmsClient) AccountRevokeSessions(ctx context.Context, in *KmsAccountRevokeSessionsRequest, opts ...grpc.CallOption) (*KmsAccountRevokeSessionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(KmsAccountRevokeSessionsResponse)
+	err := c.cc.Invoke(ctx, Kms_AccountRevokeSessions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *kmsClient) CompleteAccountHandoff(ctx context.Context, in *KmsCompleteAccountHandoffRequest, opts ...grpc.CallOption) (*KmsCompleteAccountHandoffResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(KmsCompleteAccountHandoffResponse)
@@ -267,6 +291,8 @@ type KmsServer interface {
 	CancelFactorReset(context.Context, *KmsCancelFactorResetRequest) (*KmsCancelFactorResetResponse, error)
 	ExecuteFactorReset(context.Context, *KmsExecuteFactorResetRequest) (*KmsExecuteFactorResetResponse, error)
 	RecoverKeys(context.Context, *KmsRecoverKeysRequest) (*KmsRecoverKeysResponse, error)
+	AccountRefreshSession(context.Context, *KmsAccountRefreshSessionRequest) (*KmsAccountRefreshSessionResponse, error)
+	AccountRevokeSessions(context.Context, *KmsAccountRevokeSessionsRequest) (*KmsAccountRevokeSessionsResponse, error)
 	// Bot JWT.
 	CompleteAccountHandoff(context.Context, *KmsCompleteAccountHandoffRequest) (*KmsCompleteAccountHandoffResponse, error)
 	RequestAgent(context.Context, *KmsRequestAgentRequest) (*KmsRequestAgentResponse, error)
@@ -321,6 +347,12 @@ func (UnimplementedKmsServer) ExecuteFactorReset(context.Context, *KmsExecuteFac
 }
 func (UnimplementedKmsServer) RecoverKeys(context.Context, *KmsRecoverKeysRequest) (*KmsRecoverKeysResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RecoverKeys not implemented")
+}
+func (UnimplementedKmsServer) AccountRefreshSession(context.Context, *KmsAccountRefreshSessionRequest) (*KmsAccountRefreshSessionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AccountRefreshSession not implemented")
+}
+func (UnimplementedKmsServer) AccountRevokeSessions(context.Context, *KmsAccountRevokeSessionsRequest) (*KmsAccountRevokeSessionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AccountRevokeSessions not implemented")
 }
 func (UnimplementedKmsServer) CompleteAccountHandoff(context.Context, *KmsCompleteAccountHandoffRequest) (*KmsCompleteAccountHandoffResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CompleteAccountHandoff not implemented")
@@ -611,6 +643,42 @@ func _Kms_RecoverKeys_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Kms_AccountRefreshSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KmsAccountRefreshSessionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KmsServer).AccountRefreshSession(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Kms_AccountRefreshSession_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KmsServer).AccountRefreshSession(ctx, req.(*KmsAccountRefreshSessionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Kms_AccountRevokeSessions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KmsAccountRevokeSessionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KmsServer).AccountRevokeSessions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Kms_AccountRevokeSessions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KmsServer).AccountRevokeSessions(ctx, req.(*KmsAccountRevokeSessionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Kms_CompleteAccountHandoff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(KmsCompleteAccountHandoffRequest)
 	if err := dec(in); err != nil {
@@ -713,6 +781,14 @@ var Kms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RecoverKeys",
 			Handler:    _Kms_RecoverKeys_Handler,
+		},
+		{
+			MethodName: "AccountRefreshSession",
+			Handler:    _Kms_AccountRefreshSession_Handler,
+		},
+		{
+			MethodName: "AccountRevokeSessions",
+			Handler:    _Kms_AccountRevokeSessions_Handler,
 		},
 		{
 			MethodName: "CompleteAccountHandoff",
