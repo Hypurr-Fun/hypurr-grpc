@@ -107,34 +107,30 @@ message AllTimeTradeCountMilestone {
 // A price call on one spot or perp market, optionally with a trade.
 message FeedPrediction {
   string text = 1;
-  // The market quote at response time. Mobile uses LiveAssetUpdates for live prices.
-  MarketQuote market_quote = 2;
+  // One quote per predicted asset at response time, in the author's order.
+  repeated MarketQuote market_quotes = 2;
   // Exactly 12 points, oldest first. Uses Home's 24-hour series with 2-hour intervals.
   repeated AssetPricePoint history = 3;
-  // The trade placed with the prediction, on market_quote's market.
+  // The trade placed with the prediction, on the market of the first quote.
   // Neither variant is present for a call without a trade.
   oneof order {
     FeedPerpOpen perp_order = 4;
-    FeedSpotTrade spot_order = 6;
+    FeedSpotTrade spot_order = 5;
   }
-  FeedEngagement engagement = 5;
+  FeedEngagement engagement = 6;
   // Same rules as FeedFuns.media_items.
   repeated FeedMedia media_items = 7;
-  // One quote per predicted asset, in the author's order. market_quote is the first.
-  repeated MarketQuote market_quotes = 8;
 }
 
 // A post with text, media, or both.
 message FeedFuns {
   // Empty for a post with media only.
   string text = 1;
-  // Deprecated: use media_items. Kept as media_items[0] for older app versions.
-  FeedMedia media = 2;
+  // Up to 4 images and GIFs, in display order.
+  repeated FeedMedia media_items = 2;
   FeedEngagement engagement = 3;
   // Author-provided alt text. Empty when media or its description is absent.
   string media_description = 4;
-  // Up to 4 images and GIFs, in display order.
-  repeated FeedMedia media_items = 5;
 }
 
 message FeedMedia {
