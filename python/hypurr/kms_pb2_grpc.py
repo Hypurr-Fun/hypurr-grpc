@@ -51,6 +51,21 @@ class KmsStub:
                 request_serializer=hypurr_dot_kms__pb2.KmsLoginIntentRequest.SerializeToString,
                 response_deserializer=hypurr_dot_kms__pb2.KmsLoginIntentResponse.FromString,
                 _registered_method=True)
+        self.RequestFactorReset = channel.unary_unary(
+                '/hypurr.Kms/RequestFactorReset',
+                request_serializer=hypurr_dot_kms__pb2.KmsRequestFactorResetRequest.SerializeToString,
+                response_deserializer=hypurr_dot_kms__pb2.KmsRequestFactorResetResponse.FromString,
+                _registered_method=True)
+        self.CancelFactorReset = channel.unary_unary(
+                '/hypurr.Kms/CancelFactorReset',
+                request_serializer=hypurr_dot_kms__pb2.KmsCancelFactorResetRequest.SerializeToString,
+                response_deserializer=hypurr_dot_kms__pb2.KmsCancelFactorResetResponse.FromString,
+                _registered_method=True)
+        self.ExecuteFactorReset = channel.unary_unary(
+                '/hypurr.Kms/ExecuteFactorReset',
+                request_serializer=hypurr_dot_kms__pb2.KmsExecuteFactorResetRequest.SerializeToString,
+                response_deserializer=hypurr_dot_kms__pb2.KmsExecuteFactorResetResponse.FromString,
+                _registered_method=True)
         self.AddProvider = channel.unary_unary(
                 '/hypurr.Kms/AddProvider',
                 request_serializer=hypurr_dot_kms__pb2.KmsAddProviderRequest.SerializeToString,
@@ -90,21 +105,6 @@ class KmsStub:
                 '/hypurr.Kms/GetAccountInfo',
                 request_serializer=hypurr_dot_kms__pb2.KmsGetAccountInfoRequest.SerializeToString,
                 response_deserializer=hypurr_dot_kms__pb2.KmsGetAccountInfoResponse.FromString,
-                _registered_method=True)
-        self.RequestFactorReset = channel.unary_unary(
-                '/hypurr.Kms/RequestFactorReset',
-                request_serializer=hypurr_dot_kms__pb2.KmsRequestFactorResetRequest.SerializeToString,
-                response_deserializer=hypurr_dot_kms__pb2.KmsRequestFactorResetResponse.FromString,
-                _registered_method=True)
-        self.CancelFactorReset = channel.unary_unary(
-                '/hypurr.Kms/CancelFactorReset',
-                request_serializer=hypurr_dot_kms__pb2.KmsCancelFactorResetRequest.SerializeToString,
-                response_deserializer=hypurr_dot_kms__pb2.KmsCancelFactorResetResponse.FromString,
-                _registered_method=True)
-        self.ExecuteFactorReset = channel.unary_unary(
-                '/hypurr.Kms/ExecuteFactorReset',
-                request_serializer=hypurr_dot_kms__pb2.KmsExecuteFactorResetRequest.SerializeToString,
-                response_deserializer=hypurr_dot_kms__pb2.KmsExecuteFactorResetResponse.FromString,
                 _registered_method=True)
         self.RecoverKeys = channel.unary_unary(
                 '/hypurr.Kms/RecoverKeys',
@@ -151,6 +151,26 @@ class KmsServicer:
         raise NotImplementedError('Method not implemented!')
 
     def LoginIntent(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RequestFactorReset(self, request, context):
+        """Routed by the subject hash of the provider sign-in, as LoginOrRegister:
+        they need no session.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CancelFactorReset(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ExecuteFactorReset(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -205,24 +225,6 @@ class KmsServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def RequestFactorReset(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def CancelFactorReset(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def ExecuteFactorReset(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def RecoverKeys(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -272,6 +274,21 @@ def add_KmsServicer_to_server(servicer, server):
                     request_deserializer=hypurr_dot_kms__pb2.KmsLoginIntentRequest.FromString,
                     response_serializer=hypurr_dot_kms__pb2.KmsLoginIntentResponse.SerializeToString,
             ),
+            'RequestFactorReset': grpc.unary_unary_rpc_method_handler(
+                    servicer.RequestFactorReset,
+                    request_deserializer=hypurr_dot_kms__pb2.KmsRequestFactorResetRequest.FromString,
+                    response_serializer=hypurr_dot_kms__pb2.KmsRequestFactorResetResponse.SerializeToString,
+            ),
+            'CancelFactorReset': grpc.unary_unary_rpc_method_handler(
+                    servicer.CancelFactorReset,
+                    request_deserializer=hypurr_dot_kms__pb2.KmsCancelFactorResetRequest.FromString,
+                    response_serializer=hypurr_dot_kms__pb2.KmsCancelFactorResetResponse.SerializeToString,
+            ),
+            'ExecuteFactorReset': grpc.unary_unary_rpc_method_handler(
+                    servicer.ExecuteFactorReset,
+                    request_deserializer=hypurr_dot_kms__pb2.KmsExecuteFactorResetRequest.FromString,
+                    response_serializer=hypurr_dot_kms__pb2.KmsExecuteFactorResetResponse.SerializeToString,
+            ),
             'AddProvider': grpc.unary_unary_rpc_method_handler(
                     servicer.AddProvider,
                     request_deserializer=hypurr_dot_kms__pb2.KmsAddProviderRequest.FromString,
@@ -311,21 +328,6 @@ def add_KmsServicer_to_server(servicer, server):
                     servicer.GetAccountInfo,
                     request_deserializer=hypurr_dot_kms__pb2.KmsGetAccountInfoRequest.FromString,
                     response_serializer=hypurr_dot_kms__pb2.KmsGetAccountInfoResponse.SerializeToString,
-            ),
-            'RequestFactorReset': grpc.unary_unary_rpc_method_handler(
-                    servicer.RequestFactorReset,
-                    request_deserializer=hypurr_dot_kms__pb2.KmsRequestFactorResetRequest.FromString,
-                    response_serializer=hypurr_dot_kms__pb2.KmsRequestFactorResetResponse.SerializeToString,
-            ),
-            'CancelFactorReset': grpc.unary_unary_rpc_method_handler(
-                    servicer.CancelFactorReset,
-                    request_deserializer=hypurr_dot_kms__pb2.KmsCancelFactorResetRequest.FromString,
-                    response_serializer=hypurr_dot_kms__pb2.KmsCancelFactorResetResponse.SerializeToString,
-            ),
-            'ExecuteFactorReset': grpc.unary_unary_rpc_method_handler(
-                    servicer.ExecuteFactorReset,
-                    request_deserializer=hypurr_dot_kms__pb2.KmsExecuteFactorResetRequest.FromString,
-                    response_serializer=hypurr_dot_kms__pb2.KmsExecuteFactorResetResponse.SerializeToString,
             ),
             'RecoverKeys': grpc.unary_unary_rpc_method_handler(
                     servicer.RecoverKeys,
@@ -436,6 +438,87 @@ class Kms:
             '/hypurr.Kms/LoginIntent',
             hypurr_dot_kms__pb2.KmsLoginIntentRequest.SerializeToString,
             hypurr_dot_kms__pb2.KmsLoginIntentResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def RequestFactorReset(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Kms/RequestFactorReset',
+            hypurr_dot_kms__pb2.KmsRequestFactorResetRequest.SerializeToString,
+            hypurr_dot_kms__pb2.KmsRequestFactorResetResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CancelFactorReset(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Kms/CancelFactorReset',
+            hypurr_dot_kms__pb2.KmsCancelFactorResetRequest.SerializeToString,
+            hypurr_dot_kms__pb2.KmsCancelFactorResetResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ExecuteFactorReset(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/hypurr.Kms/ExecuteFactorReset',
+            hypurr_dot_kms__pb2.KmsExecuteFactorResetRequest.SerializeToString,
+            hypurr_dot_kms__pb2.KmsExecuteFactorResetResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -652,87 +735,6 @@ class Kms:
             '/hypurr.Kms/GetAccountInfo',
             hypurr_dot_kms__pb2.KmsGetAccountInfoRequest.SerializeToString,
             hypurr_dot_kms__pb2.KmsGetAccountInfoResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def RequestFactorReset(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/hypurr.Kms/RequestFactorReset',
-            hypurr_dot_kms__pb2.KmsRequestFactorResetRequest.SerializeToString,
-            hypurr_dot_kms__pb2.KmsRequestFactorResetResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def CancelFactorReset(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/hypurr.Kms/CancelFactorReset',
-            hypurr_dot_kms__pb2.KmsCancelFactorResetRequest.SerializeToString,
-            hypurr_dot_kms__pb2.KmsCancelFactorResetResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def ExecuteFactorReset(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/hypurr.Kms/ExecuteFactorReset',
-            hypurr_dot_kms__pb2.KmsExecuteFactorResetRequest.SerializeToString,
-            hypurr_dot_kms__pb2.KmsExecuteFactorResetResponse.FromString,
             options,
             channel_credentials,
             insecure,
