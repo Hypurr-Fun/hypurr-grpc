@@ -61,6 +61,9 @@ export interface KmsLoginOrRegisterRequest {
     subjectHash: string;
 }
 /**
+ * A login the account refuses for want of a factor (login_2fa_required)
+ * carries attestation alone.
+ *
  * @generated from protobuf message hypurr.KmsLoginOrRegisterResponse
  */
 export interface KmsLoginOrRegisterResponse {
@@ -75,19 +78,11 @@ export interface KmsLoginOrRegisterResponse {
      */
     handoff?: KmsAccountHandoff;
     /**
-     * @generated from protobuf field: string bot_access_token = 3
-     */
-    botAccessToken: string;
-    /**
-     * @generated from protobuf field: string bot_refresh_token = 4
-     */
-    botRefreshToken: string;
-    /**
-     * Seconds until bot_access_token expires.
+     * As on KmsAccountRefreshSessionResponse.
      *
-     * @generated from protobuf field: int64 bot_access_token_expires_in = 5
+     * @generated from protobuf field: bytes bot_tokens_sealed = 3
      */
-    botAccessTokenExpiresIn: number;
+    botTokensSealed: Uint8Array;
 }
 /**
  * User shard and recovery codes sealed to the device key of this login.
@@ -324,6 +319,10 @@ export interface KmsAgentInfo {
     walletIds: string[];
 }
 /**
+ * One device of the account: its live session when it has one, and whether
+ * the account trusts it. A trusted device whose session has ended has no
+ * session_id and no session times.
+ *
  * @generated from protobuf message hypurr.KmsSessionInfo
  */
 export interface KmsSessionInfo {
@@ -355,6 +354,14 @@ export interface KmsSessionInfo {
      * @generated from protobuf field: int64 expires_at = 7
      */
     expiresAt: number;
+    /**
+     * @generated from protobuf field: bool trusted = 8
+     */
+    trusted: boolean; // its logins skip the login 2FA
+    /**
+     * @generated from protobuf field: int64 trusted_at = 9
+     */
+    trustedAt: number;
 }
 /**
  * @generated from protobuf message hypurr.KmsFactorResetStatus
@@ -396,6 +403,9 @@ export interface KmsAccountShardSecretResponse {
     attestation: Uint8Array;
 }
 /**
+ * The factor reset requests are routed as KmsLoginOrRegisterRequest, by the
+ * subject hash of the provider sign-in in the sealed payload.
+ *
  * @generated from protobuf message hypurr.KmsRequestFactorResetRequest
  */
 export interface KmsRequestFactorResetRequest {
@@ -404,9 +414,9 @@ export interface KmsRequestFactorResetRequest {
      */
     encryptedPayload: Uint8Array;
     /**
-     * @generated from protobuf field: string instance_jwt = 2
+     * @generated from protobuf field: string subject_hash = 2
      */
-    instanceJwt: string;
+    subjectHash: string;
 }
 /**
  * @generated from protobuf message hypurr.KmsRequestFactorResetResponse
@@ -426,9 +436,9 @@ export interface KmsCancelFactorResetRequest {
      */
     encryptedPayload: Uint8Array;
     /**
-     * @generated from protobuf field: string instance_jwt = 2
+     * @generated from protobuf field: string subject_hash = 2
      */
-    instanceJwt: string;
+    subjectHash: string;
 }
 /**
  * @generated from protobuf message hypurr.KmsCancelFactorResetResponse
@@ -448,9 +458,9 @@ export interface KmsExecuteFactorResetRequest {
      */
     encryptedPayload: Uint8Array;
     /**
-     * @generated from protobuf field: string instance_jwt = 2
+     * @generated from protobuf field: string subject_hash = 2
      */
-    instanceJwt: string;
+    subjectHash: string;
 }
 /**
  * @generated from protobuf message hypurr.KmsExecuteFactorResetResponse
@@ -461,17 +471,11 @@ export interface KmsExecuteFactorResetResponse {
      */
     attestation: Uint8Array;
     /**
-     * @generated from protobuf field: string bot_access_token = 2
+     * As on KmsAccountRefreshSessionResponse. Empty: the bot started no session.
+     *
+     * @generated from protobuf field: bytes bot_tokens_sealed = 2
      */
-    botAccessToken: string;
-    /**
-     * @generated from protobuf field: string bot_refresh_token = 3
-     */
-    botRefreshToken: string;
-    /**
-     * @generated from protobuf field: int64 bot_access_token_expires_in = 4
-     */
-    botAccessTokenExpiresIn: number;
+    botTokensSealed: Uint8Array;
 }
 /**
  * @generated from protobuf message hypurr.KmsRecoverKeysRequest
@@ -909,17 +913,13 @@ class KmsLoginOrRegisterResponse$Type extends MessageType<KmsLoginOrRegisterResp
         super("hypurr.KmsLoginOrRegisterResponse", [
             { no: 1, name: "attestation", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
             { no: 2, name: "handoff", kind: "message", T: () => KmsAccountHandoff },
-            { no: 3, name: "bot_access_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "bot_refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "bot_access_token_expires_in", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 3, name: "bot_tokens_sealed", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<KmsLoginOrRegisterResponse>): KmsLoginOrRegisterResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.attestation = new Uint8Array(0);
-        message.botAccessToken = "";
-        message.botRefreshToken = "";
-        message.botAccessTokenExpiresIn = 0;
+        message.botTokensSealed = new Uint8Array(0);
         if (value !== undefined)
             reflectionMergePartial<KmsLoginOrRegisterResponse>(this, message, value);
         return message;
@@ -935,14 +935,8 @@ class KmsLoginOrRegisterResponse$Type extends MessageType<KmsLoginOrRegisterResp
                 case /* hypurr.KmsAccountHandoff handoff */ 2:
                     message.handoff = KmsAccountHandoff.internalBinaryRead(reader, reader.uint32(), options, message.handoff);
                     break;
-                case /* string bot_access_token */ 3:
-                    message.botAccessToken = reader.string();
-                    break;
-                case /* string bot_refresh_token */ 4:
-                    message.botRefreshToken = reader.string();
-                    break;
-                case /* int64 bot_access_token_expires_in */ 5:
-                    message.botAccessTokenExpiresIn = reader.int64().toNumber();
+                case /* bytes bot_tokens_sealed */ 3:
+                    message.botTokensSealed = reader.bytes();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -962,15 +956,9 @@ class KmsLoginOrRegisterResponse$Type extends MessageType<KmsLoginOrRegisterResp
         /* hypurr.KmsAccountHandoff handoff = 2; */
         if (message.handoff)
             KmsAccountHandoff.internalBinaryWrite(message.handoff, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* string bot_access_token = 3; */
-        if (message.botAccessToken !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.botAccessToken);
-        /* string bot_refresh_token = 4; */
-        if (message.botRefreshToken !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.botRefreshToken);
-        /* int64 bot_access_token_expires_in = 5; */
-        if (message.botAccessTokenExpiresIn !== 0)
-            writer.tag(5, WireType.Varint).int64(message.botAccessTokenExpiresIn);
+        /* bytes bot_tokens_sealed = 3; */
+        if (message.botTokensSealed.length)
+            writer.tag(3, WireType.LengthDelimited).bytes(message.botTokensSealed);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1847,7 +1835,9 @@ class KmsSessionInfo$Type extends MessageType<KmsSessionInfo> {
             { no: 4, name: "device_platform", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "created_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
             { no: 6, name: "refreshed_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
-            { no: 7, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 7, name: "expires_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ },
+            { no: 8, name: "trusted", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 9, name: "trusted_at", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
         ]);
     }
     create(value?: PartialMessage<KmsSessionInfo>): KmsSessionInfo {
@@ -1859,6 +1849,8 @@ class KmsSessionInfo$Type extends MessageType<KmsSessionInfo> {
         message.createdAt = 0;
         message.refreshedAt = 0;
         message.expiresAt = 0;
+        message.trusted = false;
+        message.trustedAt = 0;
         if (value !== undefined)
             reflectionMergePartial<KmsSessionInfo>(this, message, value);
         return message;
@@ -1888,6 +1880,12 @@ class KmsSessionInfo$Type extends MessageType<KmsSessionInfo> {
                     break;
                 case /* int64 expires_at */ 7:
                     message.expiresAt = reader.int64().toNumber();
+                    break;
+                case /* bool trusted */ 8:
+                    message.trusted = reader.bool();
+                    break;
+                case /* int64 trusted_at */ 9:
+                    message.trustedAt = reader.int64().toNumber();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1922,6 +1920,12 @@ class KmsSessionInfo$Type extends MessageType<KmsSessionInfo> {
         /* int64 expires_at = 7; */
         if (message.expiresAt !== 0)
             writer.tag(7, WireType.Varint).int64(message.expiresAt);
+        /* bool trusted = 8; */
+        if (message.trusted !== false)
+            writer.tag(8, WireType.Varint).bool(message.trusted);
+        /* int64 trusted_at = 9; */
+        if (message.trustedAt !== 0)
+            writer.tag(9, WireType.Varint).int64(message.trustedAt);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2102,13 +2106,13 @@ class KmsRequestFactorResetRequest$Type extends MessageType<KmsRequestFactorRese
     constructor() {
         super("hypurr.KmsRequestFactorResetRequest", [
             { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "subject_hash", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsRequestFactorResetRequest>): KmsRequestFactorResetRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.encryptedPayload = new Uint8Array(0);
-        message.instanceJwt = "";
+        message.subjectHash = "";
         if (value !== undefined)
             reflectionMergePartial<KmsRequestFactorResetRequest>(this, message, value);
         return message;
@@ -2121,8 +2125,8 @@ class KmsRequestFactorResetRequest$Type extends MessageType<KmsRequestFactorRese
                 case /* bytes encrypted_payload */ 1:
                     message.encryptedPayload = reader.bytes();
                     break;
-                case /* string instance_jwt */ 2:
-                    message.instanceJwt = reader.string();
+                case /* string subject_hash */ 2:
+                    message.subjectHash = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2139,9 +2143,9 @@ class KmsRequestFactorResetRequest$Type extends MessageType<KmsRequestFactorRese
         /* bytes encrypted_payload = 1; */
         if (message.encryptedPayload.length)
             writer.tag(1, WireType.LengthDelimited).bytes(message.encryptedPayload);
-        /* string instance_jwt = 2; */
-        if (message.instanceJwt !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
+        /* string subject_hash = 2; */
+        if (message.subjectHash !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.subjectHash);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2204,13 +2208,13 @@ class KmsCancelFactorResetRequest$Type extends MessageType<KmsCancelFactorResetR
     constructor() {
         super("hypurr.KmsCancelFactorResetRequest", [
             { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "subject_hash", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsCancelFactorResetRequest>): KmsCancelFactorResetRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.encryptedPayload = new Uint8Array(0);
-        message.instanceJwt = "";
+        message.subjectHash = "";
         if (value !== undefined)
             reflectionMergePartial<KmsCancelFactorResetRequest>(this, message, value);
         return message;
@@ -2223,8 +2227,8 @@ class KmsCancelFactorResetRequest$Type extends MessageType<KmsCancelFactorResetR
                 case /* bytes encrypted_payload */ 1:
                     message.encryptedPayload = reader.bytes();
                     break;
-                case /* string instance_jwt */ 2:
-                    message.instanceJwt = reader.string();
+                case /* string subject_hash */ 2:
+                    message.subjectHash = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2241,9 +2245,9 @@ class KmsCancelFactorResetRequest$Type extends MessageType<KmsCancelFactorResetR
         /* bytes encrypted_payload = 1; */
         if (message.encryptedPayload.length)
             writer.tag(1, WireType.LengthDelimited).bytes(message.encryptedPayload);
-        /* string instance_jwt = 2; */
-        if (message.instanceJwt !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
+        /* string subject_hash = 2; */
+        if (message.subjectHash !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.subjectHash);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2306,13 +2310,13 @@ class KmsExecuteFactorResetRequest$Type extends MessageType<KmsExecuteFactorRese
     constructor() {
         super("hypurr.KmsExecuteFactorResetRequest", [
             { no: 1, name: "encrypted_payload", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "instance_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "subject_hash", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<KmsExecuteFactorResetRequest>): KmsExecuteFactorResetRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.encryptedPayload = new Uint8Array(0);
-        message.instanceJwt = "";
+        message.subjectHash = "";
         if (value !== undefined)
             reflectionMergePartial<KmsExecuteFactorResetRequest>(this, message, value);
         return message;
@@ -2325,8 +2329,8 @@ class KmsExecuteFactorResetRequest$Type extends MessageType<KmsExecuteFactorRese
                 case /* bytes encrypted_payload */ 1:
                     message.encryptedPayload = reader.bytes();
                     break;
-                case /* string instance_jwt */ 2:
-                    message.instanceJwt = reader.string();
+                case /* string subject_hash */ 2:
+                    message.subjectHash = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2343,9 +2347,9 @@ class KmsExecuteFactorResetRequest$Type extends MessageType<KmsExecuteFactorRese
         /* bytes encrypted_payload = 1; */
         if (message.encryptedPayload.length)
             writer.tag(1, WireType.LengthDelimited).bytes(message.encryptedPayload);
-        /* string instance_jwt = 2; */
-        if (message.instanceJwt !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.instanceJwt);
+        /* string subject_hash = 2; */
+        if (message.subjectHash !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.subjectHash);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2361,17 +2365,13 @@ class KmsExecuteFactorResetResponse$Type extends MessageType<KmsExecuteFactorRes
     constructor() {
         super("hypurr.KmsExecuteFactorResetResponse", [
             { no: 1, name: "attestation", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "bot_access_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "bot_refresh_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "bot_access_token_expires_in", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 2 /*LongType.NUMBER*/ }
+            { no: 2, name: "bot_tokens_sealed", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<KmsExecuteFactorResetResponse>): KmsExecuteFactorResetResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.attestation = new Uint8Array(0);
-        message.botAccessToken = "";
-        message.botRefreshToken = "";
-        message.botAccessTokenExpiresIn = 0;
+        message.botTokensSealed = new Uint8Array(0);
         if (value !== undefined)
             reflectionMergePartial<KmsExecuteFactorResetResponse>(this, message, value);
         return message;
@@ -2384,14 +2384,8 @@ class KmsExecuteFactorResetResponse$Type extends MessageType<KmsExecuteFactorRes
                 case /* bytes attestation */ 1:
                     message.attestation = reader.bytes();
                     break;
-                case /* string bot_access_token */ 2:
-                    message.botAccessToken = reader.string();
-                    break;
-                case /* string bot_refresh_token */ 3:
-                    message.botRefreshToken = reader.string();
-                    break;
-                case /* int64 bot_access_token_expires_in */ 4:
-                    message.botAccessTokenExpiresIn = reader.int64().toNumber();
+                case /* bytes bot_tokens_sealed */ 2:
+                    message.botTokensSealed = reader.bytes();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2408,15 +2402,9 @@ class KmsExecuteFactorResetResponse$Type extends MessageType<KmsExecuteFactorRes
         /* bytes attestation = 1; */
         if (message.attestation.length)
             writer.tag(1, WireType.LengthDelimited).bytes(message.attestation);
-        /* string bot_access_token = 2; */
-        if (message.botAccessToken !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.botAccessToken);
-        /* string bot_refresh_token = 3; */
-        if (message.botRefreshToken !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.botRefreshToken);
-        /* int64 bot_access_token_expires_in = 4; */
-        if (message.botAccessTokenExpiresIn !== 0)
-            writer.tag(4, WireType.Varint).int64(message.botAccessTokenExpiresIn);
+        /* bytes bot_tokens_sealed = 2; */
+        if (message.botTokensSealed.length)
+            writer.tag(2, WireType.LengthDelimited).bytes(message.botTokensSealed);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3172,6 +3160,9 @@ export const Kms = new ServiceType("hypurr.Kms", [
     { name: "GetAttestation", options: {}, I: KmsGetAttestationRequest, O: KmsGetAttestationResponse },
     { name: "LoginOrRegister", options: {}, I: KmsLoginOrRegisterRequest, O: KmsLoginOrRegisterResponse },
     { name: "LoginIntent", options: {}, I: KmsLoginIntentRequest, O: KmsLoginIntentResponse },
+    { name: "RequestFactorReset", options: {}, I: KmsRequestFactorResetRequest, O: KmsRequestFactorResetResponse },
+    { name: "CancelFactorReset", options: {}, I: KmsCancelFactorResetRequest, O: KmsCancelFactorResetResponse },
+    { name: "ExecuteFactorReset", options: {}, I: KmsExecuteFactorResetRequest, O: KmsExecuteFactorResetResponse },
     { name: "AddProvider", options: {}, I: KmsAddProviderRequest, O: KmsAddProviderResponse },
     { name: "AccountEnable2FA", options: {}, I: KmsAccountEnable2FARequest, O: KmsAccountEnable2FAResponse },
     { name: "AccountDisable2FA", options: {}, I: KmsAccountDisable2FARequest, O: KmsAccountDisable2FAResponse },
@@ -3180,9 +3171,6 @@ export const Kms = new ServiceType("hypurr.Kms", [
     { name: "AccountApproveAgent", options: {}, I: KmsAccountApproveAgentRequest, O: KmsAccountApproveAgentResponse },
     { name: "AccountRevokeAgent", options: {}, I: KmsAccountRevokeAgentRequest, O: KmsAccountRevokeAgentResponse },
     { name: "GetAccountInfo", options: {}, I: KmsGetAccountInfoRequest, O: KmsGetAccountInfoResponse },
-    { name: "RequestFactorReset", options: {}, I: KmsRequestFactorResetRequest, O: KmsRequestFactorResetResponse },
-    { name: "CancelFactorReset", options: {}, I: KmsCancelFactorResetRequest, O: KmsCancelFactorResetResponse },
-    { name: "ExecuteFactorReset", options: {}, I: KmsExecuteFactorResetRequest, O: KmsExecuteFactorResetResponse },
     { name: "RecoverKeys", options: {}, I: KmsRecoverKeysRequest, O: KmsRecoverKeysResponse },
     { name: "AccountRefreshSession", options: {}, I: KmsAccountRefreshSessionRequest, O: KmsAccountRefreshSessionResponse },
     { name: "AccountRevokeSessions", options: {}, I: KmsAccountRevokeSessionsRequest, O: KmsAccountRevokeSessionsResponse },

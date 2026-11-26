@@ -9,6 +9,12 @@ service Kms {
   rpc LoginOrRegister(KmsLoginOrRegisterRequest) returns (KmsLoginOrRegisterResponse);
   rpc LoginIntent(KmsLoginIntentRequest) returns (KmsLoginIntentResponse);
 
+  // Routed by the subject hash of the provider sign-in, as LoginOrRegister:
+  // they need no session.
+  rpc RequestFactorReset(KmsRequestFactorResetRequest) returns (KmsRequestFactorResetResponse);
+  rpc CancelFactorReset(KmsCancelFactorResetRequest) returns (KmsCancelFactorResetResponse);
+  rpc ExecuteFactorReset(KmsExecuteFactorResetRequest) returns (KmsExecuteFactorResetResponse);
+
   // Routed by the instance JWT.
   rpc AddProvider(KmsAddProviderRequest) returns (KmsAddProviderResponse);
   rpc AccountEnable2FA(KmsAccountEnable2FARequest) returns (KmsAccountEnable2FAResponse);
@@ -18,9 +24,6 @@ service Kms {
   rpc AccountApproveAgent(KmsAccountApproveAgentRequest) returns (KmsAccountApproveAgentResponse);
   rpc AccountRevokeAgent(KmsAccountRevokeAgentRequest) returns (KmsAccountRevokeAgentResponse);
   rpc GetAccountInfo(KmsGetAccountInfoRequest) returns (KmsGetAccountInfoResponse);
-  rpc RequestFactorReset(KmsRequestFactorResetRequest) returns (KmsRequestFactorResetResponse);
-  rpc CancelFactorReset(KmsCancelFactorResetRequest) returns (KmsCancelFactorResetResponse);
-  rpc ExecuteFactorReset(KmsExecuteFactorResetRequest) returns (KmsExecuteFactorResetResponse);
   rpc RecoverKeys(KmsRecoverKeysRequest) returns (KmsRecoverKeysResponse);
   rpc AccountRefreshSession(KmsAccountRefreshSessionRequest) returns (KmsAccountRefreshSessionResponse);
   rpc AccountRevokeSessions(KmsAccountRevokeSessionsRequest) returns (KmsAccountRevokeSessionsResponse);
@@ -56,14 +59,13 @@ message KmsLoginOrRegisterRequest {
   string subject_hash = 2;
 }
 
+// A login the account refuses for want of a factor (login_2fa_required)
+// carries attestation alone.
 message KmsLoginOrRegisterResponse {
   bytes attestation = 1;
   // Migrated legacy bot users only, absent otherwise.
   KmsAccountHandoff handoff = 2;
-  string bot_access_token = 3;
-  string bot_refresh_token = 4;
-  // Seconds until bot_access_token expires.
-  int64 bot_access_token_expires_in = 5;
+  bytes bot_tokens_sealed = 3;
 }
 
 // User shard and recovery codes sealed to the device key of this login.
@@ -151,6 +153,9 @@ message KmsAgentInfo {
   repeated string wallet_ids = 6;
 }
 
+// One device of the account: its live session when it has one, and whether
+// the account trusts it. A trusted device whose session has ended has no
+// session_id and no session times.
 message KmsSessionInfo {
   string session_id = 1;
   string device_id = 2;
@@ -159,6 +164,8 @@ message KmsSessionInfo {
   int64 created_at = 5;
   int64 refreshed_at = 6;
   int64 expires_at = 7;
+  bool trusted = 8; // its logins skip the login 2FA
+  int64 trusted_at = 9;
 }
 
 message KmsFactorResetStatus {
@@ -176,9 +183,11 @@ message KmsAccountShardSecretResponse {
   bytes attestation = 1;
 }
 
+// The factor reset requests are routed as KmsLoginOrRegisterRequest, by the
+// subject hash of the provider sign-in in the sealed payload.
 message KmsRequestFactorResetRequest {
   bytes encrypted_payload = 1;
-  string instance_jwt = 2;
+  string subject_hash = 2;
 }
 
 message KmsRequestFactorResetResponse {
@@ -187,7 +196,7 @@ message KmsRequestFactorResetResponse {
 
 message KmsCancelFactorResetRequest {
   bytes encrypted_payload = 1;
-  string instance_jwt = 2;
+  string subject_hash = 2;
 }
 
 message KmsCancelFactorResetResponse {
@@ -196,14 +205,13 @@ message KmsCancelFactorResetResponse {
 
 message KmsExecuteFactorResetRequest {
   bytes encrypted_payload = 1;
-  string instance_jwt = 2;
+  string subject_hash = 2;
 }
 
 message KmsExecuteFactorResetResponse {
   bytes attestation = 1;
-  string bot_access_token = 2;
-  string bot_refresh_token = 3;
-  int64 bot_access_token_expires_in = 4;
+  // As on KmsAccountRefreshSessionResponse. Empty: the bot started no session.
+  bytes bot_tokens_sealed = 2;
 }
 
 message KmsRecoverKeysRequest {

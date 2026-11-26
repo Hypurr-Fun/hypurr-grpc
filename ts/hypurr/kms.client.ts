@@ -14,12 +14,6 @@ import type { KmsAccountRefreshSessionResponse } from "./kms";
 import type { KmsAccountRefreshSessionRequest } from "./kms";
 import type { KmsRecoverKeysResponse } from "./kms";
 import type { KmsRecoverKeysRequest } from "./kms";
-import type { KmsExecuteFactorResetResponse } from "./kms";
-import type { KmsExecuteFactorResetRequest } from "./kms";
-import type { KmsCancelFactorResetResponse } from "./kms";
-import type { KmsCancelFactorResetRequest } from "./kms";
-import type { KmsRequestFactorResetResponse } from "./kms";
-import type { KmsRequestFactorResetRequest } from "./kms";
 import type { KmsGetAccountInfoResponse } from "./kms";
 import type { KmsGetAccountInfoRequest } from "./kms";
 import type { KmsAccountRevokeAgentResponse } from "./kms";
@@ -36,6 +30,12 @@ import type { KmsAccountEnable2FAResponse } from "./kms";
 import type { KmsAccountEnable2FARequest } from "./kms";
 import type { KmsAddProviderResponse } from "./kms";
 import type { KmsAddProviderRequest } from "./kms";
+import type { KmsExecuteFactorResetResponse } from "./kms";
+import type { KmsExecuteFactorResetRequest } from "./kms";
+import type { KmsCancelFactorResetResponse } from "./kms";
+import type { KmsCancelFactorResetRequest } from "./kms";
+import type { KmsRequestFactorResetResponse } from "./kms";
+import type { KmsRequestFactorResetRequest } from "./kms";
 import type { KmsLoginIntentResponse } from "./kms";
 import type { KmsLoginIntentRequest } from "./kms";
 import type { KmsLoginOrRegisterResponse } from "./kms";
@@ -64,6 +64,21 @@ export interface IKmsClient {
      * @generated from protobuf rpc: LoginIntent
      */
     loginIntent(input: KmsLoginIntentRequest, options?: RpcOptions): UnaryCall<KmsLoginIntentRequest, KmsLoginIntentResponse>;
+    /**
+     * Routed by the subject hash of the provider sign-in, as LoginOrRegister:
+     * they need no session.
+     *
+     * @generated from protobuf rpc: RequestFactorReset
+     */
+    requestFactorReset(input: KmsRequestFactorResetRequest, options?: RpcOptions): UnaryCall<KmsRequestFactorResetRequest, KmsRequestFactorResetResponse>;
+    /**
+     * @generated from protobuf rpc: CancelFactorReset
+     */
+    cancelFactorReset(input: KmsCancelFactorResetRequest, options?: RpcOptions): UnaryCall<KmsCancelFactorResetRequest, KmsCancelFactorResetResponse>;
+    /**
+     * @generated from protobuf rpc: ExecuteFactorReset
+     */
+    executeFactorReset(input: KmsExecuteFactorResetRequest, options?: RpcOptions): UnaryCall<KmsExecuteFactorResetRequest, KmsExecuteFactorResetResponse>;
     /**
      * Routed by the instance JWT.
      *
@@ -98,18 +113,6 @@ export interface IKmsClient {
      * @generated from protobuf rpc: GetAccountInfo
      */
     getAccountInfo(input: KmsGetAccountInfoRequest, options?: RpcOptions): UnaryCall<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse>;
-    /**
-     * @generated from protobuf rpc: RequestFactorReset
-     */
-    requestFactorReset(input: KmsRequestFactorResetRequest, options?: RpcOptions): UnaryCall<KmsRequestFactorResetRequest, KmsRequestFactorResetResponse>;
-    /**
-     * @generated from protobuf rpc: CancelFactorReset
-     */
-    cancelFactorReset(input: KmsCancelFactorResetRequest, options?: RpcOptions): UnaryCall<KmsCancelFactorResetRequest, KmsCancelFactorResetResponse>;
-    /**
-     * @generated from protobuf rpc: ExecuteFactorReset
-     */
-    executeFactorReset(input: KmsExecuteFactorResetRequest, options?: RpcOptions): UnaryCall<KmsExecuteFactorResetRequest, KmsExecuteFactorResetResponse>;
     /**
      * @generated from protobuf rpc: RecoverKeys
      */
@@ -167,83 +170,86 @@ export class KmsClient implements IKmsClient, ServiceInfo {
         return stackIntercept<KmsLoginIntentRequest, KmsLoginIntentResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * Routed by the instance JWT.
+     * Routed by the subject hash of the provider sign-in, as LoginOrRegister:
+     * they need no session.
      *
-     * @generated from protobuf rpc: AddProvider
-     */
-    addProvider(input: KmsAddProviderRequest, options?: RpcOptions): UnaryCall<KmsAddProviderRequest, KmsAddProviderResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
-        return stackIntercept<KmsAddProviderRequest, KmsAddProviderResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: AccountEnable2FA
-     */
-    accountEnable2FA(input: KmsAccountEnable2FARequest, options?: RpcOptions): UnaryCall<KmsAccountEnable2FARequest, KmsAccountEnable2FAResponse> {
-        const method = this.methods[4], opt = this._transport.mergeOptions(options);
-        return stackIntercept<KmsAccountEnable2FARequest, KmsAccountEnable2FAResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: AccountDisable2FA
-     */
-    accountDisable2FA(input: KmsAccountDisable2FARequest, options?: RpcOptions): UnaryCall<KmsAccountDisable2FARequest, KmsAccountDisable2FAResponse> {
-        const method = this.methods[5], opt = this._transport.mergeOptions(options);
-        return stackIntercept<KmsAccountDisable2FARequest, KmsAccountDisable2FAResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: AccountShardSecret
-     */
-    accountShardSecret(input: KmsAccountShardSecretRequest, options?: RpcOptions): UnaryCall<KmsAccountShardSecretRequest, KmsAccountShardSecretResponse> {
-        const method = this.methods[6], opt = this._transport.mergeOptions(options);
-        return stackIntercept<KmsAccountShardSecretRequest, KmsAccountShardSecretResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: AccountSignMessage
-     */
-    accountSignMessage(input: KmsAccountSignMessageRequest, options?: RpcOptions): UnaryCall<KmsAccountSignMessageRequest, KmsAccountSignMessageResponse> {
-        const method = this.methods[7], opt = this._transport.mergeOptions(options);
-        return stackIntercept<KmsAccountSignMessageRequest, KmsAccountSignMessageResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: AccountApproveAgent
-     */
-    accountApproveAgent(input: KmsAccountApproveAgentRequest, options?: RpcOptions): UnaryCall<KmsAccountApproveAgentRequest, KmsAccountApproveAgentResponse> {
-        const method = this.methods[8], opt = this._transport.mergeOptions(options);
-        return stackIntercept<KmsAccountApproveAgentRequest, KmsAccountApproveAgentResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: AccountRevokeAgent
-     */
-    accountRevokeAgent(input: KmsAccountRevokeAgentRequest, options?: RpcOptions): UnaryCall<KmsAccountRevokeAgentRequest, KmsAccountRevokeAgentResponse> {
-        const method = this.methods[9], opt = this._transport.mergeOptions(options);
-        return stackIntercept<KmsAccountRevokeAgentRequest, KmsAccountRevokeAgentResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: GetAccountInfo
-     */
-    getAccountInfo(input: KmsGetAccountInfoRequest, options?: RpcOptions): UnaryCall<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse> {
-        const method = this.methods[10], opt = this._transport.mergeOptions(options);
-        return stackIntercept<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
      * @generated from protobuf rpc: RequestFactorReset
      */
     requestFactorReset(input: KmsRequestFactorResetRequest, options?: RpcOptions): UnaryCall<KmsRequestFactorResetRequest, KmsRequestFactorResetResponse> {
-        const method = this.methods[11], opt = this._transport.mergeOptions(options);
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsRequestFactorResetRequest, KmsRequestFactorResetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: CancelFactorReset
      */
     cancelFactorReset(input: KmsCancelFactorResetRequest, options?: RpcOptions): UnaryCall<KmsCancelFactorResetRequest, KmsCancelFactorResetResponse> {
-        const method = this.methods[12], opt = this._transport.mergeOptions(options);
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsCancelFactorResetRequest, KmsCancelFactorResetResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: ExecuteFactorReset
      */
     executeFactorReset(input: KmsExecuteFactorResetRequest, options?: RpcOptions): UnaryCall<KmsExecuteFactorResetRequest, KmsExecuteFactorResetResponse> {
-        const method = this.methods[13], opt = this._transport.mergeOptions(options);
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
         return stackIntercept<KmsExecuteFactorResetRequest, KmsExecuteFactorResetResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * Routed by the instance JWT.
+     *
+     * @generated from protobuf rpc: AddProvider
+     */
+    addProvider(input: KmsAddProviderRequest, options?: RpcOptions): UnaryCall<KmsAddProviderRequest, KmsAddProviderResponse> {
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsAddProviderRequest, KmsAddProviderResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: AccountEnable2FA
+     */
+    accountEnable2FA(input: KmsAccountEnable2FARequest, options?: RpcOptions): UnaryCall<KmsAccountEnable2FARequest, KmsAccountEnable2FAResponse> {
+        const method = this.methods[7], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsAccountEnable2FARequest, KmsAccountEnable2FAResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: AccountDisable2FA
+     */
+    accountDisable2FA(input: KmsAccountDisable2FARequest, options?: RpcOptions): UnaryCall<KmsAccountDisable2FARequest, KmsAccountDisable2FAResponse> {
+        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsAccountDisable2FARequest, KmsAccountDisable2FAResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: AccountShardSecret
+     */
+    accountShardSecret(input: KmsAccountShardSecretRequest, options?: RpcOptions): UnaryCall<KmsAccountShardSecretRequest, KmsAccountShardSecretResponse> {
+        const method = this.methods[9], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsAccountShardSecretRequest, KmsAccountShardSecretResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: AccountSignMessage
+     */
+    accountSignMessage(input: KmsAccountSignMessageRequest, options?: RpcOptions): UnaryCall<KmsAccountSignMessageRequest, KmsAccountSignMessageResponse> {
+        const method = this.methods[10], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsAccountSignMessageRequest, KmsAccountSignMessageResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: AccountApproveAgent
+     */
+    accountApproveAgent(input: KmsAccountApproveAgentRequest, options?: RpcOptions): UnaryCall<KmsAccountApproveAgentRequest, KmsAccountApproveAgentResponse> {
+        const method = this.methods[11], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsAccountApproveAgentRequest, KmsAccountApproveAgentResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: AccountRevokeAgent
+     */
+    accountRevokeAgent(input: KmsAccountRevokeAgentRequest, options?: RpcOptions): UnaryCall<KmsAccountRevokeAgentRequest, KmsAccountRevokeAgentResponse> {
+        const method = this.methods[12], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsAccountRevokeAgentRequest, KmsAccountRevokeAgentResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: GetAccountInfo
+     */
+    getAccountInfo(input: KmsGetAccountInfoRequest, options?: RpcOptions): UnaryCall<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse> {
+        const method = this.methods[13], opt = this._transport.mergeOptions(options);
+        return stackIntercept<KmsGetAccountInfoRequest, KmsGetAccountInfoResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: RecoverKeys

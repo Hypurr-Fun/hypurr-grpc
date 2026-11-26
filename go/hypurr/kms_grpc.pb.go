@@ -22,6 +22,9 @@ const (
 	Kms_GetAttestation_FullMethodName         = "/hypurr.Kms/GetAttestation"
 	Kms_LoginOrRegister_FullMethodName        = "/hypurr.Kms/LoginOrRegister"
 	Kms_LoginIntent_FullMethodName            = "/hypurr.Kms/LoginIntent"
+	Kms_RequestFactorReset_FullMethodName     = "/hypurr.Kms/RequestFactorReset"
+	Kms_CancelFactorReset_FullMethodName      = "/hypurr.Kms/CancelFactorReset"
+	Kms_ExecuteFactorReset_FullMethodName     = "/hypurr.Kms/ExecuteFactorReset"
 	Kms_AddProvider_FullMethodName            = "/hypurr.Kms/AddProvider"
 	Kms_AccountEnable2FA_FullMethodName       = "/hypurr.Kms/AccountEnable2FA"
 	Kms_AccountDisable2FA_FullMethodName      = "/hypurr.Kms/AccountDisable2FA"
@@ -30,9 +33,6 @@ const (
 	Kms_AccountApproveAgent_FullMethodName    = "/hypurr.Kms/AccountApproveAgent"
 	Kms_AccountRevokeAgent_FullMethodName     = "/hypurr.Kms/AccountRevokeAgent"
 	Kms_GetAccountInfo_FullMethodName         = "/hypurr.Kms/GetAccountInfo"
-	Kms_RequestFactorReset_FullMethodName     = "/hypurr.Kms/RequestFactorReset"
-	Kms_CancelFactorReset_FullMethodName      = "/hypurr.Kms/CancelFactorReset"
-	Kms_ExecuteFactorReset_FullMethodName     = "/hypurr.Kms/ExecuteFactorReset"
 	Kms_RecoverKeys_FullMethodName            = "/hypurr.Kms/RecoverKeys"
 	Kms_AccountRefreshSession_FullMethodName  = "/hypurr.Kms/AccountRefreshSession"
 	Kms_AccountRevokeSessions_FullMethodName  = "/hypurr.Kms/AccountRevokeSessions"
@@ -50,6 +50,11 @@ type KmsClient interface {
 	GetAttestation(ctx context.Context, in *KmsGetAttestationRequest, opts ...grpc.CallOption) (*KmsGetAttestationResponse, error)
 	LoginOrRegister(ctx context.Context, in *KmsLoginOrRegisterRequest, opts ...grpc.CallOption) (*KmsLoginOrRegisterResponse, error)
 	LoginIntent(ctx context.Context, in *KmsLoginIntentRequest, opts ...grpc.CallOption) (*KmsLoginIntentResponse, error)
+	// Routed by the subject hash of the provider sign-in, as LoginOrRegister:
+	// they need no session.
+	RequestFactorReset(ctx context.Context, in *KmsRequestFactorResetRequest, opts ...grpc.CallOption) (*KmsRequestFactorResetResponse, error)
+	CancelFactorReset(ctx context.Context, in *KmsCancelFactorResetRequest, opts ...grpc.CallOption) (*KmsCancelFactorResetResponse, error)
+	ExecuteFactorReset(ctx context.Context, in *KmsExecuteFactorResetRequest, opts ...grpc.CallOption) (*KmsExecuteFactorResetResponse, error)
 	// Routed by the instance JWT.
 	AddProvider(ctx context.Context, in *KmsAddProviderRequest, opts ...grpc.CallOption) (*KmsAddProviderResponse, error)
 	AccountEnable2FA(ctx context.Context, in *KmsAccountEnable2FARequest, opts ...grpc.CallOption) (*KmsAccountEnable2FAResponse, error)
@@ -59,9 +64,6 @@ type KmsClient interface {
 	AccountApproveAgent(ctx context.Context, in *KmsAccountApproveAgentRequest, opts ...grpc.CallOption) (*KmsAccountApproveAgentResponse, error)
 	AccountRevokeAgent(ctx context.Context, in *KmsAccountRevokeAgentRequest, opts ...grpc.CallOption) (*KmsAccountRevokeAgentResponse, error)
 	GetAccountInfo(ctx context.Context, in *KmsGetAccountInfoRequest, opts ...grpc.CallOption) (*KmsGetAccountInfoResponse, error)
-	RequestFactorReset(ctx context.Context, in *KmsRequestFactorResetRequest, opts ...grpc.CallOption) (*KmsRequestFactorResetResponse, error)
-	CancelFactorReset(ctx context.Context, in *KmsCancelFactorResetRequest, opts ...grpc.CallOption) (*KmsCancelFactorResetResponse, error)
-	ExecuteFactorReset(ctx context.Context, in *KmsExecuteFactorResetRequest, opts ...grpc.CallOption) (*KmsExecuteFactorResetResponse, error)
 	RecoverKeys(ctx context.Context, in *KmsRecoverKeysRequest, opts ...grpc.CallOption) (*KmsRecoverKeysResponse, error)
 	AccountRefreshSession(ctx context.Context, in *KmsAccountRefreshSessionRequest, opts ...grpc.CallOption) (*KmsAccountRefreshSessionResponse, error)
 	AccountRevokeSessions(ctx context.Context, in *KmsAccountRevokeSessionsRequest, opts ...grpc.CallOption) (*KmsAccountRevokeSessionsResponse, error)
@@ -102,6 +104,36 @@ func (c *kmsClient) LoginIntent(ctx context.Context, in *KmsLoginIntentRequest, 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(KmsLoginIntentResponse)
 	err := c.cc.Invoke(ctx, Kms_LoginIntent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *kmsClient) RequestFactorReset(ctx context.Context, in *KmsRequestFactorResetRequest, opts ...grpc.CallOption) (*KmsRequestFactorResetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(KmsRequestFactorResetResponse)
+	err := c.cc.Invoke(ctx, Kms_RequestFactorReset_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *kmsClient) CancelFactorReset(ctx context.Context, in *KmsCancelFactorResetRequest, opts ...grpc.CallOption) (*KmsCancelFactorResetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(KmsCancelFactorResetResponse)
+	err := c.cc.Invoke(ctx, Kms_CancelFactorReset_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *kmsClient) ExecuteFactorReset(ctx context.Context, in *KmsExecuteFactorResetRequest, opts ...grpc.CallOption) (*KmsExecuteFactorResetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(KmsExecuteFactorResetResponse)
+	err := c.cc.Invoke(ctx, Kms_ExecuteFactorReset_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -188,36 +220,6 @@ func (c *kmsClient) GetAccountInfo(ctx context.Context, in *KmsGetAccountInfoReq
 	return out, nil
 }
 
-func (c *kmsClient) RequestFactorReset(ctx context.Context, in *KmsRequestFactorResetRequest, opts ...grpc.CallOption) (*KmsRequestFactorResetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(KmsRequestFactorResetResponse)
-	err := c.cc.Invoke(ctx, Kms_RequestFactorReset_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *kmsClient) CancelFactorReset(ctx context.Context, in *KmsCancelFactorResetRequest, opts ...grpc.CallOption) (*KmsCancelFactorResetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(KmsCancelFactorResetResponse)
-	err := c.cc.Invoke(ctx, Kms_CancelFactorReset_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *kmsClient) ExecuteFactorReset(ctx context.Context, in *KmsExecuteFactorResetRequest, opts ...grpc.CallOption) (*KmsExecuteFactorResetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(KmsExecuteFactorResetResponse)
-	err := c.cc.Invoke(ctx, Kms_ExecuteFactorReset_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *kmsClient) RecoverKeys(ctx context.Context, in *KmsRecoverKeysRequest, opts ...grpc.CallOption) (*KmsRecoverKeysResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(KmsRecoverKeysResponse)
@@ -278,6 +280,11 @@ type KmsServer interface {
 	GetAttestation(context.Context, *KmsGetAttestationRequest) (*KmsGetAttestationResponse, error)
 	LoginOrRegister(context.Context, *KmsLoginOrRegisterRequest) (*KmsLoginOrRegisterResponse, error)
 	LoginIntent(context.Context, *KmsLoginIntentRequest) (*KmsLoginIntentResponse, error)
+	// Routed by the subject hash of the provider sign-in, as LoginOrRegister:
+	// they need no session.
+	RequestFactorReset(context.Context, *KmsRequestFactorResetRequest) (*KmsRequestFactorResetResponse, error)
+	CancelFactorReset(context.Context, *KmsCancelFactorResetRequest) (*KmsCancelFactorResetResponse, error)
+	ExecuteFactorReset(context.Context, *KmsExecuteFactorResetRequest) (*KmsExecuteFactorResetResponse, error)
 	// Routed by the instance JWT.
 	AddProvider(context.Context, *KmsAddProviderRequest) (*KmsAddProviderResponse, error)
 	AccountEnable2FA(context.Context, *KmsAccountEnable2FARequest) (*KmsAccountEnable2FAResponse, error)
@@ -287,9 +294,6 @@ type KmsServer interface {
 	AccountApproveAgent(context.Context, *KmsAccountApproveAgentRequest) (*KmsAccountApproveAgentResponse, error)
 	AccountRevokeAgent(context.Context, *KmsAccountRevokeAgentRequest) (*KmsAccountRevokeAgentResponse, error)
 	GetAccountInfo(context.Context, *KmsGetAccountInfoRequest) (*KmsGetAccountInfoResponse, error)
-	RequestFactorReset(context.Context, *KmsRequestFactorResetRequest) (*KmsRequestFactorResetResponse, error)
-	CancelFactorReset(context.Context, *KmsCancelFactorResetRequest) (*KmsCancelFactorResetResponse, error)
-	ExecuteFactorReset(context.Context, *KmsExecuteFactorResetRequest) (*KmsExecuteFactorResetResponse, error)
 	RecoverKeys(context.Context, *KmsRecoverKeysRequest) (*KmsRecoverKeysResponse, error)
 	AccountRefreshSession(context.Context, *KmsAccountRefreshSessionRequest) (*KmsAccountRefreshSessionResponse, error)
 	AccountRevokeSessions(context.Context, *KmsAccountRevokeSessionsRequest) (*KmsAccountRevokeSessionsResponse, error)
@@ -311,6 +315,15 @@ func (UnimplementedKmsServer) LoginOrRegister(context.Context, *KmsLoginOrRegist
 }
 func (UnimplementedKmsServer) LoginIntent(context.Context, *KmsLoginIntentRequest) (*KmsLoginIntentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginIntent not implemented")
+}
+func (UnimplementedKmsServer) RequestFactorReset(context.Context, *KmsRequestFactorResetRequest) (*KmsRequestFactorResetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RequestFactorReset not implemented")
+}
+func (UnimplementedKmsServer) CancelFactorReset(context.Context, *KmsCancelFactorResetRequest) (*KmsCancelFactorResetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelFactorReset not implemented")
+}
+func (UnimplementedKmsServer) ExecuteFactorReset(context.Context, *KmsExecuteFactorResetRequest) (*KmsExecuteFactorResetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExecuteFactorReset not implemented")
 }
 func (UnimplementedKmsServer) AddProvider(context.Context, *KmsAddProviderRequest) (*KmsAddProviderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddProvider not implemented")
@@ -335,15 +348,6 @@ func (UnimplementedKmsServer) AccountRevokeAgent(context.Context, *KmsAccountRev
 }
 func (UnimplementedKmsServer) GetAccountInfo(context.Context, *KmsGetAccountInfoRequest) (*KmsGetAccountInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccountInfo not implemented")
-}
-func (UnimplementedKmsServer) RequestFactorReset(context.Context, *KmsRequestFactorResetRequest) (*KmsRequestFactorResetResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RequestFactorReset not implemented")
-}
-func (UnimplementedKmsServer) CancelFactorReset(context.Context, *KmsCancelFactorResetRequest) (*KmsCancelFactorResetResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CancelFactorReset not implemented")
-}
-func (UnimplementedKmsServer) ExecuteFactorReset(context.Context, *KmsExecuteFactorResetRequest) (*KmsExecuteFactorResetResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ExecuteFactorReset not implemented")
 }
 func (UnimplementedKmsServer) RecoverKeys(context.Context, *KmsRecoverKeysRequest) (*KmsRecoverKeysResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RecoverKeys not implemented")
@@ -423,6 +427,60 @@ func _Kms_LoginIntent_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(KmsServer).LoginIntent(ctx, req.(*KmsLoginIntentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Kms_RequestFactorReset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KmsRequestFactorResetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KmsServer).RequestFactorReset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Kms_RequestFactorReset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KmsServer).RequestFactorReset(ctx, req.(*KmsRequestFactorResetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Kms_CancelFactorReset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KmsCancelFactorResetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KmsServer).CancelFactorReset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Kms_CancelFactorReset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KmsServer).CancelFactorReset(ctx, req.(*KmsCancelFactorResetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Kms_ExecuteFactorReset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KmsExecuteFactorResetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KmsServer).ExecuteFactorReset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Kms_ExecuteFactorReset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KmsServer).ExecuteFactorReset(ctx, req.(*KmsExecuteFactorResetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -571,60 +629,6 @@ func _Kms_GetAccountInfo_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Kms_RequestFactorReset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(KmsRequestFactorResetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(KmsServer).RequestFactorReset(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Kms_RequestFactorReset_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KmsServer).RequestFactorReset(ctx, req.(*KmsRequestFactorResetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Kms_CancelFactorReset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(KmsCancelFactorResetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(KmsServer).CancelFactorReset(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Kms_CancelFactorReset_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KmsServer).CancelFactorReset(ctx, req.(*KmsCancelFactorResetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Kms_ExecuteFactorReset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(KmsExecuteFactorResetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(KmsServer).ExecuteFactorReset(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Kms_ExecuteFactorReset_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(KmsServer).ExecuteFactorReset(ctx, req.(*KmsExecuteFactorResetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Kms_RecoverKeys_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(KmsRecoverKeysRequest)
 	if err := dec(in); err != nil {
@@ -735,6 +739,18 @@ var Kms_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Kms_LoginIntent_Handler,
 		},
 		{
+			MethodName: "RequestFactorReset",
+			Handler:    _Kms_RequestFactorReset_Handler,
+		},
+		{
+			MethodName: "CancelFactorReset",
+			Handler:    _Kms_CancelFactorReset_Handler,
+		},
+		{
+			MethodName: "ExecuteFactorReset",
+			Handler:    _Kms_ExecuteFactorReset_Handler,
+		},
+		{
 			MethodName: "AddProvider",
 			Handler:    _Kms_AddProvider_Handler,
 		},
@@ -765,18 +781,6 @@ var Kms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAccountInfo",
 			Handler:    _Kms_GetAccountInfo_Handler,
-		},
-		{
-			MethodName: "RequestFactorReset",
-			Handler:    _Kms_RequestFactorReset_Handler,
-		},
-		{
-			MethodName: "CancelFactorReset",
-			Handler:    _Kms_CancelFactorReset_Handler,
-		},
-		{
-			MethodName: "ExecuteFactorReset",
-			Handler:    _Kms_ExecuteFactorReset_Handler,
 		},
 		{
 			MethodName: "RecoverKeys",
